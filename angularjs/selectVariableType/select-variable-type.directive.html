@@ -1,0 +1,14 @@
+<div class="tagManagerManageSelect tagManagerVariableSelectType">
+
+    <div piwik-field uicontrol="select" name="variableType{{variableSelectType.variableType}}"
+         class="selectVariableType"
+         full-width="true"
+         ng-change="variableSelectType.onChange()"
+         ng-model="variableSelectType.variable"
+         options="variableSelectType.containerVariables">
+    </div>
+
+    <a class="createNewVariable" ng-click="variableSelectType.createVariable()"
+       ng-show="!variableSelectType.isLoading"
+    ><span class="icon-add"></span> {{ 'TagManager_CreateNewX'|translate:variableSelectType.variableTypeName }}</a>
+</div>

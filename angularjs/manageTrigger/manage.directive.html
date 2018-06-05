@@ -1,0 +1,13 @@
+<div class="manageTrigger">
+    <div ng-show="!manageTrigger.editMode">
+        <div piwik-trigger-list
+             id-container="manageTrigger.idContainer"
+             id-container-version="manageTrigger.idContainerVersion"></div>
+    </div>
+    <div ng-show="manageTrigger.editMode">
+        <div piwik-trigger-edit
+             id-container="manageTrigger.idContainer"
+             id-container-version="manageTrigger.idContainerVersion"
+             id-trigger="manageTrigger.idTrigger"></div>
+    </div>
+</div>

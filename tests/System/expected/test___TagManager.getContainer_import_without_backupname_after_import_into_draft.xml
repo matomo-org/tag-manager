@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idcontainer>import02</idcontainer>
+	<idsite>4</idsite>
+	<context>web</context>
+	<name>My Name</name>
+	<description />
+	<status>active</status>
+	
+	
+	
+	
+	<versions>
+	</versions>
+	<releases>
+	</releases>
+	<draft>
+		<idcontainerversion>14</idcontainerversion>
+		<idcontainer>import02</idcontainer>
+		<idsite>4</idsite>
+		<status>active</status>
+		<revision>0</revision>
+		<name />
+		<description />
+		
+		
+		
+		
+	</draft>
+</result>

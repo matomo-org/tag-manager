@@ -1,0 +1,61 @@
+<div class="manageInstallTagCode" piwik-content-block
+     feature="Tag Manager" content-title="Install Code">
+
+    <div piwik-field uicontrol="select" name="environment"
+         ng-model="manageInstallTagCode.environment"
+         ng-change="manageInstallTagCode.fetchInstallInstructions(manageInstallTagCode.environment)"
+         options="manageInstallTagCode.environments"
+         style="margin-left: -0.75rem;"
+         title="{{ 'TagManager_Environment'|translate }}">
+    </div>
+
+    <div piwik-activity-indicator loading="manageInstallTagCode.isLoading"></div>
+
+    <div ng-repeat="installInstruction in manageInstallTagCode.installInstructions">
+        <p>{{ installInstruction.description }}
+
+            <br />
+            <a href="{{ installInstruction.helpUrl }}" target="_blank" ng-show="installInstruction.helpUrl">{{ 'TagManager_LearnMore'|translate }}</a>
+        </p>
+
+        <pre piwik-select-on-focus class="codeblock"
+             ng-bind="installInstruction.embedCode">
+        </pre>
+    </div>
+
+    <p>{{ 'TagManager_InstallCodePublishEnvironmentNote'|translate:'preview' }} {{ 'TagManager_ConfigureEnvironmentsSuperUser'|translate }}</p>
+
+    <h2>{{ 'TagManager_ReleasesOverview'|translate }}</h2>
+
+    <table piwik-content-table>
+        <thead>
+        <tr>
+            <th class="environment">{{ 'TagManager_Environment'|translate }}</th>
+            <th class="name">{{ 'TagManager_VersionName'|translate }}</th>
+            <th class="name">{{ 'TagManager_VersionRevision'|translate }}</th>
+            <th class="released_by">{{ 'TagManager_ReleasedBy'|translate }}</th>
+            <th class="released_on">{{ 'TagManager_ReleasedOn'|translate }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="tagList.model.isLoading">
+            <td colspan="7">
+                <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
+            </td>
+        </tr>
+        <tr ng-show="!tagList.model.isLoading && (manageInstallTagCode.releases|length) == 0">
+            <td colspan="7">
+                {{ 'TagManager_NoReleasesFound'|translate }}
+            </td>
+        </tr>
+        <tr ng-repeat="release in manageInstallTagCode.releases|orderBy:'release_date':true">
+            <td class="environment">{{ release.environment|ucfirst }}</td>
+            <td class="name">{{ release.version.name }}</td>
+            <td class="revision">{{ release.version.revision }}</td>
+            <td class="released_by">{{ release.release_login }}</td>
+            <td class="released_on"><span class="date">{{ release.release_date_pretty }}</span></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idcontainer>import01</idcontainer>
+	<idsite>5</idsite>
+	<context>web</context>
+	<name>My Name</name>
+	<description />
+	
+	
+	
+	
+	<revision>0</revision>
+	<version>
+		<name />
+		<description />
+		<revision>0</revision>
+		
+		
+		
+		
+	</version>
+	<tags>
+		<row>
+			<idtag>16</idtag>
+			<type>CustomHtml</type>
+			<name>My Tag 2</name>
+			<parameters>
+				<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
+			</parameters>
+			<fire_trigger_ids>
+				<row>21</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+				<row>22</row>
+			</block_trigger_ids>
+			<fire_limit>once_lifetime</fire_limit>
+			<priority>343</priority>
+			<fire_delay>1350</fire_delay>
+			<start_date>2017-01-02 03:04:05</start_date>
+			<end_date>2029-01-02 03:04:05</end_date>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtag>17</idtag>
+			<type>CustomHtml</type>
+			<name>My Tag 1</name>
+			<parameters>
+				<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
+			</parameters>
+			<fire_trigger_ids>
+				<row>21</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+			</block_trigger_ids>
+			<fire_limit>unlimited</fire_limit>
+			<priority>999</priority>
+			<fire_delay>0</fire_delay>
+			<start_date />
+			<end_date />
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtag>18</idtag>
+			<type>CustomImage</type>
+			<name>My Tag 3</name>
+			<parameters>
+				<customImageSrc>/plugins/tracking.png</customImageSrc>
+				<cacheBusterEnabled>1</cacheBusterEnabled>
+			</parameters>
+			<fire_trigger_ids>
+				<row>22</row>
+				<row>23</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+			</block_trigger_ids>
+			<fire_limit>unlimited</fire_limit>
+			<priority>999</priority>
+			<fire_delay>0</fire_delay>
+			<start_date />
+			<end_date />
+			
+			
+			
+			
+		</row>
+	</tags>
+	<triggers>
+		<row>
+			<idtrigger>21</idtrigger>
+			<type>CustomEvent</type>
+			<name>My trigger1</name>
+			<parameters>
+				<eventName>foo</eventName>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtrigger>22</idtrigger>
+			<type>WindowLoaded</type>
+			<name>Mytrigger2</name>
+			<parameters>
+			</parameters>
+			<conditions>
+				<row>
+					<actual>ErrorUrl</actual>
+					<comparison>contains</comparison>
+					<expected>foo</expected>
+				</row>
+			</conditions>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtrigger>23</idtrigger>
+			<type>DomReady</type>
+			<name>Mytrigger3</name>
+			<parameters>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtrigger>24</idtrigger>
+			<type>CustomEvent</type>
+			<name>My trigger4</name>
+			<parameters>
+				<eventName>foo{{My Var 3}}bar{{My Var 2}}baz{{PageUrl}}yeah</eventName>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+	</triggers>
+	<variables>
+		<row>
+			<idvariable>9</idvariable>
+			<type>DataLayer</type>
+			<name>My Var 1</name>
+			<parameters>
+				<dataLayerName>fooBarName</dataLayerName>
+			</parameters>
+			<lookup_table>
+				<row>
+					<match_value>foo</match_value>
+					<comparison>equals</comparison>
+					<out_value>bar</out_value>
+				</row>
+			</lookup_table>
+			<default_value>10</default_value>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idvariable>10</idvariable>
+			<type>DataLayer</type>
+			<name>My Var 2</name>
+			<parameters>
+				<dataLayerName>dataVarName</dataLayerName>
+			</parameters>
+			<lookup_table>
+			</lookup_table>
+			<default_value />
+			
+			
+			
+			
+		</row>
+		<row>
+			<idvariable>11</idvariable>
+			<type>DataLayer</type>
+			<name>My Var 3</name>
+			<parameters>
+				<dataLayerName>dataVarName</dataLayerName>
+			</parameters>
+			<lookup_table>
+			</lookup_table>
+			<default_value />
+			
+			
+			
+			
+		</row>
+	</variables>
+</result>

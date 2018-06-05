@@ -1,0 +1,78 @@
+<div class="tagManagerManageList tagManagerTriggerList">
+    <div piwik-content-block
+         feature="Tag Manager"
+         content-title="{{ 'TagManager_ManageX'|translate:('TagManager_Triggers'|translate) }}">
+    <p>{{ 'TagManager_TriggerUsageBenefits'|translate }}</p>
+
+    <table piwik-content-table>
+        <thead>
+            <tr>
+                <th class="name">{{ 'General_Name'|translate }}</th>
+                <th class="type">{{ 'TagManager_Type'|translate }}</th>
+                <th class="conditions">{{ 'TagManager_Filter'|translate }}</th>
+                <th class="lastUpdated">{{ 'TagManager_LastUpdated'|translate }}</th>
+                <th class="action"
+                    ng-show="triggerList.hasAdminAccess">{{ 'General_Actions'|translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="triggerList.model.isLoading || triggerList.model.isUpdating">
+            <td colspan="7">
+                <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
+            </td>
+        </tr>
+        <tr ng-show="!triggerList.model.isLoading && (triggerList.model.triggers|length) == 0">
+            <td colspan="7">
+                {{ 'TagManager_NoTriggersFound'|translate }}
+                <a ng-click="triggerList.createTrigger()"
+                   class="createContainerTriggerNow"
+                   ng-show="triggerList.hasAdminAccess">{{ 'TagManager_CreateNewTriggerNow'|translate }}</a>
+            </td>
+        </tr>
+        <tr ng-repeat="trigger in triggerList.model.triggers|orderBy:'name':false"
+            id="trigger{{ trigger.idtrigger }}"
+            class="triggers">
+            <td class="name">{{ trigger.name }}</td>
+            <td class="type" title="{{ trigger.typeMetadata.description }}">{{ trigger.typeMetadata.name }}</td>
+            <td class="conditions"><span class="icon-ok" ng-show="trigger.conditions|length"></span></td>
+            <td class="lastUpdated" title="{{ 'TagManager_CreatedOnX'|translate:trigger.created_date_pretty }}"><span>{{ trigger.updated_date_pretty }}</span></td>
+            <td class="action"
+                ng-show="triggerList.hasAdminAccess">
+                <a ng-click="triggerList.editTrigger(trigger.idtrigger, trigger.type)" class="table-action icon-edit" title="{{ 'TagManager_EditTrigger'|translate }}"></a>
+                <a ng-click="triggerList.deleteTrigger(trigger)" class="table-action icon-delete"
+                   title="{{ 'TagManager_DeleteX'|translate:('TagManager_Trigger'|translate) }}"
+                ></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="tableActionBar"
+         ng-show="triggerList.hasAdminAccess">
+        <a class="createNewTrigger" value="" ng-click="triggerList.createTrigger()"
+        ><span class="icon-add"></span> {{ 'TagManager_CreateNewTrigger'|translate }}</a>
+    </div>
+    </div>
+
+    <div class="ui-confirm" id="confirmDeleteTrigger">
+        <h2>{{ 'TagManager_DeleteTriggerConfirm'|translate }} </h2>
+        <input role="yes" type="button" value="{{ 'General_Yes'|translate }}"/>
+        <input role="no" type="button" value="{{ 'General_No'|translate }}"/>
+    </div>
+
+    <div class="ui-confirm" id="confirmDeleteTriggerNotPossible">
+        <h2>{{ 'TagManager_TriggerCannotBeDeleted'|translate }}</h2>
+        <p>{{ 'TagManager_TriggerBeingUsedBy'|translate }}</p>
+
+        <ul class="collection">
+            <li class="collection-item" ng-repeat="reference in triggerList.triggerReferences">
+                {{ reference.referenceTypeName }}: {{ reference.referenceName }}
+            </li>
+        </ul>
+
+        <p>{{ 'TagManager_TriggerBeingUsedNeedsRemove'|translate }}</p>
+
+        <input role="no" type="button" value="{{ 'General_Cancel'|translate }}"/>
+    </div>
+
+</div>

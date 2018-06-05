@@ -1,0 +1,284 @@
+<div class="editTag tagManagerManageEdit"
+     piwik-content-block
+     feature="Tag Manager"
+     content-title="{{ editTag.editTitle }}">
+
+    <p ng-show="editTag.model.isLoading">
+        <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
+    </p>
+
+    <p ng-show="editTag.model.isUpdating">
+        <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'TagManager_UpdatingData'|translate }}</span>
+    </p>
+
+    <form ng-show="!editTag.chooseTagType && editTag.editTitle" ng-submit="editTag.edit ? editTag.updateTag() : editTag.createTag()">
+        <div>
+
+            <div piwik-field uicontrol="text" name="type"
+                 ng-model="editTag.tag.typeMetadata.name"
+                 disabled="true"
+                 inline-help="{{ editTag.tag.typeMetadata.description }} {{ editTag.tag.typeMetadata.help }}"
+                 title="{{ 'TagManager_Type'|translate }}">
+            </div>
+
+            <div piwik-field uicontrol="text" name="name"
+                 ng-model="editTag.tag.name"
+                 maxlength="50"
+                 ng-change="editTag.setValueHasChanged()"
+                 title="{{ 'General_Name'|translate }}"
+                 inline-help="{{ 'TagManager_TagNameHelp'|translate }}">
+            </div>
+
+            <div class="form-group row" ng-show="editTag.tag.typeMetadata.parameters|length">
+                <div class="col s12"><h3>{{ 'TagManager_ConfigureWhatTagDoes'|translate }}</h3></div>
+            </div>
+
+            <div ng-repeat="parameter in editTag.tag.typeMetadata.parameters">
+                <div piwik-form-field="parameter" all-settings="editTag.tag.typeMetadata.parameters"></div>
+            </div>
+
+            <div class="form-group row" ng-show="editTag.tag.typeMetadata.parameters|length">
+                <div class="col s12"><h3>{{ 'TagManager_ConfigureWhenTagDoes'|translate }}</h3></div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col s12 m6">
+                    <div>
+                        <label for="fire_triggers">{{ 'TagManager_FireTriggerTitle'|translate }}</label>
+
+                        <p ng-show="(editTag.containerTriggers|length) == 0">
+                            <br/>
+                            {{ 'TagManager_NoTriggersFound'|translate }}.
+                            <a class="createNewFireTrigger" ng-click="editTag.onCreateNewFireTrigger()">{{ 'TagManager_CreateNewTriggerNow'|translate }}</a>
+                        </p>
+
+                        <div ng-repeat="(index, idTrigger) in editTag.tag.fire_triggers"
+                             ng-show="editTag.containerTriggers|length"
+                             class="fireTrigger fireTrigger{{ index }} multiple valign-wrapper">
+
+                            <div piwik-field uicontrol="select" name="fire_triggers"
+                                 class="innerFormField"
+                                 full-width="true"
+                                 ng-model="editTag.tag.fire_triggers[index].idtrigger"
+                                 ng-change="editTag.setValueHasChanged();editTag.onFireTriggerChange(index);"
+                                 options="editTag.containerTriggers">
+                            </div>
+
+                            <span ng-click="editTag.editTrigger(editTag.tag.fire_triggers[index].idtrigger)"
+                                  title="{{ 'General_Edit'|translate }}"
+                                  ng-show="editTag.tag.fire_triggers[index].idtrigger"
+                                  class="icon-edit valign"></span>
+
+                            <span ng-click="editTag.removeFireTrigger(index)"
+                                  title="{{ 'General_Remove'|translate }}"
+                                  ng-hide="(index + 1) == (editTag.tag.fire_triggers|length)"
+                                  class="icon-minus valign"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m6">
+                    <div class="form-help">
+                        <span class="inline-help">
+                            {{ 'TagManager_FireTriggerHelp'|translate:('TagManager_FireLimit'|translate) }}
+                            <br /><br />
+                            <a class="createFireTriggerInHelp" ng-click="editTag.onCreateNewFireTrigger()">{{ 'TagManager_CreateNewTriggerNow'|translate }}</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col s12 m6">
+                    <div>
+                        <label for="block_triggers">{{ 'TagManager_BlockTriggerTitle'|translate }}</label>
+
+                        <p ng-show="(editTag.containerTriggers|length) == 0">
+                            <br/>
+                            {{ 'TagManager_NoTriggersFound'|translate }}.
+                            <a class="createNewBlockTrigger" ng-click="editTag.onCreateNewBlockTrigger()">{{ 'TagManager_CreateNewTriggerNow'|translate }}</a>
+                        </p>
+
+                        <div ng-repeat="(index, trigger) in editTag.tag.block_triggers"
+                             ng-show="editTag.containerTriggers|length"
+                             class="blockTrigger blockTrigger{{ index }} multiple valign-wrapper">
+
+                            <div piwik-field uicontrol="select" name="block_triggers"
+                                 class="innerFormField"
+                                 full-width="true"
+                                 ng-model="editTag.tag.block_triggers[index].idtrigger"
+                                 ng-change="editTag.setValueHasChanged();editTag.onBlockTriggerChange();"
+                                 options="editTag.containerTriggers">
+                            </div>
+
+                            <span ng-click="editTag.editTrigger(editTag.tag.block_triggers[index].idtrigger)"
+                                  title="{{ 'General_Edit'|translate }}"
+                                  ng-show="editTag.tag.block_triggers[index].idtrigger"
+                                  class="icon-edit valign"></span>
+
+                            <span ng-click="editTag.removeBlockTrigger(index)"
+                                  title="{{ 'General_Remove'|translate }}"
+                                  ng-hide="(index + 1) == (editTag.tag.block_triggers|length)"
+                                  class="icon-minus valign"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m6">
+                    <div class="form-help">
+                        <span class="inline-help">
+                            {{ 'TagManager_BlockTriggerHelp'|translate }}
+
+                            <br /><br />
+                            <a class="createBlockTriggerInHelp" ng-click="editTag.onCreateNewBlockTrigger()">{{ 'TagManager_CreateNewTriggerNow'|translate }}</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group row" ng-show="editTag.tag.typeMetadata.hasAdvancedSettings">
+                <div class="col s12"><h3>
+                    <a href="javascript:;"
+                       class="showAdvancedSettings"
+                       ng-show="!editTag.showAdvanced"
+                       ng-click="editTag.showAdvanced = true">{{ 'TagManager_ShowAdvancedSettings'|translate }}</a>
+                    <a href="javascript:;"
+                       class="hideAdvancedSettings"
+                       ng-show="editTag.showAdvanced"
+                       ng-click="editTag.showAdvanced = false">{{ 'TagManager_HideAdvancedSettings'|translate }}</a>
+                </h3>
+                </div>
+            </div>
+
+            <div ng-show="editTag.showAdvanced && editTag.tag.typeMetadata.hasAdvancedSettings">
+                <div piwik-field uicontrol="radio" name="fire_limit"
+                     ng-model="editTag.tag.fire_limit"
+                     ng-change="editTag.setValueHasChanged()"
+                     title="{{ 'TagManager_FireLimit'|translate }}"
+                     options="editTag.availableFireLimits"
+                     inline-help="{{ 'TagManager_FireLimitHelp'|translate:('TagManager_Unlimited'|translate):('TagManager_OncePage'|translate):('TagManager_Once24Hours'|translate):('TagManager_OnceLifetime'|translate) }}">
+                </div>
+
+                <div piwik-field uicontrol="text" name="fire_delay"
+                     ng-model="editTag.tag.fire_delay"
+                     maxlength="8"
+                     ng-change="editTag.setValueHasChanged()"
+                     title="{{ 'TagManager_FireDelay'|translate }}"
+                     inline-help="{{ 'TagManager_FireDelayHelp'|translate }}">
+                </div>
+
+                <div piwik-field uicontrol="text" name="priority"
+                     ng-model="editTag.tag.priority"
+                     maxlength="4"
+                     ng-change="editTag.setValueHasChanged()"
+                     title="{{ 'TagManager_Priority'|translate }}"
+                     inline-help="{{ 'TagManager_PriorityHelp'|translate }}">
+                </div>
+
+                <div class="form-group row tagStartDate">
+                    <div class="col s12 m6">
+                        <div class="row">
+                            <div class="col s12">
+                                <label for="start_date_date" class="active">{{ 'TagManager_StartDate'|translate }}:</label>
+                            </div>
+                            <div class="col s12 m6 input-field">
+                                <input type="text" ng-model="editTag.tag.start_date_date"
+                                       name="start_date_date"
+                                       id="start_date_date"
+                                       ng-change="editTag.setValueHasChanged();editTag.onAnyDateChange();"
+                                       class="tagStartDateInput">
+
+                            </div>
+                            <div class="col s12 m6 input-field">
+                                <input type="text" ng-model="editTag.tag.start_date_time"
+                                       name="start_date_time"
+                                       id="start_date_time"
+                                       ng-change="editTag.setValueHasChanged();editTag.onAnyDateChange();"
+                                       class="tagStartTimeInput">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 ">
+                        <div class="form-help">
+                            <span class="inline-help">
+                                <span>
+                                    <span ng-bind-html="'TagManager_TagStartDateHelp'|translate:'<strong>':'</strong>'"></span>
+                                    <br />
+                                    <span class="currentLocalTime" ng-bind-html="'TagManager_CurrentTimeInLocalTimezone'|translate:'<strong>':editTag.currentTime:'</strong>'"></span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group row tagEndDate">
+                    <div class="col s12 m6">
+                        <div class="row">
+                            <div class="col s12">
+                                <label for="end_date_date" class="active">{{ 'TagManager_EndDate'|translate }}:</label>
+                            </div>
+                            <div class="col s12 m6 input-field">
+                                <input type="text"
+                                       ng-model="editTag.tag.end_date_date"
+                                       class="tagEndDateInput"
+                                       name="end_date_date"
+                                       id="end_date_date"
+                                       ng-change="editTag.setValueHasChanged();editTag.onAnyDateChange();">
+                            </div>
+                            <div class="col s12 m6 input-field">
+                                <input type="text"
+                                       ng-model="editTag.tag.end_date_time"
+                                       class="tagEndTimeInput"
+                                       name="end_date_time"
+                                       id="end_date_time"
+                                       ng-change="editTag.setValueHasChanged();editTag.onAnyDateChange();">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m6">
+                        <div class="form-help">
+                            <span class="inline-help">
+                                <span>
+                                    <span ng-bind-html="'TagManager_TagEndDateHelp'|translate:'<strong>':'</strong>'"></span>
+                                    <br />
+                                    <span class="currentLocalTime" ng-bind-html="'TagManager_CurrentTimeInLocalTimezone'|translate:'<strong>':editTag.currentTime:'</strong>'"></span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div piwik-save-button
+                 class="createButton"
+                 onconfirm="editTag.edit ? editTag.updateTag() : editTag.createTag()"
+                 disabled="editTag.model.isUpdating || !editTag.isDirty"
+                 value="{{ editTag.edit ? ('CoreUpdater_UpdateTitle'|translate) : ('TagManager_CreateNewTag'|translate) }}"
+                 saving="editTag.model.isUpdating">
+            </div>
+
+            <div class='entityCancel'>
+                <a ng-click="editTag.cancel()">{{ 'General_Cancel'|translate }}</a>
+            </div>
+        </div>
+    </form>
+
+    <div ng-show="editTag.chooseTagType" id="confirmSelectTagType">
+        <ul class="collection with-header" ng-repeat="tagCategory in editTag.availableTags">
+            <li class="collection-header"><h4>{{ tagCategory.name }}</h4></li>
+            <li class="collection-item avatar templateType{{tagTemplate.id}}" ng-repeat="tagTemplate in tagCategory.types" ng-click="editTag.createTagType(tagTemplate)">
+                <img ng-if="tagTemplate.icon" ng-src="{{ tagTemplate.icon }}" alt="" class="circle">
+                <span class="title">{{ tagTemplate.name }}</span>
+                <p ng-show="tagTemplate.description">{{ tagTemplate.description }}</p>
+                <span class="secondary-content" ng-show="!!tagTemplate.help"><i class="icon-help" title="{{tagTemplate.help}}"></i></span>
+            </li>
+        </ul>
+
+        <div class='entityCancel'>
+            <a ng-click="editTag.cancel()">{{ 'General_Cancel'|translate }}</a>
+        </div>
+    </div>
+</div>

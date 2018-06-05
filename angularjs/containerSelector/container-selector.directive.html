@@ -1,0 +1,23 @@
+<div class="tagContainerSelector piwikSelector borderedControl"
+     piwik-focus-anywhere-but-here="containerSelector.showContainerList=false"
+     title="{{ 'TagManager_ChooseContainer'|translate }}"
+     ng-click="containerSelector.fetchContainers();containerSelector.showContainerList = !containerSelector.showContainerList;"
+     ng-class="{'expanded': containerSelector.showContainerList}">
+    <a class="title">
+        <span class="icon icon-arrow-bottom"></span>
+        {{ containerSelector.containerName }}
+    </a>
+    <div class="dropdown positionInViewport" ng-show="containerSelector.showContainerList">
+        <div piwik-activity-indicator loading="containerSelector.isLoading"></div>
+        <div class="custom_select_container">
+            <ul class="custom_select_ul_list">
+                <li ng-show="!containerSelector.isLoading && ((containerSelector.containers|length) == 0)">
+                    <a ng-click="$event.stopPropagation();$event.preventDefault();" tabindex="-1">{{'TagManager_NoContainersFound'|translate}}</a>
+                </li>
+                <li ng-repeat="containerEntry in containerSelector.containers" title="{{ containerEntry.name }} ({{ containerEntry.idcontainer }})">
+                    <a ng-href="{{ containerSelector.linkTo(containerEntry.idcontainer) }}">{{ containerEntry.name }} ({{ containerEntry.idcontainer }})</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

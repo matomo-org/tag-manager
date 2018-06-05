@@ -1,0 +1,8 @@
+{% extends '@TagManager/tagmanager.twig' %}
+
+{% set title = 'TagManager_Tags'|translate %}
+
+{% block content %}
+    <div piwik-tag-manage id-container="{{ container.idcontainer }}" id-container-version="{{ idcontainerversion }}">
+    </div>
+{% endblock %}

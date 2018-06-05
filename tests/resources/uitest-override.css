@@ -1,0 +1,13 @@
+.tagmanager td.released_on span,
+.tagmanager .currentLocalTime,
+.tagmanager td.lastUpdated span,
+.tagmanager .dashboardCreationDate,
+.tagmanager td.created span {
+    display:none;
+}
+
+.tagmanager .modal.modal-extra-wide.open {
+    height: auto !important;
+    max-height: none !important;
+    position: absolute !important;
+}

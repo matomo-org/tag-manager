@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<row>
+		<name>Date</name>
+		<types>
+			<row>
+				<id>TimeSinceLoad</id>
+				<name>Time since page load</name>
+				<description>Calculates the time that has passed since the page was loaded.</description>
+				<category>Date</category>
+				<icon>plugins/TagManager/images/icons/timer.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>unit</name>
+						<title>Unit</title>
+						<value>ms</value>
+						<defaultValue>ms</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<ms>Milliseconds</ms>
+							<s>Seconds</s>
+							<m>Minutes</m>
+						</availableValues>
+						<description>Select in which unit you want to retrieve the time.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Page Variables</name>
+		<types>
+			<row>
+				<id>CustomJsFunction</id>
+				<name>Custom JavaScript</name>
+				<description>Executes a custom JavaScript function to retrieve the value.</description>
+				<category>Page Variables</category>
+				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>jsFunction</name>
+						<title>JavaScript Function</title>
+						<value>function () { return &quot;&quot;; }</value>
+						<defaultValue>function () { return &quot;&quot;; }</defaultValue>
+						<type>string</type>
+						<uiControl>textarea</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The value should start with &quot;function() { &quot; and end with &quot;return yourValue; }&quot;. You have to define a function and return a value. We highly recommend to test the pasted JavaScript function to avoid JavaScript errors on your website.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>DomElement</id>
+				<name>DOM Element</name>
+				<description>Gets the value from a DOM element.</description>
+				<category>Page Variables</category>
+				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>selectionMethod</name>
+						<title>Selection Method</title>
+						<value>elementId</value>
+						<defaultValue>elementId</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<cssSelector>CSS Selector</cssSelector>
+							<elementId>Element ID</elementId>
+						</availableValues>
+						<description>Select the way you want to identify the element you want to read the value from.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>cssSelector</name>
+						<title>CSS Selector</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>selectionMethod == &quot;cssSelector&quot;</condition>
+					</row>
+					<row>
+						<name>elementId</name>
+						<title>Element ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The id attribute specifies a unique id for an HTML element. Insert here the value of an ID attribute of any element within your website.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>selectionMethod == &quot;elementId&quot;</condition>
+					</row>
+					<row>
+						<name>attributeName</name>
+						<title>Attribute Name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>If a value is entered, the value of the attribute will be returned instead of the text content of the element.</inlineHelp>
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>DataLayer</id>
+				<name>Data-Layer</name>
+				<description>Reads a custom value from the Data-Layer.</description>
+				<category>Page Variables</category>
+				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<help>Using this variable you can access any value that is stored within the dataLayer. You can also push values to the dataLayer yourself and access them this way afterwards.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>dataLayerName</name>
+						<title>Data Layer Variable Name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example &quot;object1.myPropertyOfObject1&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Cookie</id>
+				<name>First-Party Cookie</name>
+				<description>Reads a value from a cookie</description>
+				<category>Page Variables</category>
+				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>cookieName</name>
+						<title>Cookie Name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>urlDecode</name>
+						<title>URI-decode Cookie</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>If enabled, the value will be decoded</inlineHelp>
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>JavaScript</id>
+				<name>JavaScript Variable</name>
+				<description>Reads the value of a global JavaScript variable.</description>
+				<category>Page Variables</category>
+				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>variableName</name>
+						<title>JavaScript Variable Name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The name of any variable that is available within the global scope. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example &quot;document.referrer&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>ReferrerUrl</id>
+				<name>Referrer URL</name>
+				<description>Gets the value of the Referrer URL.</description>
+				<category>Page Variables</category>
+				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>urlPart</name>
+						<title>URL Part</title>
+						<value>href</value>
+						<defaultValue>href</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<href>Full</href>
+							<host>Host</host>
+							<hostname>Host name</hostname>
+							<origin>Origin</origin>
+							<pathname>Path</pathname>
+							<port>Port</port>
+							<protocol>Protocol</protocol>
+							<search>Search query</search>
+						</availableValues>
+						<description>Select the part of the URL you want to retrieve.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>UrlParameter</id>
+				<name>URL Parameter</name>
+				<description>Get the value of a specific URL parameter.</description>
+				<category>Page Variables</category>
+				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>parameterName</name>
+						<title>URL Parameter Name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>For example when your page has URL parameters such as &quot;?lang=NZ&quot; and you want to get the value &quot;NZ&quot;, then you need to enter &quot;lang&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Url</id>
+				<name>URL Variable</name>
+				<description>Get the value of the current page URL.</description>
+				<category>Page Variables</category>
+				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>urlPart</name>
+						<title>URL Part</title>
+						<value>href</value>
+						<defaultValue>href</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<href>Full</href>
+							<hash>Hash</hash>
+							<host>Host</host>
+							<hostname>Host name</hostname>
+							<origin>Origin</origin>
+							<pathname>Path</pathname>
+							<port>Port</port>
+							<protocol>Protocol</protocol>
+							<search>Search query</search>
+						</availableValues>
+						<description>Select the part of the URL you want to retrieve.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>SEO</name>
+		<types>
+			<row>
+				<id>MetaContent</id>
+				<name>Page Meta Content</name>
+				<description>Ready a value from a &quot;meta&quot; HTML element.</description>
+				<category>SEO</category>
+				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>metaName</name>
+						<title>Meta Name</title>
+						<value>keywords</value>
+						<defaultValue>keywords</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<keywords>Keywords</keywords>
+							<description>Description</description>
+							<author>Author</author>
+							<viewport>Viewport</viewport>
+							<generator>Generator</generator>
+							<subject>Subject</subject>
+							<language>Language</language>
+							<robots>Robots</robots>
+							<copyright>Copyright</copyright>
+							<application-name>Application Name</application-name>
+							<content-type>Content Type</content-type>
+							<og:site_name>Open Graph Site Name</og:site_name>
+							<og:title>Open Graph Title</og:title>
+							<og:description>Open Graph Description</og:description>
+							<og:type>Open Graph Type</og:type>
+							<og:url>Open Graph URL</og:url>
+							<og:image>Open Graph Image</og:image>
+							<og:locale>Open Graph Locale</og:locale>
+						</availableValues>
+						<description />
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Utilities</name>
+		<types>
+			<row>
+				<id>Constant</id>
+				<name>Constant</name>
+				<description>The variable is set to a fixed value.</description>
+				<category>Utilities</category>
+				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>constantValue</name>
+						<title>Value</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Others</name>
+		<types>
+			<row>
+				<id>MatomoConfiguration</id>
+				<name>Matomo Configuration</name>
+				<description>Defines a configuration for Matomo Analytics.</description>
+				<category>Others</category>
+				<icon>plugins/TagManager/images/MatomoIcon.png</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>0</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>matomoUrl</name>
+						<title>Matomo URL</title>
+						<value>//localhost/tests/PHPUnit/proxy/</value>
+						<defaultValue>//localhost/tests/PHPUnit/proxy/</defaultValue>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The URL of your Matomo instance. It should not include &quot;/index.php&quot; or &quot;piwik.php&quot;. The URL of your current Matomo URL instance is preconfigured.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>idSite</name>
+						<title>Matomo idSite</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>integer</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The idSite you want to track data into. The idSite of the current website is preconfigured. You may also find the idSite of any other website under &quot;Administration =&gt; Manage Measurables/Websites&quot;.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>enableLinkTracking</name>
+						<title>Enable Link Tracking</title>
+						<value>1</value>
+						<defaultValue>1</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enables the automatic download and outlink tracking.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>enableCrossDomainLinking</name>
+						<title>Enable Cross Domain Linking</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enable this to accurately measure the same visitor across multiple domain names.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>enableDoNotTrack</name>
+						<title>Enable Do Not Track</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>enableJSErrorTracking</name>
+						<title>Enable JavaScript Error Tracking</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enables the tracking of uncaught JavaScript errors as an event.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>enableHeartBeatTimer</name>
+						<title>Enable HeartBeat Timer</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Install a Heart beat timer that will regularly send requests to Matomo in order to better measure the time spent on the page.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>trackAllContentImpressions</name>
+						<title>Track All Content Impressions</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enables the content tracking feature by scanning the entire DOM for all content blocks and tracks all impressions once the page has loaded.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>trackVisibleContentImpressions</name>
+						<title>Track Visible Content Impressions</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enables the content tracking feature by scanning the entire DOM for all content blocks but only tracks content impressions once the user scrolls to the content and the content is actually visible.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>disableCookies</name>
+						<title>Disable cookies</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Disables all first party cookies.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>cookieDomain</name>
+						<title>Cookie Domain</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: &quot;.example.com&quot; or &quot;*.example.com&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>cookiePath</name>
+						<title>Cookie Path</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>When tracking many subdirectories in separate websites, the cookie path prevents the number of cookies to quickly increase and prevent browser from deleting some of the cookies. This ensures optimal data accuracy and improves performance for your users (fewer cookies are sent with each request).</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>userId</name>
+						<title>User ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Sets a User ID to this user (such as an email address or a username).</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>customDimensions</name>
+						<title>Custom Dimensions</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>index</key>
+								<title>Index</title>
+								<uiControl>text</uiControl>
+								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally set one or multiple custom dimensions.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+</result>

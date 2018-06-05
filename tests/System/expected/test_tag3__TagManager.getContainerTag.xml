@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idtag>3</idtag>
+	<idcontainerversion>1</idcontainerversion>
+	<idsite>2</idsite>
+	<type>CustomImage</type>
+	<name>My Tag 3</name>
+	<status>active</status>
+	<parameters>
+		<customImageSrc>/plugins/tracking.png</customImageSrc>
+		<cacheBusterEnabled>1</cacheBusterEnabled>
+	</parameters>
+	<fire_trigger_ids>
+		<row>2</row>
+		<row>3</row>
+	</fire_trigger_ids>
+	<block_trigger_ids>
+	</block_trigger_ids>
+	<fire_limit>unlimited</fire_limit>
+	<priority>999</priority>
+	<fire_delay>0</fire_delay>
+	<start_date />
+	<end_date />
+	
+	
+	
+	
+	<typeMetadata>
+		<id>CustomImage</id>
+		<name>Custom Image</name>
+		<description>Allows you to embed any image, for example a tracking pixel.</description>
+		<category>Custom</category>
+		<icon>plugins/TagManager/images/icons/image.svg</icon>
+		<help>This tag allows you to add for example a transparent tracking pixel into your website.</help>
+		<order>9999</order>
+		<contexts>
+			<row>web</row>
+		</contexts>
+		<hasAdvancedSettings>1</hasAdvancedSettings>
+		<parameters>
+			<row>
+				<name>customImageSrc</name>
+				<title>Image URL</title>
+				<value>/plugins/tracking.png</value>
+				<defaultValue />
+				<type>string</type>
+				<uiControl>text</uiControl>
+				<uiControlAttributes>
+				</uiControlAttributes>
+				<availableValues />
+				<description>You can define any image URL. We recommend to define a URL that starts with &quot;//&quot; so it will work on HTTP and HTTPS pages. If your website only supports HTTPS, it should start with &quot;https://&quot;.</description>
+				<inlineHelp />
+				<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+				<introduction />
+				<condition />
+			</row>
+			<row>
+				<name>cacheBusterEnabled</name>
+				<title>Enable Cache Buster</title>
+				<value>1</value>
+				<defaultValue>1</defaultValue>
+				<type>boolean</type>
+				<uiControl>checkbox</uiControl>
+				<uiControlAttributes>
+				</uiControlAttributes>
+				<availableValues />
+				<description>Makes sure the image will be fetched again every time it is added to the page by adding a URL parameter to the image URL with a random value, for example &quot;?mtmcb=12345&quot;..</description>
+				<inlineHelp />
+				<templateFile />
+				<introduction />
+				<condition />
+			</row>
+		</parameters>
+	</typeMetadata>
+</result>

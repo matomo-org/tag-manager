@@ -1,0 +1,18 @@
+<div class="fieldVariableTemplate">
+    <input
+            class="control_{{ formField.uiControl }}"
+            type="{{ formField.uiControl }}"
+            id="{{ formField.name }}"
+            name="{{ formField.name }}"
+            ng-model="formField.value"
+            ng-value="formField.value"
+            ng-trim="false"
+            placeholder=""
+            style="width: calc(100% - 40px);"
+            piwik-attributes="{{formField.uiControlAttributes}}"
+    >
+    <span class="icon-code"
+          title="{{ 'TagManager_ChooseVariable'|translate }}"
+          onclick="tagManagerHelper.selectVariable((function (ele) { return function (variable) { tagManagerHelper.insertTextSnippetAtElement(ele.previousElementSibling, '{' + '{' + variable.id + '}' + '}'); }  })(this))"></span>
+    <label for="{{ formField.name }}" ng-bind-html="formField.title"></label>
+</div>

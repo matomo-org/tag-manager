@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idcontainer>aaatest1</idcontainer>
+	<idsite>6</idsite>
+	<context>web</context>
+	<name>Default Container</name>
+	<description>This container was auto generated when the website was created.</description>
+	
+	
+	
+	
+	<revision>0</revision>
+	<version>
+		<name />
+		<description />
+		<revision>0</revision>
+		
+		
+		
+		
+	</version>
+	<tags>
+		<row>
+			<idtag>25</idtag>
+			<type>Matomo</type>
+			<name>Pageview</name>
+			<parameters>
+				<matomoConfig>{{Matomo Configuration}}</matomoConfig>
+				<trackingType>pageview</trackingType>
+				<idGoal />
+				<eventCategory />
+				<eventAction />
+				<eventName />
+				<eventValue />
+			</parameters>
+			<fire_trigger_ids>
+				<row>33</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+			</block_trigger_ids>
+			<fire_limit>unlimited</fire_limit>
+			<priority>999</priority>
+			<fire_delay>0</fire_delay>
+			<start_date />
+			<end_date />
+			
+			
+			
+			
+		</row>
+	</tags>
+	<triggers>
+		<row>
+			<idtrigger>33</idtrigger>
+			<type>PageView</type>
+			<name>Pageview</name>
+			<parameters>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+	</triggers>
+	<variables>
+		<row>
+			<idvariable>18</idvariable>
+			<type>MatomoConfiguration</type>
+			<name>Matomo Configuration</name>
+			<parameters>
+				<matomoUrl>//localhost/tests/PHPUnit/proxy/</matomoUrl>
+				<idSite>6</idSite>
+				<enableLinkTracking>1</enableLinkTracking>
+				<enableCrossDomainLinking>0</enableCrossDomainLinking>
+				<enableDoNotTrack>0</enableDoNotTrack>
+				<enableJSErrorTracking>0</enableJSErrorTracking>
+				<enableHeartBeatTimer>0</enableHeartBeatTimer>
+				<trackAllContentImpressions>0</trackAllContentImpressions>
+				<trackVisibleContentImpressions>0</trackVisibleContentImpressions>
+				<disableCookies>0</disableCookies>
+				<cookieDomain />
+				<cookiePath />
+				<userId />
+				<customDimensions>
+				</customDimensions>
+			</parameters>
+			<lookup_table>
+			</lookup_table>
+			<default_value />
+			
+			
+			
+			
+		</row>
+	</variables>
+</result>

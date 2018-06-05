@@ -1,0 +1,133 @@
+<div class="editVariable tagManagerManageEdit"
+     piwik-content-block
+     feature="Tag Manager"
+     content-title="{{ editVariable.editTitle }}">
+
+    <p ng-show="editVariable.model.isLoading">
+        <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
+    </p>
+
+    <p ng-show="editVariable.model.isUpdating">
+        <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'TagManager_UpdatingData'|translate }}</span>
+    </p>
+
+    <form ng-show="!editVariable.chooseVariableType && editVariable.editTitle" ng-submit="editVariable.edit ? editVariable.updateVariable() : editVariable.createVariable()">
+        <div>
+
+            <div piwik-field uicontrol="text" name="type"
+                 ng-model="editVariable.variable.typeMetadata.name"
+                 disabled="true"
+                 inline-help="{{ editVariable.variable.typeMetadata.description }} {{ editVariable.variable.typeMetadata.help }}"
+                 title="{{ 'TagManager_Type'|translate }}">
+            </div>
+
+            <div piwik-field uicontrol="text" name="name"
+                 ng-model="editVariable.variable.name"
+                 maxlength="50"
+                 ng-change="editVariable.setValueHasChanged()"
+                 title="{{ 'General_Name'|translate }}"
+                 inline-help="{{ 'TagManager_VariableNameHelp'|translate }}">
+            </div>
+
+            <div class="form-group row" ng-show="editVariable.variable.typeMetadata.parameters|length">
+                <div class="col s12"><h3>{{ 'TagManager_ConfigureThisVariable'|translate }}</h3></div>
+            </div>
+
+            <div ng-repeat="parameter in editVariable.variable.typeMetadata.parameters">
+                <div piwik-form-field="parameter" all-settings="editVariable.variable.typeMetadata.parameters"></div>
+            </div>
+
+            <div class="form-group row" ng-show="editVariable.variable.typeMetadata.hasAdvancedSettings">
+                <div class="col s12"><h3>
+                    <a href="javascript:;"
+                       class="showAdvancedSettings"
+                       ng-show="!editVariable.showAdvanced"
+                       ng-click="editVariable.showAdvanced = true">{{ 'TagManager_ShowAdvancedSettings'|translate }}</a>
+                    <a href="javascript:;"
+                       class="hideAdvancedSettings"
+                       ng-show="editVariable.showAdvanced"
+                       ng-click="editVariable.showAdvanced = false">{{ 'TagManager_HideAdvancedSettings'|translate }}</a>
+                </h3>
+                </div>
+            </div>
+            <div ng-show="editVariable.showAdvanced && editVariable.variable.typeMetadata.hasAdvancedSettings">
+
+                <div piwik-field uicontrol="text" name="default_value"
+                     class="innerFormField"
+                     title="{{ 'TagManager_DefaultValue'|translate }}"
+                     inline-help="{{ 'TagManager_DefaultValueHelp'|translate }}"
+                     ng-model="editVariable.variable.default_value"
+                     ng-change="editVariable.setValueHasChanged()">
+                </div>
+
+                <div class="form-group row">
+                    <div class="col s12 m12">
+                        <div>
+                            <label for="lookup_table">{{ 'TagManager_LookupTableTitle'|translate }}</label>
+
+                            <div ng-repeat="(index, lookup) in editVariable.variable.lookup_table"
+                                 class="lookupTable lookupTable{{ index }} multiple valign-wrapper">
+
+                                <div piwik-field uicontrol="select" name="lookup_table_comparison"
+                                     class="innerFormField comparisonField"
+                                     full-width="true"
+                                     ng-model="editVariable.variable.lookup_table[index].comparison"
+                                     ng-change="editVariable.setValueHasChanged()"
+                                     options="editVariable.availableLookUpComparisons">
+                                </div>
+
+                                <div piwik-field uicontrol="text" name="lookup_table_matchvalue"
+                                     class="innerFormField"
+                                     placeholder="{{ 'TagManager_LookupTableMatchValue'|translate }}"
+                                     full-width="true"
+                                     ng-model="editVariable.variable.lookup_table[index].match_value"
+                                     ng-change="editVariable.setValueHasChanged();editVariable.onLookupChange()">
+                                </div>
+
+                                <div piwik-field uicontrol="text" name="lookup_table_outvalue"
+                                     class="innerFormField"
+                                     placeholder="{{ 'TagManager_LookupTableOutValue'|translate }}"
+                                     full-width="true"
+                                     ng-model="editVariable.variable.lookup_table[index].out_value"
+                                     ng-change="editVariable.setValueHasChanged();editVariable.onLookupChange()">
+                                </div>
+
+                                <span ng-click="editVariable.removeLookUpEntry(index)"
+                                      title="{{ 'General_Remove'|translate }}"
+                                      ng-hide="(index + 1) == (editVariable.variable.lookup_table|length)"
+                                      class="icon-minus valign"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div piwik-save-button
+                 class="createButton"
+                 onconfirm="editVariable.edit ? editVariable.updateVariable() : editVariable.createVariable()"
+                 disabled="editVariable.model.isUpdating || !editVariable.isDirty"
+                 value="{{ editVariable.edit ? ('CoreUpdater_UpdateTitle'|translate) : ('TagManager_CreateNewVariable'|translate) }}"
+                 saving="editVariable.model.isUpdating">
+            </div>
+
+            <div class='entityCancel' ng-show="!editVariable.isEmbedded">
+                <a ng-click="editVariable.cancel()">{{ 'General_Cancel'|translate }}</a>
+            </div>
+        </div>
+    </form>
+
+    <div ng-show="editVariable.chooseVariableType" id="confirmSelectVariableType">
+        <ul class="collection with-header" ng-repeat="variableCategory in editVariable.availableVariables">
+            <li class="collection-header"><h4>{{ variableCategory.name }}</h4></li>
+            <li class="collection-item avatar templateType{{variableTemplate.id}}" ng-repeat="variableTemplate in variableCategory.types" ng-click="editVariable.createVariableType(variableTemplate)">
+                <img ng-if="variableTemplate.icon" ng-src="{{ variableTemplate.icon }}" alt="" class="circle">
+                <span class="title">{{ variableTemplate.name }}</span>
+                <p ng-show="variableTemplate.description">{{ variableTemplate.description }}</p>
+                <span class="secondary-content" ng-show="!!variableTemplate.help"><i class="icon-help" title="{{variableTemplate.help}}"></i></span>
+            </li>
+        </ul>
+
+        <div class='entityCancel' ng-show="!editVariable.isEmbedded" >
+            <a ng-click="editVariable.cancel()">{{ 'General_Cancel'|translate }}</a>
+        </div>
+    </div>
+</div>

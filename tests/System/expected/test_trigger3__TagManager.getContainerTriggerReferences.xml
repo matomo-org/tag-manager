@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<row>
+		<referenceId>3</referenceId>
+		<referenceType>tag</referenceType>
+		<referenceTypeName>Tag</referenceTypeName>
+		<referenceName>My Tag 3</referenceName>
+	</row>
+</result>

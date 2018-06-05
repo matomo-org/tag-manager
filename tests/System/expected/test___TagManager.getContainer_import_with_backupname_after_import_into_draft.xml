@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idcontainer>import01</idcontainer>
+	<idsite>5</idsite>
+	<context>web</context>
+	<name>My Name</name>
+	<description />
+	<status>active</status>
+	
+	
+	
+	
+	<versions>
+		<row>
+			<idcontainerversion>13</idcontainerversion>
+			<idcontainer>import01</idcontainer>
+			<idsite>5</idsite>
+			<status>active</status>
+			<revision>1</revision>
+			<name>v1imported</name>
+			<description />
+			
+			
+			
+			
+			<environments>
+			</environments>
+		</row>
+	</versions>
+	<releases>
+	</releases>
+	<draft>
+		<idcontainerversion>12</idcontainerversion>
+		<idcontainer>import01</idcontainer>
+		<idsite>5</idsite>
+		<status>active</status>
+		<revision>0</revision>
+		<name />
+		<description />
+		
+		
+		
+		
+	</draft>
+</result>

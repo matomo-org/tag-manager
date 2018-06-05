@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>&lt;!-- Matomo Tag Manager --&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var _mtm = _mtm || [];
+_mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+g.type='text/javascript'; g.async=true; g.defer=true; g.src='http://example.com/piwik/tests/PHPUnit/proxy/js/container_aaacont2.js'; s.parentNode.insertBefore(g,s);
+&lt;/script&gt;
+&lt;!-- End Matomo Tag Manager --&gt;</result>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idcontainerversion>1</idcontainerversion>
+	<idcontainer>aaacont1</idcontainer>
+	<idsite>2</idsite>
+	<status>active</status>
+	<revision>0</revision>
+	<name />
+	<description />
+	
+	
+	
+	
+	<releases>
+		<row>
+			<idcontainerrelease>4</idcontainerrelease>
+			<idcontainer>aaacont1</idcontainer>
+			<idcontainerversion>1</idcontainerversion>
+			<idsite>2</idsite>
+			<status>active</status>
+			<environment>preview</environment>
+			<release_login>superUserLogin</release_login>
+			
+			
+		</row>
+	</releases>
+</result>
