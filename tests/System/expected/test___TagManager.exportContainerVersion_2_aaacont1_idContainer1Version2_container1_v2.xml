@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idcontainer>aaacont1</idcontainer>
+	<idsite>2</idsite>
+	<context>web</context>
+	<name>Container1</name>
+	<description />
+	
+	
+	
+	
+	<revision>2</revision>
+	<version>
+		<name>container1_v2</name>
+		<description>Version from draft with tags and triggers</description>
+		<revision>2</revision>
+		
+		
+		
+		
+	</version>
+	<tags>
+		<row>
+			<idtag>4</idtag>
+			<type>CustomHtml</type>
+			<name>My Tag 2</name>
+			<parameters>
+				<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
+			</parameters>
+			<fire_trigger_ids>
+				<row>7</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+				<row>8</row>
+			</block_trigger_ids>
+			<fire_limit>once_lifetime</fire_limit>
+			<priority>343</priority>
+			<fire_delay>1350</fire_delay>
+			<start_date>2017-01-02 03:04:05</start_date>
+			<end_date>2029-01-02 03:04:05</end_date>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtag>5</idtag>
+			<type>CustomHtml</type>
+			<name>My Tag 1</name>
+			<parameters>
+				<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
+			</parameters>
+			<fire_trigger_ids>
+				<row>7</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+			</block_trigger_ids>
+			<fire_limit>unlimited</fire_limit>
+			<priority>999</priority>
+			<fire_delay>0</fire_delay>
+			<start_date />
+			<end_date />
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtag>6</idtag>
+			<type>CustomImage</type>
+			<name>My Tag 3</name>
+			<parameters>
+				<customImageSrc>/plugins/tracking.png</customImageSrc>
+				<cacheBusterEnabled>1</cacheBusterEnabled>
+			</parameters>
+			<fire_trigger_ids>
+				<row>8</row>
+				<row>9</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+			</block_trigger_ids>
+			<fire_limit>unlimited</fire_limit>
+			<priority>999</priority>
+			<fire_delay>0</fire_delay>
+			<start_date />
+			<end_date />
+			
+			
+			
+			
+		</row>
+	</tags>
+	<triggers>
+		<row>
+			<idtrigger>7</idtrigger>
+			<type>CustomEvent</type>
+			<name>My trigger1</name>
+			<parameters>
+				<eventName>foo</eventName>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtrigger>8</idtrigger>
+			<type>WindowLoaded</type>
+			<name>Mytrigger2</name>
+			<parameters>
+			</parameters>
+			<conditions>
+				<row>
+					<actual>ErrorUrl</actual>
+					<comparison>contains</comparison>
+					<expected>foo</expected>
+				</row>
+			</conditions>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtrigger>9</idtrigger>
+			<type>DomReady</type>
+			<name>Mytrigger3</name>
+			<parameters>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+	</triggers>
+	<variables>
+	</variables>
+</result>

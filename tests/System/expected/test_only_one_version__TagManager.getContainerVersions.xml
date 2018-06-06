@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<row>
+		<idcontainerversion>6</idcontainerversion>
+		<idcontainer>aaacont2</idcontainer>
+		<idsite>2</idsite>
+		<status>active</status>
+		<revision>1</revision>
+		<name>container2_v1</name>
+		<description>Version from draft without content</description>
+		
+		
+		
+		
+		<releases>
+		</releases>
+	</row>
+</result>

@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<row>
+		<name>Clicks</name>
+		<types>
+			<row>
+				<id>ClickClasses</id>
+				<idvariable />
+				<type>ClickClasses</type>
+				<name>Click Classes</name>
+				<category>Clicks</category>
+				<description>The value of all CSS class names of an element when a click trigger was triggered.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ClickDestinationUrl</id>
+				<idvariable />
+				<type>ClickDestinationUrl</type>
+				<name>Click Destination URL</name>
+				<category>Clicks</category>
+				<description>The value of the link URL (href) of an element when a click trigger was triggered.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ClickId</id>
+				<idvariable />
+				<type>ClickId</type>
+				<name>Click ID</name>
+				<category>Clicks</category>
+				<description>The value of the ID attribute of an element when a click trigger was triggered.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ClickNodeName</id>
+				<idvariable />
+				<type>ClickNodeName</type>
+				<name>Click Node Name</name>
+				<category>Clicks</category>
+				<description>The name of an element when a click trigger was triggered. For example &quot;P&quot; or &quot;DIV&quot;</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ClickText</id>
+				<idvariable />
+				<type>ClickText</type>
+				<name>Click Text</name>
+				<category>Clicks</category>
+				<description>The value of the text content of an element when a click trigger was triggered.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Container Info</name>
+		<types>
+			<row>
+				<id>ContainerId</id>
+				<idvariable />
+				<type>ContainerId</type>
+				<name>Container ID</name>
+				<category>Container Info</category>
+				<description>Returns the ID of this container, for example &quot;ab2Dk432&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ContainerRevision</id>
+				<idvariable />
+				<type>ContainerRevision</type>
+				<name>Container Revision</name>
+				<category>Container Info</category>
+				<description>Returns the revision of this container, for example &quot;5&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ContainerVersion</id>
+				<idvariable />
+				<type>ContainerVersion</type>
+				<name>Container Version Name</name>
+				<category>Container Info</category>
+				<description>Returns the version of this container.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>Environment</id>
+				<idvariable />
+				<type>Environment</type>
+				<name>Environment Name</name>
+				<category>Container Info</category>
+				<description>Returns the current environment.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>PreviewMode</id>
+				<idvariable />
+				<type>PreviewMode</type>
+				<name>Preview Mode</name>
+				<category>Container Info</category>
+				<description>Returns either &quot;1&quot; or &quot;0&quot; depending on whether the preview mode is currently enabled.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Date</name>
+		<types>
+			<row>
+				<id>IsoDate</id>
+				<idvariable />
+				<type>IsoDate</type>
+				<name>ISO Date</name>
+				<category>Date</category>
+				<description>The current date and time in ISO format, for example &quot;2018-03-19T14:00:00.587Z&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>LocalDate</id>
+				<idvariable />
+				<type>LocalDate</type>
+				<name>Local Date</name>
+				<category>Date</category>
+				<description>The current user's local date, for example &quot;Mon Mar 19 2018&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>LocalHour</id>
+				<idvariable />
+				<type>LocalHour</type>
+				<name>Local Hour</name>
+				<category>Date</category>
+				<description>The current hour of the local time, for example &quot;8&quot; or &quot;11&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>LocalTime</id>
+				<idvariable />
+				<type>LocalTime</type>
+				<name>Local Time</name>
+				<category>Date</category>
+				<description>The current user's local time, for example &quot;14:00:00 GMT+1300 (NZDT)&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>UtcDate</id>
+				<idvariable />
+				<type>UtcDate</type>
+				<name>UTC Date</name>
+				<category>Date</category>
+				<description>The current data in UTC, for example &quot;Mon, 19 Mar 2018 14:00:00 GMT&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>Weekday</id>
+				<idvariable />
+				<type>Weekday</type>
+				<name>Weekday</name>
+				<category>Date</category>
+				<description>Returns the local day of the week eg monday, tuesday, wednesday, ...</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Device</name>
+		<types>
+			<row>
+				<id>BrowserLanguage</id>
+				<idvariable />
+				<type>BrowserLanguage</type>
+				<name>Browser Language</name>
+				<category>Device</category>
+				<description>Gets the preferred language of the user which is usually the language of the browser UI. For example &quot;en&quot; or &quot;en-US&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ScreenHeight</id>
+				<idvariable />
+				<type>ScreenHeight</type>
+				<name>Screen Height</name>
+				<category>Device</category>
+				<description>The full screen height of the current device.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ScreenHeightAvailable</id>
+				<idvariable />
+				<type>ScreenHeightAvailable</type>
+				<name>Screen Height Available</name>
+				<category>Device</category>
+				<description>The screen height that is available within the browser window (viewport).</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ScreenWidth</id>
+				<idvariable />
+				<type>ScreenWidth</type>
+				<name>Screen Width</name>
+				<category>Device</category>
+				<description>The full screen width of the current device.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ScreenWidthAvailable</id>
+				<idvariable />
+				<type>ScreenWidthAvailable</type>
+				<name>Screen Width Available</name>
+				<category>Device</category>
+				<description>The screen width that is available within the browser window (viewport).</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>UserAgent</id>
+				<idvariable />
+				<type>UserAgent</type>
+				<name>User Agent</name>
+				<category>Device</category>
+				<description>Gets the value of the user agent which includes the operating system and browser information about the current visitors' device.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Errors</name>
+		<types>
+			<row>
+				<id>ErrorLine</id>
+				<idvariable />
+				<type>ErrorLine</type>
+				<name>Error Line</name>
+				<category>Errors</category>
+				<description>Returns the line of an error, when an error was triggered previously.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ErrorMessage</id>
+				<idvariable />
+				<type>ErrorMessage</type>
+				<name>Error Message</name>
+				<category>Errors</category>
+				<description>Returns the message of an error, when an error was triggered previously.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ErrorUrl</id>
+				<idvariable />
+				<type>ErrorUrl</type>
+				<name>Error Url</name>
+				<category>Errors</category>
+				<description>Returns the url of an error, when an error was triggered previously.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Forms</name>
+		<types>
+			<row>
+				<id>FormClasses</id>
+				<idvariable />
+				<type>FormClasses</type>
+				<name>Form Classes</name>
+				<category>Forms</category>
+				<description>The value of all CSS class names of a submitted form.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>FormDestionation</id>
+				<idvariable />
+				<type>FormDestionation</type>
+				<name>Form Destination URL</name>
+				<category>Forms</category>
+				<description>The value of the form action URL of a submitted form.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>FormId</id>
+				<idvariable />
+				<type>FormId</type>
+				<name>Form ID</name>
+				<category>Forms</category>
+				<description>The value of the ID attribute of a submitted form.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>FormName</id>
+				<idvariable />
+				<type>FormName</type>
+				<name>Form Name</name>
+				<category>Forms</category>
+				<description>The value of the name attribute of a submitted form.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>History</name>
+		<types>
+			<row>
+				<id>HistoryHashNew</id>
+				<idvariable />
+				<type>HistoryHashNew</type>
+				<name>History New Hash</name>
+				<category>History</category>
+				<description />
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>HistoryHashNewPath</id>
+				<idvariable />
+				<type>HistoryHashNewPath</type>
+				<name>History New Path</name>
+				<category>History</category>
+				<description />
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>HistoryHashNewSearch</id>
+				<idvariable />
+				<type>HistoryHashNewSearch</type>
+				<name>History New Search</name>
+				<category>History</category>
+				<description />
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>HistoryHashNewUrl</id>
+				<idvariable />
+				<type>HistoryHashNewUrl</type>
+				<name>History New URL</name>
+				<category>History</category>
+				<description />
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>HistoryHashOld</id>
+				<idvariable />
+				<type>HistoryHashOld</type>
+				<name>History Old Hash</name>
+				<category>History</category>
+				<description />
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>HistoryHashOldPath</id>
+				<idvariable />
+				<type>HistoryHashOldPath</type>
+				<name>History Old Path</name>
+				<category>History</category>
+				<description />
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>HistoryHashOldSearch</id>
+				<idvariable />
+				<type>HistoryHashOldSearch</type>
+				<name>History Old Search</name>
+				<category>History</category>
+				<description />
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>HistoryHashOldUrl</id>
+				<idvariable />
+				<type>HistoryHashOldUrl</type>
+				<name>History Old URL</name>
+				<category>History</category>
+				<description />
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>HistorySource</id>
+				<idvariable />
+				<type>HistorySource</type>
+				<name>History Source</name>
+				<category>History</category>
+				<description>For example &quot;popstate&quot;, &quot;historychange&quot;, &quot;pushState&quot;, or &quot;replaceState&quot;</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Page Variables</name>
+		<types>
+			<row>
+				<id>FirstDirectory</id>
+				<idvariable />
+				<type>FirstDirectory</type>
+				<name>First URL Directory</name>
+				<category>Page Variables</category>
+				<description>Returns the first directory of the current page URL.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>PageHash</id>
+				<idvariable />
+				<type>PageHash</type>
+				<name>Page Hash</name>
+				<category>Page Variables</category>
+				<description>Returns the hash part of the current URL without the leading hash.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>PageHostname</id>
+				<idvariable />
+				<type>PageHostname</type>
+				<name>Page Hostname</name>
+				<category>Page Variables</category>
+				<description>Returns the hostname of the current URL.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>PageOrigin</id>
+				<idvariable />
+				<type>PageOrigin</type>
+				<name>Page Origin</name>
+				<category>Page Variables</category>
+				<description>Returns a domain of the current URL with protocol.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>PagePath</id>
+				<idvariable />
+				<type>PagePath</type>
+				<name>Page Path</name>
+				<category>Page Variables</category>
+				<description>Returns the path of the current page URL</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>PageTitle</id>
+				<idvariable />
+				<type>PageTitle</type>
+				<name>Page Title</name>
+				<category>Page Variables</category>
+				<description>Returns the title of the current page.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>PageUrl</id>
+				<idvariable />
+				<type>PageUrl</type>
+				<name>Page URL</name>
+				<category>Page Variables</category>
+				<description>Returns the full URL of a page</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>Referrer</id>
+				<idvariable />
+				<type>Referrer</type>
+				<name>Referrer URL</name>
+				<category>Page Variables</category>
+				<description>Returns the full URL of the referrer.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Performance</name>
+		<types>
+			<row>
+				<id>DnsLookupTime</id>
+				<idvariable />
+				<type>DnsLookupTime</type>
+				<name>DNS Lookup Time</name>
+				<category>Performance</category>
+				<description>The time it took to look up the DNS in milliseconds.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>PageLoadTimeTotal</id>
+				<idvariable />
+				<type>PageLoadTimeTotal</type>
+				<name>Page Load Time Total</name>
+				<category>Performance</category>
+				<description>The total amount of time it took to load the page.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>PageRenderTime</id>
+				<idvariable />
+				<type>PageRenderTime</type>
+				<name>Page Render Time</name>
+				<category>Performance</category>
+				<description>The time it took to render the page in the browser in milliseconds.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>SEO</name>
+		<types>
+			<row>
+				<id>SeoCanonicalUrl</id>
+				<idvariable />
+				<type>SeoCanonicalUrl</type>
+				<name>Canonical URL</name>
+				<category>SEO</category>
+				<description>Returns the canonical URL if any is set.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>SeoNumH1</id>
+				<idvariable />
+				<type>SeoNumH1</type>
+				<name>Number of H1 Elements</name>
+				<category>SEO</category>
+				<description>The number of H1 elements that are present on the current page. Useful for example for SEO Monitoring.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>SeoNumH2</id>
+				<idvariable />
+				<type>SeoNumH2</type>
+				<name>Number of H2 Elements</name>
+				<category>SEO</category>
+				<description>The number of H2 elements that are present on the current page. Useful for example for SEO Monitoring.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Scrolls</name>
+		<types>
+			<row>
+				<id>ScrollHorizontalPercentage</id>
+				<idvariable />
+				<type>ScrollHorizontalPercentage</type>
+				<name>Scroll Horizontal Percentage</name>
+				<category>Scrolls</category>
+				<description>How far the user has currently scrolled horizontally, for example &quot;75.59&quot; for &quot;75.59%&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ScrollLeftPixel</id>
+				<idvariable />
+				<type>ScrollLeftPixel</type>
+				<name>Scroll Left Pixel</name>
+				<category>Scrolls</category>
+				<description>How far the user has currently scrolled horizontally in pixels, for example &quot;592&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ScrollSource</id>
+				<idvariable />
+				<type>ScrollSource</type>
+				<name>Scroll Source</name>
+				<category>Scrolls</category>
+				<description>Whether the scroll position was originated from a user scroll or a browser resize. Value is either &quot;scroll&quot; or &quot;resize&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ScrollTopPixel</id>
+				<idvariable />
+				<type>ScrollTopPixel</type>
+				<name>Scroll Top Pixel</name>
+				<category>Scrolls</category>
+				<description>How far the user has currently scrolled vertically in pixels, for example &quot;592&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>ScrollVerticalPercentage</id>
+				<idvariable />
+				<type>ScrollVerticalPercentage</type>
+				<name>Scroll Vertical Percentage</name>
+				<category>Scrolls</category>
+				<description>How far the user has currently scrolled vertically, for example &quot;75.59&quot; for &quot;75.59%&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Utilities</name>
+		<types>
+			<row>
+				<id>RandomNumber</id>
+				<idvariable />
+				<type>RandomNumber</type>
+				<name>Random Number</name>
+				<category>Utilities</category>
+				<description>Returns a random number each time the value of the variable is retrieved.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Visibility</name>
+		<types>
+			<row>
+				<id>VisibleElementClasses</id>
+				<idvariable />
+				<type>VisibleElementClasses</type>
+				<name>Visible Element Classes</name>
+				<category>Visibility</category>
+				<description>The value of all CSS class names of an element that was matched when the visible element trigger was triggered.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>VisibleElementUrl</id>
+				<idvariable />
+				<type>VisibleElementUrl</type>
+				<name>Visible Element Destination URL</name>
+				<category>Visibility</category>
+				<description>The value of the link URL (href) of an element that was matched when the visible element trigger was triggered.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>VisibleElementId</id>
+				<idvariable />
+				<type>VisibleElementId</type>
+				<name>Visible Element ID</name>
+				<category>Visibility</category>
+				<description>The value of the ID attribute of an element that was matched when the visible element trigger was triggered.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>VisibleElementNodeName</id>
+				<idvariable />
+				<type>VisibleElementNodeName</type>
+				<name>Visible Element Node Name</name>
+				<category>Visibility</category>
+				<description>The value of element name that was matched when the visible element trigger was triggered. For example &quot;P&quot; or &quot;DIV&quot;.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
+				<id>VisibleElementText</id>
+				<idvariable />
+				<type>VisibleElementText</type>
+				<name>Visible Element Text</name>
+				<category>Visibility</category>
+				<description>The value of the text content of an element that was matched when the visible element trigger was triggered.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+		</types>
+	</row>
+</result>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<row>
+		<idcontainer>aaacont1</idcontainer>
+		<idsite>2</idsite>
+		<context>web</context>
+		<name>Container1</name>
+		<description />
+		<status>active</status>
+		
+		
+		
+		<releases>
+			<row>
+				<idcontainerrelease>1</idcontainerrelease>
+				<idcontainer>aaacont1</idcontainer>
+				<idcontainerversion>10</idcontainerversion>
+				<idsite>2</idsite>
+				<status>active</status>
+				<environment>live</environment>
+				<release_login>superUserLogin</release_login>
+				
+				
+			</row>
+			<row>
+				<idcontainerrelease>2</idcontainerrelease>
+				<idcontainer>aaacont1</idcontainer>
+				<idcontainerversion>10</idcontainerversion>
+				<idsite>2</idsite>
+				<status>active</status>
+				<environment>dev</environment>
+				<release_login>superUserLogin</release_login>
+				
+				
+			</row>
+			<row>
+				<idcontainerrelease>3</idcontainerrelease>
+				<idcontainer>aaacont1</idcontainer>
+				<idcontainerversion>11</idcontainerversion>
+				<idsite>2</idsite>
+				<status>active</status>
+				<environment>staging</environment>
+				<release_login>superUserLogin</release_login>
+				
+				
+			</row>
+			<row>
+				<idcontainerrelease>4</idcontainerrelease>
+				<idcontainer>aaacont1</idcontainer>
+				<idcontainerversion>1</idcontainerversion>
+				<idsite>2</idsite>
+				<status>active</status>
+				<environment>preview</environment>
+				<release_login>superUserLogin</release_login>
+				
+				
+			</row>
+		</releases>
+		<versions>
+			<row>
+				<idcontainerversion>11</idcontainerversion>
+				<idcontainer>aaacont1</idcontainer>
+				<idsite>2</idsite>
+				<status>active</status>
+				<revision>5</revision>
+				<name>container1_v5</name>
+				<description>Version with linked variables</description>
+				
+				
+				
+			</row>
+			<row>
+				<idcontainerversion>10</idcontainerversion>
+				<idcontainer>aaacont1</idcontainer>
+				<idsite>2</idsite>
+				<status>active</status>
+				<revision>4</revision>
+				<name>container1_v4_reversioned</name>
+				<description>new version from an older version</description>
+				
+				
+				
+			</row>
+			<row>
+				<idcontainerversion>9</idcontainerversion>
+				<idcontainer>aaacont1</idcontainer>
+				<idsite>2</idsite>
+				<status>active</status>
+				<revision>3</revision>
+				<name>container1_v3</name>
+				<description>Version from draft with tags, triggers and variables</description>
+				
+				
+				
+			</row>
+			<row>
+				<idcontainerversion>8</idcontainerversion>
+				<idcontainer>aaacont1</idcontainer>
+				<idsite>2</idsite>
+				<status>active</status>
+				<revision>2</revision>
+				<name>container1_v2</name>
+				<description>Version from draft with tags and triggers</description>
+				
+				
+				
+			</row>
+			<row>
+				<idcontainerversion>7</idcontainerversion>
+				<idcontainer>aaacont1</idcontainer>
+				<idsite>2</idsite>
+				<status>active</status>
+				<revision>1</revision>
+				<name>container1_v1</name>
+				<description>Version from draft with only triggers</description>
+				
+				
+				
+			</row>
+		</versions>
+		<draft>
+			<idcontainerversion>1</idcontainerversion>
+			<idcontainer>aaacont1</idcontainer>
+			<idsite>2</idsite>
+			<status>active</status>
+			<revision>0</revision>
+			<name />
+			<description />
+			
+			
+			
+		</draft>
+	</row>
+	<row>
+		<idcontainer>aaacont2</idcontainer>
+		<idsite>2</idsite>
+		<context>web</context>
+		<name>Container2</name>
+		<description>My container 2 description</description>
+		<status>active</status>
+		
+		
+		
+		<releases>
+		</releases>
+		<versions>
+			<row>
+				<idcontainerversion>6</idcontainerversion>
+				<idcontainer>aaacont2</idcontainer>
+				<idsite>2</idsite>
+				<status>active</status>
+				<revision>1</revision>
+				<name>container2_v1</name>
+				<description>Version from draft without content</description>
+				
+				
+				
+			</row>
+		</versions>
+		<draft>
+			<idcontainerversion>2</idcontainerversion>
+			<idcontainer>aaacont2</idcontainer>
+			<idsite>2</idsite>
+			<status>active</status>
+			<revision>0</revision>
+			<name />
+			<description />
+			
+			
+			
+		</draft>
+	</row>
+	<row>
+		<idcontainer>aaacont3</idcontainer>
+		<idsite>2</idsite>
+		<context>web</context>
+		<name>Container3</name>
+		<description>My container 3 description</description>
+		<status>active</status>
+		
+		
+		
+		<releases>
+		</releases>
+		<versions>
+		</versions>
+		<draft>
+			<idcontainerversion>3</idcontainerversion>
+			<idcontainer>aaacont3</idcontainer>
+			<idsite>2</idsite>
+			<status>active</status>
+			<revision>0</revision>
+			<name />
+			<description />
+			
+			
+			
+		</draft>
+	</row>
+</result>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idcontainer>aaacont2</idcontainer>
+	<idsite>2</idsite>
+	<context>web</context>
+	<name>Container2</name>
+	<description>My container 2 description</description>
+	<status>active</status>
+	
+	
+	
+	
+	<versions>
+		<row>
+			<idcontainerversion>6</idcontainerversion>
+			<idcontainer>aaacont2</idcontainer>
+			<idsite>2</idsite>
+			<status>active</status>
+			<revision>1</revision>
+			<name>container2_v1</name>
+			<description>Version from draft without content</description>
+			
+			
+			
+			
+			<environments>
+			</environments>
+		</row>
+	</versions>
+	<releases>
+	</releases>
+	<draft>
+		<idcontainerversion>2</idcontainerversion>
+		<idcontainer>aaacont2</idcontainer>
+		<idsite>2</idsite>
+		<status>active</status>
+		<revision>0</revision>
+		<name />
+		<description />
+		
+		
+		
+		
+	</draft>
+</result>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idtag>2</idtag>
+	<idcontainerversion>1</idcontainerversion>
+	<idsite>2</idsite>
+	<type>CustomHtml</type>
+	<name>My Tag 2</name>
+	<status>active</status>
+	<parameters>
+		<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
+	</parameters>
+	<fire_trigger_ids>
+		<row>1</row>
+	</fire_trigger_ids>
+	<block_trigger_ids>
+		<row>2</row>
+	</block_trigger_ids>
+	<fire_limit>once_lifetime</fire_limit>
+	<priority>343</priority>
+	<fire_delay>1350</fire_delay>
+	<start_date>2017-01-02 03:04:05</start_date>
+	<end_date>2029-01-02 03:04:05</end_date>
+	
+	
+	
+	
+	<typeMetadata>
+		<id>CustomHtml</id>
+		<name>Custom HTML</name>
+		<description>Allows you to embed any custom HTML, for example JavaScript or CSS Styles.</description>
+		<category>Custom</category>
+		<icon>plugins/TagManager/images/icons/code.svg</icon>
+		<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.</help>
+		<order>9999</order>
+		<contexts>
+			<row>web</row>
+		</contexts>
+		<hasAdvancedSettings>1</hasAdvancedSettings>
+		<parameters>
+			<row>
+				<name>customHtml</name>
+				<title>Custom HTML</title>
+				<value>&lt;script&gt;&lt;/script&gt;</value>
+				<defaultValue />
+				<type>string</type>
+				<uiControl>textarea</uiControl>
+				<uiControlAttributes>
+				</uiControlAttributes>
+				<availableValues />
+				<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
+				<inlineHelp />
+				<templateFile>plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html</templateFile>
+				<introduction />
+				<condition />
+			</row>
+		</parameters>
+	</typeMetadata>
+</result>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<row>
+		<referenceId>16</referenceId>
+		<referenceType>trigger</referenceType>
+		<referenceTypeName>Trigger</referenceTypeName>
+		<referenceName>My trigger4</referenceName>
+	</row>
+</result>

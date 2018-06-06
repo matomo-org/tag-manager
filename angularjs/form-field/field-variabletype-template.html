@@ -1,0 +1,11 @@
+<div>
+    <span piwik-variable-select-type
+          variable="formField.value"
+          id="{{ formField.name }}"
+          name="{{ formField.name }}"
+          variable-type-name="{{ formField.title }}"
+          variable-type="{{formField.uiControlAttributes.variableType}}">
+    </span>
+
+    <label for="{{ formField.name }}" style="font-size: 0.8rem;" ng-bind-html="formField.title"></label>
+</div>

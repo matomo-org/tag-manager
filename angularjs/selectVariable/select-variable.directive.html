@@ -1,0 +1,33 @@
+<div class="tagManagerManageSelect tagManagerVariableSelect">
+
+    <div piwik-activity-indicator loading="variableSelect.isLoading"></div>
+
+    <div class="tableActionBar">
+        <a class="createNewVariable" ng-click="variableSelect.createVariable()"
+           ng-show="!variableSelect.isLoading"
+        ><span class="icon-add"></span> {{ 'TagManager_CreateNewX'|translate:('TagManager_Variable'|translate) }}</a>
+    </div>
+    <ul class="collection with-header">
+        <li class="collection-header"><h4>{{ 'TagManager_CustomVariables'|translate }}</h4></li>
+        <li class="collection-item" ng-repeat="variable in variableSelect.containerVariables" ng-click="variableSelect.selectVariable(variable)">
+            <span class="title">{{ variable.name }} (Type: {{ variable.type }})</span>
+            <span class="secondary-content"><i class="icon-edit" title="{{ 'General_Edit'|translate }}" ng-click="$event.stopPropagation();variableSelect.editVariable(variable)"></i></span>
+        </li>
+    </ul>
+
+    <h2>{{ 'TagManager_PreconfiguredVariables'|translate }}</h2>
+    <ul class="collection with-header" ng-repeat="variableCategory in variableSelect.preconfiguredVariables">
+        <li class="collection-header"><h4>{{ variableCategory.name }}</h4></li>
+        <li class="collection-item" ng-repeat="variableTemplate in variableCategory.types" ng-click="variableSelect.selectVariable(variableTemplate)"
+            ng-show="variableTemplate.is_pre_configured">
+            <span class="title">{{ variableTemplate.name }}</span>
+            <span class="secondary-content" ng-show="!!variableTemplate.description"><i class="icon-help" title="{{variableTemplate.description}}"></i></span>
+        </li>
+    </ul>
+
+    <div class="tableActionBar">
+        <a class="createNewVariable" ng-click="variableSelect.createVariable()"
+           ng-show="!variableSelect.isLoading"
+        ><span class="icon-add"></span> {{ 'TagManager_CreateNewX'|translate:('TagManager_Variable'|translate) }}</a>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<row>
+		<idcontainerversion>11</idcontainerversion>
+		<idcontainer>aaacont1</idcontainer>
+		<idsite>2</idsite>
+		<status>active</status>
+		<revision>5</revision>
+		<name>container1_v5</name>
+		<description>Version with linked variables</description>
+		
+		
+		
+		
+		<releases>
+			<row>
+				<idcontainerrelease>3</idcontainerrelease>
+				<idcontainer>aaacont1</idcontainer>
+				<idcontainerversion>11</idcontainerversion>
+				<idsite>2</idsite>
+				<status>active</status>
+				<environment>staging</environment>
+				<release_login>superUserLogin</release_login>
+				
+				
+			</row>
+		</releases>
+	</row>
+	<row>
+		<idcontainerversion>10</idcontainerversion>
+		<idcontainer>aaacont1</idcontainer>
+		<idsite>2</idsite>
+		<status>active</status>
+		<revision>4</revision>
+		<name>container1_v4_reversioned</name>
+		<description>new version from an older version</description>
+		
+		
+		
+		
+		<releases>
+			<row>
+				<idcontainerrelease>1</idcontainerrelease>
+				<idcontainer>aaacont1</idcontainer>
+				<idcontainerversion>10</idcontainerversion>
+				<idsite>2</idsite>
+				<status>active</status>
+				<environment>live</environment>
+				<release_login>superUserLogin</release_login>
+				
+				
+			</row>
+			<row>
+				<idcontainerrelease>2</idcontainerrelease>
+				<idcontainer>aaacont1</idcontainer>
+				<idcontainerversion>10</idcontainerversion>
+				<idsite>2</idsite>
+				<status>active</status>
+				<environment>dev</environment>
+				<release_login>superUserLogin</release_login>
+				
+				
+			</row>
+		</releases>
+	</row>
+	<row>
+		<idcontainerversion>9</idcontainerversion>
+		<idcontainer>aaacont1</idcontainer>
+		<idsite>2</idsite>
+		<status>active</status>
+		<revision>3</revision>
+		<name>container1_v3</name>
+		<description>Version from draft with tags, triggers and variables</description>
+		
+		
+		
+		
+		<releases>
+		</releases>
+	</row>
+	<row>
+		<idcontainerversion>8</idcontainerversion>
+		<idcontainer>aaacont1</idcontainer>
+		<idsite>2</idsite>
+		<status>active</status>
+		<revision>2</revision>
+		<name>container1_v2</name>
+		<description>Version from draft with tags and triggers</description>
+		
+		
+		
+		
+		<releases>
+		</releases>
+	</row>
+	<row>
+		<idcontainerversion>7</idcontainerversion>
+		<idcontainer>aaacont1</idcontainer>
+		<idsite>2</idsite>
+		<status>active</status>
+		<revision>1</revision>
+		<name>container1_v1</name>
+		<description>Version from draft with only triggers</description>
+		
+		
+		
+		
+		<releases>
+		</releases>
+	</row>
+</result>

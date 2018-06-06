@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idvariable>1</idvariable>
+	<idcontainerversion>1</idcontainerversion>
+	<idsite>2</idsite>
+	<type>DataLayer</type>
+	<name>My Var 1</name>
+	<status>active</status>
+	<parameters>
+		<dataLayerName>fooBarName</dataLayerName>
+	</parameters>
+	<lookup_table>
+		<row>
+			<match_value>foo</match_value>
+			<comparison>equals</comparison>
+			<out_value>bar</out_value>
+		</row>
+	</lookup_table>
+	<default_value>10</default_value>
+	
+	
+	
+	
+	<typeMetadata>
+		<id>DataLayer</id>
+		<name>Data-Layer</name>
+		<description>Reads a custom value from the Data-Layer.</description>
+		<category>Page Variables</category>
+		<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+		<help>Using this variable you can access any value that is stored within the dataLayer. You can also push values to the dataLayer yourself and access them this way afterwards.</help>
+		<order>9999</order>
+		<contexts>
+			<row>web</row>
+		</contexts>
+		<hasAdvancedSettings>1</hasAdvancedSettings>
+		<parameters>
+			<row>
+				<name>dataLayerName</name>
+				<title>Data Layer Variable Name</title>
+				<value>fooBarName</value>
+				<defaultValue />
+				<type>string</type>
+				<uiControl>text</uiControl>
+				<uiControlAttributes>
+				</uiControlAttributes>
+				<availableValues />
+				<description>The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example &quot;object1.myPropertyOfObject1&quot;.</description>
+				<inlineHelp />
+				<templateFile />
+				<introduction />
+				<condition />
+			</row>
+		</parameters>
+	</typeMetadata>
+</result>

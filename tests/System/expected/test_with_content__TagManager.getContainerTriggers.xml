@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<row>
+		<idtrigger>1</idtrigger>
+		<idcontainerversion>1</idcontainerversion>
+		<idsite>2</idsite>
+		<type>CustomEvent</type>
+		<name>My trigger1</name>
+		<status>active</status>
+		<parameters>
+			<eventName>foo</eventName>
+		</parameters>
+		<conditions>
+		</conditions>
+		
+		
+		
+		
+		<typeMetadata>
+			<id>CustomEvent</id>
+			<name>Custom Event</name>
+			<description>Triggered when a custom event is pushed to the Data-Layer.</description>
+			<category>Others</category>
+			<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+			<help>Allows developers to define manually when this trigger should be triggered by pushing an event to the Data-Layer. This way you can for example execute certain actions when a product is added to the cart, or when a user logs in.</help>
+			<order>9999</order>
+			<contexts>
+				<row>web</row>
+			</contexts>
+			<hasAdvancedSettings>1</hasAdvancedSettings>
+			<parameters>
+				<row>
+					<name>eventName</name>
+					<title>Event Name</title>
+					<value>foo</value>
+					<defaultValue />
+					<type>string</type>
+					<uiControl>text</uiControl>
+					<uiControlAttributes>
+					</uiControlAttributes>
+					<availableValues />
+					<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
+					<inlineHelp />
+					<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+					<introduction />
+					<condition />
+				</row>
+			</parameters>
+		</typeMetadata>
+	</row>
+	<row>
+		<idtrigger>2</idtrigger>
+		<idcontainerversion>1</idcontainerversion>
+		<idsite>2</idsite>
+		<type>WindowLoaded</type>
+		<name>Mytrigger2</name>
+		<status>active</status>
+		<parameters>
+		</parameters>
+		<conditions>
+			<row>
+				<actual>ErrorUrl</actual>
+				<comparison>contains</comparison>
+				<expected>foo</expected>
+			</row>
+		</conditions>
+		
+		
+		
+		
+		<typeMetadata>
+			<id>WindowLoaded</id>
+			<name>Window Loaded</name>
+			<description>Triggered when the page is fully loaded including all images etc.</description>
+			<category>Pageview</category>
+			<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+			<help>This stage of loading a web page, is when the page is fully loaded according to the browser. In most cases this means that also all images are loaded, and all styles are applied etc. This trigger is always triggered at some point after the &quot;DOM Ready&quot;.</help>
+			<order>9999</order>
+			<contexts>
+				<row>web</row>
+			</contexts>
+			<hasAdvancedSettings>1</hasAdvancedSettings>
+			<parameters>
+			</parameters>
+		</typeMetadata>
+	</row>
+	<row>
+		<idtrigger>3</idtrigger>
+		<idcontainerversion>1</idcontainerversion>
+		<idsite>2</idsite>
+		<type>DomReady</type>
+		<name>Mytrigger3</name>
+		<status>active</status>
+		<parameters>
+		</parameters>
+		<conditions>
+		</conditions>
+		
+		
+		
+		
+		<typeMetadata>
+			<id>DomReady</id>
+			<name>DOM Ready</name>
+			<description>Triggered as soon as all the HTML has been received and parsed.</description>
+			<category>Pageview</category>
+			<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+			<help>At this stage of loading a web page only the HTML is loaded but not yet all images, StyleSheets, and JavaScript files. If you want to make sure the website is fully loaded, please consider the &quot;Window Loaded&quot; trigger.</help>
+			<order>9999</order>
+			<contexts>
+				<row>web</row>
+			</contexts>
+			<hasAdvancedSettings>1</hasAdvancedSettings>
+			<parameters>
+			</parameters>
+		</typeMetadata>
+	</row>
+	<row>
+		<idtrigger>16</idtrigger>
+		<idcontainerversion>1</idcontainerversion>
+		<idsite>2</idsite>
+		<type>CustomEvent</type>
+		<name>My trigger4</name>
+		<status>active</status>
+		<parameters>
+			<eventName>foo{{My Var 3}}bar{{My Var 2}}baz{{PageUrl}}yeah</eventName>
+		</parameters>
+		<conditions>
+		</conditions>
+		
+		
+		
+		
+		<typeMetadata>
+			<id>CustomEvent</id>
+			<name>Custom Event</name>
+			<description>Triggered when a custom event is pushed to the Data-Layer.</description>
+			<category>Others</category>
+			<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+			<help>Allows developers to define manually when this trigger should be triggered by pushing an event to the Data-Layer. This way you can for example execute certain actions when a product is added to the cart, or when a user logs in.</help>
+			<order>9999</order>
+			<contexts>
+				<row>web</row>
+			</contexts>
+			<hasAdvancedSettings>1</hasAdvancedSettings>
+			<parameters>
+				<row>
+					<name>eventName</name>
+					<title>Event Name</title>
+					<value>foo{{My Var 3}}bar{{My Var 2}}baz{{PageUrl}}yeah</value>
+					<defaultValue />
+					<type>string</type>
+					<uiControl>text</uiControl>
+					<uiControlAttributes>
+					</uiControlAttributes>
+					<availableValues />
+					<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
+					<inlineHelp />
+					<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+					<introduction />
+					<condition />
+				</row>
+			</parameters>
+		</typeMetadata>
+	</row>
+</result>

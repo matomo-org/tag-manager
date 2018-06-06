@@ -1,0 +1,11 @@
+<div class="manageVersion">
+    <div ng-show="!manageVersion.editMode">
+        <div piwik-version-list
+             id-container="manageVersion.idContainer"></div>
+    </div>
+    <div ng-show="manageVersion.editMode">
+        <div piwik-version-edit
+             id-container="manageVersion.idContainer"
+             id-container-version="manageVersion.idContainerVersion"></div>
+    </div>
+</div>

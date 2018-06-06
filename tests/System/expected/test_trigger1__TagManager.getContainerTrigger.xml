@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idtrigger>1</idtrigger>
+	<idcontainerversion>1</idcontainerversion>
+	<idsite>2</idsite>
+	<type>CustomEvent</type>
+	<name>My trigger1</name>
+	<status>active</status>
+	<parameters>
+		<eventName>foo</eventName>
+	</parameters>
+	<conditions>
+	</conditions>
+	
+	
+	
+	
+	<typeMetadata>
+		<id>CustomEvent</id>
+		<name>Custom Event</name>
+		<description>Triggered when a custom event is pushed to the Data-Layer.</description>
+		<category>Others</category>
+		<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+		<help>Allows developers to define manually when this trigger should be triggered by pushing an event to the Data-Layer. This way you can for example execute certain actions when a product is added to the cart, or when a user logs in.</help>
+		<order>9999</order>
+		<contexts>
+			<row>web</row>
+		</contexts>
+		<hasAdvancedSettings>1</hasAdvancedSettings>
+		<parameters>
+			<row>
+				<name>eventName</name>
+				<title>Event Name</title>
+				<value>foo</value>
+				<defaultValue />
+				<type>string</type>
+				<uiControl>text</uiControl>
+				<uiControlAttributes>
+				</uiControlAttributes>
+				<availableValues />
+				<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
+				<inlineHelp />
+				<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+				<introduction />
+				<condition />
+			</row>
+		</parameters>
+	</typeMetadata>
+</result>

@@ -1,0 +1,66 @@
+<div class="tagManagerManageList tagManagerContainerList">
+    <div piwik-content-block
+         feature="Tag Manager"
+         content-title="{{ 'TagManager_ManageX'|translate:('TagManager_Containers'|translate) }}">
+    <p>{{ 'TagManager_ContainerUsageBenefits'|translate }}</p>
+
+    <table piwik-content-table>
+        <thead>
+            <tr>
+                <th class="index">{{ 'General_Id'|translate }}</th>
+                <th class="name">{{ 'General_Name'|translate }}</th>
+                <th class="description">{{ 'General_Description'|translate }}</th>
+                <th class="created">{{ 'TagManager_CreatedDate'|translate }}</th>
+                <th class="action">{{ 'General_Actions'|translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="containerList.model.isLoading || containerList.model.isUpdating">
+            <td colspan="5">
+                <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
+            </td>
+        </tr>
+        <tr ng-show="!containerList.model.isLoading && (containerList.model.containers|length) == 0">
+            <td colspan="5">
+                {{ 'TagManager_NoContainersFound'|translate }} <a class="createContainerNow" ng-click="containerList.createContainer()" ng-show="containerList.hasAdminAccess">{{ 'TagManager_CreateNewContainerNow'|translate }}</a>
+            </td>
+        </tr>
+        <tr ng-repeat="container in containerList.model.containers|orderBy:'created_date':true"
+            id="container{{ container.idcontainer }}"
+            class="containers">
+            <td class="index" title="{{ 'TagManager_Context'|translate }}: {{ containerList.contexts[container.context] }}">{{ container.idcontainer }}</td>
+            <td class="name">{{ container.name }}</td>
+            <td class="description" title="{{ container.description }}">{{ containerList.truncateText(container.description, 50) }}</td>
+            <td class="created"><span>{{ container.created_date_pretty }}</span></td>
+            <td class="action">
+                <a ng-href="?module=TagManager&action={{ containerList.containerDefaultAction }}&idContainer={{ container.idcontainer }}&idSite={{container.idsite}}&period=day&date=yesterday"
+                   title="{{ 'TagManager_ConfigureX'|translate:('TagManager_Container'|translate) }}"
+                   class="table-action icon-configure"></a>
+                <a ng-click="containerList.installCode(container.idcontainer)"
+                   title="{{ 'TagManager_InstallCode'|translate }}"
+                   class="table-action installCode icon-embed"></a>
+                <a ng-click="containerList.editContainer(container.idcontainer)"
+                   ng-show="containerList.hasAdminAccess"
+                   class="table-action icon-edit" title="{{ 'TagManager_EditX'|translate:('TagManager_Container'|translate) }}"></a>
+                <a ng-click="containerList.deleteContainer(container)"
+                   ng-show="containerList.hasAdminAccess"
+                   class="table-action icon-delete"
+                   title="{{ 'TagManager_DeleteX'|translate:('TagManager_Container'|translate) }}"
+                ></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="tableActionBar" ng-show="containerList.hasAdminAccess">
+        <a class="createNewContainer" value="" ng-click="containerList.createContainer()"
+        ><span class="icon-add"></span> {{ 'TagManager_CreateNewContainer'|translate }}</a>
+    </div>
+    </div>
+
+    <div class="ui-confirm" id="confirmDeleteContainer">
+        <h2>{{ 'TagManager_DeleteContainerConfirm'|translate }} </h2>
+        <input role="yes" type="button" value="{{ 'General_Yes'|translate }}"/>
+        <input role="no" type="button" value="{{ 'General_No'|translate }}"/>
+    </div>
+</div>

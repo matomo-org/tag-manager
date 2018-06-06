@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idtrigger>3</idtrigger>
+	<idcontainerversion>1</idcontainerversion>
+	<idsite>2</idsite>
+	<type>DomReady</type>
+	<name>Mytrigger3</name>
+	<status>active</status>
+	<parameters>
+	</parameters>
+	<conditions>
+	</conditions>
+	
+	
+	
+	
+	<typeMetadata>
+		<id>DomReady</id>
+		<name>DOM Ready</name>
+		<description>Triggered as soon as all the HTML has been received and parsed.</description>
+		<category>Pageview</category>
+		<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+		<help>At this stage of loading a web page only the HTML is loaded but not yet all images, StyleSheets, and JavaScript files. If you want to make sure the website is fully loaded, please consider the &quot;Window Loaded&quot; trigger.</help>
+		<order>9999</order>
+		<contexts>
+			<row>web</row>
+		</contexts>
+		<hasAdvancedSettings>1</hasAdvancedSettings>
+		<parameters>
+		</parameters>
+	</typeMetadata>
+</result>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idcontainer>aaacont1</idcontainer>
+	<idsite>2</idsite>
+	<context>web</context>
+	<name>Container1</name>
+	<description />
+	
+	
+	<revision>0</revision>
+	<version_name />
+	<version_description />
+	<tags>
+		<row>
+			<idtag>1</idtag>
+			<type>CustomHtml</type>
+			<name>My Tag 1</name>
+			<parameters>
+				<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
+			</parameters>
+			<fire_trigger_ids>
+				<row>1</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+			</block_trigger_ids>
+			<fire_limit>unlimited</fire_limit>
+			<priority>999</priority>
+			<fire_delay>0</fire_delay>
+			<start_date />
+			<end_date />
+			
+			
+		</row>
+		<row>
+			<idtag>2</idtag>
+			<type>CustomHtml</type>
+			<name>My Tag 2</name>
+			<parameters>
+				<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
+			</parameters>
+			<fire_trigger_ids>
+				<row>1</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+				<row>2</row>
+			</block_trigger_ids>
+			<fire_limit>unlimited</fire_limit>
+			<priority>999</priority>
+			<fire_delay>0</fire_delay>
+			<start_date />
+			<end_date />
+			
+			
+		</row>
+		<row>
+			<idtag>3</idtag>
+			<type>CustomImage</type>
+			<name>My Tag 3</name>
+			<parameters>
+				<imageSrc>/plugins/tracking.png</imageSrc>
+			</parameters>
+			<fire_trigger_ids>
+				<row>2</row>
+				<row>3</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+			</block_trigger_ids>
+			<fire_limit>unlimited</fire_limit>
+			<priority>999</priority>
+			<fire_delay>0</fire_delay>
+			<start_date />
+			<end_date />
+			
+			
+		</row>
+	</tags>
+	<triggers>
+		<row>
+			<idtrigger>1</idtrigger>
+			<type>CustomEvent</type>
+			<name>My trigger1</name>
+			<parameters>
+				<eventName>foo</eventName>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+		</row>
+		<row>
+			<idtrigger>2</idtrigger>
+			<type>WindowLoaded</type>
+			<name>Mytrigger2</name>
+			<parameters>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+		</row>
+		<row>
+			<idtrigger>3</idtrigger>
+			<type>DomReady</type>
+			<name>Mytrigger3</name>
+			<parameters>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+		</row>
+		<row>
+			<idtrigger>16</idtrigger>
+			<type>CustomEvent</type>
+			<name>My trigger4</name>
+			<parameters>
+				<eventName>foo{{My Var 3}}bar{{My Var 2}}baz{{PageUrl}}yeah</eventName>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+		</row>
+	</triggers>
+	<variables>
+		<row>
+			<idvariable>1</idvariable>
+			<type>DataLayer</type>
+			<name>My Var 1</name>
+			<parameters>
+				<dataLayerName>dataVarName</dataLayerName>
+			</parameters>
+			<lookup_table>
+			</lookup_table>
+			<default_value />
+			
+			
+		</row>
+		<row>
+			<idvariable>2</idvariable>
+			<type>DataLayer</type>
+			<name>My Var 2</name>
+			<parameters>
+				<dataLayerName>dataVarName</dataLayerName>
+			</parameters>
+			<lookup_table>
+			</lookup_table>
+			<default_value />
+			
+			
+		</row>
+		<row>
+			<idvariable>5</idvariable>
+			<type>DataLayer</type>
+			<name>My Var 3</name>
+			<parameters>
+				<dataLayerName>dataVarName</dataLayerName>
+			</parameters>
+			<lookup_table>
+			</lookup_table>
+			<default_value />
+			
+			
+		</row>
+	</variables>
+</result>

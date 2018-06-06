@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idtrigger>2</idtrigger>
+	<idcontainerversion>1</idcontainerversion>
+	<idsite>2</idsite>
+	<type>WindowLoaded</type>
+	<name>Mytrigger2</name>
+	<status>active</status>
+	<parameters>
+	</parameters>
+	<conditions>
+		<row>
+			<actual>ErrorUrl</actual>
+			<comparison>contains</comparison>
+			<expected>foo</expected>
+		</row>
+	</conditions>
+	
+	
+	
+	
+	<typeMetadata>
+		<id>WindowLoaded</id>
+		<name>Window Loaded</name>
+		<description>Triggered when the page is fully loaded including all images etc.</description>
+		<category>Pageview</category>
+		<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+		<help>This stage of loading a web page, is when the page is fully loaded according to the browser. In most cases this means that also all images are loaded, and all styles are applied etc. This trigger is always triggered at some point after the &quot;DOM Ready&quot;.</help>
+		<order>9999</order>
+		<contexts>
+			<row>web</row>
+		</contexts>
+		<hasAdvancedSettings>1</hasAdvancedSettings>
+		<parameters>
+		</parameters>
+	</typeMetadata>
+</result>
