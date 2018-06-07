@@ -216,8 +216,14 @@ class WebContext extends BaseContext
         if (Common::stringEndsWith($domain, '/')) {
             $domain = Common::mb_substr($domain, 0, -1);
         }
-        $path = $domain . $this->getJsTargetPath($idSite, $idContainer, $environment, $containerCreatedDate);
-        return $path;
+
+        $path = $this->getJsTargetPath($idSite, $idContainer, $environment, $containerCreatedDate);
+
+        $storagePath = StaticContainer::get('TagManagerContainerStorageDir') . '/';
+        $webPath = StaticContainer::get('TagManagerContainerWebDir') . '/';
+        $path = str_replace($storagePath, $webPath, $path);
+
+        return $domain . $path;
     }
 
     public function getInstallInstructions($container, $environment)

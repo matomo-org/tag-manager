@@ -144,7 +144,7 @@ class TagManager extends \Piwik\Plugin
 
     public static function getAbsolutePathToContainerDirectory()
     {
-        return PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath');
+        return PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerStorageDir');
     }
 
     public function getQueryParametersToExclude(&$parametersToExclude)

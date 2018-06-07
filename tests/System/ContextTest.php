@@ -458,6 +458,14 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
         $this->assertSame('/js/container_abcDefGh.js', $path);
     }
 
+    public function test_getWebInstallInstructions_differentWebDirectory()
+    {
+        StaticContainer::getContainer()->set('TagManagerContainerWebDir', '/foobar');
+        $container = $this->getContainer();
+        $instructions = $this->makeWebContext()->getInstallInstructions($container, Environment::ENVIRONMENT_LIVE);
+        $this->assertContains('tests/PHPUnit/proxy/foobar/container_aaacont1.js\';', $instructions[0]['embedCode']);
+    }
+
     public function test_removeNoLongerExistingEnvironments()
     {
         $context = $this->makeWebContext();
@@ -481,7 +489,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
 
     private function createDummyContainerFile($idContainer)
     {
-        $this->writeFile(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath') . '/' . sprintf('%s%s*.js', StaticContainer::get('TagManagerContainerFilesPrefix'), $idContainer), 'test');
+        $this->writeFile(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerStorageDir') . '/' . sprintf('%s%s*.js', StaticContainer::get('TagManagerContainerFilesPrefix'), $idContainer), 'test');
     }
 
     private function writeFile($file, $content)
