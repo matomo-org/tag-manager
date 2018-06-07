@@ -52,7 +52,7 @@ class AdwordsConversionTag extends BaseTag
         // return parent::getIcon();
         //
         // The image should have ideally a resolution of about 64x64 pixels.
-        return 'plugins/TagManager/images/icons/code.svg';
+        return 'plugins/TagManager/images/icons/adwords.svg';
     }
 
     public function getParameters()
