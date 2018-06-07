@@ -932,7 +932,7 @@ class ContainerTest extends IntegrationTestCase
         $this->assertNotEmpty($instructions[0]['description']);
         $this->assertNotEmpty($instructions[0]['helpUrl']);
         $this->assertNotEmpty($instructions[0]['embedCode']);
-        $this->assertContains(StaticContainer::get('TagManagerContainerFilesRelativePath'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1. '.js', $instructions[0]['embedCode']);
+        $this->assertContains(StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1. '.js', $instructions[0]['embedCode']);
     }
 
     public function test_getAllReleasedContainers_noReleases()
@@ -1178,8 +1178,8 @@ class ContainerTest extends IntegrationTestCase
         $this->addContainerTrigger($this->idSite, $this->idContainer1draft);
         $this->model->enablePreviewMode($this->idSite, $this->idContainer1, $this->idContainer1draft, 'foo');
         $result = $this->model->generateContainer($this->idSite, $this->idContainer1);
-        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerFilesRelativePath'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'.js']);
-        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerFilesRelativePath'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
+        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'.js']);
+        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
         $this->assertCount(4, $result);
     }
 

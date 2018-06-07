@@ -9,7 +9,6 @@ namespace Piwik\Plugins\TagManager\Context;
 
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
-use Piwik\Filesystem;
 use Piwik\Plugins\TagManager\Context\Storage\StorageInterface;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Environment;
@@ -365,7 +364,7 @@ abstract class BaseContext
     public function getJsTargetPath($idSite, $idContainer, $environment, $containerCreatedDate)
     {
         $idSite = (int) $idSite;
-        $path = StaticContainer::get('TagManagerContainerFilesRelativePath') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $idContainer;
+        $path = StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $idContainer;
         if ($environment === Environment::ENVIRONMENT_PREVIEW) {
             // we do not add a hash here with the salt as the preview may be public, and if this was public, they could
             // calculate the salt from the hash which would then allow to calculate other hashes
@@ -381,7 +380,7 @@ abstract class BaseContext
 
     public static function removeAllFilesOfAllContainers()
     {
-        $files = self::findFiles(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath'), StaticContainer::get('TagManagerContainerFilesPrefix') . '*.js');
+        $files = self::findFiles(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerStorageDir'), StaticContainer::get('TagManagerContainerFilesPrefix') . '*.js');
         if (!empty($files)) {
             foreach ($files as $file) {
                 self::deleteFile($file);
@@ -396,7 +395,7 @@ abstract class BaseContext
             return; // prevent accidental deletion of multiple container files
         }
 
-        $files = self::findFiles(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath'), sprintf('%s%s*.js', StaticContainer::get('TagManagerContainerFilesPrefix'), $idContainer));
+        $files = self::findFiles(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerStorageDir'), sprintf('%s%s*.js', StaticContainer::get('TagManagerContainerFilesPrefix'), $idContainer));
         if (!empty($files)) {
             foreach ($files as $file) {
                 self::deleteFile($file);
@@ -426,7 +425,7 @@ abstract class BaseContext
         $availableEnvironments[] = Environment::ENVIRONMENT_LIVE; // we make sure they are set as we never want to remove them
         $availableEnvironments[] = Environment::ENVIRONMENT_PREVIEW;
 
-        $basePath = PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath');
+        $basePath = PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerStorageDir');
         $files = self::findFiles($basePath, StaticContainer::get('TagManagerContainerFilesPrefix') . '*.js');
         $environmentsDeleted = array();
         if (!empty($files)) {
