@@ -16,4 +16,20 @@ class Memory implements StorageInterface
         $this->content[$name] = $data;
     }
 
+    public function delete($name)
+    {
+        unset($this->content[$name]);
+    }
+
+    public function find($sDir, $sPattern)
+    {
+        $found = array();
+        foreach ($this->content as $key => $data) {
+            if (fnmatch($sDir . '/' . $sPattern, $key)) {
+                $found[] = $key;
+            }
+        }
+        return $found;
+    }
+
 }

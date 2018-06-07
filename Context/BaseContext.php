@@ -17,7 +17,6 @@ use Piwik\Plugins\TagManager\Model\Salt;
 use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\Model\Trigger;
 use Piwik\Plugins\TagManager\Model\Variable;
-use Piwik\Plugins\TagManager\Template\BaseTemplate;
 use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
 use Piwik\Settings\FieldConfig;
 
@@ -382,10 +381,10 @@ abstract class BaseContext
 
     public static function removeAllFilesOfAllContainers()
     {
-        $files = Filesystem::globr(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath'), StaticContainer::get('TagManagerContainerFilesPrefix') . '*.js');
+        $files = self::findFiles(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath'), StaticContainer::get('TagManagerContainerFilesPrefix') . '*.js');
         if (!empty($files)) {
             foreach ($files as $file) {
-                Filesystem::deleteFileIfExists($file);
+                self::deleteFile($file);
             }
         }
         return count($files);
@@ -397,13 +396,25 @@ abstract class BaseContext
             return; // prevent accidental deletion of multiple container files
         }
 
-        $files = Filesystem::globr(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath'), sprintf('%s%s*.js', StaticContainer::get('TagManagerContainerFilesPrefix'), $idContainer));
+        $files = self::findFiles(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath'), sprintf('%s%s*.js', StaticContainer::get('TagManagerContainerFilesPrefix'), $idContainer));
         if (!empty($files)) {
             foreach ($files as $file) {
-                Filesystem::deleteFileIfExists($file);
+                self::deleteFile($file);
             }
         }
         return count($files);
+    }
+
+    private static function deleteFile($file)
+    {
+        $storage = StaticContainer::get('Piwik\Plugins\TagManager\Context\Storage\StorageInterface');
+        $storage->delete($file);
+    }
+
+    private static function findFiles($sdir, $spattern)
+    {
+        $storage = StaticContainer::get('Piwik\Plugins\TagManager\Context\Storage\StorageInterface');
+        return $storage->find($sdir, $spattern);
     }
 
     public static function removeNoLongerExistingEnvironments($availableEnvironments)
@@ -416,7 +427,7 @@ abstract class BaseContext
         $availableEnvironments[] = Environment::ENVIRONMENT_PREVIEW;
 
         $basePath = PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath');
-        $files = Filesystem::globr($basePath, StaticContainer::get('TagManagerContainerFilesPrefix') . '*.js');
+        $files = self::findFiles($basePath, StaticContainer::get('TagManagerContainerFilesPrefix') . '*.js');
         $environmentsDeleted = array();
         if (!empty($files)) {
             foreach ($files as $file) {
@@ -439,7 +450,7 @@ abstract class BaseContext
 
                     if (!in_array($env, $availableEnvironments)) {
                         $environmentsDeleted[] = $env;
-                        Filesystem::deleteFileIfExists($file);
+                        self::deleteFile($file);
                     }
                 }
             }
