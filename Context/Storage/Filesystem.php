@@ -30,14 +30,14 @@ class Filesystem implements StorageInterface
         }
     }
 
-    public function delete($file)
+    public function delete($name)
     {
-        \Piwik\Filesystem::deleteFileIfExists($file);
+        \Piwik\Filesystem::deleteFileIfExists($name);
 
         /**
          * Triggered so plugins can detect the deleted file and for example sync it to other servers.
          */
-        Piwik::postEvent('TagManager.containerFileDeleted', array($file));
+        Piwik::postEvent('TagManager.containerFileDeleted', array($name));
     }
 
     public function find($sDir, $sPattern)
