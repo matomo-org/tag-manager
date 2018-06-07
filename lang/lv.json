@@ -1,0 +1,14 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Klikšķi",
+        "CategoryDate": "Datums",
+        "CategoryEmail": "E-pasta adrese",
+        "ComparisonContains": "satur",
+        "PageTitleVariableName": "Lapas virsraksts",
+        "PageUrlVariableName": "Lapas URL",
+        "ReferrerUrlVariableName": "Atsauces URL",
+        "ReferrerVariableName": "Atsauces URL",
+        "Type": "Tips",
+        "Version": "Versija"
+    }
+}

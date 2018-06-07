@@ -1,0 +1,15 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Kliknutia",
+        "CategoryDate": "Dátum",
+        "CategoryEmail": "E-mail",
+        "CategoryErrors": "Chyby",
+        "CategoryHistory": "História",
+        "PageTitleVariableName": "Titulok stránky",
+        "PageUrlVariableName": "Adresa stránky",
+        "ReferrerUrlVariableName": "Referenčné URL",
+        "ReferrerVariableName": "Referenčné URL",
+        "Type": "Typ",
+        "Version": "Verzia"
+    }
+}

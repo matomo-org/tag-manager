@@ -1,0 +1,28 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Clics",
+        "CategoryDate": "Fecha",
+        "CategoryDevice": "Dispositivo",
+        "CategoryEmail": "Correo electrónico",
+        "CategoryErrors": "Errores",
+        "CategoryHistory": "Historial",
+        "ComparisonContains": "contiene",
+        "ComparisonEndsWith": "termina con",
+        "ComparisonGreaterThan": "es mayor que",
+        "ComparisonStartsWith": "empieza con",
+        "Condition": "Condición",
+        "EndDate": "Fecha de fin",
+        "Filter": "Filtro",
+        "LastUpdated": "Última actualización",
+        "ManageX": "Administrar %s",
+        "Change": "Cambiar",
+        "PageTitleVariableName": "Título de la página",
+        "PageUrlVariableName": "URL de la página",
+        "ReferrerUrlVariableName": "URL de referencia",
+        "ReferrerVariableName": "URL de referencia",
+        "StartDate": "Fecha de inicio",
+        "Tag": "Etiqueta",
+        "Type": "Tipo",
+        "Version": "Versión"
+    }
+}

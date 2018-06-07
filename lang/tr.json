@@ -1,0 +1,28 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Tıklanma",
+        "CategoryDate": "Tarih",
+        "CategoryDevice": "Aygıt",
+        "CategoryEmail": "E-posta",
+        "CategoryErrors": "Hata",
+        "CategoryHistory": "Geçmiş",
+        "ComparisonContains": "şunu içeren",
+        "ComparisonEndsWith": "şununla biten",
+        "ComparisonGreaterThan": "şundan büyük olan",
+        "ComparisonStartsWith": "şununla başlayan",
+        "Condition": "Koşul",
+        "EndDate": "Bitiş tarihi",
+        "Filter": "Süzgeç",
+        "LastUpdated": "Son güncelleme",
+        "ManageX": "%s Yönetimi",
+        "Change": "Değiştir",
+        "PageTitleVariableName": "Sayfa Başlığı",
+        "PageUrlVariableName": "Sayfa Adresi",
+        "ReferrerUrlVariableName": "Yönlendirme Siteleri",
+        "ReferrerVariableName": "Yönlendirme Siteleri",
+        "StartDate": "Başlangıç tarihi",
+        "Tag": "Kod İmi",
+        "Type": "Tür",
+        "Version": "Sürüm"
+    }
+}

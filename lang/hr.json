@@ -1,0 +1,10 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Klikovi",
+        "CategoryDate": "Datum",
+        "PageUrlVariableName": "URL stranice",
+        "ReferrerUrlVariableName": "Referrer URL",
+        "ReferrerVariableName": "Referrer URL",
+        "Type": "Vrsta"
+    }
+}

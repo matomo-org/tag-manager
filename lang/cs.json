@@ -1,0 +1,28 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Prokliků",
+        "CategoryDate": "Datum",
+        "CategoryDevice": "Zařízení",
+        "CategoryEmail": "E-mail",
+        "CategoryErrors": "Chyby",
+        "CategoryHistory": "Historie",
+        "ComparisonContains": "obsahuje",
+        "ComparisonEndsWith": "končí na",
+        "ComparisonGreaterThan": "je větší než",
+        "ComparisonStartsWith": "začíná na",
+        "Condition": "Podmínka",
+        "EndDate": "Koncové datum",
+        "Filter": "Filtr",
+        "LastUpdated": "Naposledy aktualizován",
+        "ManageX": "Spravovat %s",
+        "Change": "Změnit",
+        "PageTitleVariableName": "Titulek stránky",
+        "PageUrlVariableName": "URL stránky",
+        "ReferrerUrlVariableName": "Odkazující URL",
+        "ReferrerVariableName": "Odkazující URL",
+        "StartDate": "Počáteční datum",
+        "Tag": "Značka",
+        "Type": "Typ",
+        "Version": "Verze"
+    }
+}

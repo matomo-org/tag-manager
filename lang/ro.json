@@ -1,0 +1,21 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Click-uri",
+        "CategoryDate": "Data",
+        "CategoryDevice": "Dispozitiv",
+        "CategoryEmail": "Email",
+        "CategoryHistory": "Istoric",
+        "ComparisonContains": "contine",
+        "ComparisonEndsWith": "se termina cu",
+        "ComparisonGreaterThan": "este mai mare decat",
+        "ComparisonStartsWith": "incepe cu",
+        "Condition": "Conditie",
+        "Filter": "Filtru",
+        "PageTitleVariableName": "Titlul paginii",
+        "PageUrlVariableName": "URL-ul Paginii",
+        "ReferrerUrlVariableName": "Referal URL",
+        "ReferrerVariableName": "Referal URL",
+        "Type": "Tip",
+        "Version": "Versiune"
+    }
+}

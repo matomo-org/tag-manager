@@ -1,0 +1,22 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Klik",
+        "CategoryDate": "Dato",
+        "CategoryDevice": "Enhed",
+        "CategoryEmail": "E-mail",
+        "CategoryErrors": "Fejl",
+        "CategoryHistory": "Historik",
+        "ComparisonContains": "indeholder",
+        "ComparisonEndsWith": "slutter med",
+        "ComparisonGreaterThan": "er større end",
+        "ComparisonStartsWith": "begynder med",
+        "Condition": "Betingelse",
+        "Filter": "Filter",
+        "PageTitleVariableName": "sidetitel",
+        "PageUrlVariableName": "Side URL",
+        "ReferrerUrlVariableName": "Henvisning netadresse",
+        "ReferrerVariableName": "Henvisning netadresse",
+        "Type": "Type",
+        "Version": "Version"
+    }
+}

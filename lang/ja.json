@@ -1,0 +1,28 @@
+{
+    "TagManager": {
+        "CategoryClicks": "クリック",
+        "CategoryDate": "日付",
+        "CategoryDevice": "デバイス",
+        "CategoryEmail": "メール",
+        "CategoryErrors": "エラー",
+        "CategoryHistory": "履歴",
+        "ComparisonContains": "を含みます。",
+        "ComparisonEndsWith": "で終わります。",
+        "ComparisonGreaterThan": "はより大きい",
+        "ComparisonStartsWith": "で始まります。",
+        "Condition": "条件",
+        "EndDate": "終了日",
+        "Filter": "フィルター",
+        "LastUpdated": "最終更新",
+        "ManageX": "管理 %s",
+        "Change": "変更",
+        "PageTitleVariableName": "ページタイトル",
+        "PageUrlVariableName": "ページ URL",
+        "ReferrerUrlVariableName": "リファラー URL",
+        "ReferrerVariableName": "リファラー URL",
+        "StartDate": "開始日",
+        "Tag": "タグ",
+        "Type": "タイプ",
+        "Version": "バージョン"
+    }
+}

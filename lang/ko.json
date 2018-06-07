@@ -1,0 +1,17 @@
+{
+    "TagManager": {
+        "CategoryClicks": "조회수",
+        "CategoryDate": "날짜",
+        "CategoryDevice": "기기장치",
+        "CategoryEmail": "이메일",
+        "CategoryErrors": "에러",
+        "CategoryHistory": "역사",
+        "ManageX": "%s 관리",
+        "PageTitleVariableName": "페이지 제목",
+        "PageUrlVariableName": "페이지 URL",
+        "ReferrerUrlVariableName": "참조 URL",
+        "ReferrerVariableName": "참조 URL",
+        "Type": "유형",
+        "Version": "버전"
+    }
+}

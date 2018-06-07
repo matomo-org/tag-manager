@@ -1,0 +1,12 @@
+{
+    "TagManager": {
+        "CategoryClicks": "დაწკაპუნებები",
+        "CategoryDate": "თარიღი",
+        "CategoryEmail": "ელ.ფოსტა",
+        "PageUrlVariableName": "გვერდის URL",
+        "ReferrerUrlVariableName": "რეფერერის URL",
+        "ReferrerVariableName": "რეფერერის URL",
+        "Type": "ტიპი",
+        "Version": "ვერსია"
+    }
+}

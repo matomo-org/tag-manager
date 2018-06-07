@@ -1,0 +1,24 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Клики",
+        "CategoryDate": "Дата",
+        "CategoryDevice": "Устройство",
+        "CategoryEmail": "Email",
+        "CategoryErrors": "Ошибки",
+        "CategoryHistory": "История",
+        "ComparisonContains": "содержит",
+        "ComparisonEndsWith": "завершилось с",
+        "ComparisonGreaterThan": "больше чем",
+        "ComparisonStartsWith": "началось с",
+        "Condition": "Условие",
+        "Filter": "Фильтр",
+        "ManageX": "Управление %s",
+        "PageTitleVariableName": "Заголовок страницы",
+        "PageUrlVariableName": "URL страницы",
+        "ReferrerUrlVariableName": "URL источника",
+        "ReferrerVariableName": "URL источника",
+        "Tag": "Тег",
+        "Type": "Тип",
+        "Version": "Версия"
+    }
+}

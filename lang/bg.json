@@ -1,0 +1,21 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Щраквания",
+        "CategoryDate": "Дата",
+        "CategoryDevice": "Устройство",
+        "CategoryEmail": "Имейл",
+        "CategoryHistory": "История",
+        "ComparisonContains": "съдържа",
+        "ComparisonEndsWith": "завършва с",
+        "ComparisonGreaterThan": "е по-голямо от",
+        "ComparisonStartsWith": "започва с",
+        "Condition": "Състояние",
+        "Filter": "Филтър",
+        "PageTitleVariableName": "Заглавие на страница",
+        "PageUrlVariableName": "Страница URL",
+        "ReferrerUrlVariableName": "URL Референции",
+        "ReferrerVariableName": "URL Референции",
+        "Type": "Тип",
+        "Version": "Версия"
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "TagManager": {
+        "CategoryClicks": "क्लिकों",
+        "CategoryDate": "तारीख",
+        "CategoryDevice": "न्यूनतम मूल्य",
+        "CategoryEmail": "ईमेल",
+        "CategorySEO": "SEO",
+        "ComparisonContains": "युक्ति",
+        "Filter": "फ़िल्टर",
+        "PageTitleVariableName": "पृष्ठ शीर्षक",
+        "PageUrlVariableName": "पृष्ठ का यू.आर.एल",
+        "ReferrerUrlVariableName": "संदर्भ URL",
+        "ReferrerVariableName": "संदर्भ URL",
+        "Type": "प्रकार",
+        "Version": "संस्करण"
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Klikkaukset",
+        "CategoryDate": "Päiväys",
+        "CategoryDevice": "Laite",
+        "CategoryEmail": "Sähköposti",
+        "CategoryErrors": "Virheet",
+        "CategoryHistory": "Historia",
+        "ComparisonContains": "sisältää",
+        "ComparisonEndsWith": "päättyy",
+        "ComparisonGreaterThan": "on suurempi kuin",
+        "ComparisonStartsWith": "alkaa",
+        "Condition": "Tila",
+        "EndDate": "Lopetuspäivä",
+        "Filter": "Valikoi",
+        "LastUpdated": "Edellinen päivitys",
+        "Change": "Vaihda",
+        "PageTitleVariableName": "Sivun otsikko",
+        "PageUrlVariableName": "Sivun URL",
+        "ReferrerUrlVariableName": "Saapumisosoite",
+        "ReferrerVariableName": "Saapumisosoite",
+        "StartDate": "Aloituspäivä",
+        "Tag": "Tagi",
+        "Type": "Tyyppi",
+        "Version": "Versio"
+    }
+}

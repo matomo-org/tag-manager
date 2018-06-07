@@ -1,0 +1,28 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Clics",
+        "CategoryDate": "Date",
+        "CategoryDevice": "Périphérique",
+        "CategoryEmail": "Courriel",
+        "CategoryErrors": "Erreurs",
+        "CategoryHistory": "Historique",
+        "ComparisonContains": "contient",
+        "ComparisonEndsWith": "se termine par",
+        "ComparisonGreaterThan": "est supérieur à",
+        "ComparisonStartsWith": "commence par",
+        "Condition": "Condition",
+        "EndDate": "Date de fin",
+        "Filter": "Filtrer",
+        "LastUpdated": "Dernière mise à jour",
+        "ManageX": "Gérer %s",
+        "Change": "Modifier",
+        "PageTitleVariableName": "Titre de la page",
+        "PageUrlVariableName": "URL de la page",
+        "ReferrerUrlVariableName": "URL du référent",
+        "ReferrerVariableName": "URL du référent",
+        "StartDate": "Date de début",
+        "Tag": "Étiquette",
+        "Type": "Type",
+        "Version": "Version"
+    }
+}

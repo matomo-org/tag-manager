@@ -1,0 +1,15 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Clicks",
+        "CategoryDate": "Ngày",
+        "CategoryEmail": "Email",
+        "CategoryHistory": "Lịch sử",
+        "Condition": "Điều kiện",
+        "PageTitleVariableName": "Tiêu đề trang",
+        "PageUrlVariableName": "URL của trang",
+        "ReferrerUrlVariableName": "URL tham chiếu",
+        "ReferrerVariableName": "URL tham chiếu",
+        "Type": "Kiểu",
+        "Version": "Phiên bản"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Klikk",
+        "CategoryDate": "Dato",
+        "CategoryEmail": "Epost",
+        "PageTitleVariableName": "Sidetittel",
+        "PageUrlVariableName": "Side-URL",
+        "Type": "Type",
+        "Version": "Versjon"
+    }
+}
