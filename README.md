@@ -1,15 +1,18 @@
 # Free Open Source Matomo Tag Manager
 
+[![Build Status](https://travis-ci.org/matomo-org/tag-manager.svg?branch=master)](https://travis-ci.org/matomo-org/tag-manager)
+[![License](https://poser.pugx.org/matomo-org/tag-manager/license)](https://matomo.org/free-software/)
+
 ## Description
 
 <div class="alert alert-info">
-Matomo Tag Manager is currently in beta as such it may contain bugs, may not work as expected at all times and data could get lost. Please report any issues you encounter or any other feedback back to us at: https://github.com/matomo-org/tag-manager
+Matomo Tag Manager is currently in beta. As such it may contain bugs, may not work as expected at all times and data could get lost. Please <a href="https://github.com/matomo-org/tag-manager/issues">report any issues</a> you encounter or any other feedback back to us.
 
 Are you a developer? Please consider contributing more tags to our open source tag manager. Learn more on how to develop custom tags, triggers, and variables.
 </div>
 
 <div class="alert">
-When you install this version of Matomo Tag Manager, users with admin access will be able to create custom HTML tags, triggers, and variables that may execute JavaScript on your website. These custom templates could be misused to steal for example sensitive information from users (known as [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting)). You can disable these custom templates under "Administration => General Settings". We will later have new permissions in Matomo that allow you to configure who will be able to use these kind of templates.
+When you install this version of Matomo Tag Manager, users with admin access will be able to create custom HTML tags, triggers, and variables that may execute JavaScript on your website. These custom templates could be misused to steal for example sensitive information from users (known as <a href="https://en.wikipedia.org/wiki/Cross-site_scripting">XSS</a>). You can disable these custom templates under "Administration => General Settings". We will later have new permissions in Matomo that allow you to configure who will be able to use these kind of templates.
 </div>
 
 Matomo Tag Manager lets you manage and unify all your tracking and marketing tags. Tags are also known as snippets or pixels. Such tags are typically JavaScript code or HTML and let you integrate various features into your site in just a few clicks, for example:
@@ -60,7 +63,7 @@ Last but not least Matomo Tag Manager keeps track of all changes that you make a
 * Google Analytics
 * More will follow
 
-Are you a developer? If you use features regulary which are not available yet, or you have a product you want to integrate into the Tag Manager, please check out our [developer documentation](https://developer.matomo.org/guides/tagmanager/settingup) on how to add your own tags, triggers, and variables. It is really easy. Matomo Tag Manager is open source and we would love it if you contribute tags, triggers and variables to our [project](https://github.com/matomo-org/matomo/tag-manager).
+Are you a developer? If you use features regulary which are not available yet, or you have a product you want to integrate into the Tag Manager, please check out our [developer documentation](https://developer.matomo.org/guides/tagmanager/settingup) on how to add your own tags, triggers, and variables. It is really easy. Matomo Tag Manager is open source and we would love it if you contribute tags, triggers and variables to our [project](https://github.com/matomo-org/tag-manager).
 
 ### Triggers
 * All Elements
@@ -113,3 +116,41 @@ Are you a developer? If you use features regulary which are not available yet, o
 * Screen size height (available)
 * User Agent
 * Lots of more variables for elements, clicks, scrolls, error, history, and form triggers
+
+## License
+
+Matomo Tag Manager is released under the GPL v3 (or later) license, see [misc/gpl-3.0.txt](misc/gpl-3.0.txt)
+
+## Installation & Requirements
+
+Matomo Tag Manager requires an installed [Matomo Analytics](https://github.com/matomo-org/matomo) see our [installation guide](https://matomo.org/docs/installation/) and [requirements guide](https://matomo.org/docs/requirements/).
+
+Afterwards you can install the Tag Manager plugin in one click by going to "Administration => Marketplace".
+
+## Get involved!
+
+We believe in liberating Web Analytics, providing a free platform for simple and advanced analytics and tag manager. Matomo was built by dozens of people like you,
+and we need your help to make Matomo better. Why not participate in a useful project today? [Learn how you can contribute to Matomo.](https://matomo.org/get-involved)
+
+Developer guides are available at [developer.matomo.org/guides/tagmanager/settingup](https://developer.matomo.org/guides/tagmanager/settingup).
+
+## Security
+
+Security is a top priority at Matomo. As potential issues are discovered, we validate, patch and release fixes as quickly as we can. We have a security bug bounty program in place that rewards researchers for finding security issues and disclosing them to us.
+
+[Learn more](https://matomo.org/security/)
+
+## Support for Matomo Tag Manager
+
+For **Free support**, post a message in our community forums: [forum.matomo.org](https://forum.matomo.org/)
+
+For **Professional paid support**, send a message to our network of Matomo professionals: [matomo.org/support](https://matomo.org/contact/)
+
+## Contact
+
+Website: [matomo.org](https://matomo.org)
+
+About us: [matomo.org/team/](https://matomo.org/team/)
+
+Contact us: [matomo.org/contact/](https://matomo.org/contact/)
+
