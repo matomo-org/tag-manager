@@ -11,7 +11,6 @@ use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Development;
-use Piwik\Filesystem;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\Storage\StorageInterface;
 use Piwik\Plugins\TagManager\Context\WebContext\JavaScriptTagManagerLoader;
@@ -82,7 +81,7 @@ class WebContext extends BaseContext
             // we make sure to remove the preview file in case preview mode is no longer enabled to not expose any
             // possible upcoming events, changes, etc
             $previewFileToDelete = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], Environment::ENVIRONMENT_PREVIEW, $container['created_date']);
-            Filesystem::deleteFileIfExists(PIWIK_DOCUMENT_ROOT . $previewFileToDelete);
+            $this->storage->delete(PIWIK_DOCUMENT_ROOT . $previewFileToDelete);
         }
 
         $baseJs = $this->javaScriptTagManagerLoader->getJavaScriptContent();

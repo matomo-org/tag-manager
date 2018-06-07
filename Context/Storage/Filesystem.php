@@ -7,6 +7,8 @@
  */
 namespace Piwik\Plugins\TagManager\Context\Storage;
 
+use Piwik\Piwik;
+
 class Filesystem implements StorageInterface
 {
     public function save($name, $data)
@@ -20,8 +22,27 @@ class Filesystem implements StorageInterface
         if (!isset($content) || $content !== $data) {
             // we only want to save the file when needed
             file_put_contents($name, $data);
-        }
 
+            /**
+             * Triggered so plugins can detect the changed file and for example sync it to other servers.
+             */
+            Piwik::postEvent('TagManager.containerFileChanged', array($name));
+        }
+    }
+
+    public function delete($file)
+    {
+        \Piwik\Filesystem::deleteFileIfExists($file);
+
+        /**
+         * Triggered so plugins can detect the deleted file and for example sync it to other servers.
+         */
+        Piwik::postEvent('TagManager.containerFileDeleted', array($file));
+    }
+
+    public function find($sDir, $sPattern)
+    {
+        return \Piwik\Filesystem::globr($sDir, $sPattern);
     }
 
 }

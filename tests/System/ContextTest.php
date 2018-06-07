@@ -70,6 +70,12 @@ class ContextTest extends SystemTestCase
      */
     public static $fixture = null; // initialized below class definition
 
+    public function setUp()
+    {
+        parent::setUp();
+        BaseContext::removeAllFilesOfAllContainers();
+    }
+
     /**
      * @param $in
      * @param $expected
@@ -463,18 +469,25 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
         $path[] = $context->getJsTargetPath(1, 'abcDefGh', 'baz', '2014-01-02 03:04:05');
         
         foreach ($path as $file) {
-            file_put_contents(PIWIK_DOCUMENT_ROOT . $file, ' ');
+            $this->writeFile(PIWIK_DOCUMENT_ROOT . $file, ' ');
         }
 
         $removed = BaseContext::removeNoLongerExistingEnvironments(array(
             Environment::ENVIRONMENT_LIVE, 'staging'
         ));
+        sort($removed);
         $this->assertEquals(array('baz', 'dev'), $removed);
     }
 
     private function createDummyContainerFile($idContainer)
     {
-        file_put_contents(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath') . '/' . sprintf('%s%s*.js', StaticContainer::get('TagManagerContainerFilesPrefix'), $idContainer), 'test');
+        $this->writeFile(PIWIK_DOCUMENT_ROOT . StaticContainer::get('TagManagerContainerFilesRelativePath') . '/' . sprintf('%s%s*.js', StaticContainer::get('TagManagerContainerFilesPrefix'), $idContainer), 'test');
+    }
+
+    private function writeFile($file, $content)
+    {
+        $storage = StaticContainer::get('Piwik\Plugins\TagManager\Context\Storage\StorageInterface');
+        $storage->save($file, $content);
     }
 
     /**

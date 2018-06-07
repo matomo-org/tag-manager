@@ -11,4 +11,8 @@ interface StorageInterface
 {
     public function save($name, $data);
 
+    public function delete($name);
+
+    public function find($sDir, $sPattern);
+
 }
