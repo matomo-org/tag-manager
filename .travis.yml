@@ -30,7 +30,6 @@ env:
   global:
     - PLUGIN_NAME=TagManager
     - PIWIK_ROOT_DIR=$TRAVIS_BUILD_DIR/piwik
-    - PROTECTED_ARTIFACTS=1
     # this variable controls the version of Piwik your tests will run against.
     # by default it will run against the maximum support version read from plugin.json
     # (PIWIK_TEST_TARGET=maximum_supported_piwik).
