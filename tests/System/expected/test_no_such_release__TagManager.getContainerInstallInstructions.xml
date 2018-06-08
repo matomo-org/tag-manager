@@ -10,6 +10,6 @@ var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[
 g.type='text/javascript'; g.async=true; g.defer=true; g.src='http://example.com/piwik/tests/PHPUnit/proxy/js/container_aaacont2.js'; s.parentNode.insertBefore(g,s);
 &lt;/script&gt;
 &lt;!-- End Matomo Tag Manager --&gt;</embedCode>
-		<helpUrl>https://developer.matomo.org/tag-manager</helpUrl>
+		<helpUrl>https://developer.matomo.org/guides/tagmanager/embedding</helpUrl>
 	</row>
 </result>
