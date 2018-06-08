@@ -325,6 +325,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_NameOfLatestVersion';
         $result[] = 'TagManager_Created';
         $result[] = 'TagManager_CreateVersionWithoutPublishing';
+        $result[] = 'TagManager_PublishVersionToEnvironmentToViewEmbedCode';
         $result[] = 'TagManager_CreateVersionAndPublishRelease';
         $result[] = 'TagManager_VersionName';
         $result[] = 'TagManager_VersionDescription';
