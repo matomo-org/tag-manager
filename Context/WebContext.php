@@ -244,7 +244,7 @@ INST;
         return [[
             'description' => Piwik::translate('TagManager_ContextWebInstallInstructions', array('"<head>"')),
             'embedCode' => $embedCode,
-            'helpUrl' => 'https://developer.matomo.org/tag-manager'
+            'helpUrl' => 'https://developer.matomo.org/guides/tagmanager/embedding'
         ]];
     }
 
