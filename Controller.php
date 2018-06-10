@@ -82,7 +82,12 @@ class Controller extends \Piwik\Plugin\Controller
     public function gettingStarted()
     {
         Piwik::checkUserHasSomeViewAccess();
-        return $this->renderTemplate('gettingStarted');
+
+        $canEdit = $this->accessValidator->hasWritePermission($this->idSite);
+
+        return $this->renderTemplate('gettingStarted', array(
+            'canEdit' => $canEdit
+        ));
     }
 
     public function manageTags()

@@ -49,14 +49,17 @@
         </p>
 
     </div>
+
+    {% if canEdit %}
     <div piwik-content-block content-title="How do I get started?">
         <p>If you haven't created a container yet, <a href="{{ linkTo({module: 'TagManager', 'action': 'manageContainers'}) }}#?idContainer=0">create a container now</a>. Next you need to copy/paste the code for the container into your website, this is a simple HTML snippet. From this point, this code will
             load all other snippets and you usually won't need to make any changes to your website anymore.
             <br /><br />
             Now you can add one or multiple tags to your container. If you have embedded a tag manually into your site in the past, you should at the same time also remove all previously added snippets from your website as they will be then loaded through the tag manager.
         </p>
-
     </div>
+    {% endif %}
+
     <div piwik-content-block content-title="What if a tag, trigger, or variable I need is not supported yet?">
         <p>
             There are custom tags, triggers, and variables available to let you implement pretty much any use case you need.

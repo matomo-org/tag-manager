@@ -25,6 +25,16 @@ class AccessValidator
         Piwik::checkUserHasAdminAccess($idSite);
     }
 
+    public function hasWritePermission($idSite)
+    {
+        try {
+            $this->checkWritePermission($idSite);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
     public function checkSiteExists($idSite)
     {
         new Site($idSite);

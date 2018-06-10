@@ -90,6 +90,29 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->validator->checkSiteExists($idSite = 999);
     }
 
+    public function test_hasWritePermission_anonymousWithoutViewCannot()
+    {
+        $this->setAnonymous();
+        $this->assertFalse($this->validator->hasWritePermission($idSite = 1));
+    }
+
+    public function test_hasWritePermission_success_user()
+    {
+        $this->setUser();
+        $this->assertFalse($this->validator->hasWritePermission($idSite = 1));
+    }
+
+    public function test_hasWritePermission_admin()
+    {
+        $this->setAdmin();
+        $this->assertTrue($this->validator->hasWritePermission($idSite = 1));
+    }
+
+    public function test_hasWritePermission_success_Superuser()
+    {
+        $this->assertTrue($this->validator->hasWritePermission($idSite = 1));
+    }
+
     protected function setAnonymous()
     {
         FakeAccess::clearAccess(false);
