@@ -17,6 +17,7 @@
                 ga('create', parameters.get('propertyId'), 'auto');
             }
 
+            ga('set', 'anonymizeIp', true);
             ga('send', 'pageview');
         };
     };
