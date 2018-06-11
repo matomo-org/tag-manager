@@ -1,0 +1,11 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Klikak",
+        "CategoryDate": "Data",
+        "CategoryEmail": "E-posta",
+        "PageUrlVariableName": "Orriaren URLa",
+        "ReferrerUrlVariableName": "URL erreferentea",
+        "ReferrerVariableName": "URL erreferentea",
+        "Version": "Bertsioa"
+    }
+}

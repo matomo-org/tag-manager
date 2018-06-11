@@ -1,0 +1,18 @@
+{
+    "TagManager": {
+        "CategoryClicks": "النقرات",
+        "CategoryDate": "التاريخ",
+        "CategoryDevice": "الجهاز",
+        "CategoryEmail": "بريد إلكتروني",
+        "CategoryErrors": "أخطاء",
+        "CategoryHistory": "التاريخ",
+        "ManageX": "إدارة %s",
+        "PageTitleVariableName": "عنوان الصفحة",
+        "PageUrlVariableName": "رابط الصفحة",
+        "ReferrerUrlVariableName": "جاء من",
+        "ReferrerVariableName": "جاء من",
+        "Tag": "علامة",
+        "Type": "النوع",
+        "Version": "الإصدار"
+    }
+}

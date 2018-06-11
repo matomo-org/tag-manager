@@ -1,0 +1,25 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Klikk",
+        "CategoryDate": "Dato",
+        "CategoryDevice": "Enhet",
+        "CategoryEmail": "E-post",
+        "CategoryErrors": "Feil",
+        "CategoryHistory": "Historikk",
+        "ComparisonContains": "inneholder",
+        "ComparisonEndsWith": "slutter med",
+        "ComparisonGreaterThan": "er større enn",
+        "ComparisonStartsWith": "starter med",
+        "Condition": "Betingelse",
+        "Filter": "Filter",
+        "ManageX": "Administrer %s",
+        "Change": "Endre",
+        "PageTitleVariableName": "Sidetittel",
+        "PageUrlVariableName": "Side-URL",
+        "ReferrerUrlVariableName": "Henvisnings-URL",
+        "ReferrerVariableName": "Henvisnings-URL",
+        "Tag": "Stikkord",
+        "Type": "Type",
+        "Version": "Versjon"
+    }
+}

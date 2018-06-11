@@ -1,0 +1,28 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Kliks",
+        "CategoryDate": "Datum",
+        "CategoryDevice": "Apparaat",
+        "CategoryEmail": "E-mailadres",
+        "CategoryErrors": "Fouten",
+        "CategoryHistory": "Geschiedenis",
+        "ComparisonContains": "bevat",
+        "ComparisonEndsWith": "eindigt met",
+        "ComparisonGreaterThan": "is groter dan",
+        "ComparisonStartsWith": "begint met",
+        "Condition": "Voorwaarde",
+        "EndDate": "Einddatum",
+        "Filter": "Filter",
+        "LastUpdated": "Laatst bijgewerkt",
+        "ManageX": "%s beheren",
+        "Change": "Wijzigen",
+        "PageTitleVariableName": "Paginatitel",
+        "PageUrlVariableName": "Pagina-URL",
+        "ReferrerUrlVariableName": "Referrer URL",
+        "ReferrerVariableName": "Referrer URL",
+        "StartDate": "Startdatum",
+        "Tag": "Tag",
+        "Type": "Type",
+        "Version": "Versie"
+    }
+}

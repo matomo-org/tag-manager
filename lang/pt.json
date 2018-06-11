@@ -1,0 +1,19 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Cliques",
+        "CategoryDate": "Data",
+        "CategoryDevice": "Dispositivo",
+        "CategoryEmail": "Email",
+        "CategoryErrors": "Erros",
+        "CategoryHistory": "Histórico",
+        "ComparisonContains": "contém",
+        "ComparisonGreaterThan": "é maior que",
+        "Condition": "Condição",
+        "PageTitleVariableName": "Título da Página",
+        "PageUrlVariableName": "Endereço da Página",
+        "ReferrerUrlVariableName": "Endereço do Referente",
+        "ReferrerVariableName": "Endereço do Referente",
+        "Type": "Tipo",
+        "Version": "Versão"
+    }
+}

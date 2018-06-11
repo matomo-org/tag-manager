@@ -1,0 +1,28 @@
+{
+    "TagManager": {
+        "CategoryClicks": "點擊數",
+        "CategoryDate": "日期",
+        "CategoryDevice": "裝置",
+        "CategoryEmail": "Email",
+        "CategoryErrors": "錯誤",
+        "CategoryHistory": "歷史",
+        "ComparisonContains": "包含",
+        "ComparisonEndsWith": "結束於",
+        "ComparisonGreaterThan": "多於",
+        "ComparisonStartsWith": "起始於",
+        "Condition": "條件",
+        "EndDate": "結束日期",
+        "Filter": "過濾",
+        "LastUpdated": "最後更新",
+        "ManageX": "管理 %s",
+        "Change": "變更",
+        "PageTitleVariableName": "網頁標題",
+        "PageUrlVariableName": "網頁網址",
+        "ReferrerUrlVariableName": "參造連結網址",
+        "ReferrerVariableName": "參造連結網址",
+        "StartDate": "開始日期",
+        "Tag": "標籤",
+        "Type": "類型",
+        "Version": "版本"
+    }
+}

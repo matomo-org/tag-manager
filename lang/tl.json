@@ -1,0 +1,19 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Mga Click",
+        "CategoryDate": "Petsa",
+        "CategoryDevice": "Aparato",
+        "CategoryEmail": "Email",
+        "CategoryHistory": "Kasaysayan",
+        "ComparisonContains": "naglalaman",
+        "ComparisonEndsWith": "ay nagtatapos sa",
+        "ComparisonGreaterThan": "ay mas malaki sa",
+        "ComparisonStartsWith": "nagsisimula sa",
+        "Condition": "Kondisyon",
+        "PageUrlVariableName": "URL ng Pahina",
+        "ReferrerUrlVariableName": "Referrer URL",
+        "ReferrerVariableName": "Referrer URL",
+        "Type": "Uri",
+        "Version": "Bersyon"
+    }
+}

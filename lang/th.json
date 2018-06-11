@@ -1,0 +1,13 @@
+{
+    "TagManager": {
+        "CategoryClicks": "คลิก",
+        "CategoryDate": "วันที่",
+        "CategoryEmail": "อีเมล์",
+        "PageTitleVariableName": "ชื่อหน้าเว็บ",
+        "PageUrlVariableName": "URL หน้า",
+        "ReferrerUrlVariableName": "ที่มา URL",
+        "ReferrerVariableName": "ที่มา URL",
+        "Type": "รูปแบบ",
+        "Version": "เวอร์ชั่น"
+    }
+}

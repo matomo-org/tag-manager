@@ -1,0 +1,24 @@
+{
+    "TagManager": {
+        "CategoryClicks": "点击次数",
+        "CategoryDate": "日期",
+        "CategoryDevice": "设备",
+        "CategoryEmail": "电子邮箱",
+        "CategoryErrors": "错误",
+        "CategoryHistory": "历史记录",
+        "CategorySEO": "SEO",
+        "ComparisonContains": "包含",
+        "ComparisonEndsWith": "结束条件",
+        "ComparisonGreaterThan": "大于",
+        "ComparisonStartsWith": "开始条件",
+        "Condition": "条件",
+        "Filter": "条件",
+        "ManageX": "管理%s",
+        "PageTitleVariableName": "页面标题",
+        "PageUrlVariableName": "页面网址",
+        "ReferrerUrlVariableName": "来源网址",
+        "ReferrerVariableName": "来源网址",
+        "Type": "类型",
+        "Version": "版本"
+    }
+}

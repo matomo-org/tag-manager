@@ -1,0 +1,28 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Klikovi",
+        "CategoryDate": "Datum",
+        "CategoryDevice": "Uređaj",
+        "CategoryEmail": "Elektronska adresa",
+        "CategoryErrors": "Greške",
+        "CategoryHistory": "Istorijat",
+        "ComparisonContains": "sadrži",
+        "ComparisonEndsWith": "završava se sa",
+        "ComparisonGreaterThan": "je veće od",
+        "ComparisonStartsWith": "počinje sa",
+        "Condition": "Uslov",
+        "EndDate": "Krajnji datum",
+        "Filter": "Filter",
+        "LastUpdated": "Poslednje ažuriranje",
+        "ManageX": "Upravljanje sa %s",
+        "Change": "Izmena",
+        "PageTitleVariableName": "Naslov stranice",
+        "PageUrlVariableName": "Adresa stranice",
+        "ReferrerUrlVariableName": "Referenca",
+        "ReferrerVariableName": "Referenca",
+        "StartDate": "Početni datum",
+        "Tag": "Oznaka",
+        "Type": "Tip",
+        "Version": "Verzija"
+    }
+}

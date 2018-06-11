@@ -1,0 +1,14 @@
+{
+    "TagManager": {
+        "CategoryClicks": "சொடுக்குகள்",
+        "CategoryDate": "திகதி",
+        "CategoryEmail": "மின்னஞ்சல்",
+        "ComparisonEndsWith": "இல் முடிகிறது",
+        "ComparisonGreaterThan": "ஐவிடப் பெரியது",
+        "ComparisonStartsWith": "இல் தொடங்குகிறது",
+        "Condition": "கட்டளை",
+        "PageUrlVariableName": "பக்கத்தின் URL",
+        "Type": "வகை",
+        "Version": "பதிப்பு"
+    }
+}

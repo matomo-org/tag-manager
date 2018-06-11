@@ -1,0 +1,22 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Hiireklikke",
+        "CategoryDate": "Kuupäev",
+        "CategoryDevice": "Seade",
+        "CategoryEmail": "E-post",
+        "CategoryHistory": "Ajalugu",
+        "ComparisonContains": "sisaldab",
+        "ComparisonEndsWith": "lõppeb",
+        "ComparisonGreaterThan": "on rohkem kui",
+        "ComparisonStartsWith": "algab kui",
+        "Condition": "Tingimus",
+        "Filter": "Filter",
+        "PageTitleVariableName": "Lehe pealkiri",
+        "PageUrlVariableName": "Lehe URL",
+        "ReferrerUrlVariableName": "Viitaja URL",
+        "ReferrerVariableName": "Viitaja URL",
+        "Tag": "Silt",
+        "Type": "Tüüp",
+        "Version": "Versioon"
+    }
+}

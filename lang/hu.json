@@ -1,0 +1,13 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Kattintások",
+        "CategoryDate": "Dátum",
+        "CategoryEmail": "E-mail cím",
+        "CategoryErrors": "Hibák",
+        "PageUrlVariableName": "Weblap URL-je",
+        "ReferrerUrlVariableName": "Hivatkozó URL",
+        "ReferrerVariableName": "Hivatkozó URL",
+        "Type": "Típus",
+        "Version": "Verzió"
+    }
+}

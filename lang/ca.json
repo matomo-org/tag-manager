@@ -1,0 +1,15 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Clics",
+        "CategoryDate": "Data",
+        "CategoryEmail": "Correu-e",
+        "CategoryErrors": "Errors",
+        "Condition": "condició",
+        "PageTitleVariableName": "Títol de la pàgina",
+        "PageUrlVariableName": "URL de la pàgina",
+        "ReferrerUrlVariableName": "URL del referent",
+        "ReferrerVariableName": "URL del referent",
+        "Type": "Tipus",
+        "Version": "Versió"
+    }
+}

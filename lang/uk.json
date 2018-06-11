@@ -1,0 +1,21 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Кліків",
+        "CategoryDate": "Дата",
+        "CategoryDevice": "Пристрій",
+        "CategoryEmail": "Email",
+        "CategoryErrors": "Помилок",
+        "CategoryHistory": "Історія",
+        "EndDate": "Дата закінчення",
+        "Filter": "Фільтр",
+        "LastUpdated": "Останнє оновлення",
+        "ManageX": "Управління %s",
+        "PageTitleVariableName": "Заголовок сторінки",
+        "PageUrlVariableName": "URL сторінок",
+        "ReferrerUrlVariableName": "URL джерела",
+        "ReferrerVariableName": "URL джерела",
+        "StartDate": "Дата початку",
+        "Type": "Тип",
+        "Version": "Версія"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Kliki",
+        "CategoryDate": "Datum",
+        "CategoryEmail": "Email",
+        "PageTitleVariableName": "Naslov strani",
+        "PageUrlVariableName": "URL spletne strani",
+        "Tag": "Oznaka",
+        "Type": "Tip",
+        "Version": "Različica"
+    }
+}

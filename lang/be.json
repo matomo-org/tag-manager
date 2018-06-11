@@ -1,0 +1,12 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Націскі",
+        "CategoryDate": "Дата",
+        "PageTitleVariableName": "Назва старонкі",
+        "PageUrlVariableName": "URL старонкі",
+        "ReferrerUrlVariableName": "URL спасыльніка",
+        "ReferrerVariableName": "URL спасыльніка",
+        "Type": "Тып",
+        "Version": "Версія"
+    }
+}

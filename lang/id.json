@@ -1,0 +1,23 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Klik",
+        "CategoryDate": "Tanggal",
+        "CategoryDevice": "Perangkat",
+        "CategoryEmail": "Surel",
+        "CategoryErrors": "Kesalahan",
+        "CategoryHistory": "Riwayat",
+        "ComparisonContains": "mengandung",
+        "ComparisonEndsWith": "diakhiri dengan",
+        "ComparisonStartsWith": "mulai dengan",
+        "Condition": "Kondisi",
+        "Filter": "Saring",
+        "Change": "Ubah",
+        "PageTitleVariableName": "Judul Halaman",
+        "PageUrlVariableName": "URL Halaman",
+        "ReferrerUrlVariableName": "URL Pengarah",
+        "ReferrerVariableName": "URL Pengarah",
+        "Tag": "Tag",
+        "Type": "Jenis",
+        "Version": "Versi"
+    }
+}
