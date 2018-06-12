@@ -1,10 +1,15 @@
 {
     "TagManager": {
+        "CategoryClick": "Tıklanma",
         "CategoryClicks": "Tıklanma",
+        "CategoryContainerInfo": "Kapsayıcı Bilgileri",
+        "CategoryCustom": "Özel",
         "CategoryDate": "Tarih",
+        "CategoryDevelopers": "Geliştiriciler",
         "CategoryDevice": "Aygıt",
         "CategoryEmail": "E-posta",
         "CategoryErrors": "Hata",
+        "CategoryForms": "Formlar",
         "CategoryHistory": "Geçmiş",
         "ComparisonContains": "şunu içeren",
         "ComparisonEndsWith": "şununla biten",
