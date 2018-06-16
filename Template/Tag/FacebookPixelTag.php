@@ -34,6 +34,11 @@ class FacebookPixelTag extends BaseTag
         return self::CATEGORY_ANALYTICS;
     }
 
+    public function getIcon()
+    {
+        return 'plugins/TagManager/images/icons/F_icon.svg';
+    }
+
     public function getParameters()
     {
         return array(
