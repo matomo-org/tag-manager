@@ -42,15 +42,10 @@ class FacebookPixelTag extends BaseTag
     public function getParameters()
     {
         return array(
-            $this->makeSetting('pixelId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $this->makeSetting('pixelId',, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Pixel ID';
                 $field->description = 'Long numerical number for Facebook Pixel Code"';
-                $field->validators[] = new NotEmpty();
-                $field->validate = function ($value) {
-                    if (!preg_match('^\d+$', strval($value))) {
-                        throw new \Exception('The Pixel ID should only contain a series of numbers.');
-                    }
-                };
+                $field->validators[] = new NumberRange($min = 0);
             }),
             $this->makeSetting('trackingType', 'pageview', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Tracking Type';
