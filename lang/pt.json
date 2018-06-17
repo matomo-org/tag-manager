@@ -9,10 +9,14 @@
         "ComparisonContains": "contém",
         "ComparisonGreaterThan": "é maior que",
         "Condition": "Condição",
+        "EndDate": "Data de fim",
+        "Filter": "Filtro",
+        "LastUpdated": "Atualizados recentemente",
         "PageTitleVariableName": "Título da Página",
         "PageUrlVariableName": "Endereço da Página",
         "ReferrerUrlVariableName": "Endereço do Referente",
         "ReferrerVariableName": "Endereço do Referente",
+        "StartDate": "Data de início",
         "Type": "Tipo",
         "Version": "Versão"
     }
