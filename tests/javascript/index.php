@@ -2229,7 +2229,7 @@
         });
 
         test("Matomo TagManager Template CustomHtmlTag", function() {
-            expect(2);
+            expect(3);
             var templateToTest = 'CustomHtmlTag';
             var params = {document: document, customHtml: buildVariable('<div id="customHtmlTag1">my foo bar baz test</div><div id="customHtmlTag2">my test</div>')};
 
@@ -2237,9 +2237,16 @@
             var addedElement1 = document.getElementById('customHtmlTag1');
             var addedElement2 = document.getElementById('customHtmlTag2');
 
-            strictEqual('my foo bar baz test', addedElement1.innerText, 'should have set correct image source');
+            strictEqual('my foo bar baz test', addedElement1.innerText, 'should have set correct image source at end of body');
             strictEqual('my test', addedElement2.innerText, 'should have set correct image source');
 
+            params.htmlPosition = buildVariable('headStart')
+            params.customHtml = buildVariable('<style id="customStyleTag">.test{}</style>')
+            fireTemplateTag(templateToTest, params);
+            var addedStyle1 = document.getElementById('customStyleTag');
+
+            strictEqual('.test{}', addedStyle1.innerText, 'should have added element to start of head');
+            document.head.removeChild(addedStyle1);
         });
 
         test("Matomo TagManager Template MatomoTag", function() {
