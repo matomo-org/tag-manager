@@ -29,7 +29,7 @@ class FacebookPixelTag extends BaseTag
 
     public function getDescription()
     {
-        return 'The Facebook Pixel is a web analytics and avertising service offered by Facebook.';
+        return 'The Facebook Pixel is a web analytics and advertising service offered by Facebook.';
     }
 
     public function getHelp()
