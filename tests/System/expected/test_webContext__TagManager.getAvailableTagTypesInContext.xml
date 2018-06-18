@@ -218,6 +218,27 @@
 						<introduction />
 						<condition />
 					</row>
+					<row>
+						<name>htmlPosition</name>
+						<title>Position</title>
+						<value>bodyEnd</value>
+						<defaultValue>bodyEnd</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<headStart>Head Start</headStart>
+							<headEnd>Head End</headEnd>
+							<bodyStart>Body Start</bodyStart>
+							<bodyEnd>Body End</bodyEnd>
+						</availableValues>
+						<description>Define the position of where the HTML should be inserted into your website.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
 				</parameters>
 			</row>
 			<row>

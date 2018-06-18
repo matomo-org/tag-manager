@@ -26,6 +26,7 @@
 			<name>My Tag 2</name>
 			<parameters>
 				<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
+				<htmlPosition>bodyEnd</htmlPosition>
 			</parameters>
 			<fire_trigger_ids>
 				<row>21</row>
@@ -49,6 +50,7 @@
 			<name>My Tag 1</name>
 			<parameters>
 				<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
+				<htmlPosition>bodyEnd</htmlPosition>
 			</parameters>
 			<fire_trigger_ids>
 				<row>21</row>
