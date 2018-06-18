@@ -10,11 +10,19 @@ namespace Piwik\Plugins\TagManager\Template\Tag;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\NotEmpty;
+use Piwik\Validators\NumberRange;
 
 class FacebookPixelTag extends BaseTag
 {
 
-    Public function getName()
+    const ID = 'FacebookPixel';
+
+    public function getId()
+    {
+        return self::ID;
+    }
+
+    public function getName()
     {
         return 'Facebook Pixel';
     }
@@ -26,12 +34,7 @@ class FacebookPixelTag extends BaseTag
 
     public function getHelp()
     {
-        return 'This tag lets you track website pageviews in your Facebook Ads account. To obtain the  Pixel ID please log in to your Facebook Ads account.';
-    }
-
-    public function getCategory()
-    {
-        return self::CATEGORY_ANALYTICS;
+        return 'This tag lets you track website pageviews in your Facebook Ads account. To obtain the Pixel ID please log in to your Facebook Ads account.';
     }
 
     public function getIcon()
@@ -42,10 +45,9 @@ class FacebookPixelTag extends BaseTag
     public function getParameters()
     {
         return array(
-            $this->makeSetting('pixelId',, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $this->makeSetting('pixelId', '', FieldConfig::TYPE_INT, function (FieldConfig $field) {
                 $field->title = 'Pixel ID';
-                $field->description = 'Long numerical number for Facebook Pixel Code"';
-                $field->validators[] = new NumberRange($min = 0);
+                $field->validators[] = new NumberRange();
             }),
             $this->makeSetting('trackingType', 'pageview', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Tracking Type';
@@ -55,8 +57,13 @@ class FacebookPixelTag extends BaseTag
                 $field->availableValues = array(
                     'pageview' => 'Pageview',
                 );
-            })
-    );
+            }),
+        );
+    }
+
+    public function getCategory()
+    {
+        return self::CATEGORY_SOCIAL;
     }
 
 }

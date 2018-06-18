@@ -18,7 +18,7 @@
             var pixelId = parameters.get('pixelId');
             if (!(pixelId in setup)) {
                 setup[pixelId] = true;
-                fbq('init', parameters.get('pixelId'));
+                fbq('init', pixelId);
             }
 
             fbq('track', 'PageView');
