@@ -246,6 +246,7 @@ class TagTest extends IntegrationTestCase
             'parameters' =>
                 array (
                     'customHtml' => '<div></div>',
+                    'htmlPosition' => 'bodyEnd'
                 ),
             'fire_trigger_ids' => array (1),
             'block_trigger_ids' => array (),
@@ -289,9 +290,31 @@ class TagTest extends IntegrationTestCase
                                     'introduction' => NULL,
                                     'condition' => NULL,
                                 ),
+                                array (
+                                    'name' => 'htmlPosition',
+                                    'title' => 'Position',
+                                    'value' => 'bodyEnd',
+                                    'defaultValue' => 'bodyEnd',
+                                    'type' => 'string',
+                                    'uiControl' => 'select',
+                                    'uiControlAttributes' => array(),
+                                    'availableValues' => array(
+                                        'headStart' => 'Head Start',
+                                        'headEnd' => 'Head End',
+                                        'bodyStart' => 'Body Start',
+                                        'bodyEnd' => 'Body End',
+                                    ),
+                                    'description' => 'Define the position of where the HTML should be inserted into your website.',
+                                    'inlineHelp' => null,
+                                    'templateFile' => '',
+                                    'introduction' => null,
+                                    'condition' => null,
+                            )
                         ),
                 ),
         );
+
+        $tag['typeMetadata']['parameters'][1]['availableValues'] = (array) $tag['typeMetadata']['parameters'][1]['availableValues'];
         $this->assertSame($expected, $tag);
     }
 
@@ -312,6 +335,7 @@ class TagTest extends IntegrationTestCase
             'parameters' =>
                 array (
                     'customHtml' => '<div></div>',
+                    'htmlPosition' => 'bodyEnd'
                 ),
             'fire_trigger_ids' =>[1],
             'block_trigger_ids' =>[3],
@@ -354,9 +378,31 @@ class TagTest extends IntegrationTestCase
                                     'introduction' => NULL,
                                     'condition' => NULL,
                                 ),
+                                array (
+                                    'name' => 'htmlPosition',
+                                    'title' => 'Position',
+                                    'value' => 'bodyEnd',
+                                    'defaultValue' => 'bodyEnd',
+                                    'type' => 'string',
+                                    'uiControl' => 'select',
+                                    'uiControlAttributes' => array(),
+                                    'availableValues' => array(
+                                        'headStart' => 'Head Start',
+                                        'headEnd' => 'Head End',
+                                        'bodyStart' => 'Body Start',
+                                        'bodyEnd' => 'Body End',
+                                    ),
+                                    'description' => 'Define the position of where the HTML should be inserted into your website.',
+                                    'inlineHelp' => null,
+                                    'templateFile' => '',
+                                    'introduction' => null,
+                                    'condition' => null,
+                                )
                         ),
                 ),
         );
+
+        $tag['typeMetadata']['parameters'][1]['availableValues'] = (array) $tag['typeMetadata']['parameters'][1]['availableValues'];
         $this->assertSame($expected, $tag);
     }
 
@@ -485,6 +531,7 @@ class TagTest extends IntegrationTestCase
             'parameters' =>
                 array (
                     'customHtml' => '<div></div>',
+                    'htmlPosition' => 'bodyEnd'
                 ),
             'fire_trigger_ids' =>[1],
             'block_trigger_ids' =>[3],
@@ -527,9 +574,31 @@ class TagTest extends IntegrationTestCase
                                 'introduction' => NULL,
                                 'condition' => NULL,
                             ),
+                            array (
+                                'name' => 'htmlPosition',
+                                'title' => 'Position',
+                                'value' => 'bodyEnd',
+                                'defaultValue' => 'bodyEnd',
+                                'type' => 'string',
+                                'uiControl' => 'select',
+                                'uiControlAttributes' => array(),
+                                'availableValues' => array(
+                                    'headStart' => 'Head Start',
+                                    'headEnd' => 'Head End',
+                                    'bodyStart' => 'Body Start',
+                                    'bodyEnd' => 'Body End',
+                                ),
+                                'description' => 'Define the position of where the HTML should be inserted into your website.',
+                                'inlineHelp' => null,
+                                'templateFile' => '',
+                                'introduction' => null,
+                                'condition' => null,
+                            )
                         ),
                 ),
         );
+
+        $tag['typeMetadata']['parameters'][1]['availableValues'] = (array) $tag['typeMetadata']['parameters'][1]['availableValues'];
         $this->assertSame($expected, $tag);
     }
 
@@ -687,7 +756,6 @@ class TagTest extends IntegrationTestCase
         $this->model->updateParameters($this->idSite, $this->containerVersion1, $this->idTag1, $parameters = array('customHtml' => '<div></div>'));
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
-
         $expected = array (
             'idtag' => 1,
             'idcontainerversion' => 5,
@@ -698,6 +766,7 @@ class TagTest extends IntegrationTestCase
             'parameters' =>
                 array (
                     'customHtml' => '<div></div>',
+                    'htmlPosition' => 'bodyEnd'
                 ),
             'fire_trigger_ids' =>
                 array (
@@ -730,7 +799,6 @@ class TagTest extends IntegrationTestCase
                     'hasAdvancedSettings' => true,
                     'parameters' =>
                         array (
-                            0 =>
                                 array (
                                     'name' => 'customHtml',
                                     'title' => 'Custom HTML',
@@ -748,10 +816,32 @@ class TagTest extends IntegrationTestCase
                                     'introduction' => NULL,
                                     'condition' => NULL,
                                 ),
+                                array (
+                                    'name' => 'htmlPosition',
+                                    'title' => 'Position',
+                                    'value' => 'bodyEnd',
+                                    'defaultValue' => 'bodyEnd',
+                                    'type' => 'string',
+                                    'uiControl' => 'select',
+                                    'uiControlAttributes' => array(),
+                                    'availableValues' => array(
+                                        'headStart' => 'Head Start',
+                                        'headEnd' => 'Head End',
+                                        'bodyStart' => 'Body Start',
+                                        'bodyEnd' => 'Body End',
+                                    ),
+                                    'description' => 'Define the position of where the HTML should be inserted into your website.',
+                                    'inlineHelp' => null,
+                                    'templateFile' => '',
+                                    'introduction' => null,
+                                    'condition' => null,
+                                )
                         ),
                 ),
-        )
-        ;
+        );
+
+        $tag['typeMetadata']['parameters'][1]['availableValues'] = (array) $tag['typeMetadata']['parameters'][1]['availableValues'];
+
         $this->assertSame($expected, $tag);
     }
 

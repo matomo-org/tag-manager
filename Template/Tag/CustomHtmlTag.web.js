@@ -54,7 +54,16 @@
             return element && element.innerHTML && element.innerHTML.toLowerCase().indexOf("<script") !== -1;
         }
 
-        function moveNodes(parent, children)
+        function insertNode(parent, child, append)
+        {
+            if (append || !parent.firstChild) {
+                parent.appendChild(child);
+            } else {
+                parent.insertBefore(child, parent.firstChild);
+            }
+        }
+
+        function moveNodes(parent, children, append)
         {
             var limit = 5000; // prevent endless loop
             var counter = 0;
@@ -66,16 +75,16 @@
                 
                 if (isJavaScriptElement(child)) {
                     // we have to re-create the element, otherwise wouldn't be executed
-                    parent.appendChild(cloneScript(child));
+                    insertNode(parent, cloneScript(child), append);
                 } else if (doChildrenContainJavaScript(child)) {
                     // it contains at least one script, we better move them individually...
                     // first we remove all children from the element to have only the plain element left
                     var subChildren = moveChildrenToArray(child);
-                    parent.appendChild(child);
+                    insertNode(parent, child, append);
                     // then we move all nodes indidivdually into it
                     moveNodes(child, subChildren);
                 } else {
-                    parent.appendChild(child);
+                    insertNode(parent, child, append);
                 }
             }
         }
@@ -83,11 +92,24 @@
         this.fire = function () {
             var html = parameters.get('customHtml');
             if (html) {
+
                 var div = parameters.document.createElement('div');
                 div.innerHTML = html;
                 if (div.childNodes) {
                     var children = moveChildrenToArray(div);
-                    moveNodes(parameters.document.body, children);
+
+                    var htmlPosition = parameters.get('htmlPosition', 'bodyEnd');
+
+                    var append = true;
+                    if (htmlPosition === 'headStart' || htmlPosition === 'bodyStart') {
+                        append = false;
+                    }
+
+                    if (htmlPosition === 'headStart' || htmlPosition === 'headEnd') {
+                        moveNodes(parameters.document.head, children, append);
+                    } else {
+                        moveNodes(parameters.document.body, children, append);
+                    }
                 }
             }
         };

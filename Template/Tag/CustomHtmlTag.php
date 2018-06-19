@@ -65,6 +65,17 @@ class CustomHtmlTag extends BaseTag
                 $field->description = 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.';
                 $field->validators[] = new NotEmpty();
             }),
+            $this->makeSetting('htmlPosition', 'bodyEnd', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = 'Position';
+                $field->availableValues = array(
+                    'headStart' => 'Head Start',
+                    'headEnd' => 'Head End',
+                    'bodyStart' => 'Body Start',
+                    'bodyEnd' => 'Body End',
+                );
+                $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
+                $field->description = 'Define the position of where the HTML should be inserted into your website.';
+            }),
         );
     }
 
