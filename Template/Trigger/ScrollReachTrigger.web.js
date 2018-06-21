@@ -2,6 +2,7 @@
     return function (parameters, TagManager) {
 
         var self = this;
+        var numTriggers = 0;
 
         this.setUp = function (triggerEvent) {
             var scrollType = parameters.get('scrollType');
@@ -47,17 +48,26 @@
                 }
 
                 if (hasReachedScrollPosition) {
-                    triggerEvent({
-                        event: 'mtm.ScrollReach',
-                        'mtm.scrollSource': eventType,
-                        'mtm.scrollLeftPx': lastScrollLeft,
-                        'mtm.scrollTopPx': lastScrollTop,
-                        'mtm.scrollVerticalPercentage': Math.round(scrollPercentageVertical * 100) / 100,
-                        'mtm.scrollHorizontalPercentage': Math.round(scrollPercentageHorizontal * 100) / 100,
-                        'mtm.scrollDocumentHeightPx': docHeight,
-                        'mtm.scrollDocumentWidthPx': docWidth,
-                    });
-                    TagManager.window.offScroll(self.scrollIndex);
+                    if (!numTriggers) {
+                        // ensure it won't be executed twice even if there is some race condition
+
+                        numTriggers++;
+                        triggerEvent({
+                            event: 'mtm.ScrollReach',
+                            'mtm.scrollSource': eventType,
+                            'mtm.scrollLeftPx': lastScrollLeft,
+                            'mtm.scrollTopPx': lastScrollTop,
+                            'mtm.scrollVerticalPercentage': Math.round(scrollPercentageVertical * 100) / 100,
+                            'mtm.scrollHorizontalPercentage': Math.round(scrollPercentageHorizontal * 100) / 100,
+                            'mtm.scrollDocumentHeightPx': docHeight,
+                            'mtm.scrollDocumentWidthPx': docWidth,
+                        });
+                    }
+
+                    if (self.scrollIndex !== null) {
+                        TagManager.window.offScroll(self.scrollIndex);
+                        self.scrollIndex = null;
+                    }
                 }
             });
         };
