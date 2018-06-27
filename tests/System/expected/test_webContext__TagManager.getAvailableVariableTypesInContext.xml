@@ -385,7 +385,7 @@
 			<row>
 				<id>MetaContent</id>
 				<name>Page Meta Content</name>
-				<description>Ready a value from a &quot;meta&quot; HTML element.</description>
+				<description>Reads a value from a &quot;meta&quot; HTML element.</description>
 				<category>SEO</category>
 				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
 				<help />
