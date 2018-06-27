@@ -294,7 +294,7 @@
       "MatomoTagDescription": "Matomo, formerly known as Piwk, is the leading open source analytics platform.",
       "MatomoTagHelp": "This tag lets you track pageviews and events into your Matomo. You can customize the tracking to your needs.",
       "MatomoTagName": "Matomo Analytics",
-      "MetaContentVariableDescription": "Ready a value from a \"meta\" HTML element.",
+      "MetaContentVariableDescription": "Reads a value from a \"meta\" HTML element.",
       "MetaContentVariableName": "Page Meta Content",
       "NameOfLatestVersion": "The name of the previous version is %s.",
       "Names": "Names",
