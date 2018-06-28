@@ -308,7 +308,7 @@
 			<row>
 				<id>UrlParameter</id>
 				<name>URL Parameter</name>
-				<description>Get the value of a specific URL parameter.</description>
+				<description>Gets the value of a specific URL parameter.</description>
 				<category>Page Variables</category>
 				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
 				<help />
@@ -339,7 +339,7 @@
 			<row>
 				<id>Url</id>
 				<name>URL Variable</name>
-				<description>Get the value of the current page URL.</description>
+				<description>Gets the value of the current page URL.</description>
 				<category>Page Variables</category>
 				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
 				<help />
