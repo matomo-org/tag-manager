@@ -1,7 +1,7 @@
 {
     "name": "TagManager",
     "description": "A simple way to manage and maintain all of your (third-party) tags on your website.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "theme": false,
     "require": {
         "piwik": ">=3.5.1,<4.0.0-b1"
