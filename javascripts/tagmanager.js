@@ -1408,14 +1408,14 @@
                 }
 
                 this.run = function () {
-                    for (i = 0; i < this.triggers.length; i++) {
-                        this.triggers[i].setUp();
-                    }
-
                     var missedEvents = dataLayer.getAllEvents();
                     var i;
                     for (i = 0; i < missedEvents.length; i++) {
                         this.onNewGlobalDataLayerValue(missedEvents[i]);
+                    }
+
+                    for (i = 0; i < this.triggers.length; i++) {
+                        this.triggers[i].setUp();
                     }
                 };
             }

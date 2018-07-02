@@ -185,6 +185,9 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <tr ng-if="!mtmDebug.selectedEvent.container.variables.length">
+                                <td colspan="3">No variables</td>
+                            </tr>
                             <tr ng-repeat="variable in mtmDebug.selectedEvent.container.variables">
                                 <td>{{ '{{variable.name }}'|raw }}</td>
                                 <td>{{ '{{variable.type }}'|raw }}</td>
