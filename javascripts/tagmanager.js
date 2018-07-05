@@ -652,6 +652,40 @@
             };
 
             var DOM = {
+                loadScriptUrl: function (url, options) {
+                    if (!options) {
+                        options = {};
+                    }
+                    if (!utils.isDefined(options.defer)) {
+                        options.defer = true;
+                    }
+                    if (!utils.isDefined(options.async)) {
+                        options.async = true;
+                    }
+                    if (!utils.isDefined(options.type)) {
+                        options.type = 'text/javascript';
+                    }
+
+                    var script = document.createElement('script');
+                    script.src = url;
+                    script.type = options.type;
+                    script.defer = !!options.defer;
+                    script.async = !!options.async;
+
+                    if (utils.isFunction(options.onload)) {
+                        script.onload = options.onload;
+                    }
+
+                    if (utils.isFunction(options.onerror)) {
+                        script.onerror = options.onerror;
+                    }
+
+                    if (utils.isDefined(options.charset)) {
+                        script.charset = options.charset;
+                    }
+
+                    documentAlias.head.appendChild(script);
+                },
                 getScrollLeft: function () {
                     return windowAlias.document.body.scrollLeft || windowAlias.document.documentElement.scrollLeft;
                 },
