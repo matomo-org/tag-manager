@@ -684,6 +684,10 @@
                         script.charset = options.charset;
                     }
 
+                    if (utils.isDefined(options.id)) {
+                        script.id = options.id;
+                    }
+
                     documentAlias.head.appendChild(script);
                 },
                 getScrollLeft: function () {
