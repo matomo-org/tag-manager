@@ -188,7 +188,7 @@
       "ErrorContainerVersionImportWrongContext": "The context of the current container is \"%s\" but the imported content is of context \"%s\". Cannot import this version.",
       "ErrorEndDateBeforeStartDate": "The start date needs to be earlier than the end date.",
       "ErrorEnvironmentDoesNotExist": "The environment \"%s\" does not exist.",
-      "ErrorEnvironmentInvalidLength": "The environment \"%1$s\" is not a valid. Please use between %2$s and %3$s characters.",
+      "ErrorEnvironmentInvalidLength": "The environment \"%1$s\" does not have a valid lenght. Please use between %2$s and %3$s characters.",
       "ErrorEnvironmentInvalidName": "The environment \"%s\" is not a valid name. Please use only letters, numbers, and underscores.",
       "ErrorInnerIsNotAnArray": "Each \"%1$s\" within \"%2$s\" has to be an array.",
       "ErrorInvalidContainerImportFormat": "Invalid format for exportedContainerVersion. Value needs to be a valid JSON.",
