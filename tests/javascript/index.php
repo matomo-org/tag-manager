@@ -562,10 +562,11 @@
         });
 
         test("Matomo TagManager dom", function() {
-            expect(39);
+            expect(45);
 
             var dom = window.MatomoTagManager.dom;
 
+            equal(typeof dom.loadScriptUrl, 'function', 'dom.loadScriptUrl');
             equal(typeof dom.getScrollLeft, 'function', 'dom.getScrollLeft');
             equal(typeof dom.getScrollTop, 'function', 'dom.getScrollTop');
             equal(typeof dom.getDocumentHeight, 'function', 'dom.getDocumentHeight');
@@ -641,6 +642,22 @@
             var div = document.createElement('div');
             div.className = '   fo   otest  hello world         ';
             strictEqual('fo otest hello world', dom.getElementClassNames(div), 'getElementClassNames, trims and removes whitespace');
+
+            var wasCalled = false;
+            dom.loadScriptUrl('scriptfoobartest.js', {async: false, onerror: function () {
+                wasCalled = true;
+            }});
+            var element = document.querySelectorAll('script[src="scriptfoobartest.js"]');
+            strictEqual(1, element.length, 'loadScriptUrl, has added script element');
+            element = element[0];
+            ok(!!element.defer, 'loadScriptUrl, is defered');
+            ok(!element.async, 'loadScriptUrl, is not async');
+            strictEqual(location.origin + location.pathname + 'scriptfoobartest.js', element.src, 'loadScriptUrl, has src');
+            stop();
+            setTimeout(function () {
+                ok(wasCalled, 'loadScriptUrl, has failed to load the script');
+                start();
+            }, 1000);
         });
 
         test("Matomo TagManager window", function() {
