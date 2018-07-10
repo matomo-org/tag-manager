@@ -290,4 +290,40 @@
 			</row>
 		</types>
 	</row>
+	<row>
+		<name>Social</name>
+		<types>
+			<row>
+				<id>FacebookPixel</id>
+				<name>Facebook Pixel</name>
+				<description>The Facebook Pixel is a web analytics and advertising service offered by Facebook.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/F_icon.svg</icon>
+				<help>This tag lets you track website pageviews in your Facebook Ads account. To obtain the Pixel ID please log in to your Facebook Ads account.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<parameters>
+					<row>
+						<name>pixelId</name>
+						<title>Pixel ID</title>
+						<value />
+						<defaultValue />
+						<type>integer</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
 </result>
