@@ -8,9 +8,9 @@
 
 namespace Piwik\Plugins\TagManager\Input;
 
-use Piwik\Access\Capability\PublishLiveContainer;
-use Piwik\Access\Capability\TagManagerWrite;
-use Piwik\Access\Capability\UseCustomTemplates;
+use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
+use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
+use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\SystemSettings;
 use Piwik\Site;
@@ -51,9 +51,10 @@ class AccessValidator
 
         if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_SUPERUSER) {
             Piwik::checkUserHasSuperUserAccess();
-        } elseif ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_WRITE) {
-            $this->checkWritePermission($idSite);
         } else {
+            // no need to check for === disabled as it will be automatically checked because in this case we remove
+            // disabled tags/triggers/...
+
             Piwik::checkUserHasCapability($idSite, UseCustomTemplates::ID);
         }
     }

@@ -10,9 +10,10 @@ namespace Piwik\Plugins\TagManager;
 
 
 use Piwik\Config;
-use Piwik\Plugins\TagManager\Model\Environment;
-use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
-use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
+use Piwik\Plugins\TagManager\Template\Tag\TagsProvider;
+use Piwik\Plugins\TagManager\Template\Trigger\BaseTrigger;
+use Piwik\Plugins\TagManager\Template\Trigger\TriggersProvider;
+use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
 
 class Configuration
 {
@@ -80,7 +81,9 @@ class Configuration
         }
 
         if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
-            $disabled[] = CustomHtmlTag::ID;
+            foreach (TagsProvider::getCustomTagTypes() as $customType) {
+                $disabled[] = $customType;
+            }
         }
 
         return array_values(array_unique($disabled));
@@ -95,6 +98,12 @@ class Configuration
 
         if (!is_array($disabled) || empty($disabled)) {
             $disabled = array();
+        }
+
+        if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
+            foreach (TriggersProvider::getCustomTriggerTypes() as $customType) {
+                $disabled[] = $customType;
+            }
         }
 
         return $disabled;
@@ -112,7 +121,9 @@ class Configuration
         }
 
         if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
-            $disabled[] = CustomJsFunctionVariable::ID;
+            foreach (VariablesProvider::getCustomVariableTypes() as $customType) {
+                $disabled[] = $customType;
+            }
         }
 
         return array_values(array_unique($disabled));

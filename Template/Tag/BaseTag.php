@@ -35,5 +35,4 @@ abstract class BaseTag extends BaseTemplate
             WebContext::ID
         );
     }
-
 }

@@ -116,4 +116,10 @@ class TagsProvider {
         return $this->cached;
     }
 
+    public static function getCustomTagTypes()
+    {
+        return array(
+            CustomHtmlTag::ID
+        );
+    }
 }

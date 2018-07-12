@@ -18,7 +18,6 @@ use Piwik\Settings\FieldConfig;
 class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 {
     const CUSTOM_TEMPLATES_DISABLED = 'disabled';
-    const CUSTOM_TEMPLATES_WRITE = 'write';
     const CUSTOM_TEMPLATES_ADMIN = 'admin';
     const CUSTOM_TEMPLATES_SUPERUSER = 'superuser';
 
@@ -38,15 +37,14 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
     private function createCustomTemplatesSetting()
     {
-        return $this->makeSetting('restrictCustomTemplates', $default = 'admin', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+        return $this->makeSetting('restrictCustomTemplates', self::CUSTOM_TEMPLATES_ADMIN, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
             $field->title = Piwik::translate('TagManager_SettingCustomTemplatesTitle');
             $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
             $field->description = Piwik::translate('TagManager_SettingCustomTemplatesDescription');
             $field->availableValues = array(
-                self::CUSTOM_TEMPLATES_DISABLED => 'Disabled, nobody can use them',
-                self::CUSTOM_TEMPLATES_WRITE => 'Users with at least write permission can use them',
-                self::CUSTOM_TEMPLATES_ADMIN => 'Users with admin permission or the "use custom template" capability can use them',
-                self::CUSTOM_TEMPLATES_SUPERUSER => 'Only Super Users can use them'
+                self::CUSTOM_TEMPLATES_DISABLED => Piwik::translate('TagManager_SettingCustomTemplatesDisabled'),
+                self::CUSTOM_TEMPLATES_ADMIN => Piwik::translate('TagManager_SettingCustomTemplatesAdmin'),
+                self::CUSTOM_TEMPLATES_SUPERUSER => Piwik::translate('TagManager_SettingCustomTemplatesSuperUser')
             );
         });
     }

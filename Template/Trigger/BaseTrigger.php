@@ -31,5 +31,4 @@ abstract class BaseTrigger extends BaseTemplate
         );
     }
 
-
 }

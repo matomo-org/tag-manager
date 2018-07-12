@@ -157,4 +157,10 @@ class VariablesProvider {
         return $preConfigured;
     }
 
+    public static function getCustomVariableTypes()
+    {
+        return array(
+            CustomJsFunctionVariable::ID
+        );
+    }
 }

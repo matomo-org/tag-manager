@@ -114,4 +114,8 @@ class TriggersProvider {
         return $this->cached;
     }
 
+    public static function getCustomTriggerTypes()
+    {
+        return array();
+    }
 }
