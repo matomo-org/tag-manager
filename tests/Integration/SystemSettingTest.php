@@ -34,13 +34,13 @@ class SystemSettingTest extends IntegrationTestCase
 
     public function test_enableCustomTemplates_shouldBeEnabledByDefault()
     {
-        $this->assertTrue($this->settings->enableCustomTemplates->getDefaultValue());
+        $this->assertSame(SystemSettings::CUSTOM_TEMPLATES_ADMIN, $this->settings->restrictCustomTemplates->getDefaultValue());
     }
 
     public function test_enableCustomTemplates_shouldBePossibleToDisable()
     {
-        $this->settings->enableCustomTemplates->setValue('0');
-        $this->assertFalse($this->settings->enableCustomTemplates->getValue());
+        $this->settings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_DISABLED);
+        $this->assertSame(SystemSettings::CUSTOM_TEMPLATES_DISABLED, $this->settings->restrictCustomTemplates->getValue());
     }
 
 

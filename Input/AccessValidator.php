@@ -12,10 +12,21 @@ use Piwik\Access\Capability\PublishLiveContainer;
 use Piwik\Access\Capability\TagManagerWrite;
 use Piwik\Access\Capability\UseCustomTemplates;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\SystemSettings;
 use Piwik\Site;
 
 class AccessValidator
 {
+    /**
+     * @var SystemSettings 
+     */
+    private $settings;
+
+    public function __construct(SystemSettings $settings)
+    {
+        $this->settings = $settings;
+    }
+
     public function checkViewPermission($idSite)
     {
         $this->checkSiteExists($idSite);
@@ -37,7 +48,24 @@ class AccessValidator
     public function checkUseCustomTemplatesPermission($idSite)
     {
         $this->checkSiteExists($idSite);
-        Piwik::checkUserHasCapability($idSite, UseCustomTemplates::ID);
+
+        if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_SUPERUSER) {
+            Piwik::checkUserHasSuperUserAccess();
+        } elseif ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_WRITE) {
+            $this->checkWritePermission($idSite);
+        } else {
+            Piwik::checkUserHasCapability($idSite, UseCustomTemplates::ID);
+        }
+    }
+
+    public function hasUseCustomTemplatesPermission($idSite)
+    {
+        try {
+            $this->checkUseCustomTemplatesPermission($idSite);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
     }
 
     public function hasWritePermission($idSite)

@@ -79,7 +79,7 @@ class Configuration
             $disabled = array();
         }
 
-        if (!$this->settings->enableCustomTemplates->getValue()) {
+        if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
             $disabled[] = CustomHtmlTag::ID;
         }
 
@@ -111,7 +111,7 @@ class Configuration
             $disabled = array();
         }
 
-        if (!$this->settings->enableCustomTemplates->getValue()) {
+        if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
             $disabled[] = CustomJsFunctionVariable::ID;
         }
 

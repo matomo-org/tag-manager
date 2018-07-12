@@ -70,7 +70,7 @@ class ConfigurationTest extends IntegrationTestCase
 
     public function test_getDisabledTags_disabledCustomTags()
     {
-        $this->systemSettings->enableCustomTemplates->setValue(0);
+        $this->systemSettings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_DISABLED);
         $this->assertSame(array(CustomHtmlTag::ID), $this->configuration->getDisabledTags());
     }
 
@@ -79,7 +79,7 @@ class ConfigurationTest extends IntegrationTestCase
         Config::getInstance()->TagManager = array(
             Configuration::KEY_DISABLED_TAGS => array('foo', 'bar')
         );
-        $this->systemSettings->enableCustomTemplates->setValue(0);
+        $this->systemSettings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_DISABLED);
         $this->assertSame(array('foo', 'bar', CustomHtmlTag::ID), $this->configuration->getDisabledTags());
     }
 
@@ -106,7 +106,7 @@ class ConfigurationTest extends IntegrationTestCase
 
     public function test_getDisabledVariables_disabledCustomVariables()
     {
-        $this->systemSettings->enableCustomTemplates->setValue(0);
+        $this->systemSettings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_DISABLED);
         $this->assertSame(array(CustomJsFunctionVariable::ID), $this->configuration->getDisabledVariables());
     }
 
@@ -115,7 +115,7 @@ class ConfigurationTest extends IntegrationTestCase
         Config::getInstance()->TagManager = array(
             Configuration::KEY_DISABLED_VARIABLES => array('foo', 'bar')
         );
-        $this->systemSettings->enableCustomTemplates->setValue(0);
+        $this->systemSettings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_DISABLED);
         $this->assertSame(array('foo', 'bar', CustomJsFunctionVariable::ID), $this->configuration->getDisabledVariables());
     }
 

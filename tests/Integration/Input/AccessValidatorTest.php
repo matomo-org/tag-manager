@@ -9,6 +9,7 @@
 namespace Piwik\Plugins\TagManager\tests\Integration\Input;
 
 use Piwik\Plugins\TagManager\Input\AccessValidator;
+use Piwik\Plugins\TagManager\SystemSettings;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\Mock\FakeAccess;
@@ -30,7 +31,7 @@ class AccessValidatorTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->validator = new AccessValidator();
+        $this->validator = new AccessValidator(new SystemSettings());
 
         Fixture::createWebsite('2014-01-02 03:04:05');
     }
