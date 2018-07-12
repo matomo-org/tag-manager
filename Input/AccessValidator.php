@@ -8,6 +8,9 @@
 
 namespace Piwik\Plugins\TagManager\Input;
 
+use Piwik\Access\Capability\PublishLiveContainer;
+use Piwik\Access\Capability\TagManagerWrite;
+use Piwik\Access\Capability\UseCustomTemplates;
 use Piwik\Piwik;
 use Piwik\Site;
 
@@ -22,7 +25,19 @@ class AccessValidator
     public function checkWritePermission($idSite)
     {
         $this->checkSiteExists($idSite);
-        Piwik::checkUserHasAdminAccess($idSite);
+        Piwik::checkUserHasCapability($idSite, TagManagerWrite::ID);
+    }
+
+    public function checkPublishLiveEnvironmentPermission($idSite)
+    {
+        $this->checkSiteExists($idSite);
+        Piwik::checkUserHasCapability($idSite, PublishLiveContainer::ID);
+    }
+
+    public function checkUseCustomTemplatesPermission($idSite)
+    {
+        $this->checkSiteExists($idSite);
+        Piwik::checkUserHasCapability($idSite, UseCustomTemplates::ID);
     }
 
     public function hasWritePermission($idSite)

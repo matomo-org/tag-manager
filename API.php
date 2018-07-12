@@ -1008,6 +1008,9 @@ class API extends \Piwik\Plugin\API
     public function publishContainerVersion($idSite, $idContainer, $idContainerVersion, $environment)
     {
         $this->accessValidator->checkWritePermission($idSite);
+        if ($environment === Environment::ENVIRONMENT_LIVE) {
+            $this->accessValidator->checkPublishLiveEnvironmentPermission($idSite);
+        }
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
         $this->environment->checkIsValidEnvironment($environment);
 
