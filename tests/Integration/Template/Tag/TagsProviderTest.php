@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\tests\Integration\Template\Tag;
 use Piwik\Config;
 use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Configuration;
+use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
 use Piwik\Plugins\TagManager\Template\Tag\TagsProvider;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
@@ -93,6 +94,20 @@ class TagsProviderTest extends IntegrationTestCase
             $this->assertNotEquals('Matomo', $tag->getId());
         }
         $this->assertNull($this->provider->getTag('Matomo'));
+    }
+
+    public function test_getCustomTemplateIds()
+    {
+        $tags = $this->provider->getCustomTemplateIds();
+        $this->assertSame(array(CustomHtmlTag::ID), $tags);
+    }
+
+    public function test_isCustomTemplate()
+    {
+        $this->assertFalse($this->provider->isCustomTemplate(null));
+        $this->assertFalse($this->provider->isCustomTemplate(false));
+        $this->assertFalse($this->provider->isCustomTemplate('foo'));
+        $this->assertTrue($this->provider->isCustomTemplate(CustomHtmlTag::ID));
     }
 
 }

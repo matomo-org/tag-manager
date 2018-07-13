@@ -14,7 +14,7 @@
         var self = this;
         this.containers = [];
         this.isLoading = false;
-        this.hasAdminAccess = piwik.tagManagerAdminAccess;
+        this.hasAdminAccess = piwik.tagManagerWriteAccess;
         var translate = $filter('translate');
 
         if ($scope.containerName) {

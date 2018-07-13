@@ -11,6 +11,7 @@ use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
 use Piwik\Plugin\Manager;
 use Piwik\Plugins\TagManager\Configuration;
+use Piwik\Plugins\TagManager\SystemSettings;
 
 class VariablesProvider {
 
@@ -29,10 +30,16 @@ class VariablesProvider {
      */
     private $cached;
 
-    public function __construct(Manager $pluginManager, Configuration $configuration)
+    /**
+     * @var SystemSettings
+     */
+    private $settings;
+
+    public function __construct(Manager $pluginManager, Configuration $configuration, SystemSettings $systemSettings)
     {
         $this->pluginManager = $pluginManager;
         $this->configuration = $configuration;
+        $this->settings = $systemSettings;
     }
 
     public function checkIsValidVariable($variableId)
@@ -78,6 +85,13 @@ class VariablesProvider {
         if (!isset($this->cached)) {
             $blockedVariables = $this->configuration->getDisabledVariables();
             $blockedVariables = array_map('strtolower', $blockedVariables);
+
+            if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
+                foreach ($this->getCustomTemplateIds() as $customType) {
+                    $blockedVariables[] = $customType;
+                }
+            }
+
             $variableClasses = $this->pluginManager->findMultipleComponents('Template/Variable', 'Piwik\\Plugins\\TagManager\\Template\\Variable\\BaseVariable');
             
             $variables = array();
@@ -157,10 +171,20 @@ class VariablesProvider {
         return $preConfigured;
     }
 
-    public static function getCustomVariableTypes()
+    public function isCustomTemplate($id)
     {
-        return array(
-            CustomJsFunctionVariable::ID
-        );
+        return in_array($id, $this->getCustomTemplateIds(), true);
     }
+
+    public function getCustomTemplateIds()
+    {
+        $ids = array();
+        foreach ($this->getAllVariables() as $variable) {
+            if ($variable->isCustomTemplate()) {
+                $ids[] = $variable->getId();
+            }
+        }
+        return $ids;
+    }
+
 }

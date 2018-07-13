@@ -34,17 +34,17 @@ class GenerateTag extends GeneratePluginBase
         $exampleFolder  = PIWIK_INCLUDE_PATH . '/plugins/TagManager';
         $replace        = array(
             'TagManager' => $pluginName,
-            'CustomHtml' => $tagId,
-            'customHtml' => lcfirst($tagId),
-            'Custom HTML' => $tagName,
+            'CustomImage' => $tagId,
+            'customImage' => lcfirst($tagId),
+            'Custom Image' => $tagName,
             'Piwik\Plugins\\' .$pluginName. '\Template\Tag\BaseTag' => 'Piwik\Plugins\TagManager\Template\Tag\BaseTag',
             'parameters, ' . $pluginName => 'parameters, TagManager'
         );
         $whitelistFiles = array(
             '/Template',
             '/Template/Tag',
-            '/Template/Tag/CustomHtmlTag.php',
-            '/Template/Tag/CustomHtmlTag.web.js',
+            '/Template/Tag/CustomImageTag.php',
+            '/Template/Tag/CustomImageTag.web.js',
         );
 
         $this->copyTemplateToPlugin($exampleFolder, $pluginName, $replace, $whitelistFiles);

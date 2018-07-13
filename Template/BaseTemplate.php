@@ -211,6 +211,12 @@ abstract class BaseTemplate
         return true;
     }
 
+    public function isCustomTemplate()
+    {
+        // set to true if the template allows a user to add js/html code to the site for example
+        return false;
+    }
+
     public function toArray()
     {
         $settingsMetadata = new SettingsMetadata();

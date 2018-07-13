@@ -7,12 +7,17 @@
  */
 namespace Piwik\Plugins\TagManager\API;
 
+use Piwik\API\Request;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\Model\Trigger;
 use Piwik\Plugins\TagManager\Model\Variable;
 use Exception;
+use Piwik\Plugins\TagManager\Template\Tag\TagsProvider;
+use Piwik\Plugins\TagManager\Template\Trigger\TriggersProvider;
+use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
 
 class Import
 {
@@ -32,16 +37,40 @@ class Import
     private $variables;
 
     /**
+     * @var TagsProvider
+     */
+    private $tagsProvider;
+
+    /**
+     * @var TriggersProvider
+     */
+    private $triggersProvider;
+
+    /**
+     * @var VariablesProvider
+     */
+    private $variablesProvider;
+
+    /**
      * @var Container
      */
     private $containers;
 
-    public function __construct(Tag $tags, Trigger $triggers, Variable $variables, Container $containers)
+    /**
+     * @var AccessValidator
+     */
+    private $accessValidator;
+
+    public function __construct(Tag $tags, Trigger $triggers, Variable $variables, Container $containers, AccessValidator $accessValidator, TagsProvider $tagsProvider, TriggersProvider $triggersProvider, VariablesProvider $variablesProvider)
     {
         $this->tags = $tags;
         $this->triggers = $triggers;
         $this->variables = $variables;
         $this->containers = $containers;
+        $this->accessValidator = $accessValidator;
+        $this->tagsProvider = $tagsProvider;
+        $this->triggersProvider = $triggersProvider;
+        $this->variablesProvider = $variablesProvider;
     }
 
     public function checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer)
@@ -58,6 +87,30 @@ class Import
         if ($container['context'] !== $exportedContainerVersion['context']) {
             $message = sprintf(Piwik::translate('TagManager_ErrorContainerVersionImportWrongContext', array($container['context'], $exportedContainerVersion['context'])));
             throw new Exception($message);
+        }
+
+        foreach ($exportedContainerVersion['tags'] as $tag) {
+            $this->tagsProvider->checkIsValidTag($tag['type']);
+
+            if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
+                $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+            }
+        }
+
+        foreach ($exportedContainerVersion['triggers'] as $trigger) {
+            $this->triggersProvider->checkIsValidTrigger($trigger['type']);
+
+            if ($this->triggersProvider->isCustomTemplate($trigger['type'])) {
+                $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+            }
+        }
+
+        foreach ($exportedContainerVersion['variables'] as $variable) {
+            $this->variablesProvider->checkIsValidVariable($variable['type']);
+
+            if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
+                $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+            }
         }
     }
 
@@ -80,12 +133,31 @@ class Import
         $ecv = $exportedContainerVersion;
 
         foreach ($ecv['variables'] as $variable) {
-            $this->variables->addContainerVariable($idSite, $idContainerVersion, $variable['type'], $variable['name'], $variable['parameters'], $variable['default_value'], $variable['lookup_table']);
+            Request::processRequest('TagManager.addContainerVariable', array(
+                'idSite' => $idSite,
+                'idContainer' => $idContainer,
+                'idContainerVersion' => $idContainerVersion,
+                'type' => $variable['type'],
+                'name' => $variable['name'],
+                'parameters' => $variable['parameters'],
+                'defaultValue' => $variable['default_value'],
+                'lookupTable' => $variable['lookup_table'],
+            ));
         }
 
         $idTriggerMapping = array();
         foreach ($ecv['triggers'] as $trigger) {
-            $idTriggerMapping[$trigger['idtrigger']] = $this->triggers->addContainerTrigger($idSite, $idContainerVersion, $trigger['type'], $trigger['name'], $trigger['parameters'], $trigger['conditions']);
+            $idTrigger = Request::processRequest('TagManager.addContainerTrigger', array(
+                'idSite' => $idSite,
+                'idContainer' => $idContainer,
+                'idContainerVersion' => $idContainerVersion,
+                'type' => $trigger['type'],
+                'name' => $trigger['name'],
+                'parameters' => $trigger['parameters'],
+                'conditions' => $trigger['conditions'],
+            ));
+
+            $idTriggerMapping[$trigger['idtrigger']] = $idTrigger;
         }
 
         foreach ($ecv['tags'] as $tag) {
@@ -105,7 +177,22 @@ class Import
                     }
                 }
             }
-            $this->tags->addContainerTag($idSite, $idContainerVersion, $tag['type'], $tag['name'], $tag['parameters'], $fireTriggerIds, $blockTriggerIds, $tag['fire_limit'], $tag['fire_delay'], $tag['priority'], $tag['start_date'], $tag['end_date']);
+
+            Request::processRequest('TagManager.addContainerTag', array(
+                'idSite' => $idSite,
+                'idContainer' => $idContainer,
+                'idContainerVersion' => $idContainerVersion,
+                'type' => $tag['type'],
+                'name' => $tag['name'],
+                'parameters' => $tag['parameters'],
+                'fireTriggerIds' => $fireTriggerIds,
+                'blockTriggerIds' => $blockTriggerIds,
+                'fireLimit' => $tag['fire_limit'],
+                'fireDelay' => $tag['fire_delay'],
+                'priority' => $tag['priority'],
+                'startDate' => $tag['start_date'],
+                'endDate' => $tag['end_date'],
+            ));
         }
     }
 

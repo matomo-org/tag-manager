@@ -432,6 +432,10 @@ class API extends \Piwik\Plugin\API
         $this->accessValidator->checkWritePermission($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
+        if ($this->tagsProvider->isCustomTemplate($type)) {
+            $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+        }
+
         $parameters = $this->unsanitizeAssocArray($parameters);
 
         $idTag = $this->tags->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
@@ -462,6 +466,11 @@ class API extends \Piwik\Plugin\API
     {
         $this->accessValidator->checkWritePermission($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        $tag = $this->tags->getContainerTag($idSite, $idContainerVersion, $idTag);
+        if (!empty($tag) && $this->tagsProvider->isCustomTemplate($tag['type'])) {
+            $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+        }
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
@@ -578,6 +587,10 @@ class API extends \Piwik\Plugin\API
         $this->accessValidator->checkWritePermission($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
+        if ($this->triggersProvider->isCustomTemplate($type)) {
+            $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+        }
+
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
 
@@ -605,6 +618,11 @@ class API extends \Piwik\Plugin\API
     {
         $this->accessValidator->checkWritePermission($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        $trigger = $this->triggers->getContainerTrigger($idSite, $idContainerVersion, $idTrigger);
+        if (!empty($trigger) && $this->triggersProvider->isCustomTemplate($trigger['type'])) {
+            $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+        }
 
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
@@ -773,6 +791,10 @@ class API extends \Piwik\Plugin\API
         $this->accessValidator->checkWritePermission($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
+        if ($this->variablesProvider->isCustomTemplate($type)) {
+            $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+        }
+
         $parameters = $this->unsanitizeAssocArray($parameters);
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
 
@@ -799,6 +821,11 @@ class API extends \Piwik\Plugin\API
     {
         $this->accessValidator->checkWritePermission($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        $variable = $this->variables->getContainerVariable($idSite, $idContainerVersion, $idVariable);
+        if (!empty($variable) && $this->variablesProvider->isCustomTemplate($variable['type'])) {
+            $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+        }
 
         $parameters = $this->unsanitizeAssocArray($parameters);
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);

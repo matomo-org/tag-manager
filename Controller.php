@@ -48,7 +48,7 @@ class Controller extends \Piwik\Plugin\Controller
 
     public function debug()
     {
-        Piwik::checkUserHasSomeAdminAccess();
+        Piwik::checkUserHasSomeWriteAccess();
         $output = $this->renderTemplate('debug.twig');
         return $output;
     }

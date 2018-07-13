@@ -13,7 +13,7 @@
     function VersionListController($scope, tagManagerVersionModel, piwik, piwikApi, $location) {
 
         this.model = tagManagerVersionModel;
-        this.hasAdminAccess = piwik.tagManagerAdminAccess;
+        this.hasAdminAccess = piwik.tagManagerWriteAccess;
 
         var self = this;
         this.idContainer = $scope.idContainer;

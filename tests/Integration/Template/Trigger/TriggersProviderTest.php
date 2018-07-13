@@ -96,4 +96,17 @@ class TriggersProviderTest extends IntegrationTestCase
         $this->assertNull($this->provider->getTrigger('DomReady'));
     }
 
+    public function test_getCustomTemplateIds()
+    {
+        $triggers = $this->provider->getCustomTemplateIds();
+        $this->assertSame(array(), $triggers);
+    }
+
+    public function test_isCustomTemplate()
+    {
+        $this->assertFalse($this->provider->isCustomTemplate(null));
+        $this->assertFalse($this->provider->isCustomTemplate(false));
+        $this->assertFalse($this->provider->isCustomTemplate('foo'));
+    }
+
 }

@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\tests\Integration\Template\Tag;
 use Piwik\Config;
 use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Configuration;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ContainerIdVariable;
 use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
@@ -154,6 +155,20 @@ class VariablesProviderTest extends IntegrationTestCase
         }
         $this->assertNull($this->provider->getVariable('DataLayer'));
         $this->assertNull($this->provider->getVariableIgnoreCase('DataLayer'));
+    }
+
+    public function test_getCustomTemplateIds()
+    {
+        $variables = $this->provider->getCustomTemplateIds();
+        $this->assertSame(array(CustomJsFunctionVariable::ID), $variables);
+    }
+
+    public function test_isCustomTemplate()
+    {
+        $this->assertFalse($this->provider->isCustomTemplate(null));
+        $this->assertFalse($this->provider->isCustomTemplate(false));
+        $this->assertFalse($this->provider->isCustomTemplate('foo'));
+        $this->assertTrue($this->provider->isCustomTemplate(CustomJsFunctionVariable::ID));
     }
 
 }

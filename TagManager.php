@@ -204,14 +204,14 @@ class TagManager extends \Piwik\Plugin
     {
         $idSite = Common::getRequestVar('idSite', 0, 'int');
 
+        $accessValidator = StaticContainer::get('Piwik\Plugins\TagManager\Input\AccessValidator');
+
         $hasAdmin = 0;
-        if (!empty($idSite) && Piwik::isUserHasAdminAccess($idSite)) {
+        if (!empty($idSite) && $accessValidator->hasWritePermission($idSite)) {
             $hasAdmin = 1;
-        } elseif (!empty($idSite) && Piwik::isUserHasViewAccess($idSite)) {
-            $hasAdmin = 0;
         }
 
-        $str .= "piwik.tagManagerAdminAccess = " . $hasAdmin . ";";
+        $str .= "piwik.tagManagerWriteAccess = " . $hasAdmin . ";";
     }
 
     private function getContainerModel()

@@ -13,7 +13,7 @@
     function ContainerListController($scope, tagManagerContainerModel, piwik, piwikApi, $location) {
 
         this.model = tagManagerContainerModel;
-        this.hasAdminAccess = piwik.tagManagerAdminAccess;
+        this.hasAdminAccess = piwik.tagManagerWriteAccess;
 
         if (this.hasAdminAccess) {
             this.containerDefaultAction = 'dashboard';

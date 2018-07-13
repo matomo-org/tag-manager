@@ -8,12 +8,7 @@
 
 namespace Piwik\Plugins\TagManager;
 
-
 use Piwik\Config;
-use Piwik\Plugins\TagManager\Template\Tag\TagsProvider;
-use Piwik\Plugins\TagManager\Template\Trigger\BaseTrigger;
-use Piwik\Plugins\TagManager\Template\Trigger\TriggersProvider;
-use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
 
 class Configuration
 {
@@ -23,16 +18,6 @@ class Configuration
     const KEY_DISABLED_TAGS = 'disable_tags';
     const KEY_DISABLED_TRIGGERS = 'disable_triggers';
     const KEY_DISABLED_VARIABLES = 'disable_variables';
-
-    /**
-     * @var SystemSettings
-     */
-    private $settings;
-
-    public function __construct(SystemSettings $settings)
-    {
-        $this->settings = $settings;
-    }
 
     public function install()
     {
@@ -80,12 +65,6 @@ class Configuration
             $disabled = array();
         }
 
-        if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
-            foreach (TagsProvider::getCustomTagTypes() as $customType) {
-                $disabled[] = $customType;
-            }
-        }
-
         return array_values(array_unique($disabled));
     }
 
@@ -100,12 +79,6 @@ class Configuration
             $disabled = array();
         }
 
-        if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
-            foreach (TriggersProvider::getCustomTriggerTypes() as $customType) {
-                $disabled[] = $customType;
-            }
-        }
-
         return $disabled;
     }
 
@@ -118,12 +91,6 @@ class Configuration
 
         if (!is_array($disabled) || empty($disabled)) {
             $disabled = array();
-        }
-
-        if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
-            foreach (VariablesProvider::getCustomVariableTypes() as $customType) {
-                $disabled[] = $customType;
-            }
         }
 
         return array_values(array_unique($disabled));

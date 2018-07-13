@@ -11,6 +11,7 @@ use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
 use Piwik\Plugin\Manager;
 use Piwik\Plugins\TagManager\Configuration;
+use Piwik\Plugins\TagManager\SystemSettings;
 
 class TriggersProvider {
 
@@ -29,10 +30,16 @@ class TriggersProvider {
      */
     private $cached;
 
-    public function __construct(Manager $pluginManager, Configuration $configuration)
+    /**
+     * @var SystemSettings
+     */
+    private $settings;
+
+    public function __construct(Manager $pluginManager, Configuration $configuration, SystemSettings $systemSettings)
     {
         $this->pluginManager = $pluginManager;
         $this->configuration = $configuration;
+        $this->settings = $systemSettings;
     }
 
     public function checkIsValidTrigger($triggerId)
@@ -63,6 +70,14 @@ class TriggersProvider {
         if (!isset($this->cached)) {
             $blockedTriggers = $this->configuration->getDisabledTriggers();
             $blockedTriggers = array_map('strtolower', $blockedTriggers);
+
+            if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
+                foreach ($this->getCustomTemplateIds() as $customType) {
+                    $blockedTriggers[] = $customType;
+                }
+            }
+
+
             $triggerClasses = $this->pluginManager->findMultipleComponents('Template/Trigger', 'Piwik\\Plugins\\TagManager\\Template\\Trigger\\BaseTrigger');
             $triggers = array();
 
@@ -114,8 +129,20 @@ class TriggersProvider {
         return $this->cached;
     }
 
-    public static function getCustomTriggerTypes()
+    public function isCustomTemplate($id)
     {
-        return array();
+        return in_array($id, $this->getCustomTemplateIds(), true);
     }
+
+    public function getCustomTemplateIds()
+    {
+        $ids = array();
+        foreach ($this->getAllTriggers() as $trigger) {
+            if ($trigger->isCustomTemplate()) {
+                $ids[] = $trigger->getId();
+            }
+        }
+        return $ids;
+    }
+
 }

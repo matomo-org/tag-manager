@@ -13,7 +13,7 @@
     function VariableListController($scope, tagManagerVariableModel, piwik, piwikApi, $location) {
 
         this.model = tagManagerVariableModel;
-        this.hasAdminAccess = piwik.tagManagerAdminAccess;
+        this.hasAdminAccess = piwik.tagManagerWriteAccess;
 
         var self = this;
         this.idContainer = $scope.idContainer;
