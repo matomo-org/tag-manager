@@ -268,7 +268,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_deleteContainer_shouldFailWhenNotHavingViewPermissions()
     {
@@ -293,7 +293,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_publishContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
@@ -321,7 +321,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_addContainer_shouldFailWhenNotHavingViewPermissions()
     {
@@ -340,7 +340,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_updateContainer_shouldFailWhenNotHavingViewPermissions()
     {
@@ -359,7 +359,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_updateContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
@@ -378,7 +378,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_createContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
@@ -388,7 +388,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_createContainerVersion_shouldFailWhenContainerVersionDoesNotExist()
     {
@@ -398,7 +398,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_deleteContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
@@ -417,7 +417,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_deleteContainerVariable_shouldFailWhenNotHavingViewPermissions()
     {
@@ -445,7 +445,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_deleteContainerTrigger_shouldFailWhenNotHavingViewPermissions()
     {
@@ -473,7 +473,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_deleteContainerTag_shouldFailWhenNotHavingViewPermissions()
     {
@@ -526,7 +526,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_enablePreviewMode_shouldFailWhenNotHavingViewPermissions()
     {
@@ -550,7 +550,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_disablePreviewMode_shouldFailWhenNotHavingViewPermissions()
     {
@@ -574,7 +574,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_createDefaultContainerForSite_shouldFailWhenNotHavingViewPermissions()
     {
@@ -591,7 +591,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_addContainerVariable_shouldFailWhenNotHavingViewPermissions()
     {
@@ -601,7 +601,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_updateContainerVariable_shouldFailWhenNotHavingViewPermissions()
     {
@@ -611,7 +611,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_addContainerTrigger_shouldFailWhenNotHavingViewPermissions()
     {
@@ -621,7 +621,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_updateContainerTrigger_shouldFailWhenNotHavingViewPermissions()
     {
@@ -631,7 +631,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_addContainerTag_shouldFailWhenNotHavingViewPermissions()
     {
@@ -641,7 +641,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_updateContainerTag_shouldFailWhenNotHavingViewPermissions()
     {
@@ -677,7 +677,7 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_importContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
