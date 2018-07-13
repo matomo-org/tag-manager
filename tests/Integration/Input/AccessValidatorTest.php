@@ -27,18 +27,24 @@ class AccessValidatorTest extends IntegrationTestCase
      */
     private $validator;
 
+    /**
+     * @var SystemSettings
+     */
+    private $settings;
+
     public function setUp()
     {
         parent::setUp();
 
-        $this->validator = new AccessValidator(new SystemSettings());
+        $this->settings = new SystemSettings();
+        $this->validator = new AccessValidator($this->settings);
 
         Fixture::createWebsite('2014-01-02 03:04:05');
     }
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasAdminAccess Fake exception
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_checkWritePermission()
     {
@@ -53,9 +59,66 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    public function test_checkWritePermission_successSuperUSer()
+    public function test_checkWritePermission_successSuperUser()
     {
         $this->validator->checkWritePermission($idSite = 1);
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_publish_live_container Fake exception
+     */
+    public function test_checkPublishLiveEnvironmentPermission()
+    {
+        $this->setUser();
+        $this->validator->checkPublishLiveEnvironmentPermission($idSite = 1);
+    }
+
+    public function test_checkPublishLiveEnvironmentPermission_successAdmin()
+    {
+        $this->setAdmin();
+        $this->validator->checkPublishLiveEnvironmentPermission($idSite = 1);
+        $this->assertTrue(true);
+    }
+
+    public function test_checkPublishLiveEnvironmentPermission_successSuperUser()
+    {
+        $this->validator->checkPublishLiveEnvironmentPermission($idSite = 1);
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_use_custom_templates Fake exception
+     */
+    public function test_checkUseCustomTemplatesPermission()
+    {
+        $this->setUser();
+        $this->validator->checkUseCustomTemplatesPermission($idSite = 1);
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage checkUserHasSuperUserAccess Fake exception
+     */
+    public function test_checkUseCustomTemplatesPermission_noAccessWhenRequireSuperUser()
+    {
+        $this->settings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_SUPERUSER);
+        $this->setAdmin();
+        $this->validator->checkUseCustomTemplatesPermission($idSite = 1);
+    }
+
+    public function test_checkUseCustomTemplatesPermission_successAdmin()
+    {
+        $this->setAdmin();
+        $this->validator->checkUseCustomTemplatesPermission($idSite = 1);
+        $this->assertTrue(true);
+    }
+
+    public function test_checkUseCustomTemplatesPermission_successSuperUser()
+    {
+        $this->validator->checkUseCustomTemplatesPermission($idSite = 1);
         $this->assertTrue(true);
     }
 
