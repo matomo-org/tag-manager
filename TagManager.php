@@ -52,7 +52,6 @@ class TagManager extends \Piwik\Plugin
             'Controller.CoreHome.checkForUpdates.end' => 'regenerateReleasedContainers',
             'SitesManager.deleteSite.end' => 'onSiteDeleted',
             'SitesManager.addSite.end' => 'onSiteAdded',
-            'Template.jsGlobalVariables' => 'addJsGlobalVariables',
             'System.addSystemSummaryItems' => 'addSystemSummaryItems',
             'Template.endTrackingCodePage' => 'addTagManagerCode',
             'Template.endTrackingHelpPage' => 'addTagManagerTrackingCodeHelp',
@@ -198,20 +197,6 @@ class TagManager extends \Piwik\Plugin
         $numContainers = $model->getNumContainersTotal();
 
         $systemSummary[] = new SystemSummary\Item($key = 'tagmanagercontainer', Piwik::translate('%s containers (in tag manager)', $numContainers), $value = null, array('module' => 'TagManager', 'action' => 'manageContainers'), '', $order = 20);
-    }
-
-    public function addJsGlobalVariables(&$str)
-    {
-        $idSite = Common::getRequestVar('idSite', 0, 'int');
-
-        $accessValidator = StaticContainer::get('Piwik\Plugins\TagManager\Input\AccessValidator');
-
-        $hasAdmin = 0;
-        if (!empty($idSite) && $accessValidator->hasWritePermission($idSite)) {
-            $hasAdmin = 1;
-        }
-
-        $str .= "piwik.tagManagerWriteAccess = " . $hasAdmin . ";";
     }
 
     private function getContainerModel()

@@ -33,7 +33,7 @@ class UseCustomTemplates extends Capability
 
     public function getDescription()
     {
-        return 'Grants the ability to write HTML/JavaScript that will be executed on the website. Grant this capability only to users you trust as custom templates can be misused to steal for example sensitive information.';
+        return Piwik::translate('TagManager_CapabilityUseCustomTemplateDescription');
     }
 
     public function getIncludedInRoles()

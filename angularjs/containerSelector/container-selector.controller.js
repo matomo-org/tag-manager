@@ -14,7 +14,7 @@
         var self = this;
         this.containers = [];
         this.isLoading = false;
-        this.hasAdminAccess = piwik.tagManagerWriteAccess;
+        this.hasWriteAccess = piwik.hasUserCapability('tagmanager_write');
         var translate = $filter('translate');
 
         if ($scope.containerName) {
@@ -39,7 +39,7 @@
             currentUrl = piwik.broadcast.updateParamValue('idContainer=' + idContainer, currentUrl);
             var action = piwik.broadcast.getValueFromUrl('idContainer')
             if (!action || action === 'manageContainers') {
-                if (this.hasAdminAccess) {
+                if (this.hasWriteAccess) {
                     currentUrl = piwik.broadcast.updateParamValue('action=dashboard', currentUrl);
                 } else {
                     currentUrl = piwik.broadcast.updateParamValue('action=manageTags', currentUrl);

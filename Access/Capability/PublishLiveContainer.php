@@ -33,7 +33,7 @@ class PublishLiveContainer extends Capability
 
     public function getDescription()
     {
-        return 'Grants the ability to publish a container to the live environment.';
+        return Piwik::translate('TagManager_CapabilityPublishLiveContainerDescription');
     }
 
     public function getIncludedInRoles()

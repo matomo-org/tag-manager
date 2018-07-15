@@ -34,7 +34,7 @@ class TagManagerWrite extends Capability
 
     public function getDescription()
     {
-        return 'Grants the ability to use the Tag Manager. For example create, delete, and manage containers, tags, triggers, and variables, versions, etc.';
+        return Piwik::translate('TagManager_CapabilityWriteDescription');
     }
 
     public function getIncludedInRoles()

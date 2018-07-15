@@ -13,9 +13,9 @@
     function ContainerListController($scope, tagManagerContainerModel, piwik, piwikApi, $location) {
 
         this.model = tagManagerContainerModel;
-        this.hasAdminAccess = piwik.tagManagerWriteAccess;
+        this.hasWriteAccess = piwik.hasUserCapability('tagmanager_write');
 
-        if (this.hasAdminAccess) {
+        if (this.hasWriteAccess) {
             this.containerDefaultAction = 'dashboard';
         } else {
             this.containerDefaultAction = 'manageTags';

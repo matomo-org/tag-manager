@@ -13,7 +13,7 @@
     function TagListController($scope, tagManagerTagModel, tagManagerTriggerModel, piwik, piwikApi, $location) {
 
         this.model = tagManagerTagModel;
-        this.hasAdminAccess = piwik.tagManagerWriteAccess;
+        this.hasWriteAccess = piwik.hasUserCapability('tagmanager_write');
 
         var self = this;
         this.idContainer = $scope.idContainer;

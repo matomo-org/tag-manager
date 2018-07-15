@@ -93,7 +93,7 @@ class Import
             $this->tagsProvider->checkIsValidTag($tag['type']);
 
             if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
-                $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+                $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
 
@@ -101,7 +101,7 @@ class Import
             $this->triggersProvider->checkIsValidTrigger($trigger['type']);
 
             if ($this->triggersProvider->isCustomTemplate($trigger['type'])) {
-                $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+                $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
 
@@ -109,7 +109,7 @@ class Import
             $this->variablesProvider->checkIsValidVariable($variable['type']);
 
             if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
-                $this->accessValidator->checkUseCustomTemplatesPermission($idSite);
+                $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
     }

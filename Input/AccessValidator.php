@@ -33,19 +33,19 @@ class AccessValidator
         Piwik::checkUserHasViewAccess($idSite);
     }
 
-    public function checkWritePermission($idSite)
+    public function checkWriteCapability($idSite)
     {
         $this->checkSiteExists($idSite);
         Piwik::checkUserHasCapability($idSite, TagManagerWrite::ID);
     }
 
-    public function checkPublishLiveEnvironmentPermission($idSite)
+    public function checkPublishLiveEnvironmentCapability($idSite)
     {
         $this->checkSiteExists($idSite);
         Piwik::checkUserHasCapability($idSite, PublishLiveContainer::ID);
     }
 
-    public function checkUseCustomTemplatesPermission($idSite)
+    public function checkUseCustomTemplatesCapability($idSite)
     {
         $this->checkSiteExists($idSite);
 
@@ -59,20 +59,30 @@ class AccessValidator
         }
     }
 
-    public function hasUseCustomTemplatesPermission($idSite)
+    public function hasUseCustomTemplatesCapability($idSite)
     {
         try {
-            $this->checkUseCustomTemplatesPermission($idSite);
+            $this->checkUseCustomTemplatesCapability($idSite);
         } catch (\Exception $e) {
             return false;
         }
         return true;
     }
 
-    public function hasWritePermission($idSite)
+    public function hasPublishLiveEnvironmenCapability($idSite)
     {
         try {
-            $this->checkWritePermission($idSite);
+            $this->checkPublishLiveEnvironmentCapability($idSite);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+    public function hasWriteCapability($idSite)
+    {
+        try {
+            $this->checkWriteCapability($idSite);
         } catch (\Exception $e) {
             return false;
         }

@@ -80,7 +80,7 @@ class Menu extends \Piwik\Plugin\Menu
                 $menuCategory = $container['name'];
 
                 $accessValidator = StaticContainer::get('Piwik\Plugins\TagManager\Input\AccessValidator');
-                if ($accessValidator->hasWritePermission($idSite)) {
+                if ($accessValidator->hasWriteCapability($idSite)) {
                     $menu->addItem($menuCategory, 'Dashboard', $this->urlForAction('dashboard', $params), $orderId = 104);
                 }
 
@@ -96,7 +96,7 @@ class Menu extends \Piwik\Plugin\Menu
                     }
                 }
 
-                if ($accessValidator->hasWritePermission($idSite)) {
+                if ($accessValidator->hasWriteCapability($idSite)) {
                     if ($previewEnabled) {
                         $menu->addItem($menuCategory, 'TagManager_DisablePreview', array(), $orderId = 130, false,'icon-bug', "tagManagerHelper.disablePreviewMode(" . json_encode($container['idcontainer']) . ")");
                     } else {

@@ -8,9 +8,14 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration;
 
+use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
+use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\API;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Model\Environment;
+use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
+use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Mock\FakeAccess;
@@ -40,24 +45,6 @@ class APITest extends IntegrationTestCase
      * @var TagManagerFixture
      */
     private $tagFixture;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->tagFixture = new TagManagerFixture();
-        $this->tagFixture->setUpWebsite();
-        $this->tagFixture->setUpContainers();
-
-        // we do not want to use idSite = 1, instead as we will sometimes also have idTag = 1... better tests this way
-        $this->idSite = $this->tagFixture->idSite2;
-        $this->idContainer = $this->tagFixture->idContainer1;
-        $this->idContainerDraftVersion = $this->tagFixture->idContainer1DraftVersion;
-
-        $this->api = API::getInstance();
-
-        $this->setSuperUser();
-    }
 
     /**
      * @expectedException \Piwik\NoAccessException
@@ -172,7 +159,7 @@ class APITest extends IntegrationTestCase
     {
         $this->assertNotEmpty($this->api->getAvailableTriggerTypesInContext(WebContext::ID));
     }
-    
+
     /**
      * @expectedException \Piwik\NoAccessException
      * @expectedExceptionMessage checkUserHasSomeViewAccess
@@ -317,6 +304,30 @@ class APITest extends IntegrationTestCase
     public function test_publishContainerVersion_shouldFailWhenEnvironmentNameIsInvalid()
     {
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'foobar');
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_publish_live_container Fake exception
+     */
+    public function test_publishContainerVersion_shouldFailWhenNotHavingPublishLiveCapability()
+    {
+        $this->setWriteUser();
+        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
+    }
+
+    public function test_publishContainerVersion_shouldSucceedForAdmin()
+    {
+        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
+        $this->assertTrue(true);
+    }
+
+    public function test_publishContainerVersion_shouldSucceedForPublishLiveCapability()
+    {
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
+        $this->assertTrue(true);
     }
 
     /**
@@ -601,6 +612,16 @@ class APITest extends IntegrationTestCase
 
     /**
      * @expectedException \Piwik\NoAccessException
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_use_custom_templates Fake exception
+     */
+    public function test_addContainerVariable_shouldFailWhenNotHavingCustomTemplatesPermissionsAndCustomTemplateIsUsed()
+    {
+        $this->setWriteUser();
+        $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
+    }
+
+    /**
+     * @expectedException \Piwik\NoAccessException
      * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
     public function test_updateContainerVariable_shouldFailWhenNotHavingViewPermissions()
@@ -637,6 +658,16 @@ class APITest extends IntegrationTestCase
     {
         $this->setUser();
         $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'myType', 'myName');
+    }
+
+    /**
+     * @expectedException \Piwik\NoAccessException
+     * @expectedExceptionMessage checkUserHasCapability tagmanager_use_custom_templates Fake exception
+     */
+    public function test_addContainerTag_shouldFailWhenNotHavingCustomTemplatesPermissionsAndCustomTemplateIsUsed()
+    {
+        $this->setWriteUser();
+        $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName');
     }
 
     /**
@@ -947,6 +978,131 @@ class APITest extends IntegrationTestCase
         );
     }
 
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->tagFixture = new TagManagerFixture();
+        $this->tagFixture->setUpWebsite();
+        $this->tagFixture->setUpContainers();
+
+        // we do not want to use idSite = 1, instead as we will sometimes also have idTag = 1... better tests this way
+        $this->idSite = $this->tagFixture->idSite2;
+        $this->idContainer = $this->tagFixture->idContainer1;
+        $this->idContainerDraftVersion = $this->tagFixture->idContainer1DraftVersion;
+
+        $this->api = API::getInstance();
+
+        $this->setSuperUser();
+    }
+
+    public function test_addContainerTrigger_successRegularTemplateWithWriteUser($name = 'myName')
+    {
+        $this->setWriteUser();
+        $id = $this->api->addContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, WindowLoadedTrigger::ID, $name);
+        $this->assertNotEmpty($id);
+        return $id;
+    }
+
+    public function test_addContainerVariable_successRegularTemplateWithWriteUser()
+    {
+        $this->setWriteUser();
+        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'Url', 'myName');
+        $this->assertNotEmpty($id);
+        return $id;
+    }
+
+    public function test_updateContainerVariable_successRegularTemplateWithWriteUser()
+    {
+        $id = $this->test_addContainerVariable_successRegularTemplateWithWriteUser();
+
+        $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('urlPart' => 'href'));
+        $this->assertTrue(true);
+    }
+
+    public function test_updateContainerVariable_failMissingCustomTemplatePermission()
+    {
+        $this->setAdminUser();
+        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
+
+        $this->setWriteUser();
+
+        try {
+            $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2');
+            $this->fail('Expected exception has not been thrown');
+        } catch (\Exception $e) {
+            $this->assertContains('checkUserHasCapability tagmanager_use_custom_templates', $e->getMessage());
+        }
+    }
+
+    public function test_updateContainerVariable_successWithCustomTemplatePermission()
+    {
+        $this->setAdminUser();
+        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+
+        $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2');
+        $this->assertTrue(true);
+    }
+
+    public function test_addContainerTag_successRegularTemplateWithWriteUser()
+    {
+        $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser();
+        $this->setWriteUser();
+        $fireTrigger = array($idTrigger);
+        $id = $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger);
+        $this->assertNotEmpty($id);
+        return $id;
+    }
+
+    public function test_updateContainerTag_successRegularTemplateWithWriteUser()
+    {
+        $id = $this->test_addContainerTag_successRegularTemplateWithWriteUser();
+
+        $this->setWriteUser();
+
+        $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser($name = 'foobar');
+        $fireTrigger = array($idTrigger);
+        $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customImageSrc' => 'foo'), $fireTrigger);
+        $this->assertTrue(true);
+    }
+
+    public function test_updateContainerTag_failMissingCustomTemplatePermission()
+    {
+        $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser($name = 'foobar');
+        $this->setAdminUser();
+
+        $fireTrigger = array($idTrigger);
+
+        $id = $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
+
+        $this->setWriteUser();
+
+        try {
+            $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customHtml' => 'foo'), $fireTrigger);
+            $this->fail('Expected exception has not been thrown');
+        } catch (\Exception $e) {
+            $this->assertContains('checkUserHasCapability tagmanager_use_custom_templates', $e->getMessage());
+        }
+    }
+
+    public function test_updateContainerTag_successWithCustomTemplatePermission()
+    {
+        $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser();
+        $this->setAdminUser();
+
+        $fireTrigger = array($idTrigger);
+        $id = $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+
+        $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customHtml' => 'foo'), $fireTrigger);
+        $this->assertTrue(true);
+    }
+
     protected function setSuperUser()
     {
         FakeAccess::clearAccess(true);
@@ -963,6 +1119,15 @@ class APITest extends IntegrationTestCase
         FakeAccess::clearAccess(false);
         FakeAccess::$identity = 'testUser';
         FakeAccess::$idSitesView = array(1,3, $this->idSite);
+        FakeAccess::$idSitesAdmin = array();
+    }
+
+    protected function setWriteUser()
+    {
+        FakeAccess::clearAccess(false);
+        FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesView = array();
+        FakeAccess::$idSitesWrite = array(1,3, $this->idSite);
         FakeAccess::$idSitesAdmin = array();
     }
 

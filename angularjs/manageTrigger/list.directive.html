@@ -12,7 +12,7 @@
                 <th class="conditions">{{ 'TagManager_Filter'|translate }}</th>
                 <th class="lastUpdated">{{ 'TagManager_LastUpdated'|translate }}</th>
                 <th class="action"
-                    ng-show="triggerList.hasAdminAccess">{{ 'General_Actions'|translate }}</th>
+                    ng-show="triggerList.hasWriteAccess">{{ 'General_Actions'|translate }}</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@
                 {{ 'TagManager_NoTriggersFound'|translate }}
                 <a ng-click="triggerList.createTrigger()"
                    class="createContainerTriggerNow"
-                   ng-show="triggerList.hasAdminAccess">{{ 'TagManager_CreateNewTriggerNow'|translate }}</a>
+                   ng-show="triggerList.hasWriteAccess">{{ 'TagManager_CreateNewTriggerNow'|translate }}</a>
             </td>
         </tr>
         <tr ng-repeat="trigger in triggerList.model.triggers|orderBy:'name':false"
@@ -37,7 +37,7 @@
             <td class="conditions"><span class="icon-ok" ng-show="trigger.conditions|length"></span></td>
             <td class="lastUpdated" title="{{ 'TagManager_CreatedOnX'|translate:trigger.created_date_pretty }}"><span>{{ trigger.updated_date_pretty }}</span></td>
             <td class="action"
-                ng-show="triggerList.hasAdminAccess">
+                ng-show="triggerList.hasWriteAccess">
                 <a ng-click="triggerList.editTrigger(trigger.idtrigger, trigger.type)" class="table-action icon-edit" title="{{ 'TagManager_EditTrigger'|translate }}"></a>
                 <a ng-click="triggerList.deleteTrigger(trigger)" class="table-action icon-delete"
                    title="{{ 'TagManager_DeleteX'|translate:('TagManager_Trigger'|translate) }}"
@@ -48,7 +48,7 @@
     </table>
 
     <div class="tableActionBar"
-         ng-show="triggerList.hasAdminAccess">
+         ng-show="triggerList.hasWriteAccess">
         <a class="createNewTrigger" value="" ng-click="triggerList.createTrigger()"
         ><span class="icon-add"></span> {{ 'TagManager_CreateNewTrigger'|translate }}</a>
     </div>

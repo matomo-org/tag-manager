@@ -8,6 +8,8 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration\Input;
 
+use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
+use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\SystemSettings;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
@@ -46,22 +48,37 @@ class AccessValidatorTest extends IntegrationTestCase
      * @expectedException \Exception
      * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
      */
-    public function test_checkWritePermission()
+    public function test_checkWriteCapability()
     {
         $this->setUser();
-        $this->validator->checkWritePermission($idSite = 1);
+        $this->validator->checkWriteCapability($idSite = 1);
     }
 
-    public function test_checkWritePermission_successAdmin()
+    public function test_checkWriteCapability_successWrite()
     {
-        $this->setAdmin();
-        $this->validator->checkWritePermission($idSite = 1);
+        $this->setWrite();
+        $this->validator->checkWriteCapability($idSite = 1);
         $this->assertTrue(true);
     }
 
-    public function test_checkWritePermission_successSuperUser()
+    public function test_checkWriteCapability_successAdmin()
     {
-        $this->validator->checkWritePermission($idSite = 1);
+        $this->setAdmin();
+        $this->validator->checkWriteCapability($idSite = 1);
+        $this->assertTrue(true);
+    }
+
+    public function test_checkWriteCapability_successSuperUser()
+    {
+        $this->validator->checkWriteCapability($idSite = 1);
+        $this->assertTrue(true);
+    }
+
+    public function test_checkWriteCapability_successViewUserWithCapability()
+    {
+        $this->setUser();
+        FakeAccess::$idSitesCapabilities = array(TagManagerWrite::ID => array($idSite = 1));
+        $this->validator->checkWriteCapability($idSite = 1);
         $this->assertTrue(true);
     }
 
@@ -69,56 +86,86 @@ class AccessValidatorTest extends IntegrationTestCase
      * @expectedException \Exception
      * @expectedExceptionMessage checkUserHasCapability tagmanager_publish_live_container Fake exception
      */
-    public function test_checkPublishLiveEnvironmentPermission()
+    public function test_checkPublishLiveEnvironmentCapability()
     {
         $this->setUser();
-        $this->validator->checkPublishLiveEnvironmentPermission($idSite = 1);
+        $this->validator->checkPublishLiveEnvironmentCapability($idSite = 1);
     }
 
-    public function test_checkPublishLiveEnvironmentPermission_successAdmin()
+    public function test_checkPublishLiveEnvironmentCapability_successAdmin()
     {
         $this->setAdmin();
-        $this->validator->checkPublishLiveEnvironmentPermission($idSite = 1);
+        $this->validator->checkPublishLiveEnvironmentCapability($idSite = 1);
         $this->assertTrue(true);
     }
 
-    public function test_checkPublishLiveEnvironmentPermission_successSuperUser()
+    public function test_checkPublishLiveEnvironmentCapability_successWriteUserWithCapability()
     {
-        $this->validator->checkPublishLiveEnvironmentPermission($idSite = 1);
+        $this->setUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($idSite = 1));
+        $this->validator->checkPublishLiveEnvironmentCapability($idSite = 1);
         $this->assertTrue(true);
+    }
+
+    public function test_checkPublishLiveEnvironmentCapability_successSuperUser()
+    {
+        $this->validator->checkPublishLiveEnvironmentCapability($idSite = 1);
+        $this->assertTrue(true);
+    }
+
+    public function test_hasUseCustomTemplatesCapability()
+    {
+        $this->assertTrue($this->validator->hasUseCustomTemplatesCapability(1));
+        $this->setUser();
+        $this->assertFalse($this->validator->hasUseCustomTemplatesCapability(1));
+        $this->setAdmin();
+        $this->assertTrue($this->validator->hasUseCustomTemplatesCapability(1));
+        $this->setWrite();
+        $this->assertFalse($this->validator->hasUseCustomTemplatesCapability(1));
+    }
+
+    public function test_hasPublishLiveEnvironmenCapability()
+    {
+        $this->assertTrue($this->validator->hasPublishLiveEnvironmenCapability(1));
+        $this->setUser();
+        $this->assertFalse($this->validator->hasPublishLiveEnvironmenCapability(1));
+        $this->setAdmin();
+        $this->assertTrue($this->validator->hasPublishLiveEnvironmenCapability(1));
+        $this->setWrite();
+        $this->assertFalse($this->validator->hasPublishLiveEnvironmenCapability(1));
     }
 
     /**
      * @expectedException \Exception
      * @expectedExceptionMessage checkUserHasCapability tagmanager_use_custom_templates Fake exception
      */
-    public function test_checkUseCustomTemplatesPermission()
+    public function test_checkUseCustomTemplatesCapability()
     {
         $this->setUser();
-        $this->validator->checkUseCustomTemplatesPermission($idSite = 1);
+        $this->validator->checkUseCustomTemplatesCapability($idSite = 1);
     }
 
     /**
      * @expectedException \Exception
      * @expectedExceptionMessage checkUserHasSuperUserAccess Fake exception
      */
-    public function test_checkUseCustomTemplatesPermission_noAccessWhenRequireSuperUser()
+    public function test_checkUseCustomTemplatesCapability_noAccessWhenRequireSuperUser()
     {
         $this->settings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_SUPERUSER);
         $this->setAdmin();
-        $this->validator->checkUseCustomTemplatesPermission($idSite = 1);
+        $this->validator->checkUseCustomTemplatesCapability($idSite = 1);
     }
 
-    public function test_checkUseCustomTemplatesPermission_successAdmin()
+    public function test_checkUseCustomTemplatesCapability_successAdmin()
     {
         $this->setAdmin();
-        $this->validator->checkUseCustomTemplatesPermission($idSite = 1);
+        $this->validator->checkUseCustomTemplatesCapability($idSite = 1);
         $this->assertTrue(true);
     }
 
-    public function test_checkUseCustomTemplatesPermission_successSuperUser()
+    public function test_checkUseCustomTemplatesCapability_successSuperUser()
     {
-        $this->validator->checkUseCustomTemplatesPermission($idSite = 1);
+        $this->validator->checkUseCustomTemplatesCapability($idSite = 1);
         $this->assertTrue(true);
     }
 
@@ -154,27 +201,27 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->validator->checkSiteExists($idSite = 999);
     }
 
-    public function test_hasWritePermission_anonymousWithoutViewCannot()
+    public function test_hasWriteCapability_anonymousWithoutViewCannot()
     {
         $this->setAnonymous();
-        $this->assertFalse($this->validator->hasWritePermission($idSite = 1));
+        $this->assertFalse($this->validator->hasWriteCapability($idSite = 1));
     }
 
-    public function test_hasWritePermission_success_user()
+    public function test_hasWriteCapability_success_user()
     {
         $this->setUser();
-        $this->assertFalse($this->validator->hasWritePermission($idSite = 1));
+        $this->assertFalse($this->validator->hasWriteCapability($idSite = 1));
     }
 
-    public function test_hasWritePermission_admin()
+    public function test_hasWriteCapability_admin()
     {
         $this->setAdmin();
-        $this->assertTrue($this->validator->hasWritePermission($idSite = 1));
+        $this->assertTrue($this->validator->hasWriteCapability($idSite = 1));
     }
 
-    public function test_hasWritePermission_success_Superuser()
+    public function test_hasWriteCapability_success_Superuser()
     {
-        $this->assertTrue($this->validator->hasWritePermission($idSite = 1));
+        $this->assertTrue($this->validator->hasWriteCapability($idSite = 1));
     }
 
     protected function setAnonymous()
@@ -190,6 +237,15 @@ class AccessValidatorTest extends IntegrationTestCase
         FakeAccess::clearAccess(false);
         FakeAccess::$identity = 'testUser';
         FakeAccess::$idSitesView = array(1,3);
+        FakeAccess::$idSitesAdmin = array();
+    }
+
+    protected function setWrite()
+    {
+        FakeAccess::clearAccess(false);
+        FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesView = array();
+        FakeAccess::$idSitesWrite = array(1,3);
         FakeAccess::$idSitesAdmin = array();
     }
 

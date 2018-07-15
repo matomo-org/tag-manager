@@ -13,7 +13,7 @@
                 <th class="lookupTable">{{ 'TagManager_LookupTable'|translate }}</th>
                 <th class="lastUpdated">{{ 'TagManager_LastUpdated'|translate }}</th>
                 <th class="action"
-                    ng-show="variableList.hasAdminAccess">{{ 'General_Actions'|translate }}</th>
+                    ng-show="variableList.hasWriteAccess">{{ 'General_Actions'|translate }}</th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@
                 {{ 'TagManager_NoVariablesFound'|translate }}
                 <a ng-click="variableList.createVariable()"
                    class="createContainerVariableNow"
-                   ng-show="variableList.hasAdminAccess"
+                   ng-show="variableList.hasWriteAccess"
                 >{{ 'TagManager_CreateNewVariableNow'|translate }}</a>
             </td>
         </tr>
@@ -39,7 +39,7 @@
             <td class="lookupTable"><span class="icon-ok" ng-show="variable.lookup_table|length"></span></td>
             <td class="lastUpdated" title="{{ 'TagManager_CreatedOnX'|translate:variable.created_date_pretty }}"><span>{{ variable.updated_date_pretty }}</span></td>
             <td class="action"
-                ng-show="variableList.hasAdminAccess">
+                ng-show="variableList.hasWriteAccess">
                 <a ng-click="variableList.editVariable(variable.idvariable, variable.type)"
                    class="table-action icon-edit" title="{{ 'TagManager_EditVariable'|translate }}"></a>
                 <a ng-click="variableList.deleteVariable(variable)" class="table-action icon-delete"
@@ -51,7 +51,7 @@
     </table>
 
     <div class="tableActionBar"
-         ng-show="variableList.hasAdminAccess">
+         ng-show="variableList.hasWriteAccess">
         <a class="createNewVariable" value="" ng-click="variableList.createVariable()"
         ><span class="icon-add"></span> {{ 'TagManager_CreateNewVariable'|translate }}</a>
     </div>

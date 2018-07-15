@@ -63,7 +63,7 @@ class Variable extends BaseModel
             throw new \Exception(Piwik::translate('TagManager_ErrorVariableNameInUseByPreconfiguredVariable'));
         }
 
-        if (!is_string($defaultValue) && !is_int($defaultValue) && !is_float($defaultValue) && !is_bool($defaultValue)) {
+        if (isset($defaultValue) && !is_string($defaultValue) && !is_int($defaultValue) && !is_float($defaultValue) && !is_bool($defaultValue)) {
             throw new \Exception(Piwik::translate('TagManager_ErrorVariableInvalidDefaultValue'));
         }
 
