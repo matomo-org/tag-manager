@@ -43,18 +43,28 @@
                  saving="editVersion.model.isUpdating">
             </div>
 
+            <div id="selectTagManagerEnvironmentHelp" class="inline-help-node">
+                <div>{{ 'TagManager_VersionEnvironmentHelp'|translate }}</div>
+                <div ng-show="!editVersion.canPublishToLive"
+                     class="alert alert-info"
+                     style="margin-bottom: 0;padding-bottom: 0;">
+                    {{ 'TagManager_PublishLiveEnvironmentCapabilityRequired'|translate:('TagManager_CapabilityPublishLiveContainer'|translate) }}
+                </div>
+            </div>
+
             <div piwik-field uicontrol="select" name="environment"
-                 ng-show="editVersion.create"
+                 ng-show="editVersion.create && editVersion.environments.length"
                  ng-model="editVersion.version.environment"
                  ng-change="editVersion.setValueHasChanged()"
                  introduction="{{ 'TagManager_OrCreateAndPublishVersion'|translate }}"
                  title="{{ 'TagManager_Environment'|translate }}"
                  options="editVersion.environments"
-                 inline-help="{{ 'TagManager_VersionEnvironmentHelp'|translate }}">
+                 inline-help="#selectTagManagerEnvironmentHelp">
             </div>
 
+
             <div piwik-save-button
-                 ng-show="editVersion.create"
+                 ng-show="editVersion.create && editVersion.environments.length"
                  class="publishButton"
                  onconfirm="editVersion.createVersionAndPublish()"
                  disabled="editVersion.model.isUpdating || !editVersion.isDirty"

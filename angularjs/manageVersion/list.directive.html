@@ -35,7 +35,7 @@
             <td class="index">{{ version.revision }}</td>
             <td class="name">{{ version.name }}</td>
             <td class="description" title="{{ version.description }}">{{ versionList.truncateText(version.description, 30) }}</td>
-            <td class="environments"><span ng-repeat="release in version.releases" title="{{ 'TagManager_ReleaseInfo'|translate:release.release_login:release.release_date_pretty }}">{{ release.environment }}<span ng-show="!$last">, </span></span></td>
+            <td class="environments"><span ng-repeat="release in version.releases" title="{{ 'TagManager_ReleaseInfo'|translate:release.release_login:release.release_date_pretty }}">{{ release.environment|ucfirst }}<span ng-show="!$last">, </span></span></td>
             <td class="created"><span>{{ version.created_date_pretty }}</span></td>
             <td class="action">
                 <a ng-click="versionList.publishVersion(version)"
@@ -88,11 +88,24 @@
     <div class="ui-confirm" id="confirmPublishVersion">
         <h2>{{ 'TagManager_PublishVersion'|translate:versionList.versionToBePublished.name }}</h2>
 
-        <div piwik-field uicontrol="select" name="environment"
-             ng-model="versionList.versionToBePublished.deployEnvironment"
-             title="{{ 'TagManager_Environment'|translate }}"
-             options="versionList.versionToBePublished.availableEnvironments"
-             full-width="true">
+        <div ng-show="versionList.versionToBePublished.availableEnvironments.length">
+            <div piwik-field uicontrol="select" name="environment"
+                 ng-model="versionList.versionToBePublished.deployEnvironment"
+                 title="{{ 'TagManager_Environment'|translate }}"
+                 options="versionList.versionToBePublished.availableEnvironments"
+                 full-width="true">
+            </div>
+
+            <div ng-show="!versionList.canPublishToLive"
+                 style="margin-bottom: 0;"
+                 class="alert alert-info">
+                {{ 'TagManager_PublishLiveEnvironmentCapabilityRequired'|translate:('TagManager_CapabilityPublishLiveContainer'|translate) }}
+            </div>
+        </div>
+
+        <div ng-if="!versionList.versionToBePublished.availableEnvironments.length" class="alert alert-info"
+             style="margin-top: 16px;">
+            {{ 'TagManager_VersionAlreadyPublishedToAllEnvironments'|translate }}
         </div>
 
         <input role="yes" type="button" value="{{ 'TagManager_PublishRelease'|translate }}"/>

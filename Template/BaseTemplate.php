@@ -17,6 +17,9 @@ use Piwik\Plugins\TagManager\Settings\Storage\Backend\TransientBackend;
 use Piwik\Settings\Setting;
 use Piwik\Settings\Storage\Storage;
 
+/**
+ * @api
+ */
 abstract class BaseTemplate
 {
     private $pluginName = null;

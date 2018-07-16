@@ -21,8 +21,9 @@
         this.environments = [];
         this.versionToBePublished = null;
         this.idSite = piwik.idSite;
+        this.canPublishToLive = piwik.hasUserCapability('tagmanager_publish_live_container');
 
-        tagManagerVersionModel.fetchAvailableEnvironments().then(function (environments) {
+        tagManagerVersionModel.fetchAvailableEnvironmentsWithPublishPermission().then(function (environments) {
             self.environments = [];
             angular.forEach(environments, function (environment) {
                 self.environments.push({key: environment.id, value: environment.name});

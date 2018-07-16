@@ -151,7 +151,7 @@ class Controller extends \Piwik\Plugin\Controller
 
                 $version = '';
                 if (!empty($release['version_name'])) {
-                    $version = ' (' . $release['version_name'] . ')';
+                    $version = ' (' . Piwik::translate('TagManager_VersionX', $release['version_name']) . ')';
                 }
 
                 $mtmPreviewId = PreviewCookie::COOKIE_NAME . '=' .$idContainer;

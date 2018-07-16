@@ -124,15 +124,15 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->assertFalse($this->validator->hasUseCustomTemplatesCapability(1));
     }
 
-    public function test_hasPublishLiveEnvironmenCapability()
+    public function test_hasPublishLiveEnvironmentCapability()
     {
-        $this->assertTrue($this->validator->hasPublishLiveEnvironmenCapability(1));
+        $this->assertTrue($this->validator->hasPublishLiveEnvironmentCapability(1));
         $this->setUser();
-        $this->assertFalse($this->validator->hasPublishLiveEnvironmenCapability(1));
+        $this->assertFalse($this->validator->hasPublishLiveEnvironmentCapability(1));
         $this->setAdmin();
-        $this->assertTrue($this->validator->hasPublishLiveEnvironmenCapability(1));
+        $this->assertTrue($this->validator->hasPublishLiveEnvironmentCapability(1));
         $this->setWrite();
-        $this->assertFalse($this->validator->hasPublishLiveEnvironmenCapability(1));
+        $this->assertFalse($this->validator->hasPublishLiveEnvironmentCapability(1));
     }
 
     /**

@@ -161,6 +161,28 @@ class API extends \Piwik\Plugin\API
     }
 
     /**
+     * Get a list of all available environments such as "live", "dev", "staging" with the permission to publish.
+     *
+     * @param int $idSite
+     * @return array
+     */
+    public function getAvailableEnvironmentsWithPublishCapability($idSite)
+    {
+        Piwik::checkUserHasSomeViewAccess();
+
+        $environments = $this->environment->getEnvironments();
+
+        $hasCapability = $this->accessValidator->hasPublishLiveEnvironmentCapability($idSite);
+
+        return array_filter($environments, function ($environment) use ($idSite, $hasCapability) {
+            if ($environment['id'] === 'live' && !$hasCapability) {
+                return false;
+            }
+            return true;
+        });
+    }
+
+    /**
      * Get a list of all available fire limits which can be used when creating or updating a tag.
      * @return array
      */

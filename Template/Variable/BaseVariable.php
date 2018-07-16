@@ -10,7 +10,9 @@ namespace Piwik\Plugins\TagManager\Template\Variable;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Template\BaseTemplate;
 
-
+/**
+ * @api
+ */
 abstract class BaseVariable extends BaseTemplate
 {
     CONST CATEGORY_PAGE_VARIABLES = 'TagManager_CategoryPageVariables';

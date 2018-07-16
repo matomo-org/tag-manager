@@ -75,14 +75,14 @@ class Import
 
     public function checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer)
     {
-        $container = $this->containers->getContainer($idSite, $idContainer);
-
         if (!isset($exportedContainerVersion['tags'])
             || !isset($exportedContainerVersion['triggers'])
             || !isset($exportedContainerVersion['variables'])
             || !isset($exportedContainerVersion['context'])) {
             throw new Exception(Piwik::translate('TagManager_ErrorContainerVersionImportIncomplete'));
         }
+
+        $container = $this->containers->getContainer($idSite, $idContainer);
 
         if ($container['context'] !== $exportedContainerVersion['context']) {
             $message = sprintf(Piwik::translate('TagManager_ErrorContainerVersionImportWrongContext', array($container['context'], $exportedContainerVersion['context'])));

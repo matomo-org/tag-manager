@@ -69,7 +69,7 @@ class AccessValidator
         return true;
     }
 
-    public function hasPublishLiveEnvironmenCapability($idSite)
+    public function hasPublishLiveEnvironmentCapability($idSite)
     {
         try {
             $this->checkPublishLiveEnvironmentCapability($idSite);
