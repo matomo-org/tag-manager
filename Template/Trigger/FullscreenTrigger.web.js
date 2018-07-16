@@ -7,7 +7,7 @@
             function onFullScreen() {
                 var limit = parameters.get('triggerLimit', 1);
 
-                if (limit && limit <= numTriggers) {
+                if (limit && limit !== '0' && limit <= numTriggers) {
                     return;
                 }
 
