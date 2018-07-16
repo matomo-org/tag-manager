@@ -102,6 +102,14 @@ describe("ContainerVariable", function () {
         }, done);
     });
 
+    it('should fade out variables that cannot be created', function (done) {
+        permissions.setWriteUser()
+        capture.page(done, 'create_new_custom_templates_restricted', function (page) {
+            page.load(container1Base);
+            page.click('.createNewVariable');
+        }, done);
+    });
+    return;
     it('should be able to prefill variable', function (done) {
         capture.page(done, 'create_new_prefilled', function (page) {
             page.load(container1Base);
