@@ -24,6 +24,7 @@
         this.idContainerVersion = $scope.idContainerVersion;
         this.showAdvanced = false;
         this.chooseTagType = false;
+        this.canUseCustomTemplates = piwik.hasUserCapability('tagmanager_use_custom_templates');
 
         this.availableTags = [];
         this.availableFireLimits = [];
@@ -122,6 +123,12 @@
             return parts[1];
         }
 
+        function enrichTemplateType(template)
+        {
+            template.isDisabled = !self.canUseCustomTemplates && template && template.isCustomTemplate;
+            return template;
+        }
+
         function updateAvailableTriggers()
         {
             self.model.fetchContainerTriggers(self.idContainer, self.idContainerVersion).then(function (triggers) {
@@ -205,6 +212,12 @@
             self.model.fetchContainer(self.idContainer).then(function (container){
                 return self.model.fetchAvailableTags(container.context);
             }).then(function (tags) {
+                angular.forEach(tags, function (tagsGroup) {
+                    angular.forEach(tagsGroup.types, function (tag) {
+                        enrichTemplateType(tag);
+                    });
+                });
+
                 self.availableTags = tags;
             }).then(function () {
                 if (self.edit && idTag) {
@@ -218,6 +231,10 @@
                         self.tag.idcontainer = self.idContainer;
                         self.tag.block_triggers = [];
                         self.tag.fire_triggers = [];
+
+                        if (self.tag.typeMetadata) {
+                            enrichTemplateType(self.tag.typeMetadata);
+                        }
 
                         if (angular.isArray(self.tag.block_trigger_ids)) {
                             angular.forEach(self.tag.block_trigger_ids, function (id) {
@@ -371,6 +388,9 @@
         };
 
         this.createTagType = function (tagTemplate) {
+            if (tagTemplate && tagTemplate.isDisabled) {
+                return;
+            }
             this.chooseTagType = false;
             this.editTitle = translate('TagManager_CreateNewTag');
             this.tag = {

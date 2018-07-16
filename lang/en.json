@@ -431,6 +431,7 @@
       "UrlParameterVariableName": "URL Parameter",
       "UrlVariableDescription": "Gets the value of the current page URL.",
       "UrlVariableName": "URL Variable",
+      "UseCustomTemplateCapabilityRequired": "This is a Custom Template which can only be created or edited by an \"Admin\" or a user with the \"%1$s\" capability",
       "UserAgentVariableDescription": "Gets the value of the user agent which includes the operating system and browser information about the current visitors' device.",
       "UserAgentVariableName": "User Agent",
       "UtcDateVariableDescription": "The current data in UTC, for example \"Mon, 19 Mar 2018 14:00:00 GMT\".",

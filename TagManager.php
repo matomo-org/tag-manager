@@ -295,6 +295,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_PublishLiveEnvironmentCapabilityRequired';
         $result[] = 'TagManager_CapabilityPublishLiveContainer';
         $result[] = 'TagManager_VersionAlreadyPublishedToAllEnvironments';
+        $result[] = 'TagManager_UseCustomTemplateCapabilityRequired';
+        $result[] = 'TagManager_CapabilityUseCustomTemplates';
         $result[] = 'TagManager_ViewX';
         $result[] = 'TagManager_DeleteX';
         $result[] = 'TagManager_CreateNewX';

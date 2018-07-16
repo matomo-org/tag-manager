@@ -1,5 +1,12 @@
 ## Changelog
 
+0.2.0
+* Support Matomo's new capability system for a more granular permission system and to improve security. Introduces three new capabilities
+ * Tag Manager Write
+ * Use Custom Template
+ * Publish Live Contaier
+* New API method `TagManager.getAvailableEnvironmentsWithPublishCapability`
+
 0.1.1
 * Fixed CustomEventsTrigger may miss an event when pushed before tag manager is loaded
 * Improved various wordings and fixed some typos

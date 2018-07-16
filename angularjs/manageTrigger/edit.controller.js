@@ -24,6 +24,7 @@
         this.idContainerVersion = $scope.idContainerVersion;
         this.chooseTriggerType = false;
         this.isEmbedded = !!$scope.onChangeTrigger;
+        this.canUseCustomTemplates = piwik.hasUserCapability('tagmanager_use_custom_templates');
 
         this.availableTriggers = [];
         this.availableComparisons = [];
@@ -49,6 +50,12 @@
 
         // needed for suggestNameForType() to make sure it is aware of all names
         this.model.fetchTriggersIfNotLoaded();
+
+        function enrichTemplateType(template)
+        {
+            template.isDisabled = !self.canUseCustomTemplates && template && template.isCustomTemplate;
+            return template;
+        }
 
         function getNotification()
         {
@@ -101,6 +108,12 @@
             self.model.fetchContainer(self.idContainer).then(function (container){
                 return self.model.fetchAvailableTriggers(container.context);
             }).then(function (triggers) {
+                angular.forEach(triggers, function (triggersGroup) {
+                    angular.forEach(triggersGroup.types, function (trigger) {
+                        enrichTemplateType(trigger);
+                    });
+                });
+
                 self.availableTriggers = triggers;
             }).then(function () {
                 if (self.edit && idTrigger) {
@@ -112,6 +125,9 @@
                         }
                         self.trigger = angular.copy(trigger);
                         self.trigger.idcontainer = self.idContainer;
+                        if (self.trigger.typeMetadata) {
+                            enrichTemplateType(self.trigger.typeMetadata);
+                        }
                         self.addConditionEntryIfNoneExists();
                         self.onConditionChange();
                         self.addParameterWatch();
@@ -196,6 +212,10 @@
         };
 
         this.createTriggerType = function (triggerTemplate) {
+            if (triggerTemplate && triggerTemplate.isDisabled) {
+                return;
+            }
+
             this.chooseTriggerType = false;
             this.editTitle = translate('TagManager_CreateNewTrigger');
             this.trigger = {

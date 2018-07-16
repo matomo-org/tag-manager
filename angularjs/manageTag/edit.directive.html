@@ -14,6 +14,11 @@
     <form ng-show="!editTag.chooseTagType && editTag.editTitle" ng-submit="editTag.edit ? editTag.updateTag() : editTag.createTag()">
         <div>
 
+            <div class="alert alert-warning"
+                 ng-show="editTag.tag.typeMetadata.isDisabled">
+                {{ 'TagManager_UseCustomTemplateCapabilityRequired'|translate:('TagManager_CapabilityUseCustomTemplates'|translate) }}
+            </div>
+
             <div piwik-field uicontrol="text" name="type"
                  ng-model="editTag.tag.typeMetadata.name"
                  disabled="true"
@@ -252,7 +257,13 @@
                 </div>
             </div>
 
+            <div class="alert alert-warning"
+                 ng-show="editTag.tag.typeMetadata.isDisabled">
+                {{ 'TagManager_UseCustomTemplateCapabilityRequired'|translate:('TagManager_CapabilityUseCustomTemplates'|translate) }}
+            </div>
+
             <div piwik-save-button
+                 ng-show="!editTag.tag.typeMetadata.isDisabled"
                  class="createButton"
                  onconfirm="editTag.edit ? editTag.updateTag() : editTag.createTag()"
                  disabled="editTag.model.isUpdating || !editTag.isDirty"
@@ -269,7 +280,11 @@
     <div ng-show="editTag.chooseTagType" id="confirmSelectTagType">
         <ul class="collection with-header" ng-repeat="tagCategory in editTag.availableTags">
             <li class="collection-header"><h4>{{ tagCategory.name }}</h4></li>
-            <li class="collection-item avatar templateType{{tagTemplate.id}}" ng-repeat="tagTemplate in tagCategory.types" ng-click="editTag.createTagType(tagTemplate)">
+            <li class="collection-item avatar templateType{{tagTemplate.id}}"
+                ng-repeat="tagTemplate in tagCategory.types"
+                ng-class="{'disabledTemplate': tagTemplate.isDisabled}"
+                ng-click="editTag.createTagType(tagTemplate)"
+                title="{{ !tagTemplate.isDisabled ? '' : ('TagManager_UseCustomTemplateCapabilityRequired'|translate:('TagManager_CapabilityUseCustomTemplates'|translate)) }}">
                 <img ng-if="tagTemplate.icon" ng-src="{{ tagTemplate.icon }}" alt="" class="circle">
                 <span class="title">{{ tagTemplate.name }}</span>
                 <p ng-show="tagTemplate.description">{{ tagTemplate.description }}</p>

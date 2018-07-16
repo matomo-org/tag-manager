@@ -34,6 +34,7 @@
 				<row>web</row>
 			</contexts>
 			<hasAdvancedSettings>1</hasAdvancedSettings>
+			<isCustomTemplate>0</isCustomTemplate>
 			<parameters>
 				<row>
 					<name>dataLayerName</name>
@@ -83,6 +84,7 @@
 				<row>web</row>
 			</contexts>
 			<hasAdvancedSettings>1</hasAdvancedSettings>
+			<isCustomTemplate>0</isCustomTemplate>
 			<parameters>
 				<row>
 					<name>dataLayerName</name>
@@ -132,6 +134,7 @@
 				<row>web</row>
 			</contexts>
 			<hasAdvancedSettings>1</hasAdvancedSettings>
+			<isCustomTemplate>0</isCustomTemplate>
 			<parameters>
 				<row>
 					<name>dataLayerName</name>

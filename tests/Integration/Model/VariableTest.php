@@ -183,6 +183,7 @@ class VariableTest extends IntegrationTestCase
                 'order' => 9999,
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
+                'isCustomTemplate' => false,
                 'parameters' => array (
                    array(
                         'name' => 'dataLayerName',
@@ -243,6 +244,7 @@ class VariableTest extends IntegrationTestCase
                 'order' => 9999,
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
+                'isCustomTemplate' => false,
                 'parameters' => array (
                     array(
                         'name' => 'dataLayerName',
@@ -362,6 +364,7 @@ class VariableTest extends IntegrationTestCase
                 'order' => 9999,
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
+                'isCustomTemplate' => false,
                 'parameters' => array (
                     array(
                         'name' => 'dataLayerName',

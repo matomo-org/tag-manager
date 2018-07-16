@@ -15,6 +15,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>unit</name>
@@ -55,6 +56,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>1</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>jsFunction</name>
@@ -86,6 +88,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>selectionMethod</name>
@@ -168,6 +171,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>dataLayerName</name>
@@ -199,6 +203,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>cookieName</name>
@@ -246,6 +251,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>variableName</name>
@@ -277,6 +283,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>urlPart</name>
@@ -317,6 +324,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>parameterName</name>
@@ -348,6 +356,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>urlPart</name>
@@ -394,6 +403,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>metaName</name>
@@ -449,6 +459,7 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>constantValue</name>
@@ -485,12 +496,13 @@
 					<row>web</row>
 				</contexts>
 				<hasAdvancedSettings>0</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
 						<name>matomoUrl</name>
 						<title>Matomo URL</title>
-						<value>//localhost/tests/PHPUnit/proxy/</value>
-						<defaultValue>//localhost/tests/PHPUnit/proxy/</defaultValue>
+						<value>//example.com/piwik/tests/PHPUnit/proxy/</value>
+						<defaultValue>//example.com/piwik/tests/PHPUnit/proxy/</defaultValue>
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>

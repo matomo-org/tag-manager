@@ -26,6 +26,7 @@
 			<row>web</row>
 		</contexts>
 		<hasAdvancedSettings>1</hasAdvancedSettings>
+		<isCustomTemplate>0</isCustomTemplate>
 		<parameters>
 		</parameters>
 	</typeMetadata>

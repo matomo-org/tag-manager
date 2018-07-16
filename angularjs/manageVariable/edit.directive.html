@@ -14,6 +14,11 @@
     <form ng-show="!editVariable.chooseVariableType && editVariable.editTitle" ng-submit="editVariable.edit ? editVariable.updateVariable() : editVariable.createVariable()">
         <div>
 
+            <div class="alert alert-warning"
+                 ng-show="editVariable.variable.typeMetadata.isDisabled">
+                {{ 'TagManager_UseCustomTemplateCapabilityRequired'|translate:('TagManager_CapabilityUseCustomTemplates'|translate) }}
+            </div>
+
             <div piwik-field uicontrol="text" name="type"
                  ng-model="editVariable.variable.typeMetadata.name"
                  disabled="true"
@@ -101,8 +106,15 @@
                     </div>
                 </div>
             </div>
+
+            <div class="alert alert-warning"
+                 ng-show="editVariable.variable.typeMetadata.isDisabled">
+                {{ 'TagManager_UseCustomTemplateCapabilityRequired'|translate:('TagManager_CapabilityUseCustomTemplates'|translate) }}
+            </div>
+
             <div piwik-save-button
                  class="createButton"
+                 ng-show="!editVariable.variable.typeMetadata.isDisabled"
                  onconfirm="editVariable.edit ? editVariable.updateVariable() : editVariable.createVariable()"
                  disabled="editVariable.model.isUpdating || !editVariable.isDirty"
                  value="{{ editVariable.edit ? ('CoreUpdater_UpdateTitle'|translate) : ('TagManager_CreateNewVariable'|translate) }}"
@@ -118,7 +130,11 @@
     <div ng-show="editVariable.chooseVariableType" id="confirmSelectVariableType">
         <ul class="collection with-header" ng-repeat="variableCategory in editVariable.availableVariables">
             <li class="collection-header"><h4>{{ variableCategory.name }}</h4></li>
-            <li class="collection-item avatar templateType{{variableTemplate.id}}" ng-repeat="variableTemplate in variableCategory.types" ng-click="editVariable.createVariableType(variableTemplate)">
+            <li class="collection-item avatar templateType{{variableTemplate.id}}"
+                ng-repeat="variableTemplate in variableCategory.types"
+                ng-class="{'disabledTemplate': variableTemplate.isDisabled}"
+                ng-click="editVariable.createVariableType(variableTemplate)"
+                title="{{ !variableTemplate.isDisabled ? '' : ('TagManager_UseCustomTemplateCapabilityRequired'|translate:('TagManager_CapabilityUseCustomTemplates'|translate)) }}">
                 <img ng-if="variableTemplate.icon" ng-src="{{ variableTemplate.icon }}" alt="" class="circle">
                 <span class="title">{{ variableTemplate.name }}</span>
                 <p ng-show="variableTemplate.description">{{ variableTemplate.description }}</p>

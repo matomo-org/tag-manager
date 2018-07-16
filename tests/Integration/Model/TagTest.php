@@ -271,6 +271,7 @@ class TagTest extends IntegrationTestCase
                     'contexts' =>
                         array ('web'),
                     'hasAdvancedSettings' => true,
+                    'isCustomTemplate' => true,
                     'parameters' =>
                         array (
                                 array (
@@ -359,6 +360,7 @@ class TagTest extends IntegrationTestCase
                     'order' => 9999,
                     'contexts' =>['web'],
                     'hasAdvancedSettings' => true,
+                    'isCustomTemplate' => true,
                     'parameters' =>
                         array (
                                 array (
@@ -555,6 +557,7 @@ class TagTest extends IntegrationTestCase
                     'order' => 9999,
                     'contexts' =>['web'],
                     'hasAdvancedSettings' => true,
+                    'isCustomTemplate' => true,
                     'parameters' =>
                         array (
                             array (
@@ -797,6 +800,7 @@ class TagTest extends IntegrationTestCase
                             0 => 'web',
                         ),
                     'hasAdvancedSettings' => true,
+                    'isCustomTemplate' => true,
                     'parameters' =>
                         array (
                                 array (
