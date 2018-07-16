@@ -32,11 +32,17 @@ abstract class BaseVariable extends BaseTemplate
 
     protected $templateType = 'Variable';
 
+    /**
+     * @inheritdoc
+     */
     public function getCategory()
     {
         return self::CATEGORY_OTHERS;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getSupportedContexts()
     {
         return array(
@@ -44,6 +50,10 @@ abstract class BaseVariable extends BaseTemplate
         );
     }
 
+    /**
+     * Defines whether this variable is a preconfigured variable which cannot be configured and is ready to use.
+     * @return bool
+     */
     public function isPreConfigured()
     {
         return false;

@@ -22,11 +22,17 @@ abstract class BaseTrigger extends BaseTemplate
 
     protected $templateType = 'Trigger';
 
+    /**
+     * @inheritdoc
+     */
     public function getCategory()
     {
         return self::CATEGORY_OTHERS;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getSupportedContexts()
     {
         return array(

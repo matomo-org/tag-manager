@@ -27,11 +27,17 @@ abstract class BaseTag extends BaseTemplate
     
     protected $templateType = 'Tag';
 
+    /**
+     * @inheritdoc
+     */
     public function getCategory()
     {
         return self::CATEGORY_OTHERS;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getSupportedContexts()
     {
         return array(

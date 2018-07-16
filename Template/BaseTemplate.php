@@ -37,14 +37,33 @@ abstract class BaseTemplate
 
     private $settingsStorage;
 
+    /**
+     * Get the ID of this template.
+     * The ID is by default automatically generated from the class name, but can be customized by returning a string.
+     *
+     * @return string
+     */
     public function getId()
     {
         return $this->makeIdFromClassname($this->templateType);
     }
 
-    /** @return Setting[] */
+    /**
+     * Get the list of parameters that can be configured for this template.
+     * @return Setting[]
+     */
     abstract public function getParameters();
+
+    /**
+     * Get the category this template belongs to.
+     * @return string
+     */
     abstract public function getCategory();
+
+    /**
+     * Defines in which contexts this tag should be available, for example "web".
+     * @return string[]
+     */
     abstract public function getSupportedContexts();
 
     private function getTranslationKey($part)
@@ -68,6 +87,10 @@ abstract class BaseTemplate
         return '';
     }
 
+    /**
+     * Get the translated name of this template.
+     * @return string
+     */
     public function getName()
     {
         $key = $this->getTranslationKey('Name');
@@ -81,6 +104,10 @@ abstract class BaseTemplate
         return $this->getId();
     }
 
+    /**
+     * Get the translated description of this template.
+     * @return string
+     */
     public function getDescription()
     {
         $key = $this->getTranslationKey('Description');
@@ -93,6 +120,10 @@ abstract class BaseTemplate
         }
     }
 
+    /**
+     * Get the translated help text for this template.
+     * @return string
+     */
     public function getHelp()
     {
         $key = $this->getTranslationKey('Help');
@@ -105,6 +136,10 @@ abstract class BaseTemplate
         }
     }
 
+    /**
+     * Get the order for this template. The lower the order is, the higher in the list the template will be shown.
+     * @return int
+     */
     public function getOrder()
     {
         return 9999;
@@ -122,6 +157,21 @@ abstract class BaseTemplate
         return 'plugins/TagManager/images/defaultIcon.svg';
     }
 
+    /**
+     * Creates a new setting / parameter.
+     *
+     * Settings will be displayed in the UI depending on the order of `makeSetting` calls. This means you can define
+     * the order of the displayed settings by calling makeSetting first for more important settings.
+     *
+     * @param string $name         The name of the setting that shall be created
+     * @param mixed  $defaultValue The default value for this setting. Note the value will not be converted to the
+     *                             specified type.
+     * @param string $type         The PHP internal type the value of this setting should have.
+     *                             Use one of FieldConfig::TYPE_* constancts
+     * @param \Closure $fieldConfigCallback   A callback method to configure the field that shall be displayed in the
+     *                             UI to define the value for this setting
+     * @return Setting   Returns an instance of the created measurable setting.
+     */
     protected function makeSetting($name, $defaultValue, $type, $fieldConfigCallback)
     {
         if (in_array(strtolower($name), self::$RESERVED_SETTING_NAMES, true)) {
@@ -140,6 +190,9 @@ abstract class BaseTemplate
         return $setting;
     }
 
+    /**
+     * @ignore
+     */
     public function loadTemplate($context, $entity)
     {
         switch ($context) {
@@ -174,6 +227,9 @@ abstract class BaseTemplate
         }
     }
 
+    /**
+     * @ignore
+     */
     protected function makeIdFromClassname($rightTrimWord)
     {
         $className = get_class($this);
@@ -209,17 +265,29 @@ abstract class BaseTemplate
         }
     }
 
+    /**
+     * Lets you hide the advanced settings tab in the UI.
+     * @return bool
+     */
     public function hasAdvancedSettings()
     {
         return true;
     }
 
+    /**
+     * If your template allows a user to add js/html code to the site for example, you should be overwriting this
+     * method and return `true`.
+     * @return bool
+     */
     public function isCustomTemplate()
     {
-        // set to true if the template allows a user to add js/html code to the site for example
         return false;
     }
 
+    /**
+     * @ignore
+     * @return array
+     */
     public function toArray()
     {
         $settingsMetadata = new SettingsMetadata();
@@ -248,6 +316,7 @@ abstract class BaseTemplate
             'order' => $this->getOrder(),
             'contexts' => $this->getSupportedContexts(),
             'hasAdvancedSettings' => $this->hasAdvancedSettings(),
+            'isCustomTemplate' => $this->isCustomTemplate(),
             'parameters' => $params,
         );
     }
