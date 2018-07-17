@@ -212,7 +212,7 @@ class Tag extends BaseModel
             $tag['typeMetadata'] = $tagType->toArray();
             foreach ($tag['typeMetadata']['parameters'] as &$parameter) {
                 $paramName = $parameter['name'];
-                if (!empty($tag['parameters'][$paramName])) {
+                if (isset($tag['parameters'][$paramName])) {
                     $parameter['value'] = $tag['parameters'][$paramName];
                 } else {
                     $tag['parameters'][$paramName] = $parameter['defaultValue'];

@@ -37,7 +37,7 @@
         });
 
         // needed for suggestNameForType() to make sure it is aware of all names
-        this.model.fetchVariablesIfNotLoaded();
+        this.model.fetchVariablesIfNotLoaded(this.idContainer, this.idContainerVersion);
 
         function getNotification()
         {
