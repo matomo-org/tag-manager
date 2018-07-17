@@ -25,6 +25,10 @@
             setTimeout(function () {
                 var limit = parameters.get('triggerLimit', 1);
 
+                if (limit) {
+                    limit = parseInt(limit, 10);
+                }
+
                 if (limit && limit <= numTriggers) {
                     return;
                 }
