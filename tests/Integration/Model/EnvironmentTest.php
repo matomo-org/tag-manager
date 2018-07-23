@@ -64,7 +64,7 @@ class EnvironmentTest extends IntegrationTestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage The environment "fooffffffffffffffffffffffffffffffffffffff" does not have a valid lenght. Please use between 2 and 40 characters.
+     * @expectedExceptionMessage The environment "fooffffffffffffffffffffffffffffffffffffff" does not have a valid length. Please use between 2 and 40 characters.
      */
     public function test_checkEnvironmentNameFormat_tooLong()
     {
