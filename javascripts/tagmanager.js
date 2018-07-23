@@ -794,6 +794,21 @@
                     }
                     return [];
                 },
+                /** @ignore **/
+                isJsContext: function (htmlString) {
+                    //  not part of API at this moment
+                    if (!htmlString) {
+                        return false;
+                    }
+                    htmlString = String(htmlString).toLowerCase();
+                    var lastScriptPos = htmlString.lastIndexOf('<script');
+                    if (lastScriptPos === -1) {
+                        return false;
+                    }
+                    var lastPiece = htmlString.substring(lastScriptPos);
+
+                    return !lastPiece.match(new RegExp('<\\s*/\\s*script>'));
+                },
                 onLoad: function (callback) {
                     if (documentAlias.readyState === 'complete') {
                         callback();
@@ -914,6 +929,10 @@
             {
                 this.name = '';
                 this.type = 'JoinedVariable';
+
+                this.getDefinition = function () {
+                    return variables;
+                };
                 this.get = function () {
                     var value = '', varReturn;
                     for (var i = 0; i < variables.length; i++) {
@@ -941,6 +960,10 @@
             {
                 this.name = '';
                 this.type = 'ConstantVariable';
+
+                this.getDefinition = function () {
+                    return value;
+                };
 
                 function isVariableDefinition(value) {
                     return value && utils.isObject(value) && !utils.isArray(value) && (utils.hasProperty(value, 'type') || utils.hasProperty(value, 'joinedVariable'));
@@ -1012,6 +1035,9 @@
                 this.defaultValue = undefined;
                 this.parameters = variable.parameters || {};
 
+                this.getDefinition = function () {
+                    return variable;
+                };
                 this.get = function () {
                     var value;
                     try {

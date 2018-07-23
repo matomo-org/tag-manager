@@ -558,11 +558,10 @@
                 result = utils.compare(atest.actualValue, atest.expectedValue, 'not_' + atest.type);
                 strictEqual(!atest.expected, result, '_compare: ' + JSON.stringify(atest));
             }
-
         });
 
         test("Matomo TagManager dom", function() {
-            expect(45);
+            expect(55);
 
             var dom = window.MatomoTagManager.dom;
 
@@ -581,6 +580,7 @@
             equal(typeof dom.bySelector, 'function', 'dom.bySelector');
             equal(typeof dom.onLoad, 'function', 'dom.onLoad');
             equal(typeof dom.onReady, 'function', 'dom.onReady');
+            equal(typeof dom.isJsContext, 'function', 'dom.isJsContext');
 
             var scrollLeft = dom.getScrollLeft();
             var scrollTop = dom.getScrollTop();
@@ -638,6 +638,16 @@
 
             strictEqual('myTagTest myTagFoo myTagTest4', dom.getElementClassNames(dom.byId('TagManager')), 'getElementClassNames, when has classes');
             strictEqual('', dom.getElementClassNames(dom.byId('customTag3')), 'getElementClassNames, when has no classes');
+
+            strictEqual(false, dom.isJsContext(null), 'isJsContext, no value given');
+            strictEqual(false, dom.isJsContext('<div>var foo ="'), 'isJsContext, not a script element');
+            strictEqual(false, dom.isJsContext('<div>var foo =""</div>'), 'isJsContext, not a closing script element');
+            strictEqual(true, dom.isJsContext('<script>var foo ="'), 'isJsContext, in the middle of a script element');
+            strictEqual(true, dom.isJsContext('<scRipT>var foo ="'), 'isJsContext, in the middle of a script element case insensitive');
+            strictEqual(false, dom.isJsContext('<div>var foo < /script>'), 'isJsContext, not an opening script element');
+            strictEqual(true, dom.isJsContext('<script>var foo ="</ div>'), 'isJsContext, not a closing script element');
+            strictEqual(false, dom.isJsContext('<script>var foo =""< / script>'), 'isJsContext, not in a script element');
+            strictEqual(false, dom.isJsContext('<script>var foo =""</'+ 'scrIpT>'), 'isJsContext, not in a script element');
 
             var div = document.createElement('div');
             div.className = '   fo   otest  hello world         ';
@@ -721,9 +731,11 @@
         });
 
         test("Matomo TagManager Template Variable", function() {
-            expect(42);
+            expect(46);
 
             strictEqual('ConstantVariable', getConstructorName(buildVariable('footest')), 'buildVariable, makes a constant variable');
+            strictEqual('footest', buildVariable('footest').getDefinition(), 'ConstantVariable, getDefinition returns string');
+            strictEqual(false, buildVariable(false).getDefinition(), 'ConstantVariable, getDefinition returns other input');
             strictEqual('footest', buildVariable('footest').get(), 'ConstantVariable, makes a constant variable when a string given');
             strictEqual('footest6', buildVariable('footest6').toString(), 'ConstantVariable, has a toString method');
             strictEqual(5, buildVariable(5).get(), 'ConstantVariable, makes a constant variable when a number given');
@@ -751,6 +763,7 @@
             strictEqual('test14', buildVariable(varWithObjectTemplate).get(), 'Variable, can work with a template object');
             strictEqual('test12', buildVariable(varWithStringTemplate, {myTemplate: function () { return varWithFunctionTemplate.Variable; }}).get(), 'Variable, can resolve a string container template');
             strictEqual('test12', buildVariable(varWithFunctionTemplate).toString(), 'Variable, has a toString method');
+            deepEqual(varWithStringTemplate, buildVariable(varWithStringTemplate, {myTemplate: function () { return varWithFunctionTemplate.Variable; }}).getDefinition(), 'Variable, getDefinition');
 
             try {
                 strictEqual('test12', buildVariable(varWithStringTemplate).get(), 'Variable, triggers an error when string template not found');
@@ -778,6 +791,7 @@
             strictEqual('footest12bartest145', buildVariable({joinedVariable:['foo', varWithFunctionTemplate, 'bar', varWithObjectTemplate, 5]}).get(), 'JoinedVariable, combines the value of multiple variables');
             strictEqual('footest1205', buildVariable({joinedVariable:['foo', varWithFunctionTemplate, false, 0, null, undefined, 5]}).get(), 'JoinedVariable, does not have a problem with empty values');
             strictEqual('footest12', buildVariable({joinedVariable:['foo', varWithFunctionTemplate]}).toString(), 'JoinedVariable, has a toString()');
+            deepEqual(['foo', varWithFunctionTemplate], buildVariable({joinedVariable:['foo', varWithFunctionTemplate]}).getDefinition(), 'JoinedVariable getDefinition');
 
             deepEqual(['foo', 'bar'], buildVariable(['foo', 'bar']).get(), 'treats a regular array as an array and not any kind of variable');
             strictEqual('ConstantVariable', getConstructorName(buildVariable(['foo', 'bar'])), 'uses a constant variable for a regular array');
@@ -2246,7 +2260,7 @@
         });
 
         test("Matomo TagManager Template CustomHtmlTag", function() {
-            expect(3);
+            expect(8);
             var templateToTest = 'CustomHtmlTag';
             var params = {document: document, customHtml: buildVariable('<div id="customHtmlTag1">my foo bar baz test</div><div id="customHtmlTag2">my test</div>')};
 
@@ -2262,8 +2276,45 @@
             fireTemplateTag(templateToTest, params);
             var addedStyle1 = document.getElementById('customStyleTag');
 
-            strictEqual('.test{}', addedStyle1.innerText, 'should have added element to start of head');
+            strictEqual('.test{}', addedStyle1.innerText, 'should have added element to start of head style1');
             document.head.removeChild(addedStyle1);
+
+            // testing joined
+            params.customHtml = buildVariable({joinedVariable:['<div id="customStyleTag3">', '.test{}', '</div>']});
+            fireTemplateTag(templateToTest, params);
+            var addedStyle3 = document.getElementById('customStyleTag3');
+            strictEqual('.test{}', addedStyle3.innerText, 'should have added element to start of head style3');
+            document.head.removeChild(addedStyle3);
+
+            // does not escape hardcoded string
+            params.customHtml = buildVariable({joinedVariable:['<script id="customStyleTag4">', 'var x = {};', '</' + 'script>']});
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('var x = {};', addedStyle4.innerText, 'should have added element to start of head');
+            document.head.removeChild(addedStyle4);
+
+            // auto escapes JS when through variable
+            params.customHtml = buildVariable({joinedVariable:['<script id="customStyleTag4">var x = "', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return '{}'; }}}, '"</' + 'script>']});
+
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('var x = "\\x7B\\x7D"', addedStyle4.innerText, 'should have added element to start of head');
+            document.head.removeChild(addedStyle4);
+
+            // no auto escape for regular div when through variable
+            params.customHtml = buildVariable({joinedVariable:['<div id="customStyleTag4">var x = "', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return '{}'; }}}, '"</' + 'div>']});
+
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('var x = "{}"', addedStyle4.innerText, 'should have added element to start of head');
+            document.head.removeChild(addedStyle4);
+
+            // auto resolves objects
+            params.customHtml = buildVariable({joinedVariable:['<script id="customStyleTag4">', {mytest: 'mytype2', myfoo: 'myname2'}, '</' + 'script>']});
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('window.MatomoTagManager.customHtmlDataStore[0]()', addedStyle4.innerText, 'should have added element to start of head');
+            document.head.removeChild(addedStyle4);
         });
 
         test("Matomo TagManager Template MatomoTag", function() {

@@ -30,9 +30,11 @@
             if (element.defer) {
                 newScript.defer = element.defer;
             }
+            if (element.async) {
+                newScript.async = element.async;
+            }
 
             newScript.type = "text/javascript";
-            newScript.async = true;
 
             return newScript;
         }
@@ -90,9 +92,68 @@
         }
 
         this.fire = function () {
-            var html = parameters.get('customHtml');
-            if (html) {
+            var html = parameters.customHtml;
+            if (html && html.type === 'JoinedVariable') {
+                var variables = html.getDefinition();
+                var value = '', varReturn, theVarValue, isVariable;
+                for (var i = 0; i < variables.length; i++) {
+                    varReturn = parameters.buildVariable(variables[i]);
+                    isVariable = TagManager.utils.isObject(variables[i]);
+                    theVarValue = varReturn.get();
+                    if (TagManager.utils.isObject(theVarValue) && TagManager.dom.isJsContext(value)) {
+                        // instead of serializing the object, we make it accessbile through a method so users can reference
+                        // an object using eg "var mytest = {{myObj}}"
+                        if (!TagManager.utils.isDefined(TagManager.customHtmlDataStore)) {
+                            TagManager.customHtmlDataStore = [];
+                        }
+                        TagManager.customHtmlDataStore.push((function (variable) {
+                            return function(){
+                                return varReturn.get();
+                            }
+                        })(varReturn));
+                        value += 'window.MatomoTagManager.customHtmlDataStore[' + (TagManager.customHtmlDataStore.length - 1) +']()';
+                    } else if (theVarValue !== false && theVarValue !== null && TagManager.utils.isDefined(theVarValue)) {
+                       if (isVariable && TagManager.utils.isString(theVarValue) && TagManager.dom.isJsContext(value)) {
+                            // we only escape it when the string is a result of a variable, not when it was actually entered
+                            // by a user
+                            value += theVarValue.replace(/[^,\-\.0-9A-Z_a-z]/g, function (charStr) {
+                                // from https://github.com/salesforce/secure-filters/blob/master/lib/secure-filters.js
+                                // license: BSD-3-Clause https://github.com/salesforce/secure-filters/blob/master/LICENSE.txt
+                                var code = charStr.charCodeAt(0);
+                                var hex = code.toString(16).toUpperCase();
+                                if (code < 0x80) { // ASCII
+                                    if (hex.length === 1) {
+                                        return '\\x0'+hex;
+                                    } else {
+                                        return '\\x'+hex;
+                                    }
+                                } else { // Unicode
+                                    switch(hex.length) {
+                                        case 2:
+                                            return '\\u00'+hex;
+                                        case 3:
+                                            return '\\u0'+hex;
+                                        case 4:
+                                            return '\\u'+hex;
+                                        default:
+                                            // charCodeAt() JS shouldn't return code > 0xFFFF, and only four hex
+                                            // digits can be encoded via `\u`-encoding, so return REPLACEMENT
+                                            // CHARACTER U+FFFD.
+                                            return '\\uFFFD';
+                                    }
+                                }
 
+                            });
+                        } else {
+                            value += theVarValue;
+                        }
+                    }
+                }
+                html = value;
+            } else {
+                html = html.get();
+            }
+            if (html) {
                 var div = parameters.document.createElement('div');
                 div.innerHTML = html;
                 if (div.childNodes) {
