@@ -2291,7 +2291,7 @@
         });
 
         test("Matomo TagManager Template CustomHtmlTag", function() {
-            expect(9);
+            expect(10);
             var templateToTest = 'CustomHtmlTag';
             var params = {document: document, customHtml: buildVariable('<div id="customHtmlTag1">my foo bar baz test</div><div id="customHtmlTag2">my test</div>')};
 
