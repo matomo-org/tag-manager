@@ -566,7 +566,7 @@
         });
 
         test("Matomo TagManager dom", function() {
-            expect(58);
+            expect(78);
 
             var dom = window.MatomoTagManager.dom;
 
@@ -586,6 +586,7 @@
             equal(typeof dom.onLoad, 'function', 'dom.onLoad');
             equal(typeof dom.onReady, 'function', 'dom.onReady');
             equal(typeof dom.isElementContext, 'function', 'dom.isElementContext');
+            equal(typeof dom.isAttributeContext, 'function', 'dom.isAttributeContext');
 
             var scrollLeft = dom.getScrollLeft();
             var scrollTop = dom.getScrollTop();
@@ -656,6 +657,28 @@
             strictEqual(false, dom.isElementContext('<style>var foo ="</ div>', 'script'), 'isElementContext, different element 2');
             strictEqual(false, dom.isElementContext('<script>var foo =""< / script>', 'script'), 'isElementContext, not in a script element');
             strictEqual(false, dom.isElementContext('<script>var foo =""</'+ 'scrIpT>', 'ScRipt'), 'isElementContext, not in a script element');
+
+            strictEqual(false, dom.isAttributeContext('<a href="foo">', 'href'), 'isAttributeContext, is not in that context as tag is closed');
+            strictEqual(false, dom.isAttributeContext('<a href="foo"></a>', 'href'), 'isAttributeContext, is not in that context as element is closed');
+            strictEqual(false, dom.isAttributeContext('<a href="foo></a>', 'href'), 'isAttributeContext, is not in that context as element is closed even when attribute not closed');
+
+            strictEqual(false, dom.isAttributeContext('<a href="foo"', 'href'), 'isAttributeContext, is not in that context as tag is not closed but attribute is, double quotes');
+            strictEqual(false, dom.isAttributeContext("<a href='foo'", 'href'), 'isAttributeContext, is not in that context as tag is not closed but attribute is, single quotes');
+            strictEqual(false, dom.isAttributeContext("<a href  =  'foo'", 'href'), 'isAttributeContext, is not in that context as tag is not closed but attribute is, single quotes with spacing');
+            strictEqual(false, dom.isAttributeContext("<a foo=bar id=\"me\" target='blank' href  =  'foo'", 'href'), 'isAttributeContext, is not in that context as tag is not closed but attribute is, also other attributes');
+            strictEqual(false, dom.isAttributeContext("<a foo=bar href=' id=\"me\" target='", 'href'), 'isAttributeContext, is not in that context as tag is not closed but other attributes exist after');
+            strictEqual(false, dom.isAttributeContext("<a href=http://www.test.de ", 'href'), 'isAttributeContext, is not in that context as tag has no quotes but is separated by space');
+            strictEqual(false, dom.isAttributeContext('<a href="foo', 'id'), 'isAttributeContext, is open attribute but not requested attribute id');
+            strictEqual(false, dom.isAttributeContext('<a href="foo', 'hre'), 'isAttributeContext, is open attribute but not requested attribute hre');
+            strictEqual(false, dom.isAttributeContext('<a href="foo', 'hreff'), 'isAttributeContext, is open attribute but not requested attribute hreff');
+
+            strictEqual(true, dom.isAttributeContext('<a href="foo', 'href'), 'isAttributeContext, is in context when attribute opened but not closed');
+            strictEqual(true, dom.isAttributeContext("<a href='foo", 'href'), 'isAttributeContext, is in context when attribute opened but not closed');
+            strictEqual(true, dom.isAttributeContext("<a href ='foo", 'href'), 'isAttributeContext, is in context when attribute opened but not closed');
+            strictEqual(true, dom.isAttributeContext('<a href =  \'foo', 'href'), 'isAttributeContext, is in context when attribute opened but not closed');
+            strictEqual(true, dom.isAttributeContext('<a href = "foo', 'href'), 'isAttributeContext, is in context when attribute opened but not closed');
+            strictEqual(true, dom.isAttributeContext('<a href =foo', 'href'), 'isAttributeContext, is in context when attribute opened but not closed, no quotes');
+            strictEqual(true, dom.isAttributeContext('<a foo=bar id="me" target=\'blank\' href =foo', 'href'), 'isAttributeContext, is in context when attribute opened but not closed, also other attributes');
 
             var div = document.createElement('div');
             div.className = '   fo   otest  hello world         ';
@@ -2315,6 +2338,14 @@
             fireTemplateTag(templateToTest, params);
             var addedStyle4 = document.getElementById('customStyleTag4');
             strictEqual('\\2e foo\\5b test\\3d name\\5d \\7b \\20 color\\3a \\20 red\\3b \\20 \\7d \"', addedStyle4.innerText, 'should have escaped style');
+            document.head.removeChild(addedStyle4);
+
+            // auto escapes url in href attribute
+            params.customHtml = buildVariable({joinedVariable:['<a id="customStyleTag4" href = "', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return 'http://www.mytesturl.de/?foo=bar&="test<>"'; }}}, '"></' + 'a>']});
+
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('http://www.mytesturl.de/?foo=bar&=%22test%3C%3E%22', addedStyle4.href, 'should detect href attribute');
             document.head.removeChild(addedStyle4);
 
             // no auto escape for regular div when through variable

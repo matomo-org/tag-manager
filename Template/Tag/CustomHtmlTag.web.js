@@ -53,6 +53,35 @@
             }
         });
     };
+    secureFilters.style = function(val) {
+        return secureFilters.html(secureFilters.css(val));
+    };
+    secureFilters.uri = function(val) {
+        // encodeURIComponent() is well-standardized across browsers and it handles
+        // UTF-8 natively.  It will not encode "~!*()'", so need to replace those here.
+        // encodeURIComponent also won't encode ".-_", but those are known-safe.
+        //
+        // IE does not always encode '"' to '%27':
+        // http://blog.imperva.com/2012/01/ie-bug-exposes-its-users-to-xss-attacks-.html
+        var QUOT = /\x22/g; // "
+        var APOS = /\x27/g; // '
+        var AST = /\*/g;
+        var TILDE = /~/g;
+        var BANG = /!/g;
+        var LPAREN = /\(/g;
+        var RPAREN = /\)/g;
+        var encode = encodeURI(String(val));
+        // modification by matomo: we use encodeURI instead of encodeURIComponent as we are currently not detecting
+        // whether we are escaping a variable as part of a uri or the full uri
+        return encode
+            .replace(BANG, '%21')
+            .replace(QUOT, '%27')
+            .replace(APOS, '%27')
+            .replace(LPAREN, '%28')
+            .replace(RPAREN, '%29')
+            .replace(AST, '%2A')
+            .replace(TILDE, '%7E');
+    };
     /*! end secure filters */
 
     return function (parameters, TagManager) {
@@ -157,18 +186,26 @@
                     isVariable = TagManager.utils.isObject(variables[i]);
                     theVarValue = varReturn.get();
 
-                    if (isVariable && TagManager.dom.isElementContext(value, 'script')) {
-                        // instead of serializing the object, we make it accessbile through a method so users can reference
-                        // an object using eg "var mytest = {{myObj}}"
-                        if (!TagManager.utils.isDefined(TagManager.customHtmlDataStore)) {
-                            TagManager.customHtmlDataStore = [];
+                    if (isVariable) {
+                        if (TagManager.dom.isElementContext(value, 'script')) {
+                            // instead of serializing the object, we make it accessbile through a method so users can reference
+                            // an object using eg "var mytest = {{myObj}}"
+                            if (!TagManager.utils.isDefined(TagManager.customHtmlDataStore)) {
+                                TagManager.customHtmlDataStore = [];
+                            }
+                            TagManager.customHtmlDataStore.push(theVarValue);
+                            value += 'window.MatomoTagManager.customHtmlDataStore[' + (TagManager.customHtmlDataStore.length - 1) +']';
+                        } else if (TagManager.dom.isElementContext(value, 'style')) {
+                            value += secureFilters.css(theVarValue);
+                        } else if (TagManager.dom.isAttributeContext(value, 'style')) {
+                            value += secureFilters.style(theVarValue);
+                        } else if (TagManager.dom.isAttributeContext(value, 'href')) {
+                            value += secureFilters.uri(theVarValue);
+                        } else if (TagManager.dom.isAttributeContext(value, 'src')) {
+                            value += secureFilters.uri(theVarValue);
+                        } else {
+                            value += secureFilters.html(theVarValue);
                         }
-                        TagManager.customHtmlDataStore.push(theVarValue);
-                        value += 'window.MatomoTagManager.customHtmlDataStore[' + (TagManager.customHtmlDataStore.length - 1) +']';
-                    } else if (isVariable && TagManager.dom.isElementContext(value, 'style')) {
-                        value += secureFilters.css(theVarValue);
-                    } else if (isVariable) {
-                        value += secureFilters.html(theVarValue);
                     } else if (theVarValue !== false && theVarValue !== null && TagManager.utils.isDefined(theVarValue)) {
                         // raw value entered by user, no escaping
                         value += theVarValue;
