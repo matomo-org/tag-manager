@@ -10,7 +10,7 @@
 
 /**
  * To minify execute
- * TemplateLocatorTest
+ * cat javascripts/tagmanager.js | java -jar ../../js/yuicompressor-2.4.8.jar --type js --line-break 1000 | sed 's/^[/][*]/\/*!/' > javascripts/tagmanager.min.js
  */
 
 
