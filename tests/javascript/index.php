@@ -365,7 +365,7 @@
         });
 
         test("Matomo TagManager Utils", function() {
-            expect(279);
+            expect(283);
 
             var utils = window.MatomoTagManager.utils;
 
@@ -374,6 +374,7 @@
             equal(typeof utils.isFunction, 'function', 'utils.isFunction');
             equal(typeof utils.isObject, 'function', 'utils.isObject');
             equal(typeof utils.isString, 'function', 'utils.isString');
+            equal(typeof utils.isNumber, 'function', 'utils.isNumber');
             equal(typeof utils.isArray, 'function', 'utils.isArray');
             equal(typeof utils.indexOfArray, 'function', 'utils.indexOfArray');
             equal(typeof utils.compare, 'function', 'utils.compare');
@@ -392,6 +393,10 @@
             strictEqual(false, utils.isString(4), 'isString, when value is not a string but a number');
             strictEqual(false, utils.isString(null), 'isString, when value is not a string but null');
             strictEqual(false, utils.isString(undefined), 'isString, when value is not a string but undefined');
+
+            strictEqual(false, utils.isNumber('5'), 'isNumber, when actually a string');
+            strictEqual(true, utils.isNumber(5), 'isNumber, when value actually is an int number');
+            strictEqual(true, utils.isNumber(4.4), 'isNumber, when value is float number');
 
             strictEqual(true, utils.isObject({test:'foo'}), 'isObject, when value actually is an object');
             strictEqual(true, utils.isObject([5]), 'isObject, an array is an object too');
@@ -561,7 +566,7 @@
         });
 
         test("Matomo TagManager dom", function() {
-            expect(55);
+            expect(58);
 
             var dom = window.MatomoTagManager.dom;
 
@@ -580,7 +585,7 @@
             equal(typeof dom.bySelector, 'function', 'dom.bySelector');
             equal(typeof dom.onLoad, 'function', 'dom.onLoad');
             equal(typeof dom.onReady, 'function', 'dom.onReady');
-            equal(typeof dom.isJsContext, 'function', 'dom.isJsContext');
+            equal(typeof dom.isElementContext, 'function', 'dom.isElementContext');
 
             var scrollLeft = dom.getScrollLeft();
             var scrollTop = dom.getScrollTop();
@@ -639,15 +644,18 @@
             strictEqual('myTagTest myTagFoo myTagTest4', dom.getElementClassNames(dom.byId('TagManager')), 'getElementClassNames, when has classes');
             strictEqual('', dom.getElementClassNames(dom.byId('customTag3')), 'getElementClassNames, when has no classes');
 
-            strictEqual(false, dom.isJsContext(null), 'isJsContext, no value given');
-            strictEqual(false, dom.isJsContext('<div>var foo ="'), 'isJsContext, not a script element');
-            strictEqual(false, dom.isJsContext('<div>var foo =""</div>'), 'isJsContext, not a closing script element');
-            strictEqual(true, dom.isJsContext('<script>var foo ="'), 'isJsContext, in the middle of a script element');
-            strictEqual(true, dom.isJsContext('<scRipT>var foo ="'), 'isJsContext, in the middle of a script element case insensitive');
-            strictEqual(false, dom.isJsContext('<div>var foo < /script>'), 'isJsContext, not an opening script element');
-            strictEqual(true, dom.isJsContext('<script>var foo ="</ div>'), 'isJsContext, not a closing script element');
-            strictEqual(false, dom.isJsContext('<script>var foo =""< / script>'), 'isJsContext, not in a script element');
-            strictEqual(false, dom.isJsContext('<script>var foo =""</'+ 'scrIpT>'), 'isJsContext, not in a script element');
+            strictEqual(false, dom.isElementContext(), 'isElementContext, no value given');
+            strictEqual(false, dom.isElementContext('<div>var foo ="', 'script'), 'isElementContext, not a script element');
+            strictEqual(false, dom.isElementContext('<div>var foo =""</div>', 'script'), 'isElementContext, not a closing script element');
+            strictEqual(true, dom.isElementContext('<script>var foo ="', 'script'), 'isElementContext, in the middle of a script element');
+            strictEqual(true, dom.isElementContext('<scRipT>var foo ="', 'script'), 'isElementContext, in the middle of a script element case insensitive');
+            strictEqual(false, dom.isElementContext('<div>var foo < /script>', 'script'), 'isElementContext, not an opening script element');
+            strictEqual(true, dom.isElementContext('<script>var foo ="</ div>', 'script'), 'isElementContext, not a closing script element');
+            strictEqual(false, dom.isElementContext('<script>var foo ="</ div>', 'style'), 'isElementContext, different element');
+            strictEqual(true, dom.isElementContext('<style>var foo ="</ div>', 'style'), 'isElementContext, different element');
+            strictEqual(false, dom.isElementContext('<style>var foo ="</ div>', 'script'), 'isElementContext, different element 2');
+            strictEqual(false, dom.isElementContext('<script>var foo =""< / script>', 'script'), 'isElementContext, not in a script element');
+            strictEqual(false, dom.isElementContext('<script>var foo =""</'+ 'scrIpT>', 'ScRipt'), 'isElementContext, not in a script element');
 
             var div = document.createElement('div');
             div.className = '   fo   otest  hello world         ';
@@ -2260,7 +2268,7 @@
         });
 
         test("Matomo TagManager Template CustomHtmlTag", function() {
-            expect(8);
+            expect(9);
             var templateToTest = 'CustomHtmlTag';
             var params = {document: document, customHtml: buildVariable('<div id="customHtmlTag1">my foo bar baz test</div><div id="customHtmlTag2">my test</div>')};
 
@@ -2299,6 +2307,14 @@
             fireTemplateTag(templateToTest, params);
             var addedStyle4 = document.getElementById('customStyleTag4');
             strictEqual('var x = "\\x7B\\x7D"', addedStyle4.innerText, 'should have added element to start of head');
+            document.head.removeChild(addedStyle4);
+
+            // auto escapes STYLEs when through variable
+            params.customHtml = buildVariable({joinedVariable:['<style id="customStyleTag4">', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return '.foo[test=name]{ color: red; }'; }}}, '"</' + 'style>']});
+
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('\\2e foo\\5b test\\3d name\\5d \\7b \\20 color\\3a \\20 red\\3b \\20 \\7d \"', addedStyle4.innerText, 'should have escaped style');
             document.head.removeChild(addedStyle4);
 
             // no auto escape for regular div when through variable

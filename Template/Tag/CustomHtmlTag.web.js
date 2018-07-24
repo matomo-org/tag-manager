@@ -1,4 +1,91 @@
 (function () {
+
+    /*!
+    * secure-filters from https://github.com/salesforce/secure-filters/blob/master/lib/secure-filters.js
+    * license: BSD-3-Clause https://github.com/salesforce/secure-filters/blob/master/LICENSE.txt
+    * */
+    function convertControlCharacters(str) {
+        return String(str).replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, ' ');
+    };
+    var secureFilters = {};
+    secureFilters.css = function(val) {
+        var str = String(val);
+        str = convertControlCharacters(str);
+        return str.replace(/[^a-zA-Z0-9\uD800-\uDFFF]/g, function(match) {
+            var code = match.charCodeAt(0);
+            if (code === 0) {
+                return '\\fffd '; // REPLACEMENT CHARACTER U+FFFD
+            } else {
+                var hex = code.toString(16).toLowerCase();
+                return '\\'+hex+' ';
+            }
+        });
+    };
+    secureFilters.js = function(val) {
+        var str = String(val);
+        str = convertControlCharacters(str);
+        str = str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, ' ');
+        return str.replace(/[^,\-\.0-9A-Z_a-z]/g, function jsSlashEncoder(charStr) {
+            var code = charStr.charCodeAt(0);
+            var hex = code.toString(16).toUpperCase();
+            if (code < 0x80) { // ASCII
+                if (hex.length === 1) {
+                    return '\\x0'+hex;
+                } else {
+                    return '\\x'+hex;
+                }
+            } else { // Unicode
+                switch(hex.length) {
+                    case 2:
+                        return '\\u00'+hex;
+                    case 3:
+                        return '\\u0'+hex;
+                    case 4:
+                        return '\\u'+hex;
+                    default:
+                        // charCodeAt() JS shouldn't return code > 0xFFFF, and only four hex
+                        // digits can be encoded via `\u`-encoding, so return REPLACEMENT
+                        // CHARACTER U+FFFD.
+                        return '\\uFFFD';
+                }
+            }
+
+        });
+    };
+    secureFilters.html = function(val) {
+        var str = String(val);
+        str = convertControlCharacters(str);
+        return str.replace(/[^\t\n\v\f\r ,\.0-9A-Z_a-z\-\u00A0-\uFFFF]/g, function(match) {
+            var code = match.charCodeAt(0);
+            switch(code) {
+                // folks expect these "nice" entities:
+                case 0x22:
+                    return '&quot;';
+                case 0x26:
+                    return '&amp;';
+                case 0x3C:
+                    return '&lt;';
+                case 0x3E:
+                    return '&gt;';
+
+                default:
+                    // optimize for size:
+                    if (code < 100) {
+                        var dec = code.toString(10);
+                        return '&#'+dec+';';
+                    } else {
+                        // XXX: this doesn't produce strictly valid entities for code-points
+                        // requiring a UTF-16 surrogate pair. However, browsers are generally
+                        // tolerant of this. Surrogate pairs are currently in the whitelist
+                        // defined via HTML_NOT_WHITELISTED.
+                        var hex = code.toString(16).toUpperCase();
+                        return '&#x'+hex+';';
+                    }
+            }
+        });
+    };
+    /*! end secure filters */
+
     return function (parameters, TagManager) {
 
         function moveChildrenToArray(element)
@@ -74,7 +161,7 @@
             while (counter in children && children[counter] && counter < limit) {
                 child = children[counter];
                 counter++;
-                
+
                 if (isJavaScriptElement(child)) {
                     // we have to re-create the element, otherwise wouldn't be executed
                     insertNode(parent, cloneScript(child), append);
@@ -100,7 +187,10 @@
                     varReturn = parameters.buildVariable(variables[i]);
                     isVariable = TagManager.utils.isObject(variables[i]);
                     theVarValue = varReturn.get();
-                    if (TagManager.utils.isObject(theVarValue) && TagManager.dom.isJsContext(value)) {
+
+                    if (!TagManager.utils.isString(theVarValue)
+                        && !TagManager.utils.isNumber(theVarValue)
+                        && TagManager.dom.isElementContext(value, 'script')) {
                         // instead of serializing the object, we make it accessbile through a method so users can reference
                         // an object using eg "var mytest = {{myObj}}"
                         if (!TagManager.utils.isDefined(TagManager.customHtmlDataStore)) {
@@ -108,42 +198,21 @@
                         }
                         TagManager.customHtmlDataStore.push((function (variable) {
                             return function(){
-                                return varReturn.get();
+                                return variable;
                             }
-                        })(varReturn));
+                        })(theVarValue));
                         value += 'window.MatomoTagManager.customHtmlDataStore[' + (TagManager.customHtmlDataStore.length - 1) +']()';
                     } else if (theVarValue !== false && theVarValue !== null && TagManager.utils.isDefined(theVarValue)) {
-                       if (isVariable && TagManager.utils.isString(theVarValue) && TagManager.dom.isJsContext(value)) {
+                        if (isVariable && TagManager.utils.isString(theVarValue)) {
                             // we only escape it when the string is a result of a variable, not when it was actually entered
                             // by a user
-                            value += theVarValue.replace(/[^,\-\.0-9A-Z_a-z]/g, function (charStr) {
-                                // from https://github.com/salesforce/secure-filters/blob/master/lib/secure-filters.js
-                                // license: BSD-3-Clause https://github.com/salesforce/secure-filters/blob/master/LICENSE.txt
-                                var code = charStr.charCodeAt(0);
-                                var hex = code.toString(16).toUpperCase();
-                                if (code < 0x80) { // ASCII
-                                    if (hex.length === 1) {
-                                        return '\\x0'+hex;
-                                    } else {
-                                        return '\\x'+hex;
-                                    }
-                                } else { // Unicode
-                                    switch(hex.length) {
-                                        case 2:
-                                            return '\\u00'+hex;
-                                        case 3:
-                                            return '\\u0'+hex;
-                                        case 4:
-                                            return '\\u'+hex;
-                                        default:
-                                            // charCodeAt() JS shouldn't return code > 0xFFFF, and only four hex
-                                            // digits can be encoded via `\u`-encoding, so return REPLACEMENT
-                                            // CHARACTER U+FFFD.
-                                            return '\\uFFFD';
-                                    }
-                                }
-
-                            });
+                            if (TagManager.dom.isElementContext(value, 'script')) {
+                                value += secureFilters.js(theVarValue);
+                            } else if (TagManager.dom.isElementContext(value, 'style')) {
+                                value += secureFilters.css(theVarValue);
+                            } else {
+                                value += secureFilters.html(theVarValue);
+                            }
                         } else {
                             value += theVarValue;
                         }

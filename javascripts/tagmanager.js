@@ -260,6 +260,9 @@
                 isString: function (property) {
                     return typeof property === 'string';
                 },
+                isNumber: function (property) {
+                    return typeof property === 'number';
+                },
                 isArray: function (property) {
                     if (!utils.isObject(property)) {
                         return false;
@@ -795,19 +798,20 @@
                     return [];
                 },
                 /** @ignore **/
-                isJsContext: function (htmlString) {
+                isElementContext: function (htmlString, tag) {
                     //  not part of API at this moment
-                    if (!htmlString) {
+                    if (!htmlString || !tag) {
                         return false;
                     }
                     htmlString = String(htmlString).toLowerCase();
-                    var lastScriptPos = htmlString.lastIndexOf('<script');
+                    tag = String(tag).toLowerCase();
+                    var lastScriptPos = htmlString.lastIndexOf('<' + tag);
                     if (lastScriptPos === -1) {
                         return false;
                     }
                     var lastPiece = htmlString.substring(lastScriptPos);
 
-                    return !lastPiece.match(new RegExp('<\\s*/\\s*script>'));
+                    return !lastPiece.match(new RegExp('<\\s*/\\s*' + tag + '>'));
                 },
                 onLoad: function (callback) {
                     if (documentAlias.readyState === 'complete') {
