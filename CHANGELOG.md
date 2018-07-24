@@ -1,5 +1,8 @@
 ## Changelog
 
+0.1.2
+* Custom HTML tag supports assigning JavaScript variables, CSS styles and HTML content
+
 0.1.1
 * Fixed CustomEventsTrigger may miss an event when pushed before tag manager is loaded
 * Improved various wordings and fixed some typos
