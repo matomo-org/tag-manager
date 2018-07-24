@@ -21,37 +21,6 @@
             }
         });
     };
-    secureFilters.js = function(val) {
-        var str = String(val);
-        str = convertControlCharacters(str);
-        str = str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, ' ');
-        return str.replace(/[^,\-\.0-9A-Z_a-z]/g, function jsSlashEncoder(charStr) {
-            var code = charStr.charCodeAt(0);
-            var hex = code.toString(16).toUpperCase();
-            if (code < 0x80) { // ASCII
-                if (hex.length === 1) {
-                    return '\\x0'+hex;
-                } else {
-                    return '\\x'+hex;
-                }
-            } else { // Unicode
-                switch(hex.length) {
-                    case 2:
-                        return '\\u00'+hex;
-                    case 3:
-                        return '\\u0'+hex;
-                    case 4:
-                        return '\\u'+hex;
-                    default:
-                        // charCodeAt() JS shouldn't return code > 0xFFFF, and only four hex
-                        // digits can be encoded via `\u`-encoding, so return REPLACEMENT
-                        // CHARACTER U+FFFD.
-                        return '\\uFFFD';
-                }
-            }
-
-        });
-    };
     secureFilters.html = function(val) {
         var str = String(val);
         str = convertControlCharacters(str);
@@ -188,34 +157,21 @@
                     isVariable = TagManager.utils.isObject(variables[i]);
                     theVarValue = varReturn.get();
 
-                    if (!TagManager.utils.isString(theVarValue)
-                        && !TagManager.utils.isNumber(theVarValue)
-                        && TagManager.dom.isElementContext(value, 'script')) {
+                    if (isVariable && TagManager.dom.isElementContext(value, 'script')) {
                         // instead of serializing the object, we make it accessbile through a method so users can reference
                         // an object using eg "var mytest = {{myObj}}"
                         if (!TagManager.utils.isDefined(TagManager.customHtmlDataStore)) {
                             TagManager.customHtmlDataStore = [];
                         }
-                        TagManager.customHtmlDataStore.push((function (variable) {
-                            return function(){
-                                return variable;
-                            }
-                        })(theVarValue));
-                        value += 'window.MatomoTagManager.customHtmlDataStore[' + (TagManager.customHtmlDataStore.length - 1) +']()';
+                        TagManager.customHtmlDataStore.push(theVarValue);
+                        value += 'window.MatomoTagManager.customHtmlDataStore[' + (TagManager.customHtmlDataStore.length - 1) +']';
+                    } else if (isVariable && TagManager.dom.isElementContext(value, 'style')) {
+                        value += secureFilters.css(theVarValue);
+                    } else if (isVariable) {
+                        value += secureFilters.html(theVarValue);
                     } else if (theVarValue !== false && theVarValue !== null && TagManager.utils.isDefined(theVarValue)) {
-                        if (isVariable && TagManager.utils.isString(theVarValue)) {
-                            // we only escape it when the string is a result of a variable, not when it was actually entered
-                            // by a user
-                            if (TagManager.dom.isElementContext(value, 'script')) {
-                                value += secureFilters.js(theVarValue);
-                            } else if (TagManager.dom.isElementContext(value, 'style')) {
-                                value += secureFilters.css(theVarValue);
-                            } else {
-                                value += secureFilters.html(theVarValue);
-                            }
-                        } else {
-                            value += theVarValue;
-                        }
+                        // raw value entered by user, no escaping
+                        value += theVarValue;
                     }
                 }
                 html = value;

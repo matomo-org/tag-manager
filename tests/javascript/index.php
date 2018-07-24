@@ -2302,11 +2302,11 @@
             document.head.removeChild(addedStyle4);
 
             // auto escapes JS when through variable
-            params.customHtml = buildVariable({joinedVariable:['<script id="customStyleTag4">var x = "', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return '{}'; }}}, '"</' + 'script>']});
+            params.customHtml = buildVariable({joinedVariable:['<script id="customStyleTag4">var x = ', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return '{}'; }}}, '</' + 'script>']});
 
             fireTemplateTag(templateToTest, params);
             var addedStyle4 = document.getElementById('customStyleTag4');
-            strictEqual('var x = "\\x7B\\x7D"', addedStyle4.innerText, 'should have added element to start of head');
+            strictEqual('var x = window.MatomoTagManager.customHtmlDataStore[0]', addedStyle4.innerText, 'should have added element to start of head');
             document.head.removeChild(addedStyle4);
 
             // auto escapes STYLEs when through variable
@@ -2329,7 +2329,7 @@
             params.customHtml = buildVariable({joinedVariable:['<script id="customStyleTag4">', {mytest: 'mytype2', myfoo: 'myname2'}, '</' + 'script>']});
             fireTemplateTag(templateToTest, params);
             var addedStyle4 = document.getElementById('customStyleTag4');
-            strictEqual('window.MatomoTagManager.customHtmlDataStore[0]()', addedStyle4.innerText, 'should have added element to start of head');
+            strictEqual('window.MatomoTagManager.customHtmlDataStore[1]', addedStyle4.innerText, 'should have added element to start of head');
             document.head.removeChild(addedStyle4);
         });
 
