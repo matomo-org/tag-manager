@@ -180,11 +180,12 @@
             var html = parameters.customHtml;
             if (html && html.type === 'JoinedVariable') {
                 var variables = html.getDefinition();
-                var value = '', varReturn, theVarValue, isVariable;
+                var value = '', varReturn, theVarValue, isVariable, hasValueSet;
                 for (var i = 0; i < variables.length; i++) {
                     varReturn = parameters.buildVariable(variables[i]);
                     isVariable = TagManager.utils.isObject(variables[i]);
                     theVarValue = varReturn.get();
+                    hasValueSet = theVarValue !== false && theVarValue !== null && TagManager.utils.isDefined(theVarValue);
 
                     if (isVariable) {
                         if (TagManager.dom.isElementContext(value, 'script')) {
@@ -195,18 +196,23 @@
                             }
                             TagManager.customHtmlDataStore.push(theVarValue);
                             value += 'window.MatomoTagManager.customHtmlDataStore[' + (TagManager.customHtmlDataStore.length - 1) +']';
-                        } else if (TagManager.dom.isElementContext(value, 'style')) {
-                            value += secureFilters.css(theVarValue);
-                        } else if (TagManager.dom.isAttributeContext(value, 'style')) {
-                            value += secureFilters.style(theVarValue);
-                        } else if (TagManager.dom.isAttributeContext(value, 'href')) {
-                            value += secureFilters.uri(theVarValue);
-                        } else if (TagManager.dom.isAttributeContext(value, 'src')) {
-                            value += secureFilters.uri(theVarValue);
-                        } else {
+                        } else if (TagManager.dom.isElementContext(value, 'style')
+                                 || TagManager.dom.isAttributeContext(value, 'style')) {
+                            if (hasValueSet) {
+                                // we need to make sure to print a value... we use a random value... if someone searches for it
+                                // they can find the FAQ article
+                                value += 'mTmKpwoqM';
+                            } else {
+                                value += secureFilters.css(theVarValue);
+                            }
+                        } else if (TagManager.dom.isAttributeContext(value, 'href') || TagManager.dom.isAttributeContext(value, 'src')) {
+                            if (hasValueSet) {
+                                value += secureFilters.uri(theVarValue);
+                            }
+                        } else if (hasValueSet) {
                             value += secureFilters.html(theVarValue);
                         }
-                    } else if (theVarValue !== false && theVarValue !== null && TagManager.utils.isDefined(theVarValue)) {
+                    } else if (hasValueSet) {
                         // raw value entered by user, no escaping
                         value += theVarValue;
                     }
