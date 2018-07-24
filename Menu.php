@@ -79,7 +79,8 @@ class Menu extends \Piwik\Plugin\Menu
                 $params = array('idContainer' => $idContainer); // not needed as it is already present in url but we make sure the id is set
                 $menuCategory = $container['name'];
 
-                if (Piwik::isUserHasAdminAccess($idSite)) {
+                $accessValidator = StaticContainer::get('Piwik\Plugins\TagManager\Input\AccessValidator');
+                if ($accessValidator->hasWriteCapability($idSite)) {
                     $menu->addItem($menuCategory, 'Dashboard', $this->urlForAction('dashboard', $params), $orderId = 104);
                 }
 
@@ -95,7 +96,7 @@ class Menu extends \Piwik\Plugin\Menu
                     }
                 }
 
-                if (Piwik::isUserHasAdminAccess($idSite)) {
+                if ($accessValidator->hasWriteCapability($idSite)) {
                     if ($previewEnabled) {
                         $menu->addItem($menuCategory, 'TagManager_DisablePreview', array(), $orderId = 130, false,'icon-bug', "tagManagerHelper.disablePreviewMode(" . json_encode($container['idcontainer']) . ")");
                     } else {

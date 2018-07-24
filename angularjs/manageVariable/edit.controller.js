@@ -25,6 +25,7 @@
         this.showAdvanced = false;
         this.chooseVariableType = false;
         this.isEmbedded = !!$scope.onChangeVariable;
+        this.canUseCustomTemplates = piwik.hasUserCapability('tagmanager_use_custom_templates');
 
         this.availableVariables = [];
         this.availableLookUpComparisons = [];
@@ -38,6 +39,12 @@
 
         // needed for suggestNameForType() to make sure it is aware of all names
         this.model.fetchVariablesIfNotLoaded(this.idContainer, this.idContainerVersion);
+
+        function enrichTemplateType(template)
+        {
+            template.isDisabled = !self.canUseCustomTemplates && template && template.isCustomTemplate;
+            return template;
+        }
 
         function getNotification()
         {
@@ -89,8 +96,14 @@
             self.availableVariables = [];
             self.model.fetchContainer(self.idContainer).then(function (container){
                 return self.model.fetchAvailableVariables(container.context);
-            }).then(function (availableVariables) {
-                self.availableVariables = availableVariables;
+            }).then(function (variables) {
+                angular.forEach(variables, function (variablesGroup) {
+                    angular.forEach(variablesGroup.types, function (variable) {
+                        enrichTemplateType(variable);
+                    });
+                });
+
+                self.availableVariables = variables;
             }).then(function () {
                 if (self.edit && idVariable) {
                     self.editTitle = translate('TagManager_EditVariable');
@@ -101,6 +114,10 @@
                         }
                         self.variable = angular.copy(variable);
                         self.variable.idcontainer = self.idContainer;
+
+                        if (self.variable.typeMetadata) {
+                            enrichTemplateType(self.variable.typeMetadata);
+                        }
 
                         if (self.variable.lookup_table && self.variable.lookup_table.length) {
                             self.showAdvanced = true; // make sure lookup_table is visible directly if configured
@@ -183,6 +200,10 @@
         };
 
         this.createVariableType = function (variableTemplate) {
+            if (variableTemplate && variableTemplate.isDisabled) {
+                return;
+            }
+
             this.chooseVariableType = false;
             this.editTitle = translate('TagManager_CreateNewVariable');
             this.variable = {

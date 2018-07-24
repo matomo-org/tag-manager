@@ -49,12 +49,42 @@ class JavaScriptTagManagerLoader
 
     public function getPreviewJsContent()
     {
+        $unsetPeriod = false;
+        $unsetDate = false;
+        $unsetGet = false;
+
+        if (!isset($_GET)) {
+            $_GET = array();
+            $unsetGet = true;
+        }
+
+        if (!isset($_GET['period'])) {
+            $_GET['period'] = 'day';
+            $unsetPeriod = true;
+        }
+        if (!isset($_GET['date'])) {
+            $_GET['date'] = 'yesterday';
+            $unsetDate = true;
+        }
+
         $path = PIWIK_DOCUMENT_ROOT . '/plugins/TagManager/javascripts/previewmode.js';
         $previewJs = file_get_contents($path);
         $debugContent = FrontController::getInstance()->dispatch('TagManager', 'debug');
         $debugContent = str_replace(Piwik::getCurrentUserTokenAuth(), 'anonymous', $debugContent); // make sure to not expose somehow the token
         $debugContent = json_encode($debugContent);
         $previewJs = str_replace(array('/*!! previewContent */', '/*!!! previewContent */'), $debugContent, $previewJs);
+
+        if ($unsetPeriod) {
+            unset($_GET['period']);
+        }
+
+        if ($unsetDate) {
+            unset($_GET['date']);
+        }
+
+        if ($unsetGet) {
+            unset($_GET);
+        }
 
         return $previewJs;
     }

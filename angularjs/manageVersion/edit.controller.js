@@ -26,8 +26,9 @@
         this.lastVersion = null;
         this.versionChanges = [];
         this.isLoadingVersionChanges = false;
+        this.canPublishToLive = piwik.hasUserCapability('tagmanager_publish_live_container');
 
-        tagManagerVersionModel.fetchAvailableEnvironments().then(function (environments) {
+        tagManagerVersionModel.fetchAvailableEnvironmentsWithPublishPermission().then(function (environments) {
             self.environments = [];
             angular.forEach(environments, function (environment) {
                 self.environments.push({key: environment.id, value: environment.name});
@@ -126,9 +127,14 @@
                     idSite: piwik.idSite,
                     idcontainer: self.idContainer,
                     name: '',
-                    environment: 'live',
+                    environment: '',
                     description: ''
                 };
+                if (self.canPublishToLive) {
+                    self.version.environment = 'live';
+                } else if (angular.isArray(self.environments) && self.environments.length && self.environments[0]) {
+                    self.version.environment = self.environments[0].key;
+                }
                 self.isDirty = false;
             }
         }

@@ -8,11 +8,7 @@
 
 namespace Piwik\Plugins\TagManager;
 
-
 use Piwik\Config;
-use Piwik\Plugins\TagManager\Model\Environment;
-use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
-use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 
 class Configuration
 {
@@ -22,16 +18,6 @@ class Configuration
     const KEY_DISABLED_TAGS = 'disable_tags';
     const KEY_DISABLED_TRIGGERS = 'disable_triggers';
     const KEY_DISABLED_VARIABLES = 'disable_variables';
-
-    /**
-     * @var SystemSettings
-     */
-    private $settings;
-
-    public function __construct(SystemSettings $settings)
-    {
-        $this->settings = $settings;
-    }
 
     public function install()
     {
@@ -79,10 +65,6 @@ class Configuration
             $disabled = array();
         }
 
-        if (!$this->settings->enableCustomTemplates->getValue()) {
-            $disabled[] = CustomHtmlTag::ID;
-        }
-
         return array_values(array_unique($disabled));
     }
 
@@ -109,10 +91,6 @@ class Configuration
 
         if (!is_array($disabled) || empty($disabled)) {
             $disabled = array();
-        }
-
-        if (!$this->settings->enableCustomTemplates->getValue()) {
-            $disabled[] = CustomJsFunctionVariable::ID;
         }
 
         return array_values(array_unique($disabled));

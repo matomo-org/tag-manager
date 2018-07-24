@@ -14,6 +14,11 @@
     <form ng-show="!editTrigger.chooseTriggerType && editTrigger.editTitle" ng-submit="editTrigger.edit ? editTrigger.updateTrigger() : editTrigger.createTrigger()">
         <div>
 
+            <div class="alert alert-warning"
+                 ng-show="editTrigger.trigger.typeMetadata.isDisabled">
+                {{ 'TagManager_UseCustomTemplateCapabilityRequired'|translate:('TagManager_CapabilityUseCustomTemplates'|translate) }}
+            </div>
+
             <div piwik-field uicontrol="text" name="type"
                  ng-model="editTrigger.trigger.typeMetadata.name"
                  disabled="true"
@@ -86,8 +91,15 @@
                     </div>
                 </div>
             </div>
+
+            <div class="alert alert-warning"
+                 ng-show="editTrigger.trigger.typeMetadata.isDisabled">
+                {{ 'TagManager_UseCustomTemplateCapabilityRequired'|translate:('TagManager_CapabilityUseCustomTemplates'|translate) }}
+            </div>
+
             <div piwik-save-button
                  class="createButton"
+                 ng-show="!editTrigger.trigger.typeMetadata.isDisabled"
                  onconfirm="editTrigger.edit ? editTrigger.updateTrigger() : editTrigger.createTrigger()"
                  disabled="editTrigger.model.isUpdating || !editTrigger.isDirty"
                  value="{{ editTrigger.edit ? ('CoreUpdater_UpdateTitle'|translate) : ('TagManager_CreateNewTrigger'|translate) }}"
@@ -103,7 +115,11 @@
     <div ng-show="editTrigger.chooseTriggerType" id="confirmSelectTriggerType">
         <ul class="collection with-header" ng-repeat="triggerCategory in editTrigger.availableTriggers">
             <li class="collection-header"><h4>{{ triggerCategory.name }}</h4></li>
-            <li class="collection-item avatar templateType{{triggerTemplate.id}}" ng-repeat="triggerTemplate in triggerCategory.types" ng-click="editTrigger.createTriggerType(triggerTemplate)">
+            <li class="collection-item avatar templateType{{triggerTemplate.id}}"
+                ng-repeat="triggerTemplate in triggerCategory.types"
+                ng-class="{'disabledTemplate': triggerTemplate.isDisabled}"
+                ng-click="editTrigger.createTriggerType(triggerTemplate)"
+                title="{{ !triggerTemplate.isDisabled ? '' : ('TagManager_UseCustomTemplateCapabilityRequired'|translate:('TagManager_CapabilityUseCustomTemplates'|translate)) }}">
                 <img ng-if="triggerTemplate.icon" ng-src="{{ triggerTemplate.icon }}" alt="" class="circle">
                 <span class="title">{{ triggerTemplate.name }}</span>
                 <p ng-show="triggerTemplate.description">{{ triggerTemplate.description }}</p>

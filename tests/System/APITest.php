@@ -254,6 +254,7 @@ class APITest extends SystemTestCase
 
         $apiSiteDependend = array(
             'TagManager.getContainers',
+            'TagManager.getAvailableEnvironmentsWithPublishCapability'
         );
 
         $apiToTest[] = array($apiSiteDependend,

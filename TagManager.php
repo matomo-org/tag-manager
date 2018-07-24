@@ -14,6 +14,9 @@ use Piwik\Date;
 use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Log;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
+use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
+use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\API\PreviewCookie;
 use Piwik\Plugins\TagManager\Context\BaseContext;
 use Piwik\Plugins\TagManager\Dao\ContainerReleaseDao;
@@ -49,7 +52,6 @@ class TagManager extends \Piwik\Plugin
             'Controller.CoreHome.checkForUpdates.end' => 'regenerateReleasedContainers',
             'SitesManager.deleteSite.end' => 'onSiteDeleted',
             'SitesManager.addSite.end' => 'onSiteAdded',
-            'Template.jsGlobalVariables' => 'addJsGlobalVariables',
             'System.addSystemSummaryItems' => 'addSystemSummaryItems',
             'Template.endTrackingCodePage' => 'addTagManagerCode',
             'Template.endTrackingHelpPage' => 'addTagManagerTrackingCodeHelp',
@@ -57,6 +59,7 @@ class TagManager extends \Piwik\Plugin
             'Tracker.PageUrl.getQueryParametersToExclude' => 'getQueryParametersToExclude',
             'API.addGlossaryItems' => 'addGlossaryItems',
             'Template.bodyClass' => 'addBodyClass',
+            'Access.Capability.addCapabilities' => 'addCapabilities'
         );
     }
     
@@ -64,6 +67,21 @@ class TagManager extends \Piwik\Plugin
     {
         if ($type === 'tagmanager') {
             $out .= 'tagmanager';
+        }
+    }
+
+    public function addCapabilities(&$capabilities)
+    {
+        $capabilities[] = new TagManagerWrite();
+        $capabilities[] = new PublishLiveContainer();
+
+        $systemSettings = StaticContainer::get('Piwik\Plugins\TagManager\SystemSettings');
+        $restrictCustomTemplates = $systemSettings->restrictCustomTemplates->getValue();
+
+        if ($restrictCustomTemplates === SystemSettings::CUSTOM_TEMPLATES_ADMIN) {
+            // there is no need to show it when they are completely disabled,
+            // when only super users are allowed to use them
+            $capabilities[] = new UseCustomTemplates();
         }
     }
 
@@ -181,20 +199,6 @@ class TagManager extends \Piwik\Plugin
         $systemSummary[] = new SystemSummary\Item($key = 'tagmanagercontainer', Piwik::translate('%s containers (in tag manager)', $numContainers), $value = null, array('module' => 'TagManager', 'action' => 'manageContainers'), '', $order = 20);
     }
 
-    public function addJsGlobalVariables(&$str)
-    {
-        $idSite = Common::getRequestVar('idSite', 0, 'int');
-
-        $hasAdmin = 0;
-        if (!empty($idSite) && Piwik::isUserHasAdminAccess($idSite)) {
-            $hasAdmin = 1;
-        } elseif (!empty($idSite) && Piwik::isUserHasViewAccess($idSite)) {
-            $hasAdmin = 0;
-        }
-
-        $str .= "piwik.tagManagerAdminAccess = " . $hasAdmin . ";";
-    }
-
     private function getContainerModel()
     {
         return StaticContainer::get('Piwik\Plugins\TagManager\Model\Container');
@@ -288,6 +292,11 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_ViewContainerDashboard';
         $result[] = 'TagManager_NoMatomoConfigFoundForContainer';
         $result[] = 'TagManager_CustomizeTrackingTeaser';
+        $result[] = 'TagManager_PublishLiveEnvironmentCapabilityRequired';
+        $result[] = 'TagManager_CapabilityPublishLiveContainer';
+        $result[] = 'TagManager_VersionAlreadyPublishedToAllEnvironments';
+        $result[] = 'TagManager_UseCustomTemplateCapabilityRequired';
+        $result[] = 'TagManager_CapabilityUseCustomTemplates';
         $result[] = 'TagManager_ViewX';
         $result[] = 'TagManager_DeleteX';
         $result[] = 'TagManager_CreateNewX';

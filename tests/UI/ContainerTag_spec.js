@@ -104,6 +104,14 @@ describe("ContainerTag", function () {
         }, done);
     });
 
+    it('should fade out tags that cannot be created', function (done) {
+        permissions.setWriteUser()
+        capture.page(done, 'create_new_custom_templates_restricted', function (page) {
+            page.load(container1Base);
+            page.click('.createNewTag');
+        }, done);
+    });
+
     it('should be able to prefill tag', function (done) {
         capture.page(done, 'create_new_prefilled', function (page) {
             page.load(container1Base);

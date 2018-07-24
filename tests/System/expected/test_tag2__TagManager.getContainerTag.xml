@@ -37,6 +37,7 @@
 			<row>web</row>
 		</contexts>
 		<hasAdvancedSettings>1</hasAdvancedSettings>
+		<isCustomTemplate>1</isCustomTemplate>
 		<parameters>
 			<row>
 				<name>customHtml</name>

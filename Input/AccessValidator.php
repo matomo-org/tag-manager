@@ -8,27 +8,81 @@
 
 namespace Piwik\Plugins\TagManager\Input;
 
+use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
+use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
+use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\SystemSettings;
 use Piwik\Site;
 
 class AccessValidator
 {
+    /**
+     * @var SystemSettings 
+     */
+    private $settings;
+
+    public function __construct(SystemSettings $settings)
+    {
+        $this->settings = $settings;
+    }
+
     public function checkViewPermission($idSite)
     {
         $this->checkSiteExists($idSite);
         Piwik::checkUserHasViewAccess($idSite);
     }
 
-    public function checkWritePermission($idSite)
+    public function checkWriteCapability($idSite)
     {
         $this->checkSiteExists($idSite);
-        Piwik::checkUserHasAdminAccess($idSite);
+        Piwik::checkUserHasCapability($idSite, TagManagerWrite::ID);
     }
 
-    public function hasWritePermission($idSite)
+    public function checkPublishLiveEnvironmentCapability($idSite)
+    {
+        $this->checkSiteExists($idSite);
+        Piwik::checkUserHasCapability($idSite, PublishLiveContainer::ID);
+    }
+
+    public function checkUseCustomTemplatesCapability($idSite)
+    {
+        $this->checkSiteExists($idSite);
+
+        if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_SUPERUSER) {
+            Piwik::checkUserHasSuperUserAccess();
+        } else {
+            // no need to check for === disabled as it will be automatically checked because in this case we remove
+            // disabled tags/triggers/...
+
+            Piwik::checkUserHasCapability($idSite, UseCustomTemplates::ID);
+        }
+    }
+
+    public function hasUseCustomTemplatesCapability($idSite)
     {
         try {
-            $this->checkWritePermission($idSite);
+            $this->checkUseCustomTemplatesCapability($idSite);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+    public function hasPublishLiveEnvironmentCapability($idSite)
+    {
+        try {
+            $this->checkPublishLiveEnvironmentCapability($idSite);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+    public function hasWriteCapability($idSite)
+    {
+        try {
+            $this->checkWriteCapability($idSite);
         } catch (\Exception $e) {
             return false;
         }

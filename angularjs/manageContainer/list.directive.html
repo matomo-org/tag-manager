@@ -22,7 +22,7 @@
         </tr>
         <tr ng-show="!containerList.model.isLoading && (containerList.model.containers|length) == 0">
             <td colspan="5">
-                {{ 'TagManager_NoContainersFound'|translate }} <a class="createContainerNow" ng-click="containerList.createContainer()" ng-show="containerList.hasAdminAccess">{{ 'TagManager_CreateNewContainerNow'|translate }}</a>
+                {{ 'TagManager_NoContainersFound'|translate }} <a class="createContainerNow" ng-click="containerList.createContainer()" ng-show="containerList.hasWriteAccess">{{ 'TagManager_CreateNewContainerNow'|translate }}</a>
             </td>
         </tr>
         <tr ng-repeat="container in containerList.model.containers|orderBy:'created_date':true"
@@ -40,10 +40,10 @@
                    title="{{ 'TagManager_InstallCode'|translate }}"
                    class="table-action installCode icon-embed"></a>
                 <a ng-click="containerList.editContainer(container.idcontainer)"
-                   ng-show="containerList.hasAdminAccess"
+                   ng-show="containerList.hasWriteAccess"
                    class="table-action icon-edit" title="{{ 'TagManager_EditX'|translate:('TagManager_Container'|translate) }}"></a>
                 <a ng-click="containerList.deleteContainer(container)"
-                   ng-show="containerList.hasAdminAccess"
+                   ng-show="containerList.hasWriteAccess"
                    class="table-action icon-delete"
                    title="{{ 'TagManager_DeleteX'|translate:('TagManager_Container'|translate) }}"
                 ></a>
@@ -52,7 +52,7 @@
         </tbody>
     </table>
 
-    <div class="tableActionBar" ng-show="containerList.hasAdminAccess">
+    <div class="tableActionBar" ng-show="containerList.hasWriteAccess">
         <a class="createNewContainer" value="" ng-click="containerList.createContainer()"
         ><span class="icon-add"></span> {{ 'TagManager_CreateNewContainer'|translate }}</a>
     </div>

@@ -175,6 +175,7 @@ class TriggerTest extends IntegrationTestCase
                 'order' => 9999,
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
+                'isCustomTemplate' => false,
                 'parameters' => array (
                    array(
                         'name' => 'eventName',
@@ -234,6 +235,7 @@ class TriggerTest extends IntegrationTestCase
                 'order' => 9999,
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
+                'isCustomTemplate' => false,
                 'parameters' => array (
                     array(
                         'name' => 'eventName',
@@ -352,6 +354,7 @@ class TriggerTest extends IntegrationTestCase
                 'order' => 9999,
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
+                'isCustomTemplate' => false,
                 'parameters' => array (
                     array(
                         'name' => 'eventName',

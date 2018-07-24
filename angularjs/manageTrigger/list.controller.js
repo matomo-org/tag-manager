@@ -13,7 +13,7 @@
     function TriggerListController($scope, tagManagerTriggerModel, piwik, piwikApi, $location) {
 
         this.model = tagManagerTriggerModel;
-        this.hasAdminAccess = piwik.tagManagerAdminAccess;
+        this.hasWriteAccess = piwik.hasUserCapability('tagmanager_write');
 
         var self = this;
         this.idContainer = $scope.idContainer;

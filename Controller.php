@@ -48,7 +48,7 @@ class Controller extends \Piwik\Plugin\Controller
 
     public function debug()
     {
-        Piwik::checkUserHasSomeAdminAccess();
+        Piwik::checkUserHasSomeWriteAccess();
         $output = $this->renderTemplate('debug.twig');
         return $output;
     }
@@ -74,7 +74,7 @@ class Controller extends \Piwik\Plugin\Controller
 
     public function dashboard()
     {
-        $this->accessValidator->checkWritePermission($this->idSite);
+        $this->accessValidator->checkWriteCapability($this->idSite);
 
         return $this->renderManageContainerTemplate('dashboard');
     }
@@ -83,7 +83,7 @@ class Controller extends \Piwik\Plugin\Controller
     {
         Piwik::checkUserHasSomeViewAccess();
 
-        $canEdit = $this->accessValidator->hasWritePermission($this->idSite);
+        $canEdit = $this->accessValidator->hasWriteCapability($this->idSite);
 
         return $this->renderTemplate('gettingStarted', array(
             'canEdit' => $canEdit
@@ -151,7 +151,7 @@ class Controller extends \Piwik\Plugin\Controller
 
                 $version = '';
                 if (!empty($release['version_name'])) {
-                    $version = ' (' . $release['version_name'] . ')';
+                    $version = ' (' . Piwik::translate('TagManager_VersionX', $release['version_name']) . ')';
                 }
 
                 $mtmPreviewId = PreviewCookie::COOKIE_NAME . '=' .$idContainer;

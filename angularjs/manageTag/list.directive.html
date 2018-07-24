@@ -12,7 +12,7 @@
                 <th class="triggers">{{ 'TagManager_Triggers'|translate }}</th>
                 <th class="lastUpdated">{{ 'TagManager_LastUpdated'|translate }}</th>
                 <th class="action"
-                    ng-show="tagList.hasAdminAccess">{{ 'General_Actions'|translate }}</th>
+                    ng-show="tagList.hasWriteAccess">{{ 'General_Actions'|translate }}</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@
                 {{ 'TagManager_NoTagsFound'|translate }}
                 <a ng-click="tagList.createTag()"
                    class="createContainerTagNow"
-                   ng-show="tagList.hasAdminAccess">{{ 'TagManager_CreateNewTagNow'|translate }}</a>
+                   ng-show="tagList.hasWriteAccess">{{ 'TagManager_CreateNewTagNow'|translate }}</a>
             </td>
         </tr>
         <tr ng-repeat="tag in tagList.model.tags|orderBy:'name':false"
@@ -38,21 +38,21 @@
                 <span ng-repeat="(fireTriggerIndex, fireTriggerId) in tag.fire_trigger_ids track by fireTriggerIndex">
                     <a ng-click="tagList.editTrigger(fireTriggerId)"
                        style="display: inline-block;vertical-align: top !important;"
-                       ng-show="tagList.hasAdminAccess" class="chip">{{ tagList.triggers[fireTriggerId] }}</a>
-                    <span ng-show="!tagList.hasAdminAccess" class="chip">{{ tagList.triggers[fireTriggerId] }}</span>
+                       ng-show="tagList.hasWriteAccess" class="chip">{{ tagList.triggers[fireTriggerId] }}</a>
+                    <span ng-show="!tagList.hasWriteAccess" class="chip">{{ tagList.triggers[fireTriggerId] }}</span>
                 </span>
                 <span ng-show="tag.block_trigger_ids|length">{{ 'TagManager_Except'|translate }}:
                 <span ng-repeat="blockTriggerId in tag.block_trigger_ids">
                     <a ng-click="tagList.editTrigger(blockTriggerId)"
-                       ng-show="tagList.hasAdminAccess"
+                       ng-show="tagList.hasWriteAccess"
                        class="chip">{{ tagList.triggers[blockTriggerId] }}</a>
-                    <span ng-show="!tagList.hasAdminAccess" class="chip">{{ tagList.triggers[blockTriggerId] }}</span>
+                    <span ng-show="!tagList.hasWriteAccess" class="chip">{{ tagList.triggers[blockTriggerId] }}</span>
                 </span></span>
 
             </td>
             <td class="lastUpdated" title="{{ 'TagManager_CreatedOnX'|translate:tag.created_date_pretty }}"><span>{{ tag.updated_date_pretty }}</span></td>
             <td class="action"
-                ng-show="tagList.hasAdminAccess">
+                ng-show="tagList.hasWriteAccess">
                 <a ng-click="tagList.editTag(tag.idtag, tag.type)"
                    class="table-action icon-edit" title="{{ 'TagManager_EditTag'|translate }}"></a>
                 <a ng-click="tagList.deleteTag(tag)" class="table-action icon-delete"
@@ -63,7 +63,7 @@
         </tbody>
     </table>
 
-    <div class="tableActionBar" ng-show="tagList.hasAdminAccess">
+    <div class="tableActionBar" ng-show="tagList.hasWriteAccess">
         <a class="createNewTag" value="" ng-click="tagList.createTag()"
         ><span class="icon-add"></span> {{ 'TagManager_CreateNewTag'|translate }}</a>
     </div>

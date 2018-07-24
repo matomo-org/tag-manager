@@ -12,7 +12,7 @@
 
     function tagManagerVersionModel(piwikApi, $q, $filter) {
         var fetchPromise = null;
-        var environmentPromise = null;
+        var environmentPublishPromise = null;
         var translate = $filter('translate');
 
         var model = {
@@ -23,7 +23,7 @@
             createOrUpdateVersion: createOrUpdateVersion,
             deleteVersion: deleteVersion,
             publishVersion: publishVersion,
-            fetchAvailableEnvironments: fetchAvailableEnvironments,
+            fetchAvailableEnvironmentsWithPublishPermission: fetchAvailableEnvironmentsWithPublishPermission,
             reload: reload,
             fetchVersions: fetchVersions
         };
@@ -57,13 +57,13 @@
             });
         }
 
-        function fetchAvailableEnvironments() {
-            if (!environmentPromise) {
-                var params = {method: 'TagManager.getAvailableEnvironments', filter_limit: '-1'};
-                environmentPromise = piwikApi.fetch(params);
+        function fetchAvailableEnvironmentsWithPublishPermission() {
+            if (!environmentPublishPromise) {
+                var params = {method: 'TagManager.getAvailableEnvironmentsWithPublishCapability', filter_limit: '-1'};
+                environmentPublishPromise = piwikApi.fetch(params);
             }
 
-            return environmentPromise;
+            return environmentPublishPromise;
         }
 
         function findVersion(idContainer, idContainerVersion) {

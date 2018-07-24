@@ -122,6 +122,7 @@ class BaseTemplateTest extends IntegrationTestCase
             'order' => 9999,
             'contexts' => array(WebContext::ID),
             'hasAdvancedSettings' => true,
+            'isCustomTemplate' => false,
             'parameters' => array (
                 array (
                     'name' => 'value',

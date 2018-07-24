@@ -17,8 +17,12 @@ use Piwik\Settings\FieldConfig;
 
 class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 {
+    const CUSTOM_TEMPLATES_DISABLED = 'disabled';
+    const CUSTOM_TEMPLATES_ADMIN = 'admin';
+    const CUSTOM_TEMPLATES_SUPERUSER = 'superuser';
+
     /** @var Setting */
-    public $enableCustomTemplates;
+    public $restrictCustomTemplates;
 
     /** @var Setting */
     public $environments;
@@ -27,16 +31,21 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
     protected function init()
     {
-        $this->enableCustomTemplates = $this->createCustomTemplatesSetting();
+        $this->restrictCustomTemplates = $this->createCustomTemplatesSetting();
         $this->environments = $this->createEnvironmentsSetting();
     }
 
     private function createCustomTemplatesSetting()
     {
-        return $this->makeSetting('enableCustomTemplates', $default = true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-            $field->title = Piwik::translate('TagManager_SettingEnableCustomTemplatesTitle');
-            $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
-            $field->description = Piwik::translate('TagManager_SettingEnableCustomTemplatesDescription');
+        return $this->makeSetting('restrictCustomTemplates', self::CUSTOM_TEMPLATES_ADMIN, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $field->title = Piwik::translate('TagManager_SettingCustomTemplatesTitle');
+            $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
+            $field->description = Piwik::translate('TagManager_SettingCustomTemplatesDescription');
+            $field->availableValues = array(
+                self::CUSTOM_TEMPLATES_DISABLED => Piwik::translate('TagManager_SettingCustomTemplatesDisabled'),
+                self::CUSTOM_TEMPLATES_ADMIN => Piwik::translate('TagManager_SettingCustomTemplatesAdmin'),
+                self::CUSTOM_TEMPLATES_SUPERUSER => Piwik::translate('TagManager_SettingCustomTemplatesSuperUser')
+            );
         });
     }
 

@@ -24,6 +24,11 @@ class CustomJsFunctionVariable extends BaseVariable
         return self::CATEGORY_PAGE_VARIABLES;
     }
 
+    public function isCustomTemplate()
+    {
+        return true;
+    }
+
     public function getParameters()
     {
         return array(

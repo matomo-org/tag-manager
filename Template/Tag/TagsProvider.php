@@ -11,6 +11,7 @@ use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
 use Piwik\Plugin\Manager;
 use Piwik\Plugins\TagManager\Configuration;
+use Piwik\Plugins\TagManager\SystemSettings;
 
 class TagsProvider {
 
@@ -29,10 +30,16 @@ class TagsProvider {
      */
     private $cached;
 
-    public function __construct(Manager $pluginManager, Configuration $configuration)
+    /**
+     * @var SystemSettings
+     */
+    private $settings;
+
+    public function __construct(Manager $pluginManager, Configuration $configuration, SystemSettings $systemSettings)
     {
         $this->pluginManager = $pluginManager;
         $this->configuration = $configuration;
+        $this->settings = $systemSettings;
     }
 
     public function checkIsValidTag($tagId)
@@ -63,6 +70,12 @@ class TagsProvider {
         if (!isset($this->cached)) {
             $blockedTags = $this->configuration->getDisabledTags();
             $blockedTags = array_map('strtolower', $blockedTags);
+
+            if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
+                foreach ($this->getCustomTemplateIds() as $customType) {
+                    $blockedTags[] = $customType;
+                }
+            }
 
             $tagClasses = $this->pluginManager->findMultipleComponents('Template/Tag', 'Piwik\\Plugins\\TagManager\\Template\\Tag\\BaseTag');
 
@@ -116,4 +129,19 @@ class TagsProvider {
         return $this->cached;
     }
 
+    public function isCustomTemplate($id)
+    {
+        return in_array($id, $this->getCustomTemplateIds(), true);
+    }
+
+    public function getCustomTemplateIds()
+    {
+        $ids = array();
+        foreach ($this->getAllTags() as $tag) {
+            if ($tag->isCustomTemplate()) {
+                $ids[] = $tag->getId();
+            }
+        }
+        return $ids;
+    }
 }

@@ -29,17 +29,11 @@ class ConfigurationTest extends IntegrationTestCase
      */
     private $configuration;
 
-    /**
-     * @var SystemSettings
-     */
-    private $systemSettings;
-
     public function setUp()
     {
         parent::setUp();
 
-        $this->systemSettings = new SystemSettings();
-        $this->configuration = new Configuration($this->systemSettings);
+        $this->configuration = new Configuration();
         $this->configuration->install();
     }
 
@@ -68,21 +62,6 @@ class ConfigurationTest extends IntegrationTestCase
         $this->assertSame(array('customhtml', 'foo', 'bar'), $this->configuration->getDisabledTags());
     }
 
-    public function test_getDisabledTags_disabledCustomTags()
-    {
-        $this->systemSettings->enableCustomTemplates->setValue(0);
-        $this->assertSame(array(CustomHtmlTag::ID), $this->configuration->getDisabledTags());
-    }
-
-    public function test_getDisabledTags_disabledCustomTagsAndValues()
-    {
-        Config::getInstance()->TagManager = array(
-            Configuration::KEY_DISABLED_TAGS => array('foo', 'bar')
-        );
-        $this->systemSettings->enableCustomTemplates->setValue(0);
-        $this->assertSame(array('foo', 'bar', CustomHtmlTag::ID), $this->configuration->getDisabledTags());
-    }
-
     public function test_getDisabledTags_invalidValue()
     {
         Config::getInstance()->TagManager = array(
@@ -102,21 +81,6 @@ class ConfigurationTest extends IntegrationTestCase
             Configuration::KEY_DISABLED_VARIABLES => array('customhtml', 'foo', 'bar')
         );
         $this->assertSame(array('customhtml', 'foo', 'bar'), $this->configuration->getDisabledVariables());
-    }
-
-    public function test_getDisabledVariables_disabledCustomVariables()
-    {
-        $this->systemSettings->enableCustomTemplates->setValue(0);
-        $this->assertSame(array(CustomJsFunctionVariable::ID), $this->configuration->getDisabledVariables());
-    }
-
-    public function test_getDisabledVariables_disabledCustomVariablesAndValues()
-    {
-        Config::getInstance()->TagManager = array(
-            Configuration::KEY_DISABLED_VARIABLES => array('foo', 'bar')
-        );
-        $this->systemSettings->enableCustomTemplates->setValue(0);
-        $this->assertSame(array('foo', 'bar', CustomJsFunctionVariable::ID), $this->configuration->getDisabledVariables());
     }
 
     public function test_getDisabledVariables_invalidValue()

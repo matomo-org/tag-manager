@@ -161,6 +161,28 @@ class API extends \Piwik\Plugin\API
     }
 
     /**
+     * Get a list of all available environments such as "live", "dev", "staging" with the permission to publish.
+     *
+     * @param int $idSite
+     * @return array
+     */
+    public function getAvailableEnvironmentsWithPublishCapability($idSite)
+    {
+        Piwik::checkUserHasSomeViewAccess();
+
+        $environments = $this->environment->getEnvironments();
+
+        $hasCapability = $this->accessValidator->hasPublishLiveEnvironmentCapability($idSite);
+
+        return array_filter($environments, function ($environment) use ($idSite, $hasCapability) {
+            if ($environment['id'] === 'live' && !$hasCapability) {
+                return false;
+            }
+            return true;
+        });
+    }
+
+    /**
      * Get a list of all available fire limits which can be used when creating or updating a tag.
      * @return array
      */
@@ -339,7 +361,7 @@ class API extends \Piwik\Plugin\API
      */
     public function createDefaultContainerForSite($idSite)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
 
         $loop = 0;
         $idContainer = null;
@@ -429,8 +451,12 @@ class API extends \Piwik\Plugin\API
      */
     public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        if ($this->tagsProvider->isCustomTemplate($type)) {
+            $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+        }
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
@@ -460,8 +486,13 @@ class API extends \Piwik\Plugin\API
      */
     public function updateContainerTag($idSite, $idContainer, $idContainerVersion, $idTag, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        $tag = $this->tags->getContainerTag($idSite, $idContainerVersion, $idTag);
+        if (!empty($tag) && $this->tagsProvider->isCustomTemplate($tag['type'])) {
+            $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+        }
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
@@ -482,7 +513,7 @@ class API extends \Piwik\Plugin\API
      */
     public function deleteContainerTag($idSite, $idContainer, $idContainerVersion, $idTag)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
         if ($this->getContainerTag($idSite, $idContainer, $idContainerVersion, $idTag)) {
@@ -575,8 +606,12 @@ class API extends \Piwik\Plugin\API
      */
     public function addContainerTrigger($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $conditions = [])
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        if ($this->triggersProvider->isCustomTemplate($type)) {
+            $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+        }
 
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
@@ -603,8 +638,13 @@ class API extends \Piwik\Plugin\API
      */
     public function updateContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger, $name, $parameters = [], $conditions = [])
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        $trigger = $this->triggers->getContainerTrigger($idSite, $idContainerVersion, $idTrigger);
+        if (!empty($trigger) && $this->triggersProvider->isCustomTemplate($trigger['type'])) {
+            $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+        }
 
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
@@ -626,7 +666,7 @@ class API extends \Piwik\Plugin\API
      */
     public function deleteContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
         if ($this->getContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger)) {
@@ -770,8 +810,12 @@ class API extends \Piwik\Plugin\API
      */
     public function addContainerVariable($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $defaultValue = false, $lookupTable = [])
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        if ($this->variablesProvider->isCustomTemplate($type)) {
+            $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+        }
 
         $parameters = $this->unsanitizeAssocArray($parameters);
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
@@ -797,8 +841,13 @@ class API extends \Piwik\Plugin\API
      */
     public function updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name, $parameters = [], $defaultValue = null, $lookupTable = [])
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        $variable = $this->variables->getContainerVariable($idSite, $idContainerVersion, $idVariable);
+        if (!empty($variable) && $this->variablesProvider->isCustomTemplate($variable['type'])) {
+            $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+        }
 
         $parameters = $this->unsanitizeAssocArray($parameters);
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
@@ -820,7 +869,7 @@ class API extends \Piwik\Plugin\API
      */
     public function deleteContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
         if ($this->getContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable)) {
@@ -877,7 +926,7 @@ class API extends \Piwik\Plugin\API
      */
     public function addContainer($idSite, $context, $name, $description = '')
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         return $this->containers->addContainer($idSite, $context, $name, $description);
     }
 
@@ -892,7 +941,7 @@ class API extends \Piwik\Plugin\API
      */
     public function updateContainer($idSite, $idContainer, $name, $description = '')
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
         return $this->containers->updateContainer($idSite, $idContainer, $name, $description);
@@ -911,7 +960,7 @@ class API extends \Piwik\Plugin\API
      */
     public function createContainerVersion($idSite, $idContainer, $name, $description = '', $idContainerVersion = null)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
         if (empty($idContainerVersion)) {
@@ -932,7 +981,7 @@ class API extends \Piwik\Plugin\API
      */
     public function updateContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description = '')
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
         return $this->containers->updateContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
@@ -981,7 +1030,7 @@ class API extends \Piwik\Plugin\API
      */
     public function deleteContainerVersion($idSite, $idContainer, $idContainerVersion)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
         if ($this->getContainerVersion($idSite, $idContainer, $idContainerVersion)) {
@@ -1007,7 +1056,10 @@ class API extends \Piwik\Plugin\API
      */
     public function publishContainerVersion($idSite, $idContainer, $idContainerVersion, $environment)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
+        if ($environment === Environment::ENVIRONMENT_LIVE) {
+            $this->accessValidator->checkPublishLiveEnvironmentCapability($idSite);
+        }
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
         $this->environment->checkIsValidEnvironment($environment);
 
@@ -1024,7 +1076,7 @@ class API extends \Piwik\Plugin\API
      */
     public function deleteContainer($idSite, $idContainer)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
         $this->containers->deleteContainer($idSite, $idContainer);
@@ -1063,7 +1115,7 @@ class API extends \Piwik\Plugin\API
      */
     public function enablePreviewMode($idSite, $idContainer, $idContainerVersion = null)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
         if (empty($idContainerVersion)) {
@@ -1090,7 +1142,7 @@ class API extends \Piwik\Plugin\API
      */
     public function disablePreviewMode($idSite, $idContainer)
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
         if (empty($idContainerVersion)) {
@@ -1152,7 +1204,7 @@ class API extends \Piwik\Plugin\API
      */
     public function importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $backupName = '')
     {
-        $this->accessValidator->checkWritePermission($idSite);
+        $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
         $idContainerVersion = $this->getContainerDraftVersion($idSite, $idContainer);

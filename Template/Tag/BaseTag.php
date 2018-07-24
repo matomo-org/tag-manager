@@ -10,6 +10,9 @@ namespace Piwik\Plugins\TagManager\Template\Tag;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Template\BaseTemplate;
 
+/**
+ * @api
+ */
 abstract class BaseTag extends BaseTemplate
 {
     const CATEGORY_ANALYTICS = 'TagManager_CategoryAnalytics';
@@ -24,11 +27,17 @@ abstract class BaseTag extends BaseTemplate
     
     protected $templateType = 'Tag';
 
+    /**
+     * @inheritdoc
+     */
     public function getCategory()
     {
         return self::CATEGORY_OTHERS;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getSupportedContexts()
     {
         return array(

@@ -13,7 +13,7 @@
     function VersionListController($scope, tagManagerVersionModel, piwik, piwikApi, $location) {
 
         this.model = tagManagerVersionModel;
-        this.hasAdminAccess = piwik.tagManagerAdminAccess;
+        this.hasWriteAccess = piwik.hasUserCapability('tagmanager_write');
 
         var self = this;
         this.idContainer = $scope.idContainer;
@@ -21,8 +21,9 @@
         this.environments = [];
         this.versionToBePublished = null;
         this.idSite = piwik.idSite;
+        this.canPublishToLive = piwik.hasUserCapability('tagmanager_publish_live_container');
 
-        tagManagerVersionModel.fetchAvailableEnvironments().then(function (environments) {
+        tagManagerVersionModel.fetchAvailableEnvironmentsWithPublishPermission().then(function (environments) {
             self.environments = [];
             angular.forEach(environments, function (environment) {
                 self.environments.push({key: environment.id, value: environment.name});

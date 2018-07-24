@@ -10,6 +10,9 @@ namespace Piwik\Plugins\TagManager\Template\Trigger;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Template\BaseTemplate;
 
+/**
+ * @api
+ */
 abstract class BaseTrigger extends BaseTemplate
 {
     CONST CATEGORY_PAGE_VIEW = 'TagManager_CategoryPageview';
@@ -19,17 +22,22 @@ abstract class BaseTrigger extends BaseTemplate
 
     protected $templateType = 'Trigger';
 
+    /**
+     * @inheritdoc
+     */
     public function getCategory()
     {
         return self::CATEGORY_OTHERS;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getSupportedContexts()
     {
         return array(
             WebContext::ID
         );
     }
-
 
 }

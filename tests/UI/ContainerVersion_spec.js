@@ -275,4 +275,19 @@ describe("ContainerVersion", function () {
         }, done);
     });
 
+    it('should show notice not possible to publish to live container and preselect alternative environment', function (done) {
+        permissions.setWriteUser();
+        capture.page(done, 'no_publish_live_container_capability', function (page) {
+            page.load(container1Base);
+            page.click('.createNewVersion');
+        }, done);
+    });
+
+    it('should show notice not possible to publish to live container and preselect alternative environment in selector', function (done) {
+        permissions.setWriteUser();
+        capture.page(done, 'no_publish_live_container_capability_selector', function (page) {
+            page.load(container1Base);
+            clickFirstRowTableAction(page, 'icon-rocket');
+        }, done);
+    });
 });
