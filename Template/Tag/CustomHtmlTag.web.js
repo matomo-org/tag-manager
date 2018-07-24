@@ -201,9 +201,9 @@
                             if (hasValueSet) {
                                 // we need to make sure to print a value... we use a random value... if someone searches for it
                                 // they can find the FAQ article
-                                value += 'mTmKpwoqM';
-                            } else {
                                 value += secureFilters.css(theVarValue);
+                            } else {
+                                value += 'mTmKpwoqM';
                             }
                         } else if (TagManager.dom.isAttributeContext(value, 'href') || TagManager.dom.isAttributeContext(value, 'src')) {
                             if (hasValueSet) {
