@@ -127,7 +127,7 @@ class SystemSettingTest extends IntegrationTestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage is not a valid
+     * @expectedExceptionMessage does not have a valid length
      */
     public function test_getEnvironments_validatesTheName()
     {

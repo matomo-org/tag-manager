@@ -260,6 +260,9 @@
                 isString: function (property) {
                     return typeof property === 'string';
                 },
+                isNumber: function (property) {
+                    return typeof property === 'number';
+                },
                 isArray: function (property) {
                     if (!utils.isObject(property)) {
                         return false;
@@ -794,6 +797,72 @@
                     }
                     return [];
                 },
+                /** @ignore **/
+                isElementContext: function (htmlString, tag) {
+                    //  not part of API at this moment
+                    if (!htmlString || !tag) {
+                        return false;
+                    }
+                    htmlString = String(htmlString).toLowerCase();
+                    tag = String(tag).toLowerCase();
+                    var lastScriptPos = htmlString.lastIndexOf('<' + tag);
+                    if (lastScriptPos === -1) {
+                        return false;
+                    }
+                    var lastPiece = htmlString.substring(lastScriptPos);
+
+                    return !lastPiece.match(new RegExp('<\\s*/\\s*' + tag + '>'));
+                },
+                /** @ignore **/
+                isAttributeContext: function (htmlString, attr) {
+                    //  not part of API at this moment
+                    if (!htmlString || !attr) {
+                        return false;
+                    }
+
+                    // we remove all whitespace around equal signs in case there is an attribute like this " href = 'fff'"
+                    // for easier matching
+                    htmlString = String(htmlString).replace(/([\s\uFEFF\xA0]*=[\s\uFEFF\xA0]*)/g, '=');
+
+                    // htmlString = eg "sdsds <div foo='test' mytest style='color:"
+                    var lastScriptPos = htmlString.lastIndexOf('<');
+                    if (lastScriptPos === -1) {
+                        return false; // no opening tag
+                    }
+                    // lastPiece = eg "<div foo='test' mytest style='color:"
+                    var lastPiece = htmlString.substring(lastScriptPos);
+                    var endingElementPos = lastPiece.indexOf('>');
+
+                    if (endingElementPos !== -1) {
+                        return false; // the tag was closed so we cannot be within an attribute
+                    }
+
+                    var posAttrEnd = lastPiece.lastIndexOf('=');
+                    if (posAttrEnd === -1) {
+                        return false; // no attribute with value within the tag
+                    }
+                    var posAttrStart = lastPiece.lastIndexOf(' ', posAttrEnd);
+                    // attrName = eg " style"
+                    var attrName = lastPiece.substring(posAttrStart, posAttrEnd);
+                    attrName = utils.trim(attrName);
+
+                    if (attrName.toLowerCase() !== attr.toLowerCase()) {
+                        return false;
+                    }
+
+                    // attrValue = eg "'color:"
+                    var attrValue = lastPiece.substring(posAttrEnd).replace('=', '');
+
+                    var quote = attrValue.substring(0, 1);
+                    if ('"' === quote) {
+                        return -1 === attrValue.substring(1).indexOf('"');
+                    } else if ("'" === quote) {
+                        return -1 === attrValue.substring(1).indexOf("'");
+                    }
+
+                    // seems like user did not put quotes around the attribute! we check for a space for attr separation
+                    return -1 === attrValue.indexOf(' ');
+                },
                 onLoad: function (callback) {
                     if (documentAlias.readyState === 'complete') {
                         callback();
@@ -914,6 +983,10 @@
             {
                 this.name = '';
                 this.type = 'JoinedVariable';
+
+                this.getDefinition = function () {
+                    return variables;
+                };
                 this.get = function () {
                     var value = '', varReturn;
                     for (var i = 0; i < variables.length; i++) {
@@ -941,6 +1014,10 @@
             {
                 this.name = '';
                 this.type = 'ConstantVariable';
+
+                this.getDefinition = function () {
+                    return value;
+                };
 
                 function isVariableDefinition(value) {
                     return value && utils.isObject(value) && !utils.isArray(value) && (utils.hasProperty(value, 'type') || utils.hasProperty(value, 'joinedVariable'));
@@ -1012,6 +1089,9 @@
                 this.defaultValue = undefined;
                 this.parameters = variable.parameters || {};
 
+                this.getDefinition = function () {
+                    return variable;
+                };
                 this.get = function () {
                     var value;
                     try {

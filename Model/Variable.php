@@ -355,7 +355,7 @@ class Variable extends BaseModel
             $variable['typeMetadata'] = $variableTemplate->toArray();
             foreach ($variable['typeMetadata']['parameters'] as &$parameter) {
                 $paramName = $parameter['name'];
-                if (!empty($variable['parameters'][$paramName])) {
+                if (isset($variable['parameters'][$paramName])) {
                     $parameter['value'] = $variable['parameters'][$paramName];
                 } else {
                     $variable['parameters'][$paramName] = $parameter['defaultValue'];

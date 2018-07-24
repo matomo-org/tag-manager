@@ -66,11 +66,11 @@
             return fetchVariables(idContainer, idContainerVersion);
         }
 
-        function fetchVariablesIfNotLoaded()
+        function fetchVariablesIfNotLoaded(idContainer, idContainerVersion)
         {
             if (!fetchPromise) {
                 // needed for suggestNameForType() to make sure it is aware of all names
-                model.fetchVariables();
+                model.fetchVariables(idContainer, idContainerVersion);
             }
         }
 

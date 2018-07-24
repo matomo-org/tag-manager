@@ -43,7 +43,7 @@ class TemplateLocatorTest extends IntegrationTestCase
 
         $templates = $this->templateLocator->getLoadedTemplates();
         $this->assertEquals(array('CustomHtmlTag'), array_keys($templates));
-        $this->assertContains("parameters.get('customHtml')", $templates['CustomHtmlTag']);
+        $this->assertContains("parameters.customHtml", $templates['CustomHtmlTag']);
     }
 
     public function test_loadTriggerTemplate()

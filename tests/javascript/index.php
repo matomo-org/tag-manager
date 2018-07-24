@@ -365,7 +365,7 @@
         });
 
         test("Matomo TagManager Utils", function() {
-            expect(279);
+            expect(283);
 
             var utils = window.MatomoTagManager.utils;
 
@@ -374,6 +374,7 @@
             equal(typeof utils.isFunction, 'function', 'utils.isFunction');
             equal(typeof utils.isObject, 'function', 'utils.isObject');
             equal(typeof utils.isString, 'function', 'utils.isString');
+            equal(typeof utils.isNumber, 'function', 'utils.isNumber');
             equal(typeof utils.isArray, 'function', 'utils.isArray');
             equal(typeof utils.indexOfArray, 'function', 'utils.indexOfArray');
             equal(typeof utils.compare, 'function', 'utils.compare');
@@ -392,6 +393,10 @@
             strictEqual(false, utils.isString(4), 'isString, when value is not a string but a number');
             strictEqual(false, utils.isString(null), 'isString, when value is not a string but null');
             strictEqual(false, utils.isString(undefined), 'isString, when value is not a string but undefined');
+
+            strictEqual(false, utils.isNumber('5'), 'isNumber, when actually a string');
+            strictEqual(true, utils.isNumber(5), 'isNumber, when value actually is an int number');
+            strictEqual(true, utils.isNumber(4.4), 'isNumber, when value is float number');
 
             strictEqual(true, utils.isObject({test:'foo'}), 'isObject, when value actually is an object');
             strictEqual(true, utils.isObject([5]), 'isObject, an array is an object too');
@@ -558,11 +563,10 @@
                 result = utils.compare(atest.actualValue, atest.expectedValue, 'not_' + atest.type);
                 strictEqual(!atest.expected, result, '_compare: ' + JSON.stringify(atest));
             }
-
         });
 
         test("Matomo TagManager dom", function() {
-            expect(45);
+            expect(78);
 
             var dom = window.MatomoTagManager.dom;
 
@@ -581,6 +585,8 @@
             equal(typeof dom.bySelector, 'function', 'dom.bySelector');
             equal(typeof dom.onLoad, 'function', 'dom.onLoad');
             equal(typeof dom.onReady, 'function', 'dom.onReady');
+            equal(typeof dom.isElementContext, 'function', 'dom.isElementContext');
+            equal(typeof dom.isAttributeContext, 'function', 'dom.isAttributeContext');
 
             var scrollLeft = dom.getScrollLeft();
             var scrollTop = dom.getScrollTop();
@@ -638,6 +644,41 @@
 
             strictEqual('myTagTest myTagFoo myTagTest4', dom.getElementClassNames(dom.byId('TagManager')), 'getElementClassNames, when has classes');
             strictEqual('', dom.getElementClassNames(dom.byId('customTag3')), 'getElementClassNames, when has no classes');
+
+            strictEqual(false, dom.isElementContext(), 'isElementContext, no value given');
+            strictEqual(false, dom.isElementContext('<div>var foo ="', 'script'), 'isElementContext, not a script element');
+            strictEqual(false, dom.isElementContext('<div>var foo =""</div>', 'script'), 'isElementContext, not a closing script element');
+            strictEqual(true, dom.isElementContext('<script>var foo ="', 'script'), 'isElementContext, in the middle of a script element');
+            strictEqual(true, dom.isElementContext('<scRipT>var foo ="', 'script'), 'isElementContext, in the middle of a script element case insensitive');
+            strictEqual(false, dom.isElementContext('<div>var foo < /script>', 'script'), 'isElementContext, not an opening script element');
+            strictEqual(true, dom.isElementContext('<script>var foo ="</ div>', 'script'), 'isElementContext, not a closing script element');
+            strictEqual(false, dom.isElementContext('<script>var foo ="</ div>', 'style'), 'isElementContext, different element');
+            strictEqual(true, dom.isElementContext('<style>var foo ="</ div>', 'style'), 'isElementContext, different element');
+            strictEqual(false, dom.isElementContext('<style>var foo ="</ div>', 'script'), 'isElementContext, different element 2');
+            strictEqual(false, dom.isElementContext('<script>var foo =""< / script>', 'script'), 'isElementContext, not in a script element');
+            strictEqual(false, dom.isElementContext('<script>var foo =""</'+ 'scrIpT>', 'ScRipt'), 'isElementContext, not in a script element');
+
+            strictEqual(false, dom.isAttributeContext('<a href="foo">', 'href'), 'isAttributeContext, is not in that context as tag is closed');
+            strictEqual(false, dom.isAttributeContext('<a href="foo"></a>', 'href'), 'isAttributeContext, is not in that context as element is closed');
+            strictEqual(false, dom.isAttributeContext('<a href="foo></a>', 'href'), 'isAttributeContext, is not in that context as element is closed even when attribute not closed');
+
+            strictEqual(false, dom.isAttributeContext('<a href="foo"', 'href'), 'isAttributeContext, is not in that context as tag is not closed but attribute is, double quotes');
+            strictEqual(false, dom.isAttributeContext("<a href='foo'", 'href'), 'isAttributeContext, is not in that context as tag is not closed but attribute is, single quotes');
+            strictEqual(false, dom.isAttributeContext("<a href  =  'foo'", 'href'), 'isAttributeContext, is not in that context as tag is not closed but attribute is, single quotes with spacing');
+            strictEqual(false, dom.isAttributeContext("<a foo=bar id=\"me\" target='blank' href  =  'foo'", 'href'), 'isAttributeContext, is not in that context as tag is not closed but attribute is, also other attributes');
+            strictEqual(false, dom.isAttributeContext("<a foo=bar href=' id=\"me\" target='", 'href'), 'isAttributeContext, is not in that context as tag is not closed but other attributes exist after');
+            strictEqual(false, dom.isAttributeContext("<a href=http://www.test.de ", 'href'), 'isAttributeContext, is not in that context as tag has no quotes but is separated by space');
+            strictEqual(false, dom.isAttributeContext('<a href="foo', 'id'), 'isAttributeContext, is open attribute but not requested attribute id');
+            strictEqual(false, dom.isAttributeContext('<a href="foo', 'hre'), 'isAttributeContext, is open attribute but not requested attribute hre');
+            strictEqual(false, dom.isAttributeContext('<a href="foo', 'hreff'), 'isAttributeContext, is open attribute but not requested attribute hreff');
+
+            strictEqual(true, dom.isAttributeContext('<a href="foo', 'href'), 'isAttributeContext, is in context when attribute opened but not closed');
+            strictEqual(true, dom.isAttributeContext("<a href='foo", 'href'), 'isAttributeContext, is in context when attribute opened but not closed');
+            strictEqual(true, dom.isAttributeContext("<a href ='foo", 'href'), 'isAttributeContext, is in context when attribute opened but not closed');
+            strictEqual(true, dom.isAttributeContext('<a href =  \'foo', 'href'), 'isAttributeContext, is in context when attribute opened but not closed');
+            strictEqual(true, dom.isAttributeContext('<a href = "foo', 'href'), 'isAttributeContext, is in context when attribute opened but not closed');
+            strictEqual(true, dom.isAttributeContext('<a href =foo', 'href'), 'isAttributeContext, is in context when attribute opened but not closed, no quotes');
+            strictEqual(true, dom.isAttributeContext('<a foo=bar id="me" target=\'blank\' href =foo', 'href'), 'isAttributeContext, is in context when attribute opened but not closed, also other attributes');
 
             var div = document.createElement('div');
             div.className = '   fo   otest  hello world         ';
@@ -721,9 +762,11 @@
         });
 
         test("Matomo TagManager Template Variable", function() {
-            expect(42);
+            expect(46);
 
             strictEqual('ConstantVariable', getConstructorName(buildVariable('footest')), 'buildVariable, makes a constant variable');
+            strictEqual('footest', buildVariable('footest').getDefinition(), 'ConstantVariable, getDefinition returns string');
+            strictEqual(false, buildVariable(false).getDefinition(), 'ConstantVariable, getDefinition returns other input');
             strictEqual('footest', buildVariable('footest').get(), 'ConstantVariable, makes a constant variable when a string given');
             strictEqual('footest6', buildVariable('footest6').toString(), 'ConstantVariable, has a toString method');
             strictEqual(5, buildVariable(5).get(), 'ConstantVariable, makes a constant variable when a number given');
@@ -751,6 +794,7 @@
             strictEqual('test14', buildVariable(varWithObjectTemplate).get(), 'Variable, can work with a template object');
             strictEqual('test12', buildVariable(varWithStringTemplate, {myTemplate: function () { return varWithFunctionTemplate.Variable; }}).get(), 'Variable, can resolve a string container template');
             strictEqual('test12', buildVariable(varWithFunctionTemplate).toString(), 'Variable, has a toString method');
+            deepEqual(varWithStringTemplate, buildVariable(varWithStringTemplate, {myTemplate: function () { return varWithFunctionTemplate.Variable; }}).getDefinition(), 'Variable, getDefinition');
 
             try {
                 strictEqual('test12', buildVariable(varWithStringTemplate).get(), 'Variable, triggers an error when string template not found');
@@ -778,6 +822,7 @@
             strictEqual('footest12bartest145', buildVariable({joinedVariable:['foo', varWithFunctionTemplate, 'bar', varWithObjectTemplate, 5]}).get(), 'JoinedVariable, combines the value of multiple variables');
             strictEqual('footest1205', buildVariable({joinedVariable:['foo', varWithFunctionTemplate, false, 0, null, undefined, 5]}).get(), 'JoinedVariable, does not have a problem with empty values');
             strictEqual('footest12', buildVariable({joinedVariable:['foo', varWithFunctionTemplate]}).toString(), 'JoinedVariable, has a toString()');
+            deepEqual(['foo', varWithFunctionTemplate], buildVariable({joinedVariable:['foo', varWithFunctionTemplate]}).getDefinition(), 'JoinedVariable getDefinition');
 
             deepEqual(['foo', 'bar'], buildVariable(['foo', 'bar']).get(), 'treats a regular array as an array and not any kind of variable');
             strictEqual('ConstantVariable', getConstructorName(buildVariable(['foo', 'bar'])), 'uses a constant variable for a regular array');
@@ -2246,7 +2291,7 @@
         });
 
         test("Matomo TagManager Template CustomHtmlTag", function() {
-            expect(3);
+            expect(10);
             var templateToTest = 'CustomHtmlTag';
             var params = {document: document, customHtml: buildVariable('<div id="customHtmlTag1">my foo bar baz test</div><div id="customHtmlTag2">my test</div>')};
 
@@ -2262,8 +2307,61 @@
             fireTemplateTag(templateToTest, params);
             var addedStyle1 = document.getElementById('customStyleTag');
 
-            strictEqual('.test{}', addedStyle1.innerText, 'should have added element to start of head');
+            strictEqual('.test{}', addedStyle1.innerText, 'should have added element to start of head style1');
             document.head.removeChild(addedStyle1);
+
+            // testing joined
+            params.customHtml = buildVariable({joinedVariable:['<div id="customStyleTag3">', '.test{}', '</div>']});
+            fireTemplateTag(templateToTest, params);
+            var addedStyle3 = document.getElementById('customStyleTag3');
+            strictEqual('.test{}', addedStyle3.innerText, 'should have added element to start of head style3');
+            document.head.removeChild(addedStyle3);
+
+            // does not escape hardcoded string
+            params.customHtml = buildVariable({joinedVariable:['<script id="customStyleTag4">', 'var x = {};', '</' + 'script>']});
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('var x = {};', addedStyle4.innerText, 'should have added element to start of head');
+            document.head.removeChild(addedStyle4);
+
+            // auto escapes JS when through variable
+            params.customHtml = buildVariable({joinedVariable:['<script id="customStyleTag4">var x = ', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return '{}'; }}}, '</' + 'script>']});
+
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('var x = window.MatomoTagManager.customHtmlDataStore[0]', addedStyle4.innerText, 'should have added element to start of head');
+            document.head.removeChild(addedStyle4);
+
+            // auto escapes STYLEs when through variable
+            params.customHtml = buildVariable({joinedVariable:['<style id="customStyleTag4">', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return '.foo[test=name]{ color: red; }'; }}}, '"</' + 'style>']});
+
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('\\2e foo\\5b test\\3d name\\5d \\7b \\20 color\\3a \\20 red\\3b \\20 \\7d \"', addedStyle4.innerText, 'should have escaped style');
+            document.head.removeChild(addedStyle4);
+
+            // auto escapes url in href attribute
+            params.customHtml = buildVariable({joinedVariable:['<a id="customStyleTag4" href = "', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return 'http://www.mytesturl.de/?foo=bar&="test<>"'; }}}, '"></' + 'a>']});
+
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('http://www.mytesturl.de/?foo=bar&=%22test%3C%3E%22', addedStyle4.href, 'should detect href attribute');
+            document.head.removeChild(addedStyle4);
+
+            // no auto escape for regular div when through variable
+            params.customHtml = buildVariable({joinedVariable:['<div id="customStyleTag4">var x = "', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return '{}'; }}}, '"</' + 'div>']});
+
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('var x = "{}"', addedStyle4.innerText, 'should have added element to start of head');
+            document.head.removeChild(addedStyle4);
+
+            // auto resolves objects
+            params.customHtml = buildVariable({joinedVariable:['<script id="customStyleTag4">', {mytest: 'mytype2', myfoo: 'myname2'}, '</' + 'script>']});
+            fireTemplateTag(templateToTest, params);
+            var addedStyle4 = document.getElementById('customStyleTag4');
+            strictEqual('window.MatomoTagManager.customHtmlDataStore[1]', addedStyle4.innerText, 'should have added element to start of head');
+            document.head.removeChild(addedStyle4);
         });
 
         test("Matomo TagManager Template MatomoTag", function() {

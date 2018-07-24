@@ -177,7 +177,7 @@ class Trigger extends BaseModel
             $trigger['typeMetadata'] = $triggerTemplate->toArray();
             foreach ($trigger['typeMetadata']['parameters'] as &$parameter) {
                 $paramName = $parameter['name'];
-                if (!empty($trigger['parameters'][$paramName])) {
+                if (isset($trigger['parameters'][$paramName])) {
                     $parameter['value'] = $trigger['parameters'][$paramName];
                 } else {
                     $trigger['parameters'][$paramName] = $parameter['defaultValue'];

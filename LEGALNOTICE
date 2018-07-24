@@ -53,3 +53,7 @@ SEPARATELY LICENSED COMPONENTS AND LIBRARIES
 	Name: IcoMoon - Free icons ("/images/icons/form.svg", "/images/icons/image.svg")
 	Link: https://icomoon.io/#icons-icomoon
 	License: GPL
+
+	Name: Secure-Filters in CustomHtmlTag.web.js
+	Link: https://github.com/salesforce/secure-filters/blob/master/lib/secure-filters.js
+	License: BSD-3-Clause (https://github.com/salesforce/secure-filters/blob/master/LICENSE.txt)
