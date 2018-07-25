@@ -378,6 +378,8 @@
       "ScrollTopPixelVariableName": "Scroll Top Pixel",
       "ScrollVerticalPercentageVariableDescription": "How far the user has currently scrolled vertically, for example \"75.59\" for \"75.59%\".",
       "ScrollVerticalPercentageVariableName": "Scroll Vertical Percentage",
+      "SentryRavenTagDescription": "Sentry.io is an Open-Source error tracking tool that allows you to detect errors that happen on your website.",
+      "SentryRavenTagHelp": "This tag adds Raven.js, the official Javascript SDK. Get started by signing up on sentry.io or setting up your own tracking instance.",
       "SeoCanonicalUrlVariableDescription": "Returns the canonical URL if any is set.",
       "SeoCanonicalUrlVariableName": "Canonical URL",
       "SeoNumH1VariableDescription": "The number of H1 elements that are present on the current page. Useful for example for SEO Monitoring.",
