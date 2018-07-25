@@ -313,7 +313,7 @@ abstract class BaseContext
             $lookUpTable = [];
             if (!empty($variable['lookup_table']) && is_array($variable['lookup_table'])) {
                 foreach ($variable['lookup_table'] as $lookup) {
-                    $lookUpTable[] = ['matchValue' => 'match_value', 'outValue' => $lookup['out_value'], 'comparison' => $lookup['comparison']];
+                    $lookUpTable[] = ['matchValue' => $lookup['match_value'], 'outValue' => $lookup['out_value'], 'comparison' => $lookup['comparison']];
                 }
             }
 
