@@ -1061,15 +1061,17 @@
                 }
 
                 this.get = function () {
-                    if (utils.isObject(value)) {
+                    var result = value;
+                    if (utils.isObject(result)) {
                         // we potentially make modifications to the initial parameter and therefore need to
                         // clone it to ensure we always resolve all variables. cannot use json.parse(json.stringify) as
                         // there will be functions and objects
-                        value = deepClone(value);
-                        value = convertVariableTemplateIfNeeded(value);
+                        result = deepClone(result);
+                        result= convertVariableTemplateIfNeeded(result);
                     }
-                    return value;
+                    return result;
                 };
+
                 this.toString = function () {
                     return value;
                 };
