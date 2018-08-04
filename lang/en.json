@@ -1,5 +1,8 @@
 {
    "TagManager": {
+      "AdwordsConversionTagName": "AdWords Conversion Tracking",
+      "AdwordsConversionTagDescription": "Google AdWords conversion tracking",
+      "AdwordsConversionTagHelp": "",
       "AllElementsClickTriggerDescription": "Triggered when any element is clicked.",
       "AllElementsClickTriggerHelp": "Triggered on any click on any element. To listen to clicks on specific elements, please add conditions based on a \"click\" variable in the advanced settings.",
       "AllElementsClickTriggerName": "All Elements Click",
