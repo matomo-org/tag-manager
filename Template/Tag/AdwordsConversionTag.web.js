@@ -1,6 +1,10 @@
 (function () {
     return function (parameters, TagManager) {
         this.fire = function () {
+            var tagParameters = parameters.get("tagParameters");
+            console.info("tagParameters:");
+            console.info(tagParameters); //PLACEHOLDER
+            
             var imageUrl = parameters.get('conversionID');
             if (!imageUrl) {
                 return;

@@ -66,7 +66,14 @@ class AdwordsConversionTag extends BaseTag
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->validators[] = new CharacterLength(2, 2); // e.g. 'de'
             }),
-
+            $this->makeSetting('tagParameters', [], FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
+                $field->title = 'Tag Parameters'; # e.g. 'ffffff'
+                $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
+                $field1 = new FieldConfig\MultiPair('Parameter Name', 'parameter', FieldConfig::UI_CONTROL_TEXT);
+                $field2 = new FieldConfig\MultiPair('Value', 'value', FieldConfig::UI_CONTROL_TEXT);
+                $field->uiControlAttributes['field1'] = $field1->toArray();
+                $field->uiControlAttributes['field2'] = $field2->toArray();
+            }),
         );
     }
 
