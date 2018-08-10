@@ -71,6 +71,7 @@ class AdwordsConversionTag extends BaseTag
                 $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
                 $field1 = new FieldConfig\MultiPair('Parameter Name', 'parameter', FieldConfig::UI_CONTROL_TEXT);
                 $field2 = new FieldConfig\MultiPair('Value', 'value', FieldConfig::UI_CONTROL_TEXT);
+                $field2->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->uiControlAttributes['field1'] = $field1->toArray();
                 $field->uiControlAttributes['field2'] = $field2->toArray();
             }),

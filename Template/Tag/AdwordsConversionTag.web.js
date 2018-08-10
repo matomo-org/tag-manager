@@ -1,10 +1,6 @@
 (function () {
     return function (parameters, TagManager) {
         this.fire = function () {
-            var tagParameters = parameters.get("tagParameters");
-            console.info("tagParameters:");
-            console.info(tagParameters); //PLACEHOLDER
-            
             var imageUrl = parameters.get('conversionID');
             if (!imageUrl) {
                 return;
@@ -32,6 +28,15 @@
                     var conversionColor = parameters.get("conversionColor");
                     if (conversionColor) {
                         configObject.google_conversion_color = conversionColor;
+                    }
+                    var rawTagParameters = parameters.get("tagParameters");
+                    if (rawTagParameters) {
+                        var tagParameters = {};
+                        for (var i = 0; i < rawTagParameters.length - 1; i++) {
+                            tagParameters[rawTagParameters[i]["parameter"]] = rawTagParameters[i]["value"]
+                        }
+                        console.warn(tagParameters);
+                        configObject.google_tag_params = tagParameters
                     }
                     
                     configObject.google_conversion_label = conversionID + '/' + parameters.get('conversionLabel');
