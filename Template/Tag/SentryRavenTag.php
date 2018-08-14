@@ -13,26 +13,9 @@ use Piwik\Validators\NotEmpty;
 
 class SentryRavenTag extends BaseTag
 {
-    const ID = 'SentryRaven';
-
-    public function getId()
-    {
-        return self::ID;
-    }
-
     public function getName()
     {
         return "Sentry.io Raven.js";
-    }
-
-    public function getDescription()
-    {
-        return parent::getDescription();
-    }
-
-    public function getHelp()
-    {
-        return parent::getHelp();
     }
 
     public function getIcon()
