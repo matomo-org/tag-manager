@@ -10,7 +10,9 @@ namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
+use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
+use Piwik\Validators\NumberRange;
 
 class TawkToTag extends BaseTag
 {
@@ -19,7 +21,7 @@ class TawkToTag extends BaseTag
     }
 
     public function getCategory() {
-        return self::CATEGORY_OTHERS;
+        return self::CATEGORY_SOCIAL;
     }
 
     public function getIcon() {
@@ -29,10 +31,10 @@ class TawkToTag extends BaseTag
     public function getParameters() {
         return array(
             $this->makeSetting('tawkToId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'tawk.to ID';
-                $field->description = 'You can get the ID by copying the widget code. It is the text between "https://embed.tawk.to/" and "/default"';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->title = 'tawk.to Site ID';
+                $field->description = 'You can get the Site ID by logging into Tawk.to, going to "Administration" and clicking on "Property Settings". The Site ID has typically about 25 characters, for example "123451c27295ad739e46b6b1".';
                 $field->validators[] = new NotEmpty();
+                $field->validators[] = new CharacterLength(16, 30); // we limit to 30 so users don't accidentally enter a 32 digit API key
             }),
         );
     }
