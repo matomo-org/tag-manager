@@ -295,6 +295,43 @@
 		</types>
 	</row>
 	<row>
+		<name>Developers</name>
+		<types>
+			<row>
+				<id>SentryRaven</id>
+				<name>Sentry.io Raven.js</name>
+				<description>Sentry.io is an Open-Source error tracking tool that allows you to detect errors that happen on your website.</description>
+				<category>Developers</category>
+				<icon>plugins/TagManager/images/icons/sentry.svg</icon>
+				<help>This tag adds Raven.js, the official Javascript SDK. Get started by signing up on sentry.io or setting up your own tracking instance.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>sentryDSN</name>
+						<title>Sentry.io DSN</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The DSN (Data Source Name) of your sentry.io project. It should look like 'https://&lt;key&gt;@sentry.io/&lt;project&gt;'</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
 		<name>Social</name>
 		<types>
 			<row>
@@ -322,6 +359,70 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description />
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>LinkedinInsight</id>
+				<name>LinkedIn Insight Tag</name>
+				<description>Adds the LinkedIn Insight Tag so you can apply conversion tracking to your LinkedIn ad campaigns.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/linkedin.svg</icon>
+				<help>The tag will enable detailed campaign reporting and information about your website visitors in LinkedIn. It allows you to track conversions, retarget website visitors, and gain additional insights about LinkedIn members that interact with your LinkedIn ads.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>partnerId</name>
+						<title>LinkedIn Partner ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can find the partner ID by logging into your LinkedIn Campaign Manager, and clicking on &quot;Account Assets&quot; followed by &quot;Insight Tag&quot;. If &quot;Insight Tag&quot; is not available, please set up the Insight Tag by clicking on &quot;Conversion Tracking&quot;. There you can enter a domain and continue the set up. You will find the partner ID in the line `_linkedin_partner_id = &quot;123456&quot;`. In this example the ID would be &quot;123456&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>TawkTo</id>
+				<name>Tawk.to</name>
+				<description>Tawk.to lets you monitor and chat with visitors on your website.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/tawk_to.png</icon>
+				<help>This tag allows you to add the Tawk.to contact form to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>tawkToId</name>
+						<title>tawk.to Site ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can get the Site ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Property Settings&quot;. The Site ID has typically about 25 characters, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />

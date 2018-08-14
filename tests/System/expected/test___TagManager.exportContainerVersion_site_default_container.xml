@@ -70,7 +70,7 @@
 			<type>MatomoConfiguration</type>
 			<name>Matomo Configuration</name>
 			<parameters>
-				<matomoUrl>//localhost/tests/PHPUnit/proxy/</matomoUrl>
+				<matomoUrl>//example.com/piwik/tests/PHPUnit/proxy/</matomoUrl>
 				<idSite>6</idSite>
 				<enableLinkTracking>1</enableLinkTracking>
 				<enableCrossDomainLinking>0</enableCrossDomainLinking>
