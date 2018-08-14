@@ -13,28 +13,6 @@ use Piwik\Validators\NumberRange;
 
 class LinkedinInsightTag extends BaseTag
 {
-    const ID = 'LinkedinInsight';
-
-    public function getId()
-    {
-        return self::ID;
-    }
-
-    public function getName()
-    {
-        return parent::getName();
-    }
-
-    public function getDescription()
-    {
-        return parent::getDescription();
-    }
-
-    public function getHelp()
-    {
-        return parent::getHelp();
-    }
-
     public function getIcon()
     {
         return 'plugins/TagManager/images/icons/linkedin.svg';
@@ -43,10 +21,10 @@ class LinkedinInsightTag extends BaseTag
     public function getParameters()
     {
         return array(
-            $this->makeSetting('linkedinInsight', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $this->makeSetting('partnerId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'LinkedIn Partner ID';
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = '';
+                $field->description = 'You can find the partner ID by logging into your LinkedIn Campaign Manager, and clicking on "Account Assets" followed by "Insight Tag". If "Insight Tag" is not available, please set up the Insight Tag by clicking on "Conversion Tracking". There you can enter a domain and continue the set up. You will find the partner ID in the line `_linkedin_partner_id = "123456"`. In this example the ID would be "123456".';
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new NumberRange();
             }),
