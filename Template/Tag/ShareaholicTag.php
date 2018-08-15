@@ -13,16 +13,6 @@ use Piwik\Validators\NotEmpty;
 
 class ShareaholicTag extends BaseTag
 {
-    public function getDescription()
-    {
-        return parent::getDescription();
-    }
-
-    public function getHelp()
-    {
-        return parent::getHelp();
-    }
-
     public function getCategory()
     {
         return self::CATEGORY_SOCIAL;
@@ -44,5 +34,4 @@ class ShareaholicTag extends BaseTag
             })
         );
     }
-
 }
