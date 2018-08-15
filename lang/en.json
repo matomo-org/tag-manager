@@ -489,6 +489,9 @@
       "WindowLoadedTriggerName": "Window Loaded",
       "WindowUnloadTriggerDescription": "Triggered just before the browser window is closed or when the user navigates to a different page.",
       "WindowUnloadTriggerHelp": "This trigger identifies the event when a user is actually closing the current page compared to the \"Window Leave\" trigger which triggers when the user is about to leave your page. Either by navigating to another page within the current browser tab, or by completely closing the tab.",
-      "WindowUnloadTriggerName": "Window Unload"
+      "WindowUnloadTriggerName": "Window Unload",
+      "ZendeskChatTagDescription": "Reach your customers, instantly via web, mobile, and messaging.",
+      "ZendeskChatTagHelp": "This tag allows you to add the Zendesk Chat form to your website.",
+      "ZendeskChatTagName": "Zendesk Chat (formerly Zopim)"
    }
 }
