@@ -14,7 +14,6 @@
                 script.setAttribute('data-shr-siteid', siteId);
                 script.src = '//apps.shareaholic.com/assets/pub/shareaholic.js';
                 s.parentNode.insertBefore(script, s);
-                console.info(s);
                 var inPageApp = parameters.get('shareaholicInPageApp');
                 if (inPageApp) {
                     var AppID = parameters.get('shareaholicAppId');
