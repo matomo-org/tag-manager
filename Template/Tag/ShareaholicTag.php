@@ -49,11 +49,13 @@ class ShareaholicTag extends BaseTag
             $this->makeSetting('shareaholicAppId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'In-Page App ID';
                 $field->description = 'If you want to add an In-Page App enter the App ID here. It is about eight digits long. The App ID is not required for the Total Share Counter.';
+                $field->condition = 'shareaholicInPageApp && shareaholicInPageApp !== "total_share_count"';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
             }),
             $this->makeSetting('shareaholicParentSelector', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'In-Page App Parent Selector';
                 $field->description = 'Enter a CSS selector to the element where the In-Page App should be added.';
+                $field->condition = 'shareaholicInPageApp';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
             })
         );
