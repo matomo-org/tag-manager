@@ -26,14 +26,16 @@
                         TagManager.debug.error('you have to specify a Parent Selector to place the In-Page App onto your website');
                         return false;
                     }
-                    var parent = TagManager.dom.bySelector(parentSelector)[0];
-                    var div = document.createElement('div');
-                    div.className = 'shareaholic-canvas';
-                    div.setAttribute('data-app', inPageApp);
-                    if (AppID) {
-                        div.setAttribute('data-app-id', AppID);
+                    var parent = TagManager.dom.bySelector(parentSelector);
+                    if (parent) {
+                        var div = document.createElement('div');
+                        div.className = 'shareaholic-canvas';
+                        div.setAttribute('data-app', inPageApp);
+                        if (AppID) {
+                            div.setAttribute('data-app-id', AppID);
+                        }
+                        parent[0].appendChild(div)
                     }
-                    parent.appendChild(div)
                 }
             }
         };
