@@ -18,7 +18,7 @@ class PingdomRUMTag extends BaseTag
     }
 
     public function getCategory() {
-        return self::CATEGORY_OTHERS;
+        return self::CATEGORY_ANALYTICS;
     }
 
     public function getIcon() {
