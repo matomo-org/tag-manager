@@ -36,7 +36,7 @@
                             tagParameters[rawTagParameters[i]["parameter"]] = rawTagParameters[i]["value"]
                         }
                         console.warn(tagParameters);
-                        configObject.google_tag_params = tagParameters
+                        window.google_tag_params = tagParameters
                     }
                     
                     configObject.google_conversion_label = conversionID + '/' + parameters.get('conversionLabel');
