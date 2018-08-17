@@ -11,10 +11,12 @@
 
                 var parentSelector = parameters.get('AddThisParentSelector');
                 if (parentSelector) {
-                    var parent = TagManager.dom.bySelector(parentSelector)[0];
-                    var div = document.createElement('div');
-                    div.className = 'addthis_inline_share_toolbox';
-                    parent.appendChild(div)
+                    var parent = TagManager.dom.bySelector(parentSelector);
+                    if (parent) {
+                        var div = document.createElement('div');
+                        div.className = 'addthis_inline_share_toolbox';
+                        parent[0].appendChild(div)
+                    }
                 }
             }
         };
