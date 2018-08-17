@@ -273,6 +273,8 @@
       "HistoryHashOldVariableName": "History Old Hash",
       "HistorySourceVariableDescription": "For example \"popstate\", \"historychange\", \"pushState\", or \"replaceState\"",
       "HistorySourceVariableName": "History Source",
+      "HoneybadgerTagDescription": "Exception and Uptime Monitoring for Application Developers",
+      "HoneybadgerTagHelp": "This tag adds the official Honeybadger Javascript SDK to your website.",
       "Import": "Import",
       "ImportVersion": "Import a version",
       "InstallCode": "Install Code",
