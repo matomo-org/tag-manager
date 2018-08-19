@@ -186,6 +186,38 @@
 					</row>
 				</parameters>
 			</row>
+			<row>
+				<id>PingdomRUM</id>
+				<name>Pingdom Real User Monitoring (RUM)</name>
+				<description>Pingdom Real User Monitoring (RUM) lets you collect performance data from actual visitors to your site.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/pingdom.svg</icon>
+				<help>This tag allows you to add the Pingdom Real User Monitoring (RUM) to your site.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>pingdomROMId</name>
+						<title>Pingdom RUM Site ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can get the Site ID by logging into Pingdom, going to &quot;Monitoring&quot; and clicking on &quot;Real User Monitoring&quot;. Every added site will get its own Site ID.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
 		</types>
 	</row>
 	<row>
@@ -423,6 +455,38 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Site ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Property Settings&quot;. The Site ID has typically about 25 characters, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>ZendeskChat</id>
+				<name>Zendesk Chat (formerly Zopim)</name>
+				<description>Reach your customers, instantly via web, mobile, and messaging.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/zendesk_chat.svg</icon>
+				<help>This tag allows you to add the Zendesk Chat form to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>zendeskChatId</name>
+						<title>Zendesk Chat ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can get the Site ID by logging into Zendesk Chat, going to &quot;Settings&quot; and clicking on &quot;Widget&quot;. The Site ID has typically about 32 characters and is the text coming directly after &quot;https://v2.zopim.com/?&quot;, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
