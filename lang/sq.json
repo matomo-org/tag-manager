@@ -141,7 +141,6 @@
         "ErrorContainerVersionDoesNotExist": "Versioni i kërkuar i kontejnerit s’ekziston.",
         "ErrorEndDateBeforeStartDate": "Data e fillimit lypset të jetë me herët se data e përfundimit.",
         "ErrorEnvironmentDoesNotExist": "Mjedisi \"%s\" s’ekziston.",
-        "ErrorEnvironmentInvalidLength": "Mjedisi \"%1$s\" s’është i vlefshëm. Ju lutemi, përdorni nga %2$s deri %3$s shenja.",
         "ErrorEnvironmentInvalidName": "Mjedisi \"%s\" s’është emër i vlefshëm. Ju lutemi, përdorni vetëm shkronja, numra dhe nënvija.",
         "ErrorLineVariableName": "Rresht Gabimi",
         "ErrorMessageVariableDescription": "Jep mesazhin e një gabimi, kur një gabim qe shkaktuar më herët.",
