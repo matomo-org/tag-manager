@@ -340,6 +340,8 @@
       "PageUrlVariableName": "Page URL",
       "PageViewTriggerDescription": "Triggered as soon as the Tag Manager is executed within the page.",
       "PageViewTriggerName": "Pageview",
+      "PingdomRUMTagDescription": "Pingdom Real User Monitoring (RUM) lets you collect performance data from actual visitors to your site.",
+      "PingdomRUMTagHelp": "This tag allows you to add the Pingdom Real User Monitoring (RUM) to your site.",
       "PluginDescription": "Manage and unify all your tracking and marketing snippets in one place.",
       "PreConfiguredInfoTitle": "Pre-configured variables are variables that are ready-to-use and cannot be created, edited, or configured. They work out of the box and you can use them in tags, triggers, and variables if needed.",
       "PreconfiguredVariables": "Pre-configured variables",
