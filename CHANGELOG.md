@@ -2,11 +2,11 @@
 
 0.2.1
 * Added new tags
- * Zendesk Chat (kudos to @Findus23)
- * Pingdom Real User Monitoring (kudos to @sgiehl)
- * LinkedIn Insight (kudos to @Findus23)
- * Tawk.to (kudos to @Findus23)
- * Sentry.io (kudos to @Findus23)
+  * Zendesk Chat (kudos to @Findus23)
+  * Pingdom Real User Monitoring (kudos to @sgiehl)
+  * LinkedIn Insight (kudos to @Findus23)
+  * Tawk.to (kudos to @Findus23)
+  * Sentry.io (kudos to @Findus23)
 
 0.2.0
 * Support Matomo's new capability system for a more granular permission system and to improve security. Introduces three new capabilities
