@@ -3,7 +3,6 @@
         this.fire = function () {
             var apiKey = parameters.get('honeybadgerApiKey');
             if (apiKey) {
-                var tawkToId = parameters.get("tawkToId");
                 var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
                 s1.src = '//js.honeybadger.io/v0.5/honeybadger.min.js';
                 s1.setAttribute('data-apiKey', apiKey);
