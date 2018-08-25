@@ -15,6 +15,8 @@
             if (siteId) {
                 var script = document.createElement('script');
                 var s = document.getElementsByTagName('script')[0];
+                script.async = true;
+                script.defer = true;
                 script.type = 'text/javascript';
                 script.src = '//s7.addthis.com/js/300/addthis_widget.js#pubid=' + siteId;
                 s.parentNode.insertBefore(script, s);
