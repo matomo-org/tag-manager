@@ -4,7 +4,7 @@
             var siteId = parameters.get('shareaholicSiteId');
             if (siteId) {
                 // should result in a <script> like this:
-                // <script type="text/javascript" data-cfasync="false" src="//apps.shareaholic.com/assets/pub/shareaholic.js" data-shr-siteid="[SITEID]" async="async"></script>
+                // &lt;script type="text/javascript" data-cfasync="false" src="//apps.shareaholic.com/assets/pub/shareaholic.js" data-shr-siteid="[SITEID]" async="async"&gt;&lt;/script&gt;
 
                 var script = document.createElement('script');
                 var s = document.getElementsByTagName('script')[0];
