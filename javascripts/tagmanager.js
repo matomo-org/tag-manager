@@ -1341,6 +1341,11 @@
                         return 'date range does not match';
                     }
 
+                    if (!this.theTag || !this.theTag.fire) {
+                        Debug.log('not firing as tag does not exist anymore', this);
+                        return 'tag not found';
+                    }
+
                     Debug.log('firing this tag', this);
 
                     this.numExecuted++;
