@@ -145,7 +145,7 @@ class WebContext extends BaseContext
             $initContainer = '(function(){';
             $initContainer .= "\nvar Templates = {};\n";
             foreach ($this->templateLocator->getLoadedTemplates() as $methodName => $template) {
-                $initContainer .= sprintf("Templates['%s'] = function () { return %s }\n", $methodName, $template);
+                $initContainer .= sprintf("Templates['%s'] = %s \n", $methodName, $template);
             }
             $initContainer .= 'window.MatomoTagManager.addContainer(' . json_encode($containerJs, $jsonOptions) . ', Templates);})()';
 

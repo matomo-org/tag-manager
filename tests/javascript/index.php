@@ -792,7 +792,7 @@
 
             strictEqual('test12', buildVariable(varWithFunctionTemplate).get(), 'Variable, creates a new instance of the template function');
             strictEqual('test14', buildVariable(varWithObjectTemplate).get(), 'Variable, can work with a template object');
-            strictEqual('test12', buildVariable(varWithStringTemplate, {myTemplate: function () { return varWithFunctionTemplate.Variable; }}).get(), 'Variable, can resolve a string container template');
+            strictEqual('test12', buildVariable(varWithStringTemplate, {myTemplate: varWithFunctionTemplate.Variable}).get(), 'Variable, can resolve a string container template');
             strictEqual('test12', buildVariable(varWithFunctionTemplate).toString(), 'Variable, has a toString method');
             deepEqual(varWithStringTemplate, buildVariable(varWithStringTemplate, {myTemplate: function () { return varWithFunctionTemplate.Variable; }}).getDefinition(), 'Variable, getDefinition');
 
@@ -882,7 +882,7 @@
             strictEqual(TagManager, window.MatomoTagManager, 'Tag template, function passes tagmanager');
             strictEqual(tag, parameters.tag, 'Tag template, function passes parameters');
 
-            tag = buildTag({Tag: 'myTagTemplate'}, {myTagTemplate: function () { return exampleTag; }});
+            tag = buildTag({Tag: 'myTagTemplate'}, {myTagTemplate: exampleTag });
             tag.fire();
             strictEqual(2, wasFired, 'Tag template, can be a string referencing templates');
             strictEqual(TagManager, window.MatomoTagManager, 'Tag template, string reference passes tagmanager');
@@ -1123,7 +1123,7 @@
             strictEqual(TagManager, window.MatomoTagManager, 'Trigger template, function passes tagmanager');
             strictEqual(trigger, parameters.trigger, 'Trigger template, function passes parameters');
 
-            trigger = buildTrigger({Trigger: 'myTriggerTemplate'}, {myTriggerTemplate: function () { return TriggerTemplate; }});
+            trigger = buildTrigger({Trigger: 'myTriggerTemplate'}, {myTriggerTemplate: TriggerTemplate});
             trigger.setUp();
             strictEqual(2, numSetups, 'Trigger template, can be a string referencing templates');
             strictEqual(TagManager, window.MatomoTagManager, 'Trigger template, string reference passes tagmanager');
