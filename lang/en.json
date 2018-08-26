@@ -253,7 +253,7 @@
       "GoogleAnalyticsUniversalTagHelp": "This tag lets you track website pageviews into your Google Analytics. To obtain the Property-ID please log in to your Google Analytics account.",
       "GoogleAnalyticsUniversalTagName": "Google Analytics (Universal)",
       "HideAdvancedSettings": "Hide advanced settings",
-      "HistoryChangeTriggerDescription": "Triggered when the window location changes.",
+      "HistoryChangeTriggerDescription": "Triggered when the current URL changes.",
       "HistoryChangeTriggerName": "History Change",
       "HistoryHashNewPathVariableDescription": "",
       "HistoryHashNewPathVariableName": "History New Path",
