@@ -1,5 +1,6 @@
 {
    "TagManager": {
+      "AddThisTagDescription": "Add the AddThis social media buttons and more to your website.",
       "AllElementsClickTriggerDescription": "Triggered when any element is clicked.",
       "AllElementsClickTriggerHelp": "Triggered on any click on any element. To listen to clicks on specific elements, please add conditions based on a \"click\" variable in the advanced settings.",
       "AllElementsClickTriggerName": "All Elements Click",
