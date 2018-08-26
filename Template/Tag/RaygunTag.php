@@ -23,13 +23,13 @@ class RaygunTag extends BaseTag
             $this->makeSetting('raygunApiKey', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Raygun apiKey';
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = "The DSN (Data Source Name) of your sentry.io project. It should look like 'https://<key>@sentry.io/<project>'";
+                $field->description = 'When you create a new application in your Raygun dashboard, your app API key is displayed at the top of the instructions page. You can also find the API key by clicking the "Application Settings" button in the side bar of the Raygun dashboard.';
                 $field->validators[] = new NotEmpty();
             }),
             $this->makeSetting('raygunEnablePulse', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'Enable Pulse (Real User Monitoring)';
                 $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
-                $field->description = "Automatically identify front end performance issues causing slow page load speeds. See what your users see in the browser and discover why users had poor quality experiences.";
+                $field->description = 'Automatically identify front end performance issues causing slow page load speeds. See what your users see in the browser and discover why users had poor quality experiences.';
             })
         );
     }
