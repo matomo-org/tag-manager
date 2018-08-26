@@ -1160,8 +1160,7 @@
                 } else if (utils.isObject(variable.Variable)) {
                     this.theVariable = variable.Variable;
                 } else if (variable.Variable in container.templates) {
-                    var variableTemplate = container.templates[variable.Variable]();
-                    this.theVariable = new variableTemplate(parameters, TagManager);
+                    this.theVariable = new container.templates[variable.Variable](parameters, TagManager);
                 } else {
                     throwError('No matching variable template found');
                 }
@@ -1272,9 +1271,10 @@
                     this.theTrigger = new trigger.Trigger(parameters, TagManager);
                 } else if (utils.isObject(trigger.Trigger)) {
                     this.theTrigger = trigger.Trigger;
+                } else if (trigger.Trigger in container.templates) {
+                    this.theTrigger = new container.templates[trigger.Trigger](parameters, TagManager);
                 } else {
-                    var triggerTemplate = container.templates[trigger.Trigger]();
-                    this.theTrigger = new triggerTemplate(parameters, TagManager);
+                    throwError('No matching trigger template found');
                 }
 
                 parameters = null;
@@ -1414,9 +1414,10 @@
                     this.theTag = new tag.Tag(parameters, TagManager);
                 } else if (utils.isObject(tag.Tag)) {
                     this.theTag = tag.Tag;
+                } else if (tag.Tag in container.templates) {
+                    this.theTag = new container.templates[tag.Tag](parameters, TagManager);
                 } else {
-                    var tagTemplate = container.templates[tag.Tag]();
-                    this.theTag = new tagTemplate(parameters, TagManager);
+                    throwError('No matching tag template found');
                 }
 
             }
