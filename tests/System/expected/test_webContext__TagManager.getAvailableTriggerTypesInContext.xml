@@ -299,7 +299,7 @@
 			<row>
 				<id>HistoryChange</id>
 				<name>History Change</name>
-				<description>Triggered when the window location changes.</description>
+				<description>Triggered when the current URL changes.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
 				<help />
