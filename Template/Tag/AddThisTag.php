@@ -13,6 +13,10 @@ use Piwik\Validators\NotEmpty;
 
 class AddThisTag extends BaseTag
 {
+    public function getHelp() {
+        return '';
+    }
+    
     public function getCategory()
     {
         return self::CATEGORY_SOCIAL;
