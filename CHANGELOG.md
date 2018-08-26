@@ -1,5 +1,13 @@
 ## Changelog
 
+0.2.2
+* Fix a Matomo Tag may track a page view multiple times when the Matomo Tag was used multiple times within a container
+* Added new tags
+  * AddThis (kudos to @Findus23)
+  * Honeybadger (kudos to @Findus23)
+  * Raygun (kudos to @Findus23)
+  * Shareaholic (kudos to @Findus23)
+
 0.2.1
 * Added new tags
   * Zendesk Chat (kudos to @Findus23)

@@ -330,6 +330,118 @@
 		<name>Developers</name>
 		<types>
 			<row>
+				<id>Honeybadger</id>
+				<name>Honeybadger</name>
+				<description>Exception and Uptime Monitoring for Application Developers</description>
+				<category>Developers</category>
+				<icon>plugins/TagManager/images/icons/honeybadger.svg</icon>
+				<help>This tag adds the official Honeybadger Javascript SDK to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>honeybadgerApiKey</name>
+						<title>Honeybadger apiKey</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The apiKey of your honeybadger project</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>honeybadgerEnvironment</name>
+						<title>Environment</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The environment where the container is included (production, dev, etc.). Leave empty to default to the environment of this container.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>honeybadgerRevision</name>
+						<title>Code Revision</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>(optional) the version of your project</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Raygun</id>
+				<name>Raygun</name>
+				<description>Error, crash and performance monitoring software.</description>
+				<category>Developers</category>
+				<icon>plugins/TagManager/images/icons/raygun.svg</icon>
+				<help>This tag adds the official raygun4js SDK to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>raygunApiKey</name>
+						<title>Raygun apiKey</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>When you create a new application in your Raygun dashboard, your app API key is displayed at the top of the instructions page. You can also find the API key by clicking the &quot;Application Settings&quot; button in the side bar of the Raygun dashboard.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>raygunEnablePulse</name>
+						<title>Enable Pulse (Real User Monitoring)</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Automatically identify front end performance issues causing slow page load speeds. See what your users see in the browser and discover why users had poor quality experiences.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
 				<id>SentryRaven</id>
 				<name>Sentry.io Raven.js</name>
 				<description>Sentry.io is an Open-Source error tracking tool that allows you to detect errors that happen on your website.</description>
@@ -366,6 +478,54 @@
 	<row>
 		<name>Social</name>
 		<types>
+			<row>
+				<id>AddThis</id>
+				<name>AddThis</name>
+				<description>Add the AddThis social media buttons and more to your website.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/addthis.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>AddThisPubId</name>
+						<title>AddThis PubId</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Create a new site in Shareaholic and paste the site ID here</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>AddThisParentSelector</name>
+						<title>Inline Tools Parent Selector</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally enter a CSS selector to the element where the Inline Tools should be added.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
 			<row>
 				<id>FacebookPixel</id>
 				<name>Facebook Pixel</name>
@@ -427,6 +587,92 @@
 						<templateFile />
 						<introduction />
 						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Shareaholic</id>
+				<name>Shareaholic</name>
+				<description>Content Marketing Platform &amp; Website Traffic Tools</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/shareaholic.svg</icon>
+				<help>This tag lets you add Shareaholic social media buttons and more to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>shareaholicSiteId</name>
+						<title>Shareaholic Site ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Create a new site in Shareaholic and paste the site ID here</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>shareaholicInPageApp</name>
+						<title>Shareaholic In-Page App</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<row key="">None</row>
+							<share_buttons>Share Buttons</share_buttons>
+							<follow_buttons>Follow Buttons</follow_buttons>
+							<recommendations>Related Content</recommendations>
+							<total_share_count>Total Share Counter</total_share_count>
+						</availableValues>
+						<description>Here you can optionally add an In-Page App to your website.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>shareaholicAppId</name>
+						<title>In-Page App ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>If you want to add an In-Page App enter the App ID here. It is about eight digits long. The App ID is not required for the Total Share Counter.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>shareaholicInPageApp &amp;&amp; shareaholicInPageApp !== &quot;total_share_count&quot;</condition>
+					</row>
+					<row>
+						<name>shareaholicParentSelector</name>
+						<title>In-Page App Parent Selector</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enter a CSS selector to the element where the In-Page App should be added.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>shareaholicInPageApp</condition>
 					</row>
 				</parameters>
 			</row>
