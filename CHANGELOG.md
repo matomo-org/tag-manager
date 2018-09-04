@@ -1,5 +1,8 @@
 ## Changelog
 
+0.2.3
+* Link to Manage Tags page in top menu when user has only view access to prevent seeing Log in screen
+
 0.2.2
 * Fix a Matomo Tag may track a page view multiple times when the Matomo Tag was used multiple times within a container
 * Added new tags
