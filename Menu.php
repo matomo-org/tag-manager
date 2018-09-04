@@ -12,10 +12,21 @@ use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Menu\MenuTop;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Environment;
 
 class Menu extends \Piwik\Plugin\Menu
 {
+
+    /**
+     * @var AccessValidator
+     */
+    private $accessValidator;
+
+    public function __construct(AccessValidator $accessValidator)
+    {
+        $this->accessValidator = $accessValidator;
+    }
 
     public function configureTopMenu(MenuTop $menu)
     {
@@ -44,7 +55,13 @@ class Menu extends \Piwik\Plugin\Menu
                 $defaultAction = 'gettingStarted';
             } elseif (count($containers) == 1) {
                 $firstContainer = array_shift($containers);
-                $defaultAction = 'dashboard';
+
+                $accessValidator = StaticContainer::get('Piwik\Plugins\TagManager\Input\AccessValidator');
+                if ($accessValidator->hasWriteCapability($idSite)) {
+                    $defaultAction = 'dashboard';
+                } else {
+                    $defaultAction = 'manageTags';
+                }
                 $defaultParams = array('idContainer' => $firstContainer['idcontainer']);
             }
         }
@@ -79,8 +96,7 @@ class Menu extends \Piwik\Plugin\Menu
                 $params = array('idContainer' => $idContainer); // not needed as it is already present in url but we make sure the id is set
                 $menuCategory = $container['name'];
 
-                $accessValidator = StaticContainer::get('Piwik\Plugins\TagManager\Input\AccessValidator');
-                if ($accessValidator->hasWriteCapability($idSite)) {
+                if ($this->accessValidator->hasWriteCapability($idSite)) {
                     $menu->addItem($menuCategory, 'Dashboard', $this->urlForAction('dashboard', $params), $orderId = 104);
                 }
 
@@ -96,7 +112,7 @@ class Menu extends \Piwik\Plugin\Menu
                     }
                 }
 
-                if ($accessValidator->hasWriteCapability($idSite)) {
+                if ($this->accessValidator->hasWriteCapability($idSite)) {
                     if ($previewEnabled) {
                         $menu->addItem($menuCategory, 'TagManager_DisablePreview', array(), $orderId = 130, false,'icon-bug', "tagManagerHelper.disablePreviewMode(" . json_encode($container['idcontainer']) . ")");
                     } else {
