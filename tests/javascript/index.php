@@ -19,6 +19,7 @@
 </div>
 <a href="https://www.example.click" id="ClickTagManager1" class="tag123 clicktag23">my link</a>
 <a href="https://www.example.click/foo/bar" id="ClickTagManager2">my link</a>
+<a href="https://www.example.click/foo/bar3" id="ClickTagManager3"><span><span id="ClickTagManager3Span">my link</span></span></a>
 
 <script type="text/javascript">
 
@@ -1786,7 +1787,7 @@
         });
 
         test("Matomo TagManager Template AllLinksClick", function() {
-            expect(4);
+            expect(5);
             var templateToTest = 'AllLinksClickTrigger';
 
             var parameters = {};
@@ -1831,6 +1832,21 @@
                 "mtm.clickNodeName": "A",
                 "mtm.clickText": "my link"
             }], events, 'should have triggered a link click 1');
+
+            events = [];
+            var target = document.getElementById('ClickTagManager3Span');
+            target.addEventListener('click', function (event) {
+                event.preventDefault(); // do not execute in ie10
+            });
+            triggerEvent(target, 'click', null, true);
+            deepEqual([ {
+                "event": "mtm.AllLinksClick",
+                "mtm.clickElementClasses": "",
+                "mtm.clickElementId": "ClickTagManager3",
+                "mtm.clickElementUrl": "https://www.example.click/foo/bar3",
+                "mtm.clickNodeName": "A",
+                "mtm.clickText": "my link"
+            }], events, 'should have triggered a link click 3');
         });
 
         test("Matomo TagManager Template FormSubmit", function() {

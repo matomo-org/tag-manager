@@ -1,13 +1,26 @@
 (function () {
     return function (parameters, TagManager) {
         this.setUp = function (triggerEvent) {
+
+            function isClickNode(nodeName)
+            {
+                return nodeName === 'A' || nodeName === 'AREA';
+            }
+
             TagManager.dom.addEventListener(parameters.document.body, 'click', function (event) {
                 if (!event.target) {
                     return;
                 }
+
                 var target = event.target;
                 var nodeName = target.nodeName;
-                if (nodeName === 'A' || nodeName === 'AREA') {
+
+                while (!isClickNode(nodeName) && target && target.parentNode) {
+                    target = target.parentNode;
+                    nodeName = target.nodeName;
+                }
+
+                if (target && isClickNode(nodeName)) {
                     triggerEvent({
                         event: 'mtm.AllLinksClick',
                         'mtm.clickElementId': TagManager.dom.getElementAttribute(target, 'id'),
