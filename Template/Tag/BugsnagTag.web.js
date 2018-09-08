@@ -7,7 +7,7 @@
                         apiKey: parameters.get('apiKey'),
                         collectUserIp: parameters.get('collectUserIp')
                     };
-                    config.window.bugsnagClient = bugsnag(config)
+                    window.bugsnagClient = bugsnag(config)
                 }
             });
         };
