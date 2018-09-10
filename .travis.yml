@@ -62,7 +62,6 @@ sudo: required
 script: $PIWIK_ROOT_DIR/tests/travis/travis.sh
 
 before_install:
-  - . ./tests/travis/install_git_lfs.sh
 
 install:
   # move all contents of current repo (which contains the plugin) to a new directory
