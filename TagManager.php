@@ -14,6 +14,7 @@ use Piwik\Date;
 use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Log;
 use Piwik\Piwik;
+use Piwik\Plugin;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
@@ -206,6 +207,11 @@ class TagManager extends \Piwik\Plugin
 
     public function regenerateReleasedContainers()
     {
+        $pluginManager = Plugin\Manager::getInstance();
+        if (!$pluginManager->isPluginInstalled('TagManager')) {
+            return;
+        }
+
         Piwik::doAsSuperUser(function () {
             // we need to run as super user because after a core update the user might not be an admin etc
             // (and admin is needed for debug action)
