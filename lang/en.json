@@ -366,7 +366,7 @@
       "ReferrerUrlVariableName": "Referrer URL",
       "ReferrerVariableDescription": "Returns the full URL of the referrer.",
       "ReferrerVariableName": "Referrer URL",
-      "ReleaseInfo": "Released by %s on %s.",
+      "ReleaseInfo": "Released by %1$s on %2$s.",
       "ReleaseVersionInfo": "Version name %s.",
       "Released": "Released",
       "ReleasedBy": "Released by",
