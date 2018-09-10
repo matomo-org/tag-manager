@@ -1,3 +1,11 @@
+<?php
+/**
+ * Matomo - free/libre analytics platform
+ *
+ * @link https://matomo.org
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ */
+?>
 <div id="TagManager" mytagattribute="test" class="myTagTest myTagFoo myTagTest4" attributeWithoutValue data-tag-test>
     <div id="customTag1"
          title="My Title Title"
