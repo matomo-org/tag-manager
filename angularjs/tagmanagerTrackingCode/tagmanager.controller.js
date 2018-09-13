@@ -8,9 +8,9 @@
 (function () {
     angular.module('piwikApp').controller('TagManagerTrackingCodeController', TagManagerTrackingCodeController);
 
-    TagManagerTrackingCodeController.$inject = ['$scope', 'piwikApi', 'piwikUrl', '$timeout', '$filter'];
+    TagManagerTrackingCodeController.$inject = ['$scope', 'piwikApi', 'piwikUrl', '$timeout', '$filter', 'piwik'];
 
-    function TagManagerTrackingCodeController($scope, piwikApi, piwikUrl, $timeout, $filter) {
+    function TagManagerTrackingCodeController($scope, piwikApi, piwikUrl, $timeout, $filter, piwik) {
 
         var self = this;
         this.containerVariables = [];
@@ -33,7 +33,7 @@
         environmentsPromise.then(function (environments) {
             angular.forEach(environments, function (environment) {
                 self.environmentNameMap[environment.id] = environment.name;
-            })
+            });
         });
 
         this.onSiteChange = function () {
@@ -120,7 +120,7 @@
 
             this.fetchInstallInstructions();
             this.fetchVariables(draftVersion);
-        }
+        };
 
         this.linkTo = function (action, idContainer, hash){
             var currentUrl = window.location.pathname + window.location.search;
@@ -131,7 +131,7 @@
                 newUrl += '#?' + hash;
             }
             return newUrl;
-        }
+        };
 
         this.fetchInstallInstructions = function () {
             this.installInstructions = {};

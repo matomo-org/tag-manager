@@ -18,6 +18,7 @@ use Piwik\Plugins\TagManager\API\PreviewCookie;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Environment;
+use Piwik\Url;
 use Piwik\View;
 use Piwik\Notification\Manager as NotificationManager;
 
@@ -170,7 +171,25 @@ class Controller extends \Piwik\Plugin\Controller
     public function exportContainerVersion()
     {
         $this->checkSitePermission();
-        return Request::processRequest('TagManager.exportContainerVersion', array('format' => 'JSON', 'idSite' => $this->idSite));
+
+        $jsonCallback = Common::getRequestVar('callback', false);
+
+        if (!$jsonCallback) {
+            $jsonCallback = Common::getRequestVar('jsoncallback', false);
+        }
+
+        if ($jsonCallback) {
+            throw new \Exception('JSON callback not possible');
+        }
+
+        $result = Request::processRequest('TagManager.exportContainerVersion', array('format' => 'JSON', 'idSite' => $this->idSite));
+
+        if (!empty($_SERVER['SERVER_NAME']) && Url::getCorsHostsFromConfig()) {
+            // we make sure to send a custom cors header
+            Common::sendHeader('Access-Control-Allow-Origin: ' . $_SERVER['SERVER_NAME']);
+        }
+
+        return $result;
     }
 
     protected function renderTemplate($template, array $variables = array())
