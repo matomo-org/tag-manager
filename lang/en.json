@@ -406,7 +406,7 @@
       "SettingCustomTemplatesTitle": "Restrict usage of custom templates",
       "SettingEnvironmentDescription": "Define one or multiple additional environments. Please note that if you remove any environment, generated container files that exist for a specific environment will be removed and will be no longer available.",
       "SettingCustomTemplatesDisabled": "Disabled, nobody can use them",
-      "SettingCustomTemplatesAdmin": "Users with at last admin permission can use them",
+      "SettingCustomTemplatesAdmin": "Users with at least admin permission can use them",
       "SettingCustomTemplatesSuperUser": "Only Super Users can use them",
       "ShareaholicTagDescription": "Content Marketing Platform & Website Traffic Tools",
       "ShareaholicTagHelp": "This tag lets you add Shareaholic social media buttons and more to your website.",
