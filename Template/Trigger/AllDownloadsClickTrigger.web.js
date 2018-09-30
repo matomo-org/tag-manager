@@ -6,9 +6,22 @@
                 return;
             }
 
+            function isClickNode(nodeName)
+            {
+                return nodeName === 'A' || nodeName === 'AREA';
+            }
+
             TagManager.dom.addEventListener(parameters.document.body, 'click', function (event) {
                 if (!event.target) {
                     return;
+                }
+
+                var target = event.target;
+                var nodeName = target.nodeName;
+
+                while (!isClickNode(nodeName) && target && target.parentNode) {
+                    target = target.parentNode;
+                    nodeName = target.nodeName;
                 }
 
                 extensions = String(extensions).split(',');
@@ -17,15 +30,14 @@
                     extensions[i] = TagManager.utils.trim(extensions[i]);
                 }
 
-                var target = event.target;
-                var nodeName = target.nodeName;
-                if (nodeName === 'A' || nodeName === 'AREA') {
+                if (target && isClickNode(nodeName)) {
                     var link = TagManager.dom.getElementAttribute(target, 'href');
 
                     var downloadExtensionsPattern = new RegExp('\\.(' + extensions.join('|') + ')([?&#]|$)', 'i');
                     if (downloadExtensionsPattern.test(link)) {
                         triggerEvent({
                             event: 'mtm.DownloadClick',
+                            'mtm.clickElement': target,
                             'mtm.clickElementId': TagManager.dom.getElementAttribute(target, 'id'),
                             'mtm.clickElementClasses': TagManager.dom.getElementClassNames(target),
                             'mtm.clickText': TagManager.dom.getElementText(target),

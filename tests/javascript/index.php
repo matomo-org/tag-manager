@@ -374,7 +374,7 @@
         });
 
         test("Matomo TagManager Utils", function() {
-            expect(283);
+            expect(304);
 
             var utils = window.MatomoTagManager.utils;
 
@@ -558,6 +558,15 @@
                 {expected: true, actualValue: 'foohTTp', type: 'regexp_ignore_case', expectedValue: 'hTTp$'},
                 {expected: true, actualValue: 'http', type: 'regexp_ignore_case', expectedValue: 'http$'},
                 {expected: false, actualValue: 5, type: 'regexp_ignore_case', expectedValue: 'http$'},
+
+                // match_css_selector
+                {expected: true, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '#TagManager #customTag2'},
+                {expected: true, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '.myTagFoo #customTag2'},
+                {expected: true, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '#customTag2'},
+                {expected: false, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: 'body'},
+                {expected: false, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: ''},
+                {expected: false, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '#customTag3'},
+                {expected: false, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '#noerkerke #customTag2'}
             ];
 
             var atest, result;
@@ -1771,6 +1780,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([{
                 "event": "mtm.AllElementsClick",
+                "mtm.clickElement": target,
                 "mtm.clickElementClasses": "myTagTest myTagFoo myTagTest4",
                 "mtm.clickElementId": "TagManager",
                 "mtm.clickElementUrl": null,
@@ -1786,6 +1796,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllElementsClick",
+                "mtm.clickElement": target,
                 "mtm.clickElementClasses": "",
                 "mtm.clickElementId": "ClickTagManager2",
                 "mtm.clickElementUrl": "https://www.example.click/foo/bar",
@@ -1819,6 +1830,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllLinksClick",
+                "mtm.clickElement": target,
                 "mtm.clickElementClasses": "",
                 "mtm.clickElementId": "ClickTagManager2",
                 "mtm.clickElementUrl": "https://www.example.click/foo/bar",
@@ -1834,6 +1846,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllLinksClick",
+                "mtm.clickElement": target,
                 "mtm.clickElementClasses": "tag123 clicktag23",
                 "mtm.clickElementId": "ClickTagManager1",
                 "mtm.clickElementUrl": "https://www.example.click",
@@ -1849,6 +1862,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllLinksClick",
+                "mtm.clickElement": document.getElementById('ClickTagManager3'),
                 "mtm.clickElementClasses": "",
                 "mtm.clickElementId": "ClickTagManager3",
                 "mtm.clickElementUrl": "https://www.example.click/foo/bar3",
