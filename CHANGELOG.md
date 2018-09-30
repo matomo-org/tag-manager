@@ -1,5 +1,11 @@
 ## Changelog
 
+0.2.4
+* Add support for Click Element Match CSS Selector 
+* Fix trigger update button does not become active after removing a condition
+* Added new tags
+  * bugsnag (kudos to @Findus23)
+
 0.2.3
 * Link to Manage Tags page in top menu when user has only view access to prevent seeing Log in screen
 
