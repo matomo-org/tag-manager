@@ -1,7 +1,7 @@
 ## Changelog
 
 0.2.4
-* Add support for Click Element Match CSS Selector 
+* Add support for Click and Form Element Match CSS Selector 
 * Fix trigger update button does not become active after removing a condition
 * Added new tags
   * bugsnag (kudos to @Findus23)
