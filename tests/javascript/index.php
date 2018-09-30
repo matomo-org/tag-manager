@@ -569,17 +569,29 @@
                 {expected: false, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '#noerkerke #customTag2'}
             ];
 
+            function compareSummary(atest)
+            {
+                var test = {};
+                test.expected = atest.expected;
+                test.type = atest.type;
+                if (atest.type !== 'match_css_selector') {
+                    test.actualValue = atest.actualValue;
+                }
+                test.expectedValue = atest.expectedValue;
+                return JSON.stringify(test);
+            }
+
             var atest, result;
             for (var i = 0; i < tests.length; i++) {
                 atest = tests[i];
                 result = utils._compare(atest.actualValue, atest.expectedValue, atest.type);
-                strictEqual(atest.expected, result, '_compare: ' + JSON.stringify(atest));
+                strictEqual(atest.expected, result, '_compare: ' + compareSummary(atest));
 
                 result = utils.compare(atest.actualValue, atest.expectedValue, atest.type);
-                strictEqual(atest.expected, result, '_compare: ' + JSON.stringify(atest));
+                strictEqual(atest.expected, result, '_compare: ' + compareSummary(atest));
 
                 result = utils.compare(atest.actualValue, atest.expectedValue, 'not_' + atest.type);
-                strictEqual(!atest.expected, result, '_compare: ' + JSON.stringify(atest));
+                strictEqual(!atest.expected, result, '_compare: ' + compareSummary(atest));
             }
         });
 
@@ -1901,6 +1913,7 @@
             triggerEvent(form, 'submit', null, true);
             deepEqual([ {
                 "event": "mtm.FormSubmit",
+                "mtm.formElement": form,
                 "mtm.formElementAction": location.href,
                 "mtm.formElementClasses": "",
                 "mtm.formElementId": null,
@@ -1916,6 +1929,7 @@
             triggerEvent(form, 'submit', null, true);
             deepEqual([ {
                 "event": "mtm.FormSubmit",
+                "mtm.formElement": form,
                 "mtm.formElementAction": "/post/data?x=1",
                 "mtm.formElementClasses": "myclass1 myclass2",
                 "mtm.formElementId": 'myformIdtag',
