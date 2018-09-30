@@ -63,6 +63,16 @@
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
+			<row>
+				<id>FormElement</id>
+				<idvariable />
+				<type>FormElement</type>
+				<name>Form Element</name>
+				<category>Clicks</category>
+				<description>An instance of the element that was submitted.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
 		</types>
 	</row>
 	<row>

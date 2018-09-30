@@ -240,6 +240,8 @@
       "FireTriggerTitle": "Execute this tag when any of these triggers are triggered.",
       "FirstDirectoryVariableDescription": "Returns the first directory of the current page URL.",
       "FirstDirectoryVariableName": "First URL Directory",
+      "FormElementVariableName": "Form Element",
+      "FormElementVariableDescription": "An instance of the element that was submitted.",
       "FormClassesVariableDescription": "The value of all CSS class names of a submitted form.",
       "FormClassesVariableName": "Form Classes",
       "FormDestionationVariableDescription": "The value of the form action URL of a submitted form.",

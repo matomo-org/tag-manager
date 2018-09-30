@@ -1901,6 +1901,7 @@
             triggerEvent(form, 'submit', null, true);
             deepEqual([ {
                 "event": "mtm.FormSubmit",
+                "mtm.formElement": form,
                 "mtm.formElementAction": location.href,
                 "mtm.formElementClasses": "",
                 "mtm.formElementId": null,
@@ -1916,6 +1917,7 @@
             triggerEvent(form, 'submit', null, true);
             deepEqual([ {
                 "event": "mtm.FormSubmit",
+                "mtm.formElement": form,
                 "mtm.formElementAction": "/post/data?x=1",
                 "mtm.formElementClasses": "myclass1 myclass2",
                 "mtm.formElementId": 'myformIdtag',

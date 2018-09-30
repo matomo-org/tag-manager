@@ -15,6 +15,7 @@
 
                     triggerEvent({
                         event: 'mtm.FormSubmit',
+                        'mtm.formElement': target,
                         'mtm.formElementId': dom.getElementAttribute(target, 'id'),
                         'mtm.formElementName': dom.getElementAttribute(target, 'name'),
                         'mtm.formElementClasses': dom.getElementClassNames(target),
