@@ -330,6 +330,54 @@
 		<name>Developers</name>
 		<types>
 			<row>
+				<id>Bugsnag</id>
+				<name>Bugsnag</name>
+				<description>Add error monitoring to your applications with bugsnag.</description>
+				<category>Developers</category>
+				<icon>plugins/TagManager/images/icons/bugsnag.png</icon>
+				<help>This tag adds the default bugsnag javascript integration to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>apiKey</name>
+						<title>API key</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can find your API key in your project settings from your Bugsnag dashboard.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>collectUserIp</name>
+						<title>collect user IP</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>This should be disable if you don't want to track personal information about your users.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
 				<id>Honeybadger</id>
 				<name>Honeybadger</name>
 				<description>Exception and Uptime Monitoring for Application Developers</description>
