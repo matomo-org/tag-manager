@@ -24,6 +24,16 @@
 				<is_pre_configured>1</is_pre_configured>
 			</row>
 			<row>
+				<id>ClickElement</id>
+				<idvariable />
+				<type>ClickElement</type>
+				<name>Click Element</name>
+				<category>Clicks</category>
+				<description>An instance of the element that was clicked.</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
 				<id>ClickId</id>
 				<idvariable />
 				<type>ClickId</type>

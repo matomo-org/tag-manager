@@ -23,6 +23,7 @@
                 if (target && isClickNode(nodeName)) {
                     triggerEvent({
                         event: 'mtm.AllLinksClick',
+                        'mtm.clickElement': target,
                         'mtm.clickElementId': TagManager.dom.getElementAttribute(target, 'id'),
                         'mtm.clickElementClasses': TagManager.dom.getElementClassNames(target),
                         'mtm.clickText': TagManager.dom.getElementText(target),

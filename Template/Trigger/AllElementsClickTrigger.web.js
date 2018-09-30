@@ -8,6 +8,7 @@
                 var target = event.target;
                 triggerEvent({
                     event: 'mtm.AllElementsClick',
+                    'mtm.clickElement': target,
                     'mtm.clickElementId': TagManager.dom.getElementAttribute(target, 'id'),
                     'mtm.clickElementClasses': TagManager.dom.getElementClassNames(target),
                     'mtm.clickText': TagManager.dom.getElementText(target),

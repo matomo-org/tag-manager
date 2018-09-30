@@ -217,6 +217,12 @@
                             return actualValue >= expectedValue;
                         case 'contains':
                             return String(actualValue).indexOf(expectedValue) !== -1;
+                        case 'match_css_selector':
+                            if (!expectedValue || !actualValue) {
+                                return false;
+                            }
+                            var nodes = DOM.bySelector(expectedValue)
+                            return utils.indexOfArray(nodes, actualValue) !== -1;
                         case 'starts_with':
                             return String(actualValue).indexOf(expectedValue) === 0;
                         case 'ends_with':
