@@ -21,6 +21,7 @@ class Filesystem implements StorageInterface
 
         if (!isset($content) || $content !== $data) {
             // we only want to save the file when needed
+            \Piwik\Filesystem::mkdir(dirname($name));
             file_put_contents($name, $data);
 
             /**
