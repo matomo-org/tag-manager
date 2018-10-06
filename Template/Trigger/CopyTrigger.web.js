@@ -6,6 +6,7 @@
                     return;
                 }
                 var target = event.target;
+                var dom = TagManager.dom;
                 triggerEvent({
                     event: 'mtm.Print',
                     'mtm.copyElement': target,
