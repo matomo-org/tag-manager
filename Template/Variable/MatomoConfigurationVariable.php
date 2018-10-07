@@ -146,7 +146,11 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->uiControlAttributes['field1'] = $field1->toArray();
                 $field->uiControlAttributes['field2'] = $field2->toArray();
             }),
-
+            $this->makeSetting('bundleTracker', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = 'Bundle Tracker';
+                $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+                $field->description = 'By bundling the Matomo JavaScript tracker directly into the container it may improve the performance of your website as it reduces the number of needed requests. It is recommended to bundle the Matomo tracker because in most cases the tracker would otherwise be otherwise loaded in a separate request on page view anyway. Note: If you use two different Matomo configurations in one container, the setting of the first configuration used in the first Matomo Tag will be applied to all Matomo tags within one container.';
+            }),
         );
     }
 
