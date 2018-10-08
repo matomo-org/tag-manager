@@ -85,6 +85,7 @@
 				<userId />
 				<customDimensions>
 				</customDimensions>
+				<bundleTracker>1</bundleTracker>
 			</parameters>
 			<lookup_table>
 			</lookup_table>

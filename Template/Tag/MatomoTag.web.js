@@ -1,4 +1,5 @@
 (function () {
+
     var libLoaded = false;
     var libAvailable = false;
     var callbacks = {
@@ -26,6 +27,12 @@
             callbacks.callbacks[i]();
         }
     });
+
+    function loadMatomo() {
+        var replaceMeWithTracker=''; // do not modify this line, be replaced with Matomo tracker. Cannot use /*!! comment because of Jshrink bug
+        libAvailable = true;
+        libLoaded = true;
+    }
 
     function loadTracker(url)
     {
@@ -84,7 +91,7 @@
                     lastIdSite = matomoConfig.idSite;
                     // but even two or more different configs for the same Matomo URL & idSite
                     lastMatomoUrl = getMatomoUrlFromConfig(matomoConfig);
-                    var trackerUrl = matomoUrl + 'piwik.php';
+                    var trackerUrl = lastMatomoUrl + 'piwik.php';
                     tracker = Piwik.addTracker(trackerUrl, matomoConfig.idSite);
                     configuredTrackers[variableName] = tracker;
 
@@ -171,12 +178,16 @@
         };
 
         var matomoConfig = parameters.get('matomoConfig', {});
+        if (matomoConfig.bundleTracker) {
+            loadMatomo();
+            // we don't return in case for some reason matomo was not loaded there, then we have the fallback
+        }
+
         if (!matomoConfig.matomoUrl || !matomoConfig.idSite) {
             return;
         }
 
         var matomoUrl = getMatomoUrlFromConfig(matomoConfig);
-
         loadTracker(matomoUrl);
     };
 })();

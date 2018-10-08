@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Container\StaticContainer;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
@@ -16,6 +17,7 @@ class MatomoTag extends BaseTag
 {
     const ID = 'Matomo';
     const PARAM_MATOMO_CONFIG = 'matomoConfig';
+    const REPLACE_TRACKER_KEY = "var replaceMeWithTracker='';";
 
     public function getId()
     {
@@ -108,6 +110,17 @@ class MatomoTag extends BaseTag
                 $field->validate = function (){}; // prevent executing default float validator which requires a value, value here is optional
             })
         );
+    }
+
+    public function loadTemplate($context, $entity)
+    {
+        $template = parent::loadTemplate($context, $entity);
+        if ($template && !empty($entity['parameters']['matomoConfig']['parameters']['bundleTracker'])) {
+            $trackerUpdater = StaticContainer::get('Piwik\Plugins\CustomPiwikJs\TrackerUpdater');
+            $tracker = $trackerUpdater->getUpdatedTrackerFileContent();
+            return str_replace(self::REPLACE_TRACKER_KEY, $tracker, $template);
+        }
+        return $template;
     }
 
     public function getOrder()
