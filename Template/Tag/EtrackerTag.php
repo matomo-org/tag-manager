@@ -14,7 +14,7 @@ class EtrackerTag extends BaseTag
 {
 	public function getIcon()
 	{
-		return 'plugins/TagManager/Template/Tag/EtrackerEvent.svg';
+		return 'plugins/TagManager/Template/Tag/Etracker.svg';
 	}
     
     public function getParameters()
