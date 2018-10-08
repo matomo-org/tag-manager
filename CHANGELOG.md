@@ -1,5 +1,8 @@
 ## Changelog
 
+0.2.5
+* Add possibility to bundle Matomo JS tracker with a container
+
 0.2.4
 * Add support for Click and Form Element Match CSS Selector 
 * Fix trigger update button does not become active after removing a condition
