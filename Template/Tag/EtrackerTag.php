@@ -12,6 +12,8 @@ use Piwik\Validators\NotEmpty;
 
 class EtrackerTag extends BaseTag
 {
+	const PARAM_ETRACKER_CONFIG = 'etrackerConfig';
+	
 	public function getIcon()
 	{
 		return 'plugins/TagManager/Template/Tag/Etracker.svg';
@@ -30,19 +32,14 @@ class EtrackerTag extends BaseTag
             );
         });
 	    return array(
-		$trackingType,
-            	$this->makeSetting('etrackerID', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                	$field->title = 'etracker Tracking ID';
-                	$field->description = '';
-                	$field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-			$field->condition = 'trackingType == "pageview"';
+		$this->makeSetting(self::PARAM_ETRACKER_CONFIG, '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                	$field->title = 'etracker Configuration';
+	                $field->description = 'Assign a etracker configuration in order to track data into a specific site.';
+        	        $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE_TYPE;
+                	$field->uiControlAttributes = array('variableType' => 'EtrackerConfiguration');
                 	$field->validators[] = new NotEmpty();
             }),
-		$this->makeSetting('etrackerDNT', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) use ($trackingType) {
-                	$field->title = 'etracker Do-Not-Track';
-                	$field->description = 'Respect Do Not Track';
-			$field->condition = 'trackingType == "pageview"';
-            }),
+		$trackingType,
 		$this->makeSetting('etrackerEventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 	$field->title = 'etracker Category';
                 	$field->description = 'The event\'s category, for example Navigation, Outbound Links, 404 Error...';
