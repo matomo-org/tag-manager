@@ -28,7 +28,20 @@
         }
     });
 
+    function checkLoadedAlready()
+    {
+        if (libAvailable || typeof window.Piwik === 'object') {
+            libAvailable = true;
+            libLoaded = true; // eg loaded by tests or manually by user
+            return true;
+        }
+        return false;
+    }
+
     function loadMatomo() {
+        if (checkLoadedAlready()) {
+            return;
+        }
         var replaceMeWithTracker=''; // do not modify this line, be replaced with Matomo tracker. Cannot use /*!! comment because of Jshrink bug
         libAvailable = true;
         libLoaded = true;
@@ -36,9 +49,7 @@
 
     function loadTracker(url)
     {
-        if (libAvailable || typeof window.Piwik === 'object') {
-            libAvailable = true;
-            libLoaded = true; // eg loaded by tests or manually by user
+        if (checkLoadedAlready()) {
             return;
         }
         if (!libLoaded) {
