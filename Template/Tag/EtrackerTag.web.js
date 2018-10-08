@@ -14,7 +14,7 @@
 				var etrackerDNT = parameters.get('etrackerDNT');
 				if(etrackerDNT){
 					script.setAttribute('data-respect-dnt', 'true');
-					}
+				}
 				script.src = '//static.etracker.com/code/e.js';
 				s.parentNode.insertBefore(script, s);               
 			}
