@@ -12,7 +12,7 @@
 				script.setAttribute('data-secure-code', etrackerID);
 				script.setAttribute('id', '_etLoader');
 				script.setAttribute('charset', 'UTF-8');
-				if (etrackerConfig.enableDoNotTrack) {
+				if (etrackerConfig.etrackerDNT) {
                         		script.setAttribute('data-respect-dnt', 'true');
                     		}
 				script.src = '//static.etracker.com/code/e.js';
