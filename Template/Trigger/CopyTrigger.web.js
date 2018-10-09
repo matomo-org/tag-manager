@@ -8,7 +8,7 @@
                 var target = event.target;
                 var dom = TagManager.dom;
                 triggerEvent({
-                    event: 'mtm.Print',
+                    event: 'mtm.Copy',
                     'mtm.copyElement': target,
                     'mtm.copyElementId': dom.getElementAttribute(target, 'id'),
                     'mtm.copyElementName': dom.getElementAttribute(target, 'name'),
