@@ -412,7 +412,7 @@ class TriggerTest extends IntegrationTestCase
             'type' => 'Foo',
             'name' => 'InitialTrigger1',
             'status' => 'active',
-            'parameters' => array (),
+            'parameters' => array ('eventName' => 'myEvent'),
             'conditions' => array (),
             'created_date' => '2018-01-01 02:03:04',
             'updated_date' => '2018-01-01 02:03:04',
