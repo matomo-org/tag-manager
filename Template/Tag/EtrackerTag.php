@@ -45,7 +45,9 @@ class EtrackerTag extends BaseTag
                 	$field->description = 'The event\'s category, for example Navigation, Outbound Links, 404 Error...';
                 	$field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
 			$field->condition = 'trackingType == "event"';
-                	$field->validators[] = new NotEmpty();
+			if ($trackingType->getValue() === 'event') {
+                		$field->validators[] = new NotEmpty();
+			}
             }),
 		$this->makeSetting('etrackerEventObject', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 	$field->title = 'etracker Object';
