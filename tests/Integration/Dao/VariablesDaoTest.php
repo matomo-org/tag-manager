@@ -231,6 +231,24 @@ class VariablesDaoTest extends IntegrationTestCase
         ));
     }
 
+    public function test_updateVariable_keepsLookupTable()
+    {
+        $idSite = 3;
+        $idContainerVersion = 5;
+        $idVariable = $this->createVariable($idSite, $idContainerVersion, 'myname');
+        $this->assertEquals(1, $idVariable);
+
+        $variable = $this->dao->getContainerVariable($idSite, $idContainerVersion, $idVariable);
+        $this->assertNotEmpty($variable['lookup_table']);
+
+        $this->dao->updateVariableColumns($idSite, $idContainerVersion, $idVariable, array(
+            'name' => 'name2'
+        ));
+
+        $variable = $this->dao->getContainerVariable($idSite, $idContainerVersion, $idVariable);
+        $this->assertNotEmpty($variable['lookup_table']);
+    }
+
     public function test_updateVariableColumns_doesNotFailWhenNoColumsAreToBeUpdated()
     {
         $idVariable = $this->createVariable($idSite = 3);

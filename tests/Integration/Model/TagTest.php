@@ -642,9 +642,10 @@ class TagTest extends IntegrationTestCase
             'status' => 'active',
             'parameters' =>
                 array (
+                    'customHtml' => '<script></script>'
                 ),
             'fire_trigger_ids' =>
-                array (
+                array (1
                 ),
             'block_trigger_ids' =>
                 array (
@@ -773,6 +774,7 @@ class TagTest extends IntegrationTestCase
                 ),
             'fire_trigger_ids' =>
                 array (
+                    1
                 ),
             'block_trigger_ids' =>
                 array (

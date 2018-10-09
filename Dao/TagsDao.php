@@ -103,19 +103,19 @@ class TagsDao extends BaseDao implements TagManagerDao
     {
         if (!empty($columns['fire_trigger_ids'])) {
             $columns['fire_trigger_ids'] = json_encode($columns['fire_trigger_ids']);
-        } else {
+        } elseif (isset($columns['fire_trigger_ids'])) {
             $columns['fire_trigger_ids'] = '';
         }
 
         if (!empty($columns['block_trigger_ids'])) {
             $columns['block_trigger_ids'] = json_encode($columns['block_trigger_ids']);
-        } else {
+        } elseif (isset($columns['block_trigger_ids'])) {
             $columns['block_trigger_ids'] = '';
         }
 
         if (!empty($columns['parameters'])) {
             $columns['parameters'] = json_encode($columns['parameters']);
-        } else {
+        } elseif (isset($columns['parameters'])) {
             $columns['parameters'] = '';
         }
 
