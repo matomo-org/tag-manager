@@ -92,13 +92,13 @@ class VariablesDao extends BaseDao implements TagManagerDao
     {
         if (!empty($columns['parameters'])) {
             $columns['parameters'] = json_encode($columns['parameters']);
-        } else {
+        } elseif (isset($columns['parameters'])) {
             $columns['parameters'] = '';
         }
 
         if (!empty($columns['lookup_table'])) {
             $columns['lookup_table'] = json_encode($columns['lookup_table']);
-        } else {
+        } elseif (isset($columns['lookup_table'])) {
             $columns['lookup_table'] = '';
         }
 
