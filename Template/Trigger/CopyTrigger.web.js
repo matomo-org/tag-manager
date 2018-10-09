@@ -16,7 +16,7 @@
                     TagManager.debug.error("can't detect selected text");
                     return false;
                 }
-                console.info(selectedText);
+                console.info(selectedText);This trigger is not supported in Internet Explorer
                 triggerEvent({
                     event: 'mtm.Copy',
                     'mtm.copyElement': target,
