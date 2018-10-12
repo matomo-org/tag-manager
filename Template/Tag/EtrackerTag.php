@@ -44,8 +44,8 @@ class EtrackerTag extends BaseTag
                     $field->title = 'etracker Category';
                     $field->description = 'The event\'s category, for example Navigation, Outbound Links, 404 Error...';
                     $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-		    $field->condition = 'trackingType == "event"';
-		    if ($trackingType->getValue() === 'event') {
+                    $field->condition = 'trackingType == "event"';
+                    if ($trackingType->getValue() === 'event') {
                         $field->validators[] = new NotEmpty();
 		    }
             }),
@@ -53,19 +53,19 @@ class EtrackerTag extends BaseTag
                     $field->title = 'etracker Object';
                     $field->description = 'The event\'s object Name, for example a particular navigation element, a clicked element, form name,...';
                     $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-		    $field->condition = 'trackingType == "event"';
+                    $field->condition = 'trackingType == "event"';
             }),
 		$this->makeSetting('etrackerEventAction', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                     $field->title = 'etracker Action';
                     $field->description = 'The event\'s action, for example, click, open, close, play, pause...';
                     $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-		    $field->condition = 'trackingType == "event"';
+                    $field->condition = 'trackingType == "event"';
             }),
 		$this->makeSetting('etrackerEventType', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                     $field->title = 'etracker Type';
                     $field->description = 'The event\'s type Name, for example an value of a send form...';
                     $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-		    $field->condition = 'trackingType == "event"';
+                    $field->condition = 'trackingType == "event"';
             })
         );
     }
