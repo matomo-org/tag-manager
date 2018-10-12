@@ -31,46 +31,46 @@ class EtrackerTag extends BaseTag
                 'event' => 'Event',
             );
         });
-	    return array(
-		$this->makeSetting(self::PARAM_ETRACKER_CONFIG, '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                    $field->title = 'etracker Configuration';
-                    $field->description = 'Assign a etracker configuration in order to track data into a specific site.';
-                    $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE_TYPE;
-                    $field->uiControlAttributes = array('variableType' => 'EtrackerConfiguration');
+        return array(
+            $this->makeSetting(self::PARAM_ETRACKER_CONFIG, '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = 'etracker Configuration';
+                $field->description = 'Assign a etracker configuration in order to track data into a specific site.';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE_TYPE;
+                $field->uiControlAttributes = array('variableType' => 'EtrackerConfiguration');
+                $field->validators[] = new NotEmpty();
+            }),
+            $trackingType,
+            $this->makeSetting('etrackerEventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'etracker Category';
+                $field->description = 'The event\'s category, for example Navigation, Outbound Links, 404 Error...';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "event"';
+                if ($trackingType->getValue() === 'event') {
                     $field->validators[] = new NotEmpty();
+                }
             }),
-		$trackingType,
-		$this->makeSetting('etrackerEventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                    $field->title = 'etracker Category';
-                    $field->description = 'The event\'s category, for example Navigation, Outbound Links, 404 Error...';
-                    $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                    $field->condition = 'trackingType == "event"';
-                    if ($trackingType->getValue() === 'event') {
-                        $field->validators[] = new NotEmpty();
-		    }
+            $this->makeSetting('etrackerEventObject', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'etracker Object';
+                $field->description = 'The event\'s object Name, for example a particular navigation element, a clicked element, form name,...';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "event"';
             }),
-		$this->makeSetting('etrackerEventObject', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                    $field->title = 'etracker Object';
-                    $field->description = 'The event\'s object Name, for example a particular navigation element, a clicked element, form name,...';
-                    $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                    $field->condition = 'trackingType == "event"';
+            $this->makeSetting('etrackerEventAction', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'etracker Action';
+                $field->description = 'The event\'s action, for example, click, open, close, play, pause...';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "event"';
             }),
-		$this->makeSetting('etrackerEventAction', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                    $field->title = 'etracker Action';
-                    $field->description = 'The event\'s action, for example, click, open, close, play, pause...';
-                    $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                    $field->condition = 'trackingType == "event"';
-            }),
-		$this->makeSetting('etrackerEventType', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                    $field->title = 'etracker Type';
-                    $field->description = 'The event\'s type Name, for example an value of a send form...';
-                    $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                    $field->condition = 'trackingType == "event"';
+            $this->makeSetting('etrackerEventType', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'etracker Type';
+                $field->description = 'The event\'s type Name, for example an value of a send form...';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "event"';
             })
         );
     }
     public function getCategory()
-	{
-	    return self::CATEGORY_ANALYTICS;
-	}
+    {
+            return self::CATEGORY_ANALYTICS;
+    }
 }
