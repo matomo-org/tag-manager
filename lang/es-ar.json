@@ -1,0 +1,17 @@
+{
+    "TagManager": {
+        "CategoryClicks": "Clics",
+        "CategoryDate": "Fecha",
+        "CategoryEmail": "Email",
+        "CategoryErrors": "Errores",
+        "CategoryHistory": "Historial",
+        "ComparisonContains": "contiene",
+        "ManageX": "Administrar %s",
+        "PageTitleVariableName": "Título de la Página",
+        "PageUrlVariableName": "URL de Página",
+        "ReferrerUrlVariableName": "Dirección web de origen del visitante",
+        "ReferrerVariableName": "Dirección web de origen del visitante",
+        "Type": "Tipo",
+        "Version": "Versión"
+    }
+}
