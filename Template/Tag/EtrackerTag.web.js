@@ -2,7 +2,6 @@
     return function (parameters, TagManager) {
         this.fire = function () {
         var etrackerConfig = parameters.get('etrackerConfig', {});
-        console.log(etrackerConfig);
         var trackingType = parameters.get('trackingType');
         if (trackingType === 'pageview') {
             var etrackerID = etrackerConfig.etrackerID;
