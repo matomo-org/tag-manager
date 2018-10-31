@@ -114,6 +114,10 @@
                         tracker.enableCrossDomainLinking();
                     }
 
+                    if (matomoConfig.setSecureCookie) {
+                        tracker.setSecureCookie(true);
+                    }
+
                     if (matomoConfig.cookieDomain) {
                         tracker.setCookieDomain(matomoConfig.cookieDomain);
                     }
