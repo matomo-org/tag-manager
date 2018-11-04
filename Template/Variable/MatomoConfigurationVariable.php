@@ -96,6 +96,10 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->title = 'Disable cookies';
                 $field->description = 'Disables all first party cookies.';
             }),
+            $this->makeSetting('setSecureCookie', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = 'Enable Secure Cookie';
+                $field->description = 'Enable the Secure cookie flag on all first party cookies. This should be used when your website is only available under HTTPS so that all tracking cookies are always sent over secure connection.';
+            }),
             $this->makeSetting('cookieDomain', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Cookie Domain';
                 $field->description = 'The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: ".example.com" or "*.example.com".';
