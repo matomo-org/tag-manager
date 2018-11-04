@@ -115,9 +115,19 @@ class MatomoTag extends BaseTag
     public function loadTemplate($context, $entity)
     {
         $template = parent::loadTemplate($context, $entity);
-        if ($template && !empty($entity['parameters']['matomoConfig']['parameters']['bundleTracker'])) {
+        // !isset() because when bundleTracker is not defined for some reason we enable it by default
+        $bundleTrackerEnabled = !isset($entity['parameters']['matomoConfig']['parameters']['bundleTracker'])
+                             || !empty($entity['parameters']['matomoConfig']['parameters']['bundleTracker']);
+        if ($template && $bundleTrackerEnabled) {
             $trackerUpdater = StaticContainer::get('Piwik\Plugins\CustomPiwikJs\TrackerUpdater');
             $tracker = $trackerUpdater->getUpdatedTrackerFileContent();
+
+            if (!$tracker) {
+                $tracker = @file_get_contents(PIWIK_DOCUMENT_ROOT . '/matomo.js');
+            } elseif (!$tracker) {
+                $tracker = @file_get_contents(PIWIK_DOCUMENT_ROOT . '/piwik.js');
+            }
+
             return str_replace(self::REPLACE_TRACKER_KEY, $tracker, $template);
         }
         return $template;

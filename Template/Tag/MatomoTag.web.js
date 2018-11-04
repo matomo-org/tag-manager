@@ -43,8 +43,8 @@
             return;
         }
         var replaceMeWithTracker=''; // do not modify this line, be replaced with Matomo tracker. Cannot use /*!! comment because of Jshrink bug
-        libAvailable = true;
-        libLoaded = true;
+        libAvailable = typeof window.Piwik !== 'undefined' || typeof window.Matomo !== 'undefined';
+        libLoaded = libAvailable;
     }
 
     function loadTracker(url)
