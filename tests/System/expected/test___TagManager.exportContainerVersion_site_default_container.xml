@@ -80,6 +80,7 @@
 				<trackAllContentImpressions>0</trackAllContentImpressions>
 				<trackVisibleContentImpressions>0</trackVisibleContentImpressions>
 				<disableCookies>0</disableCookies>
+				<setSecureCookie>0</setSecureCookie>
 				<cookieDomain />
 				<cookiePath />
 				<userId />
