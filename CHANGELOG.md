@@ -1,5 +1,17 @@
 ## Changelog
 
+0.2.6
+* Fix changing name of variable causes removing trigger in a tag
+* Added possibility to configure set secure cookies for Matomo Tracker
+* Added fallback to load JS tracker if bundling the Matomo JS tracker didn't work
+* Added new tags
+  * VWO (kudos to @MichaelHeerklotz)
+  * Emarsys (kuds to @MichaelHeerklotz)
+  * Bing (kuds to @Findus23)
+  * LiveZilla (kuds to @scysys)
+  * ThemeColor (kuds to @Findus23)
+  * Drift (kuds to @Findus23)
+
 0.2.5
 * Add possibility to bundle Matomo JS tracker with a container
 
