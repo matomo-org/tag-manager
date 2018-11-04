@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <result>
 	<row>
+		<name>Ads</name>
+		<types>
+			<row>
+				<id>BingUET</id>
+				<name>Bing Ads UET Tag</name>
+				<description>Adds the Bing Ads Universal Event Tracking Tag to your website so you can apply conversion tracking to your Bing ad campaigns.</description>
+				<category>Ads</category>
+				<icon>plugins/TagManager/images/icons/bing.svg</icon>
+				<help>The tag tracks what your customers are doing after they click on your bing ad.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>bingAdID</name>
+						<title>ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Mangager.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
 		<name>Analytics</name>
 		<types>
 			<row>
@@ -137,6 +174,102 @@
 				</parameters>
 			</row>
 			<row>
+				<id>Emarsys</id>
+				<name>Emarsys</name>
+				<description>Emarsys is the largest independent marketing platform in the world.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/emarsys.svg</icon>
+				<help>This tag adds the asynchronous Emarsys Code to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>merchantId</name>
+						<title>Emarsys Merchant ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your Emarsys Merchant ID</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>commandCategory</name>
+						<title>category</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Report the category currently browsed by the visitor.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>commandView</name>
+						<title>view</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Report a product view.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>commandTag</name>
+						<title>tag</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Add an arbitrary tag to the current event. The tag is collected and can be accessed later from other Emarsys products.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>commandGo</name>
+						<title>go</title>
+						<value />
+						<defaultValue />
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Execute commands in the queue, that is, send them to the recommender service for processing.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
 				<id>GoogleAnalyticsUniversal</id>
 				<name>Google Analytics (Universal)</name>
 				<description>Google Analytics is a web analytics service offered by Google.</description>
@@ -211,6 +344,38 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Site ID by logging into Pingdom, going to &quot;Monitoring&quot; and clicking on &quot;Real User Monitoring&quot;. Every added site will get its own Site ID.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>VisualWebsiteOptimizer</id>
+				<name>Visual Website Optimizer</name>
+				<description>Visual Website Optimizer is an all-in-one A/B testing and Conversion Optimization Platform.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/visualwebsitepptimizer.svg</icon>
+				<help>This tag adds the asynchronous VWO Smart Code to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>accountId</name>
+						<title>Visual Website Optimizer Account ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your Visual Website Optimizer Account ID</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -575,6 +740,38 @@
 				</parameters>
 			</row>
 			<row>
+				<id>Drift</id>
+				<name>Drift</name>
+				<description />
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/drift.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>driftId</name>
+						<title>Drift ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The Drift ID is the text between brackets without quotes at the end of the JS snippet: drift.load('mdp4r5w7rh3y');</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
 				<id>FacebookPixel</id>
 				<name>Facebook Pixel</name>
 				<description>The Facebook Pixel is a web analytics and advertising service offered by Facebook.</description>
@@ -631,6 +828,70 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can find the partner ID by logging into your LinkedIn Campaign Manager, and clicking on &quot;Account Assets&quot; followed by &quot;Insight Tag&quot;. If &quot;Insight Tag&quot; is not available, please set up the Insight Tag by clicking on &quot;Conversion Tracking&quot;. There you can enter a domain and continue the set up. You will find the partner ID in the line `_linkedin_partner_id = &quot;123456&quot;`. In this example the ID would be &quot;123456&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>LivezillaDynamic</id>
+				<name>Livezilla Chat / Monitoring</name>
+				<description>Livezilla lets you monitor and chat with visitors on your website.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/livezilla_icon.png</icon>
+				<help>This tag allows you to add the Dynamic Code integration from Livezilla to Chat with you Customers or just Monitor your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>LivezillaDynamicID</name>
+						<title>Livezilla ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Insert the Livezilla ID from your Dynamic Code section.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>LivezillaDynamicDomain</name>
+						<title>Livezilla Domain</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enter the Domain where Livezilla is installed. Example: https://www.example.com</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>LivezillaDynamicDefer</name>
+						<title>Livezilla Script &quot;defer&quot;?</title>
+						<value>1</value>
+						<defaultValue>1</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>In most cases you should let it activated.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -781,6 +1042,43 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Site ID by logging into Zendesk Chat, going to &quot;Settings&quot; and clicking on &quot;Widget&quot;. The Site ID has typically about 32 characters and is the text coming directly after &quot;https://v2.zopim.com/?&quot;, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Others</name>
+		<types>
+			<row>
+				<id>ThemeColor</id>
+				<name>Theme Color</name>
+				<description>Style the UI of supported browsers.</description>
+				<category>Others</category>
+				<icon>plugins/TagManager/images/icons/chrome.svg</icon>
+				<help>This tag supports Chrome on Android and other browser that understand 'theme-color'.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>themeColor</name>
+						<title>Theme Color</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Please enter a color as a hexidecimal string (e.g. '#11ee33')</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />

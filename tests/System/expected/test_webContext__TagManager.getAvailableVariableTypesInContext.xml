@@ -659,6 +659,22 @@
 						<condition />
 					</row>
 					<row>
+						<name>setSecureCookie</name>
+						<title>Enable Secure Cookie</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enable the Secure cookie flag on all first party cookies. This should be used when your website is only available under HTTPS so that all tracking cookies are always sent over secure connection.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
 						<name>cookieDomain</name>
 						<title>Cookie Domain</title>
 						<value />
