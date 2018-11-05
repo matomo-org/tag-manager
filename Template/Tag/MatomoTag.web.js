@@ -182,6 +182,14 @@
                     var trackingType = parameters.get('trackingType');
 
                     if (trackingType === 'pageview') {
+                        var customTitle = parameters.get('documentTitle');
+                        if (customTitle) {
+                            tracker.setDocumentTitle(customTitle);
+                        }
+                        var customUrl = parameters.get('customUrl');
+                        if (customUrl) {
+                            tracker.setCustomUrl(customUrl);
+                        }
                         tracker.trackPageView();
                     } else if (trackingType === 'event') {
                         tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'));
