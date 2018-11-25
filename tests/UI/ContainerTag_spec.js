@@ -65,6 +65,7 @@ describe("ContainerTag", function () {
             rowIndex = 3;
         }
         page.click('.tagManagerTagList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
+        page.wait(250);
     }
 
     function createOrUpdateTag(page)
