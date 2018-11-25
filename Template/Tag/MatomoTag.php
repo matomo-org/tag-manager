@@ -100,6 +100,9 @@ class MatomoTag extends BaseTag
                 $field->condition = 'trackingType == "event"';
                 $field->validators[] = new CharacterLength(0, 500);
                 $field->validate = function ($value) {
+                    if (empty($value)) {
+                        return;
+                    }
                     if (is_numeric($value)) {
                         return; // valid
                     }
