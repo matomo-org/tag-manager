@@ -98,7 +98,16 @@ class MatomoTag extends BaseTag
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->description = 'The event\'s value, for example "50" as in user has stayed on the website for 50 seconds.';
                 $field->condition = 'trackingType == "event"';
-                $field->validators[] = new NumberRange();
+                $field->validators[] = new CharacterLength(0, 500);
+                $field->validate = function ($value) {
+                    if (is_numeric($value)) {
+                        return; // valid
+                    }
+                    $posBracket = strpos($value, '{{');
+                    if ($posBracket === false || strpos($value, '}}', $posBracket) === false) {
+                        throw new \Exception('The event value can only include numeric values and variables.');
+                    }
+                };
                 $field->transform = function ($value) {
                     if ($value === null || $value === false || $value === ''){
                         // we make sure in those cases we do not case the value to float automatically by Setting class because
@@ -107,7 +116,6 @@ class MatomoTag extends BaseTag
                     }
                     return $value;
                 };
-                $field->validate = function (){}; // prevent executing default float validator which requires a value, value here is optional
             })
         );
     }
