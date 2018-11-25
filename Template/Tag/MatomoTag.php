@@ -93,7 +93,7 @@ class MatomoTag extends BaseTag
                 $field->condition = 'trackingType == "event"';
                 $field->validators[] = new CharacterLength(0, 500);
             }),
-            $this->makeSetting('eventValue', '', FieldConfig::TYPE_FLOAT, function (FieldConfig $field) {
+            $this->makeSetting('eventValue', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Event Value';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->description = 'The event\'s value, for example "50" as in user has stayed on the website for 50 seconds.';
