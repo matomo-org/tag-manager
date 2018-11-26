@@ -160,7 +160,7 @@
 						<title>Event Value</title>
 						<value />
 						<defaultValue />
-						<type>float</type>
+						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
