@@ -14,6 +14,9 @@ class VariableDeleted extends VariableBaseActivity
 
     public function extractParams($eventData)
     {
+        if (!$this->hasRequestedApiMethod('deleteContainerVariable')) {
+            return false;
+        }
         if (empty($eventData[0]) || !is_array($eventData[0])) {
             return false;
         }

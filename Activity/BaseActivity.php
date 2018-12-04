@@ -7,6 +7,8 @@
  */
 namespace Piwik\Plugins\TagManager\Activity;
 
+use Piwik\API\Request;
+use Piwik\Cache;
 use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
 use Piwik\Plugins\ActivityLog\Activity\Activity;
@@ -15,6 +17,15 @@ use Piwik\Site;
 abstract class BaseActivity extends Activity
 {
     protected $entityType = '';
+
+    protected function hasRequestedApiMethod($method)
+    {
+        if (method_exists('Piwik\API\Request', 'getRootApiRequestMethod')) {
+            $method = 'TagManager.' . $method;
+            return $method === Request::getRootApiRequestMethod();
+        }
+        return false;
+    }
 
     protected function getContainerNameFromActivityData($activityData)
     {
