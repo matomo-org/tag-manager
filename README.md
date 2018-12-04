@@ -5,8 +5,6 @@
 ## Description
 
 <div class="alert alert-info">
-Matomo Tag Manager is currently in beta. As such it may contain bugs, may not work as expected at all times and data could get lost. Please <a href="https://github.com/matomo-org/tag-manager/issues">report any issues</a> you encounter or any other feedback back to us.
-
 Are you a developer? Please consider contributing more tags to our open source tag manager. Learn more on how to develop custom tags, triggers, and variables.
 </div>
 
