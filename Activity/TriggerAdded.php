@@ -14,6 +14,10 @@ class TriggerAdded extends TriggerBaseActivity
 
     public function extractParams($eventData)
     {
+        if (!$this->hasRequestedApiMethod('addContainerTrigger')) {
+            return false;
+        }
+
         list($idEntity, $finalAPIParameters) = $eventData;
 
         $idSite = $finalAPIParameters['parameters']['idSite'];

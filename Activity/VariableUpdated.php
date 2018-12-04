@@ -14,6 +14,9 @@ class VariableUpdated extends VariableBaseActivity
 
     public function extractParams($eventData)
     {
+        if (!$this->hasRequestedApiMethod('updateContainerVariable')) {
+            return false;
+        }
         list($return, $finalAPIParameters) = $eventData;
 
         $idEntity = $finalAPIParameters['parameters']['idVariable'];

@@ -14,6 +14,10 @@ class TagUpdated extends TagBaseActivity
 
     public function extractParams($eventData)
     {
+        if (!$this->hasRequestedApiMethod('updateContainerTag')) {
+            return false;
+        }
+
         list($return, $finalAPIParameters) = $eventData;
 
         $idEntity = $finalAPIParameters['parameters']['idTag'];
