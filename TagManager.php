@@ -86,6 +86,12 @@ class TagManager extends \Piwik\Plugin
             // when only super users are allowed to use them
             $capabilities[] = new UseCustomTemplates();
         }
+
+        if ($restrictCustomTemplates === SystemSettings::CUSTOM_TEMPLATES_SUPERUSER && Piwik::hasUserSuperUserAccess()) {
+            // there is no need to show it when they are completely disabled,
+            // when only super users are allowed to use them
+            $capabilities[] = new UseCustomTemplates();
+        }
     }
 
     public function addGlossaryItems(&$glossaryItems)
