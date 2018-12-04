@@ -10,8 +10,8 @@ namespace Piwik\Plugins\TagManager\Template\Variable;
 use Piwik\Common;
 use Piwik\Settings\FieldConfig;
 use Piwik\SettingsPiwik;
+use Piwik\Site;
 use Piwik\Validators\CharacterLength;
-use Piwik\Validators\IdSite;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\UrlLike;
 
@@ -50,20 +50,34 @@ class MatomoConfigurationVariable extends BaseVariable
             $url = str_replace(array('http://', 'https://'), '//', $url);
         }
 
+        $matomoUrl = $this->makeSetting('matomoUrl', $url, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $field->title = 'Matomo URL';
+            $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+            $field->description = 'The URL of your Matomo instance. It should not include "/index.php" or "piwik.php". The URL of your current Matomo URL instance is preconfigured.';
+            $field->validators[] = new NotEmpty();
+            $field->validators[] = new UrlLike();
+        });
+
         return array(
-            $this->makeSetting('matomoUrl', $url, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Matomo URL';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->description = 'The URL of your Matomo instance. It should not include "/index.php" or "piwik.php". The URL of your current Matomo URL instance is preconfigured.';
-                $field->validators[] = new NotEmpty();
-                $field->validators[] = new UrlLike();
-            }),
-            $this->makeSetting('idSite', $idSite, FieldConfig::TYPE_INT, function (FieldConfig $field) {
+            $matomoUrl,
+            $this->makeSetting('idSite', $idSite, FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($matomoUrl, $url) {
                 $field->title = 'Matomo idSite';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->description = 'The idSite you want to track data into. The idSite of the current website is preconfigured. You may also find the idSite of any other website under "Administration => Manage Measurables/Websites".';
                 $field->validators[] = new NotEmpty();
-                $field->validators[] = new IdSite();
+                $field->validators[] = new CharacterLength(0, 500);
+                $field->validate = function ($value) use ($matomoUrl, $url) {
+                    if (is_numeric($value)) {
+                        if ($matomoUrl->getValue() === $url) {
+                            new Site($value);// we validate idSite when it points to this url
+                        }
+                        return; // valid... we do not validate idSite as it might point to different matomo...
+                    }
+                    $posBracket = strpos($value, '{{');
+                    if ($posBracket === false || strpos($value, '}}', $posBracket) === false) {
+                        throw new \Exception('The idSite can only include idSites and variables.');
+                    }
+                };
             }),
             $this->makeSetting('enableLinkTracking', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'Enable Link Tracking';
