@@ -6,7 +6,7 @@
         var trackingType = parameters.get('trackingType');
         var etrackerID = etrackerConfig.etrackerID;
         
-		if (trackingType === 'pageview') {
+        if (trackingType === 'pageview') {
             // Pageview parameters for overwrite
             for (var i in etrackerConfig) {
                 if (TagManager.utils.hasProperty(etrackerConfig, i)) {
