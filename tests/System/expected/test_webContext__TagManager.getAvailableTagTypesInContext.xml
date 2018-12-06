@@ -108,6 +108,38 @@
 						<condition>trackingType == &quot;goal&quot;</condition>
 					</row>
 					<row>
+						<name>documentTitle</name>
+						<title>Custom Title</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally, specify a custom document title which should be tracked instead of the default document title.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot;</condition>
+					</row>
+					<row>
+						<name>customUrl</name>
+						<title>Custom URL</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally, specify a custom URL which should be tracked instead of the current location.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot;</condition>
+					</row>
+					<row>
 						<name>eventCategory</name>
 						<title>Event Category</title>
 						<value />
@@ -380,6 +412,122 @@
 						<templateFile />
 						<introduction />
 						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Etracker</id>
+				<name>etracker web analysis</name>
+				<description>etracker is a web analytics system, you can choose to send a pageview or an event.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/etracker.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>etrackerConfig</name>
+						<title>etracker Configuration</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<variableType>EtrackerConfiguration</variableType>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Assign a etracker configuration in order to track data into a specific site.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variabletype-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>trackingType</name>
+						<title>Tracking Type</title>
+						<value>pageview</value>
+						<defaultValue>pageview</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<pageview>Pageview</pageview>
+							<event>Event</event>
+						</availableValues>
+						<description>Choose which action should be executed when this tag is fired.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>etrackerEventCategory</name>
+						<title>etracker Category</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The event's category, for example Navigation, Outbound Links, 404 Error...</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;event&quot;</condition>
+					</row>
+					<row>
+						<name>etrackerEventObject</name>
+						<title>etracker Object</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The event's object Name, for example a particular navigation element, a clicked element, form name,...</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;event&quot;</condition>
+					</row>
+					<row>
+						<name>etrackerEventAction</name>
+						<title>etracker Action</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The event's action, for example, click, open, close, play, pause...</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;event&quot;</condition>
+					</row>
+					<row>
+						<name>etrackerEventType</name>
+						<title>etracker Type</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The event's type Name, for example an value of a send form...</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;event&quot;</condition>
 					</row>
 				</parameters>
 			</row>
