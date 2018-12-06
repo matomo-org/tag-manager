@@ -66,6 +66,24 @@ class MatomoTag extends BaseTag
                     $field->validators[] = new CharacterLength(1, 500);
                 }
             }),
+            $this->makeSetting('documentTitle', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Custom Title';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->description = 'Optionally, specify a custom document title which should be tracked instead of the default document title.';
+                $field->condition = 'trackingType == "pageview"';
+                if ($trackingType->getValue() === 'pageview') {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+            }),
+            $this->makeSetting('customUrl', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Custom URL';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->description = 'Optionally, specify a custom URL which should be tracked instead of the current location.';
+                $field->condition = 'trackingType == "pageview"';
+                if ($trackingType->getValue() === 'pageview') {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+            }),
             $this->makeSetting('eventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Event Category';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
