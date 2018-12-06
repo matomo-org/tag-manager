@@ -1,4 +1,5 @@
 (function () {
+    var hasBeenLoaded = false;
     return function (parameters, TagManager) {
         this.fire = function () {
         var etrackerConfig = parameters.get('etrackerConfig', {});
