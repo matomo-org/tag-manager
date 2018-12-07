@@ -34,190 +34,179 @@ describe("ContainerTrigger", function () {
         testEnvironment.save();
     });
 
-    function selectTriggerType(page, triggerType)
+    async function selectTriggerType(triggerType)
     {
-        page.click('.editTrigger .collection-item.templateType' + triggerType);
+        await page.click('.editTrigger .collection-item.templateType' + triggerType);
     }
 
-    function setTriggerName(page, name, prefix)
+    async function setTriggerName(name, prefix)
     {
         if (!prefix) {
             prefix = '';
         } else {
             prefix += ' ';
         }
-        form.sendFieldValue(page, prefix + '.editTrigger [id=name]', name);
+        await form.sendFieldValue(page, prefix + '.editTrigger [id=name]', name);
     }
 
-    function setParameterValue(page, triggerName, value)
+    async function setParameterValue(triggerName, value)
     {
-        form.sendFieldValue(page, '.editTrigger [id=' + triggerName + ']', value);
+        await form.sendFieldValue(page, '.editTrigger [id=' + triggerName + ']', value);
     }
 
-    function clickFirstRowTableAction(page, action, rowIndex)
+    async function clickFirstRowTableAction(action, rowIndex)
     {
         if (!rowIndex) {
             rowIndex = 3;
         }
-        page.click('.tagManagerTriggerList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
+        await page.click('.tagManagerTriggerList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
     }
 
-    function createOrUpdateTrigger(page)
+    async function createOrUpdateTrigger()
     {
-        page.click('.editTrigger .createButton');
+        await page.click('.editTrigger .createButton');
+        await page.waitForNetworkIdle();
     }
 
-    function cancelTrigger(page)
+    async function cancelTrigger()
     {
-        page.click('.editTrigger .entityCancel a');
+        await page.click('.editTrigger .entityCancel a');
     }
 
-    it('should load triggers page with some triggers', function (done) {
-        capture.page(done, 'trigger_some_exist', function (page) {
-            page.load(container1Base);
-            page.wait(1000);
-        }, done);
+    it('should load triggers page with some triggers', async function () {
+        await page.goto(container1Base);
+        await page.waitFor(1000);
+        await capture.page(page, 'trigger_some_exist');
     });
 
-    it('should be able to create a new trigger and show list of available types', function (done) {
-        capture.page(done, 'create_new', function (page) {
-            page.click('.createNewTrigger');
-        }, done);
+    it('should be able to create a new trigger and show list of available types', async function () {
+        await page.click('.createNewTrigger');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'create_new');
     });
 
-    it('should be able to select a type and then show create trigger screen', function (done) {
-        capture.page(done, 'create_new_type_selected', function (page) {
-            selectTriggerType(page, 'ElementVisibility');
-        }, done);
+    it('should be able to select a type and then show create trigger screen', async function () {
+        await selectTriggerType('ElementVisibility');
+        await capture.page(page, 'create_new_type_selected');
     });
 
-    it('should show an error when not possible to create trigger', function (done) {
-        capture.page(done, 'create_new_error', function (page) {
-            createOrUpdateTrigger(page);
-        }, done);
+    it('should show an error when not possible to create trigger', async function () {
+        await createOrUpdateTrigger();
+        await capture.page(page, 'create_new_error');
     });
 
-    it('should be able to prefill trigger', function (done) {
-        capture.page(done, 'create_new_prefilled', function (page) {
-            page.load(container1Base);
-            page.click('.createNewTrigger');
-            selectTriggerType(page, 'ElementVisibility');
-            setParameterValue(page, 'elementId', 'myElementId');
-        }, done);
+    it('should be able to prefill trigger', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTrigger');
+        await page.waitForNetworkIdle();
+        await selectTriggerType('ElementVisibility');
+        await setParameterValue('elementId', 'myElementId');
+        await capture.page(page, 'create_new_prefilled');
     });
 
-    it('should be able to create a new trigger and show update afterwards', function (done) {
-        capture.page(done, 'create_new_submitted', function (page) {
-            createOrUpdateTrigger(page);
-        }, done);
+    it('should be able to create a new trigger and show update afterwards', async function () {
+        await createOrUpdateTrigger();
+        await capture.page(page, 'create_new_submitted');
     });
 
-    it('should be possible to go back to list of triggers and show created trigger', function (done) {
-        capture.page(done, 'create_new_shown_in_list', function (page) {
-            cancelTrigger(page);
-        }, done);
+    it('should be possible to go back to list of triggers and show created trigger', async function () {
+        await cancelTrigger();
+        await page.mouse.move(-10, -10);
+        await capture.page(page, 'create_new_shown_in_list');
     });
 
-    it('should be possible to edit a trigger by clicking on edit', function (done) {
-        capture.page(done, 'edit_through_list', function (page) {
-            clickFirstRowTableAction(page, 'icon-edit');
-        }, done);
+    it('should be possible to edit a trigger by clicking on edit', async function () {
+        await clickFirstRowTableAction('icon-edit');
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
+        await capture.page(page, 'edit_through_list');
     });
 
-    it('should load an edit trigger through URL', function (done) {
-        capture.page(done, 'edit_url', function (page) {
-            page.load(container1Base + '#?idTrigger=2');
-        }, done);
+    it('should load an edit trigger through URL', async function () {
+        await page.goto('about:blank'); // hashchange won't trigger a new page load
+        await page.goto(container1Base + '#?idTrigger=2');
+        await capture.page(page, 'edit_url');
     });
 
-    it('should enable edit button after changing a field', function (done) {
-        capture.page(done, 'edit_url_updated', function (page) {
-            setTriggerName(page, 'triggerNameNew');
-            createOrUpdateTrigger(page);
-        }, done);
+    it('should enable edit button after changing a field', async function () {
+        await setTriggerName('triggerNameNew');
+        await createOrUpdateTrigger();
+        await capture.page(page, 'edit_url_updated');
     });
 
-    it('should have updated the list of triggers', function (done) {
-        capture.page(done, 'edit_updated_back_to_list', function (page) {
-            cancelTrigger(page);
-        }, done);
+    it('should have updated the list of triggers', async function () {
+        await cancelTrigger();
+        await page.mouse.move(-10, -10);
+        await capture.page(page, 'edit_updated_back_to_list');
     });
 
-    it('should show confirm delete trigger dialog_shows_warning_cannot_be_deleted', function (done) {
-        capture.modal(done, 'confirm_delete_trigger_warning_referenced', function (page) {
-            page.load(container1Base);
-            clickFirstRowTableAction(page, 'icon-delete', 4);
-        }, done);
+    it('should show confirm delete trigger dialog_shows_warning_cannot_be_deleted', async function () {
+        await page.goto(container1Base);
+        await clickFirstRowTableAction('icon-delete', 4);
+        await capture.modal(page, 'confirm_delete_trigger_warning_referenced');
     });
 
-    it('should show confirm delete trigger dialog', function (done) {
-        capture.modal(done, 'confirm_delete_trigger', function (page) {
-            page.load(container1Base);
-            clickFirstRowTableAction(page, 'icon-delete', 3);
-        }, done);
+    it('should show confirm delete trigger dialog', async function () {
+        await page.goto(container1Base);
+        await clickFirstRowTableAction('icon-delete', 3);
+        await capture.modal(page, 'confirm_delete_trigger');
     });
 
-    it('should do nothing when selecting no', function (done) {
-        capture.page(done, 'confirm_delete_trigger_declined', function (page) {
-            modal.clickButton(page, 'No')
-        }, done);
+    it('should do nothing when selecting no', async function () {
+        await modal.clickButton(page, 'No');
+        await capture.page(page, 'confirm_delete_trigger_declined');
     });
 
-    it('should delete trigger when confirmed', function (done) {
-        capture.page(done, 'confirm_delete_trigger_confirmed', function (page) {
-            clickFirstRowTableAction(page, 'icon-delete', 3);
-            modal.clickButton(page, 'Yes')
-        }, done);
+    it('should delete trigger when confirmed', async function () {
+        await clickFirstRowTableAction('icon-delete', 3);
+        await page.waitFor(250);
+        await modal.clickButton(page, 'Yes');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'confirm_delete_trigger_confirmed');
     });
 
-    it('should load triggers page with no triggers as view user', function (done) {
+    it('should load triggers page with no triggers as view user', async function () {
         permissions.setViewUser();
-        capture.page(done, 'trigger_none_exist_view_user', function (page) {
-            permissions.setViewUser();
-            page.load(container3Base);
-        }, done);
+        await page.goto(container3Base);
+        await capture.page(page, 'trigger_none_exist_view_user');
     });
 
-    it('should load a triggers page with no triggers', function (done) {
-        capture.page(done, 'trigger_none_exist_yet', function (page) {
-            page.load(container3Base);
-        }, done);
+    it('should load a triggers page with no triggers', async function () {
+        await page.goto(container3Base);
+        await capture.page(page, 'trigger_none_exist_yet');
     });
 
-    it('should open create trigger page when clicking on create a trigger now link', function (done) {
-        capture.page(done, 'trigger_none_exist_yet_create_now', function (page) {
-            page.click('.createContainerTriggerNow');
-        }, done);
+    it('should open create trigger page when clicking on create a trigger now link', async function () {
+        await page.click('.createContainerTriggerNow');
+        await page.mouse.move(-10, -10);
+        await page.waitForNetworkIdle();
+        await page.waitFor(200);
+        await capture.page(page, 'trigger_none_exist_yet_create_now');
     });
 
-    it('should be possible to create a trigger with a conditions filter', function (done) {
-        capture.page(done, 'create_advanced_prefilled', function (page) {
-            selectTriggerType(page, 'ElementVisibility');
-            setParameterValue(page, 'elementId', 'myelementid');
-            form.sendFieldValue(page, '.editTrigger .condition0 [id=condition_expected]', 'elementIdFoo');
-            form.sendFieldValue(page, '.editTrigger .condition1 [id=condition_expected]', 'elementIdBar');
-        }, done);
+    it('should be possible to create a trigger with a conditions filter', async function () {
+        await selectTriggerType('ElementVisibility');
+        await setParameterValue('elementId', 'myelementid');
+        await form.sendFieldValue(page, '.editTrigger .condition0 [id=condition_expected]', 'elementIdFoo');
+        await form.sendFieldValue(page, '.editTrigger .condition1 [id=condition_expected]', 'elementIdBar');
+        await capture.page(page, 'create_advanced_prefilled');
     });
 
-    it('should be possible to create a trigger with conditions filter', function (done) {
-        capture.page(done, 'create_advanced_submitted', function (page) {
-            createOrUpdateTrigger(page);
-        }, done);
+    it('should be possible to create a trigger with conditions filter', async function () {
+        await createOrUpdateTrigger();
+        await capture.page(page, 'create_advanced_submitted');
     });
 
-    it('should be possible to create a trigger with conditions filter', function (done) {
-        capture.page(done, 'create_advanced_verified', function (page) {
-            cancelTrigger(page);
-        }, done);
+    it('should be possible to create a trigger with conditions filter', async function () {
+        await cancelTrigger();
+        await capture.page(page, 'create_advanced_verified');
     });
 
-    it('should load triggers page with some triggers as view user', function (done) {
+    it('should load triggers page with some triggers as view user', async function () {
         permissions.setViewUser();
-        capture.page(done, 'trigger_some_exist_view_user', function (page) {
-            permissions.setViewUser();
-            page.load(container1Base);
-            page.wait(1000);
-        }, done);
+        await page.goto(container1Base);
+        await page.waitFor(1000);
+        await capture.page(page, 'trigger_some_exist_view_user');
     });
 
 

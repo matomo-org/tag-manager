@@ -34,260 +34,239 @@ describe("ContainerVersion", function () {
         testEnvironment.save();
     });
 
-    function setVersionName(page, name, prefix)
+    async function setVersionName(name, prefix)
     {
         if (!prefix) {
             prefix = '';
         } else {
             prefix += ' ';
         }
-        form.sendFieldValue(page, prefix + '.editVersion [id=name]', name);
+        await form.sendFieldValue(page, prefix + '.editVersion [id=name]', name);
     }
 
-    function setVersionDescription(page, name, prefix)
+    async function setVersionDescription(name, prefix)
     {
         if (!prefix) {
             prefix = '';
         } else {
             prefix += ' ';
         }
-        form.sendFieldValue(page, prefix + '.editVersion [id=description]', name);
+        await form.sendFieldValue(page, prefix + '.editVersion [id=description]', name);
     }
 
-    function clickFirstRowTableAction(page, action, rowIndex)
+    async function clickFirstRowTableAction(action, rowIndex)
     {
         if (!rowIndex) {
             rowIndex = 3;
         }
-        page.click('.tagManagerVersionList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
+        await page.click('.tagManagerVersionList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
     }
 
-    function createOrUpdateVersion(page)
+    async function createOrUpdateVersion()
     {
-        page.click('.editVersion .createButton');
+        await page.click('.editVersion .createButton');
+        await page.waitForNetworkIdle();
     }
 
-    function publishVersion(page)
+    async function publishVersion()
     {
-        page.click('.editVersion .publishButton');
+        await page.click('.editVersion .publishButton');
+        await page.waitForNetworkIdle();
     }
 
-    function cancelVersion(page)
+    async function cancelVersion()
     {
-        page.click('.editVersion .entityCancel a');
+        await page.click('.editVersion .entityCancel a');
     }
 
-    it('should load versions page with some versions', function (done) {
-        capture.page(done, 'version_some_exist', function (page) {
-            page.load(container1Base);
-        }, done);
+    it('should load versions page with some versions', async function () {
+        await page.goto(container1Base);
+        await capture.page(page, 'version_some_exist');
     });
 
-    it('should be able to create a new version', function (done) {
-        capture.page(done, 'create_new', function (page) {
-            page.click('.createNewVersion');
-        }, done);
+    it('should be able to create a new version', async function () {
+        await page.click('.createNewVersion');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'create_new');
     });
 
-    it('should show an error when not possible to create version', function (done) {
-        capture.page(done, 'create_new_error', function (page) {
-            setVersionDescription(page, 'My Description');
-            createOrUpdateVersion(page);
-        }, done);
+    it('should show an error when not possible to create version', async function () {
+        await setVersionDescription('My Description');
+        await createOrUpdateVersion();
+        await capture.page(page, 'create_new_error');
     });
 
-    it('should be able to prefill version', function (done) {
-        capture.page(done, 'create_new_prefilled', function (page) {
-            setVersionName(page, 'My Version Name');
-            setVersionDescription(page, 'My Description');
-        }, done);
+    it('should be able to prefill version', async function () {
+        await setVersionName('My Version Name');
+        await setVersionDescription('My Description');
+        await capture.page(page, 'create_new_prefilled');
     });
 
-    it('should be able to create a new version and show update afterwards', function (done) {
-        capture.page(done, 'create_new_submitted', function (page) {
-            createOrUpdateVersion(page);
-        }, done);
+    it('should be able to create a new version and show update afterwards', async function () {
+        await createOrUpdateVersion();
+        await capture.page(page, 'create_new_submitted');
     });
 
-    it('should be possible to go back to list of versions and show created version', function (done) {
-        capture.page(done, 'create_new_shown_in_list', function (page) {
-            cancelVersion(page);
-        }, done);
+    it('should be possible to go back to list of versions and show created version', async function () {
+        await cancelVersion();
+        await page.mouse.move(-10, -10);
+        await capture.page(page, 'create_new_shown_in_list');
     });
 
-    it('should be possible to publish new version', function (done) {
-        capture.page(done, 'publish_new_prefilled', function (page) {
-            page.click('.createNewVersion');
-            setVersionName(page, 'v3.0');
-        }, done);
+    it('should be possible to publish new version', async function () {
+        await page.click('.createNewVersion');
+        await setVersionName('v3.0');
+        await capture.page(page, 'publish_new_prefilled');
     });
 
-    it('should be possible to publish new version', function (done) {
-        capture.page(done, 'publish_new_submitted', function (page) {
-            publishVersion(page);
-        }, done);
+    it('should be possible to publish new version', async function () {
+        await publishVersion();
+        await capture.page(page, 'publish_new_submitted');
     });
 
-    it('should be possible to verify it was released', function (done) {
-        capture.page(done, 'publish_new_shown_in_list', function (page) {
-            cancelVersion(page);
-        }, done);
+    it('should be possible to verify it was released', async function () {
+        await cancelVersion();
+        await page.mouse.move(-10, -10);
+        await capture.page(page, 'publish_new_shown_in_list');
     });
 
-    it('should be possible to edit a version by clicking on edit', function (done) {
-        capture.page(done, 'edit_through_list', function (page) {
-            clickFirstRowTableAction(page, 'icon-edit');
-        }, done);
+    it('should be possible to edit a version by clicking on edit', async function () {
+        await clickFirstRowTableAction('icon-edit');
+        await capture.page(page, 'edit_through_list');
     });
 
-    it('should load an edit version through URL', function (done) {
-        capture.page(done, 'edit_url', function (page) {
-            page.load(container1Base + '#?idContainerVersion=11');
-        }, done);
+    it('should load an edit version through URL', async function () {
+        await page.goto(container1Base + '#?idContainerVersion=11');
+        await capture.page(page, 'edit_url');
     });
 
-    it('should enable edit button after changing a field', function (done) {
-        capture.page(done, 'edit_url_updated', function (page) {
-            setVersionName(page, 'v5.1');
-            createOrUpdateVersion(page);
-        }, done);
+    it('should enable edit button after changing a field', async function () {
+        await setVersionName('v5.1');
+        await createOrUpdateVersion();
+        await capture.page(page, 'edit_url_updated');
     });
 
-    it('should have updated the list of versions', function (done) {
-        capture.page(done, 'updated_back_to_list', function (page) {
-            cancelVersion(page);
-        }, done);
+    it('should have updated the list of versions', async function () {
+        await cancelVersion();
+        await page.mouse.move(-10, -10);
+        await capture.page(page, 'updated_back_to_list');
     });
 
-    it('should show confirm delete version dialog', function (done) {
-        capture.modal(done, 'confirm_delete_version', function (page) {
-            page.load(container1Base);
-            clickFirstRowTableAction(page, 'icon-delete', 4);
-        }, done);
+    it('should show confirm delete version dialog', async function () {
+        await page.goto(container1Base);
+        await clickFirstRowTableAction('icon-delete', 4);
+        await capture.modal(page, 'confirm_delete_version');
     });
 
-    it('should do nothing when selecting no', function (done) {
-        capture.page(done, 'confirm_delete_version_declined', function (page) {
-            modal.clickButton(page, 'No')
-        }, done);
+    it('should do nothing when selecting no', async function () {
+        await modal.clickButton(page, 'No');
+        await capture.page(page, 'confirm_delete_version_declined');
     });
 
-    it('should delete version when confirmed', function (done) {
-        capture.page(done, 'confirm_delete_version_confirmed', function (page) {
-            clickFirstRowTableAction(page, 'icon-delete', 4);
-            modal.clickButton(page, 'Yes')
-        }, done);
+    it('should delete version when confirmed', async function () {
+        await clickFirstRowTableAction('icon-delete', 4);
+        await modal.clickButton(page, 'Yes');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'confirm_delete_version_confirmed');
     });
 
-    it('should load a versions page with no versions', function (done) {
-        capture.page(done, 'version_none_exist_yet', function (page) {
-            page.load(container3Base);
-        }, done);
+    it('should load a versions page with no versions', async function () {
+        await page.goto(container3Base);
+        await capture.page(page, 'version_none_exist_yet');
     });
 
-    it('should open create version page when clicking on create a version now link', function (done) {
-        capture.page(done, 'version_none_exist_yet_create_now', function (page) {
-            page.click('.createContainerVersionNow');
-        }, done);
+    it('should open create version page when clicking on create a version now link', async function () {
+        await page.click('.createContainerVersionNow');
+        pageWrap = await page.$('#content');
+        expect(await pageWrap.screenshot()).to.matchImage('version_none_exist_yet_create_now');
     });
 
-    it('should be able to create new version through menu', function (done) {
-        capture.modal(done, 'create_through_menu_prefilled', function (page) {
-            page.load(container1Base);
-            page.click('#secondNavBar .item:contains(Publish)');
-            page.execCallback(function () {
-                page.webpage.evaluate(function () {
-                    if (window.scrollTo) {
-                        window.scrollTo(0,0);
-                    }
-                });
-            });
-            setVersionName(page, 'Menu Version Name', '.modal.open');
-            setVersionDescription(page, 'My Version Description', '.modal.open');
-        }, done);
+    it('should be able to create new version through menu', async function () {
+        await page.goto(container1Base);
+        await (await page.jQuery('#secondNavBar .item:contains(Publish)')).click();
+        await page.evaluate(function () {
+            if (window.scrollTo) {
+                window.scrollTo(0,0);
+            }
+        });
+        await setVersionName('Menu Version Name', '.modal.open');
+        await setVersionDescription('My Version Description', '.modal.open');
+        await capture.modal(page, 'create_through_menu_prefilled');
     });
 
-    it('should be possible to create a new version and show update afterwards', function (done) {
-        capture.page(done, 'create_through_menu_submitted', function (page) {
-            page.click('.modal.open .editVersion .createButton')
-        }, done);
+    it('should be possible to create a new version and show update afterwards', async function () {
+        await page.click('.modal.open .editVersion .createButton');
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
+        await capture.page(page, 'create_through_menu_submitted');
     });
 
-    it('should be possible to show publish version to different environment', function (done) {
-        capture.modal(done, 'publish_environment', function (page) {
-            clickFirstRowTableAction(page, 'icon-rocket');
-        }, done);
+    it('should be possible to show publish version to different environment', async function () {
+        await clickFirstRowTableAction('icon-rocket');
+        await capture.modal(page, 'publish_environment');
     });
 
-    it('should be possible to confirm publish version to different environment', function (done) {
-        capture.page(done, 'publish_environment_confirmed', function (page) {
-            modal.clickButton(page, 'Publish')
-        }, done);
+    it('should be possible to confirm publish version to different environment', async function () {
+        await modal.clickButton(page, 'Publish');
+        await capture.page(page, 'publish_environment_confirmed');
     });
 
-    it('should be possible to debug a specific version', function (done) {
-        capture.page(done, 'debug_version_enable', function (page) {
-            clickFirstRowTableAction(page, 'icon-bug', 5);
-        }, done);
+    it('should be possible to debug a specific version', async function () {
+        await clickFirstRowTableAction('icon-bug', 5);
+        await capture.page(page, 'debug_version_enable');
     });
 
-    it('should load versions page with some versions as view user', function (done) {
+    it('should load versions page with some versions as view user', async function () {
         permissions.setViewUser();
-        capture.page(done, 'version_some_exist_view_user', function (page) {
-            permissions.setViewUser();
-            page.load(container1Base);
-        }, done);
+        await page.goto(container1Base);
+        await capture.page(page, 'version_some_exist_view_user');
     });
 
-    it('should load versions page with no versions as view user', function (done) {
+    it('should load versions page with no versions as view user', async function () {
         permissions.setViewUser();
-        capture.page(done, 'version_none_exist_view_user', function (page) {
-            permissions.setViewUser();
-            page.load(container3Base);
-        }, done);
+        await page.goto(container3Base);
+        await capture.page(page, 'version_none_exist_view_user');
     });
 
-    it('should be able to show import version screen', function (done) {
-        capture.modal(done, 'import_version_open', function (page) {
-            page.load(container1Base);
-            page.click('.importVersion');
-        }, done);
+    it('should be able to show import version screen', async function () {
+        await page.goto(container1Base);
+        await page.click('.importVersion');
+        await capture.modal(page, 'import_version_open');
     });
 
-    it('should be able to show an error when not json formatted', function (done) {
-        capture.modal(done, 'import_version_shows_error_not_json', function (page) {
-            form.sendFieldValue(page, '.modal.open [id=importContent]', 'import test');
-            page.click('.modal.open .importVersion');
-        }, done);
+    it('should be able to show an error when not json formatted', async function () {
+        await form.sendFieldValue(page, '.modal.open [id=importContent]', 'import test');
+        await page.click('.modal.open .importVersion');
+        await capture.modal(page, 'import_version_shows_error_not_json');
     });
 
-    it('should ask for confirmation before importing a version', function (done) {
-        capture.modal(done, 'import_version_asks_confirmation', function (page) {
-            form.sendFieldValue(page, '.modal.open [id=backupName]', 'vb0392');
-            form.sendFieldValue(page, '.modal.open [id=importContent]', '{"tags": [], "triggers": [], "variables": [], "idcontainer": [], "context": "web"}');
-            page.click('.modal.open .importVersion');
-        }, done);
+    it('should ask for confirmation before importing a version', async function () {
+        await form.sendFieldValue(page, '.modal.open [id=backupName]', 'vb0392');
+        await form.sendFieldValue(page, '.modal.open [id=importContent]', '{"tags": [], "triggers": [], "variables": [], "idcontainer": [], "context": "web"}');
+        await page.click('.modal.open .importVersion');
+        await capture.modal(page, 'import_version_asks_confirmation');
     });
 
-    it('should be possible to confirm and import the version', function (done) {
-        capture.page(done, 'import_version_confirmed', function (page) {
-            modal.clickButton(page, 'Yes')
-        }, done);
+    it('should be possible to confirm and import the version', async function () {
+        await modal.clickButton(page, 'Yes');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'import_version_confirmed');
     });
 
-    it('should show notice not possible to publish to live container and preselect alternative environment', function (done) {
+    it('should show notice not possible to publish to live container and preselect alternative environment', async function () {
         permissions.setWriteUser();
-        capture.page(done, 'no_publish_live_container_capability', function (page) {
-            page.load(container1Base);
-            page.click('.createNewVersion');
-        }, done);
+        await page.goto(container1Base);
+        await page.click('.createNewVersion');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'no_publish_live_container_capability');
     });
 
-    it('should show notice not possible to publish to live container and preselect alternative environment in selector', function (done) {
+    it('should show notice not possible to publish to live container and preselect alternative environment in selector', async function () {
         permissions.setWriteUser();
-        capture.page(done, 'no_publish_live_container_capability_selector', function (page) {
-            page.load(container1Base);
-            clickFirstRowTableAction(page, 'icon-rocket');
-        }, done);
+        await page.goto(container1Base);
+        await clickFirstRowTableAction('icon-rocket');
+        await capture.modal(page, 'no_publish_live_container_capability_selector');
     });
 });

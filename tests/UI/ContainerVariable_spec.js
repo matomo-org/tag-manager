@@ -34,207 +34,193 @@ describe("ContainerVariable", function () {
         testEnvironment.save();
     });
 
-    function selectVariableType(page, variableType)
+    async function selectVariableType(variableType)
     {
-        page.click('.editVariable .collection-item.templateType' + variableType);
+        await page.click('.editVariable .collection-item.templateType' + variableType);
     }
 
-    function setVariableName(page, name, prefix)
+    async function setVariableName(name, prefix)
     {
         if (!prefix) {
             prefix = '';
         } else {
             prefix += ' ';
         }
-        form.sendFieldValue(page, prefix + '.editVariable [id=name]', name);
+        await form.sendFieldValue(page, prefix + '.editVariable [id=name]', name);
     }
 
-    function setParameterValue(page, variableName, value)
+    async function setParameterValue(variableName, value)
     {
-        form.sendFieldValue(page, '.editVariable [id=' + variableName + ']', value);
+        await form.sendFieldValue(page, '.editVariable [id=' + variableName + ']', value);
     }
 
-    function clickFirstRowTableAction(page, action, rowIndex)
+    async function clickFirstRowTableAction(action, rowIndex)
     {
         if (!rowIndex) {
             rowIndex = 3;
         }
-        page.click('.tagManagerVariableList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
+        await page.click('.tagManagerVariableList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
     }
 
-    function createOrUpdateVariable(page)
+    async function createOrUpdateVariable()
     {
-        page.click('.editVariable .createButton');
+        await page.click('.editVariable .createButton');
+        await page.waitForNetworkIdle();
     }
 
-    function cancelVariable(page)
+    async function cancelVariable()
     {
-        page.click('.editVariable .entityCancel a');
+        await page.click('.editVariable .entityCancel a');
     }
 
-    function captureCustomVariablesList(done, screenshotName, theTest)
+    async function captureCustomVariablesList(screenshotName)
     {
-        capture.selector(done, screenshotName, '.tagManagerCustomVariablesList', theTest)
+        await capture.selector(page, screenshotName, '.tagManagerCustomVariablesList')
     }
 
-    it('should load variables page with some variables', function (done) {
-        capture.page(done, 'variable_some_exist', function (page) {
-            page.load(container1Base);
-            page.wait(1000);
-        }, done);
+    it('should load variables page with some variables', async function () {
+        await page.goto(container1Base);
+        await page.waitFor(1000);
+        await capture.page(page, 'variable_some_exist');
     });
 
-    it('should be able to create a new variable and show list of available types', function (done) {
-        capture.page(done, 'create_new', function (page) {
-            page.click('.createNewVariable');
-        }, done);
+    it('should be able to create a new variable and show list of available types', async function () {
+        await page.click('.createNewVariable');
+        await page.waitForNetworkIdle();
+        await page.mouse.move(-10, -10);
+        await page.waitFor(250);
+        await capture.page(page, 'create_new');
     });
 
-    it('should be able to select a type and then show create variable screen', function (done) {
-        capture.page(done, 'create_new_type_selected', function (page) {
-            selectVariableType(page, 'DataLayer');
-        }, done);
+    it('should be able to select a type and then show create variable screen', async function () {
+        await selectVariableType('DataLayer');
+        await capture.page(page, 'create_new_type_selected');
     });
 
-    it('should show an error when not possible to create variable', function (done) {
-        capture.page(done, 'create_new_error', function (page) {
-            createOrUpdateVariable(page);
-        }, done);
+    it('should show an error when not possible to create variable', async function () {
+        await createOrUpdateVariable();
+        await capture.page(page, 'create_new_error');
     });
 
-    it('should fade out variables that cannot be created', function (done) {
-        permissions.setWriteUser()
-        capture.page(done, 'create_new_custom_templates_restricted', function (page) {
-            page.load(container1Base);
-            page.click('.createNewVariable');
-        }, done);
-    });
-    return;
-    it('should be able to prefill variable', function (done) {
-        capture.page(done, 'create_new_prefilled', function (page) {
-            page.load(container1Base);
-            page.click('.createNewVariable');
-            selectVariableType(page, 'DataLayer');
-            setParameterValue(page, 'dataLayerName', 'My DataLayerVariable Name');
-        }, done);
+    it('should fade out variables that cannot be created', async function () {
+        permissions.setWriteUser();
+        await page.goto(container1Base);
+        await page.click('.createNewVariable');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'create_new_custom_templates_restricted');
     });
 
-    it('should be able to create a new variable and show update afterwards', function (done) {
-        capture.page(done, 'create_new_submitted', function (page) {
-            createOrUpdateVariable(page);
-        }, done);
+    it('should be able to prefill variable', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewVariable');
+        await page.waitForNetworkIdle();
+        await selectVariableType('DataLayer');
+        await setParameterValue('dataLayerName', 'My DataLayerVariable Name');
+        await capture.page(page, 'create_new_prefilled');
     });
 
-    it('should be possible to go back to list of variables and show created variable', function (done) {
-        captureCustomVariablesList(done, 'create_new_shown_in_list', function (page) {
-            cancelVariable(page);
-        }, done);
+    it('should be able to create a new variable and show update afterwards', async function () {
+        await createOrUpdateVariable();
+        await capture.page(page, 'create_new_submitted');
     });
 
-    it('should be possible to edit a variable by clicking on edit', function (done) {
-        capture.page(done, 'edit_through_list', function (page) {
-            clickFirstRowTableAction(page, 'icon-edit');
-        }, done);
+    it('should be possible to go back to list of variables and show created variable', async function () {
+        await cancelVariable();
+        await page.mouse.move(-10, -10);
+        await captureCustomVariablesList('create_new_shown_in_list');
     });
 
-    it('should load an edit variable through URL', function (done) {
-        capture.page(done, 'edit_url', function (page) {
-            page.load(container1Base + '#?idVariable=2');
-        }, done);
+    it('should be possible to edit a variable by clicking on edit', async function () {
+        await clickFirstRowTableAction('icon-edit');
+        await capture.page(page, 'edit_through_list');
     });
 
-    it('should enable edit button after changing a field', function (done) {
-        capture.page(done, 'edit_url_updated', function (page) {
-            setVariableName(page, 'variableNameNew');
-            createOrUpdateVariable(page);
-        }, done);
+    it('should load an edit variable through URL', async function () {
+        await page.goto(container1Base + '#?idVariable=2');
+        await capture.page(page, 'edit_url');
     });
 
-    it('should have updated the list of variables', function (done) {
-        captureCustomVariablesList(done, 'edit_updated_back_to_list', function (page) {
-            cancelVariable(page);
-        }, done);
+    it('should enable edit button after changing a field', async function () {
+        await setVariableName('variableNameNew');
+        await createOrUpdateVariable();
+        await capture.page(page, 'edit_url_updated');
     });
 
-    it('should show confirm delete variable dialog_shows_warning_cannot_be_deleted', function (done) {
-        capture.modal(done, 'confirm_delete_variable_warning_referenced', function (page) {
-            page.load(container1Base);
-            clickFirstRowTableAction(page, 'icon-delete', 5);
-        }, done);
+    it('should have updated the list of variables', async function () {
+        await cancelVariable();
+        await captureCustomVariablesList('edit_updated_back_to_list');
     });
 
-    it('should show confirm delete variable dialog', function (done) {
-        capture.modal(done, 'confirm_delete_variable', function (page) {
-            page.load(container1Base);
-            clickFirstRowTableAction(page, 'icon-delete', 3);
-        }, done);
+    it('should show confirm delete variable dialog_shows_warning_cannot_be_deleted', async function () {
+        await page.goto(container1Base);
+        await clickFirstRowTableAction('icon-delete', 5);
+        await capture.modal(page, 'confirm_delete_variable_warning_referenced');
     });
 
-    it('should do nothing when selecting no', function (done) {
-        captureCustomVariablesList(done, 'confirm_delete_variable_declined', function (page) {
-            modal.clickButton(page, 'No')
-        }, done);
+    it('should show confirm delete variable dialog', async function () {
+        await page.goto(container1Base);
+        await clickFirstRowTableAction('icon-delete', 3);
+        await capture.modal(page, 'confirm_delete_variable');
     });
 
-    it('should delete variable when confirmed', function (done) {
-        captureCustomVariablesList(done, 'confirm_delete_variable_confirmed', function (page) {
-            clickFirstRowTableAction(page, 'icon-delete', 4);
-            modal.clickButton(page, 'Yes')
-        }, done);
+    it('should do nothing when selecting no', async function () {
+        await modal.clickButton(page, 'No');
+        await captureCustomVariablesList('confirm_delete_variable_declined');
     });
 
-    it('should load variables page with no variables as view user', function (done) {
+    it('should delete variable when confirmed', async function () {
+        await clickFirstRowTableAction('icon-delete', 4);
+        await modal.clickButton(page, 'Yes');
+        await page.waitForNetworkIdle();
+        await captureCustomVariablesList('confirm_delete_variable_confirmed');
+    });
+
+    it('should load variables page with no variables as view user', async function () {
         permissions.setViewUser();
-        capture.page(done, 'variable_none_exist_view_user', function (page) {
-            permissions.setViewUser();
-            page.load(container3Base);
-        }, done);
+        await page.goto(container3Base);
+        await capture.page(page, 'variable_none_exist_view_user');
     });
 
-    it('should load a variables page with no variables', function (done) {
-        capture.page(done, 'variable_none_exist_yet', function (page) {
-            page.load(container3Base);
-        }, done);
+    it('should load a variables page with no variables', async function () {
+        await page.goto(container3Base);
+        await capture.page(page, 'variable_none_exist_yet');
     });
 
-    it('should open create variable page when clicking on create a variable now link', function (done) {
-        capture.page(done, 'variable_none_exist_yet_create_now', function (page) {
-            page.click('.createContainerVariableNow');
-        }, done);
+    it('should open create variable page when clicking on create a variable now link', async function () {
+        await page.click('.createContainerVariableNow');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'variable_none_exist_yet_create_now');
     });
 
-    it('should be possible to create a variable with advanced settings', function (done) {
-        capture.page(done, 'create_advanced_prefilled', function (page) {
-            selectVariableType(page, 'DomElement');
-            setParameterValue(page, 'elementId', 'myelementid');
-            page.click('.showAdvancedSettings');
-            setParameterValue(page, 'default_value', 'hello world');
-            form.sendFieldValue(page, '.editVariable .lookupTable0 [id=lookup_table_matchvalue]', 'the match');
-            form.sendFieldValue(page, '.editVariable .lookupTable0 [id=lookup_table_outvalue]', 'the out');
-            form.sendFieldValue(page, '.editVariable .lookupTable1 [id=lookup_table_matchvalue]', 'the match 2');
-            form.sendFieldValue(page, '.editVariable .lookupTable1 [id=lookup_table_outvalue]', 'the out 2');
-        }, done);
+    it('should be possible to create a variable with advanced settings', async function () {
+        await selectVariableType('DomElement');
+        await setParameterValue('elementId', 'myelementid');
+        await page.click('.showAdvancedSettings');
+        await setParameterValue('default_value', 'hello world');
+        await form.sendFieldValue(page, '.editVariable .lookupTable0 [id=lookup_table_matchvalue]', 'the match');
+        await form.sendFieldValue(page, '.editVariable .lookupTable0 [id=lookup_table_outvalue]', 'the out');
+        await form.sendFieldValue(page, '.editVariable .lookupTable1 [id=lookup_table_matchvalue]', 'the match 2');
+        await form.sendFieldValue(page, '.editVariable .lookupTable1 [id=lookup_table_outvalue]', 'the out 2');
+        await capture.page(page, 'create_advanced_prefilled');
     });
 
-    it('should be possible to create a variable with advanced settings', function (done) {
-        capture.page(done, 'create_advanced_submitted', function (page) {
-            createOrUpdateVariable(page);
-        }, done);
+    it('should be possible to create a variable with advanced settings', async function () {
+        await createOrUpdateVariable();
+        await capture.page(page, 'create_advanced_submitted');
     });
 
-    it('should be possible to create a variable with advanced settings', function (done) {
-        captureCustomVariablesList(done, 'create_advanced_verified', function (page) {
-            cancelVariable(page);
-        }, done);
+    it('should be possible to create a variable with advanced settings', async function () {
+        await cancelVariable();
+        await captureCustomVariablesList('create_advanced_verified');
     });
 
-    it('should load variables page with some variables as view user', function (done) {
+    it('should load variables page with some variables as view user', async function () {
         permissions.setViewUser();
-        capture.page(done, 'variable_some_exist_view_user', function (page) {
-            permissions.setViewUser();
-            page.load(container1Base);
-            page.wait(1000);
-        }, done);
+        await page.goto(container1Base);
+        await page.waitFor(1000);
+        await capture.page(page, 'variable_some_exist_view_user');
     });
 
 

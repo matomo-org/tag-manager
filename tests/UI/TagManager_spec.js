@@ -34,93 +34,94 @@ describe("TagManager", function () {
         testEnvironment.save();
     });
 
-    function createOrUpdateContainer(page)
+    async function createOrUpdateContainer(page)
     {
-        page.click('.editContainer .createButton');
+        await page.click('.editContainer .createButton');
     }
 
-    function cancelContainer(page)
+    async function cancelContainer(page)
     {
-        page.click('.editContainer .entityCancel a');
+        await page.click('.editContainer .entityCancel a');
     }
 
     var selectorContainerOpen = '.top_controls .tagContainerSelector .dropdown';
 
-    it('should load a getting started page', function (done) {
-        capture.page(done, 'getting_started', function (page) {
-            page.load(generalParamsSite1 + urlBase + 'gettingStarted');
-        }, done);
+    it('should load a getting started page', async function () {
+        await page.goto(generalParamsSite1 + urlBase + 'gettingStarted');
+        await capture.page(page, 'getting_started');
     });
 
-    it('should show top bar list when no container exists', function (done) {
-        capture.topControls(done, 'top_controls_no_container_exists', function (page) {
-            page.load(generalParamsSite5 + urlBase + 'gettingStarted');
-        }, done);
+    it('should show top bar list when no container exists', async function () {
+        await page.goto(generalParamsSite5 + urlBase + 'gettingStarted');
+        await capture.topControls(page, 'top_controls_no_container_exists');
     });
 
-    it('should open container selector and show no containers exist', function (done) {
-        capture.selector(done, 'top_controls_no_container_exists_open', selectorContainerOpen, function (page) {
-            page.click('.tagContainerSelector');
-        }, done);
+    it('should open container selector and show no containers exist', async function () {
+        await page.click('.tagContainerSelector');
+        await page.waitFor(250);
+        await capture.selector(page, 'top_controls_no_container_exists_open', selectorContainerOpen);
     });
 
-    it('should show top bar list when container has no content', function (done) {
-        capture.topControls(done, 'top_controls_container_empty', function (page) {
-            page.load(containerEmpty);
-        }, done);
+    it('should show top bar list when container has no content', async function () {
+        await page.goto(containerEmpty);
+        await capture.topControls(page, 'top_controls_container_empty');
     });
 
-    it('should open container selector and show available containers', function (done) {
-        capture.selector(done, 'top_controls_container_empty_open', selectorContainerOpen, function (page) {
-            page.click('.tagContainerSelector');
-        }, done);
+    it('should open container selector and show available containers', async function () {
+        await page.click('.tagContainerSelector');
+        await page.waitFor(250);
+        await capture.selector(page, 'top_controls_container_empty_open', selectorContainerOpen);
     });
 
-    it('should be able to show install code page for container without content', function (done) {
-        capture.modal(done, 'install_code_without_content', function (page) {
-            page.load(containerEmpty);
-            page.click('#secondNavBar .item:contains(Install Code)');
-        }, done);
+    it('should be able to show install code page for container without content', async function () {
+        await page.goto(containerEmpty);
+        await (await page.jQuery('#secondNavBar .item:contains(Install Code)')).click();
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
+        await capture.modal(page, 'install_code_without_content');
     });
 
-    it('should be able to enable preview', function (done) {
-        capture.page(done, 'preview_enable', function (page) {
-            modal.close(page);
-            page.click('#secondNavBar .item:contains(Preview)');
-        }, done);
+    it('should be able to enable preview', async function () {
+        await modal.close(page);
+        await page.evaluate(function() {
+            $('#secondNavBar .item:contains(Preview)').click();
+        });
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'preview_enable');
     });
 
-    it('should be able to disable preview', function (done) {
-        capture.page(done, 'preview_disable', function (page) {
-            page.click('#notificationContainer .disablePreviewDebug');
-            page.wait(1000);
-        }, done);
+    it('should be able to disable preview', async function () {
+        await page.click('#notificationContainer .disablePreviewDebug');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'preview_disable');
     });
 
-    it('should show top bar list when container has no content', function (done) {
-        capture.topControls(done, 'top_controls_container_with_entries', function (page) {
-            page.load(containerWithEntries);
-        }, done);
+    it('should show top bar list when container has no content', async function () {
+        await page.goto(containerWithEntries);
+        await capture.topControls(page, 'top_controls_container_with_entries');
     });
 
-    it('should show no containers exist in top bar', function (done) {
-        capture.selector(done, 'top_controls_container_with_entries_open', selectorContainerOpen, function (page) {
-            page.click('.tagContainerSelector');
-        }, done);
+    it('should show no containers exist in top bar', async function () {
+        await page.click('.tagContainerSelector');
+        await page.waitFor(250);
+        await capture.selector(page, 'top_controls_container_with_entries_open', selectorContainerOpen);
     });
 
-    it('should be able to show install code page for container with content', function (done) {
-        capture.modal(done, 'install_code_with_content', function (page) {
-            page.load(containerWithEntries);
-            page.click('#secondNavBar .item:contains(Install Code)');
-        }, done);
+    it('should be able to show install code page for container with content', async function () {
+        await page.goto(containerWithEntries);
+        await (await page.jQuery('#secondNavBar .item:contains(Install Code)')).click();
+        await page.waitFor(250);
+        await capture.modal(page, 'install_code_with_content');
     });
 
-    it('should be able to show publish page for container with content', function (done) {
-        capture.modal(done, 'publish_with_content', function (page) {
-            modal.close(page);
-            page.click('#secondNavBar .item:contains(Publish)');
-        }, done);
+    it('should be able to show publish page for container with content', async function () {
+        await modal.close(page);
+        await page.evaluate(function(){
+            $('#secondNavBar .item:contains(Publish)').click();
+        });
+        await page.waitForNetworkIdle();
+        await page.waitFor(500);
+        await capture.modal(page, 'publish_with_content');
     });
 
 

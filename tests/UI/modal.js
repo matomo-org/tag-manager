@@ -6,16 +6,15 @@
  */
 
 
-exports.clickButton = function(page, button)
+exports.clickButton = async function(page, button)
 {
-    page.click('.modal.open .modal-footer a:contains(' + button + ')');
+    await (await page.jQuery('.modal.open .modal-footer a:contains(' + button + ')')).click();
+    await page.waitFor(250); // wait for modal to close
 }
 
-exports.close = function(page)
+exports.close = async function(page)
 {
-    page.execCallback(function () {
-        page.webpage.evaluate(function () {
-            $('.modal.open').closeModal();
-        });
+    await page.evaluate(function () {
+        $('.modal.open').closeModal();
     });
 }

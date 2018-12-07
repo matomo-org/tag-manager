@@ -6,32 +6,36 @@
  */
 
 
-exports.selector = function (done, screenshotName, selector, theTest)
+exports.selector = async function (page, screenshotName, selector)
 {
-    expect.screenshot(screenshotName).to.be.captureSelector(selector, theTest, done);
-}
+    expect(await page.screenshotSelector(selector)).to.matchImage(screenshotName);
+};
 
-exports.topControls = function (done, screenshotName, theTest)
+exports.topControls = async function (page, screenshotName)
 {
-    exports.selector(done, screenshotName, '.top_controls', theTest);
-}
+    await exports.selector(page, screenshotName, '.top_controls');
+};
 
-exports.pageWithMenu = function (done, screenshotName, theTest)
+exports.pageWithMenu = async function (page, screenshotName)
 {
-    exports.selector(done, screenshotName, '#content,#notificationContainer', theTest);
-}
+    await exports.selector(page, screenshotName, '#content,#notificationContainer');
+};
 
-exports.page = function (done, screenshotName, theTest)
+exports.page = async function (page, screenshotName)
 {
-    exports.selector(done, screenshotName, '.page,#notificationContainer', theTest);
-}
+    await exports.selector(page, screenshotName, '.page,#notificationContainer');
+};
 
-exports.notification = function (done, screenshotName, theTest)
+exports.notification = async function (page, screenshotName)
 {
-    exports.selector(done, screenshotName, '#notificationContainer', theTest);
-}
+    await exports.selector(page, screenshotName, '#notificationContainer');
+};
 
-exports.modal = function (done, screenshotName, theTest)
+exports.modal = async function (page, screenshotName)
 {
-    exports.selector(done, screenshotName, '.modal.open', theTest);
-}
+    await page.waitForNetworkIdle();
+    await page.waitFor(500); // ensure animation is finished
+
+    pageWrap = await page.$('.modal.open');
+    expect(await pageWrap.screenshot()).to.matchImage(screenshotName);
+};

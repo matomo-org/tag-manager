@@ -34,261 +34,257 @@ describe("ContainerTag", function () {
         testEnvironment.save();
     });
 
-    function selectTagType(page, tagType)
+    async function selectTagType(tagType)
     {
-        page.click('.editTag .collection-item.templateType' + tagType);
+        await page.click('.editTag .collection-item.templateType' + tagType);
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
     }
 
-    function setTagName(page, name, prefix)
+    async function setTagName(name, prefix)
     {
         if (!prefix) {
             prefix = '';
         } else {
             prefix += ' ';
         }
-        form.sendFieldValue(page, prefix + '.editTag [id=name]', name);
+        await form.sendFieldValue(page, prefix + '.editTag [id=name]', name);
     }
 
-    function setParameterValue(page, tagName, value)
+    async function setParameterValue(tagName, value)
     {
-        form.sendFieldValue(page, '.editTag [id=' + tagName + ']', value);
+        await form.sendFieldValue(page, '.editTag [id=' + tagName + ']', value);
     }
 
-    function selectParameterValue(page, tagName, value)
+    async function selectParameterValue(tagName, value)
     {
-        form.selectValue(page, '.editTag [id=' + tagName + ']', value);
+        await form.selectValue(page, '.editTag [id=' + tagName + ']', value);
     }
 
-    function clickFirstRowTableAction(page, action, rowIndex)
+    async function clickFirstRowTableAction(action, rowIndex)
     {
         if (!rowIndex) {
             rowIndex = 3;
         }
-        page.click('.tagManagerTagList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
-        page.wait(250);
+        await page.click('.tagManagerTagList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
     }
 
-    function createOrUpdateTag(page)
+    async function createOrUpdateTag()
     {
-        page.click('.editTag .createButton');
+        await page.click('.editTag .createButton');
+        await page.waitForNetworkIdle();
+        await page.mouse.move(-10, -10);
+        await page.waitFor(250);
     }
 
-    function cancelTag(page)
+    async function cancelTag()
     {
-        page.click('.editTag .entityCancel a');
+        await page.click('.editTag .entityCancel a');
     }
 
-    it('should load tags page with some tags', function (done) {
-        this.retries(3);
-        capture.page(done, 'tag_some_exist', function (page) {
-            page.load(container1Base);
-            page.wait(1000);
-        }, done);
+    it('should load tags page with some tags', async function () {
+        await page.goto(container1Base);
+        await page.waitFor(1000);
+        await capture.page(page, 'tag_some_exist');
     });
 
-    it('should be able to create a new tag and show list of available types', function (done) {
-        capture.page(done, 'create_new', function (page) {
-            page.click('.createNewTag');
-        }, done);
+    it('should be able to create a new tag and show list of available types', async function () {
+        await page.click('.createNewTag');
+        await page.waitForNetworkIdle();
+        await page.waitFor(500);
+        await capture.page(page, 'create_new');
     });
 
-    it('should be able to select a type and then show create tag screen', function (done) {
-        capture.page(done, 'create_new_type_selected', function (page) {
-            selectTagType(page, 'CustomHtml');
-        }, done);
+    it('should be able to select a type and then show create tag screen', async function () {
+        await selectTagType('CustomHtml');
+        await capture.page(page, 'create_new_type_selected'
+        );
     });
 
-    it('should show an error when not possible to create tag', function (done) {
-        capture.page(done, 'create_new_error', function (page) {
-            form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
-            createOrUpdateTag(page);
-        }, done);
+    it('should show an error when not possible to create tag', async function () {
+        await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
+        await createOrUpdateTag();
+        await capture.page(page, 'create_new_error');
     });
 
-    it('should fade out tags that cannot be created', function (done) {
-        permissions.setWriteUser()
-        capture.page(done, 'create_new_custom_templates_restricted', function (page) {
-            page.load(container1Base);
-            page.click('.createNewTag');
-        }, done);
+    it('should fade out tags that cannot be created', async function () {
+        permissions.setWriteUser();
+        await page.goto(container1Base);
+        await page.click('.createNewTag');
+        await page.waitForNetworkIdle();
+        await page.mouse.move(-10, -10);
+        await page.waitFor(250);
+        await capture.page(page, 'create_new_custom_templates_restricted');
     });
 
-    it('should be able to prefill tag', function (done) {
-        capture.page(done, 'create_new_prefilled', function (page) {
-            page.load(container1Base);
-            page.click('.createNewTag');
-            selectTagType(page, 'CustomHtml');
-            form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
-            setParameterValue(page, 'customHtml', '<script></script>');
-        }, done);
+    it('should be able to prefill tag', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTag');
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
+        await selectTagType('CustomHtml');
+        await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
+        await setParameterValue('customHtml', '<script></script>');
+        await capture.page(page, 'create_new_prefilled');
     });
 
-    it('should be able to create a new tag and show update afterwards', function (done) {
-        capture.page(done, 'create_new_submitted', function (page) {
-            createOrUpdateTag(page);
-        }, done);
+    it('should be able to create a new tag and show update afterwards', async function () {
+        await createOrUpdateTag();
+        await capture.page(page, 'create_new_submitted');
     });
 
-    it('should be possible to go back to list of tags and show created tag', function (done) {
-        capture.page(done, 'create_new_shown_in_list', function (page) {
-            cancelTag(page);
-        }, done);
+    it('should be possible to go back to list of tags and show created tag', async function () {
+        await cancelTag();
+        await page.mouse.move(-10, -10);
+        await capture.page(page, 'create_new_shown_in_list');
     });
 
-    it('should be possible to edit a tag by clicking on edit', function (done) {
-        capture.page(done, 'edit_through_list', function (page) {
-            clickFirstRowTableAction(page, 'icon-edit');
-        }, done);
+    it('should be possible to edit a tag by clicking on edit', async function () {
+        await clickFirstRowTableAction('icon-edit');
+        await capture.page(page, 'edit_through_list');
     });
 
-    it('should be possible to edit a trigger directly', function (done) {
-        capture.page(done, 'edit_trigger_directly_popup', function (page) {
-            page.click('.fireTrigger .icon-edit');
-        }, done);
+    it('should be possible to edit a trigger directly', async function () {
+        await page.click('.fireTrigger .icon-edit');
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
+        await capture.modal(page, 'edit_trigger_directly_popup');
     });
 
-    it('should be possible to edit a trigger directly', function (done) {
-        capture.page(done, 'edit_trigger_directly_updated', function (page) {
-            form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
-            page.click('.modal.open .createButton');
-        }, done);
+    it('should be possible to edit a trigger directly', async function () {
+        await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
+        await page.waitFor(100);
+        await page.click('.modal.open .createButton');
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
+        await capture.page(page, 'edit_trigger_directly_updated');
     });
 
-    it('should load an edit tag through URL', function (done) {
-        capture.page(done, 'edit_url', function (page) {
-            page.load(container1Base + '#?idTag=2');
-        }, done);
+    it('should load an edit tag through URL', async function () {
+        await page.goto(container1Base + '#?idTag=2');
+        await capture.page(page, 'edit_url');
     });
 
-    it('should enable edit button after changing a field', function (done) {
-        capture.page(done, 'edit_url_updated', function (page) {
-            setTagName(page, 'tagNameNew');
-            createOrUpdateTag(page);
-        }, done);
+    it('should enable edit button after changing a field', async function () {
+        await setTagName('tagNameNew');
+        await createOrUpdateTag();
+        await capture.page(page, 'edit_url_updated');
     });
 
-    it('should have updated the list of tags', function (done) {
-        capture.page(done, 'edit_updated_back_to_list', function (page) {
-            cancelTag(page);
-        }, done);
+    it('should have updated the list of tags', async function () {
+        await cancelTag();
+        await page.mouse.move(-10, -10);
+        await capture.page(page, 'edit_updated_back_to_list');
     });
 
-    it('should show confirm delete tag dialog', function (done) {
-        capture.modal(done, 'confirm_delete_tag', function (page) {
-            page.load(container1Base);
-            clickFirstRowTableAction(page, 'icon-delete', 3);
-        }, done);
+    it('should show confirm delete tag dialog', async function () {
+        await page.goto(container1Base);
+        await clickFirstRowTableAction('icon-delete', 3);
+        await capture.modal(page, 'confirm_delete_tag');
     });
 
-    it('should do nothing when selecting no', function (done) {
-        capture.page(done, 'confirm_delete_tag_declined', function (page) {
-            modal.clickButton(page, 'No')
-        }, done);
+    it('should do nothing when selecting no', async function () {
+        await modal.clickButton(page, 'No');
+        await capture.page(page, 'confirm_delete_tag_declined');
     });
 
-    it('should delete tag when confirmed', function (done) {
-        capture.page(done, 'confirm_delete_tag_confirmed', function (page) {
-            clickFirstRowTableAction(page, 'icon-delete', 3);
-            modal.clickButton(page, 'Yes')
-        }, done);
+    it('should delete tag when confirmed', async function () {
+        await clickFirstRowTableAction('icon-delete', 3);
+        await modal.clickButton(page, 'Yes');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'confirm_delete_tag_confirmed');
     });
 
-    it('should load tags page with no tags as view user', function (done) {
+    it('should load tags page with no tags as view user', async function () {
         permissions.setViewUser();
-        capture.page(done, 'tag_none_exist_view_user', function (page) {
-            permissions.setViewUser();
-            page.load(container3Base);
-            page.wait(1000);
-        }, done);
+        await page.goto(container3Base);
+        pageWrap = await page.$('#content');
+        expect(await pageWrap.screenshot()).to.matchImage('tag_none_exist_view_user');
     });
 
-    it('should load a tags page with no tags', function (done) {
-        capture.page(done, 'tag_none_exist_yet', function (page) {
-            page.load(container3Base);
-        }, done);
+    it('should load a tags page with no tags', async function () {
+        await page.goto(container3Base);
+        await capture.page(page, 'tag_none_exist_yet');
     });
 
-    it('should open create tag page when clicking on create a tag now link', function (done) {
-        capture.page(done, 'tag_none_exist_yet_create_now', function (page) {
-            page.click('.createContainerTagNow');
-        }, done);
+    it('should open create tag page when clicking on create a tag now link', async function () {
+        await page.click('.createContainerTagNow');
+        await page.waitForNetworkIdle();
+        await page.waitFor(250);
+        await capture.page(page, 'tag_none_exist_yet_create_now');
     });
 
-    it('should be possible to start create a tag and show advanced settings', function (done) {
-        capture.page(done, 'create_advanced_prefilled1', function (page) {
-            selectTagType(page, 'CustomHtml');
-            form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
-            setParameterValue(page, 'customHtml', '<script></script>');
-            page.click('.showAdvancedSettings');
-        }, done);
+    it('should be possible to start create a tag and show advanced settings', async function () {
+        await selectTagType('CustomHtml');
+        await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
+        await setParameterValue('customHtml', '<script></script>');
+        await page.click('.showAdvancedSettings');
+        await capture.page(page, 'create_advanced_prefilled1');
     });
 
-    it('should be possible to complete creating a tag with show advanced settings', function (done) {
-        capture.page(done, 'create_advanced_prefilled2', function (page) {
-            setParameterValue(page, 'fire_delay', '500');
-            setParameterValue(page, 'priority', '402');
-            setParameterValue(page, 'start_date_date', '2017-01-02');
-            setParameterValue(page, 'start_date_time', '03:04:05');
-            setParameterValue(page, 'end_date_date', '2030-05-12');
-            setParameterValue(page, 'end_date_time', '11:42:05');
-            page.click('label[for=fire_limitonce_24hours]');
-        }, done);
+    it('should be possible to complete creating a tag with show advanced settings', async function () {
+        await setParameterValue('fire_delay', '500');
+        await setParameterValue('priority', '402');
+        await setParameterValue('start_date_date', '2017-01-02');
+        await setParameterValue('start_date_time', '03:04:05');
+        await setParameterValue('end_date_date', '2030-05-12');
+        await setParameterValue('end_date_time', '11:42:05');
+        await page.click('label[for=fire_limitonce_24hours]');
+        await capture.page(page, 'create_advanced_prefilled2');
     });
 
-    it('should show missing fire trigger error', function (done) {
-        capture.page(done, 'create_advanced_firetrigger_error', function (page) {
-            createOrUpdateTag(page);
-        }, done);
+    it('should show missing fire trigger error', async function () {
+        await createOrUpdateTag();
+        await capture.page(page, 'create_advanced_firetrigger_error');
     });
 
-    it('should be possible to create a fire trigger directly', function (done) {
-        capture.modal(done, 'create_advanced_firetrigger_popup', function (page) {
-            page.click('.createNewFireTrigger');
-        }, done);
+    it('should be possible to create a fire trigger directly', async function () {
+        await page.click('.createNewFireTrigger');
+        await page.mouse.move(-10, -10);
+        await capture.modal(page, 'create_advanced_firetrigger_popup');
     });
 
-    it('should be possible to prefill fire trigger', function (done) {
-        capture.modal(done, 'create_advanced_firetrigger_typeselected', function (page) {
-            page.click('.modal.open .templateTypeAllElementsClick');
-        }, done);
+    it('should be possible to prefill fire trigger', async function () {
+        await page.click('.modal.open .templateTypeAllElementsClick');
+        await capture.modal(page, 'create_advanced_firetrigger_typeselected');
     });
 
-    it('should be possible to prefill fire trigger', function (done) {
-        capture.page(done, 'create_advanced_firetrigger_created', function (page) {
-            page.click('.modal.open .createButton');
-        }, done);
+    it('should be possible to prefill fire trigger', async function () {
+        await page.click('.modal.open .createButton');
+        await page.waitForNetworkIdle();
+        await page.waitFor(200);
+        await capture.page(page, 'create_advanced_firetrigger_created');
     });
 
-    it('should be possible to create a block trigger directly', function (done) {
-        capture.page(done, 'create_advanced_blocktrigger_created', function (page) {
-            page.click('.createBlockTriggerInHelp');
-            page.click('.modal.open .templateTypeAllElementsClick');
-            page.click('.modal.open .createButton');
-        }, done);
+    it('should be possible to create a block trigger directly', async function () {
+        await page.click('.createBlockTriggerInHelp');
+        await page.waitForNetworkIdle(); // wait for modal
+        await page.waitFor(250); // wait for modal
+        await page.click('.modal.open .templateTypeAllElementsClick');
+        await page.click('.modal.open .createButton');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'create_advanced_blocktrigger_created');
     });
 
-    it('should be possible to create a tag with advanced settings', function (done) {
-        capture.page(done, 'create_advanced_submitted', function (page) {
-            createOrUpdateTag(page);
-            page.click('.showAdvancedSettings');
-        }, done);
+    it('should be possible to create a tag with advanced settings', async function () {
+        await createOrUpdateTag();
+        await page.evaluate(function () {
+            $('.showAdvancedSettings').click();
+        });
+        await capture.page(page, 'create_advanced_submitted');
     });
 
-    it('should be possible to create a tag with conditions filter', function (done) {
-        capture.page(done, 'create_advanced_verified', function (page) {
-            cancelTag(page);
-        }, done);
+    it('should be possible to create a tag with conditions filter', async function () {
+        await cancelTag();
+        await capture.page(page, 'create_advanced_verified');
     });
 
-    it('should load tags page with some tags as view user', function (done) {
-        this.retries(3);
+    it('should load tags page with some tags as view user', async function () {
         permissions.setViewUser();
-        capture.page(done, 'tag_some_exist_view_user', function (page) {
-            permissions.setViewUser();
-            page.load(container1Base);
-            page.wait(1000);
-        }, done);
+        await page.goto(container1Base);
+        pageWrap = await page.$('#content');
+        expect(await pageWrap.screenshot()).to.matchImage('tag_some_exist_view_user');
     });
-
-
 });
