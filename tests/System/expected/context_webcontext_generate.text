@@ -2,7 +2,7 @@ array (
   '/js/container_aaacont1.js' => '        if ((document.cookie.indexOf(\'mtmPreview2_aaacont1%3D1\') !== -1 && window.location.search.indexOf(\'&mtmPreviewMode=0\') === -1 && window.location.search.indexOf(\'?mtmPreviewMode=0\') === -1) || window.location.search.indexOf(\'&mtmPreviewMode=aaacont1\') !== -1 || window.location.search.indexOf(\'?mtmPreviewMode=aaacont1\') !== -1) {
 
     var d=document, g=d.createElement(\'script\'), s=d.getElementsByTagName(\'script\')[0];
-    g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://mamp:8888/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
+    g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://localhost/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
     return;
 }
         var content = \'foobar\';
@@ -47,7 +47,7 @@ window.MatomoTagManager.addContainer({"id":"aaacont1","idsite":2,"versionName":"
   '/js/container_aaacont1_dev_5145ce110dfb83505890f752.js' => '        if ((document.cookie.indexOf(\'mtmPreview2_aaacont1%3D1\') !== -1 && window.location.search.indexOf(\'&mtmPreviewMode=0\') === -1 && window.location.search.indexOf(\'?mtmPreviewMode=0\') === -1) || window.location.search.indexOf(\'&mtmPreviewMode=aaacont1\') !== -1 || window.location.search.indexOf(\'?mtmPreviewMode=aaacont1\') !== -1) {
 
     var d=document, g=d.createElement(\'script\'), s=d.getElementsByTagName(\'script\')[0];
-    g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://mamp:8888/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
+    g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://localhost/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
     return;
 }
         var content = \'foobar\';
@@ -92,7 +92,7 @@ window.MatomoTagManager.addContainer({"id":"aaacont1","idsite":2,"versionName":"
   '/js/container_aaacont1_staging_a7295f29fb160dcfb59d3193.js' => '        if ((document.cookie.indexOf(\'mtmPreview2_aaacont1%3D1\') !== -1 && window.location.search.indexOf(\'&mtmPreviewMode=0\') === -1 && window.location.search.indexOf(\'?mtmPreviewMode=0\') === -1) || window.location.search.indexOf(\'&mtmPreviewMode=aaacont1\') !== -1 || window.location.search.indexOf(\'?mtmPreviewMode=aaacont1\') !== -1) {
 
     var d=document, g=d.createElement(\'script\'), s=d.getElementsByTagName(\'script\')[0];
-    g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://mamp:8888/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
+    g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://localhost/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
     return;
 }
         var content = \'foobar\';
