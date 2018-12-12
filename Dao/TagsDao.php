@@ -222,6 +222,7 @@ class TagsDao extends BaseDao implements TagManagerDao
         $tag['idsite'] = (int) $tag['idsite'];
         $tag['idcontainerversion'] = (int) $tag['idcontainerversion'];
         $tag['fire_delay'] = (int)$tag['fire_delay'];
+        $tag['priority'] = (int)$tag['priority'];
 
         if (!empty($tag['parameters'])) {
             $tag['parameters'] = json_decode($tag['parameters'], true);
