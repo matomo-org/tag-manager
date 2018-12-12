@@ -221,6 +221,7 @@ class TagsDao extends BaseDao implements TagManagerDao
         $tag['idtag'] = (int) $tag['idtag'];
         $tag['idsite'] = (int) $tag['idsite'];
         $tag['idcontainerversion'] = (int) $tag['idcontainerversion'];
+        $tag['fire_delay'] = (int)$tag['fire_delay'];
 
         if (!empty($tag['parameters'])) {
             $tag['parameters'] = json_decode($tag['parameters'], true);
@@ -245,9 +246,6 @@ class TagsDao extends BaseDao implements TagManagerDao
             $tag['block_trigger_ids'] = [];
         } else {
             $tag['block_trigger_ids'] = array_map('intval', $tag['block_trigger_ids']);
-        }
-        if (!empty($tag['fire_delay'])) {
-            $tag['fire_delay'] = (int)$tag['fire_delay'];
         }
 
         return $tag;
