@@ -13,12 +13,12 @@ use Piwik\Validators\NotEmpty;
 class EtrackerTag extends BaseTag
 {
     const PARAM_ETRACKER_CONFIG = 'etrackerConfig';
-	
+
     public function getIcon()
     {
         return 'plugins/TagManager/images/icons/etracker.svg';
     }
-    
+
     public function getParameters()
     {
         $trackingType = $this->makeSetting('trackingType', 'pageview', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
