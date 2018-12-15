@@ -242,6 +242,8 @@
       "FacebookPixelTagDescription": "The Facebook Pixel is a web analytics and advertising service offered by Facebook.",
       "FacebookPixelTagHelp": "This tag lets you track website pageviews in your Facebook Ads account. To obtain the Pixel ID please log in to your Facebook Ads account.",
       "FacebookPixelTagName": "Facebook Pixel",
+      "FathomTagDescription": "Simple, Open Source Webanalytics without tracking or storing personal data of your users.",
+      "FathomTagHelp": "This tag adds the Fathom tracking code to your website.",
       "Filter": "Filter",
       "FireDelay": "Fire delay",
       "FireDelayHelp": "Lets you delay the execution of this tag. This can be useful for example if you want to allow some time for a blocking trigger to stop the tag from being executed. The value is expected in milliseconds where 1000ms are equal to one second.",
