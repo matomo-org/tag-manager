@@ -62,10 +62,18 @@ class TagManager extends \Piwik\Plugin
             'Tracker.PageUrl.getQueryParametersToExclude' => 'getQueryParametersToExclude',
             'API.addGlossaryItems' => 'addGlossaryItems',
             'Template.bodyClass' => 'addBodyClass',
-            'Access.Capability.addCapabilities' => 'addCapabilities'
+            'Access.Capability.addCapabilities' => 'addCapabilities',
+            'TwoFactorAuth.requiresTwoFactorAuthentication' => 'requiresTwoFactorAuthentication'
         );
     }
-    
+
+    public function requiresTwoFactorAuthentication(&$requiresAuth, $module, $action, $parameters)
+    {
+        if ($module == 'TagManager' && $action === 'debug') {
+            $requiresAuth = false;
+        }
+    }
+
     public function addBodyClass(&$out, $type)
     {
         if ($type === 'tagmanager') {
