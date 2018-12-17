@@ -126,6 +126,10 @@
                         tracker.setCookiePath(matomoConfig.cookiePath);
                     }
 
+                    if (matomoConfig.alwaysUseSendBeacon) {
+                        tracker.alwaysUseSendBeacon();
+                    }
+
                     if (matomoConfig.enableLinkTracking) {
                         tracker.enableLinkTracking();
                     }
