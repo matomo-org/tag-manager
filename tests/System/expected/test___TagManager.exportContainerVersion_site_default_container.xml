@@ -85,6 +85,7 @@
 				<setSecureCookie>0</setSecureCookie>
 				<cookieDomain />
 				<cookiePath />
+				<alwaysUseSendBeacon>0</alwaysUseSendBeacon>
 				<userId />
 				<customDimensions>
 				</customDimensions>
