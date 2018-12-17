@@ -124,6 +124,10 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->description = 'When tracking many subdirectories in separate websites, the cookie path prevents the number of cookies to quickly increase and prevent browser from deleting some of the cookies. This ensures optimal data accuracy and improves performance for your users (fewer cookies are sent with each request).';
                 $field->validators[] = new CharacterLength(0, 500);
             }),
+            $this->makeSetting('alwaysUseSendBeacon', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = 'Always use sendBeacon';
+                $field->description = 'Enables send beacon usage instead of a regular ajax request. This means when a user clicks for example on an outlink, the navigation to this page will happen much faster.';
+            }),
             $this->makeSetting('userId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'User ID';
                 $field->description = 'Sets a User ID to this user (such as an email address or a username).';

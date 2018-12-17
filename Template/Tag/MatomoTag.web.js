@@ -126,6 +126,10 @@
                         tracker.setCookiePath(matomoConfig.cookiePath);
                     }
 
+                    if (matomoConfig.alwaysUseSendBeacon) {
+                        tracker.alwaysUseSendBeacon();
+                    }
+
                     if (matomoConfig.enableLinkTracking) {
                         tracker.enableLinkTracking();
                     }
@@ -198,19 +202,23 @@
                     }
                 }
             });
+
+            // we load the matomo tracker only when the tag was fired
+            // and we load it only after adding the callback, this way we make sure at least for the first matomo tag
+            // to initialize the tracker during window.piwikPluginAsyncInit
+
+            var matomoConfig = parameters.get('matomoConfig', {});
+            if (matomoConfig.bundleTracker) {
+                loadMatomo();
+                // we don't return in case for some reason matomo was not loaded there, then we have the fallback
+            }
+
+            if (!matomoConfig.matomoUrl || !matomoConfig.idSite) {
+                return;
+            }
+
+            var matomoUrl = getMatomoUrlFromConfig(matomoConfig);
+            loadTracker(matomoUrl);
         };
-
-        var matomoConfig = parameters.get('matomoConfig', {});
-        if (matomoConfig.bundleTracker) {
-            loadMatomo();
-            // we don't return in case for some reason matomo was not loaded there, then we have the fallback
-        }
-
-        if (!matomoConfig.matomoUrl || !matomoConfig.idSite) {
-            return;
-        }
-
-        var matomoUrl = getMatomoUrlFromConfig(matomoConfig);
-        loadTracker(matomoUrl);
     };
 })();
