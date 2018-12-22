@@ -3,7 +3,7 @@
         this.fire = function () {
             var siteID = parameters.get('siteID');
             var fathomURL = parameters.get('fathomURL');
-            if (siteID && fathomURL) {
+            if (siteID && fathomURL && typeof window.fathom === "undefined") {
                 (function () {
                     window.fathom = window.fathom || function () {
                         (window.fathom.q = window.fathom.q || []).push(arguments)
