@@ -160,16 +160,20 @@
         "EnvironmentVariableName": "Nazwa Środowiska",
         "Environments": "Środowisko",
         "ErrorArrayMissingKey": "Brakuje klucza tablicy \"%1$s\" w \"%2$s\" na pozycji \"%3$s\".",
+        "ErrorMessageVariableDescription": "Zwraca komunikat wcześniej wyzwolonego błędu.",
         "Filter": "Filtr",
         "FormIdVariableName": "ID formularza",
         "FormNameVariableName": "Nazwa formularza",
         "HistoryChangeTriggerDescription": "Wyzwalany podczas zmiany bieżącego adresu.",
         "HistoryChangeTriggerName": "Historia zmian",
+        "HistoryHashOldPathVariableName": "Historyczna stara ścieżka",
         "LastUpdated": "Ostatnia aktualizacja",
         "LastVersions": "Ostatnie wersje",
         "LocalTimeVariableName": "Czas lokalny",
         "ManageX": "Zarządzanie %s",
         "Change": "Zmień",
+        "MatomoConfigurationVariableDescription": "Definiuje konfigurację Statystyk Matomo.",
+        "NoReleasesFound": "Brak nowego wydania.",
         "PageTitleVariableName": "Tytuł strony",
         "PageUrlVariableName": "Adres URL strony",
         "PageViewTriggerName": "Odsłona",
@@ -181,6 +185,7 @@
         "Type": "Rodzaj",
         "UserAgentVariableName": "Przeglądarka",
         "Version": "Wersja",
+        "ViewX": "Widok %s",
         "VisibleElementClassesVariableName": "Klasy widocznych elementów"
     }
 }
