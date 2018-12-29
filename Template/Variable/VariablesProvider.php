@@ -86,12 +86,6 @@ class VariablesProvider {
             $blockedVariables = $this->configuration->getDisabledVariables();
             $blockedVariables = array_map('strtolower', $blockedVariables);
 
-            if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
-                foreach ($this->getCustomTemplateIds() as $customType) {
-                    $blockedVariables[] = $customType;
-                }
-            }
-
             $variableClasses = $this->pluginManager->findMultipleComponents('Template/Variable', 'Piwik\\Plugins\\TagManager\\Template\\Variable\\BaseVariable');
             
             $variables = array();
@@ -111,9 +105,15 @@ class VariablesProvider {
              */
             Piwik::postEvent('TagManager.addVariables', array(&$variables));
 
+            $restrictValue = $this->settings->restrictCustomTemplates->getValue();
+
             foreach ($variableClasses as $variable) {
                 /** @var BaseVariable $variableInstance */
                 $variableInstance = StaticContainer::get($variable);
+
+                if ($variableInstance->isCustomTemplate() && $restrictValue === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
+                    continue;
+                }
                 if (in_array(strtolower($variableInstance->getId()), $blockedVariables, true)) {
                     continue;
                 }
@@ -173,18 +173,12 @@ class VariablesProvider {
 
     public function isCustomTemplate($id)
     {
-        return in_array($id, $this->getCustomTemplateIds(), true);
-    }
-
-    public function getCustomTemplateIds()
-    {
-        $ids = array();
         foreach ($this->getAllVariables() as $variable) {
-            if ($variable->isCustomTemplate()) {
-                $ids[] = $variable->getId();
+            if ($variable->isCustomTemplate() && $variable->getId() === $id) {
+                return true;
             }
         }
-        return $ids;
+        return false;
     }
 
 }

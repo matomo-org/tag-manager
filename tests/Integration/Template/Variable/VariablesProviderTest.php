@@ -157,12 +157,6 @@ class VariablesProviderTest extends IntegrationTestCase
         $this->assertNull($this->provider->getVariableIgnoreCase('DataLayer'));
     }
 
-    public function test_getCustomTemplateIds()
-    {
-        $variables = $this->provider->getCustomTemplateIds();
-        $this->assertSame(array(CustomJsFunctionVariable::ID), $variables);
-    }
-
     public function test_isCustomTemplate()
     {
         $this->assertFalse($this->provider->isCustomTemplate(null));

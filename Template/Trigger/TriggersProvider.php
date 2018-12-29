@@ -71,13 +71,6 @@ class TriggersProvider {
             $blockedTriggers = $this->configuration->getDisabledTriggers();
             $blockedTriggers = array_map('strtolower', $blockedTriggers);
 
-            if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
-                foreach ($this->getCustomTemplateIds() as $customType) {
-                    $blockedTriggers[] = $customType;
-                }
-            }
-
-
             $triggerClasses = $this->pluginManager->findMultipleComponents('Template/Trigger', 'Piwik\\Plugins\\TagManager\\Template\\Trigger\\BaseTrigger');
             $triggers = array();
 
@@ -96,9 +89,14 @@ class TriggersProvider {
              */
             Piwik::postEvent('TagManager.addTriggers', array(&$triggers));
 
+            $restrictValue = $this->settings->restrictCustomTemplates->getValue();
+
             foreach ($triggerClasses as $trigger) {
                 /** @var BaseTrigger $triggerInstance */
                 $triggerInstance = StaticContainer::get($trigger);
+                if ($triggerInstance->isCustomTemplate() && $restrictValue === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
+                    continue;
+                }
                 if (in_array(strtolower($triggerInstance->getId()), $blockedTriggers, true)) {
                     continue;
                 }
@@ -131,18 +129,13 @@ class TriggersProvider {
 
     public function isCustomTemplate($id)
     {
-        return in_array($id, $this->getCustomTemplateIds(), true);
-    }
-
-    public function getCustomTemplateIds()
-    {
-        $ids = array();
         foreach ($this->getAllTriggers() as $trigger) {
-            if ($trigger->isCustomTemplate()) {
-                $ids[] = $trigger->getId();
+            if ($trigger->isCustomTemplate() && $trigger->getId() === $id) {
+                return true;
             }
         }
-        return $ids;
+        return false;
     }
+
 
 }
