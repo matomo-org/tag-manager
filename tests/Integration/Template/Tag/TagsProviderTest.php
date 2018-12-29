@@ -96,11 +96,6 @@ class TagsProviderTest extends IntegrationTestCase
         $this->assertNull($this->provider->getTag('Matomo'));
     }
 
-    public function test_getCustomTemplateIds()
-    {
-        $tags = $this->provider->getCustomTemplateIds();
-        $this->assertSame(array(CustomHtmlTag::ID), $tags);
-    }
 
     public function test_isCustomTemplate()
     {
