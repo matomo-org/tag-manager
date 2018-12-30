@@ -6,11 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-namespace Piwik\Plugins\TagManager\tests\Integration\Template\Tag;
+namespace Piwik\Plugins\TagManager\tests\Integration\Template\Variable;
 
 use Piwik\Config;
 use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Configuration;
+use Piwik\Plugins\TagManager\SystemSettings;
 use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ContainerIdVariable;
@@ -34,7 +35,7 @@ class VariablesProviderTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->provider = StaticContainer::get('Piwik\Plugins\TagManager\Template\Variable\VariablesProvider');
+        $this->provider = StaticContainer::get(VariablesProvider::class);
     }
 
     public function test_getAllVariables()
@@ -155,6 +156,18 @@ class VariablesProviderTest extends IntegrationTestCase
         }
         $this->assertNull($this->provider->getVariable('DataLayer'));
         $this->assertNull($this->provider->getVariableIgnoreCase('DataLayer'));
+    }
+
+    public function test_getAllWorksWhenCustomTemplatesDisabled()
+    {
+        $settings = StaticContainer::get(SystemSettings::class);
+        $settings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_DISABLED);
+        /** @var VariablesProvider $provider */
+        $provider = StaticContainer::getContainer()->make(VariablesProvider::class, array(
+            'systemSettings' => $settings
+        ));
+        $variables = $provider->getAllVariables();
+        $this->assertNotEmpty($variables);
     }
 
     public function test_isCustomTemplate()

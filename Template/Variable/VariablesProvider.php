@@ -106,12 +106,13 @@ class VariablesProvider {
             Piwik::postEvent('TagManager.addVariables', array(&$variables));
 
             $restrictValue = $this->settings->restrictCustomTemplates->getValue();
+            $disableCustomTemplates = $restrictValue === SystemSettings::CUSTOM_TEMPLATES_DISABLED;
 
             foreach ($variableClasses as $variable) {
                 /** @var BaseVariable $variableInstance */
                 $variableInstance = StaticContainer::get($variable);
 
-                if ($variableInstance->isCustomTemplate() && $restrictValue === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
+                if ($disableCustomTemplates && $variableInstance->isCustomTemplate()) {
                     continue;
                 }
                 if (in_array(strtolower($variableInstance->getId()), $blockedVariables, true)) {

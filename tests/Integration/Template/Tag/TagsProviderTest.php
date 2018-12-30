@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\tests\Integration\Template\Tag;
 use Piwik\Config;
 use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Configuration;
+use Piwik\Plugins\TagManager\SystemSettings;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
 use Piwik\Plugins\TagManager\Template\Tag\TagsProvider;
@@ -96,6 +97,17 @@ class TagsProviderTest extends IntegrationTestCase
         $this->assertNull($this->provider->getTag('Matomo'));
     }
 
+    public function test_getAllWorksWhenCustomTemplatesDisabled()
+    {
+        $settings = StaticContainer::get(SystemSettings::class);
+        $settings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_DISABLED);
+        /** @var TagsProvider $provider */
+        $provider = StaticContainer::getContainer()->make(TagsProvider::class, array(
+            'systemSettings' => $settings
+        ));
+        $tags = $provider->getAllTags();
+        $this->assertNotEmpty($tags);
+    }
 
     public function test_isCustomTemplate()
     {

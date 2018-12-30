@@ -91,11 +91,12 @@ class TagsProvider {
             Piwik::postEvent('TagManager.addTags', array(&$tags));
 
             $restrictValue = $this->settings->restrictCustomTemplates->getValue();
+            $disableCustomTemplates = $restrictValue === SystemSettings::CUSTOM_TEMPLATES_DISABLED;
 
             foreach ($tagClasses as $tag) {
                 /** @var BaseTag $tagInstance */
                 $tagInstance = StaticContainer::get($tag);
-                if ($tagInstance->isCustomTemplate() && $restrictValue === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
+                if ($disableCustomTemplates && $tagInstance->isCustomTemplate()) {
                     continue;
                 }
                 if (in_array(strtolower($tagInstance->getId()), $blockedTags, true)) {

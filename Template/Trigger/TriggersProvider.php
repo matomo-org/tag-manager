@@ -90,11 +90,12 @@ class TriggersProvider {
             Piwik::postEvent('TagManager.addTriggers', array(&$triggers));
 
             $restrictValue = $this->settings->restrictCustomTemplates->getValue();
+            $disableCustomTemplates = $restrictValue === SystemSettings::CUSTOM_TEMPLATES_DISABLED;
 
             foreach ($triggerClasses as $trigger) {
                 /** @var BaseTrigger $triggerInstance */
                 $triggerInstance = StaticContainer::get($trigger);
-                if ($triggerInstance->isCustomTemplate() && $restrictValue === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
+                if ($disableCustomTemplates && $triggerInstance->isCustomTemplate()) {
                     continue;
                 }
                 if (in_array(strtolower($triggerInstance->getId()), $blockedTriggers, true)) {
