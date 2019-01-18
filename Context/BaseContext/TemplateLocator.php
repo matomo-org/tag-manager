@@ -85,7 +85,7 @@ class TemplateLocator
             if ($template) {
                 $methodName = $variableType . 'Variable';
                 if ($variableType === CustomJsFunctionVariable::ID) {
-                    $methodName .= md5(json_encode($variable['parameters']));
+                    $methodName .= substr(md5(json_encode($variable['parameters'])), 0, 8);
                 }
                 $this->templateFunctions[$methodName] = $template;
 
