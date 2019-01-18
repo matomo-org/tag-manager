@@ -13,6 +13,7 @@ use Piwik\Plugins\TagManager\Context\BaseContext\TemplateLocator;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Trigger\CustomEventTrigger;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 
@@ -64,6 +65,26 @@ class TemplateLocatorTest extends IntegrationTestCase
         $templates = $this->templateLocator->getLoadedTemplates();
         $this->assertEquals(array('DataLayerVariable'), array_keys($templates));
         $this->assertContains("parameters.get('dataLayerName')", $templates['DataLayerVariable']);
+    }
+
+    public function test_loadVariableTemplate_GeneratesDifferentTemplatePerJsFunction()
+    {
+        foreach (array(2,1) as $id) {
+            // making sure the returned method name is based on jsFunction/parameters and not based on random value so for same function
+            // should return same method name
+            $result = $this->templateLocator->loadVariableTemplate(array('type' => CustomJsFunctionVariable::ID, 'id' => $id, 'parameters' => array('jsFunction' => 'function (){ return 1; }')), WebContext::ID);
+            $this->assertEquals('CustomJsFunctionVariableddb61d12', $result);
+
+            $templates = $this->templateLocator->getLoadedTemplates();
+            $this->assertEquals(array('CustomJsFunctionVariableddb61d12'), array_keys($templates));
+        }
+
+
+        $result = $this->templateLocator->loadVariableTemplate(array('type' => CustomJsFunctionVariable::ID, 'parameters' => array('jsFunction' => 'function (){ return 2; }')), WebContext::ID);
+        $this->assertEquals('CustomJsFunctionVariable786282aa', $result);
+
+        $templates = $this->templateLocator->getLoadedTemplates();
+        $this->assertEquals(array('CustomJsFunctionVariableddb61d12','CustomJsFunctionVariable786282aa'), array_keys($templates));
     }
 
     public function test_getLoadedTemplates_isEmptyByDefault()
