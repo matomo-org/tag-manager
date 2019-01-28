@@ -211,9 +211,9 @@
                             return actualValue < expectedValue;
                         case 'lower_than_or_equals':
                             return actualValue <= expectedValue;
-                        case 'larger_than':
+                        case 'greater_than':
                             return actualValue > expectedValue;
-                        case 'larger_than_or_equals':
+                        case 'greater_than_or_equals':
                             return actualValue >= expectedValue;
                         case 'contains':
                             return String(actualValue).indexOf(expectedValue) !== -1;

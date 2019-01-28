@@ -519,15 +519,15 @@
                 {expected: true, actualValue: 5678, type: 'ends_with', expectedValue: 78},
                 {expected: false, actualValue: 5678, type: 'ends_with', expectedValue: 79},
 
-                // larger_than
-                {expected: true, actualValue: '6', type: 'larger_than', expectedValue: '5'},
-                {expected: false, actualValue: '5', type: 'larger_than', expectedValue: '5'},
-                {expected: false, actualValue: '4', type: 'larger_than', expectedValue: '5'},
+                // greater_than
+                {expected: true, actualValue: '6', type: 'greater_than', expectedValue: '5'},
+                {expected: false, actualValue: '5', type: 'greater_than', expectedValue: '5'},
+                {expected: false, actualValue: '4', type: 'greater_than', expectedValue: '5'},
 
-                // larger_than_or_equals
-                {expected: true, actualValue: '6', type: 'larger_than_or_equals', expectedValue: '5'},
-                {expected: true, actualValue: '5', type: 'larger_than_or_equals', expectedValue: '5'},
-                {expected: false, actualValue: '4', type: 'larger_than_or_equals', expectedValue: '5'},
+                // greater_than_or_equals
+                {expected: true, actualValue: '6', type: 'greater_than_or_equals', expectedValue: '5'},
+                {expected: true, actualValue: '5', type: 'greater_than_or_equals', expectedValue: '5'},
+                {expected: false, actualValue: '4', type: 'greater_than_or_equals', expectedValue: '5'},
 
                 // lower_than
                 {expected: false, actualValue: '6', type: 'lower_than', expectedValue: '5'},
