@@ -106,6 +106,10 @@
                         self.versionChanges = diff;
                         self.isLoadingVersionChanges = false;
                     });
+
+                    if (self.create && !self.version.name && /^\d+$/.test(self.lastVersion)) {
+                        self.version.name = parseInt(self.lastVersion, 10) + 1;
+                    }
                 }
             });
 
