@@ -12,12 +12,18 @@
         "ComparisonGreaterThan": "大于",
         "ComparisonStartsWith": "开始条件",
         "Condition": "条件",
+        "EndDate": "结束日期",
+        "Except": "除了",
         "Filter": "条件",
+        "LastUpdated": "最后更新",
         "ManageX": "管理%s",
+        "Change": "更改",
         "PageTitleVariableName": "页面标题",
         "PageUrlVariableName": "页面网址",
         "ReferrerUrlVariableName": "来源网址",
         "ReferrerVariableName": "来源网址",
+        "StartDate": "开始日期",
+        "Tag": "标签",
         "Type": "类型",
         "Version": "版本"
     }
