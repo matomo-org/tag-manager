@@ -153,7 +153,8 @@ class MatomoTag extends BaseTag
 
             if (!$tracker) {
                 $tracker = @file_get_contents(PIWIK_DOCUMENT_ROOT . '/matomo.js');
-            } elseif (!$tracker) {
+            }
+            if (!$tracker) {
                 $tracker = @file_get_contents(PIWIK_DOCUMENT_ROOT . '/piwik.js');
             }
 
