@@ -19,7 +19,10 @@
         "ReferrerUrlVariableName": "URL источника",
         "ReferrerVariableName": "URL источника",
         "Tag": "Тег",
+        "Trigger": "Триггер",
         "Type": "Тип",
-        "Version": "Версия"
+        "Version": "Версия",
+        "WeekdayVariableDescription": "Возвращает локальный день недели, например, понедельник, вторник, среду...",
+        "WeekdayVariableName": "День недели"
     }
 }
