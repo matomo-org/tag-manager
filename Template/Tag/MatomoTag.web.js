@@ -126,6 +126,8 @@
                         tracker.setCookiePath(matomoConfig.cookiePath);
                     }
 
+                    tracker.setSiteId(matomoConfig.idSite);
+                    
                     if (matomoConfig.alwaysUseSendBeacon) {
                         tracker.alwaysUseSendBeacon();
                     }
@@ -148,8 +150,6 @@
                     if (matomoConfig.trackVisibleContentImpressions) {
                         tracker.trackVisibleContentImpressions();
                     }
-                    
-                    tracker.setSiteId(matomoConfig.idSite);
                 }
 
                 if ((matomoConfig.userId || tracker.getUserId()) && lastUserId !== matomoConfig.userId) {
