@@ -103,7 +103,7 @@
                     // but even two or more different configs for the same Matomo URL & idSite
                     lastMatomoUrl = getMatomoUrlFromConfig(matomoConfig);
                     var trackerUrl = lastMatomoUrl + 'piwik.php';
-                    tracker = Piwik.addTracker(trackerUrl, matomoConfig.idSite);
+                    tracker = Piwik.addTracker(trackerUrl);
                     configuredTrackers[variableName] = tracker;
 
                     if (matomoConfig.disableCookies) {
@@ -126,6 +126,8 @@
                         tracker.setCookiePath(matomoConfig.cookiePath);
                     }
 
+                    tracker.setSiteId(matomoConfig.idSite);
+                    
                     if (matomoConfig.alwaysUseSendBeacon) {
                         tracker.alwaysUseSendBeacon();
                     }
