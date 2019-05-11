@@ -326,7 +326,7 @@
       "ChangesSinceLastVersion": "Changes since the last version",
       "MatomoConfigurationVariableDescription": "Defines a configuration for Matomo Analytics.",
       "MatomoConfigurationVariableName": "Matomo Configuration",
-      "MatomoTagDescription": "Matomo, formerly known as Piwk, is the leading open source analytics platform.",
+      "MatomoTagDescription": "Matomo, formerly known as Piwik, is the leading open source analytics platform.",
       "MatomoTagHelp": "This tag lets you track pageviews and events into your Matomo. You can customize the tracking to your needs.",
       "MatomoTagName": "Matomo Analytics",
       "MetaContentVariableDescription": "Reads a value from a \"meta\" HTML element.",
