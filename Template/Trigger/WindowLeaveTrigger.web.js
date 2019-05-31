@@ -3,51 +3,56 @@
         var numTriggers = 0;
 
         this.setUp = function (triggerEvent) {
-            if (!parameters.document.documentElement) {
-                return;
-            }
 
-            var timerInCaseReturns;
+            TagManager.dom.onReady(function () {
 
-            function cancelTimer()
-            {
-                if (timerInCaseReturns) {
-                    clearTimeout(timerInCaseReturns);
-                    timerInCaseReturns = null;
-                }
-            }
-
-            TagManager.dom.addEventListener(parameters.document.documentElement, 'mouseleave', function (event) {
-                if ('undefined' === typeof event.clientY) {
-                    return;
-                }
-                if (event.clientY > 3) {
+                if (!parameters.document.documentElement) {
                     return;
                 }
 
-                if (timerInCaseReturns) {
-                    cancelTimer();
-                    return;
-                }
-                var timerDelay = 50;
+                var timerInCaseReturns;
 
-                timerInCaseReturns = setTimeout(function () {
-                    var limit = parameters.get('triggerLimit', 1);
-
-                    if (limit) {
-                        limit = parseInt(limit, 10);
+                function cancelTimer()
+                {
+                    if (timerInCaseReturns) {
+                        clearTimeout(timerInCaseReturns);
+                        timerInCaseReturns = null;
                     }
+                }
 
-                    if (limit && limit <= numTriggers) {
+                TagManager.dom.addEventListener(parameters.document.documentElement, 'mouseleave', function (event) {
+                    if ('undefined' === typeof event.clientY) {
+                        return;
+                    }
+                    if (event.clientY > 3) {
                         return;
                     }
 
-                    numTriggers++;
-                    triggerEvent({event: 'WindowLeave'});
-                }, timerDelay);
-            });
+                    if (timerInCaseReturns) {
+                        cancelTimer();
+                        return;
+                    }
+                    var timerDelay = 50;
 
-            TagManager.dom.addEventListener(parameters.document.documentElement, 'mouseenter', cancelTimer);
+                    timerInCaseReturns = setTimeout(function () {
+                        var limit = parameters.get('triggerLimit', 1);
+
+                        if (limit) {
+                            limit = parseInt(limit, 10);
+                        }
+
+                        if (limit && limit <= numTriggers) {
+                            return;
+                        }
+
+                        numTriggers++;
+                        triggerEvent({event: 'WindowLeave'});
+                    }, timerDelay);
+                });
+
+                TagManager.dom.addEventListener(parameters.document.documentElement, 'mouseenter', cancelTimer);
+
+            });
         };
     };
 })();
