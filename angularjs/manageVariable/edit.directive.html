@@ -21,7 +21,7 @@
 
             <div piwik-field uicontrol="text" name="type"
                  ng-model="editVariable.variable.typeMetadata.name"
-                 disabled="true"
+                 data-disabled="true"
                  inline-help="{{ editVariable.variable.typeMetadata.description }} {{ editVariable.variable.typeMetadata.help }}"
                  title="{{ 'TagManager_Type'|translate }}">
             </div>
@@ -116,7 +116,7 @@
                  class="createButton"
                  ng-show="!editVariable.variable.typeMetadata.isDisabled"
                  onconfirm="editVariable.edit ? editVariable.updateVariable() : editVariable.createVariable()"
-                 disabled="editVariable.model.isUpdating || !editVariable.isDirty"
+                 data-disabled="editVariable.model.isUpdating || !editVariable.isDirty"
                  value="{{ editVariable.edit ? ('CoreUpdater_UpdateTitle'|translate) : ('TagManager_CreateNewVariable'|translate) }}"
                  saving="editVariable.model.isUpdating">
             </div>

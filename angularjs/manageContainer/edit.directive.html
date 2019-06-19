@@ -15,14 +15,14 @@
         <div>
             <div piwik-field uicontrol="text" name="idcontainer"
                  ng-model="editContainer.container.idcontainer"
-                 disabled="true"
+                 data-disabled="true"
                  ng-show="editContainer.edit"
                  title="{{ 'General_Id'|translate }}">
             </div>
 
             <div piwik-field uicontrol="select" name="context"
                  ng-model="editContainer.container.context"
-                 disabled="true"
+                 data-disabled="true"
                  ng-change="editContainer.setValueHasChanged()"
                  title="{{ 'TagManager_Context'|translate }}"
                  options="editContainer.contexts"
@@ -47,7 +47,7 @@
             <div piwik-save-button
                  class="createButton"
                  onconfirm="editContainer.edit ? editContainer.updateContainer() : editContainer.createContainer()"
-                 disabled="editContainer.model.isUpdating || !editContainer.isDirty"
+                 data-disabled="editContainer.model.isUpdating || !editContainer.isDirty"
                  value="{{ editContainer.edit ? ('CoreUpdater_UpdateTitle'|translate) : ('TagManager_CreateNewContainer'|translate) }}"
                  saving="editContainer.model.isUpdating">
             </div>

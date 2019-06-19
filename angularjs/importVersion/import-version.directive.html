@@ -24,7 +24,7 @@
 
         <div piwik-save-button
              class="importVersion"
-             disabled="!importVersion.importContent"
+             data-disabled="!importVersion.importContent"
              onconfirm="importVersion.importVersion(importVersion.backupName, importVersion.importContent)"
              value="{{ 'TagManager_VersionImportOverwriteContent'|translate }}">
         </div>
