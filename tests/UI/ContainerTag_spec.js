@@ -284,7 +284,7 @@ describe("ContainerTag", function () {
     it('should load tags page with some tags as view user', async function () {
         permissions.setViewUser();
         await page.goto(container1Base);
-        pageWrap = await page.$('#content');
+        pageWrap = await page.$('[piwik-tag-manage]');
         expect(await pageWrap.screenshot()).to.matchImage('tag_some_exist_view_user');
     });
 });
