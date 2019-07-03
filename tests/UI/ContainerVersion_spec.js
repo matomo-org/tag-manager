@@ -118,6 +118,7 @@ describe("ContainerVersion", function () {
     it('should be possible to publish new version', async function () {
         await page.click('.createNewVersion');
         await setVersionName('v3.0');
+        await page.waitFor(500);
         await capture.page(page, 'publish_new_prefilled');
     });
 
