@@ -8,7 +8,10 @@
 
 exports.selector = async function (page, screenshotName, selector)
 {
-    expect(await page.screenshotSelector(selector)).to.matchImage(screenshotName);
+    expect(await page.screenshotSelector(selector)).to.matchImage({
+        imageName: screenshotName,
+        comparisonThreshold: 0.05,
+    });
 };
 
 exports.topControls = async function (page, screenshotName)
