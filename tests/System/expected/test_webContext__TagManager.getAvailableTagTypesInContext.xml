@@ -43,7 +43,7 @@
 			<row>
 				<id>Matomo</id>
 				<name>Matomo Analytics</name>
-				<description>Matomo, formerly known as Piwk, is the leading open source analytics platform.</description>
+				<description>Matomo, formerly known as Piwik, is the leading open source analytics platform.</description>
 				<category>Analytics</category>
 				<icon>plugins/TagManager/images/MatomoIcon.png</icon>
 				<help>This tag lets you track pageviews and events into your Matomo. You can customize the tracking to your needs.</help>

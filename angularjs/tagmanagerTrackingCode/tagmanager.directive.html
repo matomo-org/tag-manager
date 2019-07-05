@@ -22,7 +22,7 @@
                  ng-model="tagTrackingCode.idContainer"
                  ng-change="tagTrackingCode.onContainerChange()"
                  options="tagTrackingCode.containers"
-                 disabled="(tagTrackingCode.containers|length) <= 1"
+                 data-disabled="(tagTrackingCode.containers|length) <= 1"
                  full-width="true"
                  title="{{ 'TagManager_Container'|translate }}">
             </div>
@@ -32,7 +32,7 @@
                  ng-model="tagTrackingCode.environment"
                  ng-change="tagTrackingCode.fetchInstallInstructions()"
                  options="tagTrackingCode.environments"
-                 disabled="(tagTrackingCode.environments|length) <= 1"
+                 data-disabled="(tagTrackingCode.environments|length) <= 1"
                  full-width="true"
                  title="{{ 'TagManager_Environment'|translate }}">
             </div>
