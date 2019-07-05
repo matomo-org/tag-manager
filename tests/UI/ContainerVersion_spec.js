@@ -200,7 +200,7 @@ describe("ContainerVersion", function () {
     it('should be possible to create a new version and show update afterwards', async function () {
         await page.click('.modal.open .editVersion .createButton');
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitFor('.tagManagerManageList tr');
         await capture.page(page, 'create_through_menu_submitted');
     });
 
@@ -228,7 +228,7 @@ describe("ContainerVersion", function () {
     it('should load versions page with no versions as view user', async function () {
         permissions.setViewUser();
         await page.goto(container3Base);
-        await capture.page(page, 'version_none_exist_view_user');
+        await capture.selector(page, 'version_none_exist_view_user', '.manageTag');
     });
 
     it('should be able to show import version screen', async function () {
