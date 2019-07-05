@@ -253,6 +253,7 @@ describe("ContainerVersion", function () {
     it('should be possible to confirm and import the version', async function () {
         await modal.clickButton(page, 'Yes');
         await page.waitForNetworkIdle();
+        await page.waitFor('.tagManagerManageList tr');
         await capture.page(page, 'import_version_confirmed');
     });
 
