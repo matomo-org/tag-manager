@@ -26,7 +26,7 @@ exports.pageWithMenu = async function (page, screenshotName)
 
 exports.page = async function (page, screenshotName)
 {
-    await exports.selector(page, screenshotName, '.page,#notificationContainer');
+    await exports.selector(page, screenshotName, '.pageWrap,#notificationContainer');
 };
 
 exports.notification = async function (page, screenshotName)
