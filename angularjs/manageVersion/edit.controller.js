@@ -221,12 +221,12 @@
 
             tagManagerVersionModel.createOrUpdateVersion(this.version, 'TagManager.createContainerVersion').then(function (response) {
 
-                var idContainerVersion = response.response.value;
-
-                if (!response || response.type === 'error' || !response.response) {
+                if (!response || response.type === 'error' || !response.response || !response.response.value) {
                     self.isUpdating = false;
                     return;
                 }
+
+                var idContainerVersion = response.response.value;
 
                 self.version.idcontainerversion = idContainerVersion;
 

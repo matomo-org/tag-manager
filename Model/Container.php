@@ -350,6 +350,9 @@ class Container extends BaseModel
         $this->dao->updateContainerColumns($idSite, $idContainer, $columns);
     }
 
+    /**
+     * @return \Piwik\Plugins\TagManager\API\Export
+     */
     private function getExport()
     {
         return StaticContainer::get('Piwik\Plugins\TagManager\API\Export');
