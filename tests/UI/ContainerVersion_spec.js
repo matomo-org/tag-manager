@@ -202,6 +202,7 @@ describe("ContainerVersion", function () {
         await page.click('.modal.open .editVersion .createButton');
         await page.waitForNetworkIdle();
         await page.waitFor('.tagManagerManageList tr', { visible: true });
+        await page.waitFor(500);
         await capture.page(page, 'create_through_menu_submitted');
     });
 
@@ -229,6 +230,7 @@ describe("ContainerVersion", function () {
     it('should load versions page with no versions as view user', async function () {
         permissions.setViewUser();
         await page.goto(container3Base);
+        await page.waitFor('.manageTag', { visible: true });
         await capture.selector(page, 'version_none_exist_view_user', '.manageTag');
     });
 
