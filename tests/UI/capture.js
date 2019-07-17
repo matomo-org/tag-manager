@@ -17,7 +17,7 @@ exports.setTableRowHeight = async function (page) {
 
 exports.selector = async function (page, screenshotName, selector)
 {
-    await exports.setTableRowHeight();
+    await exports.setTableRowHeight(page);
     expect(await page.screenshotSelector(selector)).to.matchImage({
         imageName: screenshotName,
         comparisonThreshold: 0.05,
@@ -46,7 +46,7 @@ exports.notification = async function (page, screenshotName)
 
 exports.modal = async function (page, screenshotName)
 {
-    await exports.setTableRowHeight();
+    await exports.setTableRowHeight(page);
 
     await page.waitForNetworkIdle();
     await page.waitFor(500); // ensure animation is finished
