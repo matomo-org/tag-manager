@@ -46,11 +46,11 @@ exports.notification = async function (page, screenshotName)
 
 exports.modal = async function (page, screenshotName)
 {
-    await exports.setTableRowHeight(page);
-
     await page.waitForNetworkIdle();
     await page.waitFor(500); // ensure animation is finished
 
     pageWrap = await page.$('.modal.open');
+
+    await exports.setTableRowHeight(page);
     expect(await pageWrap.screenshot()).to.matchImage(screenshotName);
 };

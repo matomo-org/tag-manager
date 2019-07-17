@@ -230,8 +230,8 @@ describe("ContainerVersion", function () {
     it('should load versions page with no versions as view user', async function () {
         permissions.setViewUser();
         await page.goto(container3Base);
-        await page.waitFor('.manageTag', { visible: true });
-        await capture.selector(page, 'version_none_exist_view_user', '.manageTag');
+        await page.waitFor('.manageVersion', { visible: true });
+        await capture.selector(page, 'version_none_exist_view_user', '.manageVersion');
     });
 
     it('should be able to show import version screen', async function () {
