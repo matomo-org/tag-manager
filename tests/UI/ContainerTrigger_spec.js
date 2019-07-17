@@ -59,7 +59,9 @@ describe("ContainerTrigger", function () {
         if (!rowIndex) {
             rowIndex = 3;
         }
-        await page.click('.tagManagerTriggerList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
+        const selector = '.tagManagerTriggerList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action;
+        await page.waitFor(selector, { visible: true });
+        await page.click(selector);
     }
 
     async function createOrUpdateTrigger()
