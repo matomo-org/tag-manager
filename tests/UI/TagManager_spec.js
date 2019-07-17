@@ -93,6 +93,7 @@ describe("TagManager", function () {
     it('should be able to disable preview', async function () {
         await page.click('#notificationContainer .disablePreviewDebug');
         await page.waitForNetworkIdle();
+        await page.waitFor('#content .card-content', { visible: true });
         await capture.page(page, 'preview_disable');
     });
 
