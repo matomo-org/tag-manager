@@ -180,6 +180,7 @@ describe("ContainerVersion", function () {
 
     it('should open create version page when clicking on create a version now link', async function () {
         await page.click('.createContainerVersionNow');
+        await capture.setTableRowHeight(page);
         pageWrap = await page.$('#content');
         expect(await pageWrap.screenshot()).to.matchImage('version_none_exist_yet_create_now');
     });

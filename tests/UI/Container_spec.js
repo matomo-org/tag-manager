@@ -51,12 +51,14 @@ describe("Container", function () {
 
     it('should load a container page with containers', async function () {
         await page.goto(generalParamsSite1 + urlBase);
+        await capture.setTableRowHeight(page);
         pageWrap = await page.$('#content');
         expect(await pageWrap.screenshot()).to.matchImage('site_some_exist');
     });
 
     it('should be able to create a new container', async function () {
         await page.click('.createNewContainer');
+        await capture.setTableRowHeight(page);
         pageWrap = await page.$('#content');
         expect(await pageWrap.screenshot()).to.matchImage('create_new');
     });
@@ -128,6 +130,7 @@ describe("Container", function () {
 
     it('should open create container page when clicking on create a container now link', async function () {
         await page.click('.createContainerNow');
+        await capture.setTableRowHeight(page);
         pageWrap = await page.$('#content');
         expect(await pageWrap.screenshot()).to.matchImage('site_none_exist_yet_create_now');
     });

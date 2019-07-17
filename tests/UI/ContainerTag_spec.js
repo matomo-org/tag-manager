@@ -200,6 +200,7 @@ describe("ContainerTag", function () {
     it('should load tags page with no tags as view user', async function () {
         permissions.setViewUser();
         await page.goto(container3Base);
+        await capture.setTableRowHeight(page);
         pageWrap = await page.$('#content');
         expect(await pageWrap.screenshot()).to.matchImage('tag_none_exist_view_user');
     });
@@ -284,6 +285,7 @@ describe("ContainerTag", function () {
     it('should load tags page with some tags as view user', async function () {
         permissions.setViewUser();
         await page.goto(container1Base);
+        await capture.setTableRowHeight(page);
         pageWrap = await page.$('[piwik-tag-manage]');
         expect(await pageWrap.screenshot()).to.matchImage('tag_some_exist_view_user');
     });
