@@ -201,7 +201,7 @@ describe("ContainerVersion", function () {
     it('should be possible to create a new version and show update afterwards', async function () {
         await page.click('.modal.open .editVersion .createButton');
         await page.waitForNetworkIdle();
-        await page.waitFor('.tagManagerManageList tr');
+        await page.waitFor('.tagManagerManageList tr', { visible: true });
         await capture.page(page, 'create_through_menu_submitted');
     });
 
