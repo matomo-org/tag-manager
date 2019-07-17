@@ -5,9 +5,19 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
+// the first table row can for some reason can have height that varies randomly by 1px.
+// hardcoding to 78px here for screenshot tests.
+exports.setTableRowHeight = async function (page) {
+    await page.evaluate(() => {
+        $('table tr').each(function () {
+            $(this).css('height', '78px');
+        });
+    });
+};
 
 exports.selector = async function (page, screenshotName, selector)
 {
+    await setTableRowHeight();
     expect(await page.screenshotSelector(selector)).to.matchImage({
         imageName: screenshotName,
         comparisonThreshold: 0.05,
@@ -36,6 +46,8 @@ exports.notification = async function (page, screenshotName)
 
 exports.modal = async function (page, screenshotName)
 {
+    await setTableRowHeight();
+
     await page.waitForNetworkIdle();
     await page.waitFor(500); // ensure animation is finished
 
