@@ -32,16 +32,14 @@ describe("ContainerDashboard", function () {
         testEnvironment.save();
     });
 
-    it('should show an empty dashboard', function (done) {
-        capture.pageWithMenu(done, 'empty_container', function (page) {
-            page.load(generalParamsSite1 + urlBase + '&idContainer=aaacont3&idSite=2&period=day&date=yesterday');
-        }, done);
+    it('should show an empty dashboard', async function () {
+        await page.goto(generalParamsSite1 + urlBase + '&idContainer=aaacont3&idSite=2&period=day&date=yesterday');
+        await capture.pageWithMenu(page, 'empty_container');
     });
 
-    it('should show dashboard with entries', function (done) {
-        capture.pageWithMenu(done, 'with_entries', function (page) {
-            page.load(generalParamsSite1 + urlBase + '&idContainer=aaacont1&idSite=2&period=day&date=yesterday');
-        }, done);
+    it('should show dashboard with entries', async function () {
+        await page.goto(generalParamsSite1 + urlBase + '&idContainer=aaacont1&idSite=2&period=day&date=yesterday');
+        await capture.pageWithMenu(page, 'with_entries');
     });
 
 });

@@ -5,33 +5,52 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
+// the first table row can for some reason can have height that varies randomly by 1px.
+// hardcoding to 78px here for screenshot tests.
+exports.setTableRowHeight = async function (page) {
+    await page.evaluate(() => {
+        $('table tr').each(function () {
+            $(this).css('height', '78px');
+        });
+    });
+};
 
-exports.selector = function (done, screenshotName, selector, theTest)
+exports.selector = async function (page, screenshotName, selector)
 {
-    expect.screenshot(screenshotName).to.be.captureSelector(selector, theTest, done);
-}
+    await exports.setTableRowHeight(page);
+    expect(await page.screenshotSelector(selector)).to.matchImage({
+        imageName: screenshotName,
+        comparisonThreshold: 0.05,
+    });
+};
 
-exports.topControls = function (done, screenshotName, theTest)
+exports.topControls = async function (page, screenshotName)
 {
-    exports.selector(done, screenshotName, '.top_controls', theTest);
-}
+    await exports.selector(page, screenshotName, '.top_controls');
+};
 
-exports.pageWithMenu = function (done, screenshotName, theTest)
+exports.pageWithMenu = async function (page, screenshotName)
 {
-    exports.selector(done, screenshotName, '#content,#notificationContainer', theTest);
-}
+    await exports.selector(page, screenshotName, '#content,#notificationContainer');
+};
 
-exports.page = function (done, screenshotName, theTest)
+exports.page = async function (page, screenshotName)
 {
-    exports.selector(done, screenshotName, '.page,#notificationContainer', theTest);
-}
+    await exports.selector(page, screenshotName, '.pageWrap,#notificationContainer,#secondNavBar');
+};
 
-exports.notification = function (done, screenshotName, theTest)
+exports.notification = async function (page, screenshotName)
 {
-    exports.selector(done, screenshotName, '#notificationContainer', theTest);
-}
+    await exports.selector(page, screenshotName, '#notificationContainer');
+};
 
-exports.modal = function (done, screenshotName, theTest)
+exports.modal = async function (page, screenshotName)
 {
-    exports.selector(done, screenshotName, '.modal.open', theTest);
-}
+    await page.waitForNetworkIdle();
+    await page.waitFor(500); // ensure animation is finished
+
+    pageWrap = await page.$('.modal.open');
+
+    await exports.setTableRowHeight(page);
+    expect(await pageWrap.screenshot()).to.matchImage(screenshotName);
+};
