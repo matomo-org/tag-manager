@@ -602,7 +602,7 @@ class TagManager extends \Piwik\Plugin
         if (self::$enableAutoContainerCreation && $this->hasMeasurableTypeWebsite($idSite)) {
             Request::processRequest('TagManager.createDefaultContainerForSite', array(
                 'idSite' => $idSite,
-            ));
+            ), $default = []);
         }
     }
 
