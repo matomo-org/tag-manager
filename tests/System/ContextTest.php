@@ -17,6 +17,7 @@ use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Plugins\TagManager\Model\Salt;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Tests\Framework\TestCase\SystemTestCase;
+use Piwik\Version;
 
 class TestJavaScriptTagManagerLoader extends WebContext\JavaScriptTagManagerLoader {
 
@@ -336,6 +337,10 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
 
     public function test_generate_web()
     {
+        if (version_compare(Version::VERSION, '3.8.0', '<')) {
+            $this->markTestSkipped();
+        }
+
         Piwik::addAction('Controller.TagManager.debug.end', function (&$result, $parameters) {
             $this->assertNotEmpty($result);
             $this->assertContains('<html', $result);
