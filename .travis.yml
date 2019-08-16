@@ -41,9 +41,6 @@ matrix:
   exclude:
     # execute latest stable tests only w/ PHP 5.6
     - php: 5.5
-      env: TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_CORE=minimum_required_piwik
-    # execute UI tests only w/ PHP 5.6
-    - php: 5.5
       env: TEST_SUITE=UITests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
   include:
     - php: 5.6
