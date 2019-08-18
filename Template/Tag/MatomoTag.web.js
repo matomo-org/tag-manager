@@ -47,7 +47,7 @@
         libLoaded = libAvailable;
     }
 
-    function loadTracker(url)
+    function loadTracker(url, jsEndpoint)
     {
         if (checkLoadedAlready()) {
             return;
@@ -58,7 +58,7 @@
             // installed which another doesn't have.
             libLoaded = true;
             var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.defer=true; g.src=url+'piwik.js'; s.parentNode.insertBefore(g,s);
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src=url+jsEndpoint; s.parentNode.insertBefore(g,s);
         }
     }
 
@@ -102,7 +102,7 @@
                     lastIdSite = matomoConfig.idSite;
                     // but even two or more different configs for the same Matomo URL & idSite
                     lastMatomoUrl = getMatomoUrlFromConfig(matomoConfig);
-                    var trackerUrl = lastMatomoUrl + 'piwik.php';
+                    var trackerUrl = lastMatomoUrl + matomoConfig.trackingEndpoint;
                     tracker = Piwik.addTracker(trackerUrl);
                     configuredTrackers[variableName] = tracker;
 
@@ -168,7 +168,7 @@
                 var possiblyUpdatedMatomoUrl = getMatomoUrlFromConfig(matomoConfig);
                 if (possiblyUpdatedMatomoUrl && lastMatomoUrl !== possiblyUpdatedMatomoUrl) {
                     // might change each time this method is called
-                    tracker.setTrackerUrl(possiblyUpdatedMatomoUrl + 'piwik.php');
+                    tracker.setTrackerUrl(possiblyUpdatedMatomoUrl + matomoConfig.trackingEndpoint);
                     lastIdSite = possiblyUpdatedMatomoUrl;
                 }
 
@@ -220,7 +220,7 @@
             }
 
             var matomoUrl = getMatomoUrlFromConfig(matomoConfig);
-            loadTracker(matomoUrl);
+            loadTracker(matomoUrl, matomoConfig.jsEndpoint);
         };
     };
 })();
