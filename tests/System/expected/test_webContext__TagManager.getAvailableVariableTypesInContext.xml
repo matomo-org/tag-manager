@@ -994,6 +994,48 @@
 						<introduction />
 						<condition />
 					</row>
+					<row>
+						<name>jsEndpoint</name>
+						<title>Tracker Javascript Path</title>
+						<value>piwik.js</value>
+						<defaultValue>piwik.js</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<matomo.js>matomo.js</matomo.js>
+							<piwik.js>piwik.js</piwik.js>
+							<row key="js/">js/</row>
+							<row key="js/tracker.php">js/tracker.php</row>
+						</availableValues>
+						<description>Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the "Bundle Tracker" option.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>trackingEndpoint</name>
+						<title>Tracking Request Target Path</title>
+						<value>piwik.php</value>
+						<defaultValue>piwik.php</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<matomo.php>matomo.php</matomo.php>
+							<piwik.php>piwik.php</piwik.php>
+							<row key="js/">js/</row>
+							<row key="js/tracker.php">js/tracker.php</row>
+						</availableValues>
+						<description>Here you can configure the target path for tracking requests.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
 				</parameters>
 			</row>
 		</types>
