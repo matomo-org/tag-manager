@@ -126,6 +126,12 @@
                         tracker.setCookiePath(matomoConfig.cookiePath);
                     }
 
+                    if (matomoConfig.domains
+                        && TagManager.utils.isArray(matomoConfig.domains)
+                        && matomoConfig.domains.length) {
+                            tracker.setDomains(matomoConfig.domains);
+                    }
+
                     tracker.setSiteId(matomoConfig.idSite);
                     
                     if (matomoConfig.alwaysUseSendBeacon) {
