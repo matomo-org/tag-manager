@@ -12,11 +12,14 @@
         "ComparisonStartsWith": "begynder med",
         "Condition": "Betingelse",
         "Filter": "Filter",
+        "LearnMore": "Læs mere",
+        "ManageX": "Administrer %s",
         "PageTitleVariableName": "sidetitel",
         "PageUrlVariableName": "Side URL",
         "ReferrerUrlVariableName": "Henvisning netadresse",
         "ReferrerVariableName": "Henvisning netadresse",
         "Type": "Type",
-        "Version": "Version"
+        "Version": "Version",
+        "ViewX": "Se %s"
     }
 }
