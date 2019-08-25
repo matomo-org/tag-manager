@@ -1,6 +1,6 @@
 {
     "TagManager": {
-        "AddThisTagDescription": "Lägg till AddThis sociala medier-knappar och mer till din webbplats.",
+        "AddThisTagDescription": "Lägg till AddThis-knappar för sociala medier och mer till din webbplats.",
         "AllElementsClickTriggerDescription": "Triggas när något element klickas.",
         "AllElementsClickTriggerHelp": "Utlöses vid klick på något element. För att lyssna på klicka för specifika element, vänligen lägg till villkor baserade på en \"klicka\"-variabel i de avancerade inställningarna.",
         "AllElementsClickTriggerName": "Alla klick på element",
@@ -139,6 +139,9 @@
         "FacebookPixelTagName": "Facebook Pixel",
         "Filter": "Filter",
         "GettingStarted": "Komma igång",
+        "GettingStartedRemarketing": "Remarketing",
+        "GettingStartedAffiliates": "Affiliates",
+        "GettingStartedAds": "Annonser",
         "HideAdvancedSettings": "Dölj avancerad inställningar",
         "Import": "Importera",
         "ImportVersion": "Importera en version",
@@ -173,6 +176,7 @@
         "ReferrerVariableName": "Hänvisningsadress",
         "StartDate": "Startdatum",
         "Tag": "Tagg",
+        "TagManager": "Tagghanterare",
         "TimerTriggerName": "Timer",
         "Trigger": "Trigger",
         "Triggers": "Triggers",

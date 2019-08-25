@@ -6,11 +6,15 @@
         "CategoryErrors": "Errores",
         "CategoryHistory": "Historial",
         "ComparisonContains": "contiene",
+        "EndDate": "Fecha de cierre",
+        "LastUpdated": "Recientemente actualizado",
+        "LearnMore": "Aprendé más",
         "ManageX": "Administrar %s",
         "PageTitleVariableName": "Título de la Página",
         "PageUrlVariableName": "URL de Página",
         "ReferrerUrlVariableName": "Dirección web de origen del visitante",
         "ReferrerVariableName": "Dirección web de origen del visitante",
+        "StartDate": "Fecha de inicio",
         "Type": "Tipo",
         "Version": "Versión"
     }

@@ -18,6 +18,7 @@
         "ReferrerUrlVariableName": "URL بازگشتی",
         "ReferrerVariableName": "URL بازگشتی",
         "Type": "نوع",
-        "Version": "ویرایش"
+        "Version": "ویرایش",
+        "ViewX": "مشاهده %s"
     }
 }
