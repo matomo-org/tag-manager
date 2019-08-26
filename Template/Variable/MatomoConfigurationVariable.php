@@ -124,6 +124,39 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->description = 'When tracking many subdirectories in separate websites, the cookie path prevents the number of cookies to quickly increase and prevent browser from deleting some of the cookies. This ensures optimal data accuracy and improves performance for your users (fewer cookies are sent with each request).';
                 $field->validators[] = new CharacterLength(0, 500);
             }),
+
+            $this->makeSetting('domains', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
+                $field->title = 'Domains';
+                $field->description = 'Used to detect outlinks. Add hostnames or domains to be treated as local. For wildcard subdomains, you can use: ".example.com" or "*.example.com". You can also specify a path along a domain: "*.example.com/subsite1".';
+                $field->validate = function ($value) {
+                    if (empty($value)) {
+                        return;
+                    }
+                    if (!is_array($value)) {
+                        throw new \Exception('Value needs to be an array');
+                    }
+                };
+
+                $field->transform = function ($value) {
+                    if (empty($value) || !is_array($value)) {
+                        return array();
+                    }
+                    $withValues = array();
+                    foreach ($value as $domain) {
+                        if (!empty($domain['domain'])) {
+                            $withValues[] = $domain;
+                        }
+                    }
+
+                    return $withValues;
+                };
+
+                $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
+                $field1 = new FieldConfig\MultiPair('Domain', 'domain', FieldConfig::UI_CONTROL_TEXT);
+                $field1->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->uiControlAttributes['field1'] = $field1->toArray();
+            }),
+
             $this->makeSetting('alwaysUseSendBeacon', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'Always use sendBeacon';
                 $field->description = 'Enables send beacon usage instead of a regular ajax request. This means when a user clicks for example on an outlink, the navigation to this page will happen much faster.';

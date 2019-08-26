@@ -915,6 +915,31 @@
 						<condition />
 					</row>
 					<row>
+						<name>domains</name>
+						<title>Domains</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>domain</key>
+								<title>Domain</title>
+								<uiControl>text</uiControl>
+								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<availableValues />
+							</field1>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Used to detect outlinks. Add hostnames or domains to be treated as local. For wildcard subdomains, you can use: ".example.com" or "*.example.com". You can also specify a path along a domain: "*.example.com/subsite1".</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
 						<name>alwaysUseSendBeacon</name>
 						<title>Always use sendBeacon</title>
 						<value>0</value>
