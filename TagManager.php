@@ -44,7 +44,6 @@ class TagManager extends \Piwik\Plugin
             'AssetManager.getJavaScriptFiles' => 'getJsFiles',
             'Translate.getClientSideTranslationKeys' => 'getClientSideTranslationKeys',
             'CoreUpdater.update.end' => 'regenerateReleasedContainers',
-            'CronArchive.end' => 'regenerateReleasedContainers',
             'PluginManager.pluginActivated' => 'onPluginActivateOrInstall',
             'PluginManager.pluginInstalled' => 'onPluginActivateOrInstall',
             'PluginManager.pluginDeactivated' => 'onPluginActivateOrInstall',
