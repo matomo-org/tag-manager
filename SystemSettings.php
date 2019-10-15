@@ -175,7 +175,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         return $this->replacePiwikUrl($this->customAnalyticsHostname->getValue());
     }
 
-    private function replacePiwikUrl($newUrl): string
+    private function replacePiwikUrl($newUrl)
     {
         $oldUrl = SettingsPiwik::getPiwikUrl();
         if (! empty($newUrl)) {
