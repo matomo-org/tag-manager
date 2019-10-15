@@ -116,7 +116,7 @@ Are you a developer? If you use features regulary which are not available yet, o
 
 ## License
 
-Matomo Tag Manager is released under the GPL v3 (or later) license, see [misc/gpl-3.0.txt](misc/gpl-3.0.txt)
+Matomo Tag Manager is released under the GPL v3 (or later) license, see [LICENSE](LICENSE)
 
 ## Installation & Requirements
 
