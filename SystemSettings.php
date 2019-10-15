@@ -14,6 +14,9 @@ use Piwik\Plugins\TagManager\Context\BaseContext;
 use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Settings\Setting;
 use Piwik\Settings\FieldConfig;
+use Piwik\Validators\NotEmpty;
+use Piwik\SettingsPiwik;
+use Piwik\Config;
 
 class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 {
@@ -27,12 +30,36 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     /** @var Setting */
     public $environments;
 
+    /** @var Setting */
+    public $customContainersHostname;
+
+    /** @var Setting */
+    public $customAnalyticsHostname;
+
     public static $DEFAULT_ENVIRONMENTS = [['environment' => 'dev'], ['environment' => 'staging']];
 
     protected function init()
     {
+        $this->customContainersHostname = $this->createCustomContainersHostnameSetting();
+        $this->customAnalyticsHostname = $this->createCustomAnalyticsHostnameSetting();
         $this->restrictCustomTemplates = $this->createCustomTemplatesSetting();
         $this->environments = $this->createEnvironmentsSetting();
+    }
+
+    private function createCustomContainersHostnameSetting()
+    {
+        return $this->makeSetting('custom_containers_hostname', "", FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $field->title = "Containers Server";
+            $field->description = "Hostname where js files will be served from";
+        });
+    }
+
+    private function createCustomAnalyticsHostnameSetting()
+    {
+        return $this->makeSetting('custom_analytics_hostname', "", FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $field->title = "Analytics Server";
+            $field->description = "Analytics entrypoint server hostname";
+        });
     }
 
     private function createCustomTemplatesSetting()
@@ -136,5 +163,29 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
                 }
             };
         });
+    }
+
+    public function getContainersUrl()
+    {
+        return $this->replacePiwikUrl($this->customContainersHostname->getValue());
+    }
+
+    public function getAnalyticsUrl()
+    {
+        return $this->replacePiwikUrl($this->customAnalyticsHostname->getValue());
+    }
+
+    private function replacePiwikUrl($newUrl): string
+    {
+        $oldUrl = SettingsPiwik::getPiwikUrl();
+        if (! empty($newUrl)) {
+            return str_replace(Config::getHostname(), $newUrl, $oldUrl);
+        }
+        return $oldUrl;
+    }
+
+    public function isHttpsForced()
+    {
+        return SettingsPiwik::isHttpsForced();
     }
 }

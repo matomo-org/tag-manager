@@ -9,11 +9,11 @@ namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Common;
 use Piwik\Settings\FieldConfig;
-use Piwik\SettingsPiwik;
 use Piwik\Site;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\UrlLike;
+use Piwik\Plugins\TagManager\SystemSettings as Settings;
 
 class MatomoConfigurationVariable extends BaseVariable
 {
@@ -42,9 +42,10 @@ class MatomoConfigurationVariable extends BaseVariable
     public function getParameters()
     {
         $idSite = Common::getRequestVar('idSite', 0, 'int');
+        $settings = new Settings();
+        $url = $settings->getAnalyticsUrl();
 
-        $url = SettingsPiwik::getPiwikUrl();
-        if (SettingsPiwik::isHttpsForced()) {
+        if ($settings->isHttpsForced()) {
             $url = str_replace('http://', 'https://', $url);
         } else {
             $url = str_replace(array('http://', 'https://'), '//', $url);

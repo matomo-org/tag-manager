@@ -22,8 +22,7 @@ use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\Model\Trigger;
 use Piwik\Plugins\TagManager\Model\Variable;
 use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
-use Piwik\SettingsPiwik;
-
+use Piwik\Plugins\TagManager\SystemSettings as Settings;
 
 class WebContext extends BaseContext
 {
@@ -212,7 +211,7 @@ class WebContext extends BaseContext
 
     private function getWebPathForRelease($idSite, $idContainer, $environment, $containerCreatedDate)
     {
-        $domain = SettingsPiwik::getPiwikUrl();
+        $domain = (new Settings())->getContainersUrl();
         if (Common::stringEndsWith($domain, '/')) {
             $domain = Common::mb_substr($domain, 0, -1);
         }
