@@ -11,6 +11,7 @@ use Piwik\Common;
 use Piwik\Settings\FieldConfig;
 use Piwik\SettingsPiwik;
 use Piwik\Site;
+use Piwik\Tracker\TrackerCodeGenerator;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\UrlLike;
@@ -57,6 +58,10 @@ class MatomoConfigurationVariable extends BaseVariable
             $field->validators[] = new NotEmpty();
             $field->validators[] = new UrlLike();
         });
+
+        $trackerCodeGenerator = new TrackerCodeGenerator();
+        $jsEndpoint = $trackerCodeGenerator->getJsTrackerEndpoint();
+        $phpEndpoint = $trackerCodeGenerator->getPhpTrackerEndpoint();
 
         return array(
             $matomoUrl,
@@ -206,7 +211,7 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
                 $field->description = 'By bundling the Matomo JavaScript tracker directly into the container it may improve the performance of your website as it reduces the number of needed requests. It is recommended to bundle the Matomo tracker because in most cases the tracker would otherwise be otherwise loaded in a separate request on page view anyway. Note: If you use two different Matomo configurations in one container, the setting of the first configuration used in the first Matomo Tag will be applied to all Matomo tags within one container.';
             }),
-            $this->makeSetting('jsEndpoint', 'piwik.js', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $this->makeSetting('jsEndpoint', $jsEndpoint, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Tracker Javascript Path';
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->availableValues = array(
@@ -218,7 +223,7 @@ class MatomoConfigurationVariable extends BaseVariable
     
                 $field->description = 'Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the "Bundle Tracker" option.';
             }),
-            $this->makeSetting('trackingEndpoint', 'piwik.php', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $this->makeSetting('trackingEndpoint', $phpEndpoint, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Tracking Request Target Path';
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->availableValues = array(
