@@ -18,7 +18,7 @@
             <a href="{{ installInstruction.helpUrl }}" target="_blank" ng-show="installInstruction.helpUrl">{{ 'TagManager_LearnMore'|translate }}</a>
         </p>
 
-        <pre piwik-select-on-focus class="codeblock"
+        <pre piwik-select-on-focus class="codeblock"  ng-show="installInstruction.embedCode"
              ng-bind="installInstruction.embedCode">
         </pre>
     </div>
