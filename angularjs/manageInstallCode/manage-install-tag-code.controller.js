@@ -33,7 +33,9 @@
                 self.isLoading = false;
                 $timeout(function () {
                     var codeBlock = $('.manageInstallTagCode .codeblock');
-                    codeBlock.effect("highlight", {}, 1500);
+                    codeBlock.each(function (i, element) {
+                        $(element).effect("highlight", {}, 1500);
+                    });
                 });
 
             }, function () {
