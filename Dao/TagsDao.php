@@ -223,6 +223,13 @@ class TagsDao extends BaseDao implements TagManagerDao
         $tag['idcontainerversion'] = (int) $tag['idcontainerversion'];
         $tag['fire_delay'] = (int)$tag['fire_delay'];
         $tag['priority'] = (int)$tag['priority'];
+        
+        if ($tag['start_date'] === '0000-00-00 00:00:00') {
+            $tag['start_date'] = null;
+        }
+        if ($tag['end_date'] === '0000-00-00 00:00:00') {
+            $tag['end_date'] = null;
+        }
 
         if (!empty($tag['parameters'])) {
             $tag['parameters'] = json_decode($tag['parameters'], true);
