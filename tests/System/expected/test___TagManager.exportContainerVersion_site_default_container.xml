@@ -92,8 +92,8 @@
 				<customDimensions>
 				</customDimensions>
 				<bundleTracker>1</bundleTracker>
-				<jsEndpoint>piwik.js</jsEndpoint>
-				<trackingEndpoint>piwik.php</trackingEndpoint>
+				<jsEndpoint>matomo.js</jsEndpoint>
+				<trackingEndpoint>matomo.php</trackingEndpoint>
 			</parameters>
 			<lookup_table>
 			</lookup_table>

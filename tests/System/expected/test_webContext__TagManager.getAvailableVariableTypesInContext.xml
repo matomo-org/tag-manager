@@ -1022,8 +1022,8 @@
 					<row>
 						<name>jsEndpoint</name>
 						<title>Tracker Javascript Path</title>
-						<value>piwik.js</value>
-						<defaultValue>piwik.js</defaultValue>
+						<value>matomo.js</value>
+						<defaultValue>matomo.js</defaultValue>
 						<type>string</type>
 						<uiControl>select</uiControl>
 						<uiControlAttributes>
@@ -1043,8 +1043,8 @@
 					<row>
 						<name>trackingEndpoint</name>
 						<title>Tracking Request Target Path</title>
-						<value>piwik.php</value>
-						<defaultValue>piwik.php</defaultValue>
+						<value>matomo.php</value>
+						<defaultValue>matomo.php</defaultValue>
 						<type>string</type>
 						<uiControl>select</uiControl>
 						<uiControlAttributes>
