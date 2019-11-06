@@ -179,6 +179,16 @@ abstract class BaseContext
                         && Variable::hasFieldConfigVariableParameter($parameter['uiControlAttributes']['field2'])) {
                         $parameterTemplateTypes[] = $parameter['name'] . $keyTemplateTypeSeparator . $parameter['uiControlAttributes']['field2']['key'];
                     }
+
+                    if (!empty($parameter['uiControlAttributes']['field3']['key'])
+                        && Variable::hasFieldConfigVariableParameter($parameter['uiControlAttributes']['field3'])) {
+                        $parameterTemplateTypes[] = $parameter['name'] . $keyTemplateTypeSeparator . $parameter['uiControlAttributes']['field3']['key'];
+                    }
+
+                    if (!empty($parameter['uiControlAttributes']['field4']['key'])
+                        && Variable::hasFieldConfigVariableParameter($parameter['uiControlAttributes']['field4'])) {
+                        $parameterTemplateTypes[] = $parameter['name'] . $keyTemplateTypeSeparator . $parameter['uiControlAttributes']['field4']['key'];
+                    }
                 }
 
             }
