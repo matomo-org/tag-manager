@@ -1020,6 +1020,22 @@
 						<condition />
 					</row>
 					<row>
+						<name>registerAsDefaultTracker</name>
+						<title>Register As Default Tracker</title>
+						<value>1</value>
+						<defaultValue>1</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>When enabled, the tracker will be registered as the default one for the website, and will receive all commands that get pushed into the global _paq variable. Useful if you want to use the tracker config from the container with your own _paq.push() JavaScript code.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
 						<name>jsEndpoint</name>
 						<title>Tracker Javascript Path</title>
 						<value>matomo.js</value>
