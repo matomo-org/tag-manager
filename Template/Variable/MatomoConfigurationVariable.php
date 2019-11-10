@@ -211,6 +211,11 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
                 $field->description = 'By bundling the Matomo JavaScript tracker directly into the container it may improve the performance of your website as it reduces the number of needed requests. It is recommended to bundle the Matomo tracker because in most cases the tracker would otherwise be otherwise loaded in a separate request on page view anyway. Note: If you use two different Matomo configurations in one container, the setting of the first configuration used in the first Matomo Tag will be applied to all Matomo tags within one container.';
             }),
+            $this->makeSetting('registerAsDefaultTracker', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = 'Register As Default Tracker';
+                $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+                $field->description = 'When enabled, the tracker will be registered as the default one for the website, and will receive all commands that get pushed into the global _paq variable. Useful if you want to use the tracker config from the container with your own _paq.push() JavaScript code.';
+            }),
             $this->makeSetting('jsEndpoint', $jsEndpoint, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Tracker Javascript Path';
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;

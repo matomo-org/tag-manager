@@ -92,6 +92,7 @@
 				<customDimensions>
 				</customDimensions>
 				<bundleTracker>1</bundleTracker>
+				<registerAsDefaultTracker>1</registerAsDefaultTracker>
 				<jsEndpoint>matomo.js</jsEndpoint>
 				<trackingEndpoint>matomo.php</trackingEndpoint>
 			</parameters>
