@@ -19,13 +19,19 @@
         window.piwikPluginAsyncInit = [];
     }
 
-    window.piwikPluginAsyncInit.push(function () {
-        libAvailable = true;
+    function executeCallbacks() {
 
         var i;
         for (i = 0; i < callbacks.callbacks.length; i++) {
             callbacks.callbacks[i]();
         }
+
+        callbacks.callbacks = [];
+    }
+
+    window.piwikPluginAsyncInit.push(function () {
+        libAvailable = true;
+        executeCallbacks();
     });
 
     function checkLoadedAlready()
@@ -33,6 +39,7 @@
         if (libAvailable || typeof window.Piwik === 'object') {
             libAvailable = true;
             libLoaded = true; // eg loaded by tests or manually by user
+            executeCallbacks();
             return true;
         }
         return false;
