@@ -13,14 +13,14 @@ use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\CharacterLength;
 
-class AdwordsConversionTag extends BaseTag
+class GoogleAds extends BaseTag
 {
     public function getCategory() {
         return self::CATEGORY_REMARKETING;
     }
 
     public function getIcon() {
-        return 'plugins/TagManager/images/icons/adwords.svg';
+        return 'plugins/TagManager/images/icons/googleads.svg';
     }
 
     public function getParameters() {

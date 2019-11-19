@@ -1,8 +1,5 @@
 {
    "TagManager": {
-      "AdwordsConversionTagName": "AdWords Conversion Tracking",
-      "AdwordsConversionTagDescription": "Google AdWords conversion tracking",
-      "AdwordsConversionTagHelp": "",
       "AllElementsClickTriggerDescription": "Triggered when any element is clicked.",
       "AllElementsClickTriggerHelp": "Triggered on any click on any element. To listen to clicks on specific elements, please add conditions based on a \"click\" variable in the advanced settings.",
       "AllElementsClickTriggerName": "All Elements Click",
@@ -249,6 +246,9 @@
       "FullscreenTriggerName": "Full screen",
       "GettingStarted": "Getting Started",
       "GettingStartedNotice": "Want to learn more about Tag Manager is? Click on 'Getting Started' in the left menu.",
+      "GoogleAdsTagName": "AdWords Conversion Tracking",
+      "GoogleAdsTagDescription": "Google AdWords conversion tracking",
+      "GoogleAdsTagHelp": "",
       "GoogleAnalyticsUniversalTagDescription": "Google Analytics is a web analytics service offered by Google.",
       "GoogleAnalyticsUniversalTagHelp": "This tag lets you track website pageviews into your Google Analytics. To obtain the Property-ID please log in to your Google Analytics account.",
       "GoogleAnalyticsUniversalTagName": "Google Analytics (Universal)",
