@@ -14,6 +14,9 @@ class TriggerUpdated extends TriggerBaseActivity
 
     public function extractParams($eventData)
     {
+        if (!$this->hasRequestedApiMethod('updateContainerTrigger')) {
+            return false;
+        }
         list($return, $finalAPIParameters) = $eventData;
 
         $idEntity = $finalAPIParameters['parameters']['idTrigger'];

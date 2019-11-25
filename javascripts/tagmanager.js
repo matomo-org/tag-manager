@@ -211,12 +211,18 @@
                             return actualValue < expectedValue;
                         case 'lower_than_or_equals':
                             return actualValue <= expectedValue;
-                        case 'larger_than':
+                        case 'greater_than':
                             return actualValue > expectedValue;
-                        case 'larger_than_or_equals':
+                        case 'greater_than_or_equals':
                             return actualValue >= expectedValue;
                         case 'contains':
                             return String(actualValue).indexOf(expectedValue) !== -1;
+                        case 'match_css_selector':
+                            if (!expectedValue || !actualValue) {
+                                return false;
+                            }
+                            var nodes = DOM.bySelector(expectedValue)
+                            return utils.indexOfArray(nodes, actualValue) !== -1;
                         case 'starts_with':
                             return String(actualValue).indexOf(expectedValue) === 0;
                         case 'ends_with':
@@ -708,6 +714,11 @@
                     return Math.max(documentAlias.body.offsetWidth, documentAlias.body.scrollWidth, documentAlias.documentElement.offsetWidth, documentAlias.documentElement.clientWidth, documentAlias.documentElement.scrollWidth, 1);
                 },
                 addEventListener: function (element, eventType, eventHandler, useCapture) {
+                    if (!element) {
+                        Debug.log('element not found, cannot add event listener', element, this);
+
+                        return;
+                    }
                     if (element.addEventListener) {
                         useCapture = useCapture || false;
                         element.addEventListener(eventType, eventHandler, useCapture);
@@ -1160,8 +1171,7 @@
                 } else if (utils.isObject(variable.Variable)) {
                     this.theVariable = variable.Variable;
                 } else if (variable.Variable in container.templates) {
-                    var variableTemplate = container.templates[variable.Variable]();
-                    this.theVariable = new variableTemplate(parameters, TagManager);
+                    this.theVariable = new container.templates[variable.Variable](parameters, TagManager);
                 } else {
                     throwError('No matching variable template found');
                 }
@@ -1272,9 +1282,10 @@
                     this.theTrigger = new trigger.Trigger(parameters, TagManager);
                 } else if (utils.isObject(trigger.Trigger)) {
                     this.theTrigger = trigger.Trigger;
+                } else if (trigger.Trigger in container.templates) {
+                    this.theTrigger = new container.templates[trigger.Trigger](parameters, TagManager);
                 } else {
-                    var triggerTemplate = container.templates[trigger.Trigger]();
-                    this.theTrigger = new triggerTemplate(parameters, TagManager);
+                    throwError('No matching trigger template found');
                 }
 
                 parameters = null;
@@ -1339,6 +1350,11 @@
                     if (!dateHelper.matchesDateRange(new Date(), this.startDate, this.endDate)) {
                         Debug.log('not firing as this tag does not match date', this);
                         return 'date range does not match';
+                    }
+
+                    if (!this.theTag || !this.theTag.fire) {
+                        Debug.log('not firing as tag does not exist anymore', this);
+                        return 'tag not found';
                     }
 
                     Debug.log('firing this tag', this);
@@ -1414,9 +1430,10 @@
                     this.theTag = new tag.Tag(parameters, TagManager);
                 } else if (utils.isObject(tag.Tag)) {
                     this.theTag = tag.Tag;
+                } else if (tag.Tag in container.templates) {
+                    this.theTag = new container.templates[tag.Tag](parameters, TagManager);
                 } else {
-                    var tagTemplate = container.templates[tag.Tag]();
-                    this.theTag = new tagTemplate(parameters, TagManager);
+                    throwError('No matching tag template found');
                 }
 
             }

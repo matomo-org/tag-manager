@@ -88,4 +88,12 @@
 		<id>not_regexp_ignore_case</id>
 		<name>not matches the regular expression (ignore case)</name>
 	</row>
+	<row>
+		<id>match_css_selector</id>
+		<name>matches the CSS selector</name>
+	</row>
+	<row>
+		<id>not_match_css_selector</id>
+		<name>not matches the CSS selector</name>
+	</row>
 </result>

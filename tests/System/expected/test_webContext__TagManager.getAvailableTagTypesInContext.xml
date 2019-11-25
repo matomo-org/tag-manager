@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <result>
 	<row>
+		<name>Ads</name>
+		<types>
+			<row>
+				<id>BingUET</id>
+				<name>Bing Ads UET Tag</name>
+				<description>Adds the Bing Ads Universal Event Tracking Tag to your website so you can apply conversion tracking to your Bing ad campaigns.</description>
+				<category>Ads</category>
+				<icon>plugins/TagManager/images/icons/bing.svg</icon>
+				<help>The tag tracks what your customers are doing after they click on your bing ad.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>bingAdID</name>
+						<title>ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Mangager.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
 		<name>Analytics</name>
 		<types>
 			<row>
 				<id>Matomo</id>
 				<name>Matomo Analytics</name>
-				<description>Matomo, formerly known as Piwk, is the leading open source analytics platform.</description>
+				<description>Matomo, formerly known as Piwik, is the leading open source analytics platform.</description>
 				<category>Analytics</category>
 				<icon>plugins/TagManager/images/MatomoIcon.png</icon>
 				<help>This tag lets you track pageviews and events into your Matomo. You can customize the tracking to your needs.</help>
@@ -71,6 +108,38 @@
 						<condition>trackingType == &quot;goal&quot;</condition>
 					</row>
 					<row>
+						<name>documentTitle</name>
+						<title>Custom Title</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally, specify a custom document title which should be tracked instead of the default document title.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot;</condition>
+					</row>
+					<row>
+						<name>customUrl</name>
+						<title>Custom URL</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally, specify a custom URL which should be tracked instead of the current location.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot;</condition>
+					</row>
+					<row>
 						<name>eventCategory</name>
 						<title>Event Category</title>
 						<value />
@@ -123,7 +192,7 @@
 						<title>Event Value</title>
 						<value />
 						<defaultValue />
-						<type>float</type>
+						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
@@ -133,6 +202,102 @@
 						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Emarsys</id>
+				<name>Emarsys</name>
+				<description>Emarsys is the largest independent marketing platform in the world.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/emarsys.svg</icon>
+				<help>This tag adds the asynchronous Emarsys Code to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>merchantId</name>
+						<title>Emarsys Merchant ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your Emarsys Merchant ID</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>commandCategory</name>
+						<title>category</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Report the category currently browsed by the visitor.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>commandView</name>
+						<title>view</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Report a product view.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>commandTag</name>
+						<title>tag</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Add an arbitrary tag to the current event. The tag is collected and can be accessed later from other Emarsys products.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>commandGo</name>
+						<title>go</title>
+						<value />
+						<defaultValue />
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Execute commands in the queue, that is, send them to the recommender service for processing.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
 					</row>
 				</parameters>
 			</row>
@@ -183,6 +348,186 @@
 						<templateFile />
 						<introduction />
 						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>PingdomRUM</id>
+				<name>Pingdom Real User Monitoring (RUM)</name>
+				<description>Pingdom Real User Monitoring (RUM) lets you collect performance data from actual visitors to your site.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/pingdom.svg</icon>
+				<help>This tag allows you to add the Pingdom Real User Monitoring (RUM) to your site.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>pingdomROMId</name>
+						<title>Pingdom RUM Site ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can get the Site ID by logging into Pingdom, going to &quot;Monitoring&quot; and clicking on &quot;Real User Monitoring&quot;. Every added site will get its own Site ID.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>VisualWebsiteOptimizer</id>
+				<name>Visual Website Optimizer</name>
+				<description>Visual Website Optimizer is an all-in-one A/B testing and Conversion Optimization Platform.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/visualwebsitepptimizer.svg</icon>
+				<help>This tag adds the asynchronous VWO Smart Code to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>accountId</name>
+						<title>Visual Website Optimizer Account ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your Visual Website Optimizer Account ID</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Etracker</id>
+				<name>etracker web analysis</name>
+				<description>etracker is a web analytics system, you can choose to send a pageview or an event.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/etracker.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>etrackerConfig</name>
+						<title>etracker Configuration</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<variableType>EtrackerConfiguration</variableType>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Assign a etracker configuration in order to track data into a specific site.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variabletype-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>trackingType</name>
+						<title>Tracking Type</title>
+						<value>pageview</value>
+						<defaultValue>pageview</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<pageview>Pageview</pageview>
+							<event>Event</event>
+						</availableValues>
+						<description>Choose which action should be executed when this tag is fired.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>etrackerEventCategory</name>
+						<title>etracker Category</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The event's category, for example Navigation, Outbound Links, 404 Error...</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;event&quot;</condition>
+					</row>
+					<row>
+						<name>etrackerEventObject</name>
+						<title>etracker Object</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The event's object Name, for example a particular navigation element, a clicked element, form name,...</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;event&quot;</condition>
+					</row>
+					<row>
+						<name>etrackerEventAction</name>
+						<title>etracker Action</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The event's action, for example, click, open, close, play, pause...</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;event&quot;</condition>
+					</row>
+					<row>
+						<name>etrackerEventType</name>
+						<title>etracker Type</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The event's type Name, for example an value of a send form...</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;event&quot;</condition>
 					</row>
 				</parameters>
 			</row>
@@ -295,8 +640,285 @@
 		</types>
 	</row>
 	<row>
+		<name>Developers</name>
+		<types>
+			<row>
+				<id>Bugsnag</id>
+				<name>Bugsnag</name>
+				<description>Add error monitoring to your applications with bugsnag.</description>
+				<category>Developers</category>
+				<icon>plugins/TagManager/images/icons/bugsnag.png</icon>
+				<help>This tag adds the default bugsnag javascript integration to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>apiKey</name>
+						<title>API key</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can find your API key in your project settings from your Bugsnag dashboard.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>collectUserIp</name>
+						<title>collect user IP</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>This should be disable if you don't want to track personal information about your users.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Honeybadger</id>
+				<name>Honeybadger</name>
+				<description>Exception and Uptime Monitoring for Application Developers</description>
+				<category>Developers</category>
+				<icon>plugins/TagManager/images/icons/honeybadger.svg</icon>
+				<help>This tag adds the official Honeybadger Javascript SDK to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>honeybadgerApiKey</name>
+						<title>Honeybadger apiKey</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The apiKey of your honeybadger project</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>honeybadgerEnvironment</name>
+						<title>Environment</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The environment where the container is included (production, dev, etc.). Leave empty to default to the environment of this container.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>honeybadgerRevision</name>
+						<title>Code Revision</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>(optional) the version of your project</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Raygun</id>
+				<name>Raygun</name>
+				<description>Error, crash and performance monitoring software.</description>
+				<category>Developers</category>
+				<icon>plugins/TagManager/images/icons/raygun.svg</icon>
+				<help>This tag adds the official raygun4js SDK to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>raygunApiKey</name>
+						<title>Raygun apiKey</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>When you create a new application in your Raygun dashboard, your app API key is displayed at the top of the instructions page. You can also find the API key by clicking the &quot;Application Settings&quot; button in the side bar of the Raygun dashboard.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>raygunEnablePulse</name>
+						<title>Enable Pulse (Real User Monitoring)</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Automatically identify front end performance issues causing slow page load speeds. See what your users see in the browser and discover why users had poor quality experiences.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>SentryRaven</id>
+				<name>Sentry.io Raven.js</name>
+				<description>Sentry.io is an Open-Source error tracking tool that allows you to detect errors that happen on your website.</description>
+				<category>Developers</category>
+				<icon>plugins/TagManager/images/icons/sentry.svg</icon>
+				<help>This tag adds Raven.js, the official Javascript SDK. Get started by signing up on sentry.io or setting up your own tracking instance.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>sentryDSN</name>
+						<title>Sentry.io DSN</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The DSN (Data Source Name) of your sentry.io project. It should look like 'https://&lt;key&gt;@sentry.io/&lt;project&gt;'</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
 		<name>Social</name>
 		<types>
+			<row>
+				<id>AddThis</id>
+				<name>AddThis</name>
+				<description>Add the AddThis social media buttons and more to your website.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/addthis.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>AddThisPubId</name>
+						<title>AddThis PubId</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Create a new site in Shareaholic and paste the site ID here</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>AddThisParentSelector</name>
+						<title>Inline Tools Parent Selector</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally enter a CSS selector to the element where the Inline Tools should be added.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Drift</id>
+				<name>Drift</name>
+				<description />
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/drift.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>driftId</name>
+						<title>Drift ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The Drift ID is the text between brackets without quotes at the end of the JS snippet: drift.load('mdp4r5w7rh3y');</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
 			<row>
 				<id>FacebookPixel</id>
 				<name>Facebook Pixel</name>
@@ -322,6 +944,289 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description />
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>LinkedinInsight</id>
+				<name>LinkedIn Insight Tag</name>
+				<description>Adds the LinkedIn Insight Tag so you can apply conversion tracking to your LinkedIn ad campaigns.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/linkedin.svg</icon>
+				<help>The tag will enable detailed campaign reporting and information about your website visitors in LinkedIn. It allows you to track conversions, retarget website visitors, and gain additional insights about LinkedIn members that interact with your LinkedIn ads.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>partnerId</name>
+						<title>LinkedIn Partner ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can find the partner ID by logging into your LinkedIn Campaign Manager, and clicking on &quot;Account Assets&quot; followed by &quot;Insight Tag&quot;. If &quot;Insight Tag&quot; is not available, please set up the Insight Tag by clicking on &quot;Conversion Tracking&quot;. There you can enter a domain and continue the set up. You will find the partner ID in the line `_linkedin_partner_id = &quot;123456&quot;`. In this example the ID would be &quot;123456&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>LivezillaDynamic</id>
+				<name>Livezilla Chat / Monitoring</name>
+				<description>Livezilla lets you monitor and chat with visitors on your website.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/livezilla_icon.png</icon>
+				<help>This tag allows you to add the Dynamic Code integration from Livezilla to Chat with you Customers or just Monitor your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>LivezillaDynamicID</name>
+						<title>Livezilla ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Insert the Livezilla ID from your Dynamic Code section.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>LivezillaDynamicDomain</name>
+						<title>Livezilla Domain</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enter the Domain where Livezilla is installed. Example: https://www.example.com</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>LivezillaDynamicDefer</name>
+						<title>Livezilla Script &quot;defer&quot;?</title>
+						<value>1</value>
+						<defaultValue>1</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>In most cases you should let it activated.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Shareaholic</id>
+				<name>Shareaholic</name>
+				<description>Content Marketing Platform &amp; Website Traffic Tools</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/shareaholic.svg</icon>
+				<help>This tag lets you add Shareaholic social media buttons and more to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>shareaholicSiteId</name>
+						<title>Shareaholic Site ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Create a new site in Shareaholic and paste the site ID here</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>shareaholicInPageApp</name>
+						<title>Shareaholic In-Page App</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<row key="">None</row>
+							<share_buttons>Share Buttons</share_buttons>
+							<follow_buttons>Follow Buttons</follow_buttons>
+							<recommendations>Related Content</recommendations>
+							<total_share_count>Total Share Counter</total_share_count>
+						</availableValues>
+						<description>Here you can optionally add an In-Page App to your website.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>shareaholicAppId</name>
+						<title>In-Page App ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>If you want to add an In-Page App enter the App ID here. It is about eight digits long. The App ID is not required for the Total Share Counter.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>shareaholicInPageApp &amp;&amp; shareaholicInPageApp !== &quot;total_share_count&quot;</condition>
+					</row>
+					<row>
+						<name>shareaholicParentSelector</name>
+						<title>In-Page App Parent Selector</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enter a CSS selector to the element where the In-Page App should be added.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>shareaholicInPageApp</condition>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>TawkTo</id>
+				<name>Tawk.to</name>
+				<description>Tawk.to lets you monitor and chat with visitors on your website.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/tawk_to.png</icon>
+				<help>This tag allows you to add the Tawk.to contact form to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>tawkToId</name>
+						<title>tawk.to Site ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can get the Site ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Property Settings&quot;. The Site ID has typically about 25 characters, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>ZendeskChat</id>
+				<name>Zendesk Chat (formerly Zopim)</name>
+				<description>Reach your customers, instantly via web, mobile, and messaging.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/zendesk_chat.svg</icon>
+				<help>This tag allows you to add the Zendesk Chat form to your website.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>zendeskChatId</name>
+						<title>Zendesk Chat ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can get the Site ID by logging into Zendesk Chat, going to &quot;Settings&quot; and clicking on &quot;Widget&quot;. The Site ID has typically about 32 characters and is the text coming directly after &quot;https://v2.zopim.com/?&quot;, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Others</name>
+		<types>
+			<row>
+				<id>ThemeColor</id>
+				<name>Theme Color</name>
+				<description>Style the UI of supported browsers.</description>
+				<category>Others</category>
+				<icon>plugins/TagManager/images/icons/chrome.svg</icon>
+				<help>This tag supports Chrome on Android and other browser that understand 'theme-color'.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>themeColor</name>
+						<title>Theme Color</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Please enter a color as a hexidecimal string (e.g. '#11ee33')</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />

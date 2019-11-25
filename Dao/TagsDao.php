@@ -103,19 +103,19 @@ class TagsDao extends BaseDao implements TagManagerDao
     {
         if (!empty($columns['fire_trigger_ids'])) {
             $columns['fire_trigger_ids'] = json_encode($columns['fire_trigger_ids']);
-        } else {
+        } elseif (isset($columns['fire_trigger_ids'])) {
             $columns['fire_trigger_ids'] = '';
         }
 
         if (!empty($columns['block_trigger_ids'])) {
             $columns['block_trigger_ids'] = json_encode($columns['block_trigger_ids']);
-        } else {
+        } elseif (isset($columns['block_trigger_ids'])) {
             $columns['block_trigger_ids'] = '';
         }
 
         if (!empty($columns['parameters'])) {
             $columns['parameters'] = json_encode($columns['parameters']);
-        } else {
+        } elseif (isset($columns['parameters'])) {
             $columns['parameters'] = '';
         }
 
@@ -221,6 +221,15 @@ class TagsDao extends BaseDao implements TagManagerDao
         $tag['idtag'] = (int) $tag['idtag'];
         $tag['idsite'] = (int) $tag['idsite'];
         $tag['idcontainerversion'] = (int) $tag['idcontainerversion'];
+        $tag['fire_delay'] = (int)$tag['fire_delay'];
+        $tag['priority'] = (int)$tag['priority'];
+        
+        if ($tag['start_date'] === '0000-00-00 00:00:00') {
+            $tag['start_date'] = null;
+        }
+        if ($tag['end_date'] === '0000-00-00 00:00:00') {
+            $tag['end_date'] = null;
+        }
 
         if (!empty($tag['parameters'])) {
             $tag['parameters'] = json_decode($tag['parameters'], true);

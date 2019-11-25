@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idcontainer>aaacont1</idcontainer>
+	<idsite>2</idsite>
+	<context>web</context>
+	<name>Container1</name>
+	<description />
+	
+	
+	
+	
+	<revision>1</revision>
+	<version>
+		<name>container1_v1</name>
+		<description>Version from draft with only triggers</description>
+		<revision>1</revision>
+		
+		
+		
+		
+	</version>
+	<tags>
+	</tags>
+	<triggers>
+		<row>
+			<idtrigger>4</idtrigger>
+			<type>CustomEvent</type>
+			<name>My trigger1</name>
+			<parameters>
+				<eventName>foo</eventName>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtrigger>5</idtrigger>
+			<type>WindowLoaded</type>
+			<name>Mytrigger2</name>
+			<parameters>
+			</parameters>
+			<conditions>
+				<row>
+					<actual>ErrorUrl</actual>
+					<comparison>contains</comparison>
+					<expected>foo</expected>
+				</row>
+			</conditions>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtrigger>6</idtrigger>
+			<type>DomReady</type>
+			<name>Mytrigger3</name>
+			<parameters>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+	</triggers>
+	<variables>
+	</variables>
+</result>

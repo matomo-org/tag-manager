@@ -14,6 +14,7 @@ use Piwik\Date;
 use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Log;
 use Piwik\Piwik;
+use Piwik\Plugin;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
@@ -27,6 +28,7 @@ use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Dao\TriggersDao;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\CoreHome\SystemSummary;
+use Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator;
 use Piwik\Plugins\TagManager\Model\Salt;
 use Piwik\Site;
 use Piwik\View;
@@ -42,7 +44,6 @@ class TagManager extends \Piwik\Plugin
             'AssetManager.getJavaScriptFiles' => 'getJsFiles',
             'Translate.getClientSideTranslationKeys' => 'getClientSideTranslationKeys',
             'CoreUpdater.update.end' => 'regenerateReleasedContainers',
-            'CronArchive.end' => 'regenerateReleasedContainers',
             'PluginManager.pluginActivated' => 'onPluginActivateOrInstall',
             'PluginManager.pluginInstalled' => 'onPluginActivateOrInstall',
             'PluginManager.pluginDeactivated' => 'onPluginActivateOrInstall',
@@ -50,6 +51,7 @@ class TagManager extends \Piwik\Plugin
             'TagManager.regenerateContainerReleases' => 'regenerateReleasedContainers',
             'Updater.componentUpdated' => 'regenerateReleasedContainers',
             'Controller.CoreHome.checkForUpdates.end' => 'regenerateReleasedContainers',
+            'CustomPiwikJs.piwikJsChanged' => 'regenerateReleasedContainers', // in case a Matomo tracker is bundled
             'SitesManager.deleteSite.end' => 'onSiteDeleted',
             'SitesManager.addSite.end' => 'onSiteAdded',
             'System.addSystemSummaryItems' => 'addSystemSummaryItems',
@@ -59,10 +61,18 @@ class TagManager extends \Piwik\Plugin
             'Tracker.PageUrl.getQueryParametersToExclude' => 'getQueryParametersToExclude',
             'API.addGlossaryItems' => 'addGlossaryItems',
             'Template.bodyClass' => 'addBodyClass',
-            'Access.Capability.addCapabilities' => 'addCapabilities'
+            'Access.Capability.addCapabilities' => 'addCapabilities',
+            'TwoFactorAuth.requiresTwoFactorAuthentication' => 'requiresTwoFactorAuthentication'
         );
     }
-    
+
+    public function requiresTwoFactorAuthentication(&$requiresAuth, $module, $action, $parameters)
+    {
+        if ($module == 'TagManager' && $action === 'debug') {
+            $requiresAuth = false;
+        }
+    }
+
     public function addBodyClass(&$out, $type)
     {
         if ($type === 'tagmanager') {
@@ -79,6 +89,12 @@ class TagManager extends \Piwik\Plugin
         $restrictCustomTemplates = $systemSettings->restrictCustomTemplates->getValue();
 
         if ($restrictCustomTemplates === SystemSettings::CUSTOM_TEMPLATES_ADMIN) {
+            // there is no need to show it when they are completely disabled,
+            // when only super users are allowed to use them
+            $capabilities[] = new UseCustomTemplates();
+        }
+
+        if ($restrictCustomTemplates === SystemSettings::CUSTOM_TEMPLATES_SUPERUSER && Piwik::hasUserSuperUserAccess()) {
             // there is no need to show it when they are completely disabled,
             // when only super users are allowed to use them
             $capabilities[] = new UseCustomTemplates();
@@ -206,6 +222,25 @@ class TagManager extends \Piwik\Plugin
 
     public function regenerateReleasedContainers()
     {
+        $pluginManager = Plugin\Manager::getInstance();
+        if (!$pluginManager->isPluginInstalled('TagManager')) {
+            return;
+        }
+
+        try {
+            StaticContainer::get(ContainerIdGenerator::class);
+        } catch (\Exception $e){
+            // tag manager was likely activated in this request because the DI config could not be resolved.
+            // this happens eg when calling "plugin:activate TagManager AnotherPluginName".
+            // in this case tag manager gets installed and activated, and then during the same request, when
+            // AnotherPluginName is being installed, it will go into this method because we listen to plugin
+            // change events and component change events. It will then try to get the container but it fails
+            // because at the beginning of the request, the TagManager was not yet activated and therefore the
+            // TagManager/config/config.php was not loaded. In this case we skip generating containers as it would fail
+            // and a container would not yet exist anyway.
+            return;
+        }
+
         Piwik::doAsSuperUser(function () {
             // we need to run as super user because after a core update the user might not be an admin etc
             // (and admin is needed for debug action)
@@ -566,7 +601,7 @@ class TagManager extends \Piwik\Plugin
         if (self::$enableAutoContainerCreation && $this->hasMeasurableTypeWebsite($idSite)) {
             Request::processRequest('TagManager.createDefaultContainerForSite', array(
                 'idSite' => $idSite,
-            ));
+            ), $default = []);
         }
     }
 

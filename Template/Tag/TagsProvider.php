@@ -71,12 +71,6 @@ class TagsProvider {
             $blockedTags = $this->configuration->getDisabledTags();
             $blockedTags = array_map('strtolower', $blockedTags);
 
-            if ($this->settings->restrictCustomTemplates->getValue() === SystemSettings::CUSTOM_TEMPLATES_DISABLED) {
-                foreach ($this->getCustomTemplateIds() as $customType) {
-                    $blockedTags[] = $customType;
-                }
-            }
-
             $tagClasses = $this->pluginManager->findMultipleComponents('Template/Tag', 'Piwik\\Plugins\\TagManager\\Template\\Tag\\BaseTag');
 
             $tags = array();
@@ -96,9 +90,15 @@ class TagsProvider {
              */
             Piwik::postEvent('TagManager.addTags', array(&$tags));
 
+            $restrictValue = $this->settings->restrictCustomTemplates->getValue();
+            $disableCustomTemplates = $restrictValue === SystemSettings::CUSTOM_TEMPLATES_DISABLED;
+
             foreach ($tagClasses as $tag) {
                 /** @var BaseTag $tagInstance */
                 $tagInstance = StaticContainer::get($tag);
+                if ($disableCustomTemplates && $tagInstance->isCustomTemplate()) {
+                    continue;
+                }
                 if (in_array(strtolower($tagInstance->getId()), $blockedTags, true)) {
                     continue;
                 }
@@ -131,17 +131,12 @@ class TagsProvider {
 
     public function isCustomTemplate($id)
     {
-        return in_array($id, $this->getCustomTemplateIds(), true);
-    }
-
-    public function getCustomTemplateIds()
-    {
-        $ids = array();
         foreach ($this->getAllTags() as $tag) {
-            if ($tag->isCustomTemplate()) {
-                $ids[] = $tag->getId();
+            if ($tag->isCustomTemplate() && $tag->getId() === $id) {
+                return true;
             }
         }
-        return $ids;
+        return false;
     }
+
 }

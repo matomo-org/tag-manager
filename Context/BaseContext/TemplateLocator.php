@@ -9,6 +9,7 @@ namespace Piwik\Plugins\TagManager\Context\BaseContext;
 
 use Piwik\Plugins\TagManager\Template\Tag\TagsProvider;
 use Piwik\Plugins\TagManager\Template\Trigger\TriggersProvider;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
 
 class TemplateLocator
@@ -82,7 +83,10 @@ class TemplateLocator
         if ($variableTemplate) {
             $template = $variableTemplate->loadTemplate($contextId, $variable);
             if ($template) {
-                $methodName = $variable['type'] . 'Variable';
+                $methodName = $variableType . 'Variable';
+                if ($variableType === CustomJsFunctionVariable::ID) {
+                    $methodName .= substr(md5(json_encode($variable['parameters'])), 0, 8);
+                }
                 $this->templateFunctions[$methodName] = $template;
 
                 return $methodName;

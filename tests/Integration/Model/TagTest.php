@@ -251,8 +251,8 @@ class TagTest extends IntegrationTestCase
             'fire_trigger_ids' => array (1),
             'block_trigger_ids' => array (),
             'fire_limit' => 'unlimited',
-            'priority' => '0',
-            'fire_delay' => '0',
+            'priority' => 0,
+            'fire_delay' => 0,
             'start_date' => null,
             'end_date' => null,
             'created_date' => '2018-01-01 02:03:04',
@@ -341,8 +341,8 @@ class TagTest extends IntegrationTestCase
             'fire_trigger_ids' =>[1],
             'block_trigger_ids' =>[3],
             'fire_limit' => 'once_lifetime',
-            'priority' => '99',
-            'fire_delay' => '9',
+            'priority' => 99,
+            'fire_delay' => 9,
             'start_date' => '2017-03-01 01:01:01',
             'end_date' => '2018-03-01 01:01:01',
             'created_date' => '2018-01-01 02:03:04',
@@ -538,8 +538,8 @@ class TagTest extends IntegrationTestCase
             'fire_trigger_ids' =>[1],
             'block_trigger_ids' =>[3],
             'fire_limit' => 'once_lifetime',
-            'priority' => '99',
-            'fire_delay' => '9',
+            'priority' => 99,
+            'fire_delay' => 9,
             'start_date' => '2017-03-01 01:01:01',
             'end_date' => '2018-03-01 01:01:01',
             'created_date' => '2018-01-01 02:03:04',
@@ -642,16 +642,17 @@ class TagTest extends IntegrationTestCase
             'status' => 'active',
             'parameters' =>
                 array (
+                    'customHtml' => '<script></script>'
                 ),
             'fire_trigger_ids' =>
-                array (
+                array (1
                 ),
             'block_trigger_ids' =>
                 array (
                 ),
             'fire_limit' => 'unlimited',
-            'priority' => '9999',
-            'fire_delay' => '0',
+            'priority' => 9999,
+            'fire_delay' => 0,
             'start_date' => '2018-01-01 02:03:04',
             'end_date' => '2018-01-01 02:03:04',
             'created_date' => '2018-01-01 02:03:04',
@@ -773,13 +774,14 @@ class TagTest extends IntegrationTestCase
                 ),
             'fire_trigger_ids' =>
                 array (
+                    1
                 ),
             'block_trigger_ids' =>
                 array (
                 ),
             'fire_limit' => 'unlimited',
-            'priority' => '9999',
-            'fire_delay' => '0',
+            'priority' => 9999,
+            'fire_delay' => 0,
             'start_date' => '2018-01-01 02:03:04',
             'end_date' => '2018-01-01 02:03:04',
             'created_date' => '2018-01-01 02:03:04',

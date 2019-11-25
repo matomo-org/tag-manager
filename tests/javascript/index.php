@@ -1,3 +1,11 @@
+<?php
+/**
+ * Matomo - free/libre analytics platform
+ *
+ * @link https://matomo.org
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ */
+?>
 <div id="TagManager" mytagattribute="test" class="myTagTest myTagFoo myTagTest4" attributeWithoutValue data-tag-test>
     <div id="customTag1"
          title="My Title Title"
@@ -19,6 +27,7 @@
 </div>
 <a href="https://www.example.click" id="ClickTagManager1" class="tag123 clicktag23">my link</a>
 <a href="https://www.example.click/foo/bar" id="ClickTagManager2">my link</a>
+<a href="https://www.example.click/foo/bar3" id="ClickTagManager3"><span><span id="ClickTagManager3Span">my link</span></span></a>
 
 <script type="text/javascript">
 
@@ -365,7 +374,7 @@
         });
 
         test("Matomo TagManager Utils", function() {
-            expect(283);
+            expect(304);
 
             var utils = window.MatomoTagManager.utils;
 
@@ -510,15 +519,15 @@
                 {expected: true, actualValue: 5678, type: 'ends_with', expectedValue: 78},
                 {expected: false, actualValue: 5678, type: 'ends_with', expectedValue: 79},
 
-                // larger_than
-                {expected: true, actualValue: '6', type: 'larger_than', expectedValue: '5'},
-                {expected: false, actualValue: '5', type: 'larger_than', expectedValue: '5'},
-                {expected: false, actualValue: '4', type: 'larger_than', expectedValue: '5'},
+                // greater_than
+                {expected: true, actualValue: '6', type: 'greater_than', expectedValue: '5'},
+                {expected: false, actualValue: '5', type: 'greater_than', expectedValue: '5'},
+                {expected: false, actualValue: '4', type: 'greater_than', expectedValue: '5'},
 
-                // larger_than_or_equals
-                {expected: true, actualValue: '6', type: 'larger_than_or_equals', expectedValue: '5'},
-                {expected: true, actualValue: '5', type: 'larger_than_or_equals', expectedValue: '5'},
-                {expected: false, actualValue: '4', type: 'larger_than_or_equals', expectedValue: '5'},
+                // greater_than_or_equals
+                {expected: true, actualValue: '6', type: 'greater_than_or_equals', expectedValue: '5'},
+                {expected: true, actualValue: '5', type: 'greater_than_or_equals', expectedValue: '5'},
+                {expected: false, actualValue: '4', type: 'greater_than_or_equals', expectedValue: '5'},
 
                 // lower_than
                 {expected: false, actualValue: '6', type: 'lower_than', expectedValue: '5'},
@@ -549,19 +558,40 @@
                 {expected: true, actualValue: 'foohTTp', type: 'regexp_ignore_case', expectedValue: 'hTTp$'},
                 {expected: true, actualValue: 'http', type: 'regexp_ignore_case', expectedValue: 'http$'},
                 {expected: false, actualValue: 5, type: 'regexp_ignore_case', expectedValue: 'http$'},
+
+                // match_css_selector
+                {expected: true, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '#TagManager #customTag2'},
+                {expected: true, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '.myTagFoo #customTag2'},
+                {expected: true, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '#customTag2'},
+                {expected: false, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: 'body'},
+                {expected: false, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: ''},
+                {expected: false, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '#customTag3'},
+                {expected: false, actualValue: document.getElementById('customTag2'), type: 'match_css_selector', expectedValue: '#noerkerke #customTag2'}
             ];
+
+            function compareSummary(atest)
+            {
+                var test = {};
+                test.expected = atest.expected;
+                test.type = atest.type;
+                if (atest.type !== 'match_css_selector') {
+                    test.actualValue = atest.actualValue;
+                }
+                test.expectedValue = atest.expectedValue;
+                return JSON.stringify(test);
+            }
 
             var atest, result;
             for (var i = 0; i < tests.length; i++) {
                 atest = tests[i];
                 result = utils._compare(atest.actualValue, atest.expectedValue, atest.type);
-                strictEqual(atest.expected, result, '_compare: ' + JSON.stringify(atest));
+                strictEqual(atest.expected, result, '_compare: ' + compareSummary(atest));
 
                 result = utils.compare(atest.actualValue, atest.expectedValue, atest.type);
-                strictEqual(atest.expected, result, '_compare: ' + JSON.stringify(atest));
+                strictEqual(atest.expected, result, '_compare: ' + compareSummary(atest));
 
                 result = utils.compare(atest.actualValue, atest.expectedValue, 'not_' + atest.type);
-                strictEqual(!atest.expected, result, '_compare: ' + JSON.stringify(atest));
+                strictEqual(!atest.expected, result, '_compare: ' + compareSummary(atest));
             }
         });
 
@@ -792,7 +822,7 @@
 
             strictEqual('test12', buildVariable(varWithFunctionTemplate).get(), 'Variable, creates a new instance of the template function');
             strictEqual('test14', buildVariable(varWithObjectTemplate).get(), 'Variable, can work with a template object');
-            strictEqual('test12', buildVariable(varWithStringTemplate, {myTemplate: function () { return varWithFunctionTemplate.Variable; }}).get(), 'Variable, can resolve a string container template');
+            strictEqual('test12', buildVariable(varWithStringTemplate, {myTemplate: varWithFunctionTemplate.Variable}).get(), 'Variable, can resolve a string container template');
             strictEqual('test12', buildVariable(varWithFunctionTemplate).toString(), 'Variable, has a toString method');
             deepEqual(varWithStringTemplate, buildVariable(varWithStringTemplate, {myTemplate: function () { return varWithFunctionTemplate.Variable; }}).getDefinition(), 'Variable, getDefinition');
 
@@ -882,7 +912,7 @@
             strictEqual(TagManager, window.MatomoTagManager, 'Tag template, function passes tagmanager');
             strictEqual(tag, parameters.tag, 'Tag template, function passes parameters');
 
-            tag = buildTag({Tag: 'myTagTemplate'}, {myTagTemplate: function () { return exampleTag; }});
+            tag = buildTag({Tag: 'myTagTemplate'}, {myTagTemplate: exampleTag });
             tag.fire();
             strictEqual(2, wasFired, 'Tag template, can be a string referencing templates');
             strictEqual(TagManager, window.MatomoTagManager, 'Tag template, string reference passes tagmanager');
@@ -1123,7 +1153,7 @@
             strictEqual(TagManager, window.MatomoTagManager, 'Trigger template, function passes tagmanager');
             strictEqual(trigger, parameters.trigger, 'Trigger template, function passes parameters');
 
-            trigger = buildTrigger({Trigger: 'myTriggerTemplate'}, {myTriggerTemplate: function () { return TriggerTemplate; }});
+            trigger = buildTrigger({Trigger: 'myTriggerTemplate'}, {myTriggerTemplate: TriggerTemplate});
             trigger.setUp();
             strictEqual(2, numSetups, 'Trigger template, can be a string referencing templates');
             strictEqual(TagManager, window.MatomoTagManager, 'Trigger template, string reference passes tagmanager');
@@ -1762,6 +1792,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([{
                 "event": "mtm.AllElementsClick",
+                "mtm.clickElement": target,
                 "mtm.clickElementClasses": "myTagTest myTagFoo myTagTest4",
                 "mtm.clickElementId": "TagManager",
                 "mtm.clickElementUrl": null,
@@ -1777,6 +1808,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllElementsClick",
+                "mtm.clickElement": target,
                 "mtm.clickElementClasses": "",
                 "mtm.clickElementId": "ClickTagManager2",
                 "mtm.clickElementUrl": "https://www.example.click/foo/bar",
@@ -1786,7 +1818,7 @@
         });
 
         test("Matomo TagManager Template AllLinksClick", function() {
-            expect(4);
+            expect(5);
             var templateToTest = 'AllLinksClickTrigger';
 
             var parameters = {};
@@ -1810,6 +1842,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllLinksClick",
+                "mtm.clickElement": target,
                 "mtm.clickElementClasses": "",
                 "mtm.clickElementId": "ClickTagManager2",
                 "mtm.clickElementUrl": "https://www.example.click/foo/bar",
@@ -1825,12 +1858,29 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllLinksClick",
+                "mtm.clickElement": target,
                 "mtm.clickElementClasses": "tag123 clicktag23",
                 "mtm.clickElementId": "ClickTagManager1",
                 "mtm.clickElementUrl": "https://www.example.click",
                 "mtm.clickNodeName": "A",
                 "mtm.clickText": "my link"
             }], events, 'should have triggered a link click 1');
+
+            events = [];
+            var target = document.getElementById('ClickTagManager3Span');
+            target.addEventListener('click', function (event) {
+                event.preventDefault(); // do not execute in ie10
+            });
+            triggerEvent(target, 'click', null, true);
+            deepEqual([ {
+                "event": "mtm.AllLinksClick",
+                "mtm.clickElement": document.getElementById('ClickTagManager3'),
+                "mtm.clickElementClasses": "",
+                "mtm.clickElementId": "ClickTagManager3",
+                "mtm.clickElementUrl": "https://www.example.click/foo/bar3",
+                "mtm.clickNodeName": "A",
+                "mtm.clickText": "my link"
+            }], events, 'should have triggered a link click 3');
         });
 
         test("Matomo TagManager Template FormSubmit", function() {
@@ -1863,6 +1913,7 @@
             triggerEvent(form, 'submit', null, true);
             deepEqual([ {
                 "event": "mtm.FormSubmit",
+                "mtm.formElement": form,
                 "mtm.formElementAction": location.href,
                 "mtm.formElementClasses": "",
                 "mtm.formElementId": null,
@@ -1878,6 +1929,7 @@
             triggerEvent(form, 'submit', null, true);
             deepEqual([ {
                 "event": "mtm.FormSubmit",
+                "mtm.formElement": form,
                 "mtm.formElementAction": "/post/data?x=1",
                 "mtm.formElementClasses": "myclass1 myclass2",
                 "mtm.formElementId": 'myformIdtag',

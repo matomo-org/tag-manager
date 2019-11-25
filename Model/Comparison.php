@@ -48,6 +48,7 @@ class Comparison
             ['id' => 'greater_than_or_equals', 'name' => Piwik::translate('TagManager_ComparisonGreaterThanOrEqual')],
             ['id' => 'regexp', 'name' => Piwik::translate('TagManager_ComparisonMatchesRegexp')],
             ['id' => 'regexp_ignore_case', 'name' => Piwik::translate('TagManager_ComparisonMatchesRegexp') . ' (' . Piwik::translate('TagManager_ComparisonIgnoreCase') . ')'],
+            ['id' => 'match_css_selector', 'name' => Piwik::translate('TagManager_ComparisonMatchesCssSelector')],
         );
 
         $allComparisons = [];

@@ -28,6 +28,8 @@
 				<matomoConfig>{{Matomo Configuration}}</matomoConfig>
 				<trackingType>pageview</trackingType>
 				<idGoal />
+				<documentTitle />
+				<customUrl />
 				<eventCategory />
 				<eventAction />
 				<eventName />
@@ -70,7 +72,7 @@
 			<type>MatomoConfiguration</type>
 			<name>Matomo Configuration</name>
 			<parameters>
-				<matomoUrl>//localhost/tests/PHPUnit/proxy/</matomoUrl>
+				<matomoUrl>//example.com/piwik/tests/PHPUnit/proxy/</matomoUrl>
 				<idSite>6</idSite>
 				<enableLinkTracking>1</enableLinkTracking>
 				<enableCrossDomainLinking>0</enableCrossDomainLinking>
@@ -80,11 +82,19 @@
 				<trackAllContentImpressions>0</trackAllContentImpressions>
 				<trackVisibleContentImpressions>0</trackVisibleContentImpressions>
 				<disableCookies>0</disableCookies>
+				<setSecureCookie>0</setSecureCookie>
 				<cookieDomain />
 				<cookiePath />
+				<domains>
+				</domains>
+				<alwaysUseSendBeacon>0</alwaysUseSendBeacon>
 				<userId />
 				<customDimensions>
 				</customDimensions>
+				<bundleTracker>1</bundleTracker>
+				<registerAsDefaultTracker>1</registerAsDefaultTracker>
+				<jsEndpoint>matomo.js</jsEndpoint>
+				<trackingEndpoint>matomo.php</trackingEndpoint>
 			</parameters>
 			<lookup_table>
 			</lookup_table>

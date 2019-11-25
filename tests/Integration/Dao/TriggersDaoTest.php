@@ -227,6 +227,24 @@ class TriggersDaoTest extends IntegrationTestCase
         ));
     }
 
+    public function test_updateTrigger_keepsConditions()
+    {
+        $idSite = 3;
+        $idContainerVersion = 5;
+        $idTrigger = $this->createTrigger($idSite, $idContainerVersion, 'myname');
+        $this->assertEquals(1, $idTrigger);
+
+        $trigger = $this->dao->getContainerTrigger($idSite, $idContainerVersion, $idTrigger);
+        $this->assertNotEmpty($trigger['conditions']);
+
+        $this->dao->updateTriggerColumns($idSite, $idContainerVersion, $idTrigger, array(
+            'name' => 'name2'
+        ));
+
+        $trigger = $this->dao->getContainerTrigger($idSite, $idContainerVersion, $idTrigger);
+        $this->assertNotEmpty($trigger['conditions']);
+    }
+
     public function test_updateTriggerColumns_doesNotFailWhenNoColumsAreToBeUpdated()
     {
         $idTrigger = $this->createTrigger($idSite = 3);

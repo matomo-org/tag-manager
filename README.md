@@ -1,13 +1,10 @@
 # Free Open Source Matomo Tag Manager
 
 [![Build Status](https://travis-ci.org/matomo-org/tag-manager.svg?branch=master)](https://travis-ci.org/matomo-org/tag-manager)
-[![License](https://poser.pugx.org/matomo-org/tag-manager/license)](https://matomo.org/free-software/)
 
 ## Description
 
 <div class="alert alert-info">
-Matomo Tag Manager is currently in beta. As such it may contain bugs, may not work as expected at all times and data could get lost. Please <a href="https://github.com/matomo-org/tag-manager/issues">report any issues</a> you encounter or any other feedback back to us.
-
 Are you a developer? Please consider contributing more tags to our open source tag manager. Learn more on how to develop custom tags, triggers, and variables.
 </div>
 
@@ -119,7 +116,7 @@ Are you a developer? If you use features regulary which are not available yet, o
 
 ## License
 
-Matomo Tag Manager is released under the GPL v3 (or later) license, see [misc/gpl-3.0.txt](misc/gpl-3.0.txt)
+Matomo Tag Manager is released under the GPL v3 (or later) license, see [LICENSE](LICENSE)
 
 ## Installation & Requirements
 

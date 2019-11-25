@@ -67,7 +67,11 @@
         "ContextWeb": "Web",
         "EndDate": "Data final",
         "Filter": "Filtro",
+        "GettingStartedRemarketing": "Remarketing",
+        "GettingStartedAffiliates": "Afiliados",
+        "GettingStartedAds": "Publicidades",
         "LastUpdated": "Última atualização",
+        "LearnMore": "Saber mais",
         "ManageX": "Gerenciar %s",
         "Change": "Mudar",
         "PageTitleVariableName": "Título da página",
@@ -77,6 +81,7 @@
         "ReferrerVariableName": "URL do Referenciador",
         "StartDate": "Data de início",
         "Tag": "Tag",
+        "Trigger": "Disparo",
         "Type": "Tipo",
         "Version": "Versão"
     }

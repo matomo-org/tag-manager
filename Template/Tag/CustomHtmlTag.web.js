@@ -236,8 +236,13 @@
 
                     if (htmlPosition === 'headStart' || htmlPosition === 'headEnd') {
                         moveNodes(parameters.document.head, children, append);
-                    } else {
+                    } else if (parameters.document.body) {
                         moveNodes(parameters.document.body, children, append);
+                    } else {
+                        // tag manager is embedded in head and loaded before body exists, need to wait for body to exist
+                        TagManager.dom.onReady(function () {
+                            moveNodes(parameters.document.body, children, append);
+                        });
                     }
                 }
             }

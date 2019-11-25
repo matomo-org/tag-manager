@@ -12,12 +12,7 @@ services:
 
 addons:
   apt:
-    sources:
-      - deadsnakes
-
     packages:
-      - python2.6
-      - python2.6-dev
       - nginx
       - realpath
       - lftp
@@ -39,15 +34,11 @@ env:
     - secure: "aWxaWyShsra7EAU3SvsIXIy9EvTiGS8qOBo1sg5AzyzaF+TjykS/WdKy8O1hqoOmcBkuPG/CkMLORwEVtzOFhEpEo4LWzZYn3CbKF4JYPUZkoOC5elc7K8z3W2TeNjixQJiguMVkFVzpyJHd9MYMwamlTkESBoDE0/YVSyB8+ypFMYOjESMymG+252hrTowgdilpu52iDWkCscIGsHBaw8RDIV2ddi2h2sPCGMwbeXtssQytrSFfclC8N9hsYxMlVeds5GbOlL8Osd39P4hxwZoXZ+In129SCj6PEGco9NBztpvRwLVvCpxn/fQoGTZd4BzYNxW3fA24P71oXIVeA9mKiTAbBIJZng0VLzpC07sS3kilROQQuvGDv4eoQYYPPsp3OQPcxdguIF19SC+Wfn5kdVYArox3+GUnvH8yzOiU8ShE8zKIpal4vERg5zLM11X8CRZEDRfde3sOIQhBnhwa/5J1Mw3aIdbXvBPq4z3lRINbrUPjnZmNr0SVn2CNFJTOcMNpVMh1WlBd/hvE3OMYQuTe7R38rUAzUv+peZh/YSLW7c7MFrhr2I+m+9VzJZLCha6IcA3uzAj2rFjN/Wim1WhYO19IPPp562LClPJEZbBc27KuSBrVhH412JjMuxPNxENarTdaQjFGBPDDQk9mSiw2NmlnM2gn+NY1tTE="
   matrix:
     - TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
-    - TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_CORE=minimum_required_piwik
     - TEST_SUITE=UITests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
 
 matrix:
   exclude:
     # execute latest stable tests only w/ PHP 5.6
-    - php: 5.5
-      env: TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_CORE=minimum_required_piwik
-    # execute UI tests only w/ PHP 5.6
     - php: 5.5
       env: TEST_SUITE=UITests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
   include:
@@ -67,6 +58,7 @@ sudo: required
 script: $PIWIK_ROOT_DIR/tests/travis/travis.sh
 
 before_install:
+  - if [[ "${TEST_SUITE}" == "UITests" ]]; then git lfs fetch; git lfs checkout; fi
 
 install:
   # move all contents of current repo (which contains the plugin) to a new directory
@@ -106,7 +98,7 @@ install:
   - ./tests/travis/checkout_dependent_plugins.sh
 
 before_script:
-  - if [[ "$TRAVIS_PHP_VERSION" != 7* ]]; then phpenv config-rm xdebug.ini; fi
+  - phpenv config-rm xdebug.ini
 
   # add always_populate_raw_post_data=-1 to php.ini
   - echo "always_populate_raw_post_data=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
@@ -131,7 +123,7 @@ after_script:
   # output contents of files w/ debugging info to screen
   - cat $PIWIK_ROOT_DIR/tests/travis/error.log
   - cat $PIWIK_ROOT_DIR/tmp/php-fpm.log
-  - cat $PIWIK_ROOT_DIR/tmp/logs/piwik.log
+  - cat $PIWIK_ROOT_DIR/tmp/logs/matomo.log
   - cat $PIWIK_ROOT_DIR/config/config.ini.php
 
   # upload test artifacts (for debugging travis failures)

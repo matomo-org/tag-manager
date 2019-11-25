@@ -208,6 +208,7 @@
                 } else {
                     this.trigger.conditions.splice(index, 1);
                 }
+                this.isDirty = true;
             }
         };
 

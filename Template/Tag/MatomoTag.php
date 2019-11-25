@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Container\StaticContainer;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
@@ -16,6 +17,7 @@ class MatomoTag extends BaseTag
 {
     const ID = 'Matomo';
     const PARAM_MATOMO_CONFIG = 'matomoConfig';
+    const REPLACE_TRACKER_KEY = "var replaceMeWithTracker='';";
 
     public function getId()
     {
@@ -64,6 +66,24 @@ class MatomoTag extends BaseTag
                     $field->validators[] = new CharacterLength(1, 500);
                 }
             }),
+            $this->makeSetting('documentTitle', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Custom Title';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->description = 'Optionally, specify a custom document title which should be tracked instead of the default document title.';
+                $field->condition = 'trackingType == "pageview"';
+                if ($trackingType->getValue() === 'pageview') {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+            }),
+            $this->makeSetting('customUrl', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Custom URL';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->description = 'Optionally, specify a custom URL which should be tracked instead of the current location.';
+                $field->condition = 'trackingType == "pageview"';
+                if ($trackingType->getValue() === 'pageview') {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+            }),
             $this->makeSetting('eventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Event Category';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
@@ -91,12 +111,24 @@ class MatomoTag extends BaseTag
                 $field->condition = 'trackingType == "event"';
                 $field->validators[] = new CharacterLength(0, 500);
             }),
-            $this->makeSetting('eventValue', '', FieldConfig::TYPE_FLOAT, function (FieldConfig $field) {
+            $this->makeSetting('eventValue', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Event Value';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->description = 'The event\'s value, for example "50" as in user has stayed on the website for 50 seconds.';
                 $field->condition = 'trackingType == "event"';
-                $field->validators[] = new NumberRange();
+                $field->validators[] = new CharacterLength(0, 500);
+                $field->validate = function ($value) {
+                    if (empty($value)) {
+                        return;
+                    }
+                    if (is_numeric($value)) {
+                        return; // valid
+                    }
+                    $posBracket = strpos($value, '{{');
+                    if ($posBracket === false || strpos($value, '}}', $posBracket) === false) {
+                        throw new \Exception('The event value can only include numeric values and variables.');
+                    }
+                };
                 $field->transform = function ($value) {
                     if ($value === null || $value === false || $value === ''){
                         // we make sure in those cases we do not case the value to float automatically by Setting class because
@@ -105,9 +137,30 @@ class MatomoTag extends BaseTag
                     }
                     return $value;
                 };
-                $field->validate = function (){}; // prevent executing default float validator which requires a value, value here is optional
             })
         );
+    }
+
+    public function loadTemplate($context, $entity)
+    {
+        $template = parent::loadTemplate($context, $entity);
+        // !isset() because when bundleTracker is not defined for some reason we enable it by default
+        $bundleTrackerEnabled = !isset($entity['parameters']['matomoConfig']['parameters']['bundleTracker'])
+                             || !empty($entity['parameters']['matomoConfig']['parameters']['bundleTracker']);
+        if ($template && $bundleTrackerEnabled) {
+            $trackerUpdater = StaticContainer::get('Piwik\Plugins\CustomPiwikJs\TrackerUpdater');
+            $tracker = $trackerUpdater->getUpdatedTrackerFileContent();
+
+            if (!$tracker) {
+                $tracker = @file_get_contents(PIWIK_DOCUMENT_ROOT . '/matomo.js');
+            }
+            if (!$tracker) {
+                $tracker = @file_get_contents(PIWIK_DOCUMENT_ROOT . '/piwik.js');
+            }
+
+            return str_replace(self::REPLACE_TRACKER_KEY, $tracker, $template);
+        }
+        return $template;
     }
 
     public function getOrder()

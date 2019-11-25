@@ -249,6 +249,24 @@ class TagsDaoTest extends IntegrationTestCase
         ));
     }
 
+    public function test_updateTag_keepsTriggersAndParameters()
+    {
+        $idSite = 3;
+        $idContainerVersion = 5;
+        $idTag = $this->createTag($idSite, $idContainerVersion, 'myname');
+        $this->assertEquals(1, $idTag);
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag['fire_trigger_ids']);
+
+        $this->dao->updateTagColumns($idSite, $idContainerVersion, $idTag, array(
+            'name' => 'MyName3'
+        ));
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag['fire_trigger_ids']);
+    }
+
     public function test_updateTagColumns_doesNotFailWhenNoColumsAreToBeUpdated()
     {
         $idTag = $this->createTag($idSite = 3);

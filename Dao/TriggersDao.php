@@ -90,13 +90,13 @@ class TriggersDao extends BaseDao implements TagManagerDao
     {
         if (!empty($columns['parameters'])) {
             $columns['parameters'] = json_encode($columns['parameters']);
-        } else {
+        } elseif (isset($columns['parameters'])) {
             $columns['parameters'] = '';
         }
 
         if (!empty($columns['conditions'])) {
             $columns['conditions'] = json_encode($columns['conditions']);
-        } else {
+        } elseif (isset($columns['conditions'])) {
             $columns['conditions'] = '';
         }
 

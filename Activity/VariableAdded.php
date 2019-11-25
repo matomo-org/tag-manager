@@ -14,6 +14,9 @@ class VariableAdded extends VariableBaseActivity
 
     public function extractParams($eventData)
     {
+        if (!$this->hasRequestedApiMethod('addContainerVariable')) {
+            return false;
+        }
         list($idEntity, $finalAPIParameters) = $eventData;
 
         $idSite = $finalAPIParameters['parameters']['idSite'];

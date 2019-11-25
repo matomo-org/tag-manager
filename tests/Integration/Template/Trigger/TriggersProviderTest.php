@@ -6,11 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-namespace Piwik\Plugins\TagManager\tests\Integration\Template\Tag;
+namespace Piwik\Plugins\TagManager\tests\Integration\Template\Trigger;
 
 use Piwik\Config;
 use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Configuration;
+use Piwik\Plugins\TagManager\SystemSettings;
 use Piwik\Plugins\TagManager\Template\Trigger\DomReadyTrigger;
 use Piwik\Plugins\TagManager\Template\Trigger\TriggersProvider;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
@@ -32,7 +33,7 @@ class TriggersProviderTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->provider = StaticContainer::get('Piwik\Plugins\TagManager\Template\Trigger\TriggersProvider');
+        $this->provider = StaticContainer::get(TriggersProvider::class);
     }
 
     public function test_getAllTriggers()
@@ -96,10 +97,16 @@ class TriggersProviderTest extends IntegrationTestCase
         $this->assertNull($this->provider->getTrigger('DomReady'));
     }
 
-    public function test_getCustomTemplateIds()
+    public function test_getAllWorksWhenCustomTemplatesDisabled()
     {
-        $triggers = $this->provider->getCustomTemplateIds();
-        $this->assertSame(array(), $triggers);
+        $settings = StaticContainer::get(SystemSettings::class);
+        $settings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_DISABLED);
+        /** @var TriggersProvider $provider */
+        $provider = StaticContainer::getContainer()->make(TriggersProvider::class, array(
+            'systemSettings' => $settings
+        ));
+        $triggers = $provider->getAllTriggers();
+        $this->assertNotEmpty($triggers);
     }
 
     public function test_isCustomTemplate()

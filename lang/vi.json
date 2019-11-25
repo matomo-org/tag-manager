@@ -3,12 +3,15 @@
         "CategoryClicks": "Clicks",
         "CategoryDate": "Ngày",
         "CategoryEmail": "Email",
+        "CategoryErrors": "Lỗi",
         "CategoryHistory": "Lịch sử",
+        "ComparisonContains": "chứa",
         "Condition": "Điều kiện",
         "PageTitleVariableName": "Tiêu đề trang",
         "PageUrlVariableName": "URL của trang",
         "ReferrerUrlVariableName": "URL tham chiếu",
         "ReferrerVariableName": "URL tham chiếu",
+        "Tag": "Thẻ",
         "Type": "Kiểu",
         "Version": "Phiên bản"
     }

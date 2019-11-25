@@ -38,7 +38,7 @@
             <div piwik-save-button
                  class="createButton"
                  onconfirm="editVersion.edit ? editVersion.updateVersion() : editVersion.createVersion()"
-                 disabled="editVersion.model.isUpdating || !editVersion.isDirty"
+                 data-disabled="editVersion.model.isUpdating || !editVersion.isDirty"
                  value="{{ editVersion.edit ? ('CoreUpdater_UpdateTitle'|translate) : ('TagManager_CreateVersionWithoutPublishing'|translate) }}"
                  saving="editVersion.model.isUpdating">
             </div>
@@ -67,7 +67,7 @@
                  ng-show="editVersion.create && editVersion.environments.length"
                  class="publishButton"
                  onconfirm="editVersion.createVersionAndPublish()"
-                 disabled="editVersion.model.isUpdating || !editVersion.isDirty"
+                 data-disabled="editVersion.model.isUpdating || !editVersion.isDirty"
                  value="{{ 'TagManager_CreateVersionAndPublishRelease'|translate }}"
                  saving="editVersion.model.isUpdating">
             </div>

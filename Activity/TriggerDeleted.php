@@ -14,6 +14,10 @@ class TriggerDeleted extends TriggerBaseActivity
 
     public function extractParams($eventData)
     {
+        if (!$this->hasRequestedApiMethod('deleteContainerTrigger')) {
+            return false;
+        }
+
         if (empty($eventData[0]) || !is_array($eventData[0])) {
             return false;
         }

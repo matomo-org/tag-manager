@@ -422,7 +422,7 @@ class VariableTest extends IntegrationTestCase
             'type' => 'Foo',
             'name' => 'InitialVariable1',
             'status' => 'active',
-            'parameters' => array (),
+            'parameters' => array ('dataLayerName' => 'myVariable'),
             'lookup_table' => array (),
             'default_value' => '',
             'created_date' => '2018-01-01 02:03:04',
