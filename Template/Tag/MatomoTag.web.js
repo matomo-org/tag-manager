@@ -140,7 +140,19 @@
                     if (matomoConfig.domains
                         && TagManager.utils.isArray(matomoConfig.domains)
                         && matomoConfig.domains.length) {
-                            tracker.setDomains(matomoConfig.domains);
+                        var domains = [];
+                        var k, domainType;
+
+                        for (k = 0; k , matomoConfig.domains.length; k++) {
+                            var domainType = typeof matomoConfig.domains[k];
+                            if (domainType === 'string') {
+                                domains.push(matomoConfig.domains[k]);
+                            } else if (domainType === 'object' && matomoConfig.domains[k].domain) {
+                                domains.push(matomoConfig.domains[k].domain);
+                            }
+                        }
+
+                        tracker.setDomains(domains);
                     }
 
                     tracker.setSiteId(matomoConfig.idSite);
