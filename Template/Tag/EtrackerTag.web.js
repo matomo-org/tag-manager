@@ -15,6 +15,18 @@
                     }
                 }
             }
+            // Custom Dimensions
+            if (etrackerConfig.customDimensions
+                && TagManager.utils.isArray(etrackerConfig.customDimensions)
+                && etrackerConfig.customDimensions.length) {
+                var dimIndex;
+                for (dimIndex = 0; dimIndex < etrackerConfig.customDimensions.length; dimIndex++) {
+                    var dimension = etrackerConfig.customDimensions[dimIndex];
+                    if (dimension && TagManager.utils.isObject(dimension) && dimension.index && dimension.value) {
+                        window[dimension.index] = dimension.value;
+                    }
+                }
+            }
         }
 
         if (!hasBeenLoaded && etrackerID) {
