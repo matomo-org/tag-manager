@@ -7,7 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable\PreConfigured;
 
-class FormDestionationVariable extends BaseDataLayerVariable
+class FormDestinationVariable extends BaseDataLayerVariable
 {
     public function getCategory()
     {
