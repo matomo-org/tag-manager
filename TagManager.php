@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager;
 
+use Piwik\Access;
 use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
@@ -242,7 +243,7 @@ class TagManager extends \Piwik\Plugin
             return;
         }
 
-        Piwik::doAsSuperUser(function () {
+        Access::doAsSuperUser(function () {
             // we need to run as super user because after a core update the user might not be an admin etc
             // (and admin is needed for debug action)
             $containerModel = StaticContainer::get('Piwik\Plugins\TagManager\Model\Container');
