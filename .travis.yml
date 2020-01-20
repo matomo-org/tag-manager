@@ -24,11 +24,11 @@ git:
 env:
   global:
     - PLUGIN_NAME=TagManager
-    - PIWIK_ROOT_DIR=$TRAVIS_BUILD_DIR/piwik
-    # this variable controls the version of Piwik your tests will run against.
+    - PIWIK_ROOT_DIR=$TRAVIS_BUILD_DIR/matomo
+    # this variable controls the version of Matomo your tests will run against.
     # by default it will run against the maximum support version read from plugin.json
     # (PIWIK_TEST_TARGET=maximum_supported_piwik).
-    # You can also specify a specific Piwik version
+    # You can also specify a specific Matomo version
     # (PIWIK_TEST_TARGET=2.16.0-b1).
     - PIWIK_TEST_TARGET=maximum_supported_piwik
     - secure: "aWxaWyShsra7EAU3SvsIXIy9EvTiGS8qOBo1sg5AzyzaF+TjykS/WdKy8O1hqoOmcBkuPG/CkMLORwEVtzOFhEpEo4LWzZYn3CbKF4JYPUZkoOC5elc7K8z3W2TeNjixQJiguMVkFVzpyJHd9MYMwamlTkESBoDE0/YVSyB8+ypFMYOjESMymG+252hrTowgdilpu52iDWkCscIGsHBaw8RDIV2ddi2h2sPCGMwbeXtssQytrSFfclC8N9hsYxMlVeds5GbOlL8Osd39P4hxwZoXZ+In129SCj6PEGco9NBztpvRwLVvCpxn/fQoGTZd4BzYNxW3fA24P71oXIVeA9mKiTAbBIJZng0VLzpC07sS3kilROQQuvGDv4eoQYYPPsp3OQPcxdguIF19SC+Wfn5kdVYArox3+GUnvH8yzOiU8ShE8zKIpal4vERg5zLM11X8CRZEDRfde3sOIQhBnhwa/5J1Mw3aIdbXvBPq4z3lRINbrUPjnZmNr0SVn2CNFJTOcMNpVMh1WlBd/hvE3OMYQuTe7R38rUAzUv+peZh/YSLW7c7MFrhr2I+m+9VzJZLCha6IcA3uzAj2rFjN/Wim1WhYO19IPPp562LClPJEZbBc27KuSBrVhH412JjMuxPNxENarTdaQjFGBPDDQk9mSiw2NmlnM2gn+NY1tTE="
@@ -66,14 +66,14 @@ install:
   - cp -R !($PLUGIN_NAME) $PLUGIN_NAME
   - cp -R .git/ $PLUGIN_NAME/
   - cp .travis.yml $PLUGIN_NAME
-  # checkout piwik in the current directory
-  - git clone -q https://github.com/piwik/piwik.git piwik
-  - cd piwik
+  # checkout matomo in the current directory
+  - git clone -q https://github.com/matomo-org/matomo.git matomo
+  - cd matomo
   - git fetch -q --all
   - git submodule update
 
   # make sure travis-scripts repo is latest for initial travis setup
-  - '[ -d ./tests/travis/.git ] || sh -c "rm -rf ./tests/travis && git clone https://github.com/piwik/travis-scripts.git ./tests/travis"'
+  - '[ -d ./tests/travis/.git ] || sh -c "rm -rf ./tests/travis && git clone https://github.com/matomo-org/travis-scripts.git ./tests/travis"'
   - cd ./tests/travis ; git checkout master ; cd ../..
 
   - export GENERATE_TRAVIS_YML_COMMAND="php ./tests/travis/generator/main.php generate:travis-yml --plugin=\"TagManager\" --dist-trusty --verbose"
