@@ -208,6 +208,24 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
         $tests[] = array(array (
             'joinedVariable' =>
                 array (
+                    'äöuü - 3434 ',
+                        array (
+                            'name' => 'PageUrl',
+                            'type' => 'PageUrl',
+                            'lookUpTable' =>
+                                array (
+                                ),
+                            'defaultValue' => NULL,
+                            'parameters' =>
+                                array (
+                                ),
+                        ),
+                    'foo',
+                ),
+        ), 'äöuü - 3434 {{PageUrl}}foo');
+        $tests[] = array(array (
+            'joinedVariable' =>
+                array (
                     0 => 'foo',
                     1 =>
                         array (
