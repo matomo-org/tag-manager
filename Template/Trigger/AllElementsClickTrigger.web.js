@@ -16,7 +16,7 @@
                         'mtm.clickNodeName': target.nodeName,
                         'mtm.clickElementUrl': target.href || TagManager.dom.getElementAttribute(target, 'href')
                     });
-                });
+                }, true);
             });
         };
     };
