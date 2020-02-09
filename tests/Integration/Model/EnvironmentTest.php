@@ -37,7 +37,7 @@ class EnvironmentTest extends IntegrationTestCase
      */
     private $environment;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -62,22 +62,22 @@ class EnvironmentTest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The environment "fooffffffffffffffffffffffffffffffffffffff" does not have a valid length. Please use between 2 and 40 characters.
-     */
     public function test_checkEnvironmentNameFormat_tooLong()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The environment "fooffffffffffffffffffffffffffffffffffffff" does not have a valid length. Please use between 2 and 40 characters.');
+
         Environment::checkEnvironmentNameFormat(str_pad('foo', Environment::MAX_LENGTH + 1, 'f'));
     }
 
     /**
      * @dataProvider getInvalidFormatDataProvider
-     * @expectedException \Exception
-     * @expectedExceptionMessage  is not a valid name
      */
-    public static function test_checkIsValidEnvironment_invalidFormat($value)
+    public function test_checkIsValidEnvironment_invalidFormat($value)
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('is not a valid name');
+
         Environment::checkEnvironmentNameFormat($value);
     }
 
@@ -86,30 +86,27 @@ class EnvironmentTest extends IntegrationTestCase
         return array(['_foo', 'foo-', 'fo-of', 'foo_', 'f', 'foo-f', 'füf']);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The environment "foobar" does not exist
-     */
     public function test_checkIsValidEnvironment_notExistingEnvironment()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The environment "foobar" does not exist');
+
         $this->environment->checkIsValidEnvironment('foobar');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The environment "Live" does not exist
-     */
     public function test_checkIsValidEnvironment_hasToMatchExactlyNotCaseInsensitive()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The environment "Live" does not exist');
+
         $this->environment->checkIsValidEnvironment('Live');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The environment "preview" does not exist
-     */
     public function test_checkIsValidEnvironment_previewIsNotConsideredAnEnvironmentThatCanBeSelected()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The environment "preview" does not exist');
+
         $this->environment->checkIsValidEnvironment(Environment::ENVIRONMENT_PREVIEW);
     }
 

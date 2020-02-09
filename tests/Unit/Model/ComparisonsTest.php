@@ -24,7 +24,7 @@ class ComparisonsTest extends UnitTestCase
      */
     private $comparison;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->comparison = new Comparison();
@@ -35,30 +35,30 @@ class ComparisonsTest extends UnitTestCase
         $this->checkIsValidComparison('equals');
         $this->checkIsValidComparison('not_equals');
         $this->checkIsValidComparison('starts_with');
+
+        self::assertTrue(true);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The comparison "Equals" is not supported
-     */
     public function test_checkIsValidComparison_hasToMatchExact()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The comparison "Equals" is not supported');
+
         $this->checkIsValidComparison('Equals');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The comparison "foobar" is not supported
-     */
     public function test_checkIsValidComparison_doesNotExist()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The comparison "foobar" is not supported');
+
         $this->checkIsValidComparison('foobar');
     }
 
     public function test_getSupportedComparisons()
     {
         $comparisons = $this->comparison->getSupportedComparisons();
-        $this->assertInternalType('array', $comparisons);
+        self::assertIsArray($comparisons);
         $this->assertGreaterThanOrEqual(10, count($comparisons));
 
         // we don't test for exact match here as we test this through the API in a system test

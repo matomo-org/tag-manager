@@ -33,7 +33,7 @@ class TriggersDaoTest extends IntegrationTestCase
 
     private $now = '2015-01-01 01:02:03';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -52,12 +52,11 @@ class TriggersDaoTest extends IntegrationTestCase
         }
     }
 
-    /**
-     * @expectedException \Zend_Db_Statement_Exception
-     * @expectedExceptionMessage tagmanager_trigger
-     */
     public function test_shouldBeAbleToUninstallTriggerTable()
     {
+        $this->expectException(\Zend_Db_Statement_Exception::class);
+        $this->expectExceptionMessage('tagmanager_trigger');
+
         $this->dao->uninstall();
 
         try {
@@ -141,12 +140,11 @@ class TriggersDaoTest extends IntegrationTestCase
         $this->assertEquals(2, $idTrigger);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_createTrigger_failsToInsertSameNameTwice()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idTrigger = $this->createTrigger($idSite = 3);
         $this->assertEquals(1, $idTrigger);
 
@@ -191,12 +189,11 @@ class TriggersDaoTest extends IntegrationTestCase
         }
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_updateTrigger_failsToSetNameAlreadyInUseByOtherTrigger()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idSite = 3;
         $idContainerVersion = 5;
         $name = 'myname';

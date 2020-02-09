@@ -35,7 +35,7 @@ class ContainersDaoTest extends IntegrationTestCase
 
     private $now = '2015-01-01 01:02:03';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -52,12 +52,11 @@ class ContainersDaoTest extends IntegrationTestCase
         $this->assertSame($columnsToCheck, $columns);
     }
 
-    /**
-     * @expectedException \Zend_Db_Statement_Exception
-     * @expectedExceptionMessage tagmanager_container
-     */
     public function test_shouldBeAbleToUninstallContainerTable()
     {
+        $this->expectException(\Zend_Db_Statement_Exception::class);
+        $this->expectExceptionMessage('tagmanager_container');
+
         $this->dao->uninstall();
 
         try {
@@ -97,36 +96,33 @@ class ContainersDaoTest extends IntegrationTestCase
         ), $container);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_createContainer_failsToInsertSameNameTwice()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idContainer = $this->createContainer($idSite = 3, 'abcdef');
         $this->assertEquals('abcdef', $idContainer);
 
         $this->createContainer($idSite = 3, 'abcdee');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorContainerIdDuplicate
-     */
     public function test_createContainer_failsToInsertSameContainerIdTwice()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorContainerIdDuplicate');
+
         $idContainer = $this->createContainer($idSite = 3, 'abcdef');
         $this->assertEquals('abcdef', $idContainer);
 
         $this->createContainer($idSite = 3, 'abcdef');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorContainerIdDuplicate
-     */
     public function test_createContainer_notPossibleToUseSameContainerIdForDifferentSites()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorContainerIdDuplicate');
+
         $idContainer = $this->createContainer($idSite = 3, 'abcdef');
         $this->assertEquals('abcdef', $idContainer);
 
@@ -142,12 +138,11 @@ class ContainersDaoTest extends IntegrationTestCase
         $this->assertEquals('abcdef', $idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_createContainer_notPossibleToUseSameNameForSameSites()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idContainer = $this->createContainer($idSite = 3, 'abcdee', 'myname');
         $this->assertEquals('abcdee', $idContainer);
 
@@ -172,12 +167,11 @@ class ContainersDaoTest extends IntegrationTestCase
         }
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_updateContainer_failsToSetNameAlreadyInUseByOtherContainer()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idSite = 3;
         $idContainer = 'abceee';
         $name = 'myname';

@@ -30,7 +30,7 @@ class TagsProviderTest extends IntegrationTestCase
      */
     private $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +40,7 @@ class TagsProviderTest extends IntegrationTestCase
     public function test_getAllTags()
     {
         $tags = $this->provider->getAllTags();
-        $this->assertInternalType('array', $tags);
+        self::assertIsArray($tags);
         $this->assertGreaterThanOrEqual(3, count($tags));
     }
 
@@ -69,21 +69,19 @@ class TagsProviderTest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The tag "matomo" is not supported
-     */
     public function test_checkIsValidTag_searchesCaseSensitive()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The tag "matomo" is not supported');
+
         $this->provider->checkIsValidTag('matomo');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The tag "foobarbaz" is not supported
-     */
     public function test_checkIsValidTag_notExistingTag()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The tag "foobarbaz" is not supported');
+
         $this->provider->checkIsValidTag('foobarbaz');
     }
 

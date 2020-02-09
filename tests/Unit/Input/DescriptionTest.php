@@ -18,12 +18,11 @@ use Piwik\Plugins\TagManager\tests\Framework\TestCase\UnitTestCase;
  */
 class DescriptionTest extends UnitTestCase
 {
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Description: The value contains "1001" characters but should contain at most 1000 characters.
-     */
     public function test_check_shouldThrowException_IfDescriptionIsTooLong()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Description: The value contains "1001" characters but should contain at most 1000 characters.');
+
         $this->checkDescription(str_pad('4', Description::MAX_LENGTH + 1));
     }
 

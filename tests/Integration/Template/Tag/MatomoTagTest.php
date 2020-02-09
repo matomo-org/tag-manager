@@ -28,7 +28,7 @@ class MatomoTagTest extends IntegrationTestCase
 {
     private $idSite;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -42,7 +42,7 @@ class MatomoTagTest extends IntegrationTestCase
         $this->checkMatomoTagIsLoaded($template);
 
         // we must ensure this line exists as it will be replaced with tracker when bundled
-        $this->assertContains(MatomoTag::REPLACE_TRACKER_KEY, $template);
+        self::assertStringContainsString(MatomoTag::REPLACE_TRACKER_KEY, $template);
     }
 
     public function test_loadTemplate_getBundled()
@@ -52,17 +52,17 @@ class MatomoTagTest extends IntegrationTestCase
         $this->checkMatomoTagIsLoaded($template);
 
         // should have been replaced with Matomo code
-        $this->assertNotContains(MatomoTag::REPLACE_TRACKER_KEY, $template);
+        self::assertStringNotContainsString(MatomoTag::REPLACE_TRACKER_KEY, $template);
         // simple test to check tracker is included
-        $this->assertContains('loadMatomo', $template);
-        $this->assertContains('this.trackPageView=function(', $template);
-        $this->assertContains('findContentNodesWithinNode', $template);
+        self::assertStringContainsString('loadMatomo', $template);
+        self::assertStringContainsString('this.trackPageView=function(', $template);
+        self::assertStringContainsString('findContentNodesWithinNode', $template);
     }
 
     private function checkMatomoTagIsLoaded($template)
     {
-        $this->assertContains('MatomoTag', $template);
-        $this->assertContains('loadMatomo', $template);
+        self::assertStringContainsString('MatomoTag', $template);
+        self::assertStringContainsString('loadMatomo', $template);
     }
 
     private function createTag($bundled)

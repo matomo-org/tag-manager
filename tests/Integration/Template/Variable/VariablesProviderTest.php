@@ -31,7 +31,7 @@ class VariablesProviderTest extends IntegrationTestCase
      */
     private $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -41,14 +41,14 @@ class VariablesProviderTest extends IntegrationTestCase
     public function test_getAllVariables()
     {
         $variables = $this->provider->getAllVariables();
-        $this->assertInternalType('array', $variables);
+        self::assertIsArray($variables);
         $this->assertGreaterThanOrEqual(6, count($variables));
     }
 
     public function test_getPreConfiguredVariables()
     {
         $variables = $this->provider->getPreConfiguredVariables();
-        $this->assertInternalType('array', $variables);
+        self::assertIsArray($variables);
         $this->assertGreaterThanOrEqual(6, count($variables));
     }
 
@@ -129,21 +129,19 @@ class VariablesProviderTest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The variable "datalayer" is not supported
-     */
     public function test_checkIsValidVariable_searchesCaseSensitive()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The variable "datalayer" is not supported');
+
         $this->provider->checkIsValidVariable('datalayer');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The variable "foobarbaz" is not supported
-     */
     public function test_checkIsValidVariable_notExistingVariable()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The variable "foobarbaz" is not supported');
+
         $this->provider->checkIsValidVariable('foobarbaz');
     }
 

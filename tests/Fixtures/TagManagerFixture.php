@@ -53,14 +53,14 @@ class TagManagerFixture extends Fixture
      */
     private $api;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->setUpWebsite();
         $this->setUpContainers();
         $this->trackFirstVisit();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // empty
     }

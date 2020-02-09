@@ -40,7 +40,7 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
 
     private $now = '2015-01-01 01:02:03';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -58,12 +58,11 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
         $this->assertSame($columnsToCheck, $columns);
     }
 
-    /**
-     * @expectedException \Zend_Db_Statement_Exception
-     * @expectedExceptionMessage tagmanager_container_release
-     */
     public function test_shouldBeAbleToUninstallReleaseTable()
     {
+        $this->expectException(\Zend_Db_Statement_Exception::class);
+        $this->expectExceptionMessage('tagmanager_container_release');
+
         $this->dao->uninstall();
 
         try {
