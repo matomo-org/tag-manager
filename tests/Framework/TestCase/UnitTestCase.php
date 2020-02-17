@@ -7,7 +7,7 @@
  */
 
 namespace Piwik\Plugins\TagManager\tests\Framework\TestCase;
-use Piwik\Translate;
+use Piwik\Tests\Framework\Fixture;
 
 /**
  * @group unit
@@ -16,6 +16,6 @@ class UnitTestCase extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {
-        Translate::loadEnglishTranslation();
+        Fixture::loadAllTranslations();
     }
 }
