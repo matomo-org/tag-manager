@@ -7,7 +7,7 @@
  */
 
 namespace Piwik\Plugins\TagManager\tests\Framework\TestCase;
-use Piwik\Translate;
+use Piwik\Tests\Framework\Fixture;
 
 /**
  * @group integration
@@ -17,12 +17,12 @@ class IntegrationTestCase extends \Piwik\Tests\Framework\TestCase\IntegrationTes
     public function setUp()
     {
         parent::setUp();
-        Translate::loadEnglishTranslation();
+        Fixture::loadAllTranslations();
     }
 
     public function tearDown()
     {
-        Translate::unloadEnglishTranslation();
+        Fixture::resetTranslations();
         parent::tearDown();
     }
 
