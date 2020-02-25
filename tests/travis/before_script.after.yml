@@ -1,0 +1,1 @@
+- sed -i "s|createDatabaseObject|get|g" "$PIWIK_ROOT_DIR/tests/PHPUnit/Framework/TestCase/IntegrationTestCase.php"
