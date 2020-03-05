@@ -8,6 +8,7 @@
 namespace Piwik\Plugins\TagManager\API;
 
 use Piwik\Cookie;
+use Piwik\ProxyHttp;
 
 class PreviewCookie extends Cookie
 {
@@ -23,6 +24,16 @@ class PreviewCookie extends Cookie
     public function getCookieValueName($idSite, $idContainer)
     {
         return 'mtmPreview' . $idSite . '_' . $idContainer;
+    }
+
+    public function save($sameSite = null)
+    {
+        if (ProxyHttp::isHttps()) {
+            $this->setSecure(true);
+            parent::save('None');
+        } else {
+            parent::save('Lax');
+        }
     }
 
     public function enable($idSite, $idContainer)
