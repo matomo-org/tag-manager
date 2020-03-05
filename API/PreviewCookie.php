@@ -26,26 +26,16 @@ class PreviewCookie extends Cookie
         return 'mtmPreview' . $idSite . '_' . $idContainer;
     }
 
-    public function save($sameSite = null)
-    {
-        if (ProxyHttp::isHttps()) {
-            $this->setSecure(true);
-            parent::save('None');
-        } else {
-            parent::save('Lax');
-        }
-    }
-
     public function enable($idSite, $idContainer)
     {
         $this->set($this->getCookieValueName($idSite, $idContainer), '1');
-        $this->save();
+        $this->save('Lax');
     }
 
     public function disable($idSite, $idContainer)
     {
         $this->set($this->getCookieValueName($idSite, $idContainer), null);
-        $this->save();
+        $this->save('Lax');
     }
 
 }
