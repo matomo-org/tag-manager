@@ -8,7 +8,6 @@
 namespace Piwik\Plugins\TagManager\API;
 
 use Piwik\Cookie;
-use Piwik\ProxyHttp;
 
 class PreviewCookie extends Cookie
 {
