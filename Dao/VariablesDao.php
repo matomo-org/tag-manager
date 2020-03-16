@@ -33,7 +33,7 @@ class VariablesDao extends BaseDao implements TagManagerDao
                   `created_date` DATETIME NOT NULL,
                   `updated_date` DATETIME NOT NULL,
                   `deleted_date` DATETIME NULL,
-                  PRIMARY KEY(`idvariable`), KEY(`idsite`), KEY (`idsite`, `idcontainerversion`)");
+                  PRIMARY KEY(`idvariable`), KEY (`idsite`, `idcontainerversion`)");
         // we cannot set a unique key on (`idsite`, `idcontainerversion`, `name`) because we soft delete tags and want to make sure names can be used again after deleting an entry
     }
 
