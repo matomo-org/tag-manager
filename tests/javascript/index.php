@@ -1030,7 +1030,7 @@
                 storage.set('mygroup2', 'mykey', 'myvalue2');
 
                 strictEqual('myvalue2', storage.get('mygroup2', 'mykey'), 'storage ' + i + ' set should save values for different groups');
-                strictEqual('myvalue', storage.get('mygroup', 'mykey'), 'storage ' + i + ' inital value should still have other value');
+                strictEqual('myvalue', storage.get('mygroup', 'mykey'), 'storage ' + i + ' initial value should still have other value');
 
                 strictEqual(undefined, storage.get('mygroup', 'myNotExistiNgkey'), 'storage ' + i + ' should return undefined if no value for a key exists');
 

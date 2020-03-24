@@ -189,7 +189,7 @@
 
                     if (isVariable) {
                         if (TagManager.dom.isElementContext(value, 'script')) {
-                            // instead of serializing the object, we make it accessbile through a method so users can reference
+                            // instead of serializing the object, we make it accessible through a method so users can reference
                             // an object using eg "var mytest = {{myObj}}"
                             if (!TagManager.utils.isDefined(TagManager.customHtmlDataStore)) {
                                 TagManager.customHtmlDataStore = [];
