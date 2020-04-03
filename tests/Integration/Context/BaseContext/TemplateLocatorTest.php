@@ -30,7 +30,7 @@ class TemplateLocatorTest extends IntegrationTestCase
      */
     private $templateLocator;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -44,7 +44,7 @@ class TemplateLocatorTest extends IntegrationTestCase
 
         $templates = $this->templateLocator->getLoadedTemplates();
         $this->assertEquals(array('CustomHtmlTag'), array_keys($templates));
-        $this->assertContains("parameters.customHtml", $templates['CustomHtmlTag']);
+        self::assertStringContainsString("parameters.customHtml", $templates['CustomHtmlTag']);
     }
 
     public function test_loadTriggerTemplate()
@@ -54,7 +54,7 @@ class TemplateLocatorTest extends IntegrationTestCase
 
         $templates = $this->templateLocator->getLoadedTemplates();
         $this->assertEquals(array('CustomEventTrigger'), array_keys($templates));
-        $this->assertContains("parameters.get('eventName')", $templates['CustomEventTrigger']);
+        self::assertStringContainsString("parameters.get('eventName')", $templates['CustomEventTrigger']);
     }
 
     public function test_loadVariableTemplate()
@@ -64,7 +64,7 @@ class TemplateLocatorTest extends IntegrationTestCase
 
         $templates = $this->templateLocator->getLoadedTemplates();
         $this->assertEquals(array('DataLayerVariable'), array_keys($templates));
-        $this->assertContains("parameters.get('dataLayerName')", $templates['DataLayerVariable']);
+        self::assertStringContainsString("parameters.get('dataLayerName')", $templates['DataLayerVariable']);
     }
 
     public function test_loadVariableTemplate_GeneratesDifferentTemplatePerJsFunction()

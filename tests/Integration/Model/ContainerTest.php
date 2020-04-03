@@ -58,7 +58,7 @@ class ContainerTest extends IntegrationTestCase
      */
     private $model;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -76,45 +76,41 @@ class ContainerTest extends IntegrationTestCase
         $this->idContainer1draft = 1;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         TagManager::$enableAutoContainerCreation = true;
         parent::tearDown();
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage idSite: An unexpected website was found
-     */
     public function test_addContainer_invalidSite()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('idSite: An unexpected website was found');
+
         $this->addContainer($idSite = 999);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Name: The value contains
-     */
     public function test_addContainer_invalidName()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains');
+
         $this->addContainer($this->idSite, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Description: The value contains "1001" characters
-     */
     public function test_addContainer_invalidDescription()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Description: The value contains "1001" characters');
+
         $this->addContainer($this->idSite, 'MyName', str_pad('4', Description::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The context "inValId" is not supported
-     */
     public function test_addContainer_invalidContext()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The context "inValId" is not supported');
+
         $this->addContainer($this->idSite, 'MyName', '', 'inValId');
     }
 
@@ -166,30 +162,27 @@ class ContainerTest extends IntegrationTestCase
         $this->assertTrue(ctype_alnum($idContainer2));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage idSite: An unexpected website was found
-     */
     public function test_updateContainer_invalidSite()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('idSite: An unexpected website was found');
+
         $this->updateContainer($idSite = 999, $this->idContainer1);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Name: The value contains
-     */
     public function test_updateContainer_invalidName()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains');
+
         $this->updateContainer($this->idSite, $this->idContainer1, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Description: The value contains "1001" characters
-     */
     public function test_updateContainer_invalidDescription()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Description: The value contains "1001" characters');
+
         $this->updateContainer($this->idSite, $this->idContainer1, 'Bar', str_pad('4', Description::MAX_LENGTH + 1));
     }
 
@@ -230,21 +223,19 @@ class ContainerTest extends IntegrationTestCase
         $this->assertSame($expected, $container);
     }
 
-    /**
-     * @expectedException  \Exception
-     * @expectedExceptionMessage The requested container "foo" does not exist
-     */
     public function test_checkContainerExists_noSuchContainerExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "foo" does not exist');
+
         $this->model->checkContainerExists($this->idSite, 'foo');
     }
 
-    /**
-     * @expectedException  \Exception
-     * @expectedExceptionMessage The requested container
-     */
     public function test_checkContainerExists_siteDoesNotMatch()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container');
+
         $this->model->checkContainerExists(999, $this->idContainer1);
     }
 
@@ -395,8 +386,8 @@ class ContainerTest extends IntegrationTestCase
 
         $this->assertCount(2, $containers);
         foreach ($containers as $container) {
-            $this->assertInternalType('array', $container['releases']);
-            $this->assertInternalType('array', $container['versions']);
+            self::assertIsArray($container['releases']);
+            self::assertIsArray($container['versions']);
             $this->assertNotEmpty($container['draft']);
         }
     }
@@ -431,7 +422,7 @@ class ContainerTest extends IntegrationTestCase
 
         foreach ($this->model->getActiveContainersInfo() as $info) {
             $this->assertEquals(array('idcontainer', 'idsite'), array_keys($info));
-            $this->assertInternalType('int', $info['idsite']);
+            self::assertIsInt($info['idsite']);
         }
     }
 
@@ -477,48 +468,43 @@ class ContainerTest extends IntegrationTestCase
         $this->assertSame(1, $count);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container
-     */
     public function test_createContainerVersion_invalidSite()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container');
+
         $this->createContainerVersion($idSite = 999, $this->idContainer1, $this->idContainer1draft);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Name: The value contains
-     */
     public function test_createContainerVersion_invalidName()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains');
+
         $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Description: The value contains
-     */
     public function test_createContainerVersion_invalidDescription()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Description: The value contains');
+
         $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'name',  str_pad('4', Description::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container
-     */
     public function test_createContainerVersion_invalidContainer()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container');
+
         $this->createContainerVersion($this->idSite, 999, $this->idContainer1draft);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist.
-     */
     public function test_createContainerVersion_invalidVersion()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist.');
+
         $this->createContainerVersion($this->idSite, $this->idContainer1, 9999);
     }
 
@@ -582,30 +568,27 @@ class ContainerTest extends IntegrationTestCase
         $this->assertSame($draftVersionBefore, $draftVersionAfter);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage idSite: An unexpected website was found
-     */
     public function test_updateContainerVersion_invalidSite()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('idSite: An unexpected website was found');
+
         $this->updateContainerVersion($idSite = 999, $this->idContainer1, $this->idContainer1draft);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Name: The value contains
-     */
     public function test_updateContainerVersion_invalidName()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains');
+
         $this->updateContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Description: The value contains "1001" characters
-     */
     public function test_updateContainerVersion_invalidDescription()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Description: The value contains "1001" characters');
+
         $this->updateContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'MyName', str_pad('4', Description::MAX_LENGTH + 1));
     }
 
@@ -651,12 +634,11 @@ class ContainerTest extends IntegrationTestCase
         $this->assertNotEmpty($this->model->getContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft));
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The "Draft" version of a container cannot be deleted
-     */
     public function test_deleteContainerVersion_notPossibleToDeleteDraft()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The "Draft" version of a container cannot be deleted');
+
         $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft);
 
         $this->assertNotEmpty($this->model->getContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft));
@@ -776,41 +758,37 @@ class ContainerTest extends IntegrationTestCase
         $this->assertSame(1, $count);
     }
 
-    /**
-     * @expectedException  \Exception
-     * @expectedExceptionMessage The "Draft" version of a container cannot be deleted
-     */
     public function test_deleteContainerVersion_failsToDeleteDraftVersion()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The "Draft" version of a container cannot be deleted');
+
         $this->model->deleteContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container
-     */
     public function test_publishVersion_invalidSite()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container');
+
         $idVersion = $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'v1');
         $this->publishVersion($idSite = 999, $this->idContainer1, $idVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container
-     */
     public function test_publishVersion_invalidContainer()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container');
+
         $idVersion = $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'v1');
         $this->publishVersion($this->idSite, 999, $idVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist.
-     */
     public function test_publishVersion_invalidVersion()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist.');
+
         $idVersion = $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'v1');
         $this->publishVersion($this->idSite, $this->idContainer1, 9999);
     }
@@ -865,43 +843,39 @@ class ContainerTest extends IntegrationTestCase
         $this->assertSame($expected, $container['releases']);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container release does not exist
-     */
     public function test_checkContainerReleaseExists_noReleaseExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container release does not exist.');
+
         $this->model->checkContainerReleaseExists($this->idSite, $this->idContainer1, Environment::ENVIRONMENT_LIVE);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "
-     */
     public function test_checkContainerReleaseExists_invalidContainer()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "');
+
         $this->publishVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, Environment::ENVIRONMENT_LIVE);
 
         $this->model->checkContainerReleaseExists($this->idSite, 9999, Environment::ENVIRONMENT_LIVE);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "
-     */
     public function test_checkContainerReleaseExists_invalidSite()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "');
+
         $this->publishVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, Environment::ENVIRONMENT_LIVE);
 
         $this->model->checkContainerReleaseExists(999, $this->idContainer1, Environment::ENVIRONMENT_LIVE);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container release does not exist
-     */
     public function test_checkContainerReleaseExists_invalidEnvironment()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container release does not exist');
+
         $this->publishVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, Environment::ENVIRONMENT_LIVE);
 
         $this->model->checkContainerReleaseExists($this->idSite, $this->idContainer1, 'foobar');
@@ -915,12 +889,11 @@ class ContainerTest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The environment "foobar" does not exist
-     */
     public function test_getContainerInstallInstructions_checksEnvironmentExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The environment "foobar" does not exist');
+
         $this->model->getContainerInstallInstructions($this->idSite, $this->idContainer1, 'foobar');
     }
 
@@ -932,7 +905,7 @@ class ContainerTest extends IntegrationTestCase
         $this->assertNotEmpty($instructions[0]['description']);
         $this->assertNotEmpty($instructions[0]['helpUrl']);
         $this->assertNotEmpty($instructions[0]['embedCode']);
-        $this->assertContains(StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1. '.js', $instructions[0]['embedCode']);
+        self::assertStringContainsString(StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1. '.js', $instructions[0]['embedCode']);
     }
 
     public function test_getAllReleasedContainers_noReleases()

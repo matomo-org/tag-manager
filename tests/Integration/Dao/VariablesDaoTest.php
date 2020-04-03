@@ -33,7 +33,7 @@ class VariablesDaoTest extends IntegrationTestCase
 
     private $now = '2015-01-01 01:02:03';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -52,12 +52,11 @@ class VariablesDaoTest extends IntegrationTestCase
         }
     }
 
-    /**
-     * @expectedException \Zend_Db_Statement_Exception
-     * @expectedExceptionMessage tagmanager_variable
-     */
     public function test_shouldBeAbleToUninstallVariableTable()
     {
+        $this->expectException(\Zend_Db_Statement_Exception::class);
+        $this->expectExceptionMessage('tagmanager_variable');
+
         $this->dao->uninstall();
 
         try {
@@ -145,12 +144,11 @@ class VariablesDaoTest extends IntegrationTestCase
         $this->assertEquals(2, $idVariable);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_createVariable_failsToInsertSameNameTwice()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idVariable = $this->createVariable($idSite = 3);
         $this->assertEquals(1, $idVariable);
 
@@ -195,12 +193,11 @@ class VariablesDaoTest extends IntegrationTestCase
         }
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_updateVariable_failsToSetNameAlreadyInUseByOtherVariable()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idSite = 3;
         $idContainerVersion = 5;
         $name = 'myname';

@@ -19,30 +19,27 @@ use Piwik\Plugins\TagManager\tests\Framework\TestCase\UnitTestCase;
  */
 class NameTest extends UnitTestCase
 {
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Name: A value needs to be provided.
-     */
     public function test_check_shouldThrowException_IfNameIsEmpty()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Name: A value needs to be provided.');
+
         $this->checkName(false);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Name: A value needs to be provided.
-     */
     public function test_check_shouldThrowException_IfNameStringIsEmpty()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Name: A value needs to be provided.');
+
         $this->checkName('');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Name: The value contains "51" characters but should contain at most 50 characters.
-     */
     public function test_check_shouldThrowException_IfNameIsTooLong()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains "51" characters but should contain at most 50 characters.');
+
         $this->checkName(str_pad('4', Name::MAX_LENGTH + 1));
     }
 

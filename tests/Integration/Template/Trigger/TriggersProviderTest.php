@@ -29,7 +29,7 @@ class TriggersProviderTest extends IntegrationTestCase
      */
     private $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -39,7 +39,7 @@ class TriggersProviderTest extends IntegrationTestCase
     public function test_getAllTriggers()
     {
         $triggers = $this->provider->getAllTriggers();
-        $this->assertInternalType('array', $triggers);
+        self::assertIsArray($triggers);
         $this->assertGreaterThanOrEqual(6, count($triggers));
     }
 
@@ -69,21 +69,19 @@ class TriggersProviderTest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The trigger "domready" is not supported
-     */
     public function test_checkIsValidTrigger_searchesCaseSensitive()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The trigger "domready" is not supported');
+
         $this->provider->checkIsValidTrigger('domready');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The trigger "foobarbaz" is not supported
-     */
     public function test_checkIsValidTrigger_notExistingTrigger()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The trigger "foobarbaz" is not supported');
+
         $this->provider->checkIsValidTrigger('foobarbaz');
     }
 

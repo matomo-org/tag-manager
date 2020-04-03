@@ -71,7 +71,7 @@ class ContextTest extends SystemTestCase
      */
     public static $fixture = null; // initialized below class definition
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         BaseContext::removeAllFilesOfAllContainers();
@@ -343,7 +343,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
 
         Piwik::addAction('Controller.TagManager.debug.end', function (&$result, $parameters) {
             $this->assertNotEmpty($result);
-            $this->assertContains('<html', $result);
+            self::assertStringContainsString('<html', $result);
             $result = 'debughtml';
         });
         $container = $this->getContainer();
@@ -468,7 +468,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
         StaticContainer::getContainer()->set('TagManagerContainerWebDir', '/foobar');
         $container = $this->getContainer();
         $instructions = $this->makeWebContext()->getInstallInstructions($container, Environment::ENVIRONMENT_LIVE);
-        $this->assertContains('tests/PHPUnit/proxy/foobar/container_aaacont1.js\';', $instructions[0]['embedCode']);
+        self::assertStringContainsString('tests/PHPUnit/proxy/foobar/container_aaacont1.js\';', $instructions[0]['embedCode']);
     }
 
     public function test_removeNoLongerExistingEnvironments()

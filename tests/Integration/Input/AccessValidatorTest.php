@@ -34,7 +34,7 @@ class AccessValidatorTest extends IntegrationTestCase
      */
     private $settings;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -44,12 +44,11 @@ class AccessValidatorTest extends IntegrationTestCase
         Fixture::createWebsite('2014-01-02 03:04:05');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_checkWriteCapability()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->validator->checkWriteCapability($idSite = 1);
     }
@@ -82,12 +81,11 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_publish_live_container Fake exception
-     */
     public function test_checkPublishLiveEnvironmentCapability()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
+
         $this->setUser();
         $this->validator->checkPublishLiveEnvironmentCapability($idSite = 1);
     }
@@ -135,22 +133,20 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->assertFalse($this->validator->hasPublishLiveEnvironmentCapability(1));
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_use_custom_templates Fake exception
-     */
     public function test_checkUseCustomTemplatesCapability()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
         $this->setUser();
         $this->validator->checkUseCustomTemplatesCapability($idSite = 1);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasSuperUserAccess Fake exception
-     */
     public function test_checkUseCustomTemplatesCapability_noAccessWhenRequireSuperUser()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasSuperUserAccess Fake exception');
+
         $this->settings->restrictCustomTemplates->setValue(SystemSettings::CUSTOM_TEMPLATES_SUPERUSER);
         $this->setAdmin();
         $this->validator->checkUseCustomTemplatesCapability($idSite = 1);
@@ -169,12 +165,11 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasViewAccess Fake exception
-     */
     public function test_checkViewPermission()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess Fake exception');
+
         $this->setAnonymous();
         $this->validator->checkViewPermission($idSite = 1);
     }
@@ -192,12 +187,11 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage An unexpected website was found in the request
-     */
     public function test_checkSiteExists_whenSiteNotExists_Exception()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('An unexpected website was found in the request');
+
         $this->validator->checkSiteExists($idSite = 999);
     }
 

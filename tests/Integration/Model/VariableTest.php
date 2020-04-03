@@ -51,7 +51,7 @@ class VariableTest extends IntegrationTestCase
      */
     private $model;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -66,85 +66,77 @@ class VariableTest extends IntegrationTestCase
         $this->idVariable1 = $this->addContainerVariable($this->idSite, $this->containerVersion1, null, 'InitialVariable1', array('dataLayerName' => 'myVariable'), '');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         TagManager::$enableAutoContainerCreation = true;
         parent::tearDown();
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage idSite: An unexpected website was found
-     */
     public function test_addContainerVariable_invalidSite()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('idSite: An unexpected website was found');
+
         $this->addContainerVariable($idSite = 999, $this->containerVersion1);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Name: The value contains
-     */
     public function test_addContainerVariable_invalidName()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains');
+
         $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The default value needs to be empty, a string
-     */
     public function test_addContainerVariable_invalidDefaultValue()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The default value needs to be empty, a string');
+
         $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => ''), array('foobar'), array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Data Layer Variable Name: A value needs to be provided.
-     */
     public function test_addContainerVariable_missingParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Data Layer Variable Name: A value needs to be provided.');
+
         $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => ''), '', array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Data Layer Variable Name: A value needs to be provided.
-     */
     public function test_addContainerVariable_invalidParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Data Layer Variable Name: A value needs to be provided.');
+
         $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => ''), '', array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Lookup Table: Missing value for array key "comparison"
-     */
     public function test_addContainerVariable_invalidLookupTable()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Lookup Table: Missing value for array key "comparison"');
+
         $lookupTable = array(array('match_value' => 'five'));
         $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => '<div></div>'), '', $lookupTable);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Lookup Table: The comparison "foobarbaz" is not supported
-     */
     public function test_addContainerVariable_invalidLookupTable2()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Lookup Table: The comparison "foobarbaz" is not supported');
+
         $lookupTable = array(
             array('match_value' => 'inval', 'comparison' => 'foobarbaz', 'out_value' => 'foobarout'),
         );
         $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => '<div></div>'), '', $lookupTable);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The variable "inValiDType" is not supported
-     */
     public function test_addContainerVariable_invalidType()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The variable "inValiDType" is not supported');
+
         $lookupTable = array();
         $this->addContainerVariable($this->idSite, $this->containerVersion1, 'inValiDType', 'MyName', $parameters = array('dataLayerName' => '<div></div>'), '', $lookupTable);
     }
@@ -267,58 +259,52 @@ class VariableTest extends IntegrationTestCase
         $this->assertSame($expected, $variable);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage idSite: An unexpected website was found
-     */
     public function test_updateContainerVariable_invalidSite()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('idSite: An unexpected website was found');
+
         $this->updateContainerVariable($idSite = 999, $this->containerVersion1, $this->idVariable1);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Name: The value contains
-     */
     public function test_updateContainerVariable_invalidName()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains');
+
         $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Data Layer Variable Name: A value needs to be provided.
-     */
     public function test_updateContainerVariable_missingParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Data Layer Variable Name: A value needs to be provided.');
+
         $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyName', $parameters = array(), '', array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Data Layer Variable Name: A value needs to be provided.
-     */
     public function test_updateContainerVariable_invalidParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Data Layer Variable Name: A value needs to be provided.');
+
         $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyName', $parameters = array('dataLayerName' => ''), '', array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Lookup Table: Missing value for array key "comparison"
-     */
     public function test_updateContainerVariable_invalidCondition()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Lookup Table: Missing value for array key "comparison"');
+
         $conditions = array(array('match_value' => 'five'));
         $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyName', $parameters = array('dataLayerName' => '<div></div>'), '', $conditions);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Lookup Table: The comparison "inValId"
-     */
     public function test_updateContainerVariable_invalidCondition2()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Lookup Table: The comparison "inValId"');
+
         $lookupTable = array(
             array('match_value' => 'inval', 'comparison' => 'inValId', 'out_value' => 'outva'),
         );

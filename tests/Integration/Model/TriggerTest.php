@@ -53,7 +53,7 @@ class TriggerTest extends IntegrationTestCase
      */
     private $model;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -68,76 +68,69 @@ class TriggerTest extends IntegrationTestCase
         $this->idTrigger1 = $this->addContainerTrigger($this->idSite, $this->containerVersion1, null, 'InitialTrigger1', array('eventName' => 'myEvent'));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         TagManager::$enableAutoContainerCreation = true;
         parent::tearDown();
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage idSite: An unexpected website was found
-     */
     public function test_addContainerTrigger_invalidSite()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('idSite: An unexpected website was found');
+
         $this->addContainerTrigger($idSite = 999);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Name: The value contains
-     */
     public function test_addContainerTrigger_invalidName()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains');
+
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Event Name: A value needs to be provided.
-     */
     public function test_addContainerTrigger_missingParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Event Name: A value needs to be provided.');
+
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('eventName' => ''), array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Event Name: A value needs to be provided.
-     */
     public function test_addContainerTrigger_invalidParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Event Name: A value needs to be provided.');
+
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('eventName' => ''), array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Conditions: Missing value for array key "comparison"
-     */
     public function test_addContainerTrigger_invalidCondition()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Conditions: Missing value for array key "comparison"');
+
         $conditions = array(array('actual' => 'five'));
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('eventName' => '<div></div>'), $conditions);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Conditions: The variable "invalid" in the condition
-     */
     public function test_addContainerTrigger_invalidCondition2()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Conditions: The variable "invalid" in the condition');
+
         $conditions = array(
             array('actual' => 'invalid', 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errorfoo'),
         );
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('eventName' => '<div></div>'), $conditions);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The trigger "MyBarBaz" is not supported
-     */
     public function test_addContainerTrigger_invalidType()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The trigger "MyBarBaz" is not supported');
+
         $conditions = array();
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = 'MyBarBaz', 'MyName', $parameters = array('eventName' => '<div></div>'), $conditions);
     }
@@ -258,58 +251,52 @@ class TriggerTest extends IntegrationTestCase
         $this->assertSame($expected, $trigger);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage idSite: An unexpected website was found
-     */
     public function test_updateContainerTrigger_invalidSite()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('idSite: An unexpected website was found');
+
         $this->updateContainerTrigger($idSite = 999, $this->containerVersion1, $this->idTrigger1);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Name: The value contains
-     */
     public function test_updateContainerTrigger_invalidName()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains');
+
         $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Event Name: A value needs to be provided.
-     */
     public function test_updateContainerTrigger_missingParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Event Name: A value needs to be provided.');
+
         $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyName', $parameters = array(), array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Event Name: A value needs to be provided.
-     */
     public function test_updateContainerTrigger_invalidParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Event Name: A value needs to be provided.');
+
         $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyName', $parameters = array('eventName' => ''), array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Conditions: Missing value for array key "comparison"
-     */
     public function test_updateContainerTrigger_invalidCondition()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Conditions: Missing value for array key "comparison"');
+
         $conditions = array(array('actual' => 'five'));
         $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyName', $parameters = array('eventName' => '<div></div>'), $conditions);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Conditions: The variable "invalid" in the condition
-     */
     public function test_updateContainerTrigger_invalidCondition2()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Conditions: The variable "invalid" in the condition');
+
         $conditions = array(
             array('actual' => 'invalid', 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errorfoo'),
         );

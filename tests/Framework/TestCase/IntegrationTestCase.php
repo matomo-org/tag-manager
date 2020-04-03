@@ -14,13 +14,13 @@ use Piwik\Tests\Framework\Fixture;
  */
 class IntegrationTestCase extends \Piwik\Tests\Framework\TestCase\IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         Fixture::loadAllTranslations();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Fixture::resetTranslations();
         parent::tearDown();
