@@ -126,6 +126,11 @@ class Variable extends BaseModel
     public function getContainerVariableReferences($idSite, $idContainerVersion, $idVariable)
     {
         $variable = $this->dao->getContainerVariable($idSite, $idContainerVersion, $idVariable);
+
+        if (empty($variable)) {
+            return [];
+        }
+
         $varName = $variable['name'];
 
         $references = [];
