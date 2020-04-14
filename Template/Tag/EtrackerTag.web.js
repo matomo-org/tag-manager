@@ -5,6 +5,7 @@
         var etrackerConfig = parameters.get('etrackerConfig', {});
         var trackingType = parameters.get('trackingType');
         var etrackerID = etrackerConfig.etrackerID;
+        var etrackerBlockCookies = etrackerConfig.etrackerBlockCookies;
         
         if (trackingType === 'pageview') {
             // Pageview parameters for overwrite
@@ -38,11 +39,7 @@
             script.setAttribute('data-secure-code', etrackerID);
             script.setAttribute('id', '_etLoader');
             script.setAttribute('charset', 'UTF-8');
-            if (etrackerConfig.etrackerBlockCookies) {
-                script.setAttribute('data-block-cookies', 'true');
-            } else {
-                script.setAttribute('data-block-cookies', 'false');
-            }
+            script.setAttribute('data-block-cookies', etrackerBlockCookies);
             if (etrackerConfig.etrackerDNT) {
                 script.setAttribute('data-respect-dnt', 'true');
             }
