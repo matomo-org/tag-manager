@@ -35,6 +35,7 @@
             var s = document.getElementsByTagName('script')[0];
             var script = document.createElement('script');
             script.type = 'text/javascript';
+            script.setAttribute('data-block-cookies', etrackerBlockCookies);
             script.setAttribute('data-secure-code', etrackerID);
             script.setAttribute('id', '_etLoader');
             script.setAttribute('charset', 'UTF-8');
