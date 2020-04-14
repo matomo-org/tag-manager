@@ -44,6 +44,9 @@ class EtrackerConfigurationVariable extends BaseVariable
                 $field->description = 'The etracker ID you want to track data into. The ID is required. You may  find the ID of your website under "Administration => Setup/Tracking Code" in etracker.';
                 $field->validators[] = new NotEmpty();
             }),
+            $this->makeSetting('etrackerBlockCookies', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = 'Block cookies by default';
+            }),
             $this->makeSetting('etrackerDNT', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'Respect Do Not Track in etracker';
             }),

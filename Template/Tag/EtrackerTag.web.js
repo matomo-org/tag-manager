@@ -5,6 +5,7 @@
         var etrackerConfig = parameters.get('etrackerConfig', {});
         var trackingType = parameters.get('trackingType');
         var etrackerID = etrackerConfig.etrackerID;
+        var etrackerBlockCookies = etrackerConfig.etrackerBlockCookies;
         
         if (trackingType === 'pageview') {
             // Pageview parameters for overwrite
@@ -38,6 +39,7 @@
             script.setAttribute('data-secure-code', etrackerID);
             script.setAttribute('id', '_etLoader');
             script.setAttribute('charset', 'UTF-8');
+            script.setAttribute('data-block-cookies', etrackerBlockCookies);
             if (etrackerConfig.etrackerDNT) {
                 script.setAttribute('data-respect-dnt', 'true');
             }
@@ -45,7 +47,7 @@
             s.parentNode.insertBefore(script, s);
          }
         
-        if (trackingType === 'event') {
+        if (trackingType === 'event' && typeof(_etracker) === "object") {
             _etracker.sendEvent(new et_UserDefinedEvent(parameters.get('etrackerEventObject'), parameters.get('etrackerEventCategory'), parameters.get('etrackerEventAction'), parameters.get('etrackerEventType')));
         }
         };
