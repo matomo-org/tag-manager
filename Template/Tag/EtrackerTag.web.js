@@ -35,10 +35,14 @@
             var s = document.getElementsByTagName('script')[0];
             var script = document.createElement('script');
             script.type = 'text/javascript';
-            script.setAttribute('data-block-cookies', etrackerBlockCookies);
             script.setAttribute('data-secure-code', etrackerID);
             script.setAttribute('id', '_etLoader');
             script.setAttribute('charset', 'UTF-8');
+            if (etrackerConfig.etrackerBlockCookies) {
+                script.setAttribute('data-block-cookies', 'true');
+            } else {
+                script.setAttribute('data-block-cookies', 'false');
+            }
             if (etrackerConfig.etrackerDNT) {
                 script.setAttribute('data-respect-dnt', 'true');
             }
@@ -46,7 +50,7 @@
             s.parentNode.insertBefore(script, s);
          }
         
-        if (trackingType === 'event') {
+        if (trackingType === 'event' && typeof(_etracker) === "object") {
             _etracker.sendEvent(new et_UserDefinedEvent(parameters.get('etrackerEventObject'), parameters.get('etrackerEventCategory'), parameters.get('etrackerEventAction'), parameters.get('etrackerEventType')));
         }
         };
