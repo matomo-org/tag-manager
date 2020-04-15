@@ -515,6 +515,22 @@
 						<condition />
 					</row>
 					<row>
+						<name>etrackerBlockCookies</name>
+						<title>Block cookies by default</title>
+						<value>1</value>
+						<defaultValue>1</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
 						<name>etrackerDNT</name>
 						<title>Respect Do Not Track in etracker</title>
 						<value>0</value>
@@ -933,7 +949,7 @@
 							</field1>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Used to detect outlinks. Add hostnames or domains to be treated as local. For wildcard subdomains, you can use: ".example.com" or "*.example.com". You can also specify a path along a domain: "*.example.com/subsite1".</description>
+						<description>Used to detect outlinks. Add hostnames or domains to be treated as local. For wildcard subdomains, you can use: &quot;.example.com&quot; or &quot;*.example.com&quot;. You can also specify a path along a domain: &quot;*.example.com/subsite1&quot;.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -1050,7 +1066,7 @@
 							<row key="js/">js/</row>
 							<row key="js/tracker.php">js/tracker.php</row>
 						</availableValues>
-						<description>Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the "Bundle Tracker" option.</description>
+						<description>Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the &quot;Bundle Tracker&quot; option.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
