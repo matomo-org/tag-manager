@@ -217,6 +217,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to debug a specific version', async function () {
+        await page.reload();
         await clickFirstRowTableAction('icon-bug', 5);
         await capture.page(page, 'debug_version_enable');
     });
