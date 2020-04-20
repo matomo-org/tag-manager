@@ -48,7 +48,7 @@ matrix:
       env: TEST_SUITE=UITests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
   include:
     - php: 7.4
-      env: TEST_SUITE=JavascriptTests MYSQL_ADAPTER=PDO_MYSQL
+      env: TEST_SUITE=JavascriptTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
       sudo: false
       addons:
         apt:
