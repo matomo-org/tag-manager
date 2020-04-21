@@ -4,17 +4,18 @@ language: php
 
 php:
   - 7.2
-  - 7.3
+  - 7.4
 #  - hhvm
 
 services:
   - redis-server
+  - mysql
 
 addons:
   apt:
     packages:
       - nginx
-      - realpath
+      - coreutils
       - lftp
 
 git:
@@ -43,19 +44,19 @@ matrix:
     - php: 7.2
       env: TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_CORE=minimum_required_piwik
     # execute UI tests only w/ PHP 5.6
-    - php: 7.3
+    - php: 7.4
       env: TEST_SUITE=UITests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
   include:
-    - php: 7.3
-      env: TEST_SUITE=JavascriptTests MYSQL_ADAPTER=PDO_MYSQL
+    - php: 7.4
+      env: TEST_SUITE=JavascriptTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
       sudo: false
       addons:
         apt:
           packages:
             - nginx
-            - realpath
+            - coreutils
 
-dist: trusty
+dist: bionic
 
 sudo: required
 
@@ -81,7 +82,7 @@ install:
   - '[ -d ./tests/travis/.git ] || sh -c "rm -rf ./tests/travis && git clone https://github.com/matomo-org/travis-scripts.git ./tests/travis"'
   - cd ./tests/travis ; git checkout master ; cd ../..
 
-  - export GENERATE_TRAVIS_YML_COMMAND="php ./tests/travis/generator/main.php generate:travis-yml --plugin=\"TagManager\" --php-versions=\"7.2,7.3\" --verbose"
+  - export GENERATE_TRAVIS_YML_COMMAND="php ./tests/travis/generator/main.php generate:travis-yml --plugin=\"TagManager\" --php-versions=\"7.2,7.4\" --distribution=\"bionic\" --verbose"
   - '[[ "$TRAVIS_JOB_NUMBER" != *.1 || "$TRAVIS_PULL_REQUEST" != "false" ]] || ./tests/travis/autoupdate_travis_yml.sh'
 
   - ./tests/travis/checkout_test_against_branch.sh

@@ -190,6 +190,7 @@ describe("ContainerVariable", function () {
 
     it('should open create variable page when clicking on create a variable now link', async function () {
         await page.click('.createContainerVariableNow');
+        await page.mouse.move(-10, -10);
         await page.waitForNetworkIdle();
         await capture.page(page, 'variable_none_exist_yet_create_now');
     });
