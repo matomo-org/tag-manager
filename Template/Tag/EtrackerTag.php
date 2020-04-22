@@ -42,7 +42,7 @@ class EtrackerTag extends BaseTag
             }),
             $trackingType,
             $this->makeSetting('etrackerWrapperPagename', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'etracker Wrapper pagename';
+                $field->title = 'etracker Wrapper pagename (et_pagename)';
                 $field->description = 'The wrappers\'s pagename';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "wrapper"';
@@ -51,13 +51,13 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerWrapperArea', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'etracker Wrapper Area (et_area)';
+                $field->title = 'etracker Wrapper area (et_area)';
                 $field->description = 'The area should be separated by Slash';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "wrapper"';
             }),
             $this->makeSetting('etrackerWrapperTarget', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'etracker Wrapper Target (et_target)';
+                $field->title = 'etracker Wrapper target (et_target)';
                 $field->description = '';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "wrapper"';
