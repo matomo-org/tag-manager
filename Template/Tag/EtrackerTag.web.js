@@ -48,31 +48,31 @@
          }
         //wrapper function    
         if (trackingType === 'wrapper' && typeof(_etracker) === "object") {
-            var wrapperjson = new Object();
-            wrapperjson.et_et = etrackerID;
-            wrapperjson.et_pagename = parameters.get('etrackerWrapperPagename');
+            var ewrapper = new Object();
+            ewrapper.et_et = etrackerID;
+            ewrapper.et_pagename = parameters.get('etrackerWrapperPagename');
             if(parameters.get('etrackerWrapperArea')){
-               wrapperjson.et_areas = parameters.get('etrackerWrapperArea');
+               ewrapper.et_areas = parameters.get('etrackerWrapperArea');
             }
             if(parameters.get('etrackerWrapperTarget')){
-               wrapperjson.et_target = parameters.get('etrackerWrapperTarget');
+               ewrapper.et_target = parameters.get('etrackerWrapperTarget');
             }
             if(parameters.get('etrackerWrapperTval')){
-               wrapperjson.et_tval = parameters.get('etrackerWrapperTval');
+               ewrapper.et_tval = parameters.get('etrackerWrapperTval');
             }
             if(parameters.get('etrackerWrapperTonr')){
-               wrapperjson.et_tonr = parameters.get('etrackerWrapperTonr');
+               ewrapper.et_tonr = parameters.get('etrackerWrapperTonr');
             }
             if(parameters.get('etrackerWrapperTsale')){
-               wrapperjson.et_tsale = parameters.get('etrackerWrapperTsale');
+               ewrapper.et_tsale = parameters.get('etrackerWrapperTsale');
             }
             if(parameters.get('etrackerWrapperCust')){
-               wrapperjson.et_cust = parameters.get('etrackerWrapperCust');
+               ewrapper.et_cust = parameters.get('etrackerWrapperCust');
             }
             if(parameters.get('etrackerWrapperBasket')){
-               wrapperjson.et_basket = parameters.get('etrackerWrapperBasket');
+               ewrapper.et_basket = parameters.get('etrackerWrapperBasket');
             }
-            et_eC_Wrapper(wrapperjson);
+            et_eC_Wrapper(ewrapper);
         }
         // event tracking function
         if (trackingType === 'event' && typeof(_etracker) === "object") {
