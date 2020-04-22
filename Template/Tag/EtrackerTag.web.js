@@ -46,6 +46,7 @@
             script.src = '//static.etracker.com/code/e.js';
             s.parentNode.insertBefore(script, s);
          }
+        //wrapper function    
         if (trackingType === 'wrapper' && typeof(_etracker) === "object") {
             var wrapperjson = '{et_et: '+etrackerID+',et_pagename:'+parameters.get('etrackerWrapperPagename');
             if(!empty(parameters.get('etrackerWrapperArea')){
@@ -72,6 +73,7 @@
             wrapperjson = wrapperjson+'}';
             et_eC_Wrapper(wrapperjson);
         }
+        // event tracking function
         if (trackingType === 'event' && typeof(_etracker) === "object") {
             _etracker.sendEvent(new et_UserDefinedEvent(parameters.get('etrackerEventObject'), parameters.get('etrackerEventCategory'), parameters.get('etrackerEventAction'), parameters.get('etrackerEventType')));
         }
