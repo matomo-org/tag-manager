@@ -49,25 +49,25 @@
         //wrapper function    
         if (trackingType === 'wrapper' && typeof(_etracker) === "object") {
             var wrapperjson = '{et_et: '+etrackerID+',et_pagename:'+parameters.get('etrackerWrapperPagename');
-            if(!empty(parameters.get('etrackerWrapperArea')){
+            if(parameters.get('etrackerWrapperArea')){
                wrapperjson = wrapperjson+',et_areas:'+parameters.get('etrackerWrapperArea');
             }
-            if(!empty(parameters.get('etrackerWrapperTarget')){
+            if(parameters.get('etrackerWrapperTarget')){
                wrapperjson = wrapperjson+',et_target:'+parameters.get('etrackerWrapperTarget');
             }
-            if(!empty(parameters.get('etrackerWrapperTval')){
+            if(parameters.get('etrackerWrapperTval')){
                wrapperjson = wrapperjson+',et_tval:'+parameters.get('etrackerWrapperTval');
             }
-            if(!empty(parameters.get('etrackerWrapperTonr')){
+            if(parameters.get('etrackerWrapperTonr')){
                wrapperjson = wrapperjson+',et_tonr:'+parameters.get('etrackerWrapperTonr');
             }
-            if(!empty(parameters.get('etrackerWrapperTsale')){
+            if(parameters.get('etrackerWrapperTsale')){
                wrapperjson = wrapperjson+',et_tsale:'+parameters.get('etrackerWrapperTsale');
             }
-            if(!empty(parameters.get('etrackerWrapperCust')){
+            if(parameters.get('etrackerWrapperCust')){
                wrapperjson = wrapperjson+',et_cust:'+parameters.get('etrackerWrapperCust');
             }
-            if(!empty(parameters.get('etrackerWrapperBasket')){
+            if(parameters.get('etrackerWrapperBasket')){
                wrapperjson = wrapperjson+',et_basket:'+parameters.get('etrackerWrapperBasket');
             }
             wrapperjson = wrapperjson+'}';
