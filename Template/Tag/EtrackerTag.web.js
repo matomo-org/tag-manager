@@ -46,7 +46,32 @@
             script.src = '//static.etracker.com/code/e.js';
             s.parentNode.insertBefore(script, s);
          }
-        
+        if (trackingType === 'wrapper' && typeof(_etracker) === "object") {
+            var wrapperjson = '{et_et: '+etrackerID+',et_pagename:'+parameters.get('etrackerWrapperPagename');
+            if(!empty(parameters.get('etrackerWrapperArea')){
+               wrapperjson = wrapperjson+',et_areas:'+parameters.get('etrackerWrapperArea');
+            }
+            if(!empty(parameters.get('etrackerWrapperTarget')){
+               wrapperjson = wrapperjson+',et_target:'+parameters.get('etrackerWrapperTarget');
+            }
+            if(!empty(parameters.get('etrackerWrapperTval')){
+               wrapperjson = wrapperjson+',et_tval:'+parameters.get('etrackerWrapperTval');
+            }
+            if(!empty(parameters.get('etrackerWrapperTonr')){
+               wrapperjson = wrapperjson+',et_tonr:'+parameters.get('etrackerWrapperTonr');
+            }
+            if(!empty(parameters.get('etrackerWrapperTsale')){
+               wrapperjson = wrapperjson+',et_tsale:'+parameters.get('etrackerWrapperTsale');
+            }
+            if(!empty(parameters.get('etrackerWrapperCust')){
+               wrapperjson = wrapperjson+',et_cust:'+parameters.get('etrackerWrapperCust');
+            }
+            if(!empty(parameters.get('etrackerWrapperBasket')){
+               wrapperjson = wrapperjson+',et_basket:'+parameters.get('etrackerWrapperBasket');
+            }
+            wrapperjson = wrapperjson+'}';
+            et_eC_Wrapper(wrapperjson);
+        }
         if (trackingType === 'event' && typeof(_etracker) === "object") {
             _etracker.sendEvent(new et_UserDefinedEvent(parameters.get('etrackerEventObject'), parameters.get('etrackerEventCategory'), parameters.get('etrackerEventAction'), parameters.get('etrackerEventType')));
         }
