@@ -48,29 +48,30 @@
          }
         //wrapper function    
         if (trackingType === 'wrapper' && typeof(_etracker) === "object") {
-            var wrapperjson = '{et_et: '+etrackerID+',et_pagename:'+parameters.get('etrackerWrapperPagename');
+            var wrapperjson = new Object();
+            wrapperjson.et_et = etrackerID;
+            wrapperjson.et_pagename = parameters.get('etrackerWrapperPagename');
             if(parameters.get('etrackerWrapperArea')){
-               wrapperjson = wrapperjson+',et_areas:'+parameters.get('etrackerWrapperArea');
+               wrapperjson.et_areas = parameters.get('etrackerWrapperArea');
             }
             if(parameters.get('etrackerWrapperTarget')){
-               wrapperjson = wrapperjson+',et_target:'+parameters.get('etrackerWrapperTarget');
+               wrapperjson.et_target = parameters.get('etrackerWrapperTarget');
             }
             if(parameters.get('etrackerWrapperTval')){
-               wrapperjson = wrapperjson+',et_tval:'+parameters.get('etrackerWrapperTval');
+               wrapperjson.et_tval = parameters.get('etrackerWrapperTval');
             }
             if(parameters.get('etrackerWrapperTonr')){
-               wrapperjson = wrapperjson+',et_tonr:'+parameters.get('etrackerWrapperTonr');
+               wrapperjson.et_tonr = parameters.get('etrackerWrapperTonr');
             }
             if(parameters.get('etrackerWrapperTsale')){
-               wrapperjson = wrapperjson+',et_tsale:'+parameters.get('etrackerWrapperTsale');
+               wrapperjson.et_tsale = parameters.get('etrackerWrapperTsale');
             }
             if(parameters.get('etrackerWrapperCust')){
-               wrapperjson = wrapperjson+',et_cust:'+parameters.get('etrackerWrapperCust');
+               wrapperjson.et_cust = parameters.get('etrackerWrapperCust');
             }
             if(parameters.get('etrackerWrapperBasket')){
-               wrapperjson = wrapperjson+',et_basket:'+parameters.get('etrackerWrapperBasket');
+               wrapperjson.et_basket = parameters.get('etrackerWrapperBasket');
             }
-            wrapperjson = wrapperjson+'}';
             et_eC_Wrapper(wrapperjson);
         }
         // event tracking function
