@@ -46,7 +46,35 @@
             script.src = '//static.etracker.com/code/e.js';
             s.parentNode.insertBefore(script, s);
          }
-        
+        //wrapper function    
+        if (trackingType === 'wrapper' && typeof(_etracker) === "object") {
+            var ewrapper = new Object();
+            ewrapper.et_et = etrackerID;
+            ewrapper.et_pagename = parameters.get('etrackerWrapperPagename');
+            if(parameters.get('etrackerWrapperArea')){
+               ewrapper.et_areas = parameters.get('etrackerWrapperArea');
+            }
+            if(parameters.get('etrackerWrapperTarget')){
+               ewrapper.et_target = parameters.get('etrackerWrapperTarget');
+            }
+            if(parameters.get('etrackerWrapperTval')){
+               ewrapper.et_tval = parameters.get('etrackerWrapperTval');
+            }
+            if(parameters.get('etrackerWrapperTonr')){
+               ewrapper.et_tonr = parameters.get('etrackerWrapperTonr');
+            }
+            if(parameters.get('etrackerWrapperTsale')){
+               ewrapper.et_tsale = parameters.get('etrackerWrapperTsale');
+            }
+            if(parameters.get('etrackerWrapperCust')){
+               ewrapper.et_cust = parameters.get('etrackerWrapperCust');
+            }
+            if(parameters.get('etrackerWrapperBasket')){
+               ewrapper.et_basket = parameters.get('etrackerWrapperBasket');
+            }
+            et_eC_Wrapper(ewrapper);
+        }
+        // event tracking function
         if (trackingType === 'event' && typeof(_etracker) === "object") {
             _etracker.sendEvent(new et_UserDefinedEvent(parameters.get('etrackerEventObject'), parameters.get('etrackerEventCategory'), parameters.get('etrackerEventAction'), parameters.get('etrackerEventType')));
         }
