@@ -24,7 +24,7 @@ class ThemeColorTag extends BaseTag
             $this->makeSetting('themeColor', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Theme Color';
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = "Please enter a color as a hexidecimal string (e.g. '#11ee33')";
+                $field->description = "Please enter a color as a hexadecimal string (e.g. '#11ee33')";
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value, Setting $setting) {
                     if (!preg_match("/^#(?:[0-9a-fA-F]{3}){1,2}$/", $value)) {

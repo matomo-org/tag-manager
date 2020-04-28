@@ -51,7 +51,7 @@
 * Support Matomo's new capability system for a more granular permission system and to improve security. Introduces three new capabilities
  * Tag Manager Write
  * Use Custom Template
- * Publish Live Contaier
+ * Publish Live Container
 * New API method `TagManager.getAvailableEnvironmentsWithPublishCapability`
 * Custom HTML tag supports assigning JavaScript variables, CSS styles and HTML content
 * Added Facebook Pixel tag (kudos to @danielmcclure)

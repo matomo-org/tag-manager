@@ -24,7 +24,7 @@ class BingUETTag extends BaseTag
             $this->makeSetting('bingAdID', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'ID';
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = 'You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Mangager.';
+                $field->description = 'You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Manager.';
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new NumberRange();
             }),

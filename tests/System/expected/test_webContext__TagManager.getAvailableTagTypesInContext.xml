@@ -27,7 +27,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Mangager.</description>
+						<description>You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Manager.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -1355,7 +1355,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Please enter a color as a hexidecimal string (e.g. '#11ee33')</description>
+						<description>Please enter a color as a hexadecimal string (e.g. '#11ee33')</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
