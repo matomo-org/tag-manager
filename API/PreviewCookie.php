@@ -28,13 +28,13 @@ class PreviewCookie extends Cookie
     public function enable($idSite, $idContainer)
     {
         $this->set($this->getCookieValueName($idSite, $idContainer), '1');
-        $this->save();
+        $this->save('Lax');
     }
 
     public function disable($idSite, $idContainer)
     {
         $this->set($this->getCookieValueName($idSite, $idContainer), null);
-        $this->save();
+        $this->save('Lax');
     }
 
 }
