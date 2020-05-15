@@ -15,6 +15,6 @@ exports.clickButton = async function(page, button)
 exports.close = async function(page)
 {
     await page.evaluate(function () {
-        $('.modal.open').closeModal();
+        $('.modal.open').modal("close");
     });
 }
