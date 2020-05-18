@@ -119,7 +119,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from.</description>
+						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are ".classname", "#id" or "li a".</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
