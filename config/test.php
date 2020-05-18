@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'Piwik\Plugins\TagManager\Context\Storage\StorageInterface' => DI\object('Piwik\Plugins\TagManager\Context\Storage\Memory'),
+    'Piwik\Plugins\TagManager\Context\Storage\StorageInterface' => DI\create('Piwik\Plugins\TagManager\Context\Storage\Memory'),
     'Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator' => DI\decorate(function ($previous) {
 
         $testGenerateFixedId = \Piwik\Container\StaticContainer::get('test.vars.testGenerateFixedId');
