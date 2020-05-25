@@ -14,29 +14,29 @@ use Piwik\Piwik;
 
 class PublishLiveContainer extends Capability
 {
-    const ID = 'tagmanager_publish_live_container';
+    public const ID = 'tagmanager_publish_live_container';
 
-    public function getId()
+    public function getId(): string
     {
         return self::ID;
     }
 
-    public function getCategory()
+    public function getCategory(): string
     {
         return Piwik::translate('TagManager_TagManager');
     }
 
-    public function getName()
+    public function getName(): string
     {
         return Piwik::translate('TagManager_CapabilityPublishLiveContainer');
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return Piwik::translate('TagManager_CapabilityPublishLiveContainerDescription');
     }
 
-    public function getIncludedInRoles()
+    public function getIncludedInRoles(): array
     {
         return array(
             Admin::ID
