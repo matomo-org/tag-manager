@@ -56,7 +56,6 @@ class MatomoConfigurationVariable extends BaseVariable
             $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
             $field->description = 'The URL of your Matomo instance. It should not include "/index.php" or "piwik.php". The URL of your current Matomo URL instance is preconfigured.';
             $field->validators[] = new NotEmpty();
-            $field->validators[] = new UrlLike();
         });
 
         $trackerCodeGenerator = new TrackerCodeGenerator();
