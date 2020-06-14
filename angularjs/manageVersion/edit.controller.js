@@ -109,6 +109,7 @@
 
                     if (self.create && !self.version.name && /^\d+$/.test(self.lastVersion)) {
                         self.version.name = parseInt(self.lastVersion, 10) + 1;
+                        self.isDirty = true;
                     }
                 }
             });
