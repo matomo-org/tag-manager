@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Context\WebContext;
 
+use Piwik\Context;
 use Piwik\Development;
 use Piwik\FrontController;
 use Piwik\Piwik;
@@ -49,41 +50,36 @@ class JavaScriptTagManagerLoader
 
     public function getPreviewJsContent()
     {
-        $unsetPeriod = false;
-        $unsetDate = false;
         $unsetGet = false;
+        $unsetPost = false;
 
         if (!isset($_GET)) {
             $_GET = array();
             $unsetGet = true;
         }
-
-        if (!isset($_GET['period'])) {
-            $_GET['period'] = 'day';
-            $unsetPeriod = true;
-        }
-        if (!isset($_GET['date'])) {
-            $_GET['date'] = 'yesterday';
-            $unsetDate = true;
+        if (!isset($_POST)) {
+            $_POST = array();
+            $unsetPost = true;
         }
 
         $path = PIWIK_DOCUMENT_ROOT . '/plugins/TagManager/javascripts/previewmode.js';
         $previewJs = file_get_contents($path);
-        $debugContent = FrontController::getInstance()->dispatch('TagManager', 'debug');
+
+        $debugContent = '';
+        Context::executeWithQueryParameters(array('period' => 'day', 'date' => 'today'), function () use (&$debugContent) {
+            $debugContent = FrontController::getInstance()->dispatch('TagManager', 'debug');
+        });
+
         $debugContent = str_replace(Piwik::getCurrentUserTokenAuth(), 'anonymous', $debugContent); // make sure to not expose somehow the token
         $debugContent = json_encode($debugContent);
         $previewJs = str_replace(array('/*!! previewContent */', '/*!!! previewContent */'), $debugContent, $previewJs);
 
-        if ($unsetPeriod) {
-            unset($_GET['period']);
-        }
-
-        if ($unsetDate) {
-            unset($_GET['date']);
-        }
-
         if ($unsetGet) {
             unset($_GET);
+        }
+
+        if ($unsetPost) {
+            unset($_POST);
         }
 
         return $previewJs;
