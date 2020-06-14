@@ -309,9 +309,9 @@
 				<is_pre_configured>1</is_pre_configured>
 			</row>
 			<row>
-				<id>FormDestionation</id>
+				<id>FormDestination</id>
 				<idvariable />
-				<type>FormDestionation</type>
+				<type>FormDestination</type>
 				<name>Form Destination URL</name>
 				<category>Forms</category>
 				<description>The value of the form action URL of a submitted form.</description>
