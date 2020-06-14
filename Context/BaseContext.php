@@ -212,6 +212,22 @@ abstract class BaseContext
         return $vars;
     }
 
+    private function mb_strpos($haystack, $needle, $offset) {
+        if (function_exists('mb_strpos')) {
+            return mb_strpos($haystack, $needle, $offset, 'UTF-8');
+        }
+
+        return strpos($haystack, $needle, $offset);
+    }
+
+    private function mb_strrpos($haystack, $needle, $offset) {
+        if (function_exists('mb_strpos')) {
+            return mb_strrpos($haystack, $needle, $offset, 'UTF-8');
+        }
+
+        return strrpos($haystack, $needle, $offset);
+    }
+
     protected function parameterToVariableJs($value, $container)
     {
         if (is_scalar($value) && preg_match_all('/{{.+?}}/', $value, $matches)) {
@@ -220,18 +236,18 @@ abstract class BaseContext
             $pos = 0;
 
             do {
-                $start = strpos($value, '{{', $pos);
+                $start = $this->mb_strpos($value, '{{', $pos);
 
                 $end = false;
                 if ($start !== false) {
                     // only if string contains a {{ we need to look to see if we find a matching end string
-                    $end = strpos($value, '}}', $start);
+                    $end = $this->mb_strpos($value, '}}', $start);
                 }
 
                 if ($end !== false) {
                     // now this might seem random, but it is basically to detect if there are the brackets two times there
                     // like "foo{{notExisting{{PageUrl}}"  then we still detect "{{PageUrl}}"
-                    $start = strrpos(substr($value, 0, $end), '{{', $pos);
+                    $start = $this->mb_strrpos(Common::mb_substr($value, 0, $end), '{{', $pos);
                 }
 
                 if ($start === false || $end === false) {
@@ -255,7 +271,7 @@ abstract class BaseContext
 
                 $trimmedVariableName = trim($variableName);
                 if ($trimmedVariableName
-                    && substr($trimmedVariableName, 0, 1) !==  '{') {    // case when using {{{foobar}}
+                    && Common::mb_substr($trimmedVariableName, 0, 1) !==  '{') {    // case when using {{{foobar}}
                     $var = $this->variableToArray($container, $trimmedVariableName);
                     if ($var) {
                         $multiVars[] = $var;
