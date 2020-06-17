@@ -19,7 +19,7 @@
             }
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, complete: function () {
+        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
@@ -49,7 +49,7 @@
             }
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, complete: function () {
+        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
@@ -77,7 +77,7 @@
         };
 
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, complete: function () {
+        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
@@ -101,7 +101,7 @@
             }
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {complete: function () {
+        piwikHelper.modalConfirm(template, {}, {onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
@@ -136,7 +136,7 @@
             idContainer: idContainer
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, complete: function () {
+        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
@@ -168,7 +168,7 @@
             idContainer: idContainer
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, complete: function () {
+        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
