@@ -92,6 +92,9 @@ class WebContext extends BaseContext
             // already nicely into the page and activate it later through the UI
             if (!in_array($environmentId, $generatedEnvironments, true)) {
                 $isPreviewRelease = $environmentId === Environment::ENVIRONMENT_PREVIEW;
+                if ($isPreviewRelease) {
+                    $hasPreviewRelease = true;
+                }
                 $js = $this->addPreviewCode($baseJs, $hasPreviewRelease, $isPreviewRelease, $container);
 
                 $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $environmentId, $container['created_date']);
@@ -103,7 +106,9 @@ class WebContext extends BaseContext
         foreach ($container['releases'] as $release) {
             $this->templateLocator = StaticContainer::getContainer()->make('Piwik\Plugins\TagManager\Context\BaseContext\TemplateLocator');
             $isPreviewRelease = $release['environment'] === Environment::ENVIRONMENT_PREVIEW;
-
+            if ($isPreviewRelease) {
+                $hasPreviewRelease = true;
+            }
             $containerJs = $this->generatePublicContainer($container, $release);
 
             foreach ($containerJs['tags'] as &$tag) {
