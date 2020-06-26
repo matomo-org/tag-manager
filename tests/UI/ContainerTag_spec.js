@@ -99,8 +99,7 @@ describe("ContainerTag", function () {
 
     it('should be able to select a type and then show create tag screen', async function () {
         await selectTagType('CustomHtml');
-        await capture.page(page, 'create_new_type_selected'
-        );
+        await capture.page(page, 'create_new_type_selected');
     });
 
     it('should show an error when not possible to create tag', async function () {
