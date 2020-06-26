@@ -231,7 +231,7 @@ describe("ContainerTag", function () {
         await setParameterValue('start_date_time', '03:04:05');
         await setParameterValue('end_date_date', '2030-05-12');
         await setParameterValue('end_date_time', '11:42:05');
-        await page.click('label[for=fire_limitonce_24hours]');
+        await page.click('#fire_limitonce_24hours');
         await capture.page(page, 'create_advanced_prefilled2');
     });
 
