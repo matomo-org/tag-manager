@@ -66,6 +66,7 @@ describe("Container", function () {
 
     it('should show an error when not possible to create container', async function () {
         await form.sendFieldValue(page, '.editContainer #description', 'My Description');
+        await page.click('.editContainer #description');
         await createOrUpdateContainer();
         await capture.page(page, 'create_new_error');
     });
