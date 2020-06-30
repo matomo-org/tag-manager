@@ -43,6 +43,7 @@ describe("Container", function () {
         await page.click('.editContainer .createButton');
         await page.waitForNetworkIdle();
         await page.waitFor(150);
+        await page.waitForNetworkIdle();
     }
 
     async function cancelContainer()
