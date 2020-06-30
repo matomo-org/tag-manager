@@ -15,7 +15,11 @@
                 if ('function' === typeof callback) {
                     callback(trigger);
                 }
-                template.parents('.modal.open').closeModal();
+                var modal = M.Modal.getInstance(template.parents('.modal.open'));
+
+                if (modal) {
+                    modal.close();
+                }
             }
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
@@ -45,7 +49,11 @@
                 if ('function' === typeof callback) {
                     callback(version);
                 }
-                template.parents('.modal.open').closeModal();
+                var modal = M.Modal.getInstance(template.parents('.modal.open'));
+
+                if (modal) {
+                    modal.close();
+                }
             }
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
@@ -72,7 +80,11 @@
                 if ('function' === typeof callback) {
                     callback(variable);
                 }
-                template.parents('.modal.open').closeModal();
+                var modal = M.Modal.getInstance(template.parents('.modal.open'));
+
+                if (modal) {
+                    modal.close();
+                }
             }
         };
 
@@ -97,7 +109,11 @@
                 if ('function' === typeof callback) {
                     callback(variable);
                 }
-                template.parents('.modal.open').closeModal();
+                var modal = M.Modal.getInstance(template.parents('.modal.open'));
+
+                if (modal) {
+                    modal.close();
+                }
             }
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});

@@ -24,6 +24,6 @@ exports.selectValue = async function (page, field, title)
     }, field);
     await page.waitFor(800);
     await page.evaluate((field, title) => {
-        $(field + ' .dropdown-content.active li:contains("' + title + '"):first').click()
+        $(field + ' .dropdown-content li:contains("' + title + '"):first').click()
     }, field, title);
 };
