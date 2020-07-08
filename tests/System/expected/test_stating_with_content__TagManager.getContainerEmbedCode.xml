@@ -4,6 +4,6 @@
 var _mtm = window._mtm = window._mtm || [];
 _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
 var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-g.type='text/javascript'; g.async=true; g.defer=true; g.src='http://example.com/piwik/tests/PHPUnit/proxy/js/container_aaacont1_staging_a7295f29fb160dcfb59d3193.js'; s.parentNode.insertBefore(g,s);
+g.type='text/javascript'; g.async=true; g.src='http://example.com/piwik/tests/PHPUnit/proxy/js/container_aaacont1_staging_a7295f29fb160dcfb59d3193.js'; s.parentNode.insertBefore(g,s);
 &lt;/script&gt;
 &lt;!-- End Matomo Tag Manager --&gt;</result>
