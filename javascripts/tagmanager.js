@@ -1605,6 +1605,8 @@
 
             windowAlias._mtm.push = function () {
                 var i, j, methodName, parameterArray, theCall;
+                
+                this.constructor.prototype.push.apply(this, arguments);
 
                 for (i = 0; i < arguments.length; i += 1) {
                     theCall = null;
