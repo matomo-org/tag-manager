@@ -1602,11 +1602,8 @@
             if ('matomoTagManagerAsyncInit' in windowAlias && utils.isFunction(windowAlias.matomoTagManagerAsyncInit)) {
                 windowAlias.matomoTagManagerAsyncInit();
             }
-
-            windowAlias._mtm.push = function () {
+            function processMtmPush() {
                 var i, j, methodName, parameterArray, theCall;
-                
-                this.constructor.prototype.push.apply(this, arguments);
 
                 for (i = 0; i < arguments.length; i += 1) {
                     theCall = null;
@@ -1645,9 +1642,10 @@
                 }
             }
 
+            utils.setMethodWrapIfNeeded(windowAlias._mtm, 'push', processMtmPush);
             var i;
             for (i = 0; i < windowAlias._mtm.length; i++) {
-                windowAlias._mtm.push(windowAlias._mtm[i]);
+                processMtmPush(windowAlias._mtm[i]);
             }
 
             dataLayer.push({'mtm.mtmScriptLoadedTime': timeScriptLoaded});
