@@ -40,7 +40,13 @@
                     var now = new Date();
                     var messages = [];
                     for (var i = 0; i < arguments.length; i++) {
-                        messages.push(JSON.stringify(arguments[i]));
+                        messages.push(JSON.stringify(arguments[i], function( key, value) {
+                            if (typeof value === 'object' && value instanceof Node) {
+                                return value.nodeName;
+                            } else {
+                                return value;
+                            };
+                        }));
                     }
                     window.mtmPreviewWindow.mtmLogs.push({time: now.toLocaleTimeString() + '.' + now.getMilliseconds(), messages: messages});
                 }
