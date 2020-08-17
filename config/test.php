@@ -12,11 +12,11 @@ return array(
         return $previous;
     }),
     'observers.global' => DI\add(array(
-        array('AssetManager.getStylesheetFiles', function (&$stylesheets) {
+        array('AssetManager.getStylesheetFiles', DI\value(function (&$stylesheets) {
             $useOverrideCss = \Piwik\Container\StaticContainer::get('test.vars.useOverrideCss');
             if ($useOverrideCss) {
                 $stylesheets[] = 'plugins/TagManager/tests/resources/uitest-override.css';
             }
-        }),
+        })),
     ))
 );
