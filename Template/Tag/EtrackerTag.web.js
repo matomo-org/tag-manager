@@ -27,9 +27,8 @@
                     }
                 }
             }
-        }
 
-        if (!hasBeenLoaded && etrackerID) {
+         if (!hasBeenLoaded && etrackerID) {
             hasBeenLoaded = true;
             // Pageview script
             var s = document.getElementsByTagName('script')[0];
@@ -44,8 +43,9 @@
             script.src = '//static.etracker.com/code/e.js';
             s.parentNode.insertBefore(script, s);
          }
-        
-        if (trackingType === 'event') {
+        } // end pageview
+
+        if (trackingType === 'event' && typeof(_etracker) === "object") {
             _etracker.sendEvent(new et_UserDefinedEvent(parameters.get('etrackerEventObject'), parameters.get('etrackerEventCategory'), parameters.get('etrackerEventAction'), parameters.get('etrackerEventType')));
         }
         };
