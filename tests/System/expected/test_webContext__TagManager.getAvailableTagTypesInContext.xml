@@ -430,23 +430,6 @@
 				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
-						<name>etrackerConfig</name>
-						<title>etracker Configuration</title>
-						<value />
-						<defaultValue />
-						<type>string</type>
-						<uiControl>text</uiControl>
-						<uiControlAttributes>
-							<variableType>EtrackerConfiguration</variableType>
-						</uiControlAttributes>
-						<availableValues />
-						<description>Assign a etracker configuration in order to track data into a specific site.</description>
-						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variabletype-template.html</templateFile>
-						<introduction />
-						<condition />
-					</row>
-					<row>
 						<name>trackingType</name>
 						<title>Tracking Type</title>
 						<value>pageview</value>
@@ -467,132 +450,149 @@
 						<condition />
 					</row>
 					<row>
+						<name>etrackerConfig</name>
+						<title>etracker Configuration</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<variableType>EtrackerConfiguration</variableType>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Assign a etracker configuration in order to track data into a specific site.</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variabletype-template.html</templateFile>
+						<introduction />
+						<condition>trackingType != &quot;event&quot;</condition>
+					</row>
+					<row>
 						<name>etrackerWrapperPagename</name>
 						<title>etracker Wrapper pagename (et_pagename)</title>
-						<value/>
-						<defaultValue/>
+						<value />
+						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues/>
+						<availableValues />
 						<description>The wrappers's pagename</description>
-						<inlineHelp/>
+						<inlineHelp />
 						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
-						<introduction/>
-						<condition>trackingType == "wrapper"</condition>
+						<introduction />
+						<condition>trackingType == &quot;wrapper&quot;</condition>
 					</row>
 					<row>
 						<name>etrackerWrapperArea</name>
 						<title>etracker Wrapper area (et_area)</title>
-						<value/>
-						<defaultValue/>
+						<value />
+						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues/>
+						<availableValues />
 						<description>The area should be separated by Slash</description>
-						<inlineHelp/>
+						<inlineHelp />
 						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
-						<introduction/>
-						<condition>trackingType == "wrapper"</condition>
+						<introduction />
+						<condition>trackingType == &quot;wrapper&quot;</condition>
 					</row>
 					<row>
 						<name>etrackerWrapperTarget</name>
 						<title>etracker Wrapper target (et_target)</title>
-						<value/>
-						<defaultValue/>
+						<value />
+						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues/>
-						<description/>
-						<inlineHelp/>
+						<availableValues />
+						<description />
+						<inlineHelp />
 						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
-						<introduction/>
-						<condition>trackingType == "wrapper"</condition>
+						<introduction />
+						<condition>trackingType == &quot;wrapper&quot;</condition>
 					</row>
 					<row>
 						<name>etrackerWrapperTval</name>
 						<title>etracker Wrapper total order value (et_tval)</title>
-						<value/>
-						<defaultValue/>
+						<value />
+						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues/>
-						<description/>
-						<inlineHelp/>
+						<availableValues />
+						<description />
+						<inlineHelp />
 						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
-						<introduction/>
-						<condition>trackingType == "wrapper"</condition>
+						<introduction />
+						<condition>trackingType == &quot;wrapper&quot;</condition>
 					</row>
 					<row>
 						<name>etrackerWrapperTonr</name>
 						<title>etracker Wrapper order number (et_tonr)</title>
-						<value/>
-						<defaultValue/>
+						<value />
+						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues/>
-						<description/>
-						<inlineHelp/>
+						<availableValues />
+						<description />
+						<inlineHelp />
 						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
-						<introduction/>
-						<condition>trackingType == "wrapper"</condition>
+						<introduction />
+						<condition>trackingType == &quot;wrapper&quot;</condition>
 					</row>
 					<row>
 						<name>etrackerWrapperTsale</name>
 						<title>etracker Wrapper order status (et_tsale)</title>
-						<value/>
-						<defaultValue/>
+						<value />
+						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues/>
-						<description/>
-						<inlineHelp/>
+						<availableValues />
+						<description />
+						<inlineHelp />
 						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
-						<introduction/>
-						<condition>trackingType == "wrapper"</condition>
+						<introduction />
+						<condition>trackingType == &quot;wrapper&quot;</condition>
 					</row>
 					<row>
 						<name>etrackerWrapperCust</name>
 						<title>etracker Wrapper customer status (et_cust)</title>
-						<value/>
-						<defaultValue/>
+						<value />
+						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues/>
-						<description/>
-						<inlineHelp/>
+						<availableValues />
+						<description />
+						<inlineHelp />
 						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
-						<introduction/>
-						<condition>trackingType == "wrapper"</condition>
+						<introduction />
+						<condition>trackingType == &quot;wrapper&quot;</condition>
 					</row>
 					<row>
 						<name>etrackerWrapperBasket</name>
 						<title>etracker Wrapper basket (et_basket)</title>
-						<value/>
-						<defaultValue/>
+						<value />
+						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues/>
-						<description/>
-						<inlineHelp/>
+						<availableValues />
+						<description />
+						<inlineHelp />
 						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
-						<introduction/>
-						<condition>trackingType == "wrapper"</condition>
+						<introduction />
+						<condition>trackingType == &quot;wrapper&quot;</condition>
 					</row>
 					<row>
 						<name>etrackerEventCategory</name>
