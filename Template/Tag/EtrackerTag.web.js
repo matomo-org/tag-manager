@@ -28,24 +28,24 @@
                     }
                 }
             }
-        }
 
-        if (!hasBeenLoaded && etrackerID) {
-            hasBeenLoaded = true;
-            // Pageview script
-            var s = document.getElementsByTagName('script')[0];
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.setAttribute('data-secure-code', etrackerID);
-            script.setAttribute('id', '_etLoader');
-            script.setAttribute('charset', 'UTF-8');
-            script.setAttribute('data-block-cookies', etrackerBlockCookies);
-            if (etrackerConfig.etrackerDNT) {
-                script.setAttribute('data-respect-dnt', 'true');
+            if (!hasBeenLoaded && etrackerID) {
+                hasBeenLoaded = true;
+                // Pageview script
+                var s = document.getElementsByTagName('script')[0];
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.setAttribute('data-secure-code', etrackerID);
+                script.setAttribute('id', '_etLoader');
+                script.setAttribute('charset', 'UTF-8');
+                script.setAttribute('data-block-cookies', etrackerBlockCookies);
+                if (etrackerConfig.etrackerDNT) {
+                    script.setAttribute('data-respect-dnt', 'true');
+                }
+                script.src = '//static.etracker.com/code/e.js';
+                s.parentNode.insertBefore(script, s);
             }
-            script.src = '//static.etracker.com/code/e.js';
-            s.parentNode.insertBefore(script, s);
-         }
+        }
         //wrapper function    
         if (trackingType === 'wrapper' && typeof(_etracker) === "object") {
             var ewrapper = new Object();

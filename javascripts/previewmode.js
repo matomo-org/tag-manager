@@ -16,6 +16,13 @@ function renderPreviewFrame(theContent)
         return;
     }
 
+    if (!document.body) {
+        document.addEventListener('DOMContentLoaded', function () {
+            renderPreviewFrame(theContent);
+        });
+        return;
+    }
+
     var previewFrame = document.getElementById('mtmDebugFrame');
 
     if (!previewFrame) {

@@ -33,14 +33,15 @@ class EtrackerTag extends BaseTag
             );
         });
         return array(
+            $trackingType,
             $this->makeSetting(self::PARAM_ETRACKER_CONFIG, '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'etracker Configuration';
                 $field->description = 'Assign a etracker configuration in order to track data into a specific site.';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE_TYPE;
                 $field->uiControlAttributes = array('variableType' => 'EtrackerConfiguration');
                 $field->validators[] = new NotEmpty();
+                $field->condition = 'trackingType != "event"';
             }),
-            $trackingType,
             $this->makeSetting('etrackerWrapperPagename', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Wrapper pagename (et_pagename)';
                 $field->description = 'The wrappers\'s pagename';

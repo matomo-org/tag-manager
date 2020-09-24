@@ -40,7 +40,13 @@
                     var now = new Date();
                     var messages = [];
                     for (var i = 0; i < arguments.length; i++) {
-                        messages.push(JSON.stringify(arguments[i]));
+                        messages.push(JSON.stringify(arguments[i], function( key, value) {
+                            if (typeof value === 'object' && value instanceof Node) {
+                                return value.nodeName;
+                            } else {
+                                return value;
+                            };
+                        }));
                     }
                     window.mtmPreviewWindow.mtmLogs.push({time: now.toLocaleTimeString() + '.' + now.getMilliseconds(), messages: messages});
                 }
@@ -1513,6 +1519,38 @@
                 }
 
                 if (container.triggers && utils.isArray(container.triggers)) {
+
+                    if (container.tags && utils.isArray(container.tags)) {
+                        // we need to try and add triggers first that are block triggers. This way block triggers will be
+                        // executed before fire triggers (unless a trigger is a block and a fire trigger in which case it
+                        // may still cause issues and then a tag delay needs to be used.
+                        // this is interesting when you have say 2 page view triggers. The first page view trigger is triggered
+                        // and then would immediately fire a tag. Next the second page view trigger will be triggered
+                        // immediately afterwards and would then block the previously fired tag. The tag should not have been fired
+                        // basically. By sorting them to add triggers that block tags first, these triggers would be executed
+                        // first and then the scenario is that basically the 2nd trigger would be executed first and correctly block
+                        // the tag. Then the first trigger will be triggered and it won't fire the tag because it was blocked.
+                        container.triggers.sort(function (a, b) {
+                            var isABlockTrigger = false, isBBlockTrigger = false, tag, z;
+                            for (z= 0; z < container.tags.length; z++) {
+                                tag = container.tags[z];
+                                if (tag && tag.blockTriggerIds && utils.isArray(tag.blockTriggerIds)) {
+                                    isABlockTrigger = isABlockTrigger || utils.indexOfArray(tag.blockTriggerIds, a.id) !== -1;
+                                    isBBlockTrigger = isBBlockTrigger || utils.indexOfArray(tag.blockTriggerIds, b.id) !== -1;
+                                }
+                            }
+                            if (isABlockTrigger && !isBBlockTrigger) {
+                                return -1;
+                            } else if (isBBlockTrigger && !isABlockTrigger) {
+                                return 1;
+                            }
+
+                            if (a.id < b.id) {
+                                return -1;
+                            }
+                            return 1;
+                        });
+                    }
                     for (i = 0; i < container.triggers.length; i++) {
                         this.addTrigger(container.triggers[i]);
                     }

@@ -23,7 +23,7 @@
                             'mtm.formElementAction': formAction
                         });
                     }
-                });
+                }, true);
             });
         };
     };
