@@ -22,7 +22,7 @@ class Filesystem implements StorageInterface
         if (!isset($content) || $content !== $data) {
             // we only want to save the file when needed
             \Piwik\Filesystem::mkdir(dirname($name));
-            $fileWritten = file_put_contents($name, $data);
+            $fileWritten = @file_put_contents($name, $data);
             if (!$fileWritten) {
                 throw new \Exception('Failed to write tag manager file ' . $name);
             }
