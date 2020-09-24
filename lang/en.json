@@ -432,7 +432,7 @@
       "ScrollLeftPixelVariableDescription": "How far the user has currently scrolled horizontally in pixels, for example \"592\".",
       "ScrollLeftPixelVariableName": "Scroll Left Pixel",
       "ScrollReachTriggerDescription": "Triggered as soon as the user scrolls to a certain position.",
-      "ScrollReachTriggerHelp": "This trigger is triggered when a user either scrolls or resizes the current browser window. The trigger is not triggered when the user scrolls within a certain element.",
+      "ScrollReachTriggerHelp": "This trigger is triggered when a user either scrolls or resizes the current browser window. The trigger is not triggered when the user scrolls within a certain element. It won't trigger every time a certain scroll position has been reached but only the very first time the configured position has been reached.",
       "ScrollReachTriggerName": "Scroll Reach",
       "ScrollSourceVariableDescription": "Whether the scroll position was originated from a user scroll or a browser resize. Value is either \"scroll\" or \"resize\".",
       "ScrollSourceVariableName": "Scroll Source",
