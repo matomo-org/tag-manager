@@ -1640,53 +1640,50 @@
             if ('matomoTagManagerAsyncInit' in windowAlias && utils.isFunction(windowAlias.matomoTagManagerAsyncInit)) {
                 windowAlias.matomoTagManagerAsyncInit();
             }
+            function processMtmPush() {
+                var i, j, methodName, parameterArray, theCall;
 
-            var methodsToApply = windowAlias._mtm;
-            windowAlias._mtm = {
-                push: function () {
-                    var i, j, methodName, parameterArray, theCall;
+                for (i = 0; i < arguments.length; i += 1) {
+                    theCall = null;
+                    if (arguments[i] && arguments[i].slice) {
+                        theCall = arguments[i].slice();
+                    }
+                    parameterArray = arguments[i];
 
-                    for (i = 0; i < arguments.length; i += 1) {
-                        theCall = null;
-                        if (arguments[i] && arguments[i].slice) {
-                            theCall = arguments[i].slice();
+                    if (utils.isObject(parameterArray) && !utils.isArray(parameterArray)) {
+                        dataLayer.push(parameterArray); // we assume dataLayer push
+                        continue;
+                    }
+
+                    methodName = parameterArray.shift();
+
+                    var isStaticPluginCall = utils.isString(methodName) && methodName.indexOf('::') > 0;
+                    if (isStaticPluginCall) {
+                        var fParts, context;
+
+                        // a static method will not be called on a tracker and is not dependent on the existence of a
+                        // tracker etc
+                        fParts = methodName.split('::');
+                        context = fParts[0];
+                        methodName = fParts[1];
+
+                        if ('object' === typeof TagManager[context] && utils.isFunction(TagManager[context][methodName])) {
+                            TagManager[context][methodName].apply(TagManager[context], parameterArray);
                         }
-                        parameterArray = arguments[i];
-
-                        if (utils.isObject(parameterArray) && !utils.isArray(parameterArray)) {
-                            dataLayer.push(parameterArray); // we assume dataLayer push
-                            continue;
-                        }
-
-                        methodName = parameterArray.shift();
-
-                        var isStaticPluginCall = utils.isString(methodName) && methodName.indexOf('::') > 0;
-                        if (isStaticPluginCall) {
-                            var fParts, context;
-
-                            // a static method will not be called on a tracker and is not dependent on the existence of a
-                            // tracker etc
-                            fParts = methodName.split('::');
-                            context = fParts[0];
-                            methodName = fParts[1];
-
-                            if ('object' === typeof TagManager[context] && utils.isFunction(TagManager[context][methodName])) {
-                                TagManager[context][methodName].apply(TagManager[context], parameterArray);
-                            }
+                    } else {
+                        if (methodName && methodName in TagManager && utils.isFunction(TagManager[methodName])) {
+                            TagManager[methodName].apply(TagManager, parameterArray);
                         } else {
-                            if (methodName && methodName in TagManager && utils.isFunction(TagManager[methodName])) {
-                                TagManager[methodName].apply(TagManager, parameterArray);
-                            } else {
-                                Debug.error('method ' + methodName + ' is not valid');
-                            }
+                            Debug.error('method ' + methodName + ' is not valid');
                         }
                     }
                 }
-            };
+            }
 
+            utils.setMethodWrapIfNeeded(windowAlias._mtm, 'push', processMtmPush);
             var i;
-            for (i = 0; i < methodsToApply.length; i++) {
-                windowAlias._mtm.push(methodsToApply[i]);
+            for (i = 0; i < windowAlias._mtm.length; i++) {
+                processMtmPush(windowAlias._mtm[i]);
             }
 
             dataLayer.push({'mtm.mtmScriptLoadedTime': timeScriptLoaded});
