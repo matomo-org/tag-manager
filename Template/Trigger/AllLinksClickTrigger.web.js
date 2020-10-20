@@ -33,7 +33,7 @@
                             'mtm.clickElementUrl': TagManager.dom.getElementAttribute(target, 'href')
                         });
                     }
-                });
+                }, true);
 
             });
         };

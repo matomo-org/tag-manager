@@ -45,7 +45,7 @@ class TagManager extends \Piwik\Plugin
             'AssetManager.getStylesheetFiles' => 'getStylesheetFiles',
             'AssetManager.getJavaScriptFiles' => 'getJsFiles',
             'Translate.getClientSideTranslationKeys' => 'getClientSideTranslationKeys',
-            'CoreUpdater.update.end' => 'regenerateReleasedContainers',
+            'CoreUpdater.update.end' => 'onPluginActivateOrInstall',
             'PluginManager.pluginActivated' => 'onPluginActivateOrInstall',
             'PluginManager.pluginInstalled' => 'onPluginActivateOrInstall',
             'PluginManager.pluginDeactivated' => 'onPluginActivateOrInstall',
@@ -187,10 +187,14 @@ class TagManager extends \Piwik\Plugin
         $glossaryItems['tagmanager'] = $items;
     }
 
-    public function onPluginActivateOrInstall($pluginName)
+    public function onPluginActivateOrInstall($pluginName = '')
     {
         if ($pluginName !== 'TagManager') {
-            $this->regenerateReleasedContainers();
+            try {
+                $this->regenerateReleasedContainers();
+            } catch (\Exception $e) {
+                Log::warning('Failed to regenerate containers: ' . $e->getMessage());
+            }
         }
     }
 

@@ -1242,7 +1242,7 @@
         });
 
         test("Matomo TagManager Container", function() {
-            expect(32);
+            expect(36);
             var TagManager = window.MatomoTagManager;
             var dataLayer = TagManager.dataLayer;
             dataLayer.reset();
@@ -1329,6 +1329,23 @@
             strictEqual('bar', container.dataLayer.get('foo'), 'container.run will replay all previously missed events');
             strictEqual('world', container.dataLayer.get('hello'), 'container.run will replay all previously missed events');
 
+            // should add block triggers first
+
+            var container = buildContainer({
+                id: 'jRL41Bw',
+                idsite: 5,
+                versionName: 'v1.0.0',
+                revision: 29,
+                environment: 'live',
+                triggers: [{Trigger:TriggerTemplate, id: 51}, {Trigger:TriggerTemplate, id: 61}, {Trigger:TriggerTemplate, id: 71}, {Trigger:TriggerTemplate, id: 81}],
+                tags: [{Tag:TagTemplate, fireTriggerIds: [61]}, {Tag:TagTemplate, fireTriggerIds: [], blockTriggerIds: [81]}, {Tag:TagTemplate, fireTriggerIds: [51]}, {Tag:TagTemplate, fireTriggerIds: [], blockTriggerIds: [71]}],
+                variables: [varWithFunctionTemplate, varWithFunctionTemplate2]
+            }, {});
+
+            strictEqual(71, container.triggers[0].id, 'first sorted trigger (block trigger first)')
+            strictEqual(81, container.triggers[1].id, 'second sorted trigger (block trigger first then by lowest id)')
+            strictEqual(51, container.triggers[2].id, 'third sorted trigger (now a fire triggers sorted by lowest id)')
+            strictEqual(61, container.triggers[3].id, 'fourth sorted trigger')
         });
 
         test("Matomo TagManager _mtm", function() {
