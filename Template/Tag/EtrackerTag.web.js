@@ -38,7 +38,9 @@
                 script.setAttribute('data-secure-code', etrackerID);
                 script.setAttribute('id', '_etLoader');
                 script.setAttribute('charset', 'UTF-8');
-                script.setAttribute('data-block-cookies', etrackerBlockCookies);
+                if (etrackerConfig.etrackerBlockCookies) {
+                    script.setAttribute('data-block-cookies', 'true');
+                }
                 if (etrackerConfig.etrackerDNT) {
                     script.setAttribute('data-respect-dnt', 'true');
                 }
