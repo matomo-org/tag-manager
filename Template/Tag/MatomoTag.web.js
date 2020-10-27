@@ -65,7 +65,7 @@
             // installed which another doesn't have.
             libLoaded = true;
             var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.defer=true; g.src=url+jsEndpoint; s.parentNode.insertBefore(g,s);
+            g.type='text/javascript'; g.async=true; g.src=url+jsEndpoint; s.parentNode.insertBefore(g,s);
         }
     }
 
