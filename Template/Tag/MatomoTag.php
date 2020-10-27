@@ -45,6 +45,7 @@ class MatomoTag extends BaseTag
                 'pageview' => 'Pageview',
                 'event' => 'Event',
                 'goal' => 'Goal',
+                'initialise' => 'Initialise tracker only. Don\' track anything.',
             );
         });
         return array(
