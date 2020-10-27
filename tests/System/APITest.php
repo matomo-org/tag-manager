@@ -123,7 +123,7 @@ class APITest extends SystemTestCase
 
             try {
                 $this->runApiTests(array('TagManager.getContainerVariableReferences', 'TagManager.getContainerVariable'), $params);
-            } catch (\PHPUnit_Framework_Exception $e) {
+            } catch (\PHPUnit\Framework\Exception $e) {
                 $exception = $e;
                 continue;
             }
@@ -154,7 +154,7 @@ class APITest extends SystemTestCase
 
             try {
                 $this->runApiTests(array('TagManager.getContainerTriggerReferences', 'TagManager.getContainerTrigger'), $params);
-            } catch (\PHPUnit_Framework_Exception $e) {
+            } catch (\PHPUnit\Framework\Exception $e) {
                 $exception = $e;
                 continue;
             }
@@ -185,7 +185,7 @@ class APITest extends SystemTestCase
 
             try {
                 $this->runApiTests(array('TagManager.getContainerTag'), $params);
-            } catch (\PHPUnit_Framework_Exception $e) {
+            } catch (\PHPUnit\Framework\Exception $e) {
                 $exception = $e;
                 continue;
             }

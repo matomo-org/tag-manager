@@ -28,7 +28,7 @@ class TriggerIdsTest extends IntegrationTestCase
      */
     private $idSite;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -42,7 +42,7 @@ class TriggerIdsTest extends IntegrationTestCase
         $idTrigger3 = $trigger->addContainerTrigger($this->idSite, 5, WindowLoadedTrigger::ID, 'MyTrigger3', array(), array());
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         TagManager::$enableAutoContainerCreation = true;
 
@@ -61,30 +61,27 @@ class TriggerIdsTest extends IntegrationTestCase
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage The trigger "2" at position "0" does not exist.
-     */
     public function test_notValidTriggerId()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('The trigger "2" at position "0" does not exist.');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, array(2));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage The trigger "2" at position "1" does not exist.
-     */
     public function test_mixedValidAndNotValidTriggerId()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('The trigger "2" at position "1" does not exist.');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, array(1,2));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage "Triggers" has to be an array.
-     */
     public function test_emptyTriggerId()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('"Triggers" has to be an array.');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, false);
     }
 

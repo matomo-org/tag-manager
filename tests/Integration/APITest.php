@@ -46,12 +46,11 @@ class APITest extends IntegrationTestCase
      */
     private $tagFixture;
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasSomeViewAccess
-     */
     public function test_getAvailableContexts_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasSomeViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getAvailableContexts();
     }
@@ -62,12 +61,11 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getAvailableContexts());
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasSomeViewAccess
-     */
     public function test_getAvailableEnvironments_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasSomeViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getAvailableEnvironments();
     }
@@ -78,12 +76,11 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getAvailableEnvironments());
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasSomeViewAccess
-     */
     public function test_getAvailableTagFireLimits_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasSomeViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getAvailableTagFireLimits();
     }
@@ -94,12 +91,11 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getAvailableTagFireLimits());
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasSomeViewAccess
-     */
     public function test_getAvailableComparisons_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasSomeViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getAvailableComparisons();
     }
@@ -110,22 +106,20 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getAvailableComparisons());
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasSomeViewAccess
-     */
     public function test_getAvailableTagTypesInContext_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasSomeViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getAvailableTagTypesInContext(WebContext::ID);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The context "foobar" is not supported
-     */
     public function test_getAvailableTagTypesInContext_whenNotValidIdContext()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The context "foobar" is not supported');
+
         $this->setUser();
         $this->api->getAvailableTagTypesInContext('foobar');
     }
@@ -135,22 +129,20 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getAvailableTagTypesInContext(WebContext::ID));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasSomeViewAccess
-     */
     public function test_getAvailableTriggerTypesInContext_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasSomeViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getAvailableTriggerTypesInContext(WebContext::ID);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The context "foobar" is not supported
-     */
     public function test_getAvailableTriggerTypesInContext_whenNotValidIdContext()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The context "foobar" is not supported');
+
         $this->setUser();
         $this->api->getAvailableTriggerTypesInContext('foobar');
     }
@@ -160,22 +152,20 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getAvailableTriggerTypesInContext(WebContext::ID));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasSomeViewAccess
-     */
     public function test_getAvailableVariableTypesInContext_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasSomeViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getAvailableVariableTypesInContext(WebContext::ID);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The context "foobar" is not supported
-     */
     public function test_getAvailableVariableTypesInContext_whenNotValidIdContext()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The context "foobar" is not supported');
+
         $this->setUser();
         $this->api->getAvailableVariableTypesInContext('foobar');
     }
@@ -185,12 +175,11 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getAvailableVariableTypesInContext(WebContext::ID));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainers_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainers($this->idSite);
     }
@@ -201,22 +190,20 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getContainers($this->idSite));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerVersions_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerVersions($this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerVersions_shouldFailWhenContainerNotExists()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerVersions($this->idSite, 9999);
     }
@@ -227,22 +214,20 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getContainerVersions($this->idSite, $this->idContainer));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerVersion_shouldFailWhenContainerVersionNotExists()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerVersion($this->idSite, $this->idContainer, 9999);
     }
@@ -253,22 +238,20 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_deleteContainer_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->deleteContainer($this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage foobar
-     */
     public function test_deleteContainer_shouldFailWhenContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('foobar');
+
         $this->api->deleteContainer($this->idSite, 'foobar');
     }
 
@@ -278,40 +261,36 @@ class APITest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_publishContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist
-     */
     public function test_publishContainerVersion_shouldFailWhenContainerVersionDoesNotExist()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, 99999, Environment::ENVIRONMENT_LIVE);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The environment "foobar" does not exist
-     */
     public function test_publishContainerVersion_shouldFailWhenEnvironmentNameIsInvalid()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The environment "foobar" does not exist');
+
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'foobar');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_publish_live_container Fake exception
-     */
     public function test_publishContainerVersion_shouldFailWhenNotHavingPublishLiveCapability()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
+
         $this->setWriteUser();
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
     }
@@ -330,202 +309,181 @@ class APITest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_addContainer_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->addContainer($this->idSite, WebContext::ID, 'TheName');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The context "foobar" is not supported
-     */
     public function test_addContainer_shouldFailWhenContextDoesNotExist()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The context "foobar" is not supported');
+
         $this->api->addContainer($this->idSite, 'foobar', 'TheName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_updateContainer_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->updateContainer($this->idSite, $this->idContainer, 'TheName');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "9999" does not exist
-     */
     public function test_updateContainer_shouldFailWhenContainerVersionDoesNotExist()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
         $this->api->updateContainer($this->idSite, '9999',  'TheName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_updateContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->updateContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'TheName');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist
-     */
     public function test_updateContainerVersion_shouldFailWhenContainerVersionDoesNotExist()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
         $this->api->updateContainerVersion($this->idSite, $this->idContainer, 99999, 'TheName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_createContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->createContainerVersion($this->idSite, $this->idContainer, 'TheName');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_createContainerVersion_shouldFailWhenContainerVersionDoesNotExist()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->createContainerVersion($this->idSite, $this->idContainer, 'TheName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_deleteContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->deleteContainerVersion($this->idSite, 'foo', $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage foobar
-     */
     public function test_deleteContainerVersion_shouldFailWhenContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('foobar');
+
         $this->api->deleteContainerVersion($this->idSite, 'foobar', $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_deleteContainerVariable_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->deleteContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idVariable = 999);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist
-     */
     public function test_deleteContainerVariable_shouldFailWhenVersionNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
         $this->api->deleteContainerVariable($this->idSite, $this->idContainer, 9999, $idVariable = 999);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "9999" does not exist
-     */
     public function test_deleteContainerVariable_shouldFailWhenContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
         $this->api->deleteContainerVariable($this->idSite, 9999, $this->idContainerDraftVersion, $idVariable = 999);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_deleteContainerTrigger_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->deleteContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTrigger = 999);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist
-     */
     public function test_deleteContainerTrigger_shouldFailWhenVersionNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
         $this->api->deleteContainerTrigger($this->idSite, $this->idContainer, 9999, $idTrigger = 999);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "9999" does not exist
-     */
     public function test_deleteContainerTrigger_shouldFailWhenContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
         $this->api->deleteContainerTrigger($this->idSite, 9999, $this->idContainerDraftVersion, $idTrigger = 999);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_deleteContainerTag_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->deleteContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag = 999);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist
-     */
     public function test_deleteContainerTag_shouldFailWhenVersionNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
         $this->api->deleteContainerTag($this->idSite, $this->idContainer, 9999, $idTag = 999);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "9999" does not exist
-     */
     public function test_deleteContainerTag_shouldFailWhenContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
         $this->api->deleteContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainer_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainer($this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "99999" does not exist
-     */
     public function test_getContainer_shouldFailWhenContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "99999" does not exist');
+
         $this->api->getContainer($this->idSite, 99999);
     }
 
@@ -535,22 +493,20 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->getContainer($this->idSite, $this->idContainer));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_enablePreviewMode_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->enablePreviewMode($this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "99999" does not exist.
-     */
     public function test_enablePreviewMode_shouldFailWhenContainernotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "99999" does not exist');
+
         $this->api->enablePreviewMode($this->idSite, 99999);
     }
 
@@ -559,22 +515,20 @@ class APITest extends IntegrationTestCase
         $this->assertNull($this->api->enablePreviewMode($this->idSite, $this->idContainer));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_disablePreviewMode_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->disablePreviewMode($this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "99999" does not exist
-     */
     public function test_disablePreviewMode_shouldFailWhenContainernotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "99999" does not exist');
+
         $this->api->disablePreviewMode($this->idSite, 99999);
     }
 
@@ -583,12 +537,11 @@ class APITest extends IntegrationTestCase
         $this->assertNull($this->api->disablePreviewMode($this->idSite, $this->idContainer));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_createDefaultContainerForSite_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->createDefaultContainerForSite($this->idSite);
     }
@@ -600,103 +553,93 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($idContainer);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_addContainerVariable_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'myType', 'myName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_use_custom_templates Fake exception
-     */
     public function test_addContainerVariable_shouldFailWhenNotHavingCustomTemplatesPermissionsAndCustomTemplateIsUsed()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
         $this->setWriteUser();
         $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_updateContainerVariable_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999, 'myName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_addContainerTrigger_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->addContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'myType', 'myName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_updateContainerTrigger_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->updateContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999, 'myName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_addContainerTag_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'myType', 'myName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_use_custom_templates Fake exception
-     */
     public function test_addContainerTag_shouldFailWhenNotHavingCustomTemplatesPermissionsAndCustomTemplateIsUsed()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
         $this->setWriteUser();
         $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName');
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_updateContainerTag_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $this->setUser();
         $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999, 'myName');
     }
 
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_exportContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->exportContainerVersion($this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "99999" does not exist
-     */
     public function test_exportContainerVersion_shouldFailWhenContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "99999" does not exist');
+
         $this->api->exportContainerVersion($this->idSite, 99999);
     }
 
@@ -706,42 +649,38 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($this->api->exportContainerVersion($this->idSite, $this->idContainer));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_write Fake exception
-     */
     public function test_importContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
         $export = $this->getValidImportJson();
         $this->setUser();
         $this->api->importContainerVersion($export, $this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "99999" does not exist.
-     */
     public function test_importContainerVersion_shouldFailWhenContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "99999" does not exist');
+
         $export = $this->getValidImportJson();
         $this->api->importContainerVersion($export, $this->idSite, 99999);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Invalid format for exportedContainerVersion. Value needs to be a valid JSON
-     */
     public function test_importContainerVersion_shouldFailWhenJsonIsInvalid()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Invalid format for exportedContainerVersion. Value needs to be a valid JSON');
+
         $this->api->importContainerVersion('{"fo:2"L_"', $this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Invalid format for exportedContainerVersion. Value needs to be a valid JSON
-     */
     public function test_importContainerVersion_whenImportIsNotAnArray()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Invalid format for exportedContainerVersion. Value needs to be a valid JSON');
+
         $this->api->importContainerVersion('""', $this->idSite, $this->idContainer);
     }
 
@@ -750,22 +689,20 @@ class APITest extends IntegrationTestCase
         return json_encode($this->api->exportContainerVersion($this->idSite, $this->idContainer));
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerInstallInstructions_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerInstallInstructions($this->idSite, $this->idContainer, Environment::ENVIRONMENT_LIVE);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "foo01bar" does not exist
-     */
     public function test_getContainerInstallInstructions_containerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "foo01bar" does not exist');
+
         $this->setUser();
         $this->api->getContainerInstallInstructions($this->idSite, 'foo01bar', Environment::ENVIRONMENT_LIVE);
     }
@@ -778,22 +715,20 @@ class APITest extends IntegrationTestCase
         );
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerEmbedCode_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerEmbedCode($this->idSite, $this->idContainer, Environment::ENVIRONMENT_LIVE);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "foo01bar" does not exist
-     */
     public function test_getContainerEmbedCode_containerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "foo01bar" does not exist');
+
         $this->setUser();
         $this->api->getContainerEmbedCode($this->idSite, 'foo01bar', Environment::ENVIRONMENT_LIVE);
     }
@@ -806,32 +741,29 @@ class APITest extends IntegrationTestCase
         );
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerTags_whenNotHavingAccess()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerTags($this->idSite, $this->idContainer, $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "9999" does not exist
-     */
     public function test_getContainerTags_ContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
         $this->setUser();
         $this->api->getContainerTags($this->idSite, 9999, $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist
-     */
     public function test_getContainerTags_idContainerVersionNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
         $this->setUser();
         $this->api->getContainerTags($this->idSite, $this->idContainer, 99999);
     }
@@ -844,32 +776,29 @@ class APITest extends IntegrationTestCase
         );
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerTriggers_whenNotHavingAccess()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerTriggers($this->idSite, $this->idContainer, $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "9999" does not exist
-     */
     public function test_getContainerTriggers_ContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
         $this->setUser();
         $this->api->getContainerTriggers($this->idSite, 9999, $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist
-     */
     public function test_getContainerTriggers_idContainerVersionNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
         $this->setUser();
         $this->api->getContainerTriggers($this->idSite, $this->idContainer, 99999);
     }
@@ -882,52 +811,47 @@ class APITest extends IntegrationTestCase
         );
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerTriggerReferences_UserHasNoAccess()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerTriggerReferences($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerVariableReferences_UserHasNoAccess()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerVariableReferences($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999);
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getContainerVariables_UserHasNoAccess()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getContainerVariables($this->idSite, $this->idContainer, $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "9999" does not exist
-     */
     public function test_getContainerVariables_ContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
         $this->setUser();
         $this->api->getContainerVariables($this->idSite, 9999, $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist
-     */
     public function test_getContainerVariables_idContainerVersionNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
         $this->setUser();
         $this->api->getContainerVariables($this->idSite, $this->idContainer, 99999);
     }
@@ -940,32 +864,29 @@ class APITest extends IntegrationTestCase
         );
     }
 
-    /**
-     * @expectedException \Piwik\NoAccessException
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getAvailableContainerVariables_UserHasNoAccess()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getAvailableContainerVariables($this->idSite, $this->idContainer, $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container "9999" does not exist
-     */
     public function test_getAvailableContainerVariables_ContainerNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
         $this->setUser();
         $this->api->getAvailableContainerVariables($this->idSite, 9999, $this->idContainerDraftVersion);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The requested container version does not exist
-     */
     public function test_getAvailableContainerVariables_idContainerVersionNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
         $this->setUser();
         $this->api->getAvailableContainerVariables($this->idSite, $this->idContainer, 99999);
     }
@@ -978,7 +899,7 @@ class APITest extends IntegrationTestCase
         );
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -1031,7 +952,7 @@ class APITest extends IntegrationTestCase
             $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2');
             $this->fail('Expected exception has not been thrown');
         } catch (\Exception $e) {
-            $this->assertContains('checkUserHasCapability tagmanager_use_custom_templates', $e->getMessage());
+            self::assertStringContainsString('checkUserHasCapability tagmanager_use_custom_templates', $e->getMessage());
         }
     }
 
@@ -1084,7 +1005,7 @@ class APITest extends IntegrationTestCase
             $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customHtml' => 'foo'), $fireTrigger);
             $this->fail('Expected exception has not been thrown');
         } catch (\Exception $e) {
-            $this->assertContains('checkUserHasCapability tagmanager_use_custom_templates', $e->getMessage());
+            self::assertStringContainsString('checkUserHasCapability tagmanager_use_custom_templates', $e->getMessage());
         }
     }
 

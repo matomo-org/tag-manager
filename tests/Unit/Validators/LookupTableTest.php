@@ -19,66 +19,59 @@ use Piwik\Plugins\TagManager\Validators\LookupTable;
  */
 class LookupTableTest extends UnitTestCase
 {
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage "Lookup Table" has to be an array.
-     */
     public function test_valid_notAnArray()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('"Lookup Table" has to be an array.');
+
         $this->validateLookupTable(false);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Each "Entry" within "Lookup Table" has to be an array.
-     */
     public function test_valid_notAnArrayWithinArray()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Each "Entry" within "Lookup Table" has to be an array.');
+
         $this->validateLookupTable(array('test'));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Missing value for array key "match_value" in "Lookup Table" at position "0".
-     */
     public function test_valid_missingKeysInArray()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Missing value for array key "match_value" in "Lookup Table" at position "0".');
+
         $this->validateLookupTable(array(array()));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Missing value for array key "comparison" in "Lookup Table" at position "0".
-     */
     public function test_valid_missingComparisonKeyInArray()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Missing value for array key "comparison" in "Lookup Table" at position "0".');
+
         $this->validateLookupTable(array(array('match_value' => 'Foo')));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Missing value for array key "out_value" in "Lookup Table" at position "0".
-     */
     public function test_valid_missingOutvalueKeyInArray()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Missing value for array key "out_value" in "Lookup Table" at position "0".');
+
         $this->validateLookupTable(array(array('match_value' => 'Foo', 'comparison' => 'equals')));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage The comparison "foobarbaz" is not supported
-     */
     public function test_valid_invalidComparisonKeyInArray()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('The comparison "foobarbaz" is not supported');
+
         $this->validateLookupTable(array(array('match_value' => 'Foo', 'comparison' => 'foobarbaz', 'out_value' => 'bar')));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Missing value for array key "comparison" in "Lookup Table" at position "1".
-     */
     public function test_invalidSecondEntry()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Missing value for array key "comparison" in "Lookup Table" at position "1".');
+
         $this->validateLookupTable(array(
             array('match_value' => 'bar', 'comparison' => 'starts_with', 'out_value' => 'baz'),
             array('match_value' => 'baz'),
@@ -95,11 +88,15 @@ class LookupTableTest extends UnitTestCase
             array('match_value' => 'bar', 'comparison' => 'starts_with', 'out_value' => 'baz'),
             array('match_value' => 'baz', 'comparison' => 'not_equals', 'out_value' => 'bar'),
         ));
+
+        self::assertTrue(true);
     }
 
     public function test_valid_empty()
     {
         $this->validateLookupTable(array());
+
+        self::assertTrue(true);
     }
 
     private function validateLookupTable($value)

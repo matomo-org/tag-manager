@@ -47,7 +47,7 @@ class ImportTest extends IntegrationTestCase
      */
     private $import;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -70,42 +70,38 @@ class ImportTest extends IntegrationTestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Cannot import container. The specified container version is incomplete
-     */
     public function test_checkImportContainerIsPossible_whenMissingTags()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Cannot import container. The specified container version is incomplete');
+
         unset($this->exported['tags']);
         $this->import->checkImportContainerIsPossible($this->exported, $this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The context of the current container is "web" but the imported content is of context "foobar"
-     */
     public function test_checkImportContainerIsPossible_whenNotMatchingContext()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The context of the current container is "web" but the imported content is of context "foobar"');
+
         $this->exported['context'] = 'foobar';
         $this->import->checkImportContainerIsPossible($this->exported, $this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The tag "Foo" is not supported
-     */
     public function test_checkImportContainerIsPossible_whenTagNotExists()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The tag "Foo" is not supported');
+
         $this->exported['tags'][0]['type'] = 'Foo';
         $this->import->checkImportContainerIsPossible($this->exported, $this->idSite, $this->idContainer);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasCapability tagmanager_use_custom_templates
-     */
     public function test_checkImportContainerIsPossible_whenNotCustomTemplatePermission()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates');
+
         $this->setUser();
         $this->exported['tags'][0]['type'] = CustomHtmlTag::ID;
         $this->import->checkImportContainerIsPossible($this->exported, $this->idSite, $this->idContainer);

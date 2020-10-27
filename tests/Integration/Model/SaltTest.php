@@ -24,7 +24,7 @@ class SaltTest extends IntegrationTestCase
      */
     private $salt;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->salt = new Salt();

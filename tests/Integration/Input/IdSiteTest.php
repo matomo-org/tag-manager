@@ -20,7 +20,7 @@ use Piwik\Tests\Framework\Fixture;
  */
 class IdSiteTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         Fixture::createWebsite('2012-03-04 05:06:07');
@@ -36,30 +36,27 @@ class IdSiteTest extends IntegrationTestCase
         $this->checkIdSite(2);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage idSite: A value needs to be provided
-     */
     public function test_validate_failNotProvided()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('idSite: A value needs to be provided');
+
         $this->checkIdSite(false);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage unexpected website was found
-     */
     public function test_validate_failValueDoesNotExist()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('unexpected website was found');
+
         $this->checkIdSite(99);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage A value needs to be provided.
-     */
     public function test_validate_failValueIsEmpty()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('A value needs to be provided.');
+
         $this->checkIdSite(0);
     }
 

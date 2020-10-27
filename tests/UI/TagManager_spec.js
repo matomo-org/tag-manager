@@ -87,6 +87,8 @@ describe("TagManager", function () {
             $('#secondNavBar .item:contains(Preview)').click();
         });
         await page.waitForNetworkIdle();
+        await page.waitFor(250);
+        await page.waitForNetworkIdle();
         await capture.page(page, 'preview_enable');
     });
 

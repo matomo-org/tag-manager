@@ -40,7 +40,7 @@ class TriggerConditionsTest extends IntegrationTestCase
      */
     private $variable;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -54,75 +54,67 @@ class TriggerConditionsTest extends IntegrationTestCase
         $idVariable3 = $this->variable->addContainerVariable($this->idSite, 5, ReferrerUrlVariable::ID, 'MyVar3', array(), false, array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage "Conditions" has to be an array.
-     */
     public function test_validate_notAnArray()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('"Conditions" has to be an array.');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, 'foo');
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Each "Condition" within "Conditions" has to be an array
-     */
     public function test_validate_innerIsnotAnArray()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Each "Condition" within "Conditions" has to be an array');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, ['foo']);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Missing value for array key "actual" in "Conditions" at position "0".
-     */
     public function test_validate_missingKeys()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Missing value for array key "actual" in "Conditions" at position "0".');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, [[]]);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Missing value for array key "comparison" in "Conditions" at position "0"
-     */
     public function test_validate_missingKeyComparison()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Missing value for array key "comparison" in "Conditions" at position "0"');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, [['actual' => 'myVar1']]);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Missing value for array key "expected" in "Conditions" at position "0"
-     */
     public function test_validate_missingKeyExpected()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Missing value for array key "expected" in "Conditions" at position "0"');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, [['actual' => 'myVar1', 'comparison' => 'equals']]);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage The comparison "foobar" is not supported
-     */
     public function test_validate_invalidComparison()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('The comparison "foobar" is not supported');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, [['actual' => 'myVar1', 'comparison' => 'foobar', 'expected' => 'foo']]);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage The variable "foobarbaz" in the condition at position "0" cannot be found
-     */
     public function test_validate_invalidVariable()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('The variable "foobarbaz" in the condition at position "0" cannot be found');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, [['actual' => 'foobarbaz', 'comparison' => 'equals', 'expected' => 'foo']]);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Missing value for array key "comparison" in "Conditions" at position "1".
-     */
     public function test_validate_missingComparisonAtIndex1()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Missing value for array key "comparison" in "Conditions" at position "1".');
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, [
             ['actual' => 'myVar1', 'comparison' => 'equals', 'expected' => 'foo'],
             ['actual' => 'myVar1', 'expected' => 'foo'],

@@ -119,7 +119,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from.</description>
+						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are ".classname", "#id" or "li a".</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -511,6 +511,22 @@
 						<description>The etracker ID you want to track data into. The ID is required. You may  find the ID of your website under &quot;Administration =&gt; Setup/Tracking Code&quot; in etracker.</description>
 						<inlineHelp />
 						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>etrackerBlockCookies</name>
+						<title>Block cookies by default</title>
+						<value>1</value>
+						<defaultValue>1</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<templateFile />
 						<introduction />
 						<condition />
 					</row>
@@ -933,7 +949,7 @@
 							</field1>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Used to detect outlinks. Add hostnames or domains to be treated as local. For wildcard subdomains, you can use: ".example.com" or "*.example.com". You can also specify a path along a domain: "*.example.com/subsite1".</description>
+						<description>Used to detect outlinks. Add hostnames or domains to be treated as local. For wildcard subdomains, you can use: &quot;.example.com&quot; or &quot;*.example.com&quot;. You can also specify a path along a domain: &quot;*.example.com/subsite1&quot;.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -1050,7 +1066,7 @@
 							<row key="js/">js/</row>
 							<row key="js/tracker.php">js/tracker.php</row>
 						</availableValues>
-						<description>Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the "Bundle Tracker" option.</description>
+						<description>Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the &quot;Bundle Tracker&quot; option.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />

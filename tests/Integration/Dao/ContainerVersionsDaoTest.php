@@ -33,7 +33,7 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
 
     private $now = '2015-01-01 01:02:03';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -50,12 +50,11 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
         $this->assertEquals($columnsToCheck, $columns);
     }
 
-    /**
-     * @expectedException \Zend_Db_Statement_Exception
-     * @expectedExceptionMessage tagmanager_container_version
-     */
     public function test_shouldBeAbleToUninstallVersionTable()
     {
+        $this->expectException(\Zend_Db_Statement_Exception::class);
+        $this->expectExceptionMessage('tagmanager_container_version');
+
         $this->dao->uninstall();
 
         try {
@@ -93,12 +92,11 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
         ), $version);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage A draft version for this container already exists
-     */
     public function test_createDraftVersionTwiceFails()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('A draft version for this container already exists');
+
         $idSite = 2;
         $idContainer = 'abcdef';
         $createdDate = $this->now;
@@ -168,12 +166,11 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
         $this->assertSame(1, $version['revision']);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_createVersion_failsToInsertSameNameTwice()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idVersion = $this->createVersion($idSite = 3);
         $this->assertEquals(1, $idVersion);
 
@@ -219,12 +216,11 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
     }
 
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_updateVersion_failsToSetNameAlreadyInUseByOtherVersion()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idSite = 3;
         $idContainer = 'abcdef';
         $name = 'myname';

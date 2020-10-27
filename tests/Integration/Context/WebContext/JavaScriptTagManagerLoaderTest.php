@@ -26,7 +26,7 @@ class JavaScriptTagManagerLoaderTest extends IntegrationTestCase
      */
     private $loader;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +38,7 @@ class JavaScriptTagManagerLoaderTest extends IntegrationTestCase
     public function test_getJavaScriptContent()
     {
         $result = $this->loader->getJavaScriptContent();
-        $this->assertContains('window.MatomoTagManager', $result);
+        self::assertStringContainsString('window.MatomoTagManager', $result);
         $this->assertGreaterThanOrEqual(5000, strlen($result));
     }
 
@@ -46,17 +46,17 @@ class JavaScriptTagManagerLoaderTest extends IntegrationTestCase
     {
         $previewUrl = 'https://localhost/js/1_live_23iaMf3k.js';
         $result = $this->loader->getDetectPreviewModeContent($previewUrl, 1, '23iaMf3k');
-        $this->assertContains('document.cookie.indexOf', $result);
-        $this->assertContains($previewUrl, $result);
+        self::assertStringContainsString('document.cookie.indexOf', $result);
+        self::assertStringContainsString($previewUrl, $result);
         $this->assertGreaterThanOrEqual(100, strlen($result));
     }
 
     public function test_getPreviewJsContent()
     {
         $result = $this->loader->getPreviewJsContent();
-        $this->assertContains('renderPreviewFrame("', $result);
-        $this->assertContains('DOCTYPE html', $result);
-        $this->assertContains('<body ng-app=', $result);
+        self::assertStringContainsString('renderPreviewFrame("', $result);
+        self::assertStringContainsString('DOCTYPE html', $result);
+        self::assertStringContainsString('<body ng-app=', $result);
         $this->assertGreaterThanOrEqual(5000, strlen($result));
     }
 

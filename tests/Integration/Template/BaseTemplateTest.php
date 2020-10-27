@@ -68,19 +68,18 @@ class BaseTemplateTest extends IntegrationTestCase
      */
     private $template;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->template = new CustomTestTemplate();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The setting name "trigger" is reserved and cannot be used
-     */
     public function test_makeSetting_failsWhenUsingReservedName()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The setting name "trigger" is reserved and cannot be used');
+
         $this->template->makeSetting($name = 'trigger', $defaultValue = false, FieldConfig::TYPE_BOOL, function () {});
     }
 

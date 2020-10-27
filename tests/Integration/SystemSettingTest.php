@@ -25,7 +25,7 @@ class SystemSettingTest extends IntegrationTestCase
      */
     private $settings;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -87,12 +87,11 @@ class SystemSettingTest extends IntegrationTestCase
         $this->assertSame(array(Environment::ENVIRONMENT_LIVE, 'baz', 'foo'), $this->settings->getEnvironments());
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The preview environment cannot be configured
-     */
     public function test_getEnvironments_previewNotValid()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The preview environment cannot be configured');
+
         $this->settings->environments->setValue(array(
             array('environment' => 'foo'),
             array('environment' => Environment::ENVIRONMENT_PREVIEW),
@@ -101,36 +100,33 @@ class SystemSettingTest extends IntegrationTestCase
         $this->settings->getEnvironments();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Missing array key environment
-     */
     public function test_getEnvironments_invalidFormat()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Missing array key environment');
+
         $this->settings->environments->setValue(array(
             null
         ));
         $this->settings->getEnvironments();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Missing array key environment
-     */
     public function test_getEnvironments_invalidKey()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Missing array key environment');
+
         $this->settings->environments->setValue(array(
             array('foo' => 'bar')
         ));
         $this->settings->getEnvironments();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage does not have a valid length
-     */
     public function test_getEnvironments_validatesTheName()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('does not have a valid length');
+
         $this->settings->environments->setValue(array(
             array('environment' => 'foo'),
             array('environment' => str_pad('foo', Environment::MAX_LENGTH + 1, 'f')),

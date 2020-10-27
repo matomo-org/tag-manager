@@ -34,7 +34,7 @@ class TagsDaoTest extends IntegrationTestCase
 
     private $now = '2015-01-01 01:02:03';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -53,12 +53,11 @@ class TagsDaoTest extends IntegrationTestCase
         }
     }
 
-    /**
-     * @expectedException \Zend_Db_Statement_Exception
-     * @expectedExceptionMessage tagmanager_tag
-     */
     public function test_shouldBeAbleToUninstallTagTable()
     {
+        $this->expectException(\Zend_Db_Statement_Exception::class);
+        $this->expectExceptionMessage('tagmanager_tag');
+
         $this->dao->uninstall();
 
         try {
@@ -163,12 +162,11 @@ class TagsDaoTest extends IntegrationTestCase
         $this->assertEquals(2, $idTag);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_createTag_failsToInsertSameNameTwice()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idTag = $this->createTag($idSite = 3);
         $this->assertEquals(1, $idTag);
 
@@ -213,12 +211,11 @@ class TagsDaoTest extends IntegrationTestCase
         }
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage TagManager_ErrorNameDuplicate
-     */
     public function test_updateTag_failsToSetNameAlreadyInUseByOtherTag()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
         $idSite = 3;
         $idContainerVersion = 5;
         $name = 'myname';

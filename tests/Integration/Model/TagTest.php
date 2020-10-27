@@ -53,7 +53,7 @@ class TagTest extends IntegrationTestCase
      */
     private $model;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -73,7 +73,7 @@ class TagTest extends IntegrationTestCase
         $this->idTag1 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'InitialTag1', array('customHtml' => '<script></script>'));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         TagManager::$enableAutoContainerCreation = true;
         parent::tearDown();
@@ -103,129 +103,115 @@ class TagTest extends IntegrationTestCase
         $this->assertSame($expected, $fireLimits);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage idSite: An unexpected website was found
-     */
     public function test_addContainerTag_invalidSite()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('idSite: An unexpected website was found');
+
         $this->addContainerTag($idSite = 999);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Name: The value contains
-     */
     public function test_addContainerTag_invalidName()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Custom HTML: A value needs to be provided.
-     */
     public function test_addContainerTag_missingParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Custom HTML: A value needs to be provided.');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array(), array($this->idTrigger1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Custom HTML: A value needs to be provided.
-     */
     public function test_addContainerTag_invalidParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Custom HTML: A value needs to be provided.');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => ''), array($this->idTrigger1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Fire Trigger: A value needs to be provided.
-     */
     public function test_addContainerTag_missingFireTrigger()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Fire Trigger: A value needs to be provided.');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Fire Trigger: The trigger "2"
-     */
     public function test_addContainerTag_invalidFireTrigger()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Fire Trigger: The trigger "2"');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger2));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Block Trigger: The trigger "9999"
-     */
     public function test_addContainerTag_invalidBlockTrigger()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Block Trigger: The trigger "9999"');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(9999));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Fire limit: The value "firelimit" is not allowed
-     */
     public function test_addContainerTag_invalidFireLimit()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Fire limit: The value "firelimit" is not allowed');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), 'firelimit');
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Fire delay: The value is not a number.
-     */
     public function test_addContainerTag_invalidFireDelay()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Fire delay: The value is not a number.');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 'foobar99999999999');
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Priority: The value is not a number.
-     */
     public function test_addContainerTag_invalidPriority()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Priority: The value is not a number.');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, 'foobar99999999999');
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Start date: Date format must be
-     */
     public function test_addContainerTag_invalidStartDate()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Start date: Date format must be');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2099-43-31 14:99:99');
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage End date: Date format must be
-     */
     public function test_addContainerTag_invalidEndDate()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('End date: Date format must be');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2099-43-31 14:99:99');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The start date needs to be earlier than the end date
-     */
     public function test_addContainerTag_endDateBeforeStartDate()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The start date needs to be earlier than the end date');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2017-03-01 01:01:01');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The tag "foobarbaz" is not supported
-     */
     public function test_addContainerTag_invalidType()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The tag "foobarbaz" is not supported');
+
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = 'foobarbaz', 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED);
     }
 
@@ -408,111 +394,99 @@ class TagTest extends IntegrationTestCase
         $this->assertSame($expected, $tag);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage idSite: An unexpected website was found
-     */
     public function test_updateContainerTag_invalidSite()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('idSite: An unexpected website was found');
+
         $this->updateContainerTag($idSite = 999, $this->containerVersion1, $this->idTag1);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Name: The value contains
-     */
     public function test_updateContainerTag_invalidName()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Name: The value contains');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Custom HTML: A value needs to be provided.
-     */
     public function test_updateContainerTag_invalidParameter()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Custom HTML: A value needs to be provided.');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => ''), array($this->idTrigger1));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Fire Trigger: A value needs to be provided.
-     */
     public function test_updateContainerTag_missingFireTrigger()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Fire Trigger: A value needs to be provided.');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array());
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Fire Trigger: The trigger "2"
-     */
     public function test_updateContainerTag_invalidFireTrigger()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Fire Trigger: The trigger "2"');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger2));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Block Trigger: The trigger "9999"
-     */
     public function test_updateContainerTag_invalidBlockTrigger()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Block Trigger: The trigger "9999"');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(9999));
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Fire limit: The value "firelimit" is not allowed
-     */
     public function test_updateContainerTag_invalidFireLimit()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Fire limit: The value "firelimit" is not allowed');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), 'firelimit');
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Fire delay: The value is not a number.
-     */
     public function test_updateContainerTag_invalidFireDelay()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Fire delay: The value is not a number.');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 'foobar99999999999');
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Priority: The value is not a number.
-     */
     public function test_updateContainerTag_invalidPriority()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Priority: The value is not a number.');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, 'foobar99999999999');
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Start date: Date format must be
-     */
     public function test_updateContainerTag_invalidStartDate()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Start date: Date format must be');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2099-43-31 14:99:99');
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage End date: Date format must be
-     */
     public function test_updateContainerTag_invalidEndDate()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('End date: Date format must be');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2099-43-31 14:99:99');
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage The start date needs to be earlier than the end date
-     */
     public function test_updateContainerTag_endDateBeforeStartDate()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The start date needs to be earlier than the end date');
+
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2017-03-01 01:01:01');
     }
 
@@ -851,12 +825,11 @@ class TagTest extends IntegrationTestCase
         $this->assertSame($expected, $tag);
     }
 
-    /**
-     * @expectedException \Piwik\Validators\Exception
-     * @expectedExceptionMessage Custom HTML: A value needs to be provided.
-     */
     public function test_updateParameters_validatesParameters()
     {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Custom HTML: A value needs to be provided.');
+
         $this->model->updateParameters($this->idSite, $this->containerVersion1, $this->idTag1, $parameters = array('customHtml' => ''));
     }
 

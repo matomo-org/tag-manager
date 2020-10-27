@@ -116,6 +116,8 @@ class WebContext extends BaseContext
                 $tag['parameters'] = $this->addVariableTemplateToParameters($tag['parameters']);
                 if (!$isPreviewRelease) {
                     $tag['name'] = md5($tag['name']);// actual name is needed for session/lifetime feature
+                } else {
+                    $tag['name'] = Common::unsanitizeInputValue($tag['name']);
                 }
             }
 
@@ -130,6 +132,8 @@ class WebContext extends BaseContext
                 }
                 if (!$isPreviewRelease) {
                     $trigger['name'] = $trigger['type'];
+                } else {
+                    $trigger['name'] = Common::unsanitizeInputValue($trigger['name']);
                 }
             }
 
@@ -139,6 +143,8 @@ class WebContext extends BaseContext
 
                 if (!$isPreviewRelease) {
                     $variable['name'] = $variable['type'];
+                } else {
+                    $variable['name'] = Common::unsanitizeInputValue($variable['name']);
                 }
             }
 

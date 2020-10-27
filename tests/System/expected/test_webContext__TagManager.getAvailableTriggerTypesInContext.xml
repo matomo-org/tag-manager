@@ -168,7 +168,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from.</description>
+						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are ".classname", "#id" or "li a".</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -318,7 +318,7 @@
 				<description>Triggered as soon as the user scrolls to a certain position.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
-				<help>This trigger is triggered when a user either scrolls or resizes the current browser window. The trigger is not triggered when the user scrolls within a certain element.</help>
+				<help>This trigger is triggered when a user either scrolls or resizes the current browser window. The trigger is not triggered when the user scrolls within a certain element. It won't trigger every time a certain scroll position has been reached but only the very first time the configured position has been reached.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>

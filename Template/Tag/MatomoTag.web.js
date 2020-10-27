@@ -111,9 +111,9 @@
                     lastMatomoUrl = getMatomoUrlFromConfig(matomoConfig);
                     var trackerUrl = lastMatomoUrl + matomoConfig.trackingEndpoint;
                     if (matomoConfig.registerAsDefaultTracker) {
-                        tracker = Piwik.addTracker(trackerUrl);
+                        tracker = Piwik.addTracker(trackerUrl, matomoConfig.idSite);
                     } else {
-                        tracker = Piwik.getTracker(trackerUrl);
+                        tracker = Piwik.getTracker(trackerUrl, matomoConfig.idSite);
                     }
                     configuredTrackers[variableName] = tracker;
 
@@ -155,8 +155,6 @@
                         tracker.setDomains(domains);
                     }
 
-                    tracker.setSiteId(matomoConfig.idSite);
-                    
                     if (matomoConfig.alwaysUseSendBeacon) {
                         tracker.alwaysUseSendBeacon();
                     }

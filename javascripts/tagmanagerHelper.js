@@ -15,11 +15,15 @@
                 if ('function' === typeof callback) {
                     callback(trigger);
                 }
-                template.parents('.modal.open').closeModal();
+                var modal = M.Modal.getInstance(template.parents('.modal.open'));
+
+                if (modal) {
+                    modal.close();
+                }
             }
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, complete: function () {
+        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
@@ -45,11 +49,15 @@
                 if ('function' === typeof callback) {
                     callback(version);
                 }
-                template.parents('.modal.open').closeModal();
+                var modal = M.Modal.getInstance(template.parents('.modal.open'));
+
+                if (modal) {
+                    modal.close();
+                }
             }
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, complete: function () {
+        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
@@ -72,12 +80,16 @@
                 if ('function' === typeof callback) {
                     callback(variable);
                 }
-                template.parents('.modal.open').closeModal();
+                var modal = M.Modal.getInstance(template.parents('.modal.open'));
+
+                if (modal) {
+                    modal.close();
+                }
             }
         };
 
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, complete: function () {
+        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
@@ -97,11 +109,15 @@
                 if ('function' === typeof callback) {
                     callback(variable);
                 }
-                template.parents('.modal.open').closeModal();
+                var modal = M.Modal.getInstance(template.parents('.modal.open'));
+
+                if (modal) {
+                    modal.close();
+                }
             }
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {complete: function () {
+        piwikHelper.modalConfirm(template, {}, {onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
@@ -136,7 +152,7 @@
             idContainer: idContainer
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, complete: function () {
+        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});
@@ -168,7 +184,7 @@
             idContainer: idContainer
         };
         piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, complete: function () {
+        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
             childScope.$destroy();
             template.empty();
         }});

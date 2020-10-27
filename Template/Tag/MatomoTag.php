@@ -148,7 +148,7 @@ class MatomoTag extends BaseTag
         $bundleTrackerEnabled = !isset($entity['parameters']['matomoConfig']['parameters']['bundleTracker'])
                              || !empty($entity['parameters']['matomoConfig']['parameters']['bundleTracker']);
         if ($template && $bundleTrackerEnabled) {
-            $trackerUpdater = StaticContainer::get('Piwik\Plugins\CustomPiwikJs\TrackerUpdater');
+            $trackerUpdater = StaticContainer::get('Piwik\Plugins\CustomJsTracker\TrackerUpdater');
             $tracker = $trackerUpdater->getUpdatedTrackerFileContent();
 
             if (!$tracker) {
