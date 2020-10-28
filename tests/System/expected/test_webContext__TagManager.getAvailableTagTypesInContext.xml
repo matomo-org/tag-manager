@@ -84,6 +84,7 @@
 							<pageview>Pageview</pageview>
 							<event>Event</event>
 							<goal>Goal</goal>
+							<initialise>Initialise tracker only. Don' track anything.</initialise>
 						</availableValues>
 						<description>Choose which action should be executed when this tag is fired.</description>
 						<inlineHelp />
