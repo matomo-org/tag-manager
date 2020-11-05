@@ -280,8 +280,8 @@ class TagManager extends \Piwik\Plugin
                     }
                 }
             } catch (\Exception $e) {
-                StaticContainer::get(LoggerInterface::class)->error('There was an error while regenerating container releases: {ex}', [
-                    'ex' => $e,
+                StaticContainer::get(LoggerInterface::class)->error('There was an error while regenerating container releases: {exception}', [
+                    'exception' => $e,
                 ]);
             }
         });
