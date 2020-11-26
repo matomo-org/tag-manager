@@ -14,6 +14,7 @@ return array(
         // the prefix for any container file
         return 'container_';
     },
+    'TagManagerJSMinificationEnabled' => true,
     'fileintegrity.ignore' => DI\add(array(
         DI\get('fileintegrityIgnoreTagManager')
     )),
