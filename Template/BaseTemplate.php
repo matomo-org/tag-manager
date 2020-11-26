@@ -9,6 +9,7 @@ namespace Piwik\Plugins\TagManager\Template;
 
 use JShrink\Minifier;
 use Piwik\Common;
+use Piwik\Container\StaticContainer;
 use Piwik\Development;
 use Piwik\Piwik;
 use Piwik\Plugins\CorePluginsAdmin\SettingsMetadata;
@@ -206,7 +207,9 @@ abstract class BaseTemplate
                 $file = $base . 'web.js';
                 $minFile = $base . 'web.min.js';
 
-                if (Development::isEnabled() && $this->hasTemplateFile($file)) {
+                if (!StaticContainer::get('TagManagerJSMinificationEnabled')) {
+                    return $this->loadTemplateFile($file); // avoid minification in test mode
+                } elseif (Development::isEnabled() && $this->hasTemplateFile($file)) {
                     // during dev mode we prefer the non-minified version for debugging purposes, but we still use
                     // the internal minifier to make sure we debug the same as a user would receive
                     $template = $this->loadTemplateFile($file);

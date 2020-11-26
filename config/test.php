@@ -18,5 +18,6 @@ return array(
                 $stylesheets[] = 'plugins/TagManager/tests/resources/uitest-override.css';
             }
         })),
-    ))
+    )),
+    'TagManagerJSMinificationEnabled' => false,
 );

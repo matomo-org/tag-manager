@@ -143,5 +143,10 @@ class BaseTemplateTest extends IntegrationTestCase
         $this->assertSame($expected, $this->template->toArray());
     }
 
-
+    public function provideContainerConfig()
+    {
+        return array(
+            'TagManagerJSMinificationEnabled' => true
+        );
+    }
 }
