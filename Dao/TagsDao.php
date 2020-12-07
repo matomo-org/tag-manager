@@ -206,7 +206,7 @@ class TagsDao extends BaseDao implements TagManagerDao
                 $indexB = array_search($tagB, $tags);
                 return $indexA - $indexB;
             }
-            return $tagA['priority'] > $tagB['priority'];
+            return strcasecmp($tagB['priority'], $tagA['priority']);
         });
 
         return $tags;
