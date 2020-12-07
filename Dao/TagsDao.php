@@ -200,12 +200,6 @@ class TagsDao extends BaseDao implements TagManagerDao
         }
 
         usort($tags, function ($tagA, $tagB) use ($tags) {
-            if ($tagA['priority'] === $tagB['priority']) {
-                // for php5 making sure to have same sort order as on php7
-                $indexA = array_search($tagA, $tags);
-                $indexB = array_search($tagB, $tags);
-                return $indexA - $indexB;
-            }
             return strcasecmp($tagB['priority'], $tagA['priority']);
         });
 
