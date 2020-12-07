@@ -200,7 +200,7 @@ class TagsDao extends BaseDao implements TagManagerDao
         }
 
         usort($tags, function ($tagA, $tagB) use ($tags) {
-            return strcasecmp($tagB['priority'], $tagA['priority']);
+            return strcasecmp($tagA['priority'], $tagB['priority']);
         });
 
         return $tags;
