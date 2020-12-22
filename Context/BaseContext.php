@@ -161,7 +161,9 @@ abstract class BaseContext
 
     private function parametersToVariableJs($container, $entity)
     {
-        $this->nestedVariableCals[] = $entity['name'];
+        if (!empty($entity['name'])) {
+            $this->nestedVariableCals[] = $entity['name'];
+        }
 
         if (count($this->nestedVariableCals) > 500) {
             // eg MatomoConfiguration variable referencing itself in a variable like matomoUrl=https://matomo.org{{MatomoConfiguration}}
@@ -224,7 +226,9 @@ abstract class BaseContext
             }
         }
 
-        array_pop($this->nestedVariableCals);
+        if (!empty($entity['name'])) {
+            array_pop($this->nestedVariableCals);
+        }
 
         return $vars;
     }
