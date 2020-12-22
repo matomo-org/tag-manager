@@ -59,6 +59,8 @@ abstract class BaseContext
 
     private $variables = array();
 
+    private $nestedVariableCals = [];
+
     public function __construct(VariablesProvider $variablesProvider, Variable $variableModel, Trigger $triggerModel, Tag $tagModel, Container $containerModel, StorageInterface $storage, Salt $salt)
     {
         $this->variablesProvider = $variablesProvider;
@@ -77,6 +79,8 @@ abstract class BaseContext
 
     protected function generatePublicContainer($container, $release)
     {
+        $this->nestedVariableCals = [];
+
         $idSite = $container['idsite'];
         $idContainer = $container['idcontainer'];
         $idContainerVersion = $release['idcontainerversion'];
@@ -156,6 +160,15 @@ abstract class BaseContext
 
     private function parametersToVariableJs($container, $entity)
     {
+        $this->nestedVariableCals[] = $entity['name'];
+
+        if (count($this->nestedVariableCals) > 500) {
+            // eg MatomoConfiguration variable referencing itself in a variable like matomoUrl=https://matomo.org{{MatomoConfiguration}}
+            $entries = array_slice($this->nestedVariableCals, -3); // show last 3 entities in error message
+            $entries = array_unique($entries);
+            throw new \Exception('It seems an entity references itself or a recursion is caused in some other way. It may be related due to these entites: "'.implode(',', $entries). '". Please check if the entity references itself maybe or if a recursion might happen in another way.');
+        }
+
         $parameters = $entity['parameters'];
         $keyTemplateTypeSeparator = '____';
 
@@ -209,6 +222,9 @@ abstract class BaseContext
                 }
             }
         }
+
+        array_pop($this->nestedVariableCals);
+
         return $vars;
     }
 
