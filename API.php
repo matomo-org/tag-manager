@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager;
 use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
+use Piwik\Date;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\API\Export;
 use Piwik\Plugins\TagManager\API\Import;
@@ -19,6 +20,8 @@ use Piwik\Plugins\TagManager\API\TemplateMetadata;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\BaseDao;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
+use Piwik\Plugins\TagManager\Dao\VariablesDao;
+use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Comparison;
 use Piwik\Plugins\TagManager\Model\Container;
@@ -113,7 +116,12 @@ class API extends \Piwik\Plugin\API
      */
     private $import;
 
-    public function __construct(Tag $tags, Trigger $triggers, Variable $variables, Container $containers, TagsProvider $tagsProvider, TriggersProvider $triggersProvider, VariablesProvider $variablesProvider, ContextProvider $contextProvider, AccessValidator $validator, Environment $environment, Comparison $comparisons, Export $export, Import $import)
+    /**
+     * @var VariablesDao
+     */
+    private $variablesDao;
+
+    public function __construct(Tag $tags, Trigger $triggers, Variable $variables, Container $containers, TagsProvider $tagsProvider, TriggersProvider $triggersProvider, VariablesProvider $variablesProvider, ContextProvider $contextProvider, AccessValidator $validator, Environment $environment, Comparison $comparisons, Export $export, Import $import, VariablesDao $variablesDao)
     {
         $this->tags = $tags;
         $this->triggers = $triggers;
@@ -128,6 +136,7 @@ class API extends \Piwik\Plugin\API
         $this->export = $export;
         $this->import = $import;
         $this->comparisons = $comparisons;
+        $this->variablesDao = $variablesDao;
     }
 
     /**
@@ -823,8 +832,26 @@ class API extends \Piwik\Plugin\API
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
 
         $idVariable = $this->variables->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
+
+        try {
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+        } catch (EntityRecursionException $e) {
+            // we need to delete the previously added variable.... we first have to add the  variable to be able to
+            // detect recursion and simulate container generation... if it fails we delete it again
+            $this->forceDeleteVariable($idSite, $idContainerVersion, $idVariable);
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            throw $e;
+        }
+
         return $idVariable;
+    }
+
+    private function forceDeleteVariable($idSite, $idContainerVersion, $idVariable)
+    {
+        // we cannot use model here because it would trigger an error when a variable references itself
+        // that the variable cannot be deleted because it's still in use by another variable
+        $now = Date::now()->getDatetime();
+        $this->variablesDao->deleteContainerVariable($idSite, $idContainerVersion, $idVariable, $now);
     }
 
     /**
@@ -855,7 +882,18 @@ class API extends \Piwik\Plugin\API
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
 
         $return = $this->variables->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
+
+        try {
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+        } catch (EntityRecursionException $e) {
+            // we need to restore the original value.... we first have to save update the original variable
+            // in order to be able to check for recursion by simulating the container... if it fails we restore original value
+            $this->variables->updateContainerVariable(
+                $variable['idsite'], $variable['idcontainerversion'], $variable['idvariable'], $variable['name'],
+                $variable['parameters'],$variable['default_value'], $variable['lookup_table']);
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            throw $e;
+        }
         return $return;
     }
 

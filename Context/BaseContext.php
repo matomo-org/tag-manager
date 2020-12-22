@@ -10,6 +10,7 @@ namespace Piwik\Plugins\TagManager\Context;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Context\Storage\StorageInterface;
+use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Plugins\TagManager\Model\Salt;
@@ -166,7 +167,7 @@ abstract class BaseContext
             // eg MatomoConfiguration variable referencing itself in a variable like matomoUrl=https://matomo.org{{MatomoConfiguration}}
             $entries = array_slice($this->nestedVariableCals, -3); // show last 3 entities in error message
             $entries = array_unique($entries);
-            throw new \Exception('It seems an entity references itself or a recursion is caused in some other way. It may be related due to these entites: "'.implode(',', $entries). '". Please check if the entity references itself maybe or if a recursion might happen in another way.');
+            throw new EntityRecursionException('It seems an entity references itself or a recursion is caused in some other way. It may be related due to these entites: "'.implode(',', $entries). '". Please check if the entity references itself maybe or if a recursion might happen in another way.');
         }
 
         $parameters = $entity['parameters'];
