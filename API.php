@@ -10,12 +10,14 @@ namespace Piwik\Plugins\TagManager;
 
 use Piwik\API\Request;
 use Piwik\Common;
+use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\API\Export;
 use Piwik\Plugins\TagManager\API\Import;
 use Piwik\Plugins\TagManager\API\PreviewCookie;
 use Piwik\Plugins\TagManager\API\TemplateMetadata;
 use Piwik\Plugins\TagManager\Context\WebContext;
+use Piwik\Plugins\TagManager\Dao\BaseDao;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Comparison;
@@ -1234,6 +1236,20 @@ class API extends \Piwik\Plugin\API
     {
         if ($this->containers->hasPreviewRelease($idSite, $idContainer)) {
             $this->containers->generateContainer($idSite, $idContainer);
+        } else {
+            // we simulate generate the container to possibly detect if a variable references itself. as there might not be
+            // any release and because we only want to simulate the current version we create a "fake" preview release
+            $simulatorContext = StaticContainer::get(SimulatorContext::class);
+            $container = $this->getContainer($idSite, $idContainer);
+            $container['releases'] = [[
+                'idcontainerrelease' => '',
+                'idcontainer' => $container['idcontainer'],
+                'idcontainerversion' => $this->getContainerDraftVersion($idSite, $idContainer),
+                'environment' => Environment::ENVIRONMENT_PREVIEW,
+                'release_login' => Piwik::getCurrentUserLogin(),
+                'status' => BaseDao::STATUS_ACTIVE,
+            ]];
+            $simulatorContext->generate($container);
         }
     }
 

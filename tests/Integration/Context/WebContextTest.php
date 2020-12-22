@@ -33,11 +33,8 @@ class WebContextTest extends IntegrationTestCase
         $this->idSite = Fixture::createWebsite('2014-01-01 02:03:04');
     }
 
-    public function test_detectsRecursion()
+    private function setupContainerWithRecursion($enablePreviewMode)
     {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('It seems an entity references itself or a recursion is caused in some other way. It may be related due to these entites: "Matomo Configuration"');
-
         $idContainer = Request::processRequest(
             'TagManager.addContainer',
             [
@@ -46,6 +43,17 @@ class WebContextTest extends IntegrationTestCase
                 'name' => 'test'
             ]
         );
+
+        if ($enablePreviewMode) {
+            Request::processRequest(
+                'TagManager.enablePreviewMode',
+                array(
+                    'idSite' => $this->idSite,
+                    'idContainer' => $idContainer,
+                ),
+                $default = []
+            );
+        }
 
         $containers = StaticContainer::get(Container::class);
         $containerVersion = $containers->getContainer($this->idSite, $idContainer);
@@ -66,16 +74,23 @@ class WebContextTest extends IntegrationTestCase
             $default = []
         );
 
-        Request::processRequest(
-            'TagManager.enablePreviewMode',
-            array(
-                'idSite' => $this->idSite,
-                'idContainer' => $idContainer,
-            ),
-            $default = []
-        );
+        return $idContainer;
+    }
 
-        $containers->generateContainer($this->idSite, $idContainer);
+    public function test_detectsRecursion_whenPreviewModeEnabled()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('It seems an entity references itself or a recursion is caused in some other way. It may be related due to these entites: "Matomo Configuration"');
+
+        $this->setupContainerWithRecursion($enablePreviewMode = true);
+    }
+
+    public function test_detectsRecursion_whenPreviewModeNotEnabled()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('It seems an entity references itself or a recursion is caused in some other way. It may be related due to these entites: "Matomo Configuration"');
+
+        $this->setupContainerWithRecursion($enablePreviewMode = false);
     }
 
 }
