@@ -1485,7 +1485,13 @@
 
                     container.id = this.id;
                     container.versionName = this.versionName;
-                    container.dataLayer = JSON.parse(JSON.stringify(this.dataLayer.values));
+                    container.dataLayer = JSON.parse(JSON.stringify(this.dataLayer.values, function( key, value) {
+                        if (typeof value === 'object' && value instanceof Node) {
+                            return value.nodeName;
+                        } else {
+                            return value;
+                        };
+                    }));
                 };
 
                 this.getTriggerById = function (idTrigger){
