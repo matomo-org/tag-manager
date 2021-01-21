@@ -5,6 +5,7 @@ array (
     g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://localhost/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
     return;
 }
+
         var content = \'foobar\';
         (function(){
 var Templates = {};
@@ -43,6 +44,7 @@ window.MatomoTagManager.addContainer({"id":"aaacont1","idsite":2,"versionName":"
     g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://localhost/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
     return;
 }
+
         var content = \'foobar\';
         (function(){
 var Templates = {};
@@ -81,6 +83,7 @@ window.MatomoTagManager.addContainer({"id":"aaacont1","idsite":2,"versionName":"
     g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://localhost/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
     return;
 }
+
         var content = \'foobar\';
         (function(){
 var Templates = {};
