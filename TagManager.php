@@ -34,6 +34,7 @@ use Piwik\Plugins\TagManager\Model\Salt;
 use Piwik\Site;
 use Piwik\View;
 use Piwik\Context;
+use Psr\Log\LoggerInterface;
 
 class TagManager extends \Piwik\Plugin
 {
@@ -279,7 +280,9 @@ class TagManager extends \Piwik\Plugin
                     }
                 }
             } catch (\Exception $e) {
-                Log::error('There was an error while regenerating container releases: ' . $e->getMessage()  .$e->getTraceAsString());
+                StaticContainer::get(LoggerInterface::class)->error('There was an error while regenerating container releases: {exception}', [
+                    'exception' => $e,
+                ]);
             }
         });
     }
