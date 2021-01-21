@@ -119,7 +119,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are ".classname", "#id" or "li a".</description>
+						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are &quot;.classname&quot;, &quot;#id&quot; or &quot;li a&quot;.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -880,7 +880,39 @@
 						<inlineHelp />
 						<templateFile />
 						<introduction />
-						<condition />
+						<condition>!requireConsent &amp;&amp; !requireCookieConsent</condition>
+					</row>
+					<row>
+						<name>requireConsent</name>
+						<title>Require tracking consent</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Track only when user gave tracking consent. In a consent screen you need to call &quot;window._paq=window._paq||[];window._paq.push(['rememberConsentGiven']);&quot; when the user gives consent.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>!requireCookieConsent &amp;&amp; !disableCookies</condition>
+					</row>
+					<row>
+						<name>requireCookieConsent</name>
+						<title>Require cookie consent</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Use cookies only if the user gave cookie consent, otherwise track the user without cookies. In a consent screen you need to call &quot;window._paq=window._paq||[];window._paq.push(['rememberCookieConsentGiven']);&quot; when the user gives consent for cookies.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>!requireConsent &amp;&amp; !disableCookies</condition>
 					</row>
 					<row>
 						<name>setSecureCookie</name>
@@ -925,6 +957,26 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>When tracking many subdirectories in separate websites, the cookie path prevents the number of cookies to quickly increase and prevent browser from deleting some of the cookies. This ensures optimal data accuracy and improves performance for your users (fewer cookies are sent with each request).</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>cookieSameSite</name>
+						<title>Same Site Cookie</title>
+						<value>Lax</value>
+						<defaultValue>Lax</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<Lax>Lax</Lax>
+							<None>None</None>
+							<Strict>Strict</Strict>
+						</availableValues>
+						<description>Set the SameSite attribute for cookies to a custom value. You might want to use this if your site is running in an iframe since then it will only be able to access the cookies if SameSite is set to &quot;None&quot;. Choosing &quot;None&quot; will only work on HTTPS and will automatically also set the secure cookie. If your site is available under http and https, using &quot;None&quot; might lead to duplicate or incomplete visits.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />

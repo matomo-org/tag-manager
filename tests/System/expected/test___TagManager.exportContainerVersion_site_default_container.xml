@@ -82,9 +82,12 @@
 				<trackAllContentImpressions>0</trackAllContentImpressions>
 				<trackVisibleContentImpressions>0</trackVisibleContentImpressions>
 				<disableCookies>0</disableCookies>
+				<requireConsent>0</requireConsent>
+				<requireCookieConsent>0</requireCookieConsent>
 				<setSecureCookie>0</setSecureCookie>
 				<cookieDomain />
 				<cookiePath />
+				<cookieSameSite>Lax</cookieSameSite>
 				<domains>
 				</domains>
 				<alwaysUseSendBeacon>0</alwaysUseSendBeacon>

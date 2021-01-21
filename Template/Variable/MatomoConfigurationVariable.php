@@ -113,6 +113,17 @@ class MatomoConfigurationVariable extends BaseVariable
             $this->makeSetting('disableCookies', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'Disable cookies';
                 $field->description = 'Disables all first party cookies.';
+                $field->condition = '!requireConsent && !requireCookieConsent';
+            }),
+            $this->makeSetting('requireConsent', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = 'Require tracking consent';
+                $field->description = 'Track only when user gave tracking consent. In a consent screen you need to call "window._paq=window._paq||[];window._paq.push([\'rememberConsentGiven\']);" when the user gives consent.';
+                $field->condition = '!requireCookieConsent && !disableCookies';
+            }),
+            $this->makeSetting('requireCookieConsent', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = 'Require cookie consent';
+                $field->description = 'Use cookies only if the user gave cookie consent, otherwise track the user without cookies. In a consent screen you need to call "window._paq=window._paq||[];window._paq.push([\'rememberCookieConsentGiven\']);" when the user gives consent for cookies.';
+                $field->condition = '!requireConsent && !disableCookies';
             }),
             $this->makeSetting('setSecureCookie', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'Enable Secure Cookie';
@@ -128,7 +139,16 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->description = 'When tracking many subdirectories in separate websites, the cookie path prevents the number of cookies to quickly increase and prevent browser from deleting some of the cookies. This ensures optimal data accuracy and improves performance for your users (fewer cookies are sent with each request).';
                 $field->validators[] = new CharacterLength(0, 500);
             }),
-
+            $this->makeSetting('cookieSameSite', 'Lax', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = 'Same Site Cookie';
+                $field->description = 'Set the SameSite attribute for cookies to a custom value. You might want to use this if your site is running in an iframe since then it will only be able to access the cookies if SameSite is set to "None". Choosing "None" will only work on HTTPS and will automatically also set the secure cookie. If your site is available under http and https, using "None" might lead to duplicate or incomplete visits.';
+                $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
+                $field->availableValues = array(
+                    'Lax' => 'Lax',
+                    'None' => 'None',
+                    'Strict' => 'Strict',
+                );
+            }),
             $this->makeSetting('domains', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
                 $field->title = 'Domains';
                 $field->description = 'Used to detect outlinks. Add hostnames or domains to be treated as local. For wildcard subdomains, you can use: ".example.com" or "*.example.com". You can also specify a path along a domain: "*.example.com/subsite1".';

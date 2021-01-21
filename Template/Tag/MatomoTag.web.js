@@ -121,12 +121,24 @@
                         tracker.disableCookies();
                     }
 
+                    if (matomoConfig.requireCookieConsent) {
+                        tracker.requireCookieConsent();
+                    }
+
+                    if (matomoConfig.requireConsent) {
+                        tracker.requireConsent();
+                    }
+
                     if (matomoConfig.enableCrossDomainLinking) {
                         tracker.enableCrossDomainLinking();
                     }
 
                     if (matomoConfig.setSecureCookie) {
                         tracker.setSecureCookie(true);
+                    }
+
+                    if (matomoConfig.cookieSameSite) {
+                        tracker.setCookieSameSite(matomoConfig.cookieSameSite);
                     }
 
                     if (matomoConfig.cookieDomain) {
