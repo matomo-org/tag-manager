@@ -26,6 +26,7 @@
         this.releases = [];
         this.installInstructions = [];
         this.noReleaseFound = false;
+        this.firstTime = true;
         var translate = $filter('translate');
         var ucfirst = $filter('ucfirst');
 
@@ -42,6 +43,7 @@
             this.environments = [];
             this.matomoConfigs = [];
             this.idContainer = '';
+            this.firstTime = false;
 
             if (!this.site || !this.site.id) {
                 return;
@@ -187,7 +189,10 @@
             if (val !== oldVal) {
                 self.onSiteChange();
             }
-        });
 
+            if (val === oldVal && self.firstTime) {
+                self.onSiteChange();
+            }
+        });
     }
 })();
