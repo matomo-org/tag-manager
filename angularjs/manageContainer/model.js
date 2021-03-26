@@ -128,7 +128,7 @@
                 }
             });
 
-            var postParams = ['idContainer', 'name', 'description'];
+            var postParams = ['idContainer', 'name', 'description', 'context'];
             var post = {};
             for (var i = 0; i < postParams.length; i++) {
                 var param = postParams[i];
