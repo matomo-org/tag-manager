@@ -216,7 +216,7 @@ class EtrackerTag extends BaseTag
                 if ($trackingType->getValue() === 'addtocart') {
                     $field->validators[] = new NotEmpty();
                 }
-            }),
+            })
         );
     }
     public function getCategory()
