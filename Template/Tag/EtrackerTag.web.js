@@ -88,6 +88,10 @@
             var etorder = {orderNumber:parameters.get('etrackerTransactionID'),status:parameters.get('etrackerTransactionType'),orderPrice:parameters.get('etrackerTransactionValue').toString(),basket:parameters.get('etrackerTransactionBasket'),currency:parameters.get('etrackerTransactionCurrency'),customerGroup:parameters.get('etrackerTransactionCustomerGroup'),deliveryConditions:parameters.get('etrackerTransactionDeliveryConditions'),paymentConditions:parameters.get('etrackerTransactionPaymentConditions'),};
             etCommerce.sendEvent('order', etorder) ;
         }
+        // ecommerce - add to cart tracking function
+        if (trackingType === 'addtocart' && typeof(_etracker) === "object") {
+            etCommerce.sendEvent('insertToBasket', parameters.get('etrackerAddToCartProduct'), parameters.get('etrackerAddToCartNumber')) ;
+        }
         };
         };
     }
