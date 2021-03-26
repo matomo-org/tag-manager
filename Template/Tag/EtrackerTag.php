@@ -41,7 +41,7 @@ class EtrackerTag extends BaseTag
                 $field->description = 'Assign a etracker configuration in order to track data into a specific site.';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE_TYPE;
                 $field->uiControlAttributes = array('variableType' => 'EtrackerConfiguration');
-                $field->condition = 'trackingType != "event"';
+                $field->condition = 'trackingType == "pageview" || trackingType =="wrapper"';
                 if ($trackingType->getValue() === 'pageview' || $trackingType->getValue() === 'wrapper') {
                     $field->validators[] = new NotEmpty();
                 }
