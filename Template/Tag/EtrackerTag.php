@@ -125,18 +125,18 @@ class EtrackerTag extends BaseTag
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "event"';
             }),
-            $this->makeSetting('etrackerTransactionType', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+            $this->makeSetting('etrackerTransactionType', 'sale', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Order Status';
                 $field->description = 'Order / Lead / Partial Cancellation / Cancellation';
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
+                $field->condition = 'trackingType == "transaction"';
                 $field->availableValues = array(
                  'sale' => 'Sale',
                  'lead' => 'Lead',
                  'cancellation' => 'Cancellation',
                  'partial_cancellation' => 'Partial Cancellation',
                 );
-                $field->condition = 'trackingType == "transaction"';
-                if ($trackingType->getValue() === 'order') {
+                if ($trackingType->getValue() === 'transaction') {
                     $field->validators[] = new NotEmpty();
                 }
             }),
@@ -198,15 +198,6 @@ class EtrackerTag extends BaseTag
                 $field->title = 'etracker Ecommerce Debug Mode';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "transaction"';
-            }),
-            $this->makeSetting('etrackerAddToCartProduct', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Product';
-                $field->description = 'dataLayer object of the product - according to etracker reference';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->condition = 'trackingType == "addtocart"';
-                if ($trackingType->getValue() === 'addtocart') {
-                    $field->validators[] = new NotEmpty();
-                }
             }),
             $this->makeSetting('etrackerAddToCartProduct', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Product object';
