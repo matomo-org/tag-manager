@@ -80,6 +80,11 @@
         if (trackingType === 'event' && typeof(_etracker) === "object") {
             _etracker.sendEvent(new et_UserDefinedEvent(parameters.get('etrackerEventObject'), parameters.get('etrackerEventCategory'), parameters.get('etrackerEventAction'), parameters.get('etrackerEventType')));
         }
+        // transaction tracking function
+        if (trackingType === 'transaction' && typeof(_etracker) === "object") {
+            var etorder = {orderNumber:parameters.get('etrackerTransactionID'),status:parameters.get('etrackerTransactionType'),orderPrice:parameters.get('etrackerTransactionValue').toString(),basket : parameters.get('etrackerTransactionBasket'),customerGroup:parameters.get('etrackerTransactionCustomerGroup'),deliveryConditions:parameters.get('etrackerTransactionDeliveryConditions'),paymentConditions:parameters.get('etrackerTransactionPaymentConditions'),};
+            etCommerce.sendEvent('order', etorder) ;
+        }
         };
         };
     }
