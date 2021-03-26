@@ -31,7 +31,7 @@ class EtrackerTag extends BaseTag
                 'pageview' => 'Pageview',
                 'wrapper' => 'Wrapper',
                 'event' => 'Event',
-                'order' => 'Transaction',
+                'transaction' => 'Transaction',
             );
         });
         return array(
@@ -134,7 +134,7 @@ class EtrackerTag extends BaseTag
                  'cancellation' => 'Cancellation',
                  'partial_cancellation' => 'Partial Cancellation',
                 );
-                $field->condition = 'trackingType == "order"';
+                $field->condition = 'trackingType == "transaction"';
                 if ($trackingType->getValue() === 'order') {
                     $field->validators[] = new NotEmpty();
                 }
@@ -143,8 +143,8 @@ class EtrackerTag extends BaseTag
                 $field->title = 'etracker Order number';
                 $field->description = 'Order ID, transaction id or similar - max 50 chars';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->condition = 'trackingType == "order"';
-                if ($trackingType->getValue() === 'order') {
+                $field->condition = 'trackingType == "transaction"';
+                if ($trackingType->getValue() === 'transaction') {
                     $field->validators[] = new NotEmpty();
                 }
             }),
@@ -152,8 +152,8 @@ class EtrackerTag extends BaseTag
                 $field->title = 'Order Value';
                 $field->description = 'Order Value';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->condition = 'trackingType == "order"';
-                if ($trackingType->getValue() === 'order') {
+                $field->condition = 'trackingType == "transaction"';
+                if ($trackingType->getValue() === 'transaction') {
                     $field->validators[] = new NotEmpty();
                 }
             }),
@@ -161,8 +161,8 @@ class EtrackerTag extends BaseTag
                 $field->title = 'Currency';
                 $field->description = 'Currency of the order according to ISO 4217 e.g.: EUR or USD';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->condition = 'trackingType == "order"';
-                if ($trackingType->getValue() === 'order') {
+                $field->condition = 'trackingType == "transaction"';
+                if ($trackingType->getValue() === 'transaction') {
                     $field->validators[] = new CharacterLength($min = 3, $max = 3);
                 }
             }),
@@ -170,8 +170,8 @@ class EtrackerTag extends BaseTag
                 $field->title = 'Basket';
                 $field->description = 'dataLayer object of basket - according to etracker reference';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->condition = 'trackingType == "order"';
-                if ($trackingType->getValue() === 'order') {
+                $field->condition = 'trackingType == "transaction"';
+                if ($trackingType->getValue() === 'transaction') {
                     $field->validators[] = new NotEmpty();
                 }
             }),
@@ -179,24 +179,24 @@ class EtrackerTag extends BaseTag
                 $field->title = 'Customer Group';
                 $field->description = 'optional, e.g. new customer, existing customer, big buyer, VIP';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->condition = 'trackingType == "order"';
+                $field->condition = 'trackingType == "transaction"';
             }),
             $this->makeSetting('etrackerTransactionDeliveryConditions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Delivery Conditions';
                 $field->description = 'optional, e.g. Delivery to the kerb, Setup on site, Delivery to the pick-up station/parcel shop/branch';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->condition = 'trackingType == "order"';
+                $field->condition = 'trackingType == "transaction"';
             }),
             $this->makeSetting('etrackerTransactionPaymentConditions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Payment Conditions';
                 $field->description = 'optional, e.g. Special payment targets, Cash discount, Payment in instalments';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->condition = 'trackingType == "order"';
+                $field->condition = 'trackingType == "transaction"';
             }),
             $this->makeSetting('etrackerTransactionDebugMode', 'false', FieldConfig::TYPE_BOOL, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Ecommerce Debug Mode';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->condition = 'trackingType == "order"';
+                $field->condition = 'trackingType == "transaction"';
             })
         );
     }
