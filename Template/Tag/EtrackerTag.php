@@ -193,6 +193,11 @@ class EtrackerTag extends BaseTag
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "order"';
             }),
+            $this->makeSetting('etrackerTransactionDebugMode', 'false', FieldConfig::TYPE_BOOL, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'etracker Ecommerce Debug Mode';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "order"';
+            })
         );
     }
     public function getCategory()
