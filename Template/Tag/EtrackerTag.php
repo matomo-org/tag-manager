@@ -168,7 +168,7 @@ class EtrackerTag extends BaseTag
             }),
             $this->makeSetting('etrackerTransactionBasket', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Basket';
-                $field->description = 'dataLayer object of products which are sold';
+                $field->description = 'dataLayer object of basket - according to etracker reference';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "order"';
                 if ($trackingType->getValue() === 'order') {
