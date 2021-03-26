@@ -176,13 +176,7 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerTransactionCustomerGroup', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'CustomerGroup';
-                $field->description = 'optional, e.g. new customer, existing customer, big buyer, VIP';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->condition = 'trackingType == "order"';
-            }),
-            $this->makeSetting('etrackerTransactionCustomerGroup', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'CustomerGroup';
+                $field->title = 'Customer Group';
                 $field->description = 'optional, e.g. new customer, existing customer, big buyer, VIP';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "order"';
