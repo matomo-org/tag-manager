@@ -9,6 +9,7 @@ namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
+use Piwik\Validators\CharacterLength;
 
 class EtrackerTag extends BaseTag
 {
@@ -30,6 +31,7 @@ class EtrackerTag extends BaseTag
                 'pageview' => 'Pageview',
                 'wrapper' => 'Wrapper',
                 'event' => 'Event',
+                'order' => 'Transaction',
             );
         });
         return array(
@@ -121,7 +123,82 @@ class EtrackerTag extends BaseTag
                 $field->description = 'The event\'s type Name, for example an value of a send form...';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "event"';
-            })
+            }),
+            $this->makeSetting('etrackerTransactionType', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'etracker Order Status';
+                $field->description = 'Order / Lead / Partial Cancellation / Cancellation';
+                $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
+                $field->availableValues = array(
+                 'sale' => 'Sale',
+                 'lead' => 'Lead',
+                 'cancellation' => 'Cancellation',
+                 'partial_cancellation' => 'Partial Cancellation',
+                );
+                $field->condition = 'trackingType == "order"';
+                if ($trackingType->getValue() === 'order') {
+                    $field->validators[] = new NotEmpty();
+                }
+            }),
+            $this->makeSetting('etrackerTransactionID', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'etracker Order number';
+                $field->description = 'Order ID, transaction id or similar - max 50 chars';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "order"';
+                if ($trackingType->getValue() === 'order') {
+                    $field->validators[] = new NotEmpty();
+                }
+            }),
+            $this->makeSetting('etrackerTransactionValue', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Order Value';
+                $field->description = 'Order Value';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "order"';
+                if ($trackingType->getValue() === 'order') {
+                    $field->validators[] = new NotEmpty();
+                }
+            }),
+            $this->makeSetting('etrackerTransactionCurrency', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Currency';
+                $field->description = 'Currency of the order according to ISO 4217 e.g.: EUR or USD';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "order"';
+                if ($trackingType->getValue() === 'order') {
+                    $field->validators[] = new CharacterLength($min = 3, $max = 3);
+                }
+            }),
+            $this->makeSetting('etrackerTransactionBasket', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Basket';
+                $field->description = 'dataLayer object of products which are sold';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "order"';
+                if ($trackingType->getValue() === 'order') {
+                    $field->validators[] = new NotEmpty();
+                }
+            }),
+            $this->makeSetting('etrackerTransactionCustomerGroup', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'CustomerGroup';
+                $field->description = 'optional, e.g. new customer, existing customer, big buyer, VIP';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "order"';
+            }),
+            $this->makeSetting('etrackerTransactionCustomerGroup', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'CustomerGroup';
+                $field->description = 'optional, e.g. new customer, existing customer, big buyer, VIP';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "order"';
+            }),
+            $this->makeSetting('etrackerTransactionDeliveryConditions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Delivery Conditions';
+                $field->description = 'optional, e.g. Delivery to the kerb, Setup on site, Delivery to the pick-up station/parcel shop/branch';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "order"';
+            }),
+            $this->makeSetting('etrackerTransactionPaymentConditions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Payment Conditions';
+                $field->description = 'optional, e.g. Special payment targets, Cash discount, Payment in instalments';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "order"';
+            }),
         );
     }
     public function getCategory()
