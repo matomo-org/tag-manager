@@ -16,3 +16,4 @@ jobs:
         TransifexUsername: ${{ secrets.TransifexUsername }}
         TransifexPassword: ${{ secrets.TransifexPassword }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PluginName: "TagManager"
