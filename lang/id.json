@@ -1,6 +1,7 @@
 {
     "TagManager": {
         "CategoryClicks": "Klik",
+        "CategoryCustom": "Berdasarkan keinginan",
         "CategoryDate": "Tanggal",
         "CategoryDevice": "Perangkat",
         "CategoryEmail": "Surel",
@@ -10,6 +11,7 @@
         "ComparisonEndsWith": "diakhiri dengan",
         "ComparisonStartsWith": "mulai dengan",
         "Condition": "Kondisi",
+        "CreatedDate": "Tanggal pembuatan",
         "Filter": "Saring",
         "Change": "Ubah",
         "PageTitleVariableName": "Judul Halaman",

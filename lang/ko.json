@@ -6,6 +6,7 @@
         "CategoryEmail": "이메일",
         "CategoryErrors": "에러",
         "CategoryHistory": "역사",
+        "CreatedDate": "생성 일자",
         "ManageX": "%s 관리",
         "PageTitleVariableName": "페이지 제목",
         "PageUrlVariableName": "페이지 URL",
