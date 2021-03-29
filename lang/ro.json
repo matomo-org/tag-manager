@@ -1,15 +1,18 @@
 {
     "TagManager": {
         "CategoryClicks": "Click-uri",
+        "CategoryCustom": "Personalizat",
         "CategoryDate": "Data",
         "CategoryDevice": "Dispozitiv",
         "CategoryEmail": "Email",
+        "CategoryErrors": "Erori",
         "CategoryHistory": "Istoric",
         "ComparisonContains": "contine",
         "ComparisonEndsWith": "se termina cu",
         "ComparisonGreaterThan": "este mai mare decat",
         "ComparisonStartsWith": "incepe cu",
         "Condition": "Conditie",
+        "CreatedDate": "Dată creare",
         "Filter": "Filtru",
         "PageTitleVariableName": "Titlul paginii",
         "PageUrlVariableName": "URL-ul Paginii",
