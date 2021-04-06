@@ -186,11 +186,7 @@
         };
 
         $scope.$watch('tagTrackingCode.site.id', function (val, oldVal) {
-            if (val !== oldVal) {
-                self.onSiteChange();
-            }
-
-            if (val === oldVal && self.firstTime) {
+            if (val !== oldVal || self.firstTime) {
                 self.onSiteChange();
             }
         });
