@@ -339,6 +339,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'General_Or';
         $result[] = 'General_Recommended';
         $result[] = 'General_Website';
+        $result[] = 'General_ValidatorErrorNoValidAlphaNumSpaces';
         $result[] = 'Goals_Optional';
         $result[] = 'SitesManager_Type';
         $result[] = 'UserCountryMap_None';

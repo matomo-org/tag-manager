@@ -258,10 +258,32 @@
             return true;
         }
 
+        function validateNameField() {
+            var regex = /^[a-zA-Z0-9\s]+$/;
+            var title = _pk_translate('General_Name');
+
+            if (!self.variable.name) {
+                return true;
+            }
+
+            if (!regex.test(self.variable.name)) {
+                showNotification(_pk_translate('General_ValidatorErrorNoValidAlphaNumSpaces', [title]), 'error');
+
+                return false;
+            }
+
+            return true;
+        }
+
+
         this.createVariable = function () {
             removeAnyVariableNotification();
 
             if (!checkRequiredFieldsAreSet()) {
+                return;
+            }
+
+            if (!validateNameField()){
                 return;
             }
 
@@ -312,6 +334,10 @@
             removeAnyVariableNotification();
 
             if (!checkRequiredFieldsAreSet()) {
+                return;
+            }
+
+            if (!validateNameField()){
                 return;
             }
 
