@@ -259,7 +259,7 @@
         }
 
         function validateNameField() {
-            var regex = /^[a-zA-Z0-9\s]+$/;
+            var regex = /^[\p{L}\p{M}\p{N} ]+$/u;
             var title = _pk_translate('General_Name');
 
             if (!self.variable.name) {
