@@ -3,6 +3,8 @@
         "CategoryClicks": "Klikak",
         "CategoryDate": "Data",
         "CategoryEmail": "E-posta",
+        "CategoryErrors": "Erroreak",
+        "CreatedDate": "Sortze-data",
         "PageUrlVariableName": "Orriaren URLa",
         "ReferrerUrlVariableName": "URL erreferentea",
         "ReferrerVariableName": "URL erreferentea",
