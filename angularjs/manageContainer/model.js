@@ -116,7 +116,6 @@
 
         function createOrUpdateContainer(container, method) {
             container = angular.copy(container);
-            container.method = method;
 
             var map = {
                 idContainer: 'idcontainer',
@@ -129,13 +128,12 @@
                 }
             });
 
-            var postParams = [];
+            var postParams = ['idContainer', 'name', 'description', 'context'];
             var post = {};
             for (var i = 0; i < postParams.length; i++) {
-                var postParam = postParams[i];
-                if (typeof container[postParam] !== 'undefined') {
-                    post[postParam] = container[postParam];
-                    delete container[postParam];
+                var param = postParams[i];
+                if (typeof container[param] !== 'undefined') {
+                    post[param] = container[param];
                 }
             }
 
@@ -143,7 +141,7 @@
 
             piwikApi.withTokenInUrl();
 
-            return piwikApi.post(container, post).then(function (response) {
+            return piwikApi.post({method: method}, post).then(function (response) {
                 model.isUpdating = false;
 
                 return {type: 'success', response: response};
