@@ -830,6 +830,7 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
+        $name = urldecode($name);
 
         $idVariable = $this->variables->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable);
 

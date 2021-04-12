@@ -258,24 +258,6 @@
             return true;
         }
 
-        function validateNameField() {
-            var regex = /^[\p{L}\p{M}\p{N} ]+$/u;
-            var title = _pk_translate('General_Name');
-
-            if (!self.variable.name) {
-                return true;
-            }
-
-            if (!regex.test(self.variable.name)) {
-                showNotification(_pk_translate('General_ValidatorErrorNoValidAlphaNumSpaces', [title]), 'error');
-
-                return false;
-            }
-
-            return true;
-        }
-
-
         this.createVariable = function () {
             removeAnyVariableNotification();
 
@@ -283,9 +265,7 @@
                 return;
             }
 
-            if (!validateNameField()){
-                return;
-            }
+            this.variable.name = encodeURIComponent(this.variable.name);
 
             this.isUpdating = true;
 
