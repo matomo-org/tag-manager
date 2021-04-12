@@ -505,7 +505,7 @@
       "VariableBeingUsedBy": "The variable is currently being used in the following places:",
       "VariableBeingUsedNeedsRemove": "To delete this variable, please remove the variable from the referenced places and then try again.",
       "VariableCannotBeDeleted": "This variable cannot be deleted",
-      "VariableNameHelp": "The variable name lets you define a unique name for this variable to quickly identify it. Please note that this name will be publicly visible in the source code of the variable when you preview\/debug this container. It may only contain letters, numbers and spaces.",
+      "VariableNameHelp": "The variable name lets you define a unique name for this variable to quickly identify it. Please note that this name will be publicly visible in the source code of the variable when you preview\/debug this container.",
       "VariableUsageBenefits": "Variables let you retrieve data which can be used by tags and triggers. Matomo Tag Manager comes with a set of predefined variables which can be used right away, and some other variables which can be configured to your needs.",
       "Variables": "Variables",
       "Version": "Version",

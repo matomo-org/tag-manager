@@ -317,9 +317,7 @@
                 return;
             }
 
-            if (!validateNameField()){
-                return;
-            }
+            this.variable.name = encodeURIComponent(this.variable.name);
 
             this.isUpdating = true;
 

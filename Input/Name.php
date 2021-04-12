@@ -9,7 +9,6 @@
 namespace Piwik\Plugins\TagManager\Input;
 
 use Piwik\Piwik;
-use Piwik\Validators\AlphaNumSpaces;
 use Piwik\Validators\BaseValidator;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
@@ -32,7 +31,7 @@ class Name
     {
         $title = Piwik::translate('General_Name');
 
-        BaseValidator::check($title, $this->name, [new NotEmpty(), new CharacterLength(1, self::MAX_LENGTH), new AlphaNumSpaces()]);
+        BaseValidator::check($title, $this->name, [new NotEmpty(), new CharacterLength(1, self::MAX_LENGTH)]);
     }
 
 }
