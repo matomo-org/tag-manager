@@ -267,7 +267,7 @@
 
             this.isUpdating = true;
 
-            var tempVariable = JSON.parse(JSON.stringify(this.variable));
+            var tempVariable = angular.copy(this.variable);
             tempVariable.name = encodeURIComponent(tempVariable.name);
 
             tagManagerVariableModel.createOrUpdateVariable(tempVariable, 'TagManager.addContainerVariable').then(function (response) {
@@ -320,7 +320,7 @@
 
             this.isUpdating = true;
 
-            var tempVariable = JSON.parse(JSON.stringify(this.variable));
+            var tempVariable = angular.copy(this.variable);
             tempVariable.name = encodeURIComponent(tempVariable.name);
 
             tagManagerVariableModel.createOrUpdateVariable(tempVariable, 'TagManager.updateContainerVariable').then(function (response) {
