@@ -267,7 +267,10 @@
 
             this.isUpdating = true;
 
-            tagManagerVariableModel.createOrUpdateVariable(this.variable, 'TagManager.addContainerVariable').then(function (response) {
+            var tempVariable = angular.copy(this.variable);
+            tempVariable.name = encodeURIComponent(tempVariable.name);
+
+            tagManagerVariableModel.createOrUpdateVariable(tempVariable, 'TagManager.addContainerVariable').then(function (response) {
                 self.isUpdating = false;
 
                 if (!response || response.type === 'error' || !response.response) {
@@ -317,7 +320,10 @@
 
             this.isUpdating = true;
 
-            tagManagerVariableModel.createOrUpdateVariable(this.variable, 'TagManager.updateContainerVariable').then(function (response) {
+            var tempVariable = angular.copy(this.variable);
+            tempVariable.name = encodeURIComponent(tempVariable.name);
+
+            tagManagerVariableModel.createOrUpdateVariable(tempVariable, 'TagManager.updateContainerVariable').then(function (response) {
                 if (response.type === 'error') {
                     return;
                 }
