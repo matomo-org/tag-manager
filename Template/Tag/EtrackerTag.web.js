@@ -95,10 +95,10 @@
         // form - form tracking
         if (trackingType === 'form' && typeof(_etracker) === "object") {
             etform_ev_data = '';
-            if(parameters.get('etrackerFormEventData')){
-                etform_ev_data =','+parameters.get('etrackerFormEventData');
+            if(parameters.get('etrackerFormData')){
+                etform_ev_data =','+parameters.get('etrackerFormData');
             }
-            etForm.sendEvent(parameters.get('etrackerFormEventType'), parameters.get('etrackerFormName')+etform_ev_data) ;
+            etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName')+etform_ev_data) ;
         }
         };
         };
