@@ -92,6 +92,14 @@
         if (trackingType === 'addtocart' && typeof(_etracker) === "object") {
             etCommerce.sendEvent('insertToBasket', parameters.get('etrackerAddToCartProduct'), parameters.get('etrackerAddToCartNumber')) ;
         }
+        // form - form tracking
+        if (trackingType === 'form' && typeof(_etracker) === "object") {
+            etform_ev_data = '';
+            if(parameters.get('etrackerFormEventData')){
+                etform_ev_data =','+parameters.get('etrackerFormEventData');
+            }
+            etForm.sendEvent(parameters.get('etrackerFormEventType'), parameters.get('etrackerFormName')+etform_ev_data) ;
+        }
         };
         };
     }
