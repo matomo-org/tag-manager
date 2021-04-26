@@ -33,6 +33,7 @@ class EtrackerTag extends BaseTag
                 'event' => 'Event',
                 'transaction' => 'Transaction',
                 'addtocart' => 'eCommerce Event - Add to cart',
+                'form' => 'Form Tracking',
             );
         });
         return array(
@@ -216,6 +217,37 @@ class EtrackerTag extends BaseTag
                 if ($trackingType->getValue() === 'addtocart') {
                     $field->validators[] = new NotEmpty();
                 }
+            }),
+            $this->makeSetting('etrackerFormType', 'formConversion', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'etracker Form Type';
+                $field->description = 'Conversion / Form View / Field View / Field Interaction / Field Error';
+                $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
+                $field->condition = 'trackingType == "form"';
+                $field->availableValues = array(
+                 'formConversion' => 'Conversion',
+                 'formView' => 'Form View',
+                 'formFieldsView' => 'Field View',
+                 'formFieldInteraction' => 'Field Interaction',
+                 'formFieldError' => 'Field Error',
+                );
+                if ($trackingType->getValue() === 'form') {
+                    $field->validators[] = new NotEmpty();
+                }
+            }),
+            $this->makeSetting('etrackerFormName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Form Name';
+                $field->description = 'Form Name titles the report of the form which is tracked';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "form"';
+                if ($trackingType->getValue() === 'form') {
+                    $field->validators[] = new NotEmpty();
+                }
+            }),
+            $this->makeSetting('etrackerFormData', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = 'Form Data';
+                $field->description = 'eg. form section information. If used, a string is required';
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->condition = 'trackingType == "form"';
             })
         );
     }
