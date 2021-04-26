@@ -127,7 +127,7 @@ class EtrackerTag extends BaseTag
             }),
             $this->makeSetting('etrackerTransactionType', 'sale', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Order Status';
-                $field->description = 'Order / Lead / Partial Cancellation / Cancellation';
+                $field->description = 'Sale / Lead / Partial Cancellation / Cancellation';
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->condition = 'trackingType == "transaction"';
                 $field->availableValues = array(
