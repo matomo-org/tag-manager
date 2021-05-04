@@ -94,11 +94,10 @@
         }
         // form - form tracking
         if (trackingType === 'form' && typeof(_etracker) === "object") {
-            var etform_ev_data = parameters.get('etrackerFormName');
             if(parameters.get('etrackerFormData')){
-                etform_ev_data +=','+parameters.get('etrackerFormData');
-            }
-            etForm.sendEvent(parameters.get('etrackerFormType'), etform_ev_data);
+                etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName'), parameters.get('etrackerFormData'));
+            } else { 
+                etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName')); }
         }
         };
         };
