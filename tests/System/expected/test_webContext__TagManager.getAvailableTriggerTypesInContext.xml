@@ -389,7 +389,7 @@
 				<description>Triggered when the user is about to leave the current page by moving the mouse outside the window.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
-				<help>This trigger is triggered when the user is possibly about to leave the website and moves her or his mouse outside of the current web page for example towards the browser URL address line or any other buttons. This can be useful to keep your visitor engaged and not lose the visitor, for example by showing an exit popup. You may be also interested in the &quot;Window Unload&quot; trigger which is triggered as soon as the user has actually left the current page.</help>
+				<help>This trigger is triggered when the user is possibly about to leave the website and moves their mouse outside of the current web page, for example towards the browser URL address line or any other buttons. This can be useful to keep your visitor engaged and not lose the visitor, for example by showing an exit popup. You may be also interested in the &quot;Window Unload&quot; trigger which is triggered as soon as the user has actually left the current page.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
