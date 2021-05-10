@@ -543,7 +543,7 @@
       "WeekdayVariableDescription": "Returns the local day of the week eg monday, tuesday, wednesday, ...",
       "WeekdayVariableName": "Weekday",
       "WindowLeaveTriggerDescription": "Triggered when the user is about to leave the current page by moving the mouse outside the window.",
-      "WindowLeaveTriggerHelp": "This trigger is triggered when the user is possibly about to leave the website and moves her or his mouse outside of the current web page for example towards the browser URL address line or any other buttons. This can be useful to keep your visitor engaged and not lose the visitor, for example by showing an exit popup. You may be also interested in the \"Window Unload\" trigger which is triggered as soon as the user has actually left the current page.",
+      "WindowLeaveTriggerHelp": "This trigger is triggered when the user is possibly about to leave the website and moves their mouse outside of the current web page, for example towards the browser URL address line or any other buttons. This can be useful to keep your visitor engaged and not lose the visitor, for example by showing an exit popup. You may be also interested in the \"Window Unload\" trigger which is triggered as soon as the user has actually left the current page.",
       "WindowLeaveTriggerName": "Window Leave",
       "WindowLoadedTriggerDescription": "Triggered when the page is fully loaded including all images etc.",
       "WindowLoadedTriggerHelp": "This stage of loading a web page, is when the page is fully loaded according to the browser. In most cases this means that also all images are loaded, and all styles are applied etc. This trigger is always triggered at some point after the \"DOM Ready\".",
