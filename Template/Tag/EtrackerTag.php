@@ -209,7 +209,7 @@ class EtrackerTag extends BaseTag
                     $field->validators[] = new NotEmpty();
                 }
             }),
-            $this->makeSetting('etrackerAddToCartNumber', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+            $this->makeSetting('etrackerAddToCartNumber', '', FieldConfig::TYPE_INT, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Number';
                 $field->description = 'Number of products added to the cart';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
