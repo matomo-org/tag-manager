@@ -10,6 +10,7 @@ namespace Piwik\Plugins\TagManager\Template\Tag;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\CharacterLength;
+use Piwik\Validators\NumberRange;
 
 class EtrackerTag extends BaseTag
 {
@@ -209,13 +210,13 @@ class EtrackerTag extends BaseTag
                     $field->validators[] = new NotEmpty();
                 }
             }),
-            $this->makeSetting('etrackerAddToCartNumber', '', FieldConfig::TYPE_INT, function (FieldConfig $field) use ($trackingType) {
+            $this->makeSetting('etrackerAddToCartNumber', '1', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Number';
                 $field->description = 'Number of products added to the cart';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "addtocart"';
                 if ($trackingType->getValue() === 'addtocart') {
-                    $field->validators[] = new NotEmpty();
+                    $field->validators[] = new NumberRange();
                 }
             }),
             $this->makeSetting('etrackerFormType', 'formConversion', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
