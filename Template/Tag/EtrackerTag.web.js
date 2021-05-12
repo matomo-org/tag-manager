@@ -90,14 +90,14 @@
         }
         // ecommerce - add to cart tracking function
         if (trackingType === 'addtocart' && typeof(_etracker) === "object") {
-            etCommerce.sendEvent('insertToBasket', parameters.get('etrackerAddToCartProduct'), parameters.get('etrackerAddToCartNumber'));
+            etCommerce.sendEvent('insertToBasket', parameters.get('etrackerAddToCartProduct'), Number(parameters.get('etrackerAddToCartNumber')));
         }
         // form - form tracking
         if (trackingType === 'form' && typeof(_etracker) === "object") {
             if(parameters.get('etrackerFormData')){
-                etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName'), parameters.get('etrackerFormData'));
-            } else { 
-                etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName')); }
+                etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName'), parameters.get('etrackerFormData')) ;
+            }
+            else{ etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName'));}
         }
         };
         };
