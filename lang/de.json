@@ -534,7 +534,6 @@
         "WeekdayVariableDescription": "Liefert den lokalen Wochentag, z. B. Montag, Dienstag, Mittwoch, ...",
         "WeekdayVariableName": "Wochentag",
         "WindowLeaveTriggerDescription": "Wird ausgelöst wenn der Benutzer daran ist die aktuelle Seite zu verlassen, indem die Maus ausserhalb des Fensters positioniert wird.",
-        "WindowLeaveTriggerHelp": "Dieser Trigger wird ausgelöst, wenn der Benutzer möglicherweise vor hat, die Website zu verlassen und den Mauszeiger außerhalb der Website platziert, zum Beispiel zur Browser URL Adresszeile oder einem anderen Knopf. Das kann hilfreich sein um die Aufmerksamkeit Ihres Besuchers zu behalten und den Besucher nicht zu verlieren, in dem zum Beispiel ein Exit-Popup gezeigt wird. Sie sind möglicherweise auch am \"Fenster Unload\" Trigger interessiert, welcher ausgelöst wird, sobald der Benutzer die aktuelle Seite effektiv verlassen hat.",
         "WindowLeaveTriggerName": "Fenster verlassen",
         "WindowLoadedTriggerDescription": "Wird ausgelöst wenn die Seite mit allen Bildern usw. geladen wurde.",
         "WindowLoadedTriggerHelp": "Diese Phase des Ladens ist wenn eine Seite für den Browser komplett geladen ist. In den meisten Fällen bedeutet das auch dass alle Bilder geladen sind und dass alle Style angewendet werden usw. Dieser Trigger wird immer irgendwann nach dem \"DOM Ready\" ausgelöst.",

@@ -534,7 +534,6 @@
         "WeekdayVariableDescription": "Returnerar den lokala veckodagen t.ex. måndag, tisdag, onsdag, ...",
         "WeekdayVariableName": "Veckodag",
         "WindowLeaveTriggerDescription": "Utlöses när användaren ska lämna den aktuella sidan genom att flytta musen utanför fönstret.",
-        "WindowLeaveTriggerHelp": "Denna utlösare utlöses när användaren eventuellt är på väg att lämna webbplatsen och flyttar sin muspekare utanför den aktuella webbsidan, till exempel mot webbläsarens URL-adressrad eller andra knappar. Detta kan vara användbart för att hålla din besökare engagerad och inte förlora besökaren, till exempel genom att visa en exit-popup. Du kanske också är intresserad av utlösaren \"Fönster inte laddat\" som utlöses så snart användaren faktiskt har lämnat den aktuella sidan.",
         "WindowLeaveTriggerName": "Fönsterlämnande",
         "WindowLoadedTriggerDescription": "Utlöses när sidan är fulladdad inklusive alla bilder etc.",
         "WindowLoadedTriggerHelp": "Det här steget med att ladda en webbsida är när sidan har laddats helt enligt webbläsaren. I de flesta fall betyder det att även alla bilder laddats, och alla stilar tillämpas etc. Denna utlösare utlöses alltid någon gång efter \"DOM Ready\".",
