@@ -533,7 +533,6 @@
         "WeekdayVariableDescription": "Retourne le jour local de la semaine ex lundi, mardi, mercredi...",
         "WeekdayVariableName": "Jour de la semaine",
         "WindowLeaveTriggerDescription": "Déclenché lorsque l'utilisateur est sur le point de quitter la page courante en déplaçant le curseur en dehors de la fenêtre.",
-        "WindowLeaveTriggerHelp": "Ce déclencheur est déclenché quand l'utilisateur est potentiellement sur le point de quitter le site web et bouge sa souris en dehors de la page courante par exemple vers la barre d'adresse ou n'importe quel autre bouton. Ceci peut être utile afin de garder votre visiteur (euse) engagé et de ne pas le\/la perdre par exemple en lui affichant un dialogue de sortie. Vous pourriez aussi être intéressé(e) par le déclencheur \"fenêtre quittée\" qui est déclencher dès lors que l'utilisateur-trice a quitté la page courante.",
         "WindowLeaveTriggerName": "Fenêtre quittée",
         "WindowLoadedTriggerDescription": "Déclenché lorsque la page est complétement chargée incluant les images etc.",
         "WindowLoadedTriggerHelp": "Cette étape de chargement de la page web est quand la page est complétement chargée d'après le navigateur. Dans la plupart des cas cela signifie que les images sont chargée, les styles appliqués etc. Ce déclencheur est toujours déclenché après \"DOM Ready\".",

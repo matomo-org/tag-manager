@@ -533,7 +533,6 @@
         "WeekdayVariableDescription": "Devolve o dia da semana local, por exemplo, segunda-feira, terça-feira, quarta-feita, ...",
         "WeekdayVariableName": "Dia da semana",
         "WindowLeaveTriggerDescription": "Despoletado quando o utilizador está prestes a deixar a página atual, deslocando o rato para fora da janela.",
-        "WindowLeaveTriggerHelp": "Este acionador é despoletado quando o utilizador, possivelmente, está prestes a deixar o site e desloca o rato para fora da página web atual, por exemplo, em direção à caixa do endereço do navegador ou quaisquer outros botões. Isto pode ser útil para manter o seu visitante interessado e não perder o visitante, por exemplo, mostrando um popup de saída. Pode também ter interesse no acionador \"Saída da janela\" que é despoletado assim que o utilizador deixou mesmo a página atual.",
         "WindowLeaveTriggerName": "Deixar a janela",
         "WindowLoadedTriggerDescription": "Despoletado quando a página está completamente carregada, incluindo todas as imagens, etc.",
         "WindowLoadedTriggerHelp": "Neste estágio de carregamento de uma página web, é quando a página está completamente carregada, de acordo com o navegador. Na maioria dos casos, isto significa que as imagens também estão carregadas e todos os estilos estão aplicados, etc. Este acionador é sempre despoletado em algum momento após o \"DOM Ready\".",
