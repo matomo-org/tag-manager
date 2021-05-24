@@ -184,9 +184,10 @@ class Controller extends \Piwik\Plugin\Controller
 
         $result = Request::processRequest('TagManager.exportContainerVersion', array('format' => 'JSON', 'idSite' => $this->idSite));
 
-        if (!empty($_SERVER['SERVER_NAME']) && Url::getCorsHostsFromConfig()) {
+        $serverName = Url::getHostFromServerNameVar();
+        if (!empty($serverName) && Url::getCorsHostsFromConfig()) {
             // we make sure to send a custom cors header
-            Common::sendHeader('Access-Control-Allow-Origin: ' . $_SERVER['SERVER_NAME']);
+            Common::sendHeader('Access-Control-Allow-Origin: ' . $serverName);
         }
 
         return $result;
