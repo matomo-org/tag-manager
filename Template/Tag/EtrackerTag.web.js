@@ -80,6 +80,25 @@
         if (trackingType === 'event' && typeof(_etracker) === "object") {
             _etracker.sendEvent(new et_UserDefinedEvent(parameters.get('etrackerEventObject'), parameters.get('etrackerEventCategory'), parameters.get('etrackerEventAction'), parameters.get('etrackerEventType')));
         }
+        // transaction tracking function
+        if (trackingType === 'transaction' && typeof(_etracker) === "object") {
+            if(parameters.get('etrackerTransactionDebugMode')){
+                etCommerce.debugMode = true;
+            }
+            var etorder = {orderNumber:parameters.get('etrackerTransactionID'),status:parameters.get('etrackerTransactionType'),orderPrice:parameters.get('etrackerTransactionValue').toString(),basket:parameters.get('etrackerTransactionBasket'),currency:parameters.get('etrackerTransactionCurrency'),customerGroup:parameters.get('etrackerTransactionCustomerGroup'),deliveryConditions:parameters.get('etrackerTransactionDeliveryConditions'),paymentConditions:parameters.get('etrackerTransactionPaymentConditions'),};
+            etCommerce.sendEvent('order', etorder) ;
+        }
+        // ecommerce - add to cart tracking function
+        if (trackingType === 'addtocart' && typeof(_etracker) === "object") {
+            etCommerce.sendEvent('insertToBasket', parameters.get('etrackerAddToCartProduct'), Number(parameters.get('etrackerAddToCartNumber')));
+        }
+        // form - form tracking
+        if (trackingType === 'form' && typeof(_etracker) === "object") {
+            if(parameters.get('etrackerFormData')){
+                etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName'), parameters.get('etrackerFormData')) ;
+            }
+            else{ etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName'));}
+        }
         };
         };
     }
