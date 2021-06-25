@@ -243,11 +243,11 @@ class WebContext extends BaseContext
 
         $embedCode = <<<INST
 <!-- Matomo Tag Manager -->
-<script type="text/javascript">
+<script>
 var _mtm = window._mtm = window._mtm || [];
 _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
 var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-g.type='text/javascript'; g.async=true; g.src='$path'; s.parentNode.insertBefore(g,s);
+g.async=true; g.src='$path'; s.parentNode.insertBefore(g,s);
 </script>
 <!-- End Matomo Tag Manager -->
 INST;
