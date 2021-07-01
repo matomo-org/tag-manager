@@ -216,6 +216,7 @@
                         if (!minPercentVisible || minPercentVisible <= percentVisible) {
                             triggerEvent({
                                 event: 'mtm.ElementVisibility',
+                                'mtm.elementVisibilityElement': nodes[i],
                                 'mtm.elementVisibilityPercentage': Math.round(percentVisible * 100) / 100,
                                 'mtm.elementVisibilityId': dom.getElementAttribute(nodes[i], 'id'),
                                 'mtm.elementVisibilityClasses': dom.getElementClassNames(nodes[i]),
