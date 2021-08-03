@@ -22,6 +22,7 @@ use Piwik\Settings\FieldConfig;
 
 abstract class BaseContext
 {
+    const MAX_NESTED_VARIABLES = 500;
 
     /**
      * @var VariablesProvider
@@ -165,7 +166,7 @@ abstract class BaseContext
             $this->nestedVariableCals[] = $entity['name'];
         }
 
-        if (count($this->nestedVariableCals) > 500) {
+        if (count($this->nestedVariableCals) > self::MAX_NESTED_VARIABLES) {
             // eg MatomoConfiguration variable referencing itself in a variable like matomoUrl=https://matomo.org{{MatomoConfiguration}}
             $entries = array_slice($this->nestedVariableCals, -3); // show last 3 entities in error message
             $entries = array_unique($entries);

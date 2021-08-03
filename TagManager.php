@@ -40,6 +40,18 @@ class TagManager extends \Piwik\Plugin
 {
     public static $enableAutoContainerCreation = true;
 
+    public function postLoad()
+    {
+        if (extension_loaded('xdebug')) {
+            //refs https://github.com/matomo-org/tag-manager/issues/337 as default is 256 need to increase it to detect nested variables
+            $val = ini_get('xdebug.max_nesting_level');
+            $limit = BaseContext::MAX_NESTED_VARIABLES * 5; // technically only needs to be * 3 as currently each nested variable causes 3 nested calls but better be safe
+            if ($val < $limit) {
+                ini_set('xdebug.max_nesting_level', $limit);
+            }
+        }
+    }
+
     public function registerEvents()
     {
         return array(
