@@ -2303,7 +2303,7 @@
                     "mtm.elementVisibilityClasses": "",
                     "mtm.elementVisibilityId": "qunit-header",
                     "mtm.elementVisibilityNodeName": 'H1',
-                    "mtm.elementVisibilityPercentage": 79.17,
+                    "mtm.elementVisibilityPercentage": 10
                     "mtm.elementVisibilityText": "piwik.js: Unit Tests",
                     "mtm.elementVisibilityUrl": null
                 }], events, 'should have triggered visibility event');
