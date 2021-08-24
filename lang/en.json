@@ -402,7 +402,7 @@
       "Publish": "Publish",
       "PublishRelease": "Publish release",
       "PublishVersion": "Publish version \"%s\" to...",
-      "PublishVersionToEnvironmentToViewEmbedCode": " Please publish a version to an environment in order to view the tracking code here.",
+      "PublishVersionToEnvironmentToViewEmbedCode": "Please publish a version to an environment in order to view the tracking code here.",
       "PublishLiveEnvironmentCapabilityRequired": "Please note that only an \"Admin\" user, or a user with the \"%1$s\" capability can publish to the \"Live\" environment.",
       "RaygunTagDescription": "Error, crash and performance monitoring software.",
       "RaygunTagHelp": "This tag adds the official raygun4js SDK to your website.",
