@@ -18,7 +18,7 @@
       "BlockTriggerTitle": "Don't execute this tag when any of these triggers have been triggered.",
       "BrowserLanguageVariableDescription": "Gets the preferred language of the user which is usually the language of the browser UI. For example \"en\" or \"en-US\".",
       "BrowserLanguageVariableName": "Browser Language",
-      "BugsnagTagDescription": "Add error monitoring to your applications with bugsnag.",
+      "BugsnagTagDescription": "Add error monitoring to your applications with Bugsnag.",
       "BugsnagTagHelp": "This tag adds the default bugsnag javascript integration to your website.",
       "CapabilityUseCustomTemplates": "Use Custom Templates",
       "CapabilityPublishLiveContainer": "Publish Live Container",
