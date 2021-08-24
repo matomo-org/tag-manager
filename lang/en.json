@@ -223,7 +223,7 @@
       "ErrorPreviewReservedEnvironment": "The preview environment cannot be configured as it is a reserved environment",
       "ErrorTriggerAtPositionXDoesNotExist": "The trigger \"%1$s\" at position \"%2$s\" does not exist.",
       "ErrorTriggerNotRemovableAsInUse": "This trigger cannot be deleted as it is used in a tag. To remove this trigger, update any referenced tag first.",
-      "ErrorUrlVariableDescription": "Returns the url of an error, when an error was triggered previously.",
+      "ErrorUrlVariableDescription": "Returns the URL of an error, when an error was triggered previously.",
       "ErrorUrlVariableName": "Error Url",
       "ErrorVariableInConditionAtPositionNotFound": "The variable \"%1$s\" in the condition at position \"%2$s\" cannot be found.",
       "ErrorVariableInvalidDefaultValue": "The default value needs to be empty, a string, or a number.",
