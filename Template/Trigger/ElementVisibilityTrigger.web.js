@@ -243,22 +243,24 @@
         }
 
         function setIntersectionObserver(triggerEvent) {
-            if ('IntersectionObserver' in window) {
-                var interSectionObserverOptions = {
-                    root: null, // document's viewport as the container.
-                    rootMargin: '0px',
-                    threshold: (minPercentVisible / 100)
-                };
-                observerIntersection = new IntersectionObserver(function (entries) {
-                    interSectionCallback(entries, triggerEvent);
-                }, interSectionObserverOptions);
+            return function () {
+                if ('IntersectionObserver' in window) {
+                    var interSectionObserverOptions = {
+                        root: null, // document's viewport as the container.
+                        rootMargin: '0px',
+                        threshold: (minPercentVisible / 100)
+                    };
+                    observerIntersection = new IntersectionObserver(function (entries) {
+                        interSectionCallback(entries, triggerEvent);
+                    }, interSectionObserverOptions);
 
-                if (selectors) {
-                    TagManager.dom.bySelector(selectors).forEach(function (element) {
-                        observerIntersection.observe(element);
-                    });
+                    if (selectors) {
+                        TagManager.dom.bySelector(selectors).forEach(function (element) {
+                            observerIntersection.observe(element);
+                        });
+                    }
                 }
-            }
+            };
 
         }
 
