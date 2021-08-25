@@ -11,6 +11,7 @@
         var blockTrigger = false;
         var onlyOncePerElement = fireTriggerWhen === 'onceElement';
         var selectors = getSelectors();
+        var observerIntersection;
 
         function getPercentVisible(node)
         {
@@ -189,16 +190,10 @@
 
                 var dom = TagManager.dom;
 
-                if (selectionMethod === 'elementId') {
-                    var node = dom.byId(parameters.get('elementId'));
-                    if (node) {
-                        nodes.push(node);
-                    }
-                } else if (selectionMethod === 'cssSelector') {
-                    nodes = dom.bySelector(parameters.get('cssSelector'));
-                } else {
+                if (!selectors) {
                     return;
                 }
+                nodes = TagManager.dom.bySelector(selectors);
 
                 for (var i = 0; i < nodes.length; i++) {
                     if (onlyOncePerElement) {
@@ -221,8 +216,14 @@
                             if (fireTriggerWhen === 'oncePage') {
                                 blockTrigger = true;
                                 TagManager.window.offScroll(self.scrollIndex);
+                                if (observerIntersection) {
+                                    observerIntersection.disconnect();
+                                }
                             } else if (onlyOncePerElement) {
                                 triggeredNodes.push(nodes[i]); // to avoid possible memory leaks as much as possible we add onceElement only when needed
+                                if (observerIntersection) {
+                                    observerIntersection.unobserve(nodes[i]);
+                                }
                             }
                         }
                     }
@@ -248,8 +249,8 @@
                     rootMargin: '0px',
                     threshold: (minPercentVisible / 100)
                 };
-                var observerIntersection = new IntersectionObserver(function (entries) {
-                    interSectionCallback(entries, triggerEvent, observerIntersection);
+                observerIntersection = new IntersectionObserver(function (entries) {
+                    interSectionCallback(entries, triggerEvent);
                 }, interSectionObserverOptions);
 
                 if (selectors) {
@@ -261,16 +262,18 @@
 
         }
 
-        function interSectionCallback(entries, triggerEvent, observer) {
+        function interSectionCallback(entries, triggerEvent) {
             var dom = TagManager.dom;
             entries.forEach(function (entry) {
                 if (entry.intersectionRatio > 0) {
                     if (blockTrigger || (onlyOncePerElement && isNodeEventTriggered(entry.target))) {
                         return;
                     }
+                    var percentVisible = Math.max(getPercentVisible(entry.target), minPercentVisible);
+
                     triggerEvent({
                         event: 'mtm.ElementVisibility',
-                        'mtm.elementVisibilityPercentage': minPercentVisible,
+                        'mtm.elementVisibilityPercentage': Math.round(percentVisible * 100) / 100,
                         'mtm.elementVisibilityId': dom.getElementAttribute(entry.target, 'id'),
                         'mtm.elementVisibilityClasses': dom.getElementClassNames(entry.target),
                         'mtm.elementVisibilityText': TagManager.utils.trim(entry.target.innerText),
@@ -281,11 +284,14 @@
                     if (fireTriggerWhen === 'oncePage') {
                         blockTrigger = true;
                         TagManager.dom.bySelector(selectors).forEach(function (element) {
-                            observer.unobserve(element);
+                            observerIntersection.unobserve(element);
                             triggeredNodes.push(element);
                         });
-                    } else if(onlyOncePerElement) {
-                        observer.unobserve(entry.target);
+                        if (self.scrollIndex) {
+                            TagManager.window.offScroll(self.scrollIndex);
+                        }
+                    } else if (onlyOncePerElement) {
+                        observerIntersection.unobserve(entry.target);
                         triggeredNodes.push(entry.target); // to avoid possible memory leaks as much as possible we add onceElement only when needed
                     }
                 }
@@ -305,7 +311,7 @@
         this.setUp = function (triggerEvent) {
             this.scrollIndex = TagManager.window.onScroll(checkVisiblity(triggerEvent));
             TagManager.dom.onLoad(checkVisiblity(triggerEvent));
-            setIntersectionObserver(triggerEvent);
+            TagManager.dom.onLoad(setIntersectionObserver(triggerEvent));
         };
     };
 })();
