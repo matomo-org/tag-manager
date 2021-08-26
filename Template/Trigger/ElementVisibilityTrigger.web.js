@@ -10,6 +10,8 @@
         var utils = TagManager.utils;
         var blockTrigger = false;
         var onlyOncePerElement = fireTriggerWhen === 'onceElement';
+        var selectors = getSelectors();
+        var observerIntersection;
 
         function getPercentVisible(node)
         {
@@ -151,13 +153,13 @@
                         //-- Only check if the offset is different for the parent
                         if (
                             //-- If the target element is to the right of the parent elm
-                        l + VISIBLE_PADDING > p.offsetWidth + p.scrollLeft ||
-                        //-- If the target element is to the left of the parent elm
-                        l + w - VISIBLE_PADDING < p.scrollLeft ||
-                        //-- If the target element is under the parent elm
-                        t + VISIBLE_PADDING > p.offsetHeight + p.scrollTop ||
-                        //-- If the target element is above the parent elm
-                        t + h - VISIBLE_PADDING < p.scrollTop
+                            l + VISIBLE_PADDING > p.offsetWidth + p.scrollLeft ||
+                            //-- If the target element is to the left of the parent elm
+                            l + w - VISIBLE_PADDING < p.scrollLeft ||
+                            //-- If the target element is under the parent elm
+                            t + VISIBLE_PADDING > p.offsetHeight + p.scrollTop ||
+                            //-- If the target element is above the parent elm
+                            t + h - VISIBLE_PADDING < p.scrollTop
                         ) {
                             //-- Our target element is out of bounds:
                             return false;
@@ -188,26 +190,14 @@
 
                 var dom = TagManager.dom;
 
-                if (selectionMethod === 'elementId') {
-                    var node = dom.byId(parameters.get('elementId'));
-                    if (node) {
-                        nodes.push(node);
-                    }
-                } else if (selectionMethod === 'cssSelector') {
-                    nodes = dom.bySelector(parameters.get('cssSelector'));
-                } else {
+                if (!selectors) {
                     return;
                 }
+                nodes = TagManager.dom.bySelector(selectors);
 
                 for (var i = 0; i < nodes.length; i++) {
                     if (onlyOncePerElement) {
-                        var hasNodeBeenTriggered = false;
-                        for (var j = 0; j < triggeredNodes.length; j++) {
-                            if (nodes[i] === triggeredNodes[j]) {
-                                hasNodeBeenTriggered = true;
-                            }
-                        }
-                        if (hasNodeBeenTriggered) {
+                        if (isNodeEventTriggered(nodes[i])) {
                             continue;
                         }
                     }
@@ -226,8 +216,14 @@
                             if (fireTriggerWhen === 'oncePage') {
                                 blockTrigger = true;
                                 TagManager.window.offScroll(self.scrollIndex);
+                                if (observerIntersection) {
+                                    observerIntersection.disconnect();
+                                }
                             } else if (onlyOncePerElement) {
                                 triggeredNodes.push(nodes[i]); // to avoid possible memory leaks as much as possible we add onceElement only when needed
+                                if (observerIntersection) {
+                                    observerIntersection.unobserve(nodes[i]);
+                                }
                             }
                         }
                     }
@@ -235,9 +231,89 @@
             };
         }
 
+        function getSelectors() {
+            var selectionMethod = parameters.get('selectionMethod');
+            if (selectionMethod === 'elementId') {
+                return '#' + parameters.get('elementId');
+            } else if (selectionMethod === 'cssSelector') {
+                return parameters.get('cssSelector');
+            }
+
+            return;
+        }
+
+        function setIntersectionObserver(triggerEvent) {
+            return function () {
+                if ('IntersectionObserver' in window) {
+                    var interSectionObserverOptions = {
+                        root: null, // document's viewport as the container.
+                        rootMargin: '0px',
+                        threshold: (minPercentVisible / 100)
+                    };
+                    observerIntersection = new IntersectionObserver(function (entries) {
+                        interSectionCallback(entries, triggerEvent);
+                    }, interSectionObserverOptions);
+
+                    if (selectors) {
+                        TagManager.dom.bySelector(selectors).forEach(function (element) {
+                            observerIntersection.observe(element);
+                        });
+                    }
+                }
+            };
+
+        }
+
+        function interSectionCallback(entries, triggerEvent) {
+            var dom = TagManager.dom;
+            entries.forEach(function (entry) {
+                if (entry.intersectionRatio > 0) {
+                    if (blockTrigger || (onlyOncePerElement && isNodeEventTriggered(entry.target))) {
+                        return;
+                    }
+                    var percentVisible = Math.max(getPercentVisible(entry.target), minPercentVisible);
+
+                    triggerEvent({
+                        event: 'mtm.ElementVisibility',
+                        'mtm.elementVisibilityPercentage': Math.round(percentVisible * 100) / 100,
+                        'mtm.elementVisibilityId': dom.getElementAttribute(entry.target, 'id'),
+                        'mtm.elementVisibilityClasses': dom.getElementClassNames(entry.target),
+                        'mtm.elementVisibilityText': TagManager.utils.trim(entry.target.innerText),
+                        'mtm.elementVisibilityNodeName': entry.target.nodeName,
+                        'mtm.elementVisibilityUrl': entry.target.href || dom.getElementAttribute(entry.target, 'href'),
+                    });
+
+                    if (fireTriggerWhen === 'oncePage') {
+                        blockTrigger = true;
+                        TagManager.dom.bySelector(selectors).forEach(function (element) {
+                            observerIntersection.unobserve(element);
+                            triggeredNodes.push(element);
+                        });
+                        if (self.scrollIndex) {
+                            TagManager.window.offScroll(self.scrollIndex);
+                        }
+                    } else if (onlyOncePerElement) {
+                        observerIntersection.unobserve(entry.target);
+                        triggeredNodes.push(entry.target); // to avoid possible memory leaks as much as possible we add onceElement only when needed
+                    }
+                }
+            });
+        }
+
+        function isNodeEventTriggered(node) {
+            for (var j = 0; j < triggeredNodes.length; j++) {
+                if (node === triggeredNodes[j]) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         this.setUp = function (triggerEvent) {
             this.scrollIndex = TagManager.window.onScroll(checkVisiblity(triggerEvent));
             TagManager.dom.onLoad(checkVisiblity(triggerEvent));
+            TagManager.dom.onLoad(setIntersectionObserver(triggerEvent));
         };
     };
 })();
