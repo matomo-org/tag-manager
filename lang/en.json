@@ -553,6 +553,8 @@
       "WindowUnloadTriggerName": "Window Unload",
       "ZendeskChatTagDescription": "Reach your customers, instantly via web, mobile, and messaging.",
       "ZendeskChatTagHelp": "This tag allows you to add the Zendesk Chat form to your website.",
-      "ZendeskChatTagName": "Zendesk Chat (formerly Zopim)"
+      "ZendeskChatTagName": "Zendesk Chat (formerly Zopim)",
+      "SettingElementVisibilityObserveDomChangesTitle": "Observe DOM Changes",
+      "SettingElementVisibilityObserveDomChangesDescription": "Enable if you want to track dynamic DOM elements."
    }
 }

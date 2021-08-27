@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Trigger;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
@@ -70,6 +71,11 @@ class ElementVisibilityTrigger extends BaseTrigger
             $this->makeSetting('minPercentVisible', 50, FieldConfig::TYPE_INT, function (FieldConfig $field) {
                 $field->title = 'Minimum Percent Visible';
                 $field->validators[] = new NumberRange($min = 1, $max = 100);
+            }),
+            $this->makeSetting('observeDomChanges', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_SettingElementVisibilityObserveDomChangesTitle');
+                $field->description = Piwik::translate('TagManager_SettingElementVisibilityObserveDomChangesDescription');
+                $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
             }),
         );
     }
