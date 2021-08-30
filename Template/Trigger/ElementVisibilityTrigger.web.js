@@ -12,6 +12,8 @@
         var onlyOncePerElement = fireTriggerWhen === 'onceElement';
         var selectors = getSelectors();
         var observerIntersection;
+        var isMutationObserverSupported = ('MutationObserver' in windowAlias);
+        var isIntersectionObserverSupported = ('IntersectionObserver' in windowAlias);
         var observeDomChanges = parameters.get('observeDomChanges', false);
         var observerMutation;
 
@@ -73,7 +75,7 @@
             //-- Cross browser method to get style properties:
             function _getStyle(el, property) {
                 if (windowAlias.getComputedStyle) {
-                    return documentAlias.defaultView.getComputedStyle(el,null)[property];
+                    return documentAlias.defaultView.getComputedStyle(el, null)[property];
                 }
                 if (el.currentStyle) {
                     return el.currentStyle[property];
@@ -181,7 +183,7 @@
             return _isVisible(node);
         }
 
-        function checkVisiblity (triggerEvent) {
+        function checkVisiblity(triggerEvent) {
             return function (event) {
                 if (blockTrigger) {
                     // oncePerPage trigger only. do not trigger it again
@@ -235,7 +237,7 @@
 
         function setIntersectionObserver(triggerEvent) {
             return function () {
-                if ('IntersectionObserver' in window) {
+                if (isIntersectionObserverSupported) {
                     var interSectionObserverOptions = {
                         root: null, // document's viewport as the container.
                         rootMargin: '0px',
@@ -284,7 +286,7 @@
 
         function isNodeEventTriggered(node) {
             for (var j = 0; j < triggeredNodes.length; j++) {
-                if (node === triggeredNodes[j]) {
+                if (node.isEqualNode(triggeredNodes[j])) {
                     return true;
                 }
             }
@@ -294,13 +296,13 @@
 
         function setMutationObserver(triggerEvent) {
             return function () {
-                if (observeDomChanges && 'MutationObserver' in window) {
-                    const targetNode = parameters.document.body;
-                    const config = {attributes: true, childList: true, subtree: true};
+                if (observeDomChanges && isMutationObserverSupported) {
+                    var targetNode = documentAlias.body;
+                    var config = {attributes: true, childList: true, subtree: true};
                     observerMutation = new MutationObserver(function (mutationsList) {
                         mutationObserverCallback(mutationsList, triggerEvent);
                     });
-                    observerMutation.observe(targetNode, config)
+                    observerMutation.observe(targetNode, config);
                 }
             };
         }
@@ -308,34 +310,47 @@
         function mutationObserverCallback(mutationsList, triggerEvent) {
             for (const mutation of mutationsList) {
                 if (mutation.type === 'childList' || mutation.type === 'attributes') {
-                    let addedNodes = mutation.addedNodes;
-                    addedNodes.forEach(node => {
-                        TagManager.dom.bySelector(selectors).forEach(element => {
+                    var addedNodes = mutation.addedNodes;
+                    addedNodes.forEach(function (node) {
+                        TagManager.dom.bySelector(selectors).forEach(function (element) {
                             if (node.contains(element)) {
-                                if (blockTrigger || (onlyOncePerElement && isNodeEventTriggered(node))) {
+                                if (blockTrigger || (onlyOncePerElement && isNodeEventTriggered(element))) {
                                     return;
                                 }
-                                if (!isVisible(node) && observerIntersection) {
-                                    observerIntersection.observe(node);
+
+                                if (!isNodeInViewport(element) && observerIntersection) {
+                                    observerIntersection.observe(element);
 
                                     return;
                                 }
-                                const percentVisible = Math.max(getPercentVisible(node), minPercentVisible);
-                                commonTrigger(triggerEvent, percentVisible, node);
+
+                                var percentVisible = Math.max(getPercentVisible(element), minPercentVisible);
+                                commonTrigger(triggerEvent, percentVisible, element);
                                 if (fireTriggerWhen === 'oncePage') {
                                     blockTrigger = true;
-                                    triggeredNodes.push(node);
+                                    triggeredNodes.push(element);
                                     if (self.scrollIndex) {
                                         TagManager.window.offScroll(self.scrollIndex);
                                     }
                                 } else if (onlyOncePerElement) {
-                                    triggeredNodes.push(node); // to avoid possible memory leaks as much as possible we add onceElement only when needed
+                                    triggeredNodes.push(element); // to avoid possible memory leaks as much as possible we add onceElement only when needed
                                 }
                             }
                         });
                     });
                 }
             }
+        }
+
+        function isNodeInViewport(node) {
+            var rect = node.getBoundingClientRect();
+
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (windowAlias.innerHeight || documentAlias.documentElement.clientHeight) && /* or $(window).height() */
+                rect.right <= (windowAlias.innerWidth || documentAlias.documentElement.clientWidth) /* or $(window).width() */
+            );
         }
 
         function commonTrigger(triggerEvent, percentVisible, node) {
@@ -352,12 +367,12 @@
         }
 
         this.setUp = function (triggerEvent) {
-            TagManager.dom.onLoad(setIntersectionObserver(triggerEvent));
-            TagManager.dom.onLoad(setMutationObserver(triggerEvent));
-            if (!observerMutation || !observerIntersection) {
+            if (!(isMutationObserverSupported && observeDomChanges && isIntersectionObserverSupported)) {
                 this.scrollIndex = TagManager.window.onScroll(checkVisiblity(triggerEvent));
                 TagManager.dom.onLoad(checkVisiblity(triggerEvent));
             }
+            TagManager.dom.onLoad(setIntersectionObserver(triggerEvent));
+            TagManager.dom.onLoad(setMutationObserver(triggerEvent));
         };
     };
 })();
