@@ -286,7 +286,7 @@
 
         function isNodeEventTriggered(node) {
             for (var j = 0; j < triggeredNodes.length; j++) {
-                if (node.isEqualNode(triggeredNodes[j])) {
+                if (node === triggeredNodes[j]) {
                     return true;
                 }
             }
@@ -308,7 +308,8 @@
         }
 
         function mutationObserverCallback(mutationsList, triggerEvent) {
-            for (const mutation of mutationsList) {
+            for (var index in mutationsList) {
+                var mutation = mutationsList[index];
                 if (mutation.type === 'childList' || mutation.type === 'attributes') {
                     var addedNodes = mutation.addedNodes;
                     addedNodes.forEach(function (node) {
@@ -362,7 +363,7 @@
                 'mtm.elementVisibilityClasses': dom.getElementClassNames(node),
                 'mtm.elementVisibilityText': TagManager.utils.trim(node.innerText),
                 'mtm.elementVisibilityNodeName': node.nodeName,
-                'mtm.elementVisibilityUrl': node.href || dom.getElementAttribute(node, 'href'),
+                'mtm.elementVisibilityUrl': node.href || dom.getElementAttribute(node, 'href')
             });
         }
 
