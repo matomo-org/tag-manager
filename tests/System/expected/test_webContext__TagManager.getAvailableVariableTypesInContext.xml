@@ -942,7 +942,7 @@
 						<availableValues />
 						<description>The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: &quot;.example.com&quot; or &quot;*.example.com&quot;.</description>
 						<inlineHelp />
-						<templateFile />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition />
 					</row>

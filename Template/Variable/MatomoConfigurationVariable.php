@@ -133,6 +133,7 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->title = 'Cookie Domain';
                 $field->description = 'The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: ".example.com" or "*.example.com".';
                 $field->validators[] = new CharacterLength(0, 500);
+                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
             }),
             $this->makeSetting('cookiePath', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Cookie Path';
