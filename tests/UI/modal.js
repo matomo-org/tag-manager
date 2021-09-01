@@ -9,7 +9,7 @@
 exports.clickButton = async function(page, button)
 {
     await (await page.jQuery('.modal.open .modal-footer a:contains(' + button + ')')).click();
-    await page.waitFor(250); // wait for modal to close
+    await page.waitForTimeout(250); // wait for modal to close
 }
 
 exports.close = async function(page)
