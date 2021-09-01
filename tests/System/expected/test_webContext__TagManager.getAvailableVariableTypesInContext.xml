@@ -940,9 +940,9 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description />
-						<inlineHelp>The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: &quot;.example.com&quot; or &quot;*.example.com&quot;. &lt;br&gt;&lt;strong&gt;Note: The variable is only evaluated at the time when tracker is being created, make sure you have the variable defined before that&lt;/strong&gt;</inlineHelp>
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<description>The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: &quot;.example.com&quot; or &quot;*.example.com&quot;.</description>
+						<inlineHelp />
+						<templateFile />
 						<introduction />
 						<condition />
 					</row>
