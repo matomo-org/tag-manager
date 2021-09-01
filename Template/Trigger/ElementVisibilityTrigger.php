@@ -74,7 +74,7 @@ class ElementVisibilityTrigger extends BaseTrigger
             }),
             $this->makeSetting('observeDomChanges', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_SettingElementVisibilityObserveDomChangesTitle');
-                $field->description = Piwik::translate('TagManager_SettingElementVisibilityObserveDomChangesDescription');
+                $field->inlineHelp = Piwik::translate('TagManager_SettingElementVisibilityObserveDomChangesDescription', array('<br><strong>', '</strong>'));
                 $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
             }),
         );

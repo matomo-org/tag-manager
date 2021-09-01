@@ -555,6 +555,6 @@
         "ZendeskChatTagHelp": "This tag allows you to add the Zendesk Chat form to your website.",
         "ZendeskChatTagName": "Zendesk Chat (formerly Zopim)",
         "SettingElementVisibilityObserveDomChangesTitle": "Observe DOM Changes",
-        "SettingElementVisibilityObserveDomChangesDescription": "Enable if you want to track dynamic DOM elements."
+        "SettingElementVisibilityObserveDomChangesDescription": "Enable if you want to track dynamic DOM elements. %1$sNote: This might slow down the website if there are lot of DOM changes%2$s"
     }
 }

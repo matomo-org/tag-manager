@@ -236,8 +236,8 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Enable if you want to track dynamic DOM elements.</description>
-						<inlineHelp />
+						<description />
+						<inlineHelp>Enable if you want to track dynamic DOM elements. &lt;br&gt;&lt;strong&gt;Note: This might slow down the website if there are lot of DOM changes&lt;/strong&gt;</inlineHelp>
 						<templateFile />
 						<introduction />
 						<condition />
