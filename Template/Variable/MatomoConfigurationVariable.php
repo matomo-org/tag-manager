@@ -131,7 +131,7 @@ class MatomoConfigurationVariable extends BaseVariable
             }),
             $this->makeSetting('cookieDomain', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Cookie Domain';
-                $field->inlineHelp = 'The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: ".example.com" or "*.example.com". <br><strong>Note: The variable is only evaluated at the time when tracker is being created, make sure you have the variable defined before that</strong>';
+                $field->inlineHelp = 'The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: ".example.com" or "*.example.com". <br><strong>Note: The variable is only evaluated at the time when tracker is being created, make sure you have the variable defined before that.</strong>';
                 $field->validators[] = new CharacterLength(0, 500);
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
             }),
