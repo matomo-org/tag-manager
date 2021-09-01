@@ -12,6 +12,7 @@ use Piwik\Cookie;
 class PreviewCookie extends Cookie
 {
     const COOKIE_NAME = 'mtmPreviewMode';
+    const DEBUG_SITE_URL_COOKIE_NAME = 'mtmPreviewSiteURL';
 
     public function __construct()
     {
@@ -35,6 +36,20 @@ class PreviewCookie extends Cookie
     {
         $this->set($this->getCookieValueName($idSite, $idContainer), null);
         $this->save('Lax');
+    }
+
+    public function enableDebugSiteUrl($url) {
+        $this->set(self::DEBUG_SITE_URL_COOKIE_NAME, $url);
+        $this->save('Lax');
+    }
+
+    public function disableDebugSiteUrl() {
+        $this->set(self::DEBUG_SITE_URL_COOKIE_NAME, null);
+        $this->save('Lax');
+    }
+
+    public function getDebugSiteUrl() {
+        return $this->get(self::DEBUG_SITE_URL_COOKIE_NAME);
     }
 
 }

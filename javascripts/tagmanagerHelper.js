@@ -165,6 +165,7 @@
         var params = {method: 'TagManager.enablePreviewMode', idContainer: idContainer, idContainerVersion: idContainerVersion};
         piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_EnablingPreviewPleaseWait') + '</h2>', {});
         piwikApi.fetch(params).then(function () {
+            tagManagerHelper.updateDebugSiteFlag(piwik.siteMainUrl, idContainer, 1);
             window.location.reload();
         });
     };
@@ -173,8 +174,25 @@
         var params = {method: 'TagManager.disablePreviewMode', idContainer: idContainer};
         piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_DisablingPreviewPleaseWait') + '</h2>', {});
         piwikApi.fetch(params).then(function () {
+            tagManagerHelper.updateDebugSiteFlag(piwik.siteMainUrl, idContainer, -1);
             window.location.reload();
         });
+    };
+    tagManagerHelper.changeDebugUrl = function (idContainer, oldUrl) {
+        var newUrl = document.getElementById('previewDebugUrl').value;
+        if (newUrl != '' && newUrl != null && oldUrl != newUrl) {
+            var piwikApi = piwikHelper.getAngularDependency('piwikApi');
+            var params = {method: 'TagManager.changeDebugUrl', idContainer: idContainer, url: newUrl};
+            piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_UpdatingDebugSiteUrlPleaseWait') + '</h2>', {});
+            piwikApi.fetch(params).then(function () {
+                tagManagerHelper.updateDebugSiteFlag(oldUrl, idContainer, -1);
+                tagManagerHelper.updateDebugSiteFlag(newUrl, idContainer, 1);
+                window.location.reload();
+            });
+        }
+    };
+    tagManagerHelper.updateDebugSiteFlag = function (url, idContainer, debugFlag) {
+        window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + idContainer + '&setDebugFlag=' + debugFlag, '_blank', 'toolbar=0,location=0,menubar=0');
     };
     tagManagerHelper.importVersion = function ($scope, idContainer) {
         var childScope = $scope.$new(true, $scope);

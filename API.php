@@ -13,6 +13,7 @@ use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
 use Piwik\Piwik;
+use Piwik\Site;
 use Piwik\Plugins\TagManager\API\Export;
 use Piwik\Plugins\TagManager\API\Import;
 use Piwik\Plugins\TagManager\API\PreviewCookie;
@@ -1174,6 +1175,7 @@ class API extends \Piwik\Plugin\API
 
         $cookie = new PreviewCookie();
         $cookie->enable($idSite, $idContainer);
+        $cookie->enableDebugSiteUrl(Site::getMainUrlFor($idSite));
     }
 
     /**
@@ -1200,6 +1202,20 @@ class API extends \Piwik\Plugin\API
 
         $cookie = new PreviewCookie();
         $cookie->disable($idSite, $idContainer);
+        $cookie->disableDebugSiteUrl();
+    }
+
+    /**
+     * Updates the debug siteurl cookie
+     *
+     * @param int $idSite The id of the site the given container belongs to
+     * @param string $idContainer  The id of a container, for example "6OMh6taM"
+     * @param string $url  The url to enable debug
+     */
+    public function changeDebugUrl($idSite, $idContainer, $url)
+    {
+        $previewCookie = new PreviewCookie();
+        $previewCookie->enableDebugSiteUrl($url);
     }
 
     /**

@@ -1621,6 +1621,15 @@
                 throwError: throwError,
                 Container: Container,
                 addContainer: function (containerConfig, templates) {
+                    var setDebugFlag = urlHelper.getQueryParameter('setDebugFlag');
+                    if (setDebugFlag) {
+                        if (setDebugFlag == 1) {
+                            document.cookie = 'mtmPreviewMode=mtmPreview' + containerConfig.idsite + '_' + containerConfig.id + '%3D1;SameSite=Lax';
+                        } else {
+                            document.cookie = 'mtmPreviewMode=mtmPreview' + containerConfig.idsite + '_' + containerConfig.id + '%3D1;expires=Thu, 01 Jan 1970 00:00:00 UTC;SameSite=Lax';
+                        }
+                        window.close();
+                    }
                     if (!window.mtmPreviewWindow) {
                         // interesting when multiple containers are registered... we check if meanwhile a
                         // debug container has been added
