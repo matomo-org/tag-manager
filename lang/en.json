@@ -162,6 +162,8 @@
         "DisablePreview": "Disable Preview",
         "DisablingPreviewPleaseWait": "Disabling preview mode, please wait...",
         "UpdatingDebugSiteUrlPleaseWait": "Updating debug site URL, please wait...",
+        "DebugUrlNoUrlErrorMessage": "Please Enter a URL to start debugging",
+        "DebugUrlSameUrlErrorMessage": "Already debugging the same site, please visit the %1$ssite%2$s or enter new url to debug",
         "DnsLookupTimeVariableDescription": "The time it took to look up the DNS in milliseconds.",
         "DnsLookupTimeVariableName": "DNS Lookup Time",
         "DomElementVariableDescription": "Gets the value from a DOM element.",

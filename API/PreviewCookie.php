@@ -5,6 +5,7 @@
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\API;
 
 use Piwik\Cookie;
@@ -38,17 +39,20 @@ class PreviewCookie extends Cookie
         $this->save('Lax');
     }
 
-    public function enableDebugSiteUrl($url) {
+    public function enableDebugSiteUrl($url)
+    {
         $this->set(self::DEBUG_SITE_URL_COOKIE_NAME, $url);
         $this->save('Lax');
     }
 
-    public function disableDebugSiteUrl() {
+    public function disableDebugSiteUrl()
+    {
         $this->set(self::DEBUG_SITE_URL_COOKIE_NAME, null);
         $this->save('Lax');
     }
 
-    public function getDebugSiteUrl() {
+    public function getDebugSiteUrl()
+    {
         return $this->get(self::DEBUG_SITE_URL_COOKIE_NAME);
     }
 

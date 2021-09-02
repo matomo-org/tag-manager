@@ -394,6 +394,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_EnablingPreviewPleaseWait';
         $result[] = 'TagManager_DisablingPreviewPleaseWait';
         $result[] = 'TagManager_UpdatingDebugSiteUrlPleaseWait';
+        $result[] = 'TagManager_DebugUrlNoUrlErrorMessage';
+        $result[] = 'TagManager_DebugUrlSameUrlErrorMessage';
         $result[] = 'TagManager_NameOfLatestVersion';
         $result[] = 'TagManager_Created';
         $result[] = 'TagManager_CreateVersionWithoutPublishing';

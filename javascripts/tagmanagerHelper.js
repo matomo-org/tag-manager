@@ -180,22 +180,29 @@
     };
     tagManagerHelper.changeDebugUrl = function (idContainer, oldUrl) {
         var newUrl = document.getElementById('previewDebugUrl').value;
-        if (newUrl != '' && newUrl != null && oldUrl != newUrl) {
-            var piwikApi = piwikHelper.getAngularDependency('piwikApi');
-            var params = {method: 'TagManager.changeDebugUrl', idContainer: idContainer, url: newUrl};
-            piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_UpdatingDebugSiteUrlPleaseWait') + '</h2>', {});
-            piwikApi.fetch(params).then(function () {
-                tagManagerHelper.updateDebugSiteFlag(oldUrl, idContainer, -1);
-                tagManagerHelper.updateDebugSiteFlag(newUrl, idContainer, 1);
-                window.location.reload();
-            });
+        var id = 'TagManager_changeDebugSiteUrl';
+        var context = 'warning'; // or 'warning' or 'error' or 'success'
+        var UI = require('piwik/UI');
+        var notification = new UI.Notification();
+        if (!newUrl) {
+            return notification.show(_pk_translate('TagManager_DebugUrlNoUrlErrorMessage'), {context: context, id: id, title: ''});
+        } else if (newUrl === oldUrl) {
+            return notification.show(_pk_translate('TagManager_DebugUrlSameUrlErrorMessage', ['<a href="'+newUrl+'" target="_blank">','</a>']), {context: context, id: id, title: ''});
         }
+        var piwikApi = piwikHelper.getAngularDependency('piwikApi');
+        var params = {method: 'TagManager.changeDebugUrl', idContainer: idContainer, url: newUrl};
+        piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_UpdatingDebugSiteUrlPleaseWait') + '</h2>', {});
+        piwikApi.fetch(params).then(function () {
+            tagManagerHelper.updateDebugSiteFlag(oldUrl, idContainer, -1);
+            tagManagerHelper.updateDebugSiteFlag(newUrl, idContainer, 1);
+            window.location.reload();
+        });
     };
     tagManagerHelper.updateDebugSiteFlag = function (url, idContainer, debugFlag) {
         if (!url || !idContainer || !debugFlag) {
             return;
         }
-        window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + idContainer + '&setDebugFlag=' + debugFlag, '_blank', 'toolbar=0,location=0,menubar=0');
+        window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + idContainer + '&setDebugFlag=' + debugFlag, '_blank', 'toolbar=0,location=0,menubar=0,rel="noopener noreferrer"');
     };
     tagManagerHelper.importVersion = function ($scope, idContainer) {
         var childScope = $scope.$new(true, $scope);
