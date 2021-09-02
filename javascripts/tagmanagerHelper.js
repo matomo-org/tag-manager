@@ -192,6 +192,9 @@
         }
     };
     tagManagerHelper.updateDebugSiteFlag = function (url, idContainer, debugFlag) {
+        if (!url || !idContainer || !debugFlag) {
+            return;
+        }
         window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + idContainer + '&setDebugFlag=' + debugFlag, '_blank', 'toolbar=0,location=0,menubar=0');
     };
     tagManagerHelper.importVersion = function ($scope, idContainer) {
