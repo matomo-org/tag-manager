@@ -38,7 +38,7 @@ describe("ContainerTag", function () {
     {
         await page.click('.editTag .collection-item.templateType' + tagType);
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
     }
 
     async function setTagName(name, prefix)
@@ -68,7 +68,7 @@ describe("ContainerTag", function () {
         }
         await page.click('.tagManagerTagList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
     }
 
     async function createOrUpdateTag()
@@ -76,7 +76,7 @@ describe("ContainerTag", function () {
         await page.click('.editTag .createButton');
         await page.waitForNetworkIdle();
         await page.mouse.move(-10, -10);
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
     }
 
     async function cancelTag()
@@ -86,14 +86,14 @@ describe("ContainerTag", function () {
 
     it('should load tags page with some tags', async function () {
         await page.goto(container1Base);
-        await page.waitFor(1000);
+        await page.waitForTimeout(1000);
         await capture.page(page, 'tag_some_exist');
     });
 
     it('should be able to create a new tag and show list of available types', async function () {
         await page.click('.createNewTag');
         await page.waitForNetworkIdle();
-        await page.waitFor(500);
+        await page.waitForTimeout(500);
         await capture.page(page, 'create_new');
     });
 
@@ -114,7 +114,7 @@ describe("ContainerTag", function () {
         await page.click('.createNewTag');
         await page.waitForNetworkIdle();
         await page.mouse.move(-10, -10);
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.page(page, 'create_new_custom_templates_restricted');
     });
 
@@ -122,7 +122,7 @@ describe("ContainerTag", function () {
         await page.goto(container1Base);
         await page.click('.createNewTag');
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await selectTagType('CustomHtml');
         await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
         await setParameterValue('customHtml', '<script></script>');
@@ -148,16 +148,16 @@ describe("ContainerTag", function () {
     it('should be possible to edit a trigger directly', async function () {
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.modal(page, 'edit_trigger_directly_popup');
     });
 
     it('should be possible to edit a trigger directly', async function () {
         await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
-        await page.waitFor(100);
+        await page.waitForTimeout(100);
         await page.click('.modal.open .createButton');
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.page(page, 'edit_trigger_directly_updated');
     });
 
@@ -212,7 +212,7 @@ describe("ContainerTag", function () {
     it('should open create tag page when clicking on create a tag now link', async function () {
         await page.click('.createContainerTagNow');
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.page(page, 'tag_none_exist_yet_create_now');
     });
 
@@ -254,14 +254,14 @@ describe("ContainerTag", function () {
     it('should be possible to prefill fire trigger', async function () {
         await page.click('.modal.open .createButton');
         await page.waitForNetworkIdle();
-        await page.waitFor(200);
+        await page.waitForTimeout(200);
         await capture.page(page, 'create_advanced_firetrigger_created');
     });
 
     it('should be possible to create a block trigger directly', async function () {
         await page.click('.createBlockTriggerInHelp');
         await page.waitForNetworkIdle(); // wait for modal
-        await page.waitFor(250); // wait for modal
+        await page.waitForTimeout(250); // wait for modal
         await page.click('.modal.open .templateTypeAllElementsClick');
         await page.click('.modal.open .createButton');
         await page.waitForNetworkIdle();

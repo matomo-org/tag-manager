@@ -9,7 +9,7 @@
 				<description>Adds the Bing Ads Universal Event Tracking Tag to your website so you can apply conversion tracking to your Bing ad campaigns.</description>
 				<category>Ads</category>
 				<icon>plugins/TagManager/images/icons/bing.svg</icon>
-				<help>The tag tracks what your customers are doing after they click on your bing ad.</help>
+				<help>The tag tracks what your customers are doing after they click on your Bing ad.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -775,7 +775,7 @@
 			<row>
 				<id>Bugsnag</id>
 				<name>Bugsnag</name>
-				<description>Add error monitoring to your applications with bugsnag.</description>
+				<description>Add error monitoring to your applications with Bugsnag.</description>
 				<category>Developers</category>
 				<icon>plugins/TagManager/images/icons/bugsnag.png</icon>
 				<help>This tag adds the default bugsnag javascript integration to your website.</help>

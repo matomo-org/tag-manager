@@ -22,7 +22,7 @@ exports.selectValue = async function (page, field, title)
     await page.evaluate((field) => {
         $(field + ' input.select-dropdown').click()
     }, field);
-    await page.waitFor(800);
+    await page.waitForTimeout(800);
     await page.evaluate((field, title) => {
         $(field + ' .dropdown-content li:contains("' + title + '"):first').click()
     }, field, title);

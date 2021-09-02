@@ -47,7 +47,7 @@ exports.notification = async function (page, screenshotName)
 exports.modal = async function (page, screenshotName)
 {
     await page.waitForNetworkIdle();
-    await page.waitFor(500); // ensure animation is finished
+    await page.waitForTimeout(500); // ensure animation is finished
 
     pageWrap = await page.$('.modal.open');
 
