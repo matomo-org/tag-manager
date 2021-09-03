@@ -1809,6 +1809,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([{
                 "event": "mtm.AllElementsClick",
+                "mtm.clickButton": "left",
                 "mtm.clickElement": target,
                 "mtm.clickElementClasses": "myTagTest myTagFoo myTagTest4",
                 "mtm.clickElementId": "TagManager",
@@ -1825,6 +1826,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllElementsClick",
+                "mtm.clickButton": "left",
                 "mtm.clickElement": target,
                 "mtm.clickElementClasses": "",
                 "mtm.clickElementId": "ClickTagManager2",
