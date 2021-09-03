@@ -1627,6 +1627,7 @@
                             document.cookie = 'mtmPreviewMode=mtmPreview' + containerConfig.idsite + '_' + containerConfig.id + '%3D1;SameSite=Lax';
                         } else {
                             document.cookie = 'mtmPreviewMode=mtmPreview' + containerConfig.idsite + '_' + containerConfig.id + '%3D1;expires=Thu, 01 Jan 1970 00:00:00 UTC;SameSite=Lax';
+                            window.close();
                         }
                     }
                     if (!window.mtmPreviewWindow) {
