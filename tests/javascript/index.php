@@ -1861,6 +1861,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllLinksClick",
+                "mtm.clickButton": "left",
                 "mtm.clickElement": target,
                 "mtm.clickElementClasses": "",
                 "mtm.clickElementId": "ClickTagManager2",
@@ -1877,6 +1878,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllLinksClick",
+                "mtm.clickButton": "left",
                 "mtm.clickElement": target,
                 "mtm.clickElementClasses": "tag123 clicktag23",
                 "mtm.clickElementId": "ClickTagManager1",
@@ -1893,6 +1895,7 @@
             triggerEvent(target, 'click', null, true);
             deepEqual([ {
                 "event": "mtm.AllLinksClick",
+                "mtm.clickButton": "left",
                 "mtm.clickElement": document.getElementById('ClickTagManager3'),
                 "mtm.clickElementClasses": "",
                 "mtm.clickElementId": "ClickTagManager3",
