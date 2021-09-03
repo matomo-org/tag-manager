@@ -294,6 +294,7 @@
                             }
                         }, 120);
                     });
+
                     observerMutation.observe(targetNode, config);
                 }
             };
