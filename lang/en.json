@@ -53,6 +53,8 @@
         "ChooseVariable": "Choose a variable",
         "ChooseVariableToContinue": "Choose a type of variable to continue",
         "ClickClassesVariableDescription": "The value of all CSS class names of an element when a click trigger was triggered.",
+        "ClickButtonVariableDescription": "Clicked button(left/middle/right)",
+        "ClickButtonVariableName": "Click Button",
         "ClickClassesVariableName": "Click Classes",
         "ClickDestinationUrlVariableDescription": "The value of the link URL (href) of an element when a click trigger was triggered.",
         "ClickDestinationUrlVariableName": "Click Destination URL",

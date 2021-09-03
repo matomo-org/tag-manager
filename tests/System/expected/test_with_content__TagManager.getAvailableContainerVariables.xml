@@ -4,6 +4,16 @@
 		<name>Clicks</name>
 		<types>
 			<row>
+				<id>ClickButton</id>
+				<idvariable />
+				<type>ClickButton</type>
+				<name>Click Button</name>
+				<category>Clicks</category>
+				<description>Clicked button(left/middle/right)</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
 				<id>ClickClasses</id>
 				<idvariable />
 				<type>ClickClasses</type>

@@ -930,6 +930,14 @@
                             callback();
                         }
                     });
+                },
+                onClick: function (callback, element) {
+                    if (typeof element === 'undefined') {
+                        element = documentAlias.body;
+                    }
+                    TagManager.dom.addEventListener(element, 'click', callback, true)
+                    TagManager.dom.addEventListener(element, 'auxclick', callback, true)
+                    TagManager.dom.addEventListener(element, 'contextmenu', callback, true)
                 }
             };
 
