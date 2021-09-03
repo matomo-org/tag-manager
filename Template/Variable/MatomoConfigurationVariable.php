@@ -93,6 +93,7 @@ class MatomoConfigurationVariable extends BaseVariable
             }),
             $this->makeSetting('enableDoNotTrack', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'Enable Do Not Track';
+                $field->description = 'Enable this feature to not track users who opt out of tracking using Mozilla\'s (proposed) Do Not Track setting';
             }),
             $this->makeSetting('enableJSErrorTracking', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'Enable JavaScript Error Tracking';

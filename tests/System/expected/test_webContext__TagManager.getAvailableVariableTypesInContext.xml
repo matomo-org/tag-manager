@@ -796,7 +796,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description />
+						<description>Enable this feature to not track users who opt out of tracking using Mozilla's (proposed) Do Not Track setting</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
