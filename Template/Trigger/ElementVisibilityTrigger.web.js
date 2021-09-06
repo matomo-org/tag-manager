@@ -369,6 +369,9 @@
                 if (observerIntersection) {
                     observerIntersection.disconnect();
                 }
+                if (observerMutation) {
+                    observerMutation.disconnect();
+                }
             } else if (onlyOncePerElement) {
                 triggeredNodes.push(node); // to avoid possible memory leaks as much as possible we add onceElement only when needed
                 if (observerIntersection) {
