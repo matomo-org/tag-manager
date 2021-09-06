@@ -797,7 +797,7 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>Enable this feature to not track users who opt out of tracking using Mozilla's (proposed) Do Not Track setting</description>
-						<inlineHelp />
+						<inlineHelp>&lt;strong&gt;Note: This feature when enabled sets _paq.push([&quot;setDoNotTrack&quot;, true]); which will not send any tracking request unlike &quot;Matomo Setting&quot; which drops the request if no tracking header is set and DNT is enabled&lt;/strong&gt;</inlineHelp>
 						<templateFile />
 						<introduction />
 						<condition />
