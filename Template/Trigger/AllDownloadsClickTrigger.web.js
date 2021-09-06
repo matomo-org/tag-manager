@@ -12,11 +12,11 @@
                     return nodeName === 'A' || nodeName === 'AREA';
                 }
 
-                TagManager.dom.onClick(function (event) {
-                    clickCallback(event, triggerEvent);
+                TagManager.dom.onClick(function (event, clickButton) {
+                    clickCallback(event, triggerEvent, clickButton);
                 });
 
-                function clickCallback(event, triggerEvent) {
+                function clickCallback(event, triggerEvent, clickButton) {
                     if (!event.target) {
                         return;
                     }
@@ -40,7 +40,6 @@
 
                         var downloadExtensionsPattern = new RegExp('\\.(' + extensions.join('|') + ')([?&#]|$)', 'i');
                         if (downloadExtensionsPattern.test(link)) {
-                            var clickButtonMap = {1: 'left', 2: 'middle', 3: 'right'};
                             triggerEvent({
                                 event: 'mtm.DownloadClick',
                                 'mtm.clickElement': target,
@@ -49,7 +48,7 @@
                                 'mtm.clickText': TagManager.dom.getElementText(target),
                                 'mtm.clickNodeName': nodeName,
                                 'mtm.clickElementUrl': link,
-                                'mtm.clickButton': clickButtonMap[event.which] ? clickButtonMap[event.which] : 'left'
+                                'mtm.clickButton': clickButton
                             });
                         }
 

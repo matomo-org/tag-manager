@@ -935,9 +935,15 @@
                     if (typeof element === 'undefined') {
                         element = documentAlias.body;
                     }
-                    TagManager.dom.addEventListener(element, 'click', callback, true)
-                    TagManager.dom.addEventListener(element, 'auxclick', callback, true)
-                    TagManager.dom.addEventListener(element, 'contextmenu', callback, true)
+                    TagManager.dom.addEventListener(element, 'click', function (event) {
+                        callback(event, 'left')
+                    }, true)
+                    TagManager.dom.addEventListener(element, 'auxclick', function (event) {
+                        callback(event, 'middle')
+                    }, true)
+                    TagManager.dom.addEventListener(element, 'contextmenu', function (event) {
+                        callback(event, 'right')
+                    }, true)
                 }
             };
 

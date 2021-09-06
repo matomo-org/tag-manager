@@ -2,18 +2,17 @@
     return function (parameters, TagManager) {
         this.setUp = function (triggerEvent) {
             TagManager.dom.onReady(function () {
-                TagManager.dom.onClick(function (event) {
-                    clickCallback(event, triggerEvent);
+                TagManager.dom.onClick(function (event, clickButton) {
+                    clickCallback(event, triggerEvent, clickButton);
                 });
             });
         };
 
-        function clickCallback(event, triggerEvent) {
+        function clickCallback(event, triggerEvent, clickButton) {
             if (!event.target) {
                 return;
             }
             var target = event.target;
-            var clickButtonMap = {1: 'left', 2: 'middle', 3: 'right'};
             triggerEvent({
                 event: 'mtm.AllElementsClick',
                 'mtm.clickElement': target,
@@ -22,7 +21,7 @@
                 'mtm.clickText': TagManager.dom.getElementText(target),
                 'mtm.clickNodeName': target.nodeName,
                 'mtm.clickElementUrl': target.href || TagManager.dom.getElementAttribute(target, 'href'),
-                'mtm.clickButton': clickButtonMap[event.which] ? clickButtonMap[event.which] : 'left'
+                'mtm.clickButton': clickButton
             });
         }
     };
