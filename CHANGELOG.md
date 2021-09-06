@@ -1,5 +1,8 @@
 ## Changelog
 
+0.3.6
+Added option to configure cookie domain via variable
+
 0.2.6
 
 * Fix changing name of variable causes removing trigger in a tag
