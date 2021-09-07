@@ -286,9 +286,9 @@
 
                         mutationObseverTimeout = true;
                         setTimeout(function () {
-                            mutationObseverTimeout = false;
                             mutationObserverCallback(allMutationsList, triggerEvent);
                             allMutationsList = [];
+                            mutationObseverTimeout = false;
                         }, 120);
                     });
 
