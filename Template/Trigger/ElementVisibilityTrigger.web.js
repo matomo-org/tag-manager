@@ -17,8 +17,8 @@
         var observeDomChanges = parameters.get('observeDomChanges', false);
         var observerMutation;
         var dynamicObservedNodesForIntersection = [];
-        var notInDomNodes = [];
         var mutationObseverTimeout = false;
+        var allMutationsList = [];
 
         function getPercentVisible(node)
         {
@@ -276,10 +276,10 @@
         function setMutationObserver(triggerEvent) {
             return function () {
                 if (observeDomChanges && isMutationObserverSupported) {
-                    notInDomNodes = getDynamicNodes(selectors);
                     var targetNode = documentAlias.body;
                     var config = {attributes: true, childList: true, subtree: true};
                     observerMutation = new MutationObserver(function (mutationsList) {
+                        Array.prototype.push.apply(allMutationsList, mutationsList);
                         if (mutationObseverTimeout) {
                             return;
                         }
@@ -287,11 +287,8 @@
                         mutationObseverTimeout = true;
                         setTimeout(function () {
                             mutationObseverTimeout = false;
-                            mutationObserverCallback(mutationsList, triggerEvent);
-                            notInDomNodes = getDynamicNodes(selectors);
-                            if (notInDomNodes.length === 0) {
-                                observerMutation.disconnect();
-                            }
+                            mutationObserverCallback(allMutationsList, triggerEvent);
+                            allMutationsList = [];
                         }, 120);
                     });
 
@@ -301,29 +298,33 @@
         }
 
         function mutationObserverCallback(mutationsList, triggerEvent) {
-            notInDomNodes.forEach(function (node) {
-                var element = documentAlias.querySelector(node);
-                if (element) {
-                    if (blockTrigger || (onlyOncePerElement && isNodeEventTriggered(element))) {
-                        return;
-                    }
-
-                    if (!isNodeInViewport(element) && observerIntersection && !isDynamicNodeObservedForIntersection(element)) {
-                        observerIntersection.observe(element);
-                        dynamicObservedNodesForIntersection.push(element);
-
-                        return;
-                    }
-
-                    var percentVisible = Math.max(getPercentVisible(element), minPercentVisible);
-                    commonTrigger(triggerEvent, percentVisible, element);
-                    commonTriggeredNodeCheck(element);
-                    if (fireTriggerWhen === 'every' && observerIntersection && !isDynamicNodeObservedForIntersection(element)) {
-                        observerIntersection.observe(element);
-                        dynamicObservedNodesForIntersection.push(element);
-                    }
+            for (var index in mutationsList) {
+                var mutation = mutationsList[index];
+                var addedNodes = mutation.addedNodes;
+                if (mutation.type === 'attributes') {
+                    addedNodes = [mutation.target];
                 }
-            });
+                addedNodes.forEach(function (node) {
+                    TagManager.dom.bySelector(selectors).forEach(function (element) {
+                        if (node.contains(element)) {
+                            if (blockTrigger || (onlyOncePerElement && isNodeEventTriggered(element))) {
+                                return;
+                            }
+
+                            if (!isNodeInViewport(element) && observerIntersection && !isDynamicNodeObservedForIntersection(element)) {
+                                observerIntersection.observe(element);
+                                dynamicObservedNodesForIntersection.push(element);
+
+                                return;
+                            }
+
+                            var percentVisible = Math.max(getPercentVisible(element), minPercentVisible);
+                            commonTrigger(triggerEvent, percentVisible, element);
+                            commonTriggeredNodeCheck(element);
+                        }
+                    });
+                });
+            }
         }
 
         function isNodeInViewport(node) {
@@ -378,17 +379,6 @@
                     observerIntersection.unobserve(node);
                 }
             }
-        }
-
-        function getDynamicNodes(selectors) {
-            var dynamicNodes = [];
-            selectors.split(',').forEach(function (node) {
-                if (!documentAlias.querySelector(node)) {
-                    dynamicNodes.push(node.trim());
-                }
-            });
-
-            return dynamicNodes;
         }
 
         this.setUp = function (triggerEvent) {
