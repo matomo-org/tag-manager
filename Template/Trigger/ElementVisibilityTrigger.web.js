@@ -276,7 +276,6 @@
         function setMutationObserver(triggerEvent) {
             return function () {
                 if (observeDomChanges && isMutationObserverSupported) {
-                    var targetNode = documentAlias.body;
                     var config = {attributes: true, childList: true, subtree: true};
                     observerMutation = new MutationObserver(function (mutationsList) {
                         Array.prototype.push.apply(allMutationsList, mutationsList);
@@ -292,12 +291,16 @@
                         }, 120);
                     });
 
-                    observerMutation.observe(targetNode, config);
+                    observerMutation.observe(documentAlias.body, config);
                 }
             };
         }
 
         function mutationObserverCallback(mutationsList, triggerEvent) {
+            var domElements = [];
+            TagManager.dom.bySelector(selectors).forEach(function (element) {
+                domElements.push(element);
+            });
             for (var index in mutationsList) {
                 var mutation = mutationsList[index];
                 var addedNodes = mutation.addedNodes;
@@ -305,7 +308,7 @@
                     addedNodes = [mutation.target];
                 }
                 addedNodes.forEach(function (node) {
-                    TagManager.dom.bySelector(selectors).forEach(function (element) {
+                    domElements.forEach(function (element) {
                         if (node.contains(element)) {
                             if (blockTrigger || (onlyOncePerElement && isNodeEventTriggered(element))) {
                                 return;
