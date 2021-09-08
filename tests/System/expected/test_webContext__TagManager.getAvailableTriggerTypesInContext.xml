@@ -6,10 +6,10 @@
 			<row>
 				<id>AllDownloadsClick</id>
 				<name>All Downloads Click</name>
-				<description>Triggered when a link is clicked which links to a downloadable file.</description>
+				<description>Triggered when a link is clicked which links to a downloadable file. It will be triggered on left, middle and right click.</description>
 				<category>Click</category>
 				<icon>plugins/TagManager/images/icons/pointer.svg</icon>
-				<help>Triggered when a user clicks on an &quot;A&quot; or &quot;AREA&quot; element and the link points to a file with a downloadable file extension.</help>
+				<help>Triggered when a user clicks on an &quot;A&quot; or &quot;AREA&quot; element and the link points to a file with a downloadable file extension. To enable tracking on specific click button, please add conditions based on a &quot;ClickButton&quot; variable in the advanced settings.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -38,10 +38,10 @@
 			<row>
 				<id>AllElementsClick</id>
 				<name>All Elements Click</name>
-				<description>Triggered when any element is clicked.</description>
+				<description>Triggered when any element is clicked. It will be triggered on left, middle and right click.</description>
 				<category>Click</category>
 				<icon>plugins/TagManager/images/icons/pointer.svg</icon>
-				<help>Triggered on any click on any element. To listen to clicks on specific elements, please add conditions based on a &quot;click&quot; variable in the advanced settings.</help>
+				<help>Triggered on any click on any element. To listen to clicks on specific elements or specific click button, please add conditions based on a &quot;Click&quot; variable or on a &quot;ClickButton&quot; variable in the advanced settings.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -54,10 +54,10 @@
 			<row>
 				<id>AllLinksClick</id>
 				<name>All Links Click</name>
-				<description>Triggered when a link is clicked.</description>
+				<description>Triggered when a link is clicked. It will be triggered on left, middle and right click.</description>
 				<category>Click</category>
 				<icon>plugins/TagManager/images/icons/pointer.svg</icon>
-				<help>Triggered on any click on any element. To listen to clicks on specific elements, please add conditions based on a &quot;click&quot; variable in the advanced settings.</help>
+				<help>Triggered on any click on any element. To listen to clicks on specific elements or specific click button, please add conditions based on a &quot;Click&quot; variable or on a &quot;ClickButton&quot; variable in the advanced settings.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
