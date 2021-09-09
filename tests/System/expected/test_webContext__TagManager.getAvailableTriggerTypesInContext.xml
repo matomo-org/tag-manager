@@ -226,6 +226,22 @@
 						<introduction />
 						<condition />
 					</row>
+					<row>
+						<name>observeDomChanges</name>
+						<title>Observe DOM Changes</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>Enable if you want to track dynamic DOM elements. &lt;br&gt;&lt;strong&gt;Note: This might slow down the website if there are lot of DOM changes&lt;/strong&gt;</inlineHelp>
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
 				</parameters>
 			</row>
 			<row>
