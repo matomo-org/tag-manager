@@ -297,10 +297,7 @@
         }
 
         function mutationObserverCallback(mutationsList, triggerEvent) {
-            var domElements = [];
-            TagManager.dom.bySelector(selectors).forEach(function (element) {
-                domElements.push(element);
-            });
+            var domElements = TagManager.dom.bySelector(selectors);
             for (var index in mutationsList) {
                 var mutation = mutationsList[index];
                 var addedNodes = mutation.addedNodes;
