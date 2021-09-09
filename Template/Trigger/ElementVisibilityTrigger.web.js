@@ -12,6 +12,13 @@
         var onlyOncePerElement = fireTriggerWhen === 'onceElement';
         var selectors = getSelectors();
         var observerIntersection;
+        var isMutationObserverSupported = ('MutationObserver' in windowAlias);
+        var isIntersectionObserverSupported = ('IntersectionObserver' in windowAlias);
+        var observeDomChanges = parameters.get('observeDomChanges', false);
+        var observerMutation;
+        var dynamicObservedNodesForIntersection = [];
+        var mutationObseverTimeout = false;
+        var allMutationsList = [];
 
         function getPercentVisible(node)
         {
@@ -71,7 +78,7 @@
             //-- Cross browser method to get style properties:
             function _getStyle(el, property) {
                 if (windowAlias.getComputedStyle) {
-                    return documentAlias.defaultView.getComputedStyle(el,null)[property];
+                    return documentAlias.defaultView.getComputedStyle(el, null)[property];
                 }
                 if (el.currentStyle) {
                     return el.currentStyle[property];
@@ -179,16 +186,13 @@
             return _isVisible(node);
         }
 
-        function checkVisiblity (triggerEvent) {
+        function checkVisiblity(triggerEvent) {
             return function (event) {
                 if (blockTrigger) {
                     // oncePerPage trigger only. do not trigger it again
                     return;
                 }
                 var nodes = [];
-                var selectionMethod = parameters.get('selectionMethod');
-
-                var dom = TagManager.dom;
 
                 if (!selectors) {
                     return;
@@ -204,27 +208,8 @@
                     if (nodes[i] && isVisible(nodes[i])) {
                         var percentVisible = getPercentVisible(nodes[i]);
                         if (!minPercentVisible || minPercentVisible <= percentVisible) {
-                            triggerEvent({
-                                event: 'mtm.ElementVisibility',
-                                'mtm.elementVisibilityPercentage': Math.round(percentVisible * 100) / 100,
-                                'mtm.elementVisibilityId': dom.getElementAttribute(nodes[i], 'id'),
-                                'mtm.elementVisibilityClasses': dom.getElementClassNames(nodes[i]),
-                                'mtm.elementVisibilityText': TagManager.utils.trim(nodes[i].innerText),
-                                'mtm.elementVisibilityNodeName': nodes[i].nodeName,
-                                'mtm.elementVisibilityUrl': nodes[i].href || dom.getElementAttribute(nodes[i], 'href'),
-                            });
-                            if (fireTriggerWhen === 'oncePage') {
-                                blockTrigger = true;
-                                TagManager.window.offScroll(self.scrollIndex);
-                                if (observerIntersection) {
-                                    observerIntersection.disconnect();
-                                }
-                            } else if (onlyOncePerElement) {
-                                triggeredNodes.push(nodes[i]); // to avoid possible memory leaks as much as possible we add onceElement only when needed
-                                if (observerIntersection) {
-                                    observerIntersection.unobserve(nodes[i]);
-                                }
-                            }
+                            commonTrigger(triggerEvent, percentVisible, nodes[i]);
+                            commonTriggeredNodeCheck(nodes[i]);
                         }
                     }
                 }
@@ -244,7 +229,7 @@
 
         function setIntersectionObserver(triggerEvent) {
             return function () {
-                if ('IntersectionObserver' in window) {
+                if (isIntersectionObserverSupported) {
                     var interSectionObserverOptions = {
                         root: null, // document's viewport as the container.
                         rootMargin: '0px',
@@ -272,30 +257,8 @@
                         return;
                     }
                     var percentVisible = Math.max(getPercentVisible(entry.target), minPercentVisible);
-
-                    triggerEvent({
-                        event: 'mtm.ElementVisibility',
-                        'mtm.elementVisibilityPercentage': Math.round(percentVisible * 100) / 100,
-                        'mtm.elementVisibilityId': dom.getElementAttribute(entry.target, 'id'),
-                        'mtm.elementVisibilityClasses': dom.getElementClassNames(entry.target),
-                        'mtm.elementVisibilityText': TagManager.utils.trim(entry.target.innerText),
-                        'mtm.elementVisibilityNodeName': entry.target.nodeName,
-                        'mtm.elementVisibilityUrl': entry.target.href || dom.getElementAttribute(entry.target, 'href'),
-                    });
-
-                    if (fireTriggerWhen === 'oncePage') {
-                        blockTrigger = true;
-                        TagManager.dom.bySelector(selectors).forEach(function (element) {
-                            observerIntersection.unobserve(element);
-                            triggeredNodes.push(element);
-                        });
-                        if (self.scrollIndex) {
-                            TagManager.window.offScroll(self.scrollIndex);
-                        }
-                    } else if (onlyOncePerElement) {
-                        observerIntersection.unobserve(entry.target);
-                        triggeredNodes.push(entry.target); // to avoid possible memory leaks as much as possible we add onceElement only when needed
-                    }
+                    commonTrigger(triggerEvent, percentVisible, entry.target);
+                    commonTriggeredNodeCheck(entry.target);
                 }
             });
         }
@@ -310,9 +273,122 @@
             return false;
         }
 
+        function setMutationObserver(triggerEvent) {
+            return function () {
+                if (observeDomChanges && isMutationObserverSupported) {
+                    var config = {attributes: true, childList: true, subtree: true};
+                    observerMutation = new MutationObserver(function (mutationsList) {
+                        Array.prototype.push.apply(allMutationsList, mutationsList);
+                        if (mutationObseverTimeout) {
+                            return;
+                        }
+
+                        mutationObseverTimeout = true;
+                        setTimeout(function () {
+                            mutationObserverCallback(allMutationsList, triggerEvent);
+                            allMutationsList = [];
+                            mutationObseverTimeout = false;
+                        }, 120);
+                    });
+
+                    observerMutation.observe(documentAlias.body, config);
+                }
+            };
+        }
+
+        function mutationObserverCallback(mutationsList, triggerEvent) {
+            var domElements = TagManager.dom.bySelector(selectors);
+            for (var index in mutationsList) {
+                var mutation = mutationsList[index];
+                var addedNodes = mutation.addedNodes;
+                if (mutation.type === 'attributes') {
+                    addedNodes = [mutation.target];
+                }
+                addedNodes.forEach(function (node) {
+                    domElements.forEach(function (element) {
+                        if (node.contains(element)) {
+                            if (blockTrigger || (onlyOncePerElement && isNodeEventTriggered(element))) {
+                                return;
+                            }
+
+                            if (!isNodeInViewport(element) && observerIntersection && !isDynamicNodeObservedForIntersection(element)) {
+                                observerIntersection.observe(element);
+                                dynamicObservedNodesForIntersection.push(element);
+
+                                return;
+                            }
+
+                            var percentVisible = Math.max(getPercentVisible(element), minPercentVisible);
+                            commonTrigger(triggerEvent, percentVisible, element);
+                            commonTriggeredNodeCheck(element);
+                        }
+                    });
+                });
+            }
+        }
+
+        function isNodeInViewport(node) {
+            var rect = node.getBoundingClientRect();
+
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (windowAlias.innerHeight || documentAlias.documentElement.clientHeight) && /* or $(window).height() */
+                rect.right <= (windowAlias.innerWidth || documentAlias.documentElement.clientWidth) /* or $(window).width() */
+            );
+        }
+
+        function isDynamicNodeObservedForIntersection(node) {
+            for (var i = 0; i < dynamicObservedNodesForIntersection.length; i++) {
+                if (node === dynamicObservedNodesForIntersection[i]) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function commonTrigger(triggerEvent, percentVisible, node) {
+            var dom = TagManager.dom;
+            triggerEvent({
+                event: 'mtm.ElementVisibility',
+                'mtm.elementVisibilityPercentage': Math.round(percentVisible * 100) / 100,
+                'mtm.elementVisibilityId': dom.getElementAttribute(node, 'id'),
+                'mtm.elementVisibilityClasses': dom.getElementClassNames(node),
+                'mtm.elementVisibilityText': TagManager.utils.trim(node.innerText),
+                'mtm.elementVisibilityNodeName': node.nodeName,
+                'mtm.elementVisibilityUrl': node.href || dom.getElementAttribute(node, 'href')
+            });
+        }
+
+        function commonTriggeredNodeCheck(node) {
+            if (fireTriggerWhen === 'oncePage') {
+                blockTrigger = true;
+                if (self.scrollIndex) {
+                    TagManager.window.offScroll(self.scrollIndex);
+                }
+                if (observerIntersection) {
+                    observerIntersection.disconnect();
+                }
+                if (observerMutation) {
+                    observerMutation.disconnect();
+                }
+            } else if (onlyOncePerElement) {
+                triggeredNodes.push(node); // to avoid possible memory leaks as much as possible we add onceElement only when needed
+                if (observerIntersection) {
+                    observerIntersection.unobserve(node);
+                }
+            }
+        }
+
         this.setUp = function (triggerEvent) {
-            this.scrollIndex = TagManager.window.onScroll(checkVisiblity(triggerEvent));
-            TagManager.dom.onLoad(checkVisiblity(triggerEvent));
+            var useMutationObserver = isMutationObserverSupported && observeDomChanges && isIntersectionObserverSupported;
+            if (useMutationObserver) {
+                TagManager.dom.onLoad(setMutationObserver(triggerEvent));
+            } else {
+                this.scrollIndex = TagManager.window.onScroll(checkVisiblity(triggerEvent));
+                TagManager.dom.onLoad(checkVisiblity(triggerEvent));
+            }
             TagManager.dom.onLoad(setIntersectionObserver(triggerEvent));
         };
     };

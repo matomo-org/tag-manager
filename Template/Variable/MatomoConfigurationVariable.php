@@ -5,9 +5,11 @@
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Common;
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\SettingsPiwik;
 use Piwik\Site;
@@ -52,9 +54,9 @@ class MatomoConfigurationVariable extends BaseVariable
         }
 
         $matomoUrl = $this->makeSetting('matomoUrl', $url, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-            $field->title = 'Matomo URL';
+            $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoUrlTitle');
             $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-            $field->description = 'The URL of your Matomo instance. It should not include "/index.php" or "piwik.php". The URL of your current Matomo URL instance is preconfigured.';
+            $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoUrlDescription');
             $field->validators[] = new NotEmpty();
         });
 
@@ -65,9 +67,9 @@ class MatomoConfigurationVariable extends BaseVariable
         return array(
             $matomoUrl,
             $this->makeSetting('idSite', $idSite, FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($matomoUrl, $url) {
-                $field->title = 'Matomo idSite';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoIDSiteTitle');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
-                $field->description = 'The idSite you want to track data into. The idSite of the current website is preconfigured. You may also find the idSite of any other website under "Administration => Manage Measurables/Websites".';
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoIDSiteDescription');;
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength(0, 500);
                 $field->validate = function ($value) use ($matomoUrl, $url) {
@@ -79,70 +81,72 @@ class MatomoConfigurationVariable extends BaseVariable
                     }
                     $posBracket = strpos($value, '{{');
                     if ($posBracket === false || strpos($value, '}}', $posBracket) === false) {
-                        throw new \Exception('The idSite can only include idSites and variables.');
+                        throw new \Exception(Piwik::translate('TagManager_MatomoConfigurationMatomoIDSiteException'));
                     }
                 };
             }),
             $this->makeSetting('enableLinkTracking', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Enable Link Tracking';
-                $field->description = 'Enables the automatic download and outlink tracking.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableLinkTrackingTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableLinkTrackingDescription');
             }),
             $this->makeSetting('enableCrossDomainLinking', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Enable Cross Domain Linking';
-                $field->description = 'Enable this to accurately measure the same visitor across multiple domain names.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableCrossDomainLinkingTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableCrossDomainLinkingDescription');
             }),
             $this->makeSetting('enableDoNotTrack', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Enable Do Not Track';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableDoNotTrackTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableDoNotTrackDescription');
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableDoNotTrackInlineHelp', array('<strong>', '</strong>'));
             }),
             $this->makeSetting('enableJSErrorTracking', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Enable JavaScript Error Tracking';
-                $field->description = 'Enables the tracking of uncaught JavaScript errors as an event.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableJSErrorTrackingTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableJSErrorTrackingDescription');
             }),
             $this->makeSetting('enableHeartBeatTimer', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Enable HeartBeat Timer';
-                $field->description = 'Install a Heart beat timer that will regularly send requests to Matomo in order to better measure the time spent on the page.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableHeartBeatTimerTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableHeartBeatTimerDescription');
             }),
             $this->makeSetting('trackAllContentImpressions', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Track All Content Impressions';
-                $field->description = 'Enables the content tracking feature by scanning the entire DOM for all content blocks and tracks all impressions once the page has loaded.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackAllContentImpressionsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackAllContentImpressionsDescription');
             }),
             $this->makeSetting('trackVisibleContentImpressions', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Track Visible Content Impressions';
-                $field->description = 'Enables the content tracking feature by scanning the entire DOM for all content blocks but only tracks content impressions once the user scrolls to the content and the content is actually visible.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackVisibleContentImpressionsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackVisibleContentImpressionsDescription');
             }),
             $this->makeSetting('disableCookies', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Disable cookies';
-                $field->description = 'Disables all first party cookies.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableCookiesTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableCookiesDescription');
                 $field->condition = '!requireConsent && !requireCookieConsent';
             }),
             $this->makeSetting('requireConsent', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Require tracking consent';
-                $field->description = 'Track only when user gave tracking consent. In a consent screen you need to call "window._paq=window._paq||[];window._paq.push([\'rememberConsentGiven\']);" when the user gives consent.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireConsentTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireConsentDescription');
                 $field->condition = '!requireCookieConsent && !disableCookies';
             }),
             $this->makeSetting('requireCookieConsent', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Require cookie consent';
-                $field->description = 'Use cookies only if the user gave cookie consent, otherwise track the user without cookies. In a consent screen you need to call "window._paq=window._paq||[];window._paq.push([\'rememberCookieConsentGiven\']);" when the user gives consent for cookies.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentDescription');
                 $field->condition = '!requireConsent && !disableCookies';
             }),
             $this->makeSetting('setSecureCookie', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Enable Secure Cookie';
-                $field->description = 'Enable the Secure cookie flag on all first party cookies. This should be used when your website is only available under HTTPS so that all tracking cookies are always sent over secure connection.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetSecureCookieTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetSecureCookieDescription');
             }),
             $this->makeSetting('cookieDomain', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Cookie Domain';
-                $field->inlineHelp = 'The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: ".example.com" or "*.example.com". <br><strong>Note: The variable is only evaluated at the time when tracker is being created, make sure you have the variable defined before that.</strong>';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCookieDomainTitle');
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoCookieDomainInlineHelp', array('<br><strong>', '</strong>'));
                 $field->validators[] = new CharacterLength(0, 500);
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
             }),
             $this->makeSetting('cookiePath', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Cookie Path';
-                $field->description = 'When tracking many subdirectories in separate websites, the cookie path prevents the number of cookies to quickly increase and prevent browser from deleting some of the cookies. This ensures optimal data accuracy and improves performance for your users (fewer cookies are sent with each request).';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCookiePathTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCookiePathDescription');
                 $field->validators[] = new CharacterLength(0, 500);
             }),
             $this->makeSetting('cookieSameSite', 'Lax', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Same Site Cookie';
-                $field->description = 'Set the SameSite attribute for cookies to a custom value. You might want to use this if your site is running in an iframe since then it will only be able to access the cookies if SameSite is set to "None". Choosing "None" will only work on HTTPS and will automatically also set the secure cookie. If your site is available under http and https, using "None" might lead to duplicate or incomplete visits.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCookieSameSiteTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCookieSameSiteDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->availableValues = array(
                     'Lax' => 'Lax',
@@ -151,14 +155,14 @@ class MatomoConfigurationVariable extends BaseVariable
                 );
             }),
             $this->makeSetting('domains', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
-                $field->title = 'Domains';
-                $field->description = 'Used to detect outlinks. Add hostnames or domains to be treated as local. For wildcard subdomains, you can use: ".example.com" or "*.example.com". You can also specify a path along a domain: "*.example.com/subsite1".';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDomainsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDomainsDescription');
                 $field->validate = function ($value) {
                     if (empty($value)) {
                         return;
                     }
                     if (!is_array($value)) {
-                        throw new \Exception('Value needs to be an array');
+                        throw new \Exception(Piwik::translate('TagManager_MatomoConfigurationMatomoDomainsException'));
                     }
                 };
 
@@ -183,24 +187,24 @@ class MatomoConfigurationVariable extends BaseVariable
             }),
 
             $this->makeSetting('alwaysUseSendBeacon', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Always use sendBeacon';
-                $field->description = 'Enables send beacon usage instead of a regular ajax request. This means when a user clicks for example on an outlink, the navigation to this page will happen much faster.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoAlwaysUseSendBeaconTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoAlwaysUseSendBeaconDescription');
             }),
             $this->makeSetting('userId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'User ID';
-                $field->description = 'Sets a User ID to this user (such as an email address or a username).';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoUserIdTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoUserIdDescription');
                 $field->validators[] = new CharacterLength(0, 500);
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
             }),
             $this->makeSetting('customDimensions', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
-                $field->title = 'Custom Dimensions';
-                $field->description = 'Optionally set one or multiple custom dimensions.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsDescription');
                 $field->validate = function ($value) {
                     if (empty($value)) {
                         return;
                     }
                     if (!is_array($value)) {
-                        throw new \Exception('Value needs to be an array');
+                        throw new \Exception(Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsException'));
                     }
                 };
 
@@ -227,17 +231,17 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->uiControlAttributes['field2'] = $field2->toArray();
             }),
             $this->makeSetting('bundleTracker', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Bundle Tracker';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoBundleTrackerTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
-                $field->description = 'By bundling the Matomo JavaScript tracker directly into the container it may improve the performance of your website as it reduces the number of needed requests. It is recommended to bundle the Matomo tracker because in most cases the tracker would otherwise be otherwise loaded in a separate request on page view anyway. Note: If you use two different Matomo configurations in one container, the setting of the first configuration used in the first Matomo Tag will be applied to all Matomo tags within one container.';
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoBundleTrackerDescription');
             }),
             $this->makeSetting('registerAsDefaultTracker', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Register As Default Tracker';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRegisterAsDefaultTrackerTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
-                $field->description = 'When enabled, the tracker will be registered as the default one for the website, and will receive all commands that get pushed into the global _paq variable. Useful if you want to use the tracker config from the container with your own _paq.push() JavaScript code.';
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRegisterAsDefaultTrackerDescription');
             }),
             $this->makeSetting('jsEndpoint', $jsEndpoint, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Tracker Javascript Path';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoJsEndpointTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->availableValues = array(
                     'matomo.js' => 'matomo.js',
@@ -245,11 +249,11 @@ class MatomoConfigurationVariable extends BaseVariable
                     'js/' => 'js/',
                     'js/tracker.php' => 'js/tracker.php',
                 );
-    
-                $field->description = 'Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the "Bundle Tracker" option.';
+
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoJsEndpointDescription');
             }),
             $this->makeSetting('trackingEndpoint', $phpEndpoint, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Tracking Request Target Path';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackingEndpointTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->availableValues = array(
                     'matomo.php' => 'matomo.php',
@@ -257,8 +261,8 @@ class MatomoConfigurationVariable extends BaseVariable
                     'js/' => 'js/',
                     'js/tracker.php' => 'js/tracker.php',
                 );
-    
-                $field->description = 'Here you can configure the target path for tracking requests.';
+
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackingEndpointDescription');
             }),
         );
     }
