@@ -205,11 +205,14 @@
                             continue;
                         }
                     }
-                    if (nodes[i] && isVisible(nodes[i])) {
+                    if (nodes[i] && isVisible(nodes[i]) && !isDynamicNodeObservedForIntersection(nodes[i])) {
                         var percentVisible = getPercentVisible(nodes[i]);
                         if (!minPercentVisible || minPercentVisible <= percentVisible) {
                             commonTrigger(triggerEvent, percentVisible, nodes[i]);
                             commonTriggeredNodeCheck(nodes[i]);
+                        } else if (observerIntersection) {
+                            observerIntersection.observe(nodes[i]);
+                            dynamicObservedNodesForIntersection.push(nodes[i]);
                         }
                     }
                 }
