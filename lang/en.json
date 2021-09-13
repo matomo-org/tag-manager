@@ -367,7 +367,7 @@
         "MatomoConfigurationMatomoEnableCrossDomainLinkingDescription": "Enable this to accurately measure the same visitor across multiple domain names.",
         "MatomoConfigurationMatomoEnableDoNotTrackTitle": "Enable Do Not Track",
         "MatomoConfigurationMatomoEnableDoNotTrackDescription": "Enable this feature to not track users who opt out of tracking using Mozilla's (proposed) Do Not Track setting",
-        "MatomoConfigurationMatomoEnableDoNotTrackInlineHelp": "%1$sNote: When enabled it sets _paq.push([\"setDoNotTrack\", true]); which will not send any tracking request when a visitor has DNT enabled unlike the \"DNT Matomo Setting\" which drops the request on the server when a visitor has DNT enabled.%2$",
+        "MatomoConfigurationMatomoEnableDoNotTrackInlineHelp": "%1$sNote: When enabled it sets _paq.push([\"setDoNotTrack\", true]); which will not send any tracking request when a visitor has DNT enabled unlike the \"DNT Matomo Setting\" which drops the request on the server when a visitor has DNT enabled.%2$s",
         "MatomoConfigurationMatomoEnableJSErrorTrackingTitle": "Enable JavaScript Error Tracking",
         "MatomoConfigurationMatomoEnableJSErrorTrackingDescription": "Enables the tracking of uncaught JavaScript errors as an event.",
         "MatomoConfigurationMatomoEnableHeartBeatTimerTitle": "Enable HeartBeat Timer",
