@@ -207,6 +207,7 @@ class TagManager extends \Piwik\Plugin
     public function getQueryParametersToExclude(&$parametersToExclude)
     {
         $parametersToExclude[] = PreviewCookie::COOKIE_NAME;
+        $parametersToExclude[] = 'mtmSetDebugFlag';
     }
 
     public function endTrackingCodePageTableOfContents(&$out)

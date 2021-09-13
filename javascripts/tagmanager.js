@@ -1635,10 +1635,12 @@
                 throwError: throwError,
                 Container: Container,
                 addContainer: function (containerConfig, templates) {
-                    var setDebugFlag = urlHelper.getQueryParameter('setDebugFlag');
-                    if (setDebugFlag) {
-                        if (setDebugFlag == 1) {
-                            document.cookie = 'mtmPreviewMode=mtmPreview' + containerConfig.idsite + '_' + containerConfig.id + '%3D1;SameSite=Lax';
+                    var mtmSetDebugFlag = urlHelper.getQueryParameter('mtmSetDebugFlag');
+                    if (mtmSetDebugFlag) {
+                        if (mtmSetDebugFlag == 1) {
+                            var date = new Date();
+                            date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
+                            document.cookie = 'mtmPreviewMode=mtmPreview' + containerConfig.idsite + '_' + containerConfig.id + '%3D1;expires=' + date.toUTCString() + ';SameSite=Lax';
                         } else {
                             document.cookie = 'mtmPreviewMode=mtmPreview' + containerConfig.idsite + '_' + containerConfig.id + '%3D1;expires=Thu, 01 Jan 1970 00:00:00 UTC;SameSite=Lax';
                             window.close();
