@@ -165,7 +165,6 @@
         var params = {method: 'TagManager.enablePreviewMode', idContainer: idContainer, idContainerVersion: idContainerVersion};
         piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_EnablingPreviewPleaseWait') + '</h2>', {});
         piwikApi.fetch(params).then(function () {
-            tagManagerHelper.updateDebugSiteFlag(piwik.siteMainUrl, idContainer, 1);
             window.location.reload();
         });
     };
@@ -174,7 +173,7 @@
         var params = {method: 'TagManager.disablePreviewMode', idContainer: idContainer};
         piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_DisablingPreviewPleaseWait') + '</h2>', {});
         piwikApi.fetch(params).then(function () {
-            tagManagerHelper.updateDebugSiteFlag(piwik.siteMainUrl, idContainer, -1);
+            tagManagerHelper.updateDebugSiteFlag(document.getElementById('previewDebugUrl').value, idContainer, -1);
             window.location.reload();
         });
     };
@@ -212,7 +211,7 @@
         if (!url || !idContainer || !debugFlag) {
             return;
         }
-        window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + idContainer + '&mtmSetDebugFlag=' + debugFlag, '_blank', 'toolbar=0,location=0,menubar=0,rel="noopener noreferrer"');
+        window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + idContainer + '&mtmSetDebugFlag=' + debugFlag, '_blank', 'noopener');
 
     };
     tagManagerHelper.importVersion = function ($scope, idContainer) {

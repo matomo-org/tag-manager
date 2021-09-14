@@ -1175,7 +1175,6 @@ class API extends \Piwik\Plugin\API
 
         $cookie = new PreviewCookie();
         $cookie->enable($idSite, $idContainer);
-        $cookie->enableDebugSiteUrl(Site::getMainUrlFor($idSite));
     }
 
     /**
