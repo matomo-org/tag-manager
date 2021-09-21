@@ -186,7 +186,7 @@
         if (!newUrl) {
             return notification.show(_pk_translate('TagManager_DebugUrlNoUrlErrorMessage'), {context: context, id: id, title: ''});
         } else if (newUrl === oldUrl) {
-            return notification.show(_pk_translate('TagManager_DebugUrlSameUrlErrorMessage', ['<a href="'+newUrl+'" target="_blank">','</a>']), {context: context, id: id, title: ''});
+            return tagManagerHelper.updateDebugSiteFlag(newUrl, idContainer, 1);;
         }
         var ajaxRequest = new ajaxHelper();
         ajaxRequest.addParams({

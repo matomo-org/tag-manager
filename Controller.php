@@ -165,7 +165,11 @@ class Controller extends \Piwik\Plugin\Controller
 
                     )
                 );
-                $notification = new Notification(Piwik::translate('TagManager_PreviewDebugEnabledNotification', array($version, '<strong>', '</strong>', '<strong>?' . $mtmPreviewId . '</strong>', '<strong>&' . $mtmPreviewId . '</strong>', $disableLink, $urlInput)));
+                $message = Piwik::translate('TagManager_PreviewDebugEnabledNotificationLine1', array($version, $disableLink));
+                $message.= Piwik::translate('TagManager_PreviewDebugEnabledNotificationLine2', array($urlInput, '<br>', '<strong>', '</strong>', '<strong>?' . $mtmPreviewId . '</strong>', '<strong>&' . $mtmPreviewId . '</strong>', '<br>'));
+                $message.= Piwik::translate('TagManager_PreviewDebugEnabledNotificationLine3', array('<br><br>', '<a href="https://matomo.org/faq/tag-manager/" target="_blank">','</a>'));
+//                $notification = new Notification(Piwik::translate('TagManager_PreviewDebugEnabledNotificationLine1', array($version, '<strong>', '</strong>', '<strong>?' . $mtmPreviewId . '</strong>', '<strong>&' . $mtmPreviewId . '</strong>', $disableLink, $urlInput)));
+                $notification = new Notification($message);
                 $notification->context = Notification::CONTEXT_INFO;
                 $notification->raw = true;
                 NotificationManager::notify('previewDebugMode', $notification);
