@@ -1,11 +1,5 @@
 ## Changelog
 
-0.3.6
-
-* Added support to debug a site without appending the debug parameters in the URL
-* Added IntersectionObserver to determine Element Visibility 
-* Added option to observer DOM changes via MutationObserver
-
 0.2.6
 
 * Fix changing name of variable causes removing trigger in a tag

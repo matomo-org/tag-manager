@@ -1,6 +1,6 @@
 <br>
 <div class="preview-debug-url-div">
-    <input type="url" id="previewDebugUrl" class="browser-default" placeholder="https://yourdebugsite.com" value="{{ debugSiteUrl|e('html_attr') }}">
+    <input type="url" id="previewDebugUrl" class="browser-default" placeholder="https://example.org" value="{{ debugSiteUrl|e('html_attr') }}">
     <button type="button" class="btn btn-small" onclick='tagManagerHelper.changeDebugUrl({{ idcontainer }},"{{ debugSiteUrl|e('html_attr') }}")'>
         {{ 'TagManager_PreviewDebugUrlButtonText'|translate }}
     </button>

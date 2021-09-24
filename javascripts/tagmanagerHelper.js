@@ -211,7 +211,7 @@
         if (!url || !idContainer || !debugFlag) {
             return;
         }
-        window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + idContainer + '&mtmSetDebugFlag=' + debugFlag, '_blank', 'noopener');
+        window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + encodeURIComponent(idContainer) + '&mtmSetDebugFlag=' + encodeURIComponent(debugFlag), '_blank', 'noreferrer');
 
     };
     tagManagerHelper.importVersion = function ($scope, idContainer) {
