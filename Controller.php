@@ -159,22 +159,21 @@ class Controller extends \Piwik\Plugin\Controller
                 $mtmPreviewId = SafeDecodeLabel::decodeLabelSafe($mtmPreviewId);
                 $previewCookie = new PreviewCookie();
                 $debugSiteUrl = $previewCookie->getDebugSiteUrl();
-                $mtmPreviewIdUrlStart = $mtmPreviewIdUrlEnd = '';
+                $previewUrl = '';
                 if (!empty($debugSiteUrl)) {
-                    $mtmPreviewIdUrlStart = '<a href="' . $debugSiteUrl . (stripos($debugSiteUrl, '?') !== False ? '&' : '?') . $mtmPreviewId . '" target="_blank">';
-                    $mtmPreviewIdUrlEnd = '</a>';
+                    $previewUrl = $debugSiteUrl . (stripos($debugSiteUrl, '?') !== False ? '&' : '?') . $mtmPreviewId;
                 }
-                $disableLink = '<a class="title disablePreviewDebug" onclick=\'tagManagerHelper.disablePreviewMode(' . json_encode($release['idcontainer']) . ')\'>' . Piwik::translate('TagManager_DisablePreview') .'</a>';
-                $urlInput = $this->renderTemplate('previewDebugUrl.twig', array(
+
+                $notificationMessage = $this->renderTemplate('previewDebugNotification.twig', array(
                         'idcontainer' => json_encode($release['idcontainer']),
                         'debugSiteUrl' => $debugSiteUrl,
-
+                        'version' => $version,
+                        'mtmPreviewId' => $mtmPreviewId,
+                        'previewUrl' => $previewUrl
                     )
                 );
-                $message = Piwik::translate('TagManager_PreviewDebugEnabledNotificationLine1', array($version, $disableLink));
-                $message .= Piwik::translate('TagManager_PreviewDebugEnabledNotificationLine2', array($urlInput, '<br>', '<strong>', '</strong>', '<strong>' . $mtmPreviewIdUrlStart . '?' . $mtmPreviewId . $mtmPreviewIdUrlEnd . '</strong>', '<strong>' . $mtmPreviewIdUrlStart . '&' . $mtmPreviewId . $mtmPreviewIdUrlEnd . '</strong>', '<br>'));
-                $message.= Piwik::translate('TagManager_PreviewDebugEnabledNotificationLine3', array('<br>', '<a href="https://matomo.org/faq/tag-manager/#why-is-debug-console-not-loading-for-me" target="_blank">','</a>'));
-                $notification = new Notification($message);
+
+                $notification = new Notification($notificationMessage);
                 $notification->context = Notification::CONTEXT_INFO;
                 $notification->raw = true;
                 NotificationManager::notify('previewDebugMode', $notification);
