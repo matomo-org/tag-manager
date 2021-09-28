@@ -1,5 +1,5 @@
 {% if debugSiteUrl %}
-    {% set mtmPreviewIdUrlStart = '<a href="' ~ previewUrl ~ '" target="_blank">' %}
+    {% set mtmPreviewIdUrlStart = '<a href="' ~ previewUrl|e('html_attr') ~ '" target="_blank">' %}
     {% set mtmPreviewIdUrlEnd = '</a>' %}
 {% else %}
     {% set mtmPreviewIdUrlStart = '' %}
@@ -8,13 +8,13 @@
 
 {{ 'TagManager_PreviewDebugEnabledNotificationLine1'|translate(version) }}
 <a class="title disablePreviewDebug"
-   onclick="tagManagerHelper.disablePreviewMode({{ idcontainer }})">{{ 'TagManager_DisablePreview'|translate }}</a>
+   onclick="tagManagerHelper.disablePreviewMode({{ idcontainer|e('html_attr') }})">{{ 'TagManager_DisablePreview'|translate }}</a>
 <br>
 <div class="preview-debug-url-div">
     <input type="url" id="previewDebugUrl" class="browser-default" placeholder="https://example.org"
-           value="{{ debugSiteUrl|e('html_attr') }}">
+           value="{{ debugSiteUrl|e('html_attr')}}">
     <button type="button" class="btn btn-small"
-            onclick='tagManagerHelper.changeDebugUrl({{ idcontainer }},"{{ debugSiteUrl|e('html_attr') }}")'>
+            onclick='tagManagerHelper.changeDebugUrl({{ idcontainer|e('html_attr') }},"{{ debugSiteUrl|e('url') }}")'>
         {{ 'TagManager_PreviewDebugUrlButtonText'|translate }}
     </button>
 </div>
