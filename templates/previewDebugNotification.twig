@@ -14,7 +14,7 @@
     <input type="url" id="previewDebugUrl" class="browser-default" placeholder="https://example.org"
            value="{{ debugSiteUrl|e('html_attr')}}">
     <button type="button" class="btn btn-small"
-            onclick='tagManagerHelper.changeDebugUrl({{ idcontainer|e('html_attr') }},"{{ debugSiteUrl|e('url') }}")'>
+            onclick='tagManagerHelper.changeDebugUrl({{ idcontainer|e('html_attr') }},"{{ debugSiteUrl|e('html_attr') }}")'>
         {{ 'TagManager_PreviewDebugUrlButtonText'|translate }}
     </button>
 </div>
