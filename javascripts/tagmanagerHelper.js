@@ -173,8 +173,46 @@
         var params = {method: 'TagManager.disablePreviewMode', idContainer: idContainer};
         piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_DisablingPreviewPleaseWait') + '</h2>', {});
         piwikApi.fetch(params).then(function () {
+            tagManagerHelper.updateDebugSiteFlag(document.getElementById('previewDebugUrl').value, idContainer, -1);
             window.location.reload();
         });
+    };
+    tagManagerHelper.changeDebugUrl = function (idContainer, oldUrl) {
+        var newUrl = document.getElementById('previewDebugUrl').value;
+        var id = 'TagManager_changeDebugSiteUrl';
+        var context = 'warning'; // or 'warning' or 'error' or 'success'
+        var UI = require('piwik/UI');
+        var notification = new UI.Notification();
+        if (!newUrl) {
+            return notification.show(_pk_translate('TagManager_DebugUrlNoUrlErrorMessage'), {context: context, id: id, title: ''});
+        } else if (newUrl === oldUrl) {
+            return tagManagerHelper.updateDebugSiteFlag(newUrl, idContainer, 1);;
+        }
+        var ajaxRequest = new ajaxHelper();
+        ajaxRequest.addParams({
+            module: 'API',
+            method: 'TagManager.changeDebugUrl',
+            idContainer: idContainer,
+            url: newUrl
+        }, 'get');
+        ajaxRequest.withTokenInUrl();
+        ajaxRequest.setCallback(
+            function (response) {
+                tagManagerHelper.updateDebugSiteFlag(oldUrl, idContainer, -1);
+                tagManagerHelper.updateDebugSiteFlag(newUrl, idContainer, 1);
+                window.location.reload();
+            }
+        );
+        ajaxRequest.setFormat('html');
+        piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_UpdatingDebugSiteUrlPleaseWait') + '</h2>', {});
+        ajaxRequest.send();
+    };
+    tagManagerHelper.updateDebugSiteFlag = function (url, idContainer, debugFlag) {
+        if (!url || !idContainer || !debugFlag) {
+            return;
+        }
+        window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + encodeURIComponent(idContainer) + '&mtmSetDebugFlag=' + encodeURIComponent(debugFlag), '_blank', 'noreferrer');
+
     };
     tagManagerHelper.importVersion = function ($scope, idContainer) {
         var childScope = $scope.$new(true, $scope);

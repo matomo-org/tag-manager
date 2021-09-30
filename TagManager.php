@@ -207,6 +207,7 @@ class TagManager extends \Piwik\Plugin
     public function getQueryParametersToExclude(&$parametersToExclude)
     {
         $parametersToExclude[] = PreviewCookie::COOKIE_NAME;
+        $parametersToExclude[] = 'mtmSetDebugFlag';
     }
 
     public function endTrackingCodePageTableOfContents(&$out)
@@ -393,6 +394,9 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_TriggerConditionsHelp';
         $result[] = 'TagManager_EnablingPreviewPleaseWait';
         $result[] = 'TagManager_DisablingPreviewPleaseWait';
+        $result[] = 'TagManager_UpdatingDebugSiteUrlPleaseWait';
+        $result[] = 'TagManager_DebugUrlNoUrlErrorMessage';
+        $result[] = 'TagManager_DebugUrlSameUrlErrorMessage';
         $result[] = 'TagManager_NameOfLatestVersion';
         $result[] = 'TagManager_Created';
         $result[] = 'TagManager_CreateVersionWithoutPublishing';

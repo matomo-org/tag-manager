@@ -69,7 +69,7 @@ class TagManagerFixture extends Fixture
     {
         for ($i = 1; $i <= 5; $i++) {
             if (!self::siteCreated($i)) {
-                $idSite = self::createWebsite($this->dateTime, $ecommerce = 1, 'Site' . $i, $siteUrl = false,
+                $idSite = self::createWebsite($this->dateTime, $ecommerce = 1, 'Site' . $i, 'http://localhost/Site'.$i,
                     $siteSearch = 1, $searchKeywordParameters = null,
                     $searchCategoryParameters = null, $timezone = null, $type = 'mobileapp');
                 // we set type "mobileapp" to avoid the creation of a default container
