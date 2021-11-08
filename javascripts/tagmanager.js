@@ -936,13 +936,19 @@
                         element = documentAlias.body;
                     }
                     TagManager.dom.addEventListener(element, 'click', function (event) {
-                        callback(event, 'left')
+                        if (event.which === 1) {
+                          callback(event, 'left');
+                        }
                     }, true)
                     TagManager.dom.addEventListener(element, 'auxclick', function (event) {
-                        callback(event, 'middle')
+                        if (event.which === 2) {
+                          callback(event, 'middle');
+                        }
                     }, true)
                     TagManager.dom.addEventListener(element, 'contextmenu', function (event) {
-                        callback(event, 'right')
+                        if (event.which === 3) {
+                          callback(event, 'right');
+                        }
                     }, true)
                 }
             };
