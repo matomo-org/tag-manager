@@ -942,13 +942,13 @@
                         }
                     }, true)
                     TagManager.dom.addEventListener(element, 'auxclick', function (event) {
-                       var clickKey = (event.which ? event.which : 2);
+                        var clickKey = (event.which ? event.which : 2);
                         if (clickKey === 2) {
                           callback(event, 'middle');
                         }
                     }, true)
                     TagManager.dom.addEventListener(element, 'contextmenu', function (event) {
-                      var clickKey = (event.which ? event.which : 3);
+                        var clickKey = (event.which ? event.which : 3);
                         if (clickKey === 3) {
                           callback(event, 'right');
                         }
