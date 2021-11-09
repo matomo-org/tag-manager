@@ -949,7 +949,7 @@
                     }, true)
                     TagManager.dom.addEventListener(element, 'contextmenu', function (event) {
                       var clickKey = (event.which ? event.which : 3);
-                        if (clickKey=== 3) {
+                        if (clickKey === 3) {
                           callback(event, 'right');
                         }
                     }, true)
