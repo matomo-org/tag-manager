@@ -58,6 +58,8 @@ class GenerateTag extends GeneratePluginBase
             'You can now start implementing the tag',
             'Enjoy!'
         ));
+
+        return 0;
     }
 
     /**
