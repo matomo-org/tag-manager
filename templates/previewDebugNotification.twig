@@ -8,13 +8,15 @@
 
 {{ 'TagManager_PreviewDebugEnabledNotificationLine1'|translate(version) }}
 <a class="title disablePreviewDebug"
-   onclick="tagManagerHelper.disablePreviewMode({{ idcontainer|e('html_attr') }})">{{ 'TagManager_DisablePreview'|translate }}</a>
+   data-idcontainer="{{ idcontainer|e('html_attr') }}"
+>{{ 'TagManager_DisablePreview'|translate }}</a>
 <br>
 <div class="preview-debug-url-div">
     <input type="url" id="previewDebugUrl" class="browser-default" placeholder="https://example.org"
            value="{{ debugSiteUrl|e('html_attr')}}">
     <button type="button" class="btn btn-small"
-            onclick='tagManagerHelper.changeDebugUrl({{ idcontainer|e('html_attr') }},"{{ debugSiteUrl|e('html_attr') }}")'>
+            data-idcontainer="{{ idcontainer|e('html_attr') }}"
+            data-debug-site-url="{{ debugSiteUrl|e('html_attr') }}">
         {{ 'TagManager_PreviewDebugUrlButtonText'|translate }}
     </button>
 </div>
