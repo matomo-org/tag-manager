@@ -236,6 +236,10 @@
 
         var idContainer = $(event.target).data('idcontainer');
         tagManagerHelper.disablePreviewMode(idContainer);
+      }).on('click', '.preview-debug-url-div button', function (event) {
+        var idContainer = $(event.target).data('idcontainer');
+        var debugSiteUrl = $(event.target).data('debug-site-url');
+        tagManagerHelper.changeDebugUrl(idContainer, debugSiteUrl);
       });
     });
 })(jQuery);
