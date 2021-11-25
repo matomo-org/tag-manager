@@ -16,6 +16,8 @@ exports.sendFieldValue = async function (page, selector, text)
     await page.evaluate((selector, text) => {
         $(selector).val(text).change();
     }, selector, text);
+
+    await page.waitForTimeout(200);
 };
 exports.selectValue = async function (page, field, title)
 {

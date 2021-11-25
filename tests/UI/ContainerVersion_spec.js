@@ -244,6 +244,7 @@ describe("ContainerVersion", function () {
     it('should be able to show an error when not json formatted', async function () {
         await form.sendFieldValue(page, '.modal.open [id=importContent]', 'import test');
         await page.click('.modal.open .importVersion');
+        await page.waitForTimeout(200);
         await capture.modal(page, 'import_version_shows_error_not_json');
     });
 
@@ -251,6 +252,7 @@ describe("ContainerVersion", function () {
         await form.sendFieldValue(page, '.modal.open [id=backupName]', 'vb0392');
         await form.sendFieldValue(page, '.modal.open [id=importContent]', '{"tags": [], "triggers": [], "variables": [], "idcontainer": [], "context": "web"}');
         await page.click('.modal.open .importVersion');
+        await page.waitForTimeout(200);
         await capture.modal(page, 'import_version_asks_confirmation');
     });
 

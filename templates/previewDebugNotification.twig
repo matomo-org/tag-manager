@@ -8,7 +8,8 @@
 
 {{ 'TagManager_PreviewDebugEnabledNotificationLine1'|translate(version) }}
 <a class="title disablePreviewDebug"
-   onclick="tagManagerHelper.disablePreviewMode({{ idcontainer|e('html_attr') }})">{{ 'TagManager_DisablePreview'|translate }}</a>
+   data-idcontainer="{{ idcontainer|e('html_attr') }}"
+>{{ 'TagManager_DisablePreview'|translate }}</a>
 <br>
 <div class="preview-debug-url-div">
     <input type="url" id="previewDebugUrl" class="browser-default" placeholder="https://example.org"
