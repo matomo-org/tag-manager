@@ -165,7 +165,7 @@ class Controller extends \Piwik\Plugin\Controller
                 }
 
                 $notificationMessage = $this->renderTemplate('previewDebugNotification.twig', array(
-                        'idcontainer' => json_encode($release['idcontainer']),
+                        'idcontainer' => $release['idcontainer'],
                         'debugSiteUrl' => $debugSiteUrl,
                         'version' => $version,
                         'mtmPreviewId' => $mtmPreviewId,
