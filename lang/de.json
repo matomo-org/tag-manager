@@ -375,7 +375,7 @@
         "MatomoConfigurationMatomoEnableCrossDomainLinkingTitle": "Domain-übergreifendes Linken aktivieren",
         "MatomoConfigurationMatomoEnableDoNotTrackDescription": "Aktivieren Sie diese Funktion, um Nutzer nicht zu verfolgen, die das Tracking über die (vorgeschlagene) Mozilla-Einstellung \"Nicht verfolgen\" ablehnen",
         "MatomoConfigurationMatomoEnableDoNotTrackInlineHelp": "%1$sHinweis: Bei Aktivierung sets _paq.push([\"setDoNotTrack\", true]); was keine Tracking-Anfragen sendet, wenn ein Besucher DNT aktiviert hat, anders als \"DNT Matomo Setting\", wo die Anfrage auf dem Server hinterlegt wird, falls der Besucher DNT aktiviert hat.%2$s",
-        "MatomoConfigurationMatomoEnableDoNotTrackTitle": "Nicht nachverfolgen aktivieren",
+        "MatomoConfigurationMatomoEnableDoNotTrackTitle": "\"Nicht nachverfolgen\" aktivieren",
         "MatomoConfigurationMatomoEnableHeartBeatTimerDescription": "Installieren Sie einen Heart Beat Timer, der regelmäßig Anfragen an Matomo sendet, um die auf der Seite verbrachte Zeit besser zu messen.",
         "MatomoConfigurationMatomoEnableHeartBeatTimerTitle": "HeartBeat-Timer einschalten",
         "MatomoConfigurationMatomoEnableJSErrorTrackingDescription": "Ermöglicht die Verfolgung von nicht abgefangenen JavaScript-Fehlern als Ereignis.",
