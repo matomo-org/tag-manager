@@ -1,0 +1,117 @@
+name: Plugin TagManager Tests
+
+on:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions:
+  actions: read
+  checks: none
+  contents: read
+  deployments: none
+  issues: write
+  packages: none
+  pull-requests: write
+  repository-projects: none
+  security-events: none
+  statuses: none
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  PluginTests:
+    runs-on: ubuntu-20.04
+    env:
+      TARGET_BRANCH: github-aciton
+      PLUGIN: TagManager
+    services:
+      redis:
+        image: redis:5.0
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      mariadb:
+        image: mariadb:latest
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_DATABASE: piwik_tests
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        options: --tmpfs /var/lib/mysql:rw
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - type: UI
+            php-versions: '7.2'
+          - type: PluginTests
+            php-versions: '7.4'
+          - type: PluginTests
+            php-versions: '8.0'
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: bcmath, ldap, curl, zip, pdo_mysql, mysqli, gd, redis
+          ini-values: |
+            memory_limit = 4024M,
+            max_execution_time=10000,
+            always_populate_raw_post_data=-1,
+            error_reporting=E_ALL,
+            log_errors=on, display_errors=on,
+            allow_url_fopen = on,
+            zend.exception_ignore_args = Off
+          tools: composer:v2
+          coverage: none
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          repository: matomo-org/matomo
+          ref: ${{ env.TARGET_BRANCH }}
+          lfs: false
+          submodules: recursive
+          path: ./matomo
+
+      - name: Move File to right place
+        run: |
+           mkdir /home/runner/work/matomo
+           mv ./matomo /home/runner/work/matomo/
+
+      - name: Checkout Submodule to current Pull request
+        working-directory: /home/runner/work/matomo/matomo
+        run: |
+          cd plugins/${{ env.PLUGIN }}
+          git pull origin ${{ github.head_ref }}
+          git checkout ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup Node
+        if: matrix.type == 'UI'
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: prepare setup
+        shell: bash
+        working-directory: /home/runner/work/matomo/matomo
+        run: ./.github/scripts/bash/prepare.sh
+        env:
+          PHP_VERSION:  ${{ matrix.php-versions }}
+          PIWIK_TEST_TARGET: ${{ matrix.type }}
+
+      - name: PluginTests Test runing
+        working-directory: /home/runner/work/matomo/matomo
+        shell: bash
+        run: ./.github/scripts/bash/plugins/pluginTests.sh
+        env:
+          TEST_SUITE: ${{ matrix.type }}
+          PLUGIN_NAME: ${{ env.PLUGIN }}
