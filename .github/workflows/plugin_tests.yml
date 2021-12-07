@@ -91,7 +91,7 @@ jobs:
         working-directory: /home/runner/work/matomo/matomo
         run: |
           cd plugins/${{ env.PLUGIN }}
-          git pull origin ${{ github.head_ref }}
+          git lfs pull origin ${{ github.head_ref }}
           git checkout ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Node
