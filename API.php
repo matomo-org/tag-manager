@@ -1012,7 +1012,12 @@ class API extends \Piwik\Plugin\API
             $idContainerVersion = $this->getContainerDraftVersion($idSite, $idContainer);
         }
 
-        return $this->containers->createContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
+        $this->enableGeneratePreview = false;
+        $container = $this->containers->createContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
+        // not needed to create a preview release as no actual change to container was made. Make it faster as the createContainerVersion
+        // uses "import" logic which would create a new preview release or check for recursions on every created tag/trigger/...
+        $this->enableGeneratePreview = true;
+        return $container;
     }
 
     /**
