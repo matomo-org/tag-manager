@@ -122,6 +122,8 @@ class API extends \Piwik\Plugin\API
      */
     private $variablesDao;
 
+    private $enableGeneratePreview = true;
+
     public function __construct(Tag $tags, Trigger $triggers, Variable $variables, Container $containers, TagsProvider $tagsProvider, TriggersProvider $triggersProvider, VariablesProvider $variablesProvider, ContextProvider $contextProvider, AccessValidator $validator, Environment $environment, Comparison $comparisons, Export $export, Import $import, VariablesDao $variablesDao)
     {
         $this->tags = $tags;
@@ -1284,11 +1286,17 @@ class API extends \Piwik\Plugin\API
         }
 
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+        $this->enableGeneratePreview = false;
         $this->import->importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion);
+        $this->enableGeneratePreview = true;
+        $this->updateContainerPreviewRelease($idSite, $idContainer);
     }
 
     private function updateContainerPreviewRelease($idSite, $idContainer)
     {
+        if (!$this->enableGeneratePreview) {
+            return;
+        }
         if ($this->containers->hasPreviewRelease($idSite, $idContainer)) {
             $this->containers->generateContainer($idSite, $idContainer);
         } else {
