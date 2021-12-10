@@ -9,6 +9,7 @@ namespace Piwik\Plugins\TagManager\API;
 
 use Piwik\API\Request;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Tag;
@@ -133,16 +134,21 @@ class Import
         $ecv = $exportedContainerVersion;
 
         foreach ($ecv['variables'] as $variable) {
-            Request::processRequest('TagManager.addContainerVariable', array(
-                'idSite' => $idSite,
-                'idContainer' => $idContainer,
-                'idContainerVersion' => $idContainerVersion,
-                'type' => $variable['type'],
-                'name' => $variable['name'],
-                'parameters' => $variable['parameters'],
-                'defaultValue' => $variable['default_value'],
-                'lookupTable' => $variable['lookup_table'],
-            ));
+            try {
+                Request::processRequest('TagManager.addContainerVariable', array(
+                    'idSite' => $idSite,
+                    'idContainer' => $idContainer,
+                    'idContainerVersion' => $idContainerVersion,
+                    'type' => $variable['type'],
+                    'name' => $variable['name'],
+                    'parameters' => $variable['parameters'],
+                    'defaultValue' => $variable['default_value'],
+                    'lookupTable' => $variable['lookup_table'],
+                ));
+            } catch (EntityRecursionException $e){
+                //Delete the variable from container if recursion exception is thrown
+                $this->variables->deleteContainerVariable($idSite, $idContainerVersion, $variable['idvariable']);
+            }
         }
 
         $idTriggerMapping = array();
