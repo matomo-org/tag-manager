@@ -8,7 +8,7 @@
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Settings\FieldConfig;
-use Piwik\Validators\NumberRange;
+use Piwik\Validators\NotEmpty;
 
 class FacebookPixelTag extends BaseTag
 {
@@ -22,7 +22,7 @@ class FacebookPixelTag extends BaseTag
         return array(
             $this->makeSetting('pixelId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Pixel ID';
-                $field->validators[] = new NumberRange();
+                $field->validators[] = new NotEmpty();
             })
         );
     }
