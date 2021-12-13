@@ -20,7 +20,7 @@ class FacebookPixelTag extends BaseTag
     public function getParameters()
     {
         return array(
-            $this->makeSetting('pixelId', '', FieldConfig::TYPE_INT, function (FieldConfig $field) {
+            $this->makeSetting('pixelId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Pixel ID';
                 $field->validators[] = new NumberRange();
             })
