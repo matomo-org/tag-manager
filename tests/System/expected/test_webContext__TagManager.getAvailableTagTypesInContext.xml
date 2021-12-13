@@ -1068,7 +1068,7 @@
 						<title>Pixel ID</title>
 						<value />
 						<defaultValue />
-						<type>integer</type>
+						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
