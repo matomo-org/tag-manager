@@ -146,8 +146,7 @@ class Import
                     'lookupTable' => $variable['lookup_table'],
                 ));
             } catch (EntityRecursionException $e){
-                //Delete the variable from container if recursion exception is thrown
-                $this->variables->deleteContainerVariable($idSite, $idContainerVersion, $variable['idvariable']);
+                throw new \Exception(Piwik::translate('TagManager_EntityRecursionExceptionForVariable', array($variable['name'] . '(' . $variable['type'] . ')')));
             }
         }
 
