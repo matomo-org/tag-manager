@@ -197,6 +197,7 @@
         "EnablingPreviewPleaseWait": "Vorschaumodus wird aktiviert, bitte warten...",
         "EndDate": "Ablaufdatum",
         "EntityDateTypeMetaInformation": "Erstellt am \"%1$s\", zuletzt aktualisiert am \"%2$s\", Typ: \"%3$s\"",
+        "EntityRecursionExceptionForVariable": "Es scheint, dass eine Entität auf sich selbst verweist oder eine Rekursion auf andere Weise verursacht wird. Möglicherweise hängt es mit dem folgenden Eintrag zusammen: \"%1$s\"",
         "Entry": "Eintrag",
         "Environment": "Umgebung",
         "EnvironmentVariableDescription": "Liefert die aktuelle Umgebung.",
