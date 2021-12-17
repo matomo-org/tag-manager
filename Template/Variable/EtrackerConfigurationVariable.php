@@ -7,7 +7,6 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
-use Piwik\Common;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 

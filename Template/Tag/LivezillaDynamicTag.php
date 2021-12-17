@@ -12,7 +12,6 @@ use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
-use Piwik\Validators\NumberRange;
 use Piwik\Validators\UrlLike;
 
 class LivezillaDynamicTag extends BaseTag

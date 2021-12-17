@@ -13,7 +13,6 @@ use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
 use Piwik\Piwik;
-use Piwik\Site;
 use Piwik\Plugins\TagManager\API\Export;
 use Piwik\Plugins\TagManager\API\Import;
 use Piwik\Plugins\TagManager\API\PreviewCookie;

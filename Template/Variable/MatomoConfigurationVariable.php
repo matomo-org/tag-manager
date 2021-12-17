@@ -16,7 +16,6 @@ use Piwik\Site;
 use Piwik\Tracker\TrackerCodeGenerator;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
-use Piwik\Validators\UrlLike;
 
 class MatomoConfigurationVariable extends BaseVariable
 {

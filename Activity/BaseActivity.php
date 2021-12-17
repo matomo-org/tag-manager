@@ -8,7 +8,6 @@
 namespace Piwik\Plugins\TagManager\Activity;
 
 use Piwik\API\Request;
-use Piwik\Cache;
 use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
 use Piwik\Plugins\ActivityLog\Activity\Activity;

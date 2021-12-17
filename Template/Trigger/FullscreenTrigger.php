@@ -8,7 +8,6 @@
 namespace Piwik\Plugins\TagManager\Template\Trigger;
 
 use Piwik\Settings\FieldConfig;
-use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
 

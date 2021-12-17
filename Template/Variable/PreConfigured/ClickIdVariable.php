@@ -7,7 +7,6 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable\PreConfigured;
 
-use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\BaseDataLayerVariable;
 
 class ClickIdVariable extends BaseDataLayerVariable

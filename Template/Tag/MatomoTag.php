@@ -11,7 +11,6 @@ use Piwik\Container\StaticContainer;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
-use Piwik\Validators\NumberRange;
 
 class MatomoTag extends BaseTag
 {

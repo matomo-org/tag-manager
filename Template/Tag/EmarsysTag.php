@@ -10,7 +10,6 @@ namespace Piwik\Plugins\TagManager\Template\Tag;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
-use Piwik\Validators\NumberRange;
 
 class EmarsysTag extends BaseTag
 {

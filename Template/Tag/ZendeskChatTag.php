@@ -13,7 +13,6 @@ use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Settings\Setting;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
-use Piwik\Validators\NumberRange;
 
 class ZendeskChatTag extends BaseTag
 {
