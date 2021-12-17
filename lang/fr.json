@@ -60,6 +60,8 @@
         "ChooseTriggerToContinue": "Choisir un type de déclencheur pour continuer",
         "ChooseVariable": "Sélectionnez une variable",
         "ChooseVariableToContinue": "Choisir un type de variable pour continuer",
+        "ClickButtonVariableDescription": "Bouton cliqué (gauche/milieu/droite)",
+        "ClickButtonVariableName": "bouton de clic",
         "ClickClassesVariableDescription": "La valeur des noms des classes CSS d'un élément lorsqu'un déclencheur au clic a été déclenché.",
         "ClickClassesVariableName": "Classes des liens",
         "ClickDestinationUrlVariableDescription": "La valeur du lien URL (href) d'un élément lorsqu'un déclencheur au clic a été déclenché.",
