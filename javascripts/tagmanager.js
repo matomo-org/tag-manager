@@ -1679,6 +1679,9 @@
                 enableDebugMode: function () { Debug.enabled = true; }
             };
 
+            if ('matomoTagManagerAsyncInit' in windowAlias && utils.isFunction(windowAlias.matomoTagManagerAsyncInit)) {
+                windowAlias.matomoTagManagerAsyncInit();
+            }
             function processMtmPush() {
                 var i, j, methodName, parameterArray, theCall;
 
@@ -1739,10 +1742,6 @@
             return TagManager;
 
         })();
-
-        if ('matomoTagManagerAsyncInit' in windowAlias && utils.isFunction(windowAlias.matomoTagManagerAsyncInit)) {
-            windowAlias.matomoTagManagerAsyncInit();
-        }
     }
 
     // we initialize container outside regular code so multiple containers can be embedded on the same site
