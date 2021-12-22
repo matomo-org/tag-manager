@@ -1680,7 +1680,7 @@
             };
 
             if ('matomoTagManagerAsyncInit' in windowAlias && utils.isFunction(windowAlias.matomoTagManagerAsyncInit)) {
-                windowAlias.matomoTagManagerAsyncInit();
+                windowAlias.matomoTagManagerAsyncInit(TagManager);
             }
             function processMtmPush() {
                 var i, j, methodName, parameterArray, theCall;
