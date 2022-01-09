@@ -49,7 +49,7 @@ exports.modal = async function (page, screenshotName)
     await page.waitForNetworkIdle();
     await page.waitForTimeout(500); // ensure animation is finished
 
-    pageWrap = await page.$('.modal.open');
+    pageWrap = await page.waitForSelector('.modal.open');
 
     await exports.setTableRowHeight(page);
     expect(await pageWrap.screenshot()).to.matchImage(screenshotName);
