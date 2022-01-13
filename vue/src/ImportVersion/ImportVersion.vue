@@ -69,6 +69,7 @@ import {
   ContentBlock,
   ActivityIndicator,
   NotificationsStore,
+  NotificationType,
 } from 'CoreHome';
 import { Field, SaveButton } from 'CorePluginsAdmin';
 
@@ -109,7 +110,7 @@ export default defineComponent({
     };
   },
   methods: {
-    showNotification(message: string, context: string) {
+    showNotification(message: string, context: NotificationType['context']) {
       const instanceId = NotificationsStore.show({
         message,
         context,
