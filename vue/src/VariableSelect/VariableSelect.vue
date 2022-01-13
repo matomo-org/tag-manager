@@ -4,12 +4,6 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-<todo>
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <div class="tagManagerManageSelect tagManagerVariableSelect">
     <ActivityIndicator :loading="isLoading" />
