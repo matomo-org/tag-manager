@@ -38,7 +38,7 @@ interface TagManagerHelper {
     idContainer: string|number,
     idContainerVersion: string|number,
     idVariable: string|number,
-    callback: (data: { variable: Variable }) => void,
+    callback: (variable: Variable) => void,
     variableType?: string,
   ): void;
 }
