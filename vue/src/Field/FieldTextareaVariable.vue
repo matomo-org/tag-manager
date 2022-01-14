@@ -17,6 +17,7 @@
       placeholder=""
       style="width: calc(100% - 40px);"
       v-bind="uiControlAttributes"
+      ref="textarea"
     ></textarea>
     <span
       class="icon-code"
@@ -30,6 +31,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { debounce } from 'CoreHome';
+import { Variable } from '../types';
+
+const { tagManagerHelper } = window;
 
 export default defineComponent({
   props: {
@@ -52,21 +56,30 @@ export default defineComponent({
       this.$emit('update:modelValue', (event.target as HTMLTextAreaElement).value);
     },
     selectVariable() {
-      tagManagerHelper.selectVariable((function (ele) { return function (variable) { tagManagerHelper.insertTextSnippetAtElement(ele.previousElementSibling, '{' + '{' + variable.id + '}' + '}'); }  })(this))
+      tagManagerHelper.selectVariable((variable: Variable) => {
+        tagManagerHelper.insertTextSnippetAtElement(
+          this.$refs.textarea! as HTMLTextAreaElement,
+          `{{${variable.id}}}`,
+        );
+      });
     },
   },
   watch: {
     modelValue() {
+      const { Materialize } = window;
+
       setTimeout(() => {
-        window.Materialize.textareaAutoResize(this.$refs.textarea);
-        window.Materialize.updateTextFields();
+        Materialize.textareaAutoResize(this.$refs.textarea);
+        Materialize.updateTextFields();
       });
     },
   },
   mounted() {
+    const { Materialize } = window;
+
     setTimeout(() => {
-      window.Materialize.textareaAutoResize(this.$refs.textarea);
-      window.Materialize.updateTextFields();
+      Materialize.textareaAutoResize(this.$refs.textarea);
+      Materialize.updateTextFields();
     });
   },
 });

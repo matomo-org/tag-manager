@@ -184,6 +184,12 @@ class Variable extends BaseModel
             return true;
         }
 
+        if (!empty($parameter['component'])
+            && ($parameter['component'] === BaseTemplate::FIELD_TEXTAREA_VARIABLE_COMPONENT)
+        ) {
+            return true;
+        }
+
         if (!empty($parameter['uiControl']) && $parameter['uiControl'] === FieldConfig::UI_CONTROL_MULTI_TUPLE) {
             if (!empty($parameter['uiControlAttributes']['field1']) && self::hasFieldConfigVariableParameter($parameter['uiControlAttributes']['field1'])) {
                 return true;
