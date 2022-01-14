@@ -41,6 +41,8 @@ interface TagManagerHelper {
     callback: (data: { variable: Variable }) => void,
     variableType?: string,
   ): void;
+
+  selectVariable(callback: (data: { variable: Variable }) => void): void;
 }
 
 declare global {
