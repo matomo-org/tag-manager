@@ -120,7 +120,7 @@ export default defineComponent({
         MatomoUrl.parsed.value.idContainer as string,
         this.idContainerVersion,
         0,
-        ({ variable }) => {
+        (variable) => {
           this.fetchAvailableVariables();
           if (variable) {
             this.onChange(`{{${variable.name}}}`);
