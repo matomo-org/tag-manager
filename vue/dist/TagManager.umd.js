@@ -597,7 +597,8 @@ VariableSelectvue_type_script_lang_ts.render = VariableSelectvue_type_template_i
       angularJsBind: '='
     },
     onSelectVariable: {
-      angularJsBind: '&?'
+      angularJsBind: '&?',
+      vue: 'selectVariable'
     }
   },
   directiveName: 'piwikVariableSelect'
