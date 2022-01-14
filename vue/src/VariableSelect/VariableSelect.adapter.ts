@@ -19,6 +19,7 @@ export default createAngularJsAdapter({
     },
     onSelectVariable: {
       angularJsBind: '&?',
+      vue: 'selectVariable',
     },
   },
   directiveName: 'piwikVariableSelect',
