@@ -59,7 +59,7 @@ class CustomImageTag extends BaseTag
             $this->makeSetting('customImageSrc', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Image URL';
                 $field->description = 'You can define any image URL. We recommend to define a URL that starts with "//" so it will work on HTTP and HTTPS pages. If your website only supports HTTPS, it should start with "https://".';
-                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new NotEmpty();
             }),
             $this->makeSetting('cacheBusterEnabled', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {

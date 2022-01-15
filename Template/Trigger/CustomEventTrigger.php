@@ -31,7 +31,7 @@ class CustomEventTrigger extends BaseTrigger
             $this->makeSetting('eventName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Event Name';
                 $field->description = 'The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({"event": "my-custom-event"});';
-                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength($min = 1, $max = 300);
             }),
