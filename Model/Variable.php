@@ -185,7 +185,8 @@ class Variable extends BaseModel
         }
 
         if (!empty($parameter['component'])
-            && ($parameter['component'] === BaseTemplate::FIELD_TEXTAREA_VARIABLE_COMPONENT)
+            && ($parameter['component'] === BaseTemplate::FIELD_TEXTAREA_VARIABLE_COMPONENT
+                || $parameter['component'] === BaseTemplate::FIELD_TEMPLATE_VARIABLE_COMPONENT)
         ) {
             return true;
         }
@@ -280,7 +281,8 @@ class Variable extends BaseModel
         $parameters = $entity['parameters'];
         foreach ($entity['typeMetadata']['parameters'] as $parameter) {
             $paramName = $parameter['name'];
-            if ($parameter['templateFile'] === BaseTemplate::FIELD_TEMPLATE_VARIABLE
+            if (($parameter['templateFile'] === BaseTemplate::FIELD_TEMPLATE_VARIABLE
+                    || $parameter['component'] === BaseTemplate::FIELD_TEMPLATE_VARIABLE_COMPONENT)
                 && isset($parameters[$paramName])
                 && is_string($parameters[$paramName])
                 && strpos($parameters[$paramName], $oldVarNameTemplate) !== false) {

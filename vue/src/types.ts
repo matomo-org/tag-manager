@@ -42,7 +42,7 @@ interface TagManagerHelper {
     variableType?: string,
   ): void;
   selectVariable(callback: (variable: Variable) => void): void;
-  insertTextSnippetAtElement(inputField: HTMLTextAreaElement, textToAdd: string): void;
+  insertTextSnippetAtElement(inputField: HTMLTextAreaElement|HTMLInputElement, textToAdd: string): void;
 }
 
 declare global {

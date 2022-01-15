@@ -27,6 +27,9 @@ abstract class BaseTemplate
 
     protected $templateType = '';
 
+    /**
+     * @deprecated
+     */
     const FIELD_TEMPLATE_VARIABLE = 'plugins/TagManager/angularjs/form-field/field-variable-template.html';
 
     /**
@@ -37,6 +40,7 @@ abstract class BaseTemplate
     const FIELD_TEMPLATE_VARIABLE_TYPE = 'plugins/TagManager/angularjs/form-field/field-variabletype-template.html';
 
     const FIELD_TEXTAREA_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldTextareaVariable'];
+    const FIELD_TEMPLATE_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldTemplateVariable'];
 
     public static $RESERVED_SETTING_NAMES = [
         'container', 'tag', 'variable', 'trigger', 'length', 'window', 'document', 'get', 'fire', 'setUp', 'set', 'reset', 'type', 'part',

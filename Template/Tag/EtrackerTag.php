@@ -47,7 +47,7 @@ class EtrackerTag extends BaseTag
             $this->makeSetting('etrackerWrapperPagename', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Wrapper pagename (et_pagename)';
                 $field->description = 'The wrappers\'s pagename';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "wrapper"';
                 if ($trackingType->getValue() === 'wrapper') {
                     $field->validators[] = new NotEmpty();
@@ -56,49 +56,49 @@ class EtrackerTag extends BaseTag
             $this->makeSetting('etrackerWrapperArea', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Wrapper area (et_area)';
                 $field->description = 'The area should be separated by Slash';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "wrapper"';
             }),
             $this->makeSetting('etrackerWrapperTarget', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Wrapper target (et_target)';
                 $field->description = '';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "wrapper"';
             }),
             $this->makeSetting('etrackerWrapperTval', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Wrapper total order value (et_tval)';
                 $field->description = '';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "wrapper"';
             }),
             $this->makeSetting('etrackerWrapperTonr', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Wrapper order number (et_tonr)';
                 $field->description = '';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "wrapper"';
             }),
             $this->makeSetting('etrackerWrapperTsale', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Wrapper order status (et_tsale)';
                 $field->description = '';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "wrapper"';
             }),
             $this->makeSetting('etrackerWrapperCust', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Wrapper customer status (et_cust)';
                 $field->description = '';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "wrapper"';
             }),
             $this->makeSetting('etrackerWrapperBasket', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Wrapper basket (et_basket)';
                 $field->description = '';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "wrapper"';
             }),
             $this->makeSetting('etrackerEventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Category';
                 $field->description = 'The event\'s category, for example Navigation, Outbound Links, 404 Error...';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "event"';
                 if ($trackingType->getValue() === 'event') {
                     $field->validators[] = new NotEmpty();
@@ -107,19 +107,19 @@ class EtrackerTag extends BaseTag
             $this->makeSetting('etrackerEventObject', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Object';
                 $field->description = 'The event\'s object Name, for example a particular navigation element, a clicked element, form name,...';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "event"';
             }),
             $this->makeSetting('etrackerEventAction', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Action';
                 $field->description = 'The event\'s action, for example, click, open, close, play, pause...';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "event"';
             }),
             $this->makeSetting('etrackerEventType', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'etracker Type';
                 $field->description = 'The event\'s type Name, for example an value of a send form...';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "event"';
             })
         );

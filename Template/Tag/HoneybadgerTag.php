@@ -33,13 +33,13 @@ class HoneybadgerTag extends BaseTag
             $this->makeSetting('honeybadgerEnvironment', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Environment';
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->description = "The environment where the container is included (production, dev, etc.). Leave empty to default to the environment of this container.";
             }),
             $this->makeSetting('honeybadgerRevision', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Code Revision';
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_TEMPLATE_VARIABLE_COMPONENT;
                 $field->description = "(optional) the version of your project";
             }),
         );
