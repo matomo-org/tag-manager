@@ -18,6 +18,7 @@ export default createAngularJsAdapter<[ITimeoutService]>({
     },
     variable: {
       angularJsBind: '=',
+      vue: 'modelValue',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       default(scope: any) {
         return scope.variable;

@@ -4,12 +4,6 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-<todo>
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <div class="tagManagerManageSelect tagManagerVariableSelectType">
     <div>
@@ -17,7 +11,7 @@
         uicontrol="select"
         :name="`variableType${variableType}`"
         class="selectVariableType"
-        :model-value="variable"
+        :model-value="modelValue"
         @update:model-value="onChange($event)"
         :full-width="true"
         :options="containerVariables"
@@ -58,7 +52,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    variable: String,
+    modelValue: String,
     variableType: String,
   },
   components: {
@@ -98,7 +92,7 @@ export default defineComponent({
             this.containerVariables.push(...options);
           });
 
-          if (!this.variable && this.containerVariables.length === 1) {
+          if (!this.modelValue && this.containerVariables.length === 1) {
             // when no value configured and only one selection is available, we preselect that value
             this.onChange(this.containerVariables[0].key);
           }
