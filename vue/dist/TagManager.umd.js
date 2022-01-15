@@ -136,6 +136,8 @@ __webpack_require__.d(__webpack_exports__, "ImportVersion", function() { return 
 __webpack_require__.d(__webpack_exports__, "VariableSelect", function() { return /* reexport */ VariableSelect; });
 __webpack_require__.d(__webpack_exports__, "VariableSelectType", function() { return /* reexport */ VariableSelectType; });
 __webpack_require__.d(__webpack_exports__, "FieldTextareaVariable", function() { return /* reexport */ FieldTextareaVariable; });
+__webpack_require__.d(__webpack_exports__, "FieldVariableTemplate", function() { return /* reexport */ FieldVariableTemplate; });
+__webpack_require__.d(__webpack_exports__, "FieldVariableTypeTemplate", function() { return /* reexport */ FieldVariableTypeTemplate; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -916,6 +918,161 @@ var FieldTextareaVariablevue_type_script_lang_ts_window = window,
 FieldTextareaVariablevue_type_script_lang_ts.render = FieldTextareaVariablevue_type_template_id_56773fd2_render
 
 /* harmony default export */ var FieldTextareaVariable = (FieldTextareaVariablevue_type_script_lang_ts);
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=template&id=a5f41872
+
+var FieldVariableTemplatevue_type_template_id_a5f41872_hoisted_1 = {
+  class: "fieldVariableTemplate"
+};
+var FieldVariableTemplatevue_type_template_id_a5f41872_hoisted_2 = ["type", "id", "name", "value"];
+var FieldVariableTemplatevue_type_template_id_a5f41872_hoisted_3 = ["title"];
+var FieldVariableTemplatevue_type_template_id_a5f41872_hoisted_4 = ["for", "innerHTML"];
+function FieldVariableTemplatevue_type_template_id_a5f41872_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", FieldVariableTemplatevue_type_template_id_a5f41872_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["mergeProps"])({
+    class: "control_".concat(_ctx.uiControl),
+    type: _ctx.uiControl,
+    id: _ctx.name,
+    name: _ctx.name,
+    value: _ctx.modelValueText,
+    onKeydown: _cache[0] || (_cache[0] = function ($event) {
+      return _ctx.onKeydown($event);
+    }),
+    onChange: _cache[1] || (_cache[1] = function ($event) {
+      return _ctx.onKeydown($event);
+    }),
+    placeholder: "",
+    style: {
+      "width": "calc(100% - 40px)"
+    }
+  }, _ctx.uiControlAttributes, {
+    ref: "input"
+  }), null, 16, FieldVariableTemplatevue_type_template_id_a5f41872_hoisted_2), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
+    class: "icon-code",
+    title: _ctx.translate('TagManager_ChooseVariable'),
+    onClick: _cache[2] || (_cache[2] = function ($event) {
+      return _ctx.selectVariable();
+    })
+  }, null, 8, FieldVariableTemplatevue_type_template_id_a5f41872_hoisted_3), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("label", {
+    for: _ctx.name,
+    innerHTML: _ctx.$sanitize(_ctx.title)
+  }, null, 8, FieldVariableTemplatevue_type_template_id_a5f41872_hoisted_4)]);
+}
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=template&id=a5f41872
+
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=script&lang=ts
+
+
+var FieldVariableTemplatevue_type_script_lang_ts_window = window,
+    FieldVariableTemplatevue_type_script_lang_ts_tagManagerHelper = FieldVariableTemplatevue_type_script_lang_ts_window.tagManagerHelper;
+/* harmony default export */ var FieldVariableTemplatevue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  props: {
+    uiControl: {
+      type: String,
+      required: true
+    },
+    uiControlAttributes: Object,
+    name: String,
+    title: String,
+    modelValue: String
+  },
+  inheritAttrs: false,
+  emits: ['update:modelValue'],
+  computed: {
+    modelValueText: function modelValueText() {
+      if (typeof this.modelValue === 'undefined' || this.modelValue === null) {
+        return '';
+      }
+
+      return this.modelValue.toString();
+    }
+  },
+  created: function created() {
+    // debounce because puppeteer types reeaally fast
+    this.onKeydown = Object(external_CoreHome_["debounce"])(this.onKeydown.bind(this), 50);
+  },
+  mounted: function mounted() {
+    setTimeout(function () {
+      window.Materialize.updateTextFields();
+    });
+  },
+  watch: {
+    modelValue: function modelValue() {
+      setTimeout(function () {
+        window.Materialize.updateTextFields();
+      });
+    }
+  },
+  methods: {
+    onKeydown: function onKeydown(event) {
+      this.$emit('update:modelValue', event.target.value);
+    },
+    selectVariable: function selectVariable() {
+      var _this = this;
+
+      FieldVariableTemplatevue_type_script_lang_ts_tagManagerHelper.selectVariable(function (variable) {
+        FieldVariableTemplatevue_type_script_lang_ts_tagManagerHelper.insertTextSnippetAtElement(_this.$refs.input, "{{".concat(variable.id, "}}"));
+      });
+    }
+  }
+}));
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue
+
+
+
+FieldVariableTemplatevue_type_script_lang_ts.render = FieldVariableTemplatevue_type_template_id_a5f41872_render
+
+/* harmony default export */ var FieldVariableTemplate = (FieldVariableTemplatevue_type_script_lang_ts);
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Field/FieldVariableTypeTemplate.vue?vue&type=template&id=76db36ac
+
+var FieldVariableTypeTemplatevue_type_template_id_76db36ac_hoisted_1 = ["for", "innerHTML"];
+function FieldVariableTypeTemplatevue_type_template_id_76db36ac_render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_VariableSelectType = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("VariableSelectType");
+
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_VariableSelectType, {
+    "model-value": _ctx.modelValue,
+    id: _ctx.name,
+    name: _ctx.name,
+    "variable-type-name": _ctx.title,
+    "variable-type": _ctx.uiControlAttributes.variableType
+  }, null, 8, ["model-value", "id", "name", "variable-type-name", "variable-type"]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("label", {
+    for: _ctx.name,
+    style: {
+      "font-size": "0.8rem"
+    },
+    innerHTML: _ctx.$sanitize(_ctx.title)
+  }, null, 8, FieldVariableTypeTemplatevue_type_template_id_76db36ac_hoisted_1)]);
+}
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Field/FieldVariableTypeTemplate.vue?vue&type=template&id=76db36ac
+
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Field/FieldVariableTypeTemplate.vue?vue&type=script&lang=ts
+
+
+var FieldVariableTypeTemplatevue_type_script_lang_ts_window = window,
+    FieldVariableTypeTemplatevue_type_script_lang_ts_tagManagerHelper = FieldVariableTypeTemplatevue_type_script_lang_ts_window.tagManagerHelper;
+/* harmony default export */ var FieldVariableTypeTemplatevue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  props: {
+    uiControlAttributes: {
+      type: Object,
+      required: true
+    },
+    name: String,
+    title: String,
+    modelValue: String
+  },
+  components: {
+    VariableSelectType: VariableSelectType
+  }
+}));
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Field/FieldVariableTypeTemplate.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Field/FieldVariableTypeTemplate.vue
+
+
+
+FieldVariableTypeTemplatevue_type_script_lang_ts.render = FieldVariableTypeTemplatevue_type_template_id_76db36ac_render
+
+/* harmony default export */ var FieldVariableTypeTemplate = (FieldVariableTypeTemplatevue_type_script_lang_ts);
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/index.ts
 /*!
  * Matomo - free/libre analytics platform
@@ -923,6 +1080,8 @@ FieldTextareaVariablevue_type_script_lang_ts.render = FieldTextareaVariablevue_t
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
+
 
 
 

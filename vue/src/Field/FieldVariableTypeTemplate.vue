@@ -22,8 +22,6 @@
 import { defineComponent } from 'vue';
 import VariableSelectType from '../VariableSelectType/VariableSelectType.vue';
 
-const { tagManagerHelper } = window;
-
 export default defineComponent({
   props: {
     uiControlAttributes: {
