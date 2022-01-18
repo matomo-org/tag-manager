@@ -175,7 +175,7 @@ export default defineComponent({
   },
   computed: {
     backupNameTitle() {
-      return `${translate('TagManager_BackupVersionName')} (${translate('General_Recommended')})'`;
+      return `${translate('TagManager_BackupVersionName')} (${translate('General_Recommended')})`;
     },
   },
 });
