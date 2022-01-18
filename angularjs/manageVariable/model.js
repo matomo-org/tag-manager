@@ -66,14 +66,6 @@
             return fetchVariables(idContainer, idContainerVersion);
         }
 
-        function fetchVariablesIfNotLoaded(idContainer, idContainerVersion)
-        {
-            if (!fetchPromise) {
-                // needed for suggestNameForType() to make sure it is aware of all names
-                model.fetchVariables(idContainer, idContainerVersion);
-            }
-        }
-
         function fetchAvailableVariables(idContext) {
             if (!variablesPromise[idContext]) {
                 var params = {method: 'TagManager.getAvailableVariableTypesInContext', idContext: idContext, filter_limit: '-1'};
@@ -90,20 +82,6 @@
             }
 
             return preconfiguredVarsPromise;
-        }
-
-        function fetchContainer(idContainer) {
-            var params = {method: 'TagManager.getContainer', idContainer: idContainer, filter_limit: '-1'};
-            return piwikApi.fetch(params);
-        }
-
-        function fetchAvailableComparisons() {
-            if (!comparisonPromise) {
-                var params = {method: 'TagManager.getAvailableComparisons', filter_limit: '-1'};
-                comparisonPromise = piwikApi.fetch(params);
-            }
-
-            return comparisonPromise;
         }
 
         function suggestNameForType(templateId) {
@@ -124,27 +102,6 @@
                     return name;
                 }
             }
-        }
-
-        function fetchVariables(idContainer, idContainerVersion) {
-            var params = {method: 'TagManager.getContainerVariables', idContainer: idContainer,
-                          idContainerVersion: idContainerVersion,filter_limit: '-1'};
-
-            if (!fetchPromise) {
-                fetchPromise = piwikApi.fetch(params);
-            }
-
-            model.isLoading = true;
-            model.variables = [];
-
-            return fetchPromise.then(function (variables) {
-                model.variables = variables;
-
-                model.isLoading = false;
-                return variables;
-            }, function () {
-                model.isLoading = false;
-            });
         }
 
         function findVariable(idContainer, idContainerVersion, idVariable) {

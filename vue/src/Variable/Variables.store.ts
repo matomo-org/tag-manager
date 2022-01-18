@@ -7,6 +7,7 @@
 
 import { reactive, computed, readonly } from 'vue';
 import { Variable } from '../types';
+import {AjaxHelper} from '../../../../../@types/CoreHome';
 
 interface VariablesStoreState {
   variables: Variable[];
@@ -26,6 +27,39 @@ class VariablesStore {
   readonly isLoading = computed(() => this.state.value.isLoading);
 
   readonly isUpdating = computed(() => this.state.value.isUpdating);
+
+  readonly variables = computed(() => this.state.value.variables);
+
+  private fetchPromise: Promise<Variable[]>|null = null;
+
+  fetchVariablesIfNotLoaded(idContainer: string|number, idContainerVersion: string|number) {
+    if (!this.fetchPromise) {
+      // needed for suggestNameForType() to make sure it is aware of all names
+      this.fetchVariables(idContainer, idContainerVersion);
+    }
+  }
+
+  fetchVariables(idContainer: string|number, idContainerVersion: string|number) {
+    this.privateState.isLoading = true;
+    this.privateState.variables = [];
+
+    if (!this.fetchPromise) {
+      this.fetchPromise = AjaxHelper.fetch<Variable[]>({
+        method: 'TagManager.getContainerVariables',
+        idContainer: idContainer,
+        idContainerVersion: idContainerVersion,
+        filter_limit: '-1',
+      });
+    }
+
+    return Promise.resolve(this.fetchPromise).then((variables) => {
+      this.privateState.variables = variables;
+      this.privateState.isLoading = false;
+      return variables;
+    }).finally(() => {
+      this.privateState.isLoading = false;
+    });
+  }
 }
 
 export default new VariablesStore();

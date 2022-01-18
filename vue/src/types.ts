@@ -34,10 +34,32 @@ export interface VariableCategory {
 
 export interface Draft {
   idcontainerversion: string|number;
+  idcontainer: string;
+  idsite: string|number;
+  status: string;
+  revision: number;
+  name: string;
+  created_date: string;
+  created_date_pretty: string;
+  description: string;
+  updated_date: string;
+  updated_date_pretty: string;
 }
 
 export interface Container {
+  context: string;
+  created_date: string;
+  created_date_pretty: string;
+  description: string;
   draft: Draft;
+  idcontainer: string;
+  idsite: string|number;
+  name: string;
+  releases: []; // TODO
+  status: string;
+  updated_date: string;
+  updated_date_pretty: string;
+  versions: []; // TODO
   // TODO
 }
 
