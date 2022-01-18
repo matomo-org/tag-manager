@@ -554,8 +554,6 @@ class TagManager extends \Piwik\Plugin
         $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/model.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/list.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/list.directive.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/edit.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/edit.directive.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/manage.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/manage.directive.js";
 
@@ -563,32 +561,24 @@ class TagManager extends \Piwik\Plugin
         $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/diff.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/list.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/list.directive.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/edit.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/edit.directive.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/manage.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/manage.directive.js";
 
         $jsFiles[] = "plugins/TagManager/angularjs/manageTrigger/model.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageTrigger/list.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageTrigger/list.directive.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTrigger/edit.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTrigger/edit.directive.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageTrigger/manage.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageTrigger/manage.directive.js";
 
         $jsFiles[] = "plugins/TagManager/angularjs/manageTag/model.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageTag/list.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageTag/list.directive.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/edit.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/edit.directive.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageTag/manage.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageTag/manage.directive.js";
 
         $jsFiles[] = "plugins/TagManager/angularjs/manageVariable/model.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageVariable/list.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageVariable/list.directive.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVariable/edit.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVariable/edit.directive.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageVariable/manage.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageVariable/manage.directive.js";
 

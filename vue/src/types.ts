@@ -6,6 +6,14 @@
  */
 import { IScope } from 'angular';
 
+export interface LookupTableEntry {
+  match_value: string;
+  comparison: string;
+  out_value: string;
+}
+
+export type LookupTable = LookupTableEntry[];
+
 export interface Variable {
   id: string|number;
   name: string;
@@ -15,6 +23,8 @@ export interface Variable {
   idvariable: string;
   order: string;
   type: string;
+  hasAdvancedSettings?: boolean;
+  lookup_table: LookupTable;
 }
 
 export interface VariableCategory {
