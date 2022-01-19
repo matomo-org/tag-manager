@@ -85,19 +85,19 @@ import {
   ActivityIndicator,
 } from 'CoreHome';
 import {
-  VariableCategory,
-  Variable,
   Container,
+  ContainerVariableCategory,
+  ContainerVariableType,
 } from '../types';
 
 interface VariableSelectState {
-  preconfiguredVariables: VariableCategory[];
-  containerVariables: Variable[];
+  preconfiguredVariables: ContainerVariableCategory[];
+  containerVariables: ContainerVariableType[];
   isLoading: boolean;
   actualIdContainerVersion?: string|number;
 }
 
-type GetAvailableContainerVariablesResponse = VariableCategory[];
+type GetAvailableContainerVariablesResponse = ContainerVariableCategory[];
 
 const { tagManagerHelper } = window;
 
@@ -149,7 +149,7 @@ export default defineComponent({
           this.isLoading = false;
 
           variables.forEach((category) => {
-            const preConfig = {
+            const preConfig: ContainerVariableCategory = {
               ...category,
               types: category.types.filter((c) => c.is_pre_configured),
             };
@@ -165,7 +165,7 @@ export default defineComponent({
         });
       });
     },
-    editVariable(variable: Variable) {
+    editVariable(variable: ContainerVariableType) {
       if (!this.actualIdContainerVersion) {
         return;
       }
@@ -195,7 +195,7 @@ export default defineComponent({
         },
       );
     },
-    selectVariable(variable: Variable) {
+    selectVariable(variable: ContainerVariableType) {
       this.$emit('selectVariable', { variable });
     },
     fetchContainer() {

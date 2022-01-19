@@ -5,9 +5,14 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-import {reactive, computed, readonly, DeepReadonly} from 'vue';
-import {Variable, VariableCategory} from '../types';
-import {AjaxHelper} from '../../../../../@types/CoreHome';
+import {
+  reactive,
+  computed,
+  readonly,
+  DeepReadonly,
+} from 'vue';
+import { Variable, VariableCategory } from '../types';
+import { AjaxHelper } from 'CoreHome';
 
 interface VariablesStoreState {
   variables: Variable[];

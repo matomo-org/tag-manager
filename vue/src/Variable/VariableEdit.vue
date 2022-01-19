@@ -237,7 +237,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, nextTick} from 'vue';
+import { defineComponent, nextTick } from 'vue';
 import {
   translate,
   AjaxHelper,
@@ -606,7 +606,7 @@ export default defineComponent({
         }
 
         this.isDirty = false;
-        this.variable = {};
+        this.variable = {} as unknown as Variable;
         VariablesStore.reload(this.idContainer, this.idContainerVersion).then(() => {
           this.initIdVariable();
         });

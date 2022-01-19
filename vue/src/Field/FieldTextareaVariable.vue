@@ -31,7 +31,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { debounce } from 'CoreHome';
-import { Variable } from '../types';
+import { ContainerVariableType } from '../types';
 
 const { tagManagerHelper } = window;
 
@@ -56,7 +56,7 @@ export default defineComponent({
       this.$emit('update:modelValue', (event.target as HTMLTextAreaElement).value);
     },
     selectVariable() {
-      tagManagerHelper.selectVariable((variable: Variable) => {
+      tagManagerHelper.selectVariable((variable: ContainerVariableType) => {
         tagManagerHelper.insertTextSnippetAtElement(
           this.$refs.textarea! as HTMLTextAreaElement,
           `{{${variable.id}}}`,

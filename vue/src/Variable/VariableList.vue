@@ -129,7 +129,7 @@
         >
           <span class="title">
             {{ variableTemplate.name }}
-            <span class="variableId">{{ `{{${variableTemplate.id}}}` }}</span>
+            <span class="variableId" v-text="`{{${variableTemplate.id}}}`"></span>
           </span>
           <span
             class="secondary-content"
@@ -193,7 +193,6 @@
 <script lang="ts">
 import { DeepReadonly, defineComponent } from 'vue';
 import {
-  translate,
   AjaxHelper,
   ContentBlock,
   ContentTable,
@@ -201,7 +200,6 @@ import {
   MatomoUrl,
 } from 'CoreHome';
 import VariablesStore from './Variables.store';
-import AvailableComparisonsStore from '../AvailableComparisons.store';
 import { VariableReference, ContainerVariableCategory, Variable } from '../types';
 
 interface VariableListState {

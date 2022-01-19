@@ -157,7 +157,7 @@ interface TagManagerHelper {
     callback: (variable: Variable) => void,
     variableType?: string,
   ): void;
-  selectVariable(callback: (variable: Variable) => void): void;
+  selectVariable(callback: (variable: ContainerVariableType) => void): void;
   insertTextSnippetAtElement(inputField: HTMLTextAreaElement|HTMLInputElement, textToAdd: string): void;
 }
 
