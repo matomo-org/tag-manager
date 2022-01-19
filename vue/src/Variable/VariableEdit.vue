@@ -21,6 +21,7 @@
     class="editVariable tagManagerManageEdit"
     feature="Tag Manager"
     :content-title="editTitle"
+    ref="root"
   >
     <p v-show="isLoading">
       <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('General_LoadingData') }}</span>
@@ -35,7 +36,7 @@
       <div>
         <div
           class="alert alert-warning"
-          v-show="variable.isDisabled"
+          v-show="isVariableDisabled"
         >
           {{ translate(
             'TagManager_UseCustomTemplateCapabilityRequired',
@@ -135,7 +136,7 @@
                       name="lookup_table_matchvalue"
                       class="innerFormField"
                       :model-value="lookup.match_value"
-                      @update:model-value="lookup.match_value = $event; setValueHasChanged(); onLookupChange()"
+                      @update:model-value="lookup.match_value = $event; setValueHasChanged();"
                       :full-width="true"
                       :placeholder="translate('TagManager_LookupTableMatchValue')"
                     />
@@ -146,7 +147,7 @@
                       name="lookup_table_outvalue"
                       class="innerFormField"
                       :model-value="lookup.out_value"
-                      @update:model-value="lookup.out_value = $event; setValueHasChanged(); onLookupChange()"
+                      @update:model-value="lookup.out_value = $event; setValueHasChanged();"
                       :full-width="true"
                       :placeholder="translate('TagManager_LookupTableOutValue')"
                     />
@@ -164,13 +165,13 @@
         </div>
         <div
           class="alert alert-warning"
-          v-show="variable.isDisabled"
+          v-show="isVariableDisabled"
         >
           {{ translate('TagManager_UseCustomTemplateCapabilityRequired', translate('TagManager_CapabilityUseCustomTemplates')) }}
         </div>
         <SaveButton
           class="createButton"
-          v-show="!variable.isDisabled"
+          v-show="!isVariableDisabled"
           @confirm="edit ? updateVariable() : createVariable()"
           :disabled="isUpdating || !isDirty"
           :saving="isUpdating"
@@ -204,10 +205,10 @@
           class="collection-item avatar"
           @click="createVariableType(variableTemplate)"
           :class="{
-            disabledTemplate: variableTemplate.isDisabled,
+            disabledTemplate: this.isVariableTemplateDisabled[variableTemplate.id],
             [`templateType${variableTemplate.id}`]: true,
           }"
-          :title="!variableTemplate.isDisabled ? '' :
+          :title="!this.isVariableTemplateDisabled[variableTemplate.id] ? '' :
             translate('TagManager_UseCustomTemplateCapabilityRequired',
               translate('TagManager_CapabilityUseCustomTemplates'))"
         >
@@ -241,12 +242,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent, nextTick} from 'vue';
 import {
   translate,
   AjaxHelper,
   ContentBlock,
   Matomo,
+  NotificationsStore,
+  Notification,
+  MatomoUrl,
 } from 'CoreHome';
 import {
   Field,
@@ -263,8 +267,6 @@ interface Option {
   value: unknown;
 }
 
-type DeregisterWatch = () => void;
-
 interface VariableEditState {
   isDirty: boolean;
   showAdvanced: boolean;
@@ -276,25 +278,23 @@ interface VariableEditState {
   variable: Variable;
   chooseVariableType: boolean;
   parameterValues: Record<string, unknown>;
-  deregisterWatches: DeregisterWatch[];
+  isUpdatingVar: boolean;
 }
+
+const notificationId = 'tagvariablemanagement';
 
 export default defineComponent({
   props: {
-    idVariable: [String, Number],
+    idVariable: Number,
     idContainer: {
-      type: [String, Number],
+      type: String,
       required: true,
     },
-    idContainerVersion: {
-      type: [String, Number],
-      required: true,
-    },
+    idContainerVersion: Number,
     variableType: {
-      type: [String, Number],
+      type: Number,
       required: true,
     },
-    // TODO: initialized to !!this.onChangeVariable
     isEmbedded: {
       type: Boolean,
       default: false,
@@ -320,20 +320,13 @@ export default defineComponent({
       variable: {} as unknown as Variable,
       chooseVariableType: false,
       parameterValues: {},
-      deregisterWatches: [],
+      isUpdatingVar: false,
     };
   },
   emits: ['changeVariable'],
   created() {
     // needed for suggestNameForType() to make sure it is aware of all names
     VariablesStore.fetchVariablesIfNotLoaded(this.idContainer, this.idContainerVersion);
-
-    /* TODO: why is this needed (needed in adapter for idVariable which is two-way bound)
-    this.$on('$destroy', function () {
-      this.idVariable = null;
-      currentId = null;
-    });
-    */
 
     if (this.idVariable) {
       this.initIdVariable();
@@ -347,104 +340,95 @@ export default defineComponent({
 
       this.initIdVariable();
     },
+    variableParameterValues: {
+      handler(newValue) {
+        if (!newValue) {
+          return;
+        }
+
+        this.isDirty = true;
+      },
+      deep: true,
+    },
+    variableLookupTable: {
+      handler() {
+        const hasAll = (this.variable.lookup_table || []).every((t) => !!t?.out_value);
+        if (hasAll) {
+          this.addLookUpEntry();
+        }
+      },
+      deep: true,
+    },
   },
   methods: {
-    // TODO
-    enrichTemplateType(template) {
-      template.isDisabled = !this.canUseCustomTemplates && template && template.isCustomTemplate;
-      return template;
-    },
-    // TODO
     removeAnyVariableNotification() {
-      var notification = this.notification;
-      notification.remove(notificationId);
-      notification.remove('ajaxHelper');
+      NotificationsStore.remove(notificationId);
+      NotificationsStore.remove('ajaxHelper');
     },
-    // TODO
-    showNotification(message, context) {
-      var notification = this.notification;
-      notification.show(message, {
-        context: context,
-        id: notificationId
+    showNotification(message: string, context: Notification['context']) {
+      const notificationInstanceId = NotificationsStore.show({
+        message,
+        context,
+        id: notificationId,
+        type: 'transient',
       });
-      $timeout(function () {
-        notification.scrollToNotification();
+      setTimeout(() => {
+        NotificationsStore.scrollToNotification(notificationInstanceId);
       }, 200);
     },
-    // TODO
-    showErrorFieldNotProvidedNotification(title) {
-      var message = translate('TagManager_ErrorXNotProvided', [title]);
+    showErrorFieldNotProvidedNotification(title: string) {
+      const message = translate('TagManager_ErrorXNotProvided', [title]);
       this.showNotification(message, 'error');
     },
-    onIdContainerChange() {
-      if (this.idContainer) {
-        AjaxHelper.fetch<Container>({
-          method: 'TagManager.getContainer',
-          idContainer: this.idContainer,
-          filter_limit: '-1',
-        }).then((container) => {
-          this.idContainerContext = container.context;
-        });
-      } else {
-        this.idContainerContext = null; // TODO
-      }
-    },
-    // TODO
     initIdVariable() {
-      this.deregisterWatches.forEach((fn) => fn());
-
       Matomo.helper.lazyScrollToContent();
 
       this.availableVariables = [];
 
-      ;
-
-      this.model.fetchContainer(this.idContainer).then(function (container) {
-        return this.model.fetchAvailableVariables(container.context);
-      }).then(function (variables) {
-        angular.forEach(variables, function (variablesGroup) {
-          angular.forEach(variablesGroup.types, function (variable) {
-            this.enrichTemplateType(variable);
-          });
-        });
+      AjaxHelper.fetch<Container>({
+        method: 'TagManager.getContainer',
+        idContainer: this.idContainer,
+        filter_limit: '-1',
+      }).then((container) => {
+        return VariablesStore.fetchAvailableVariables(container.context);
+      }).then((variables) => {
         this.availableVariables = variables;
-      }).then(function () {
+      }).then(() => {
         if (this.edit && this.idVariable) {
           this.editTitle = translate('TagManager_EditVariable');
-          this.model.findVariable(this.idContainer, this.idContainerVersion, this.idVariable).then(function (variable) {
+          VariablesStore.findVariable(
+            this.idContainer,
+            this.idContainerVersion,
+            this.idVariable,
+          ).then((variable) => {
             if (!variable) {
               return;
             }
 
-            this.variable = angular.copy(variable);
-            this.variable.idcontainer = this.idContainer;
+            this.variable = { ...variable };
+            this.parameterValues = {};
 
-            if (this.variable.typeMetadata) {
-              this.enrichTemplateType(this.variable.typeMetadata);
-            }
-
-            if (this.variable.lookup_table && this.variable.lookup_table.length) {
+            if ((this.variable.lookup_table && this.variable.lookup_table.length)
+              || this.variable.default_value
+            ) {
               this.showAdvanced = true; // make sure lookup_table is visible directly if configured
-            } else if (this.variable.default_value) {
-              this.showAdvanced = true; // make sure default_value is visible directly if configured
             }
 
             this.addLookUpEntryIfNoneExists();
-            this.onLookupChange();
-            this.addParameterWatch();
             this.isDirty = false;
           });
-        } else if (this.create) {
-          var found = false;
+
+          return;
+        }
+
+        if (this.create) {
+          let found = false;
 
           if (this.variableType) {
-            angular.forEach(this.availableVariables, function (variablesCategory) {
-              angular.forEach(variablesCategory.types, function (variable) {
-                if (!found && variable && variable.id === this.variableType) {
-                  this.createVariableType(variable);
-                  found = true;
-                }
-              });
+            this.availableVariables.forEach((category) => {
+              if (!found) {
+                found = category.types.some((v) => v?.id === this.variableType);
+              }
             });
           }
 
@@ -455,23 +439,10 @@ export default defineComponent({
         }
       });
     },
-    // TODO
-    addParameterWatch() {
-      var index;
-
-      if (this.variable.typeMetadata && this.variable.parameters) {
-        for (index = 0; index < this.variableTemplate?.parameters.length; index++) {
-          deregisterWatches.push(this.$watch('editVariable.variableTemplate?.parameters[' + index + '].value', function (val, oldVal) {
-            if (val !== oldVal) {
-              this.isDirty = true;
-            }
-          }, true));
-        }
-      }
-    },
-    // TODO
     addLookUpEntryIfNoneExists() {
-      if (!this.variable.lookup_table || !angular.isArray(this.variable.lookup_table)) {
+      if (!this.variable.lookup_table
+        || !Array.isArray(this.variable.lookup_table)
+      ) {
         this.variable.lookup_table = [];
       }
 
@@ -479,163 +450,189 @@ export default defineComponent({
         this.variable.lookup_table.push({
           comparison: 'equals',
           match_value: '',
-          out_value: ''
+          out_value: '',
         });
       }
     },
-    // TODO
-    onLookupChange() {
-      var hasAll = true;
-      angular.forEach(this.variable.lookup_table, function (table) {
-        if (!table || !table.out_value) {
-          hasAll = false;
-        }
-      });
-
-      if (hasAll) {
-        this.addLookUpEntry();
-      }
-    },
-    // TODO
     addLookUpEntry() {
       this.variable.lookup_table.push({
         comparison: 'equals',
         match_value: '',
-        out_value: ''
+        out_value: '',
       });
       this.isDirty = true;
     },
-    // TODO
-    removeLookUpEntry(index) {
+    removeLookUpEntry(index: number) {
       if (index > -1) {
         this.variable.lookup_table.splice(index, 1);
         this.isDirty = true;
       }
     },
-    // TODO
-    createVariableType(variableTemplate) {
-      if (variableTemplate && variableTemplate.isDisabled) {
+    createVariableType(variableTemplate: Variable) {
+      if (variableTemplate && this.isVariableDisabled[variableTemplate.id]) {
         return;
       }
 
       this.chooseVariableType = false;
       this.editTitle = translate('TagManager_CreateNewVariable');
       this.variable = {
-        idSite: piwik.idSite,
-        name: this.model.suggestNameForType(variableTemplate.name),
+        idSite: Matomo.idSite,
+        name: VariablesStore.suggestNameForType(variableTemplate.name),
         type: variableTemplate.id,
         idcontainer: this.idContainer,
         idcontainerversion: this.idContainerVersion,
         parameters: {},
         default_value: '',
         lookup_table: [],
-        typeMetadata: variableTemplate
+        typeMetadata: variableTemplate,
       };
+
       this.addLookUpEntry();
-      this.addParameterWatch();
-      this.isDirty = true; // we directly make the create button visible as sometimes some variables do not have any settings
 
-      $timeout(function () {
-        var editVariable = $('.editVariable');
+      // we directly make the create button visible as sometimes some variables do not have
+      // any settings
+      this.isDirty = true;
 
-        if (editVariable.length && editVariable[0]) {
-          editVariable[0].scrollIntoView();
+      nextTick(() => {
+        if (!this.$refs.root) {
+          return;
         }
 
-        $('.editVariable #name').focus();
-      }, 1);
+        const root = this.$refs.root as HTMLElement;
+        root.scrollIntoView();
+
+        const name = root.querySelector('#name') as HTMLElement;
+        if (name) {
+          name.focus();
+        }
+      });
     },
-    // TODO
     cancel() {
       this.idVariable = null;
-      currentId = null;
-      var $search = $location.search();
-      delete $search.idVariable;
-      $location.search($search);
+
+      const newParams = { ...MatomoUrl.hashParsed.value };
+      delete newParams.idVariable;
+
+      MatomoUrl.updateHash(newParams);
     },
-    // TODO
     createVariable() {
       this.removeAnyVariableNotification();
 
-      if (!this.checkRequiredFieldsAreSet) {
+      if (!this.checkRequiredFieldsAreSet()) {
         return;
       }
 
-      this.isUpdating = true;
-      var tempVariable = angular.copy(this.variable);
-      tempVariable.name = encodeURIComponent(tempVariable.name);
-      tagManagerVariableModel.createOrUpdateVariable(tempVariable, 'TagManager.addContainerVariable').then(function (response) {
-        this.isUpdating = false;
+      this.isUpdatingVar = true;
 
-        if (!response || response.type === 'error' || !response.response) {
+      // TODO:
+      // is this still needed: tempVariable.name = encodeURIComponent(tempVariable.name);
+      VariablesStore.createOrUpdateVariable<{ value: number }>(
+        this.variable,
+        'TagManager.addContainerVariable',
+        this.idContainer,
+        this.idContainerVersion,
+        this.parameterValues,
+      ).then((response) => {
+        if (!response) {
           return;
         }
 
         this.isDirty = false;
-        var this.idVariable = response.response.value;
 
-        if ('function' === typeof this.onChangeVariable) {
-          this.model.reload(this.idContainer, this.idContainerVersion);
-          this.variable.idvariable = this.idVariable;
-          this.$emit('changeVariable', {
-            variable: this.variable
-          });
-          return;
-        }
+        const idVariable = response.value;
 
-        tagManagerVariableModel.reload(this.idContainer, this.idContainerVersion).then(function () {
-          if (piwik.helper.isAngularRenderingThePage()) {
-            var $search = $location.search();
-            $search.idVariable = this.idVariable;
-            $location.search($search);
-          } else {
-            $location.url('/?idVariable=' + this.idVariable);
+        VariablesStore.reload(this.idContainer, this.idContainerVersion).then(() => {
+          if (this.isEmbedded) {
+            this.variable.idvariable = idVariable;
+            this.$emit('changeVariable', {
+              variable: this.variable,
+            });
+            return;
           }
 
-          $timeout(function () {
-            this.showNotification(translate('TagManager_CreatedX', translate('TagManager_Variable')) + ' ' + translate('TagManager_WantToDeployThisChangeCreateVersion', '<a onclick="tagManagerHelper.createNewVersion()">', '</a>'), response.type);
+          if (Matomo.helper.isAngularRenderingThePage()) {
+            MatomoUrl.updateHash({
+              ...MatomoUrl.hashParsed.value,
+              idVariable: this.idVariable,
+            });
+          } else {
+            // TODO: compare w/ original behavior
+            MatomoUrl.updateHash({
+              idVariable: this.idVariable,
+            });
+          }
+
+          setTimeout(() => {
+            const createdX = translate('TagManager_CreatedX', translate('TagManager_Variable'));
+            const wantToRedeploy = translate(
+              'TagManager_WantToDeployThisChangeCreateVersion',
+              '<a onclick="tagManagerHelper.createNewVersion()">',
+              '</a>',
+            );
+
+            this.showNotification(`${createdX} ${wantToRedeploy}`, 'success');
           }, 200);
         });
-      }, function () {
-        this.isUpdating = false;
+      }).finally(() => {
+        this.isUpdatingVar = true;
       });
     },
-    // TODO
     setValueHasChanged() {
       this.isDirty = true;
     },
-    // TODO
     updateVariable() {
       this.removeAnyVariableNotification();
 
-      if (!this.checkRequiredFieldsAreSet) {
+      if (!this.checkRequiredFieldsAreSet()) {
         return;
       }
 
-      this.isUpdating = true;
-      var tempVariable = angular.copy(this.variable);
-      tempVariable.name = encodeURIComponent(tempVariable.name);
-      tagManagerVariableModel.createOrUpdateVariable(tempVariable, 'TagManager.updateContainerVariable').then(function (response) {
-        if (response.type === 'error') {
+      this.isUpdatingVar = true;
+
+      // TODO:
+      // is this still needed: tempVariable.name = encodeURIComponent(tempVariable.name);
+
+      VariablesStore.createOrUpdateVariable(
+        this.variable,
+        'TagManager.updateContainerVariable',
+        this.idContainer,
+        this.idContainerVersion,
+        this.parameterValues,
+      ).then((response) => {
+        if (!response) {
           return;
         }
 
-        var this.idVariable = this.variable.idvariable;
-
-        if ('function' === typeof this.onChangeVariable) {
+        if (this.isEmbedded) {
           this.$emit('changeVariable', {
-            variable: this.variable
+            variable: this.variable,
           });
           return;
         }
 
         this.isDirty = false;
         this.variable = {};
-        tagManagerVariableModel.reload(this.idContainer, this.idContainerVersion).then(function () {
-          this.init(this.idVariable);
+        VariablesStore.reload(this.idContainer, this.idContainerVersion).then(() => {
+          this.initIdVariable();
         });
-        this.showNotification(translate('TagManager_UpdatedX', translate('TagManager_Variable')) + ' ' + translate('TagManager_WantToDeployThisChangeCreateVersion', '<a onclick="tagManagerHelper.createNewVersion()">', '</a>'), response.type);
+
+        // TODO: test response failures for create/update
+        const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Variable'));
+        const wantToDeploy = translate(
+          'TagManager_WantToDeployThisChangeCreateVersion',
+          '<a onclick="tagManagerHelper.createNewVersion()">',
+          '</a>',
+        );
+
+        this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success');
       });
+    },
+    checkRequiredFieldsAreSet() {
+      if (!this.variable.name) {
+        this.showErrorFieldNotProvidedNotification(translate('General_Name'));
+        return false;
+      }
+      return true;
     },
   },
   computed: {
@@ -643,28 +640,32 @@ export default defineComponent({
       return VariablesStore.isLoading.value || AvailableComparisonsStore.isLoading.value;
     },
     isUpdating() {
-      return VariablesStore.isUpdating.value;
+      return VariablesStore.isUpdating.value || this.isUpdatingVar;
     },
     availableLookUpComparisons() {
       return AvailableComparisonsStore.comparisonOptions.value;
     },
-    // TODO
-    notification() {
-      var UI = require('piwik/UI');
-
-      return new UI.Notification();
+    isVariableTemplateDisabled() {
+      const result: Record<string, boolean> = {};
+      this.availableVariables.forEach((variableCategory) => {
+        variableCategory.types.forEach((variable) => {
+          result[variable.id] = !this.canUseCustomTemplates && variable.isCustomTemplate;
+        });
+      });
+      return result;
     },
-    // TODO
-    checkRequiredFieldsAreSet() {
-      var title;
-
-      if (!this.variable.name) {
-        title = _pk_translate('General_Name');
-        this.showErrorFieldNotProvidedNotification(title);
-        return false;
+    isVariableDisabled() {
+      return !this.canUseCustomTemplates && this.variable.typeMetadata?.isCustomTemplate;
+    },
+    variableParameterValues() {
+      if (!this.variable.typeMetadata?.parameters) {
+        return null;
       }
 
-      return true;
+      return this.parameterValues;
+    },
+    variableLookupTable() {
+      return this.variable.lookup_table;
     },
   },
 });

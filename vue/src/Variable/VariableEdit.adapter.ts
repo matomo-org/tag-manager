@@ -7,6 +7,7 @@
 
 import { createAngularJsAdapter } from 'CoreHome';
 import VariableEdit from './VariableEdit.vue';
+import { Variable } from '../types';
 
 export default createAngularJsAdapter({
   component: VariableEdit,
@@ -23,9 +24,26 @@ export default createAngularJsAdapter({
     variableType: {
       angularJsBind: '=?',
     },
+    isEmbedded: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      default(scope: any) {
+        return !!scope.onChangeVariable;
+      },
+    },
     onChangeVariable: {
       angularJsBind: '&?',
+      vue: 'changeVariable',
     },
   },
   directiveName: 'piwikVariableEdit',
+  events: {
+    onChangeVariable($event, vm, scope) {
+      scope.idVariable = ($event.variable as Variable).idvariable;
+    },
+  },
+  postCreate(vm, scope) {
+    scope.$on('$destroy', () => {
+      scope.idVariable = null;
+    });
+  },
 });

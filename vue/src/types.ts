@@ -15,16 +15,19 @@ export interface LookupTableEntry {
 export type LookupTable = LookupTableEntry[];
 
 export interface Variable {
+  // TODO: check api response
   id: string|number;
   name: string;
   description: string;
   is_pre_configured?: boolean;
   category: string;
-  idvariable: string;
+  idvariable: number;
   order: string;
   type: string;
   hasAdvancedSettings?: boolean;
   lookup_table: LookupTable;
+  isCustomTemplate?: boolean;
+  default_value: unknown;
 }
 
 export interface VariableCategory {
@@ -33,15 +36,43 @@ export interface VariableCategory {
 }
 
 export interface Draft {
-  idcontainerversion: string|number;
+  idcontainerversion: number;
   idcontainer: string;
-  idsite: string|number;
+  idsite: number;
   status: string;
   revision: number;
   name: string;
   created_date: string;
   created_date_pretty: string;
   description: string;
+  updated_date: string;
+  updated_date_pretty: string;
+}
+
+export interface Release {
+  environment: string;
+  idcontainer: string;
+  idcontainerrelease: number;
+  idcontainerversion: number;
+  idsite: number;
+  release_date: string;
+  release_date_pretty: string;
+  release_login: string;
+  status: string;
+  version_name: string;
+}
+
+export interface Version {
+  created_date: string;
+  created_date_pretty: string;
+  description: string;
+  environments: string[];
+  idcontainer: string;
+  idcontainerversion: number;
+  idsite: number;
+  name: string;
+  revision: number;
+  status: string;
   updated_date: string;
   updated_date_pretty: string;
 }
@@ -55,12 +86,11 @@ export interface Container {
   idcontainer: string;
   idsite: string|number;
   name: string;
-  releases: []; // TODO
+  releases: Release[];
   status: string;
   updated_date: string;
   updated_date_pretty: string;
-  versions: []; // TODO
-  // TODO
+  versions: Version[];
 }
 
 // temporary, will be converted later

@@ -56,16 +56,6 @@
             });
         }
 
-        function reload(idContainer, idContainerVersion)
-        {
-            model.variables = [];
-            fetchPromise = null;
-            variablesPromise = {};
-            comparisonPromise = null;
-
-            return fetchVariables(idContainer, idContainerVersion);
-        }
-
         function fetchAvailableVariables(idContext) {
             if (!variablesPromise[idContext]) {
                 var params = {method: 'TagManager.getAvailableVariableTypesInContext', idContext: idContext, filter_limit: '-1'};
@@ -84,58 +74,6 @@
             return preconfiguredVarsPromise;
         }
 
-        function suggestNameForType(templateId) {
-
-            var counter;
-            for (counter = 0; counter < 100; counter++) {
-                var name = templateId;
-                if (counter) {
-                    name = name + ' (' + counter + ')';
-                }
-                var isFree = true;
-                angular.forEach(model.variables, function (variable) {
-                    if (variable && variable.name === name) {
-                        isFree = false;
-                    }
-                });
-                if (isFree) {
-                    return name;
-                }
-            }
-        }
-
-        function findVariable(idContainer, idContainerVersion, idVariable) {
-
-            // before going through an API request we first try to find it in loaded variables
-            var found;
-            angular.forEach(model.variables, function (variable) {
-                if (!found && parseInt(variable.idvariable, 10) === idVariable) {
-                    found = variable;
-                }
-            });
-
-            if (found) {
-                var deferred = $q.defer();
-                deferred.resolve(found);
-                return deferred.promise;
-            }
-
-            // otherwise we fetch it via API
-            model.isLoading = true;
-
-            return piwikApi.fetch({
-                idVariable: idVariable,
-                idContainer: idContainer,
-                idContainerVersion: idContainerVersion,
-                method: 'TagManager.getContainerVariable', filter_limit: '-1'
-            }).then(function (record) {
-                model.isLoading = false;
-                return record;
-
-            }, function (error) {
-                model.isLoading = false;
-            });
-        }
 
         function deleteVariable(idContainer, idContainerVersion, idVariable) {
 
@@ -155,65 +93,6 @@
             });
         }
 
-        function createOrUpdateVariable(variable, method) {
-            variable = angular.copy(variable);
-            variable.method = method;
-
-            variable.parameters = {};
-
-            angular.forEach(variable.typeMetadata.parameters, function (setting) {
-                var value = setting.value;
-                if (value === false) {
-                    value = '0';
-                } else if (value === true) {
-                    value = '1';
-                }
-                variable.parameters[setting.name] = value;
-            });
-
-            delete variable.typeMetadata;
-
-            var map = {
-                idVariable: 'idvariable',
-                idContainer: 'idcontainer',
-                idContainerVersion: 'idcontainerversion',
-                lookupTable: 'lookup_table',
-                defaultValue: 'default_value'
-            };
-
-            angular.forEach(map, function (value, key) {
-                if (typeof variable[value] !== 'undefined') {
-                    variable[key] = variable[value];
-                    delete variable[value];
-                }
-            });
-
-            variable.lookupTable = filterLookupTable(variable.lookupTable);
-
-            var postParams = ['parameters', 'lookupTable'];
-            var post = {};
-            for (var i = 0; i < postParams.length; i++) {
-                var postParam = postParams[i];
-                if (typeof variable[postParam] !== 'undefined') {
-                    post[postParam] = variable[postParam];
-                    delete variable[postParam];
-                }
-            }
-
-            model.isUpdating = true;
-
-            piwikApi.withTokenInUrl();
-
-            return piwikApi.post(variable, post).then(function (response) {
-                model.isUpdating = false;
-
-                return {type: 'success', response: response};
-
-            }, function (error) {
-                model.isUpdating = false;
-                return {type: 'error', message: error};
-            });
-        }
 
     }
 })();
