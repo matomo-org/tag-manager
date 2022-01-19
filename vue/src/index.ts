@@ -9,6 +9,7 @@ import './ImportVersion/ImportVersion.adapter';
 import './VariableSelect/VariableSelect.adapter';
 import './VariableSelectType/VariableSelectType.adapter';
 import './Variable/VariableEdit.adapter';
+import './Variable/VariableList.adapter';
 
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
 export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
@@ -17,3 +18,4 @@ export { default as FieldTextareaVariable } from './Field/FieldTextareaVariable.
 export { default as FieldVariableTemplate } from './Field/FieldVariableTemplate.vue';
 export { default as FieldVariableTypeTemplate } from './Field/FieldVariableTypeTemplate.vue';
 export { default as VariableEdit } from './Variable/VariableEdit.vue';
+export { default as VariableList } from './Variable/VariableList.vue';

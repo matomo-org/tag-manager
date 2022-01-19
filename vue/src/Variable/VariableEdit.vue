@@ -6,11 +6,6 @@
 
 // TODO
 <todo>
-- conversion check (mistakes get fixed in quickmigrate)
-- property types
-- state types
-- look over template
-- look over component code
 - get to build
 - test in UI
 - create PR
