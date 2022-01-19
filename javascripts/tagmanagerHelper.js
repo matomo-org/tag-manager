@@ -63,36 +63,42 @@
         }});
     };
 
-    tagManagerHelper.editVariable = function ($scope, idContainer, idContainerVersion, idVariable, callback, variableType) {
-        if (!$scope) {
-            $scope = piwikHelper.getAngularDependency('$rootScope');
-        }
+    tagManagerHelper.editVariable = function (ignored, idContainer, idContainerVersion, idVariable, callback, variableType) {
+        var createVNode = Vue.createVNode;
+        var createVueApp = CoreHome.createVueApp;
+        var VariableEdit = TagManager.VariableEdit;
 
-        var childScope = $scope.$new(true, $scope);
-        var template = $('<div class="tag-ui-confirm"><div piwik-variable-edit id-container="idContainer" variable-type="variableType" on-change-variable="onChangeVariable(variable)" id-container-version="idContainerVersion" id-variable="idVariable"></div><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/></div>')
+        var template = $('<div class="tag-ui-confirm"><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/></div>')
 
-        var params = {
-            idContainer: idContainer,
-            idVariable: idVariable,
-            variableType: variableType,
-            idContainerVersion: parseInt(idContainerVersion, 10),
-            onChangeVariable: function (variable) {
+        var app = createVueApp({
+          render: function () {
+            return createVNode(VariableEdit, {
+              idContainer: idContainer,
+              idContainerVersion: parseInt(idContainerVersion, 10),
+              idVariable: idVariable,
+              variableType: variableType,
+              onChangeVariable: function (event) {
                 if ('function' === typeof callback) {
-                    callback(variable);
+                  callback(event.variable);
                 }
+
                 var modal = M.Modal.getInstance(template.parents('.modal.open'));
-
                 if (modal) {
-                    modal.close();
+                  modal.close();
                 }
-            }
-        };
+              },
+            });
+          },
+        });
+        app.mount(template.children('.tag-ui-confirm')[0]);
 
-        piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
-            childScope.$destroy();
+        piwikHelper.modalConfirm(template, {}, {
+          extraWide: true,
+          onCloseEnd: function () {
+            app.unmount();
             template.empty();
-        }});
+          },
+        });
     };
 
     tagManagerHelper.selectVariable = function (callback) {
