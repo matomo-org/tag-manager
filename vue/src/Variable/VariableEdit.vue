@@ -285,11 +285,11 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    idContainerVersion: Number,
-    variableType: {
+    idContainerVersion: {
       type: Number,
       required: true,
     },
+    variableType: Number,
     isEmbedded: {
       type: Boolean,
       default: false,

@@ -14,25 +14,79 @@ export interface LookupTableEntry {
 
 export type LookupTable = LookupTableEntry[];
 
+export interface VariableTypeMetadata {
+  category: string;
+  contexts: string[];
+  description: string;
+  hasAdvancedSettings: boolean;
+  help: string;
+  icon: string;
+  id: string;
+  isCustomTemplate: false;
+  name: string;
+  order: number;
+  parameters: Record<string, unknown>;
+}
+
 export interface Variable {
   // TODO: check api response
-  id: string|number;
+  created_date: string;
+  created_date_pretty: string;
+  default_value: string|number;
+  idcontainerversion: number;
+  idsite: number;
+  idvariable: number;
+  lookup_table: LookupTable;
   name: string;
   description: string;
-  is_pre_configured?: boolean;
-  category: string;
-  idvariable: number;
-  order: string;
+  status: string;
   type: string;
-  hasAdvancedSettings?: boolean;
-  lookup_table: LookupTable;
-  isCustomTemplate?: boolean;
-  default_value: unknown;
+  parameters: Record<string, string>;
+  updated_date: string;
+  updated_date_pretty: string;
+  typeMetadata: VariableTypeMetadata;
+}
+
+export interface ContainerVariableType {
+  category: string;
+  description: string;
+  id: string;
+  idvariable: string;
+  is_pre_configured: boolean;
+  name: string;
+  order: number;
+  type: string;
+}
+
+export interface ContainerVariableCategory {
+  name: string;
+  types: ContainerVariableType[];
+}
+
+export interface VariableType {
+  category: string;
+  contexts: string[];
+  description: string;
+  hasAdvancedSettings: boolean;
+  help: string;
+  icon: string;
+  id: string;
+  isCustomTemplate: boolean;
+  name: string;
+  order: number;
+  parameters: Record<string, unknown>;
 }
 
 export interface VariableCategory {
   name: string;
-  types: Variable[];
+  types: VariableType[];
+}
+
+export interface VariableReference {
+  referenceId: number;
+  referenceName: string;
+  referenceType: string;
+  referenceTypeName: string;
 }
 
 export interface Draft {

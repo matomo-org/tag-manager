@@ -551,29 +551,11 @@ class TagManager extends \Piwik\Plugin
 
         $jsFiles[] = "plugins/TagManager/javascripts/tagmanagerHelper.js";
 
-        $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/model.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/manage.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/manage.directive.js";
 
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/model.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/diff.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/manage.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/manage.directive.js";
 
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTrigger/model.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTrigger/manage.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTrigger/manage.directive.js";
 
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/model.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/manage.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/manage.directive.js";
 
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVariable/model.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVariable/manage.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageVariable/manage.directive.js";
 
-        $jsFiles[] = "plugins/TagManager/angularjs/manageInstallCode/manage-install-tag-code.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageInstallCode/manage-install-tag-code.directive.js";
 
         $jsFiles[] = "plugins/TagManager/angularjs/containerDashboard/container-dashboard.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/containerDashboard/container-dashboard.directive.js";

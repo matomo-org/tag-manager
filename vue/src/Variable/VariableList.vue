@@ -4,13 +4,7 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
 <todo>
-- conversion check (mistakes get fixed in quickmigrate)
-- property types
-- state types
-- look over template
-- look over component code
 - get to build
 - test in UI
 - create PR
@@ -46,7 +40,7 @@
               </span>
             </td>
           </tr>
-          <tr v-show="!isLoading && !this.variables.length">
+          <tr v-show="!isLoading && !variables.length">
             <td colspan="7">
               {{ translate('TagManager_NoVariablesFound') }}
               <a
@@ -61,22 +55,28 @@
           <tr
             :id="`variable${variable.idvariable}`"
             class="variables"
-            v-for="(variable, index) in sortedVariables"
-            :key="index"
+            v-for="variable in sortedVariables"
+            :key="variable.idvariable"
           >
             <td class="name">{{ variable.name }}</td>
             <td
               class="type"
               :title="variable.typeMetadata.description"
-            >{{ variable.typeMetadata.name }}</td>
-            <td class="lookupTable"><span
+            >
+              {{ variable.typeMetadata.name }}
+            </td>
+            <td class="lookupTable">
+              <span
                 class="icon-ok"
-                v-show="length(variable.lookup_table)"
-              /></td>
+                v-show="variable.lookup_table.length"
+              />
+            </td>
             <td
               class="lastUpdated"
               :title="translate('TagManager_CreatedOnX', variable.created_date_pretty)"
-            ><span>{{ variable.updated_date_pretty }}</span></td>
+            >
+              <span>{{ variable.updated_date_pretty }}</span>
+            </td>
             <td
               class="action"
               v-show="hasWriteAccess"
@@ -103,14 +103,20 @@
           class="createNewVariable"
           value
           @click="createVariable()"
-        ><span class="icon-add" /> {{ translate('TagManager_CreateNewVariable') }}</a>
+        >
+          <span class="icon-add" /> {{ translate('TagManager_CreateNewVariable') }}
+        </a>
       </div>
     </ContentBlock>
-    <h2 :title="translate('TagManager_PreConfiguredInfoTitle')">{{ translate('TagManager_PreconfiguredVariables') }} <span class="icon-help preconfiguredVariablesHelp" /></h2>
+    <h2 :title="translate('TagManager_PreConfiguredInfoTitle')">
+      {{ translate('TagManager_PreconfiguredVariables') }}
+      <span class="icon-help preconfiguredVariablesHelp" />
+    </h2>
     <div>
       <ul
         class="collection with-header"
-        v-for="variableCategory in containerVariables"
+        v-for="(variableCategory, index) in containerVariables"
+        :key="index"
       >
         <li class="collection-header">
           <h4>{{ variableCategory.name }}</h4>
@@ -119,21 +125,28 @@
           class="collection-item"
           v-show="variableTemplate.is_pre_configured"
           v-for="variableTemplate in variableCategory.types"
+          :key="variableTemplate.id"
         >
-          <span class="title">{{ variableTemplate.name }} <span class="variableId">{{ '{' + '{' + variableTemplate.id + '}' + '}' }}</span></span>
+          <span class="title">
+            {{ variableTemplate.name }}
+            <span class="variableId">{{ `{{${variableTemplate.id}}}` }}</span>
+          </span>
           <span
             class="secondary-content"
             v-show="!!variableTemplate.description"
-          ><i
+          >
+            <i
               class="icon-help"
               :title="variableTemplate.description"
-            /></span>
+            />
+          </span>
         </li>
       </ul>
     </div>
     <div
       class="ui-confirm"
       id="confirmDeleteVariable"
+      ref="confirmDeleteVariable"
     >
       <h2>{{ translate('TagManager_DeleteVariableConfirm') }} </h2>
       <input
@@ -150,6 +163,7 @@
     <div
       class="ui-confirm"
       id="confirmDeleteVariableNotPossible"
+      ref="confirmDeleteVariableNotPossible"
     >
       <h2>{{ translate('TagManager_VariableCannotBeDeleted') }}</h2>
       <p>
@@ -159,6 +173,7 @@
         <li
           class="collection-item"
           v-for="reference in variableReferences"
+          :key="`${reference.referenceType}.${reference.referenceId}`"
         >
           {{ reference.referenceTypeName }}: {{ reference.referenceName }}
         </li>
@@ -176,26 +191,34 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { DeepReadonly, defineComponent } from 'vue';
 import {
   translate,
   AjaxHelper,
   ContentBlock,
   ContentTable,
   Matomo,
+  MatomoUrl,
 } from 'CoreHome';
 import VariablesStore from './Variables.store';
 import AvailableComparisonsStore from '../AvailableComparisons.store';
+import { VariableReference, ContainerVariableCategory, Variable } from '../types';
 
 interface VariableListState {
-  hasWriteAccess: unknown; // TODO
-  variableReferences: unknown[]; // TODO
+  hasWriteAccess: boolean;
+  variableReferences: VariableReference[];
 }
 
 export default defineComponent({
   props: {
-    idContainer: null, // TODO,
-    idContainerVersion: null, // TODO,
+    idContainer: {
+      type: String,
+      required: true,
+    },
+    idContainerVersion: {
+      type: Number,
+      required: true,
+    },
   },
   components: {
     ContentBlock,
@@ -211,44 +234,50 @@ export default defineComponent({
   },
   created() {
     this.model.fetchVariables(this.idContainer, this.idContainerVersion);
-    this.model.fetchAvailableContainerVariables(this.idContainer, this.idContainerVersion).then(function (variables) {
+
+    AjaxHelper.fetch<ContainerVariableCategory[]>({
+      method: 'TagManager.getAvailableContainerVariables',
+      idContainer: this.idContainer,
+      idContainerVersion: this.idContainerVersion,
+      filter_limit: '-1',
+    }).then((variables) => {
       this.containerVariables = variables;
     });
   },
   methods: {
-    // TODO
     createVariable() {
       this.editVariable(0);
     },
-    // TODO
-    editVariable(idVariable) {
-      var $search = $location.search();
-      $search.idVariable = idVariable;
-      $location.search($search);
+    editVariable(idVariable: number) {
+      MatomoUrl.updateHash({
+        ...MatomoUrl.hashParsed.value,
+        idVariable,
+      });
     },
-    // TODO
-    deleteVariable(variable) {
-      piwikApi.fetch({
+    deleteVariable(variable: DeepReadonly<Variable>) {
+      AjaxHelper.fetch<VariableReference[]>({
         method: 'TagManager.getContainerVariableReferences',
         idContainer: this.idContainer,
         idContainerVersion: this.idContainerVersion,
-        idVariable: variable.idvariable
-      }).then(function (references) {
+        idVariable: variable.idvariable,
+      }).then((references) => {
         if (!references || !references.length) {
           this.variableReferences = [];
 
-          function doDelete() {
-            tagManagerVariableModel.deleteVariable(this.idContainer, this.idContainerVersion, variable.idvariable).then(function () {
-              tagManagerVariableModel.reload(this.idContainer, this.idContainerVersion);
-            });
-          }
-
-          piwik.helper.modalConfirm('#confirmDeleteVariable', {
-            yes: doDelete
+          Matomo.helper.modalConfirm(this.$refs.confirmDeleteVariable as HTMLElement, {
+            yes: () => {
+              VariablesStore.deleteVariable(
+                this.idContainer,
+                this.idContainerVersion,
+                variable.idvariable,
+              ).then(() => {
+                VariablesStore.reload(this.idContainer, this.idContainerVersion);
+              });
+            },
           });
         } else {
           this.variableReferences = references;
-          piwik.helper.modalConfirm('#confirmDeleteVariableNotPossible', {});
+          Matomo.helper.modalConfirm(this.$refs.confirmDeleteVariableNotPossible as HTMLElement, {});
         }
       });
     },
@@ -264,8 +293,15 @@ export default defineComponent({
       return VariablesStore.variables.value;
     },
     sortedVariables() {
-      // TODO orderBy(model.variables, 'name', false)
-    }
+      const sorted = [...this.variables];
+      sorted.sort((lhs, rhs) => {
+        if (lhs.name < rhs.name) {
+          return -1;
+        }
+        return lhs.name > rhs.name ? 1 : 0;
+      });
+      return sorted;
+    },
   },
 });
 </script>

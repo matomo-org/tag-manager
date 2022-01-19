@@ -6,7 +6,7 @@
  */
 
 import {reactive, computed, readonly, DeepReadonly} from 'vue';
-import { Variable } from '../types';
+import {Variable, VariableCategory} from '../types';
 import {AjaxHelper} from '../../../../../@types/CoreHome';
 
 interface VariablesStoreState {
@@ -37,7 +37,7 @@ class VariablesStore {
 
   private fetchPromise: Promise<Variable[]>|null = null;
 
-  private availableVariablesPromises: Record<string, Promise<DeepReadonly<Variable[]>>> = {};
+  private availableVariablesPromises: Record<string, Promise<DeepReadonly<VariableCategory[]>>> = {};
 
   fetchVariablesIfNotLoaded(idContainer: string|number, idContainerVersion: string|number) {
     if (!this.fetchPromise) {
@@ -100,7 +100,7 @@ class VariablesStore {
 
   fetchAvailableVariables(idContext: string): VariablesStore['availablePromises'][''] {
     if (this.availableVariablesPromises[idContext]) {
-      this.availableVariablesPromises[idContext] = AjaxHelper.fetch<Variable[]>({
+      this.availableVariablesPromises[idContext] = AjaxHelper.fetch<VariableCategory[]>({
         method: 'TagManager.getAvailableVariableTypesInContext',
         idContext,
         filter_limit: '-1',
@@ -171,6 +171,23 @@ class VariablesStore {
     this.fetchPromise = null;
     this.availableVariablesPromises = {};
     return this.fetchVariables(idContainer, idContainerVersion);
+  }
+
+  deleteVariable(idContainer: string, idContainerVersion: number, idVariable: number): Promise<void> {
+    this.privateState.isUpdating = true;
+    this.privateState.variables = [];
+
+    return AjaxHelper.fetch(
+      {
+        idVariable,
+        idContainerVersion,
+        idContainer,
+        method: 'TagManager.deleteContainerVariable',
+      },
+      { withTokenInUrl: true },
+    ).finally(() => {
+      this.privateState.isUpdating = false;
+    });
   }
 }
 

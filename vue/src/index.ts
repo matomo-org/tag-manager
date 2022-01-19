@@ -10,6 +10,7 @@ import './VariableSelect/VariableSelect.adapter';
 import './VariableSelectType/VariableSelectType.adapter';
 import './Variable/VariableEdit.adapter';
 import './Variable/VariableList.adapter';
+import './Variable/VariableManage.adapter';
 
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
 export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
@@ -19,3 +20,4 @@ export { default as FieldVariableTemplate } from './Field/FieldVariableTemplate.
 export { default as FieldVariableTypeTemplate } from './Field/FieldVariableTypeTemplate.vue';
 export { default as VariableEdit } from './Variable/VariableEdit.vue';
 export { default as VariableList } from './Variable/VariableList.vue';
+export { default as VariableManage } from './Variable/VariableManage.vue';
