@@ -215,6 +215,8 @@
             });
 
             delete variable.typeMetadata;
+            delete variable.created_date_pretty;
+            delete variable.updated_date_pretty;
 
             var map = {
                 idVariable: 'idvariable',
