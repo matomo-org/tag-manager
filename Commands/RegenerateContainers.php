@@ -26,5 +26,7 @@ class RegenerateContainers extends ConsoleCommand
         Piwik::postEvent('TagManager.regenerateContainerReleases');
 
         $output->writeln('<info>Done</info>');
+
+        return 0;
     }
 }
