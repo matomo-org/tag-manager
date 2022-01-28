@@ -119,7 +119,7 @@
                     <li class="menuTab" role="menuitem" ng-class="{'active': eventIndex === mtmDebug.selectedEventIndex}"
                     ng-repeat="event in mtmDebug.mtmEvents | orderBy:'$index':true" ng-hide="!event.tags.length && onlyfiredTags">
                         <a class="item ng-binding"  ng-click="mtmDebug.selectEvent(event.index0)" title="Time: {{ '{{ event.time }}'|raw }}. Trigger: '{{ '{{ event.metTrigger.name }}'|raw }}'">
-                            {{ '{{ event.index }}'|raw }}: {{ '{{ event.name }}'|raw }} <span title="Events with fired tags" ng-show="event.tags.length">
+                            {{ '{{ event.index }}'|raw }}: {{ '{{ event.name }}'|raw }} <span title="This tag was fired" ng-show="event.tags.length">
                                  <svg class="tm-icon tm-icon-checkmark"><use xlink:href="#tm-icon-checkmark"></use></svg>
                             </span>
                         </a>
