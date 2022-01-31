@@ -36,7 +36,7 @@
             </div>
 
             <div piwik-save-button
-                 class="createButton"
+                 class="createButton no-publish"
                  onconfirm="editVersion.edit ? editVersion.updateVersion() : editVersion.createVersion()"
                  data-disabled="editVersion.model.isUpdating || !editVersion.isDirty"
                  value="{{ editVersion.edit ? ('CoreUpdater_UpdateTitle'|translate) : ('TagManager_CreateVersionWithoutPublishing'|translate) }}"

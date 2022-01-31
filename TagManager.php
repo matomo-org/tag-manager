@@ -543,7 +543,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/angularjs/selectVariableType/select-variable-type.directive.less";
         $stylesheets[] = "plugins/TagManager/angularjs/form-field/field-variable-template.less";
         $stylesheets[] = "plugins/TagManager/angularjs/containerSelector/container-selector.less";
-        $stylesheets[] = "plugins/TagManager/angularjs/manageVersion/manage.directive.less";
+        $stylesheets[] = "plugins/TagManager/angularjs/manageVersion/edit.directive.less";
     }
 
     public function getJsFiles(&$jsFiles)
