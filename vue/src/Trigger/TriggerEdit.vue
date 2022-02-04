@@ -6,10 +6,6 @@
 
 // TODO
 <todo>
-- conversion check (mistakes get fixed in quickmigrate)
-- property types
-- state types
-- look over template
 - look over component code
 - get to build
 - test in UI
@@ -17,142 +13,207 @@
 </todo>
 
 <template>
-  <ContentBlock
-    class="editTrigger tagManagerManageEdit"
-    feature="Tag Manager"
-    :content-title="editTitle"
-  >
-    <p v-show="model.isLoading">
-      <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('General_LoadingData') }}</span>
-    </p>
-    <p v-show="model.isUpdating">
-      <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('TagManager_UpdatingData') }}</span>
-    </p>
-    <form
-      v-show="!chooseTriggerType && editTitle"
-      @submit="edit ? updateTrigger() : createTrigger()"
+  <div class="editTrigger tagManagerManageEdit" ref="root">
+    <ContentBlock
+      feature="Tag Manager"
+      :content-title="editTitle"
     >
-      <div>
-        <div
-          class="alert alert-warning"
-          v-show="trigger.typeMetadata.isDisabled"
-        >
-          {{ translate('TagManager_UseCustomTemplateCapabilityRequired', translate('TagManager_CapabilityUseCustomTemplates')) }}
-        </div>
+      <p v-show="isLoading">
+        <span class="loadingPiwik">
+          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          {{ translate('General_LoadingData') }}
+        </span>
+      </p>
+      <p v-show="isUpdating">
+        <span class="loadingPiwik">
+          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          {{ translate('TagManager_UpdatingData') }}
+        </span>
+      </p>
+      <form
+        v-show="!chooseTriggerType && editTitle"
+        @submit="edit ? updateTrigger() : createTrigger()"
+      >
         <div>
-          <Field
-            uicontrol="text"
-            name="type"
-            v-model="trigger.typeMetadata.name"
-            :disabled="true"
-            :inline-help="trigger.typeMetadata.description + ' ' + trigger.typeMetadata.help"
-            :title="translate('TagManager_Type')"
-          />
-        </div>
-        <div>
-          <Field
-            uicontrol="text"
-            name="name"
-            v-model="trigger.name"
-            @change="setValueHasChanged()"
-            :maxlength="50"
-            :title="translate('General_Name')"
-            :inline-help="translate('TagManager_TriggerNameHelp')"
-          />
-        </div>
-        <div
-          class="form-group row"
-          v-show="length(trigger.typeMetadata.parameters)"
-        >
-          <div class="col s12">
-            <h3>{{ translate('TagManager_ConfigureThisTrigger') }}</h3>
-          </div>
-        </div>
-        <div v-for="parameter in trigger.typeMetadata.parameters">
           <div
-            :piwik-form-field="parameter"
-            :all-settings="trigger.typeMetadata.parameters"
-          />
-        </div>
-        <div
-          class="form-group row"
-          v-show="trigger.typeMetadata.hasAdvancedSettings"
-        >
-          <div class="col s12">
-            <h3>{{ translate('TagManager_OnlyTriggerWhen') }} {{ translate('Goals_Optional') }}</h3>
+            class="alert alert-warning"
+            v-show="isTriggerDisabled"
+          >
+            {{ translate(
+                'TagManager_UseCustomTemplateCapabilityRequired',
+                translate('TagManager_CapabilityUseCustomTemplates'),
+              ) }}
           </div>
-        </div>
-        <div v-show="trigger.typeMetadata.hasAdvancedSettings">
-          <div class="form-group row multiple">
-            <div class="col s12 m12">
-              <div>
-                <p>
-                  {{ translate('TagManager_TriggerConditionsHelp') }}
-                </p>
-                <div
-                  class="condition condition{{ index }} multiple valign-wrapper"
-                  v-for="(index, condition) in trigger.conditions"
-                >
-                  <div>
-                    <Field
-                      uicontrol="expandable-select"
-                      name="condition_actual"
-                      class="innerFormField"
-                      v-model="trigger.conditions.index.actual"
-                      @change="setValueHasChanged()"
-                      :full-width="true"
-                      :options="availableVariables"
-                      :title="variableIdToName.condition.actual || condition.actual"
-                    />
-                  </div>
-                  <div>
-                    <Field
-                      uicontrol="select"
-                      name="condition_comparison"
-                      class="innerFormField comparisonField"
-                      v-model="trigger.conditions.index.comparison"
-                      @change="setValueHasChanged()"
-                      :full-width="true"
-                      :options="availableComparisons"
-                    />
-                  </div>
-                  <div>
-                    <Field
-                      uicontrol="text"
-                      name="condition_expected"
-                      class="innerFormField"
-                      v-model="trigger.conditions.index.expected"
-                      @change="setValueHasChanged(); onConditionChange()"
-                      :full-width="true"
-                    />
-                  </div>
-                  <span
-                    class="icon-minus valign"
-                    @click="removeConditionEntry(index)"
-                    v-show="!((index + 1) == (trigger.conditions|length))"
-                    :title="translate('General_Remove')"
-                  />
-                </div>
-              </div>
-              <p class="triggerConditionNode">{{ translate('TagManager_TriggerConditionNode') }}</p>
+          <div>
+            <Field
+              uicontrol="text"
+              name="type"
+              :model-value="trigger.typeMetadata?.name"
+              :disabled="true"
+              :inline-help="`${trigger.typeMetadata?.description} ${trigger.typeMetadata?.help}`"
+              :title="translate('TagManager_Type')"
+            />
+          </div>
+          <div>
+            <Field
+              uicontrol="text"
+              name="name"
+              :model-value="trigger.name"
+              @update:model-value="trigger.name = $event; setValueHasChanged()"
+              :maxlength="50"
+              :title="translate('General_Name')"
+              :inline-help="translate('TagManager_TriggerNameHelp')"
+            />
+          </div>
+          <div
+            class="form-group row"
+            v-show="trigger.typeMetadata?.parameters?.length"
+          >
+            <div class="col s12">
+              <h3>{{ translate('TagManager_ConfigureThisTrigger') }}</h3>
             </div>
           </div>
+          <div v-if="trigger">
+            <GroupedSettings
+              :settings="trigger.typeMetadata?.parameters || []"
+              :all-setting-values="parameterValues"
+              @change="parameterValues[$event.name] = $event.value"
+            />
+          </div>
+          <div
+            class="form-group row"
+            v-show="trigger.typeMetadata?.hasAdvancedSettings"
+          >
+            <div class="col s12">
+              <h3>{{ translate('TagManager_OnlyTriggerWhen') }} {{ translate('Goals_Optional') }}</h3>
+            </div>
+          </div>
+          <div v-show="trigger.typeMetadata?.hasAdvancedSettings">
+            <div class="form-group row multiple">
+              <div class="col s12 m12">
+                <div>
+                  <p>
+                    {{ translate('TagManager_TriggerConditionsHelp') }}
+                  </p>
+                  <div
+                    v-for="(condition, index) in trigger.conditions"
+                    :key="index"
+                    class="condition multiple valign-wrapper"
+                    :class="`condition${index}`"
+                  >
+                    <div>
+                      <Field
+                        uicontrol="expandable-select"
+                        name="condition_actual"
+                        class="innerFormField"
+                        :model-value="condition.actual"
+                        @update:model-value="condition.actual = $event; setValueHasChanged()"
+                        :full-width="true"
+                        :options="availableVariables"
+                        :title="variableIdToName.condition.actual || condition.actual"
+                      />
+                    </div>
+                    <div>
+                      <Field
+                        uicontrol="select"
+                        name="condition_comparison"
+                        class="innerFormField comparisonField"
+                        :model-value="condition.comparison"
+                        @update:model-value="condition.comparison = $event; setValueHasChanged()"
+                        :full-width="true"
+                        :options="availableComparisons"
+                      />
+                    </div>
+                    <div>
+                      <Field
+                        uicontrol="text"
+                        name="condition_expected"
+                        class="innerFormField"
+                        :model-value="condition.expected"
+                        @update:model-value="condition.expected = $event;
+                          setValueHasChanged(); onConditionChange()"
+                        :full-width="true"
+                      />
+                    </div>
+                    <span
+                      class="icon-minus valign"
+                      @click="removeConditionEntry(index)"
+                      v-show="!((index + 1) == (trigger.conditions.length))"
+                      :title="translate('General_Remove')"
+                    />
+                  </div>
+                </div>
+                <p class="triggerConditionNode">{{ translate('TagManager_TriggerConditionNode') }}</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="alert alert-warning"
+            v-show="isTriggerDisabled"
+          >
+            {{ translate(
+                'TagManager_UseCustomTemplateCapabilityRequired',
+                translate('TagManager_CapabilityUseCustomTemplates'),
+              ) }}
+          </div>
+          <SaveButton
+            class="createButton"
+            v-show="!isTriggerDisabled"
+            @confirm="edit ? updateTrigger() : createTrigger()"
+            :disabled="isUpdating || !isDirty"
+            :saving="isUpdating"
+            :value="saveButtonText"
+          />
+          <div
+            class="entityCancel"
+            v-show="!isEmbedded"
+          >
+            <a @click="cancel()">{{ translate('General_Cancel') }}</a>
+          </div>
         </div>
-        <div
-          class="alert alert-warning"
-          v-show="trigger.typeMetadata.isDisabled"
+      </form>
+      <div
+        id="confirmSelectTriggerType"
+        v-show="chooseTriggerType"
+      >
+        <ul
+          class="collection with-header"
+          v-for="(triggerCategory, index) in availableTriggers"
+          :key="index"
         >
-          {{ translate('TagManager_UseCustomTemplateCapabilityRequired', translate('TagManager_CapabilityUseCustomTemplates')) }}
-        </div>
-        <SaveButton
-          class="createButton"
-          v-show="!trigger.typeMetadata.isDisabled"
-          @confirm="edit ? updateTrigger() : createTrigger()"
-          :disabled="model.isUpdating || !isDirty"
-          :saving="model.isUpdating"
-          :value="edit ? translate('CoreUpdater_UpdateTitle') : translate('TagManager_CreateNewTrigger')"
-        >
-        </SaveButton>
+          <li class="collection-header">
+            <h4>{{ triggerCategory.name }}</h4>
+          </li>
+          <li
+            class="collection-item avatar"
+            @click="createTriggerType(triggerTemplate)"
+            :class="{
+              disabledTemplate: triggerTemplate.isDisabled,
+              [`templateType${ triggerTemplate.id}`]: true,
+            }"
+            v-for="(triggerTemplate, index) in triggerCategory.types"
+            :key="index"
+            :title="!triggerTemplate.isDisabled ? '' : collectionItemAvatarText"
+          >
+            <img
+              alt
+              class="circle"
+              :src="triggerTemplate.icon"
+              v-if="triggerTemplate.icon"
+            />
+            <span class="title">{{ triggerTemplate.name }}</span>
+            <p v-show="triggerTemplate.description">{{ triggerTemplate.description }}</p>
+            <span
+              class="secondary-content"
+              v-show="!!triggerTemplate.help"
+            >
+              <i
+                class="icon-help"
+                :title="triggerTemplate.help"
+              />
+            </span>
+          </li>
+        </ul>
         <div
           class="entityCancel"
           v-show="!isEmbedded"
@@ -160,77 +221,54 @@
           <a @click="cancel()">{{ translate('General_Cancel') }}</a>
         </div>
       </div>
-    </form>
-    <div
-      id="confirmSelectTriggerType"
-      v-show="chooseTriggerType"
-    >
-      <ul
-        class="collection with-header"
-        v-for="triggerCategory in availableTriggers"
-      >
-        <li class="collection-header">
-          <h4>{{ triggerCategory.name }}</h4>
-        </li>
-        <li
-          class="collection-item avatar templateType{{ triggerTemplate.id }}"
-          @click="createTriggerType(triggerTemplate)"
-          :class="{'disabledTemplate': triggerTemplate.isDisabled}"
-          v-for="triggerTemplate in triggerCategory.types"
-          :title="!triggerTemplate.isDisabled ? '' : translate('TagManager_UseCustomTemplateCapabilityRequired', translate('TagManager_CapabilityUseCustomTemplates'))"
-        >
-          <img
-            alt
-            class="circle"
-            :src="triggerTemplate.icon"
-            v-if="triggerTemplate.icon"
-          />
-          <span class="title">{{ triggerTemplate.name }}</span>
-          <p v-show="triggerTemplate.description">{{ triggerTemplate.description }}</p>
-          <span
-            class="secondary-content"
-            v-show="!!triggerTemplate.help"
-          ><i
-              class="icon-help"
-              :title="triggerTemplate.help"
-            /></span>
-          </img>
-        </li>
-      </ul>
-      <div
-        class="entityCancel"
-        v-show="!isEmbedded"
-      >
-        <a @click="cancel()">{{ translate('General_Cancel') }}</a>
-      </div>
-    </div>
-  </ContentBlock>
+    </ContentBlock>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { translate, AjaxHelper, ContentBlock } from 'CoreHome';
+import {
+  translate,
+  AjaxHelper,
+  ContentBlock,
+  Matomo, NotificationType, NotificationsStore,
+} from 'CoreHome';
 import { Field, FormField, SaveButton } from 'CorePluginsAdmin';
-
+import TriggersStore from './Triggers.store';
+import AvailableComparisonsStore from '../AvailableComparisons.store';
+import { Trigger } from '../types';
 
 interface TriggerEditState {
   isDirty: boolean;
-  model: unknown; // TODO
   chooseTriggerType: boolean;
-  isEmbedded: unknown; // TODO
   canUseCustomTemplates: unknown; // TODO
   availableTriggers: unknown[]; // TODO
   availableComparisons: unknown[]; // TODO
   availableVariables: unknown[]; // TODO
   variableIdToName: Record<string, unknown>; // TODO
+  trigger: Trigger;
+  editTitle: string;
+  parameterValues: Record<string, unknown>;
 }
+
+const notificationId = 'tagvariablemanagement';
 
 export default defineComponent({
   props: {
-    idTrigger: null, // TODO,
-    idContainer: null, // TODO,
-    idContainerVersion: null, // TODO,
-    newTriggerType: null, // TODO,
+    idTrigger: Number,
+    idContainer: {
+      type: String,
+      required: true,
+    },
+    idContainerVersion: {
+      type: Number,
+      required: true,
+    },
+    newTriggerType: String,
+    isEmbedded: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     ContentBlock,
@@ -241,57 +279,55 @@ export default defineComponent({
   data(): TriggerEditState {
     return {
       isDirty: false,
-      model: tagManagerTriggerModel,
       chooseTriggerType: false,
-      isEmbedded: !!this.onChangeTrigger,
-      canUseCustomTemplates: piwik.hasUserCapability('tagmanager_use_custom_templates'),
+      canUseCustomTemplates: Matomo.hasUserCapability('tagmanager_use_custom_templates'),
       availableTriggers: [],
       availableComparisons: [],
       availableVariables: [],
       variableIdToName: {},
+      editTitle: '',
+      trigger: {} as unknown as Trigger,
+      parameterValues: {},
     };
   },
   emits: ['changeTrigger'],
   created() {
     this.model.fetchAvailableComparisons().then(function (comparisons) {
-  this.availableComparisons = [];
-  angular.forEach(comparisons, function (comparison) {
-    this.availableComparisons.push({
-      key: comparison.id,
-      value: comparison.name
-    });
-  });
-});
-    this.model.fetchAvailableContainerVariables(this.idContainer, this.idContainerVersion).then(function (variables) {
-  this.availableVariables = [];
-  angular.forEach(variables, function (category) {
-    angular.forEach(category.types, function (variable) {
-      this.variableIdToName[variable.id] = variable.name;
-      this.availableVariables.push({
-        key: variable.id,
-        value: variable.name,
-        group: category.name
+      this.availableComparisons = [];
+      angular.forEach(comparisons, function (comparison) {
+        this.availableComparisons.push({
+          key: comparison.id,
+          value: comparison.name
+        });
       });
     });
-  });
-}); // needed for suggestNameForType() to make sure it is aware of all names
-    // needed for suggestNameForType() to make sure it is aware of all names
-this.model.fetchTriggersIfNotLoaded();
-    ;
-    this.$on('$destroy', function () {
-  this.idTrigger = null;
-  currentId = null;
-});
-    this.$watch('idTrigger', function (newValue, oldValue) {
-  if (newValue === null) {
-    return;
-  }
+    this.model.fetchAvailableContainerVariables(this.idContainer, this.idContainerVersion).then(function (variables) {
+      this.availableVariables = [];
+      angular.forEach(variables, function (category) {
+        angular.forEach(category.types, function (variable) {
+          this.variableIdToName[variable.id] = variable.name;
+          this.availableVariables.push({
+            key: variable.id,
+            value: variable.name,
+            group: category.name
+          });
+        });
+      });
+    });
 
-  if (newValue != oldValue || currentId === null) {
-    currentId = newValue;
-    init(newValue);
-  }
-});
+    // needed for suggestNameForType() to make sure it is aware of all names
+    this.model.fetchTriggersIfNotLoaded();
+
+    this.$watch('idTrigger', function (newValue, oldValue) {
+      if (newValue === null) {
+        return;
+      }
+
+      if (newValue != oldValue || currentId === null) {
+        currentId = newValue;
+        init(newValue);
+      }
+    });
   },
   methods: {
     // TODO
@@ -305,15 +341,15 @@ this.model.fetchTriggersIfNotLoaded();
       notification.remove(notificationId);
       notification.remove('ajaxHelper');
     },
-    // TODO
-    showNotification(message, context) {
-      var notification = this.notification;
-      notification.show(message, {
-        context: context,
-        id: notificationId
+    showNotification(message: string, context: NotificationType['context']) {
+      const notificationInstanceId = NotificationsStore.show({
+        message,
+        context,
+        id: notificationId,
+        type: 'transient',
       });
-      $timeout(function () {
-        notification.scrollToNotification();
+      setTimeout(() => {
+        NotificationsStore.scrollToNotification(notificationInstanceId);
       }, 200);
     },
     // TODO
@@ -546,18 +582,38 @@ this.model.fetchTriggersIfNotLoaded();
     },
   },
   computed: {
-    // TODO
-    notification() {
-      var UI = require('piwik/UI');
-
-      return new UI.Notification();
+    isLoading() {
+      return TriggersStore.isLoading.value || AvailableComparisonsStore.isLoading.value;
+    },
+    isUpdating() {
+      return TriggersStore.isUpdating.value || this.isUpdatingVar;
+    },
+    create() {
+      return this.idTrigger === 0;
+    },
+    edit() {
+      return !this.create;
+    },
+    isTriggerDisabled() {
+      // TODO
+    },
+    saveButtonText() {
+      return this.edit
+        ? translate('CoreUpdater_UpdateTitle')
+        : translate('TagManager_CreateNewTrigger');
+    },
+    collectionItemAvatarText() {
+      return translate(
+        'TagManager_UseCustomTemplateCapabilityRequired',
+        translate('TagManager_CapabilityUseCustomTemplates'),
+      );
     },
     // TODO
     checkRequiredFieldsAreSet() {
       var title;
 
       if (!this.trigger.name) {
-        title = _pk_translate('General_Name');
+        title = translate('General_Name');
         this.showErrorFieldNotProvidedNotification(title);
         return false;
       }

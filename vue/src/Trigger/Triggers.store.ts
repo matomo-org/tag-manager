@@ -55,3 +55,5 @@ class TriggersStore {
     });
   }
 }
+
+export default new TriggersStore();
