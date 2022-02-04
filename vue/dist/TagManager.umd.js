@@ -789,74 +789,78 @@ VariableSelectTypevue_type_script_lang_ts.render = VariableSelectTypevue_type_te
     });
   }
 }));
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Variable/VariableEdit.vue?vue&type=template&id=ef3b0b58
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Variable/VariableEdit.vue?vue&type=template&id=7016b538
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_1 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_1 = {
+  class: "editVariable tagManagerManageEdit",
+  ref: "root"
+};
+var VariableEditvue_type_template_id_7016b538_hoisted_2 = {
   class: "loadingPiwik"
 };
 
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("img", {
+var VariableEditvue_type_template_id_7016b538_hoisted_3 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("img", {
   src: "plugins/Morpheus/images/loading-blue.gif"
 }, null, -1);
 
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_3 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_4 = {
   class: "loadingPiwik"
 };
 
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_4 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("img", {
+var VariableEditvue_type_template_id_7016b538_hoisted_5 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("img", {
   src: "plugins/Morpheus/images/loading-blue.gif"
 }, null, -1);
 
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_5 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_6 = {
   key: 0,
   class: "form-group row"
 };
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_6 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_7 = {
   class: "col s12"
 };
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_7 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_8 = {
   key: 1
 };
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_8 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_9 = {
   class: "form-group row"
 };
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_9 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_10 = {
   class: "col s12"
 };
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_10 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_11 = {
   class: "form-group row"
 };
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_11 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_12 = {
   class: "col s12 m12"
 };
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_12 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_13 = {
   for: "lookup_table"
 };
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_13 = ["onClick", "title"];
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_14 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_14 = ["onClick", "title"];
+var VariableEditvue_type_template_id_7016b538_hoisted_15 = {
   class: "entityCancel"
 };
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_15 = {
+var VariableEditvue_type_template_id_7016b538_hoisted_16 = {
   id: "confirmSelectVariableType"
 };
-var VariableEditvue_type_template_id_ef3b0b58_hoisted_16 = {
+var _hoisted_17 = {
   class: "collection-header"
 };
-var _hoisted_17 = ["onClick", "title"];
-var _hoisted_18 = ["src"];
-var _hoisted_19 = {
+var _hoisted_18 = ["onClick", "title"];
+var _hoisted_19 = ["src"];
+var _hoisted_20 = {
   class: "title"
 };
-var _hoisted_20 = {
+var _hoisted_21 = {
   class: "secondary-content"
 };
-var _hoisted_21 = ["title"];
-var _hoisted_22 = {
+var _hoisted_22 = ["title"];
+var _hoisted_23 = {
   class: "entityCancel"
 };
-function VariableEditvue_type_template_id_ef3b0b58_render(_ctx, _cache, $props, $setup, $data, $options) {
+function VariableEditvue_type_template_id_7016b538_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
   var _component_Field = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("Field");
@@ -867,16 +871,14 @@ function VariableEditvue_type_template_id_ef3b0b58_render(_ctx, _cache, $props, 
 
   var _component_ContentBlock = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("ContentBlock");
 
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])(_component_ContentBlock, {
-    class: "editVariable tagManagerManageEdit",
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableEditvue_type_template_id_7016b538_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_ContentBlock, {
     feature: "Tag Manager",
-    "content-title": _ctx.editTitle,
-    ref: "root"
+    "content-title": _ctx.editTitle
   }, {
     default: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withCtx"])(function () {
-      var _ctx$variable$paramet;
+      var _ctx$variable$typeMet, _ctx$variable$typeMet2, _ctx$variable$typeMet3;
 
-      return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", VariableEditvue_type_template_id_ef3b0b58_hoisted_1, [VariableEditvue_type_template_id_ef3b0b58_hoisted_2, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_LoadingData')), 1)])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.isLoading]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", VariableEditvue_type_template_id_ef3b0b58_hoisted_3, [VariableEditvue_type_template_id_ef3b0b58_hoisted_4, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_UpdatingData')), 1)])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.isUpdating]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("form", {
+      return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", VariableEditvue_type_template_id_7016b538_hoisted_2, [VariableEditvue_type_template_id_7016b538_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_LoadingData')), 1)])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.isLoading]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", VariableEditvue_type_template_id_7016b538_hoisted_4, [VariableEditvue_type_template_id_7016b538_hoisted_5, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_UpdatingData')), 1)])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.isUpdating]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("form", {
         onSubmit: _cache[8] || (_cache[8] = function ($event) {
           return _ctx.edit ? _ctx.updateVariable() : _ctx.createVariable();
         })
@@ -890,7 +892,7 @@ function VariableEditvue_type_template_id_ef3b0b58_render(_ctx, _cache, $props, 
           return _ctx.variable.name = $event;
         }),
         disabled: true,
-        "inline-help": "".concat(_ctx.variable.description || '', " ").concat(_ctx.variable.help || ''),
+        "inline-help": _ctx.typeInlineHelp,
         title: _ctx.translate('TagManager_Type')
       }, null, 8, ["modelValue", "inline-help", "title"])]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_Field, {
         uicontrol: "text",
@@ -904,13 +906,13 @@ function VariableEditvue_type_template_id_ef3b0b58_render(_ctx, _cache, $props, 
         maxlength: 50,
         title: _ctx.translate('General_Name'),
         "inline-help": _ctx.translate('TagManager_VariableNameHelp')
-      }, null, 8, ["model-value", "title", "inline-help"])]), (_ctx$variable$paramet = _ctx.variable.parameters) !== null && _ctx$variable$paramet !== void 0 && _ctx$variable$paramet.length ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableEditvue_type_template_id_ef3b0b58_hoisted_5, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_ef3b0b58_hoisted_6, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h3", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_ConfigureThisVariable')), 1)])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), _ctx.variable ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableEditvue_type_template_id_ef3b0b58_hoisted_7, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_GroupedSettings, {
-        settings: _ctx.variable.parameters,
+      }, null, 8, ["model-value", "title", "inline-help"])]), (_ctx$variable$typeMet = _ctx.variable.typeMetadata) !== null && _ctx$variable$typeMet !== void 0 && (_ctx$variable$typeMet2 = _ctx$variable$typeMet.parameters) !== null && _ctx$variable$typeMet2 !== void 0 && _ctx$variable$typeMet2.length ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableEditvue_type_template_id_7016b538_hoisted_6, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_7016b538_hoisted_7, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h3", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_ConfigureThisVariable')), 1)])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), _ctx.variable ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableEditvue_type_template_id_7016b538_hoisted_8, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_GroupedSettings, {
+        settings: ((_ctx$variable$typeMet3 = _ctx.variable.typeMetadata) === null || _ctx$variable$typeMet3 === void 0 ? void 0 : _ctx$variable$typeMet3.parameters) || [],
         "all-setting-values": _ctx.parameterValues,
         onChange: _cache[2] || (_cache[2] = function ($event) {
           return _ctx.parameterValues[$event.name] = $event.value;
         })
-      }, null, 8, ["settings", "all-setting-values"])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_ef3b0b58_hoisted_8, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_ef3b0b58_hoisted_9, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h3", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+      }, null, 8, ["settings", "all-setting-values"])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_7016b538_hoisted_9, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_7016b538_hoisted_10, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h3", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
         class: "showAdvancedSettings",
         onClick: _cache[3] || (_cache[3] = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withModifiers"])(function ($event) {
           return _ctx.showAdvanced = true;
@@ -932,7 +934,7 @@ function VariableEditvue_type_template_id_ef3b0b58_render(_ctx, _cache, $props, 
         }),
         title: _ctx.translate('TagManager_DefaultValue'),
         "inline-help": _ctx.translate('TagManager_DefaultValueHelp')
-      }, null, 8, ["model-value", "title", "inline-help"])]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_ef3b0b58_hoisted_10, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_ef3b0b58_hoisted_11, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("label", VariableEditvue_type_template_id_ef3b0b58_hoisted_12, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_LookupTableTitle')), 1), (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(_ctx.variable.lookup_table, function (lookup, index) {
+      }, null, 8, ["model-value", "title", "inline-help"])]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_7016b538_hoisted_11, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_7016b538_hoisted_12, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("label", VariableEditvue_type_template_id_7016b538_hoisted_13, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_LookupTableTitle')), 1), (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(_ctx.variable.lookup_table, function (lookup, index) {
         return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", {
           key: index,
           class: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["normalizeClass"])("lookupTable lookupTable".concat(index, " multiple valign-wrapper"))
@@ -979,7 +981,7 @@ function VariableEditvue_type_template_id_ef3b0b58_render(_ctx, _cache, $props, 
             return _ctx.removeLookUpEntry(index);
           },
           title: _ctx.translate('General_Remove')
-        }, null, 8, VariableEditvue_type_template_id_ef3b0b58_hoisted_13)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true)], 2);
+        }, null, 8, VariableEditvue_type_template_id_7016b538_hoisted_14)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true)], 2);
       }), 128))])])])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.showAdvanced && _ctx.variable.hasAdvancedSettings]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", {
         class: "alert alert-warning"
       }, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_UseCustomTemplateCapabilityRequired', _ctx.translate('TagManager_CapabilityUseCustomTemplates'))), 513), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.isVariableDisabled]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_SaveButton, {
@@ -990,15 +992,15 @@ function VariableEditvue_type_template_id_ef3b0b58_render(_ctx, _cache, $props, 
         disabled: _ctx.isUpdating || !_ctx.isDirty,
         saving: _ctx.isUpdating,
         value: _ctx.edit ? _ctx.translate('CoreUpdater_UpdateTitle') : _ctx.translate('TagManager_CreateNewVariable')
-      }, null, 8, ["disabled", "saving", "value"]), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.isVariableDisabled]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_ef3b0b58_hoisted_14, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+      }, null, 8, ["disabled", "saving", "value"]), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.isVariableDisabled]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_7016b538_hoisted_15, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
         onClick: _cache[7] || (_cache[7] = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withModifiers"])(function ($event) {
           return _ctx.cancel();
         }, ["prevent"]))
-      }, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_Cancel')), 1)], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.isEmbedded]])])], 544), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.chooseVariableType && _ctx.editTitle]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_ef3b0b58_hoisted_15, [(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(_ctx.availableVariables, function (variableCategory, index) {
+      }, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_Cancel')), 1)], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.isEmbedded]])])], 544), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.chooseVariableType && _ctx.editTitle]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VariableEditvue_type_template_id_7016b538_hoisted_16, [(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(_ctx.availableVariables, function (variableCategory, index) {
         return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("ul", {
           class: "collection with-header",
           key: index
-        }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", VariableEditvue_type_template_id_ef3b0b58_hoisted_16, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h4", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(variableCategory.name), 1)]), (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(variableCategory.types, function (variableTemplate, index) {
+        }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", _hoisted_17, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h4", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(variableCategory.name), 1)]), (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(variableCategory.types, function (variableTemplate, index) {
           return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("li", {
             key: index,
             class: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["normalizeClass"])(["collection-item avatar", _defineProperty({
@@ -1013,21 +1015,21 @@ function VariableEditvue_type_template_id_ef3b0b58_render(_ctx, _cache, $props, 
             alt: "",
             class: "circle",
             src: variableTemplate.icon
-          }, null, 8, _hoisted_18)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", _hoisted_19, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(variableTemplate.name), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(variableTemplate.description), 513), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], variableTemplate.description]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", _hoisted_20, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("i", {
+          }, null, 8, _hoisted_19)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", _hoisted_20, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(variableTemplate.name), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(variableTemplate.description), 513), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], variableTemplate.description]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", _hoisted_21, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("i", {
             class: "icon-help",
             title: variableTemplate.help
-          }, null, 8, _hoisted_21)], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !!variableTemplate.help]])], 10, _hoisted_17);
+          }, null, 8, _hoisted_22)], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !!variableTemplate.help]])], 10, _hoisted_18);
         }), 128))]);
-      }), 128)), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", _hoisted_22, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+      }), 128)), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", _hoisted_23, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
         onClick: _cache[9] || (_cache[9] = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withModifiers"])(function ($event) {
           return _ctx.cancel();
         }, ["prevent"]))
       }, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_Cancel')), 1)], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.isEmbedded]])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.chooseVariableType]])];
     }),
     _: 1
-  }, 8, ["content-title"]);
+  }, 8, ["content-title"])], 512);
 }
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Variable/VariableEdit.vue?vue&type=template&id=ef3b0b58
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Variable/VariableEdit.vue?vue&type=template&id=7016b538
 
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/Variable/Variables.store.ts
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || Variables_store_unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -1169,7 +1171,7 @@ var Variables_store_VariablesStore = /*#__PURE__*/function () {
   }, {
     key: "fetchAvailableVariables",
     value: function fetchAvailableVariables(idContext) {
-      if (this.availableVariablesPromises[idContext]) {
+      if (!this.availableVariablesPromises[idContext]) {
         this.availableVariablesPromises[idContext] = external_CoreHome_["AjaxHelper"].fetch({
           method: 'TagManager.getAvailableVariableTypesInContext',
           idContext: idContext,
@@ -1193,7 +1195,7 @@ var Variables_store_VariablesStore = /*#__PURE__*/function () {
           name = "".concat(name, " (").concat(counter, ")");
         }
 
-        var isFree = _this4.variables.value.some(function (v) {
+        var isFree = !_this4.variables.value.some(function (v) {
           return v.name === name;
         });
 
@@ -1236,6 +1238,8 @@ var Variables_store_VariablesStore = /*#__PURE__*/function () {
         return l && l.out_value && l.comparison;
       });
       return external_CoreHome_["AjaxHelper"].post({
+        idVariable: variable.idvariable,
+        method: method,
         idContainer: idContainer,
         idContainerVersion: idContainerVersion,
         type: variable.type,
@@ -1396,8 +1400,6 @@ var notificationId = 'tagvariablemanagement';
       canUseCustomTemplates: external_CoreHome_["Matomo"].hasUserCapability('tagmanager_use_custom_templates'),
       availableVariables: [],
       editTitle: '',
-      create: this.idVariable === 0,
-      edit: !this.create,
       variable: {},
       parameterValues: {},
       isUpdatingVar: false
@@ -1407,10 +1409,7 @@ var notificationId = 'tagvariablemanagement';
   created: function created() {
     // needed for suggestNameForType() to make sure it is aware of all names
     Variables_store.fetchVariablesIfNotLoaded(this.idContainer, this.idContainerVersion);
-
-    if (this.idVariable) {
-      this.initIdVariable();
-    }
+    this.initIdVariable();
   },
   watch: {
     idVariable: function idVariable(newValue) {
@@ -1485,7 +1484,9 @@ var notificationId = 'tagvariablemanagement';
             }
 
             _this.variable = Object(external_CoreHome_["clone"])(variable);
-            _this.parameterValues = {};
+            _this.parameterValues = Object.fromEntries(variable.typeMetadata.parameters.map(function (s) {
+              return [s.name, s.value];
+            }));
 
             if (_this.variable.lookup_table && _this.variable.lookup_table.length || _this.variable.default_value) {
               _this.showAdvanced = true; // make sure lookup_table is visible directly if configured
@@ -1560,12 +1561,13 @@ var notificationId = 'tagvariablemanagement';
         type: variableTemplate.id,
         idcontainer: this.idContainer,
         idcontainerversion: this.idContainerVersion,
-        parameters: {},
         default_value: '',
         lookup_table: [],
-        typeMetadata: variableTemplate,
-        description: ''
+        typeMetadata: variableTemplate
       };
+      this.parameterValues = Object.fromEntries(variableTemplate.parameters.map(function (s) {
+        return [s.name, s.value];
+      }));
       this.addLookUpEntry(); // we directly make the create button visible as sometimes some variables do not have
       // any settings
 
@@ -1585,7 +1587,6 @@ var notificationId = 'tagvariablemanagement';
       });
     },
     cancel: function cancel() {
-      // this.idVariable = null; TODO remove if not needed
       var newParams = Object.assign({}, external_CoreHome_["MatomoUrl"].hashParsed.value);
       delete newParams.idVariable;
       external_CoreHome_["MatomoUrl"].updateHash(newParams);
@@ -1599,10 +1600,10 @@ var notificationId = 'tagvariablemanagement';
         return;
       }
 
-      this.isUpdatingVar = true; // TODO:
-      // is this still needed: tempVariable.name = encodeURIComponent(tempVariable.name);
-
-      Variables_store.createOrUpdateVariable(this.variable, 'TagManager.addContainerVariable', this.idContainer, this.idContainerVersion, this.parameterValues).then(function (response) {
+      this.isUpdatingVar = true;
+      Variables_store.createOrUpdateVariable(Object.assign(Object.assign({}, this.variable), {}, {
+        name: encodeURIComponent(this.variable.name)
+      }), 'TagManager.addContainerVariable', this.idContainer, this.idContainerVersion, this.parameterValues).then(function (response) {
         if (!response) {
           return;
         }
@@ -1622,12 +1623,12 @@ var notificationId = 'tagvariablemanagement';
 
           if (external_CoreHome_["Matomo"].helper.isAngularRenderingThePage()) {
             external_CoreHome_["MatomoUrl"].updateHash(Object.assign(Object.assign({}, external_CoreHome_["MatomoUrl"].hashParsed.value), {}, {
-              idVariable: _this3.idVariable
+              idVariable: idVariable
             }));
           } else {
             // TODO: compare w/ original behavior
             external_CoreHome_["MatomoUrl"].updateHash({
-              idVariable: _this3.idVariable
+              idVariable: idVariable
             });
           }
 
@@ -1639,7 +1640,7 @@ var notificationId = 'tagvariablemanagement';
           }, 200);
         });
       }).finally(function () {
-        _this3.isUpdatingVar = true;
+        _this3.isUpdatingVar = false;
       });
     },
     setValueHasChanged: function setValueHasChanged() {
@@ -1654,10 +1655,10 @@ var notificationId = 'tagvariablemanagement';
         return;
       }
 
-      this.isUpdatingVar = true; // TODO:
-      // is this still needed: tempVariable.name = encodeURIComponent(tempVariable.name);
-
-      Variables_store.createOrUpdateVariable(this.variable, 'TagManager.updateContainerVariable', this.idContainer, this.idContainerVersion, this.parameterValues).then(function (response) {
+      this.isUpdatingVar = true;
+      Variables_store.createOrUpdateVariable(Object.assign(Object.assign({}, this.variable), {}, {
+        name: encodeURIComponent(this.variable.name)
+      }), 'TagManager.updateContainerVariable', this.idContainer, this.idContainerVersion, this.parameterValues).then(function (response) {
         if (!response) {
           return;
         }
@@ -1671,15 +1672,15 @@ var notificationId = 'tagvariablemanagement';
         }
 
         _this4.isDirty = false;
-        _this4.variable = {};
         Variables_store.reload(_this4.idContainer, _this4.idContainerVersion).then(function () {
           _this4.initIdVariable();
-        }); // TODO: test response failures for create/update
-
+        });
         var updatedAt = Object(external_CoreHome_["translate"])('TagManager_UpdatedX', Object(external_CoreHome_["translate"])('TagManager_Variable'));
         var wantToDeploy = Object(external_CoreHome_["translate"])('TagManager_WantToDeployThisChangeCreateVersion', '<a onclick="tagManagerHelper.createNewVersion()">', '</a>');
 
         _this4.showNotification("".concat(updatedAt, " ").concat(wantToDeploy), 'success');
+      }).finally(function () {
+        _this4.isUpdatingVar = false;
       });
     },
     checkRequiredFieldsAreSet: function checkRequiredFieldsAreSet() {
@@ -1692,6 +1693,19 @@ var notificationId = 'tagvariablemanagement';
     }
   },
   computed: {
+    typeInlineHelp: function typeInlineHelp() {
+      var _this$variable$typeMe, _this$variable$typeMe2;
+
+      var desc = ((_this$variable$typeMe = this.variable.typeMetadata) === null || _this$variable$typeMe === void 0 ? void 0 : _this$variable$typeMe.description) || '';
+      var help = ((_this$variable$typeMe2 = this.variable.typeMetadata) === null || _this$variable$typeMe2 === void 0 ? void 0 : _this$variable$typeMe2.help) || '';
+      return "".concat(desc, " ").concat(help);
+    },
+    create: function create() {
+      return this.idVariable === 0;
+    },
+    edit: function edit() {
+      return !this.create;
+    },
     isLoading: function isLoading() {
       return Variables_store.isLoading.value || AvailableComparisons_store.isLoading.value;
     },
@@ -1713,14 +1727,14 @@ var notificationId = 'tagvariablemanagement';
       return result;
     },
     isVariableDisabled: function isVariableDisabled() {
-      var _this$variable$typeMe;
+      var _this$variable$typeMe3;
 
-      return !this.canUseCustomTemplates && ((_this$variable$typeMe = this.variable.typeMetadata) === null || _this$variable$typeMe === void 0 ? void 0 : _this$variable$typeMe.isCustomTemplate);
+      return !this.canUseCustomTemplates && ((_this$variable$typeMe3 = this.variable.typeMetadata) === null || _this$variable$typeMe3 === void 0 ? void 0 : _this$variable$typeMe3.isCustomTemplate);
     },
     variableParameterValues: function variableParameterValues() {
-      var _this$variable$typeMe2;
+      var _this$variable$typeMe4;
 
-      if (!((_this$variable$typeMe2 = this.variable.typeMetadata) !== null && _this$variable$typeMe2 !== void 0 && _this$variable$typeMe2.parameters)) {
+      if (!((_this$variable$typeMe4 = this.variable.typeMetadata) !== null && _this$variable$typeMe4 !== void 0 && _this$variable$typeMe4.parameters)) {
         return null;
       }
 
@@ -1737,7 +1751,7 @@ var notificationId = 'tagvariablemanagement';
 
 
 
-VariableEditvue_type_script_lang_ts.render = VariableEditvue_type_template_id_ef3b0b58_render
+VariableEditvue_type_script_lang_ts.render = VariableEditvue_type_template_id_7016b538_render
 
 /* harmony default export */ var VariableEdit = (VariableEditvue_type_script_lang_ts);
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/Variable/VariableEdit.adapter.ts
@@ -1849,7 +1863,7 @@ var VariableListvue_type_template_id_13cf24a8_hoisted_22 = /*#__PURE__*/Object(e
   class: "icon-help preconfiguredVariablesHelp"
 }, null, -1);
 
-var _hoisted_23 = {
+var VariableListvue_type_template_id_13cf24a8_hoisted_23 = {
   class: "collection-header"
 };
 var _hoisted_24 = {
@@ -1933,7 +1947,7 @@ function VariableListvue_type_template_id_13cf24a8_render(_ctx, _cache, $props, 
     return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("ul", {
       class: "collection with-header",
       key: index
-    }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", _hoisted_23, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h4", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(variableCategory.name), 1)]), (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(variableCategory.types, function (variableTemplate) {
+    }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", VariableListvue_type_template_id_13cf24a8_hoisted_23, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h4", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(variableCategory.name), 1)]), (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(variableCategory.types, function (variableTemplate) {
       return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])((Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("li", {
         class: "collection-item",
         key: variableTemplate.id
@@ -2107,32 +2121,32 @@ VariableListvue_type_script_lang_ts.render = VariableListvue_type_template_id_13
   },
   directiveName: 'piwikVariableList'
 }));
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Variable/VariableManage.vue?vue&type=template&id=64cf6318
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Variable/VariableManage.vue?vue&type=template&id=1344dd73
 
-var VariableManagevue_type_template_id_64cf6318_hoisted_1 = {
+var VariableManagevue_type_template_id_1344dd73_hoisted_1 = {
   class: "manageVariable"
 };
-var VariableManagevue_type_template_id_64cf6318_hoisted_2 = {
+var VariableManagevue_type_template_id_1344dd73_hoisted_2 = {
   key: 0
 };
-var VariableManagevue_type_template_id_64cf6318_hoisted_3 = {
+var VariableManagevue_type_template_id_1344dd73_hoisted_3 = {
   key: 1
 };
-function VariableManagevue_type_template_id_64cf6318_render(_ctx, _cache, $props, $setup, $data, $options) {
+function VariableManagevue_type_template_id_1344dd73_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_VariableList = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("VariableList");
 
   var _component_VariableEdit = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("VariableEdit");
 
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableManagevue_type_template_id_64cf6318_hoisted_1, [!_ctx.editMode ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableManagevue_type_template_id_64cf6318_hoisted_2, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_VariableList, {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableManagevue_type_template_id_1344dd73_hoisted_1, [!_ctx.editMode ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableManagevue_type_template_id_1344dd73_hoisted_2, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_VariableList, {
     "id-container-version": _ctx.idContainerVersion,
     "id-container": _ctx.idContainer
-  }, null, 8, ["id-container-version", "id-container"])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), _ctx.editMode ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableManagevue_type_template_id_64cf6318_hoisted_3, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_VariableEdit, {
+  }, null, 8, ["id-container-version", "id-container"])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), _ctx.editMode ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VariableManagevue_type_template_id_1344dd73_hoisted_3, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_VariableEdit, {
     "id-container-version": _ctx.idContainerVersion,
     "id-container": _ctx.idContainer,
     "id-variable": _ctx.idVariable
   }, null, 8, ["id-container-version", "id-container", "id-variable"])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true)]);
 }
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Variable/VariableManage.vue?vue&type=template&id=64cf6318
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Variable/VariableManage.vue?vue&type=template&id=1344dd73
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Variable/VariableManage.vue?vue&type=script&lang=ts
 
@@ -2141,7 +2155,7 @@ function VariableManagevue_type_template_id_64cf6318_render(_ctx, _cache, $props
 
 /* harmony default export */ var VariableManagevue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
   props: {
-    idContainerVersion: String,
+    idContainerVersion: Number,
     idContainer: String
   },
   components: {
@@ -2158,24 +2172,28 @@ function VariableManagevue_type_template_id_64cf6318_render(_ctx, _cache, $props
 
     // doing this in a watch because we don't want to post an event in a computed property
     Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(function () {
-      return external_CoreHome_["MatomoUrl"].parsed.value;
-    }, function () {
+      return external_CoreHome_["MatomoUrl"].hashParsed.value.idVariable;
+    }, function (idVariable) {
+      _this.onIdVariableParamChange(idVariable);
+    });
+    external_CoreHome_["NotificationsStore"].remove('variablevariablemanagement');
+    this.onIdVariableParamChange(external_CoreHome_["MatomoUrl"].hashParsed.value.idVariable);
+  },
+  methods: {
+    onIdVariableParamChange: function onIdVariableParamChange(idVariable) {
       // for BC w/ angularjs only invoke event if idVariable is 0
-      var idVariable = external_CoreHome_["MatomoUrl"].urlParsed.value.idVariable;
-
       if (idVariable === '0') {
         var parameters = {
           isAllowed: true
         };
         external_CoreHome_["Matomo"].postEvent('TagManager.initAddVariable', parameters);
-        _this.isAddAllowed = !!parameters.isAllowed;
+        this.isAddAllowed = !!parameters.isAllowed;
       }
-    });
-    external_CoreHome_["NotificationsStore"].remove('variablevariablemanagement');
+    }
   },
   computed: {
     idVariable: function idVariable() {
-      var idVariable = external_CoreHome_["MatomoUrl"].urlParsed.value.idVariable;
+      var idVariable = external_CoreHome_["MatomoUrl"].hashParsed.value.idVariable;
 
       if (!this.isAddAllowed && idVariable === '0') {
         return null;
@@ -2184,7 +2202,7 @@ function VariableManagevue_type_template_id_64cf6318_render(_ctx, _cache, $props
       return idVariable ? parseInt(idVariable, 10) : idVariable;
     },
     editMode: function editMode() {
-      return !!this.idVariable;
+      return typeof this.idVariable === 'number';
     }
   }
 }));
@@ -2194,7 +2212,7 @@ function VariableManagevue_type_template_id_64cf6318_render(_ctx, _cache, $props
 
 
 
-VariableManagevue_type_script_lang_ts.render = VariableManagevue_type_template_id_64cf6318_render
+VariableManagevue_type_script_lang_ts.render = VariableManagevue_type_template_id_1344dd73_render
 
 /* harmony default export */ var VariableManage = (VariableManagevue_type_script_lang_ts);
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/Variable/VariableManage.adapter.ts
@@ -2210,7 +2228,10 @@ VariableManagevue_type_script_lang_ts.render = VariableManagevue_type_template_i
   component: VariableManage,
   scope: {
     idContainerVersion: {
-      angularJsBind: '@'
+      angularJsBind: '@',
+      transform: function transform(value) {
+        return value ? parseInt(value, 10) : undefined;
+      }
     },
     idContainer: {
       angularJsBind: '@'
@@ -2327,16 +2348,16 @@ var FieldTextareaVariablevue_type_script_lang_ts_window = window,
 FieldTextareaVariablevue_type_script_lang_ts.render = FieldTextareaVariablevue_type_template_id_36f615a2_render
 
 /* harmony default export */ var FieldTextareaVariable = (FieldTextareaVariablevue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=template&id=d45c461a
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=template&id=11f107ee
 
-var FieldVariableTemplatevue_type_template_id_d45c461a_hoisted_1 = {
+var FieldVariableTemplatevue_type_template_id_11f107ee_hoisted_1 = {
   class: "fieldVariableTemplate"
 };
-var FieldVariableTemplatevue_type_template_id_d45c461a_hoisted_2 = ["type", "id", "name", "value"];
-var FieldVariableTemplatevue_type_template_id_d45c461a_hoisted_3 = ["title"];
-var FieldVariableTemplatevue_type_template_id_d45c461a_hoisted_4 = ["for", "innerHTML"];
-function FieldVariableTemplatevue_type_template_id_d45c461a_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", FieldVariableTemplatevue_type_template_id_d45c461a_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["mergeProps"])({
+var FieldVariableTemplatevue_type_template_id_11f107ee_hoisted_2 = ["type", "id", "name", "value"];
+var FieldVariableTemplatevue_type_template_id_11f107ee_hoisted_3 = ["title"];
+var FieldVariableTemplatevue_type_template_id_11f107ee_hoisted_4 = ["for", "innerHTML"];
+function FieldVariableTemplatevue_type_template_id_11f107ee_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", FieldVariableTemplatevue_type_template_id_11f107ee_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["mergeProps"])({
     class: "control_".concat(_ctx.uiControl),
     type: _ctx.uiControl,
     id: _ctx.name,
@@ -2354,18 +2375,18 @@ function FieldVariableTemplatevue_type_template_id_d45c461a_render(_ctx, _cache,
     }
   }, _ctx.uiControlAttributes, {
     ref: "input"
-  }), null, 16, FieldVariableTemplatevue_type_template_id_d45c461a_hoisted_2), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
+  }), null, 16, FieldVariableTemplatevue_type_template_id_11f107ee_hoisted_2), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
     class: "icon-code",
     title: _ctx.translate('TagManager_ChooseVariable'),
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return _ctx.selectVariable();
     })
-  }, null, 8, FieldVariableTemplatevue_type_template_id_d45c461a_hoisted_3), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("label", {
+  }, null, 8, FieldVariableTemplatevue_type_template_id_11f107ee_hoisted_3), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("label", {
     for: _ctx.name,
     innerHTML: _ctx.$sanitize(_ctx.title)
-  }, null, 8, FieldVariableTemplatevue_type_template_id_d45c461a_hoisted_4)]);
+  }, null, 8, FieldVariableTemplatevue_type_template_id_11f107ee_hoisted_4)]);
 }
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=template&id=d45c461a
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=template&id=11f107ee
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=script&lang=ts
 
@@ -2381,7 +2402,7 @@ var FieldVariableTemplatevue_type_script_lang_ts_window = window,
     uiControlAttributes: Object,
     name: String,
     title: String,
-    modelValue: String
+    modelValue: null
   },
   inheritAttrs: false,
   emits: ['update:modelValue'],
@@ -2429,7 +2450,7 @@ var FieldVariableTemplatevue_type_script_lang_ts_window = window,
 
 
 
-FieldVariableTemplatevue_type_script_lang_ts.render = FieldVariableTemplatevue_type_template_id_d45c461a_render
+FieldVariableTemplatevue_type_script_lang_ts.render = FieldVariableTemplatevue_type_template_id_11f107ee_render
 
 /* harmony default export */ var FieldVariableTemplate = (FieldVariableTemplatevue_type_script_lang_ts);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Field/FieldVariableTypeTemplate.vue?vue&type=template&id=74bb398d

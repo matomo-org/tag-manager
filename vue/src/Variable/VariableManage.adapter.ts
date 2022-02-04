@@ -13,6 +13,9 @@ export default createAngularJsAdapter({
   scope: {
     idContainerVersion: {
       angularJsBind: '@',
+      transform(value: unknown) {
+        return value ? parseInt(value as string, 10) : undefined;
+      },
     },
     idContainer: {
       angularJsBind: '@',

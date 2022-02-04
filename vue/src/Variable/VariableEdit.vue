@@ -5,177 +5,229 @@
 -->
 
 <template>
-  <ContentBlock
-    class="editVariable tagManagerManageEdit"
-    feature="Tag Manager"
-    :content-title="editTitle"
-    ref="root"
-  >
-    <p v-show="isLoading">
-      <span class="loadingPiwik">
-        <img src="plugins/Morpheus/images/loading-blue.gif" />
-        {{ translate('General_LoadingData') }}
-      </span>
-    </p>
-    <p v-show="isUpdating">
-      <span class="loadingPiwik">
-        <img src="plugins/Morpheus/images/loading-blue.gif" />
-        {{ translate('TagManager_UpdatingData') }}
-      </span>
-    </p>
-    <form
-      v-show="!chooseVariableType && editTitle"
-      @submit="edit ? updateVariable() : createVariable()"
+  <div class="editVariable tagManagerManageEdit" ref="root">
+    <ContentBlock
+      feature="Tag Manager"
+      :content-title="editTitle"
     >
-      <div>
-        <div
-          class="alert alert-warning"
-          v-show="isVariableDisabled"
-        >
-          {{ translate(
-            'TagManager_UseCustomTemplateCapabilityRequired',
-            translate('TagManager_CapabilityUseCustomTemplates'),
-          ) }}
-        </div>
+      <p v-show="isLoading">
+        <span class="loadingPiwik">
+          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          {{ translate('General_LoadingData') }}
+        </span>
+      </p>
+      <p v-show="isUpdating">
+        <span class="loadingPiwik">
+          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          {{ translate('TagManager_UpdatingData') }}
+        </span>
+      </p>
+      <form
+        v-show="!chooseVariableType && editTitle"
+        @submit="edit ? updateVariable() : createVariable()"
+      >
         <div>
-          <Field
-            uicontrol="text"
-            name="type"
-            v-model="variable.name"
-            :disabled="true"
-            :inline-help="`${variable.description || ''} ${variable.help || ''}`"
-            :title="translate('TagManager_Type')"
-          />
-        </div>
-        <div>
-          <Field
-            uicontrol="text"
-            name="name"
-            :model-value="variable.name"
-            @update:model-value="variable.name = $event; setValueHasChanged()"
-            :maxlength="50"
-            :title="translate('General_Name')"
-            :inline-help="translate('TagManager_VariableNameHelp')"
-          />
-        </div>
-        <div
-          class="form-group row"
-          v-if="variable.parameters?.length"
-        >
-          <div class="col s12">
-            <h3>{{ translate('TagManager_ConfigureThisVariable') }}</h3>
+          <div
+            class="alert alert-warning"
+            v-show="isVariableDisabled"
+          >
+            {{ translate(
+              'TagManager_UseCustomTemplateCapabilityRequired',
+              translate('TagManager_CapabilityUseCustomTemplates'),
+            ) }}
           </div>
-        </div>
-        <div v-if="variable">
-          <GroupedSettings
-            :settings="variable.parameters"
-            :all-setting-values="parameterValues"
-            @change="parameterValues[$event.name] = $event.value"
-          />
-        </div>
-        <div
-          class="form-group row"
-          v-show="variable.hasAdvancedSettings"
-        >
-          <div class="col s12">
-            <h3>
-              <a
-                class="showAdvancedSettings"
-                v-show="!showAdvanced"
-                @click.prevent="showAdvanced = true"
-              >{{ translate('TagManager_ShowAdvancedSettings') }}</a>
-              <a
-                class="hideAdvancedSettings"
-                v-show="showAdvanced"
-                @click.prevent="showAdvanced = false"
-              >{{ translate('TagManager_HideAdvancedSettings') }}</a>
-            </h3>
-          </div>
-        </div>
-        <div v-show="showAdvanced && variable.hasAdvancedSettings">
           <div>
             <Field
               uicontrol="text"
-              name="default_value"
-              class="innerFormField"
-              :model-value="variable.default_value"
-              @update:model-value="variable.default_value = $event; setValueHasChanged()"
-              :title="translate('TagManager_DefaultValue')"
-              :inline-help="translate('TagManager_DefaultValueHelp')"
+              name="type"
+              v-model="variable.name"
+              :disabled="true"
+              :inline-help="typeInlineHelp"
+              :title="translate('TagManager_Type')"
             />
           </div>
-          <div class="form-group row">
-            <div class="col s12 m12">
-              <div>
-                <label for="lookup_table">{{ translate('TagManager_LookupTableTitle') }}</label>
-                <div
-                  v-for="(lookup, index) in variable.lookup_table"
-                  :key="index"
-                  :class="`lookupTable lookupTable${ index } multiple valign-wrapper`"
-                >
-                  <div>
-                    <Field
-                      uicontrol="select"
-                      name="lookup_table_comparison"
-                      class="innerFormField comparisonField"
-                      :model-value="lookup.comparison"
-                      @update:model-value="lookup.comparison = $event; setValueHasChanged()"
-                      :full-width="true"
-                      :options="availableLookUpComparisons"
+          <div>
+            <Field
+              uicontrol="text"
+              name="name"
+              :model-value="variable.name"
+              @update:model-value="variable.name = $event; setValueHasChanged()"
+              :maxlength="50"
+              :title="translate('General_Name')"
+              :inline-help="translate('TagManager_VariableNameHelp')"
+            />
+          </div>
+          <div
+            class="form-group row"
+            v-if="variable.typeMetadata?.parameters?.length"
+          >
+            <div class="col s12">
+              <h3>{{ translate('TagManager_ConfigureThisVariable') }}</h3>
+            </div>
+          </div>
+          <div v-if="variable">
+            <GroupedSettings
+              :settings="variable.typeMetadata?.parameters || []"
+              :all-setting-values="parameterValues"
+              @change="parameterValues[$event.name] = $event.value"
+            />
+          </div>
+          <div
+            class="form-group row"
+            v-show="variable.hasAdvancedSettings"
+          >
+            <div class="col s12">
+              <h3>
+                <a
+                  class="showAdvancedSettings"
+                  v-show="!showAdvanced"
+                  @click.prevent="showAdvanced = true"
+                >{{ translate('TagManager_ShowAdvancedSettings') }}</a>
+                <a
+                  class="hideAdvancedSettings"
+                  v-show="showAdvanced"
+                  @click.prevent="showAdvanced = false"
+                >{{ translate('TagManager_HideAdvancedSettings') }}</a>
+              </h3>
+            </div>
+          </div>
+          <div v-show="showAdvanced && variable.hasAdvancedSettings">
+            <div>
+              <Field
+                uicontrol="text"
+                name="default_value"
+                class="innerFormField"
+                :model-value="variable.default_value"
+                @update:model-value="variable.default_value = $event; setValueHasChanged()"
+                :title="translate('TagManager_DefaultValue')"
+                :inline-help="translate('TagManager_DefaultValueHelp')"
+              />
+            </div>
+            <div class="form-group row">
+              <div class="col s12 m12">
+                <div>
+                  <label for="lookup_table">{{ translate('TagManager_LookupTableTitle') }}</label>
+                  <div
+                    v-for="(lookup, index) in variable.lookup_table"
+                    :key="index"
+                    :class="`lookupTable lookupTable${ index } multiple valign-wrapper`"
+                  >
+                    <div>
+                      <Field
+                        uicontrol="select"
+                        name="lookup_table_comparison"
+                        class="innerFormField comparisonField"
+                        :model-value="lookup.comparison"
+                        @update:model-value="lookup.comparison = $event; setValueHasChanged()"
+                        :full-width="true"
+                        :options="availableLookUpComparisons"
+                      />
+                    </div>
+                    <div>
+                      <Field
+                        uicontrol="text"
+                        name="lookup_table_matchvalue"
+                        class="innerFormField"
+                        :model-value="lookup.match_value"
+                        @update:model-value="lookup.match_value = $event; setValueHasChanged();"
+                        :full-width="true"
+                        :placeholder="translate('TagManager_LookupTableMatchValue')"
+                      />
+                    </div>
+                    <div>
+                      <Field
+                        uicontrol="text"
+                        name="lookup_table_outvalue"
+                        class="innerFormField"
+                        :model-value="lookup.out_value"
+                        @update:model-value="lookup.out_value = $event; setValueHasChanged();"
+                        :full-width="true"
+                        :placeholder="translate('TagManager_LookupTableOutValue')"
+                      />
+                    </div>
+                    <span
+                      class="icon-minus valign"
+                      @click="removeLookUpEntry(index)"
+                      v-if="!((index + 1) === (variable.lookup_table.length))"
+                      :title="translate('General_Remove')"
                     />
                   </div>
-                  <div>
-                    <Field
-                      uicontrol="text"
-                      name="lookup_table_matchvalue"
-                      class="innerFormField"
-                      :model-value="lookup.match_value"
-                      @update:model-value="lookup.match_value = $event; setValueHasChanged();"
-                      :full-width="true"
-                      :placeholder="translate('TagManager_LookupTableMatchValue')"
-                    />
-                  </div>
-                  <div>
-                    <Field
-                      uicontrol="text"
-                      name="lookup_table_outvalue"
-                      class="innerFormField"
-                      :model-value="lookup.out_value"
-                      @update:model-value="lookup.out_value = $event; setValueHasChanged();"
-                      :full-width="true"
-                      :placeholder="translate('TagManager_LookupTableOutValue')"
-                    />
-                  </div>
-                  <span
-                    class="icon-minus valign"
-                    @click="removeLookUpEntry(index)"
-                    v-if="!((index + 1) === (variable.lookup_table.length))"
-                    :title="translate('General_Remove')"
-                  />
                 </div>
               </div>
             </div>
           </div>
+          <div
+            class="alert alert-warning"
+            v-show="isVariableDisabled"
+          >
+            {{ translate(
+                'TagManager_UseCustomTemplateCapabilityRequired',
+                translate('TagManager_CapabilityUseCustomTemplates'),
+              ) }}
+          </div>
+          <SaveButton
+            class="createButton"
+            v-show="!isVariableDisabled"
+            @confirm="edit ? updateVariable() : createVariable()"
+            :disabled="isUpdating || !isDirty"
+            :saving="isUpdating"
+            :value="edit
+              ? translate('CoreUpdater_UpdateTitle')
+              : translate('TagManager_CreateNewVariable')"
+          />
+          <div
+            class="entityCancel"
+            v-show="!isEmbedded"
+          >
+            <a @click.prevent="cancel()">{{ translate('General_Cancel') }}</a>
+          </div>
         </div>
-        <div
-          class="alert alert-warning"
-          v-show="isVariableDisabled"
+      </form>
+
+      <div
+        id="confirmSelectVariableType"
+        v-show="chooseVariableType"
+      >
+        <ul
+          class="collection with-header"
+          v-for="(variableCategory, index) in availableVariables"
+          :key="index"
         >
-          {{ translate(
-              'TagManager_UseCustomTemplateCapabilityRequired',
-              translate('TagManager_CapabilityUseCustomTemplates'),
-            ) }}
-        </div>
-        <SaveButton
-          class="createButton"
-          v-show="!isVariableDisabled"
-          @confirm="edit ? updateVariable() : createVariable()"
-          :disabled="isUpdating || !isDirty"
-          :saving="isUpdating"
-          :value="edit
-            ? translate('CoreUpdater_UpdateTitle')
-            : translate('TagManager_CreateNewVariable')"
-        />
+          <li class="collection-header">
+            <h4>{{ variableCategory.name }}</h4>
+          </li>
+          <li
+            v-for="(variableTemplate, index) in variableCategory.types"
+            :key="index"
+            class="collection-item avatar"
+            @click="createVariableType(variableTemplate)"
+            :class="{
+              disabledTemplate: this.isVariableTemplateDisabled[variableTemplate.id],
+              [`templateType${variableTemplate.id}`]: true,
+            }"
+            :title="!this.isVariableTemplateDisabled[variableTemplate.id] ? '' :
+              translate('TagManager_UseCustomTemplateCapabilityRequired',
+                translate('TagManager_CapabilityUseCustomTemplates'))"
+          >
+            <img
+              alt
+              class="circle"
+              :src="variableTemplate.icon"
+              v-if="variableTemplate.icon"
+            />
+            <span class="title">{{ variableTemplate.name }}</span>
+            <p v-show="variableTemplate.description">{{ variableTemplate.description }}</p>
+            <span
+              class="secondary-content"
+              v-show="!!variableTemplate.help"
+            >
+              <i
+                class="icon-help"
+                :title="variableTemplate.help"
+              />
+            </span>
+          </li>
+        </ul>
         <div
           class="entityCancel"
           v-show="!isEmbedded"
@@ -183,59 +235,8 @@
           <a @click.prevent="cancel()">{{ translate('General_Cancel') }}</a>
         </div>
       </div>
-    </form>
-    <div
-      id="confirmSelectVariableType"
-      v-show="chooseVariableType"
-    >
-      <ul
-        class="collection with-header"
-        v-for="(variableCategory, index) in availableVariables"
-        :key="index"
-      >
-        <li class="collection-header">
-          <h4>{{ variableCategory.name }}</h4>
-        </li>
-        <li
-          v-for="(variableTemplate, index) in variableCategory.types"
-          :key="index"
-          class="collection-item avatar"
-          @click="createVariableType(variableTemplate)"
-          :class="{
-            disabledTemplate: this.isVariableTemplateDisabled[variableTemplate.id],
-            [`templateType${variableTemplate.id}`]: true,
-          }"
-          :title="!this.isVariableTemplateDisabled[variableTemplate.id] ? '' :
-            translate('TagManager_UseCustomTemplateCapabilityRequired',
-              translate('TagManager_CapabilityUseCustomTemplates'))"
-        >
-          <img
-            alt
-            class="circle"
-            :src="variableTemplate.icon"
-            v-if="variableTemplate.icon"
-          />
-          <span class="title">{{ variableTemplate.name }}</span>
-          <p v-show="variableTemplate.description">{{ variableTemplate.description }}</p>
-          <span
-            class="secondary-content"
-            v-show="!!variableTemplate.help"
-          >
-            <i
-              class="icon-help"
-              :title="variableTemplate.help"
-            />
-          </span>
-        </li>
-      </ul>
-      <div
-        class="entityCancel"
-        v-show="!isEmbedded"
-      >
-        <a @click.prevent="cancel()">{{ translate('General_Cancel') }}</a>
-      </div>
-    </div>
-  </ContentBlock>
+    </ContentBlock>
+  </div>
 </template>
 
 <script lang="ts">
@@ -260,14 +261,9 @@ import {
   Variable,
   VariableCategory,
   Container,
-  VariableType,
+  VariableTypeMetadata,
 } from '../types';
 import AvailableComparisonsStore from '../AvailableComparisons.store';
-
-interface Option {
-  key: string;
-  value: unknown;
-}
 
 interface VariableEditState {
   isDirty: boolean;
@@ -275,8 +271,6 @@ interface VariableEditState {
   canUseCustomTemplates: boolean;
   availableVariables: DeepReadonly<VariableCategory[]>;
   editTitle: string;
-  create: boolean;
-  edit: boolean;
   variable: Variable;
   chooseVariableType: boolean;
   parameterValues: Record<string, unknown>;
@@ -316,8 +310,6 @@ export default defineComponent({
       canUseCustomTemplates: Matomo.hasUserCapability('tagmanager_use_custom_templates'),
       availableVariables: [],
       editTitle: '',
-      create: this.idVariable === 0,
-      edit: !this.create,
       variable: {} as unknown as Variable,
       parameterValues: {},
       isUpdatingVar: false,
@@ -328,9 +320,7 @@ export default defineComponent({
     // needed for suggestNameForType() to make sure it is aware of all names
     VariablesStore.fetchVariablesIfNotLoaded(this.idContainer, this.idContainerVersion);
 
-    if (this.idVariable) {
-      this.initIdVariable();
-    }
+    this.initIdVariable();
   },
   watch: {
     idVariable(newValue) {
@@ -406,7 +396,9 @@ export default defineComponent({
             }
 
             this.variable = clone(variable) as unknown as Variable;
-            this.parameterValues = {};
+            this.parameterValues = Object.fromEntries(variable.typeMetadata.parameters.map(
+              (s) => [s.name, s.value],
+            ));
 
             if ((this.variable.lookup_table && this.variable.lookup_table.length)
               || this.variable.default_value
@@ -468,25 +460,28 @@ export default defineComponent({
         this.isDirty = true;
       }
     },
-    createVariableType(variableTemplate: VariableType) {
+    createVariableType(variableTemplate: VariableTypeMetadata) {
       if (variableTemplate && this.isVariableTemplateDisabled[variableTemplate.id]) {
         return;
       }
 
       this.chooseVariableType = false;
       this.editTitle = translate('TagManager_CreateNewVariable');
+
       this.variable = {
         idsite: parseInt(`${Matomo.idSite}`, 10),
         name: VariablesStore.suggestNameForType(variableTemplate.name) || '',
         type: variableTemplate.id,
         idcontainer: this.idContainer,
         idcontainerversion: this.idContainerVersion,
-        parameters: {},
         default_value: '',
         lookup_table: [],
         typeMetadata: variableTemplate,
-        description: '',
       };
+
+      this.parameterValues = Object.fromEntries(variableTemplate.parameters.map(
+        (s) => [s.name, s.value],
+      ));
 
       this.addLookUpEntry();
 
@@ -509,8 +504,6 @@ export default defineComponent({
       });
     },
     cancel() {
-      // this.idVariable = null; TODO remove if not needed
-
       const newParams = { ...MatomoUrl.hashParsed.value };
       delete newParams.idVariable;
 
@@ -525,10 +518,8 @@ export default defineComponent({
 
       this.isUpdatingVar = true;
 
-      // TODO:
-      // is this still needed: tempVariable.name = encodeURIComponent(tempVariable.name);
       VariablesStore.createOrUpdateVariable(
-        this.variable,
+        { ...this.variable, name: encodeURIComponent(this.variable.name) },
         'TagManager.addContainerVariable',
         this.idContainer,
         this.idContainerVersion,
@@ -554,12 +545,12 @@ export default defineComponent({
           if (Matomo.helper.isAngularRenderingThePage()) {
             MatomoUrl.updateHash({
               ...MatomoUrl.hashParsed.value,
-              idVariable: this.idVariable,
+              idVariable,
             });
           } else {
             // TODO: compare w/ original behavior
             MatomoUrl.updateHash({
-              idVariable: this.idVariable,
+              idVariable,
             });
           }
 
@@ -575,7 +566,7 @@ export default defineComponent({
           }, 200);
         });
       }).finally(() => {
-        this.isUpdatingVar = true;
+        this.isUpdatingVar = false;
       });
     },
     setValueHasChanged() {
@@ -590,11 +581,8 @@ export default defineComponent({
 
       this.isUpdatingVar = true;
 
-      // TODO:
-      // is this still needed: tempVariable.name = encodeURIComponent(tempVariable.name);
-
       VariablesStore.createOrUpdateVariable(
-        this.variable,
+        { ...this.variable, name: encodeURIComponent(this.variable.name) },
         'TagManager.updateContainerVariable',
         this.idContainer,
         this.idContainerVersion,
@@ -612,12 +600,10 @@ export default defineComponent({
         }
 
         this.isDirty = false;
-        this.variable = {} as unknown as Variable;
         VariablesStore.reload(this.idContainer, this.idContainerVersion).then(() => {
           this.initIdVariable();
         });
 
-        // TODO: test response failures for create/update
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Variable'));
         const wantToDeploy = translate(
           'TagManager_WantToDeployThisChangeCreateVersion',
@@ -626,6 +612,8 @@ export default defineComponent({
         );
 
         this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success');
+      }).finally(() => {
+        this.isUpdatingVar = false;
       });
     },
     checkRequiredFieldsAreSet() {
@@ -637,6 +625,17 @@ export default defineComponent({
     },
   },
   computed: {
+    typeInlineHelp() {
+      const desc = this.variable.typeMetadata?.description || '';
+      const help = this.variable.typeMetadata?.help || '';
+      return `${desc} ${help}`;
+    },
+    create() {
+      return this.idVariable === 0;
+    },
+    edit() {
+      return !this.create;
+    },
     isLoading() {
       return VariablesStore.isLoading.value || AvailableComparisonsStore.isLoading.value;
     },

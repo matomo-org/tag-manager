@@ -106,7 +106,7 @@ class VariablesStore {
   }
 
   fetchAvailableVariables(idContext: string): VariablesStore['availableVariablesPromises'][''] {
-    if (this.availableVariablesPromises[idContext]) {
+    if (!this.availableVariablesPromises[idContext]) {
       this.availableVariablesPromises[idContext] = AjaxHelper.fetch<VariableCategory[]>({
         method: 'TagManager.getAvailableVariableTypesInContext',
         idContext,
@@ -124,7 +124,7 @@ class VariablesStore {
         name = `${name} (${counter})`;
       }
 
-      const isFree = this.variables.value.some((v) => v.name === name);
+      const isFree = !this.variables.value.some((v) => v.name === name);
       if (isFree) {
         return name;
       }
@@ -154,6 +154,8 @@ class VariablesStore {
 
     return AjaxHelper.post<{ value: number }>(
       {
+        idVariable: variable.idvariable,
+        method,
         idContainer,
         idContainerVersion,
         type: variable.type,
@@ -165,7 +167,7 @@ class VariablesStore {
         lookupTable,
       },
       { withTokenInUrl: true },
-    ).finally(() => { // TODO: test finally() use here in browser (works in node)
+    ).finally(() => { // TODO: test finally() use here in old browser (works in node)
       this.privateState.isUpdating = false;
     });
   }

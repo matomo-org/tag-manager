@@ -44,7 +44,7 @@ export default defineComponent({
     uiControlAttributes: Object,
     name: String,
     title: String,
-    modelValue: String,
+    modelValue: null,
   },
   inheritAttrs: false,
   emits: ['update:modelValue'],

@@ -25,7 +25,7 @@ export interface VariableTypeMetadata {
   isCustomTemplate: boolean;
   name: string;
   order: number;
-  parameters: Record<string, unknown>;
+  parameters: Record<string, unknown>[];
 }
 
 export interface Variable {
@@ -38,10 +38,8 @@ export interface Variable {
   idvariable?: number;
   lookup_table: LookupTable;
   name: string;
-  description: string;
   status?: string;
   type: string;
-  parameters: Record<string, string>;
   updated_date?: string;
   updated_date_pretty?: string;
   typeMetadata: VariableTypeMetadata;

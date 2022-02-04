@@ -34,7 +34,7 @@ interface VariableManageState {
 
 export default defineComponent({
   props: {
-    idContainerVersion: String,
+    idContainerVersion: Number,
     idContainer: String,
   },
   components: {
@@ -48,28 +48,34 @@ export default defineComponent({
   },
   created() {
     // doing this in a watch because we don't want to post an event in a computed property
-    watch(() => MatomoUrl.parsed.value, () => {
+    watch(() => MatomoUrl.hashParsed.value.idVariable as string, (idVariable) => {
+      this.onIdVariableParamChange(idVariable);
+    });
+
+    NotificationsStore.remove('variablevariablemanagement');
+
+    this.onIdVariableParamChange(MatomoUrl.hashParsed.value.idVariable as string);
+  },
+  methods: {
+    onIdVariableParamChange(idVariable: string) {
       // for BC w/ angularjs only invoke event if idVariable is 0
-      const idVariable = MatomoUrl.urlParsed.value.idVariable as string;
       if (idVariable === '0') {
         const parameters = { isAllowed: true };
         Matomo.postEvent('TagManager.initAddVariable', parameters);
         this.isAddAllowed = !!parameters.isAllowed;
       }
-    });
-
-    NotificationsStore.remove('variablevariablemanagement');
+    },
   },
   computed: {
     idVariable() {
-      const idVariable = MatomoUrl.urlParsed.value.idVariable as string;
+      const idVariable = MatomoUrl.hashParsed.value.idVariable as string;
       if (!this.isAddAllowed && idVariable === '0') {
         return null;
       }
       return idVariable ? parseInt(idVariable, 10) : idVariable;
     },
     editMode() {
-      return !!this.idVariable;
+      return typeof this.idVariable === 'number';
     },
   },
 });
