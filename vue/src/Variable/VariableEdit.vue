@@ -74,7 +74,7 @@
           </div>
           <div
             class="form-group row"
-            v-show="variable.hasAdvancedSettings"
+            v-show="variable.typeMetadata?.hasAdvancedSettings"
           >
             <div class="col s12">
               <h3>
@@ -91,7 +91,7 @@
               </h3>
             </div>
           </div>
-          <div v-show="showAdvanced && variable.hasAdvancedSettings">
+          <div v-show="showAdvanced && variable.typeMetadata?.hasAdvancedSettings">
             <div>
               <Field
                 uicontrol="text"
