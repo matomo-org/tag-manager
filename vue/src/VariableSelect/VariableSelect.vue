@@ -27,11 +27,13 @@
         v-for="(variable, index) in containerVariables"
         :key="index"
       >
-        <span class="title">{{ variable.name }} (Type: {{ variable.type }})</span>
+        <span class="title">
+          {{ variable.name }} ({{ translate('TagManager_Type') }}: {{ variable.type }})
+        </span>
         <span class="secondary-content">
           <i
             class="icon-edit"
-            @click.prevent="editVariable(variable)"
+            @click.stop="editVariable(variable)"
             :title="translate('General_Edit')"
           />
         </span>

@@ -12,6 +12,7 @@
       :name="name"
       :variable-type-name="title"
       :variable-type="uiControlAttributes.variableType"
+      @update:model-value="$emit('update:modelValue', $event)"
     />
 
     <label :for="name" style="font-size: 0.8rem;" v-html="$sanitize(title)"></label>
@@ -35,6 +36,7 @@ export default defineComponent({
   components: {
     VariableSelectType,
   },
+  emits: ['update:modelValue'],
 });
 
 </script>
