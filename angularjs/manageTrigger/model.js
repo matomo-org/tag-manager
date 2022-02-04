@@ -29,8 +29,7 @@
             fetchAvailableContainerVariables: fetchAvailableContainerVariables,
             deleteTrigger: deleteTrigger,
             reload: reload,
-            fetchTriggersIfNotLoaded: fetchTriggersIfNotLoaded,
-            fetchTriggers: fetchTriggers
+            fetchTriggersIfNotLoaded: fetchTriggersIfNotLoaded
         };
 
         return model;
@@ -121,27 +120,6 @@
                     return name;
                 }
             }
-        }
-
-        function fetchTriggers(idContainer, idContainerVersion) {
-            var params = {method: 'TagManager.getContainerTriggers', idContainer: idContainer,
-                          idContainerVersion: idContainerVersion,filter_limit: '-1'};
-
-            if (!fetchPromise) {
-                fetchPromise = piwikApi.fetch(params);
-            }
-
-            model.isLoading = true;
-            model.triggers = [];
-
-            return fetchPromise.then(function (triggers) {
-                model.triggers = triggers;
-
-                model.isLoading = false;
-                return triggers;
-            }, function () {
-                model.isLoading = false;
-            });
         }
 
         function findTrigger(idContainer, idContainerVersion, idTrigger) {

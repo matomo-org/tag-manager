@@ -11,6 +11,9 @@ import './VariableSelectType/VariableSelectType.adapter';
 import './Variable/VariableEdit.adapter';
 import './Variable/VariableList.adapter';
 import './Variable/VariableManage.adapter';
+import './Trigger/TriggerEdit.adapter';
+import './Trigger/TriggerList.adapter';
+import './Trigger/TriggerManage.adapter';
 
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
 export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
@@ -21,3 +24,6 @@ export { default as FieldVariableTypeTemplate } from './Field/FieldVariableTypeT
 export { default as VariableEdit } from './Variable/VariableEdit.vue';
 export { default as VariableList } from './Variable/VariableList.vue';
 export { default as VariableManage } from './Variable/VariableManage.vue';
+export { default as TriggerEdit } from './Trigger/TriggerEdit.vue';
+export { default as TriggerList } from './Trigger/TriggerList.vue';
+export { default as TriggerManage } from './Trigger/TriggerManage.vue';
