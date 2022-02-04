@@ -14,9 +14,6 @@ export default createAngularJsAdapter({
     idContainer: {
       angularJsBind: '=',
     },
-    onSomething: {
-      angularJsBind: '&',
-    },
   },
   directiveName: 'piwikImportVersion',
 });

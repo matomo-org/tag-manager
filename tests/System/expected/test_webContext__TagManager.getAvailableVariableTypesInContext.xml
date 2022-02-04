@@ -689,6 +689,7 @@
 								<title>Index</title>
 								<uiControl>text</uiControl>
 								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<component />
 								<availableValues />
 							</field1>
 							<field2>
@@ -696,6 +697,7 @@
 								<title>Value</title>
 								<uiControl>text</uiControl>
 								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<component />
 								<availableValues />
 							</field2>
 						</uiControlAttributes>
@@ -997,6 +999,7 @@
 								<title>Domain</title>
 								<uiControl>text</uiControl>
 								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<component />
 								<availableValues />
 							</field1>
 						</uiControlAttributes>
@@ -1054,6 +1057,7 @@
 								<title>Index</title>
 								<uiControl>text</uiControl>
 								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<component />
 								<availableValues />
 							</field1>
 							<field2>
@@ -1061,6 +1065,7 @@
 								<title>Value</title>
 								<uiControl>text</uiControl>
 								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<component />
 								<availableValues />
 							</field2>
 						</uiControlAttributes>
