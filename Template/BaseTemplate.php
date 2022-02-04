@@ -43,7 +43,7 @@ abstract class BaseTemplate
     const FIELD_TEMPLATE_VARIABLE_TYPE = 'plugins/TagManager/angularjs/form-field/field-variabletype-template.html';
 
     const FIELD_TEXTAREA_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldTextareaVariable'];
-    const FIELD_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldTemplateVariable'];
+    const FIELD_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTemplate'];
     const FIELD_VARIABLE_TYPE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTypeTemplate'];
 
     public static $RESERVED_SETTING_NAMES = [
