@@ -77,6 +77,7 @@
               idContainerVersion: parseInt(idContainerVersion, 10),
               idVariable: idVariable,
               variableType: variableType,
+              isEmbedded: true,
               onChangeVariable: function (event) {
                 if ('function' === typeof callback) {
                   callback(event.variable);
