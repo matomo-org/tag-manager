@@ -236,15 +236,14 @@ import {
 import { Field, FormField, SaveButton } from 'CorePluginsAdmin';
 import TriggersStore from './Triggers.store';
 import AvailableComparisonsStore from '../AvailableComparisons.store';
-import { Trigger } from '../types';
+import { ContainerVariableCategory, Trigger, TriggerCategory } from '../types';
 
 interface TriggerEditState {
   isDirty: boolean;
   chooseTriggerType: boolean;
   canUseCustomTemplates: unknown; // TODO
-  availableTriggers: unknown[]; // TODO
-  availableComparisons: unknown[]; // TODO
-  availableVariables: unknown[]; // TODO
+  availableTriggers: TriggerCategory[];
+  availableVariables: ContainerVariableCategory[];
   variableIdToName: Record<string, unknown>; // TODO
   trigger: Trigger;
   editTitle: string;
@@ -282,7 +281,6 @@ export default defineComponent({
       chooseTriggerType: false,
       canUseCustomTemplates: Matomo.hasUserCapability('tagmanager_use_custom_templates'),
       availableTriggers: [],
-      availableComparisons: [],
       availableVariables: [],
       variableIdToName: {},
       editTitle: '',
@@ -292,15 +290,6 @@ export default defineComponent({
   },
   emits: ['changeTrigger'],
   created() {
-    this.model.fetchAvailableComparisons().then(function (comparisons) {
-      this.availableComparisons = [];
-      angular.forEach(comparisons, function (comparison) {
-        this.availableComparisons.push({
-          key: comparison.id,
-          value: comparison.name
-        });
-      });
-    });
     this.model.fetchAvailableContainerVariables(this.idContainer, this.idContainerVersion).then(function (variables) {
       this.availableVariables = [];
       angular.forEach(variables, function (category) {
@@ -316,7 +305,7 @@ export default defineComponent({
     });
 
     // needed for suggestNameForType() to make sure it is aware of all names
-    this.model.fetchTriggersIfNotLoaded();
+    TriggersStore.fetchTriggersIfNotLoaded();
 
     this.$watch('idTrigger', function (newValue, oldValue) {
       if (newValue === null) {
@@ -607,6 +596,9 @@ export default defineComponent({
         'TagManager_UseCustomTemplateCapabilityRequired',
         translate('TagManager_CapabilityUseCustomTemplates'),
       );
+    },
+    availableComparisons() {
+      return AvailableComparisonsStore.comparisonOptions.value;
     },
     // TODO
     checkRequiredFieldsAreSet() {

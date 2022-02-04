@@ -54,6 +54,10 @@ class TriggersStore {
       this.privateState.isLoadingTriggers = false;
     });
   }
+
+  fetchTriggersIfNotLoaded() {
+
+  }
 }
 
 export default new TriggersStore();
