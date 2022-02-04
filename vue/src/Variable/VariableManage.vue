@@ -4,13 +4,6 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
-<todo>
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <div class="manageVariable">
     <div v-if="!editMode">
@@ -32,8 +25,8 @@
 <script lang="ts">
 import { defineComponent, watch } from 'vue';
 import { Matomo, MatomoUrl, NotificationsStore } from 'CoreHome';
-import VariableList from '../Variable/VariableList.vue';
-import VariableEdit from '../Variable/VariableEdit.vue';
+import VariableList from './VariableList.vue';
+import VariableEdit from './VariableEdit.vue';
 
 interface VariableManageState {
   isAddAllowed: boolean;

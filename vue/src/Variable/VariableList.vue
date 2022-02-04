@@ -4,12 +4,6 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-<todo>
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <div class="tagManagerManageList tagManagerVariableList">
     <ContentBlock
@@ -200,11 +194,16 @@ import {
   MatomoUrl,
 } from 'CoreHome';
 import VariablesStore from './Variables.store';
-import { VariableReference, ContainerVariableCategory, Variable } from '../types';
+import {
+  VariableReference,
+  ContainerVariableCategory,
+  Variable,
+} from '../types';
 
 interface VariableListState {
   hasWriteAccess: boolean;
   variableReferences: VariableReference[];
+  containerVariables: ContainerVariableCategory[];
 }
 
 export default defineComponent({
@@ -228,10 +227,11 @@ export default defineComponent({
     return {
       hasWriteAccess: Matomo.hasUserCapability('tagmanager_write'),
       variableReferences: [],
+      containerVariables: [],
     };
   },
   created() {
-    this.model.fetchVariables(this.idContainer, this.idContainerVersion);
+    VariablesStore.fetchVariables(this.idContainer, this.idContainerVersion);
 
     AjaxHelper.fetch<ContainerVariableCategory[]>({
       method: 'TagManager.getAvailableContainerVariables',
@@ -267,7 +267,7 @@ export default defineComponent({
               VariablesStore.deleteVariable(
                 this.idContainer,
                 this.idContainerVersion,
-                variable.idvariable,
+                variable.idvariable!,
               ).then(() => {
                 VariablesStore.reload(this.idContainer, this.idContainerVersion);
               });
@@ -275,7 +275,10 @@ export default defineComponent({
           });
         } else {
           this.variableReferences = references;
-          Matomo.helper.modalConfirm(this.$refs.confirmDeleteVariableNotPossible as HTMLElement, {});
+          Matomo.helper.modalConfirm(
+            this.$refs.confirmDeleteVariableNotPossible as HTMLElement,
+            {},
+          );
         }
       });
     },

@@ -11,8 +11,8 @@ import {
   readonly,
   DeepReadonly,
 } from 'vue';
-import { Variable, VariableCategory } from '../types';
 import { AjaxHelper } from 'CoreHome';
+import { Variable, VariableCategory } from '../types';
 
 interface VariablesStoreState {
   variables: Variable[];
@@ -20,6 +20,8 @@ interface VariablesStoreState {
   isLoadingSingle: boolean;
   isUpdating: boolean;
 }
+
+type AvailableVariablePromises = Record<string, Promise<DeepReadonly<VariableCategory[]>>>;
 
 class VariablesStore {
   private privateState = reactive<VariablesStoreState>({
@@ -42,7 +44,7 @@ class VariablesStore {
 
   private fetchPromise: Promise<Variable[]>|null = null;
 
-  private availableVariablesPromises: Record<string, Promise<DeepReadonly<VariableCategory[]>>> = {};
+  private availableVariablesPromises: AvailableVariablePromises = {};
 
   fetchVariablesIfNotLoaded(idContainer: string|number, idContainerVersion: string|number) {
     if (!this.fetchPromise) {
@@ -88,8 +90,8 @@ class VariablesStore {
     if (!this.fetchPromise) {
       this.fetchPromise = AjaxHelper.fetch<Variable[]>({
         method: 'TagManager.getContainerVariables',
-        idContainer: idContainer,
-        idContainerVersion: idContainerVersion,
+        idContainer,
+        idContainerVersion,
         filter_limit: '-1',
       });
     }
@@ -103,7 +105,7 @@ class VariablesStore {
     });
   }
 
-  fetchAvailableVariables(idContext: string): VariablesStore['availablePromises'][''] {
+  fetchAvailableVariables(idContext: string): VariablesStore['availableVariablesPromises'][''] {
     if (this.availableVariablesPromises[idContext]) {
       this.availableVariablesPromises[idContext] = AjaxHelper.fetch<VariableCategory[]>({
         method: 'TagManager.getAvailableVariableTypesInContext',
@@ -119,7 +121,7 @@ class VariablesStore {
     for (let counter = 0; counter < 100; counter += 1) {
       let name = templateId;
       if (counter) {
-        name = name + ' (' + counter + ')';
+        name = `${name} (${counter})`;
       }
 
       const isFree = this.variables.value.some((v) => v.name === name);
@@ -131,7 +133,7 @@ class VariablesStore {
   }
 
   createOrUpdateVariable(
-    variable: DeepReadonly<Variable>,
+    variable: DeepReadonly<Variable>|Variable,
     method: string,
     idContainer: string,
     idContainerVersion: number,
@@ -178,7 +180,11 @@ class VariablesStore {
     return this.fetchVariables(idContainer, idContainerVersion);
   }
 
-  deleteVariable(idContainer: string, idContainerVersion: number, idVariable: number): Promise<void> {
+  deleteVariable(
+    idContainer: string,
+    idContainerVersion: number,
+    idVariable: number,
+  ): Promise<void> {
     this.privateState.isUpdating = true;
     this.privateState.variables = [];
 

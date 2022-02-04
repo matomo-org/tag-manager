@@ -22,28 +22,28 @@ export interface VariableTypeMetadata {
   help: string;
   icon: string;
   id: string;
-  isCustomTemplate: false;
+  isCustomTemplate: boolean;
   name: string;
   order: number;
   parameters: Record<string, unknown>;
 }
 
 export interface Variable {
-  // TODO: check api response
-  created_date: string;
-  created_date_pretty: string;
+  created_date?: string;
+  created_date_pretty?: string;
   default_value: string|number;
+  idcontainer: string;
   idcontainerversion: number;
   idsite: number;
-  idvariable: number;
+  idvariable?: number;
   lookup_table: LookupTable;
   name: string;
   description: string;
-  status: string;
+  status?: string;
   type: string;
   parameters: Record<string, string>;
-  updated_date: string;
-  updated_date_pretty: string;
+  updated_date?: string;
+  updated_date_pretty?: string;
   typeMetadata: VariableTypeMetadata;
 }
 

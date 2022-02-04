@@ -4,13 +4,6 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
-<todo>
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <ContentBlock
     class="editVariable tagManagerManageEdit"
@@ -19,10 +12,16 @@
     ref="root"
   >
     <p v-show="isLoading">
-      <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('General_LoadingData') }}</span>
+      <span class="loadingPiwik">
+        <img src="plugins/Morpheus/images/loading-blue.gif" />
+        {{ translate('General_LoadingData') }}
+      </span>
     </p>
     <p v-show="isUpdating">
-      <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('TagManager_UpdatingData') }}</span>
+      <span class="loadingPiwik">
+        <img src="plugins/Morpheus/images/loading-blue.gif" />
+        {{ translate('TagManager_UpdatingData') }}
+      </span>
     </p>
     <form
       v-show="!chooseVariableType && editTitle"
@@ -162,7 +161,10 @@
           class="alert alert-warning"
           v-show="isVariableDisabled"
         >
-          {{ translate('TagManager_UseCustomTemplateCapabilityRequired', translate('TagManager_CapabilityUseCustomTemplates')) }}
+          {{ translate(
+              'TagManager_UseCustomTemplateCapabilityRequired',
+              translate('TagManager_CapabilityUseCustomTemplates'),
+            ) }}
         </div>
         <SaveButton
           class="createButton"
@@ -237,24 +239,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick } from 'vue';
+import { defineComponent, nextTick, DeepReadonly } from 'vue';
 import {
   translate,
   AjaxHelper,
   ContentBlock,
   Matomo,
   NotificationsStore,
-  Notification,
+  NotificationType,
   MatomoUrl,
+  clone,
 } from 'CoreHome';
 import {
   Field,
-  FormField,
   SaveButton,
   GroupedSettings,
 } from 'CorePluginsAdmin';
 import VariablesStore from './Variables.store';
-import { Variable, VariableCategory, Container } from '../types';
+import {
+  Variable,
+  VariableCategory,
+  Container,
+  VariableType,
+} from '../types';
 import AvailableComparisonsStore from '../AvailableComparisons.store';
 
 interface Option {
@@ -266,7 +273,7 @@ interface VariableEditState {
   isDirty: boolean;
   showAdvanced: boolean;
   canUseCustomTemplates: boolean;
-  availableVariables: VariableCategory[];
+  availableVariables: DeepReadonly<VariableCategory[]>;
   editTitle: string;
   create: boolean;
   edit: boolean;
@@ -289,7 +296,7 @@ export default defineComponent({
       type: Number,
       required: true,
     },
-    variableType: Number,
+    variableType: String,
     isEmbedded: {
       type: Boolean,
       default: false,
@@ -299,7 +306,6 @@ export default defineComponent({
     GroupedSettings,
     ContentBlock,
     Field,
-    FormField,
     SaveButton,
   },
   data(): VariableEditState {
@@ -310,10 +316,9 @@ export default defineComponent({
       canUseCustomTemplates: Matomo.hasUserCapability('tagmanager_use_custom_templates'),
       availableVariables: [],
       editTitle: '',
-      create: this.idVariable === '0' || this.idVariable === 0,
+      create: this.idVariable === 0,
       edit: !this.create,
       variable: {} as unknown as Variable,
-      chooseVariableType: false,
       parameterValues: {},
       isUpdatingVar: false,
     };
@@ -360,7 +365,7 @@ export default defineComponent({
       NotificationsStore.remove(notificationId);
       NotificationsStore.remove('ajaxHelper');
     },
-    showNotification(message: string, context: Notification['context']) {
+    showNotification(message: string, context: NotificationType['context']) {
       const notificationInstanceId = NotificationsStore.show({
         message,
         context,
@@ -384,9 +389,9 @@ export default defineComponent({
         method: 'TagManager.getContainer',
         idContainer: this.idContainer,
         filter_limit: '-1',
-      }).then((container) => {
-        return VariablesStore.fetchAvailableVariables(container.context);
-      }).then((variables) => {
+      }).then(
+        (container) => VariablesStore.fetchAvailableVariables(container.context),
+      ).then((variables) => {
         this.availableVariables = variables;
       }).then(() => {
         if (this.edit && this.idVariable) {
@@ -400,7 +405,7 @@ export default defineComponent({
               return;
             }
 
-            this.variable = { ...variable };
+            this.variable = clone(variable) as unknown as Variable;
             this.parameterValues = {};
 
             if ((this.variable.lookup_table && this.variable.lookup_table.length)
@@ -463,16 +468,16 @@ export default defineComponent({
         this.isDirty = true;
       }
     },
-    createVariableType(variableTemplate: Variable) {
-      if (variableTemplate && this.isVariableDisabled[variableTemplate.id]) {
+    createVariableType(variableTemplate: VariableType) {
+      if (variableTemplate && this.isVariableTemplateDisabled[variableTemplate.id]) {
         return;
       }
 
       this.chooseVariableType = false;
       this.editTitle = translate('TagManager_CreateNewVariable');
       this.variable = {
-        idSite: Matomo.idSite,
-        name: VariablesStore.suggestNameForType(variableTemplate.name),
+        idsite: parseInt(`${Matomo.idSite}`, 10),
+        name: VariablesStore.suggestNameForType(variableTemplate.name) || '',
         type: variableTemplate.id,
         idcontainer: this.idContainer,
         idcontainerversion: this.idContainerVersion,
@@ -480,6 +485,7 @@ export default defineComponent({
         default_value: '',
         lookup_table: [],
         typeMetadata: variableTemplate,
+        description: '',
       };
 
       this.addLookUpEntry();
@@ -503,7 +509,7 @@ export default defineComponent({
       });
     },
     cancel() {
-      this.idVariable = null;
+      // this.idVariable = null; TODO remove if not needed
 
       const newParams = { ...MatomoUrl.hashParsed.value };
       delete newParams.idVariable;
@@ -521,7 +527,7 @@ export default defineComponent({
 
       // TODO:
       // is this still needed: tempVariable.name = encodeURIComponent(tempVariable.name);
-      VariablesStore.createOrUpdateVariable<{ value: number }>(
+      VariablesStore.createOrUpdateVariable(
         this.variable,
         'TagManager.addContainerVariable',
         this.idContainer,
