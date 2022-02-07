@@ -451,7 +451,7 @@ export default defineComponent({
         const lastIndex = this.trigger.conditions.length - 1;
 
         if (lastIndex === index) {
-          this.trigger.conditions[index] = this.defaultCondition;
+          this.trigger.conditions[index] = this.makeDefaultCondition();
         } else {
           this.trigger.conditions.splice(index, 1);
         }
