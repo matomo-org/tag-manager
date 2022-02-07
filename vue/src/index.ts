@@ -11,6 +11,7 @@ import './VariableSelectType/VariableSelectType.adapter';
 import './Variable/VariableEdit.adapter';
 import './Variable/VariableList.adapter';
 import './Variable/VariableManage.adapter';
+import './Trigger/Triggers.store.adapter';
 import './Trigger/TriggerEdit.adapter';
 import './Trigger/TriggerList.adapter';
 import './Trigger/TriggerManage.adapter';
