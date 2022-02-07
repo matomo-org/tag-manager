@@ -186,6 +186,11 @@
             });
 
             delete tag.typeMetadata;
+            delete tag.created_date;
+            delete tag.created_date_pretty;
+            delete tag.status;
+            delete tag.updated_date;
+            delete tag.updated_date_pretty;
 
             var map = {
                 idTag: 'idtag',

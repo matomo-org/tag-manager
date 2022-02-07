@@ -543,6 +543,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/vue/src/VariableSelectType/VariableSelectType.less";
         $stylesheets[] = "plugins/TagManager/angularjs/form-field/field-variable-template.less";
         $stylesheets[] = "plugins/TagManager/angularjs/containerSelector/container-selector.less";
+        $stylesheets[] = "plugins/TagManager/angularjs/manageVersion/edit.directive.less";
     }
 
     public function getJsFiles(&$jsFiles)
@@ -600,7 +601,6 @@ class TagManager extends \Piwik\Plugin
 
         $jsFiles[] = "plugins/TagManager/angularjs/containerSelector/container-selector.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/containerSelector/container-selector.directive.js";
-
 
         $jsFiles[] = "plugins/TagManager/angularjs/tagmanagerTrackingCode/tagmanager.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/tagmanagerTrackingCode/tagmanager.directive.js";
