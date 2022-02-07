@@ -29,8 +29,8 @@
 <script lang="ts">
 import { defineComponent, watch } from 'vue';
 import { MatomoUrl, NotificationsStore, Matomo } from 'CoreHome';
-import TriggerList from '../Trigger/TriggerList.vue';
-import TriggerEdit from '../Trigger/TriggerEdit.vue';
+import TriggerList from './TriggerList.vue';
+import TriggerEdit from './TriggerEdit.vue';
 
 interface TriggerManageState {
   isAddAllowed: boolean;
@@ -79,7 +79,7 @@ export default defineComponent({
       return idTrigger ? parseInt(idTrigger, 10) : idTrigger;
     },
     editMode() {
-      return typeof this.idVariable === 'number';
+      return typeof this.idTrigger === 'number';
     },
   },
 });

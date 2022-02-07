@@ -77,7 +77,9 @@
             v-show="trigger.typeMetadata?.hasAdvancedSettings"
           >
             <div class="col s12">
-              <h3>{{ translate('TagManager_OnlyTriggerWhen') }} {{ translate('Goals_Optional') }}</h3>
+              <h3>
+                {{ translate('TagManager_OnlyTriggerWhen') }} {{ translate('Goals_Optional') }}
+              </h3>
             </div>
           </div>
           <div v-show="trigger.typeMetadata?.hasAdvancedSettings">
@@ -93,11 +95,10 @@
                     class="condition multiple valign-wrapper"
                     :class="`condition${index}`"
                   >
-                    <div>
+                    <div class="innerFormField">
                       <Field
                         uicontrol="expandable-select"
                         name="condition_actual"
-                        class="innerFormField"
                         :model-value="condition.actual"
                         @update:model-value="condition.actual = $event; setValueHasChanged()"
                         :full-width="true"
@@ -105,22 +106,20 @@
                         :title="variableIdToName.condition.actual || condition.actual"
                       />
                     </div>
-                    <div>
+                    <div class="innerFormField comparisonField">
                       <Field
                         uicontrol="select"
                         name="condition_comparison"
-                        class="innerFormField comparisonField"
                         :model-value="condition.comparison"
                         @update:model-value="condition.comparison = $event; setValueHasChanged()"
                         :full-width="true"
                         :options="availableComparisons"
                       />
                     </div>
-                    <div>
+                    <div class="innerFormField">
                       <Field
                         uicontrol="text"
                         name="condition_expected"
-                        class="innerFormField"
                         :model-value="condition.expected"
                         @update:model-value="condition.expected = $event;
                           setValueHasChanged(); onConditionChange()"
@@ -135,7 +134,9 @@
                     />
                   </div>
                 </div>
-                <p class="triggerConditionNode">{{ translate('TagManager_TriggerConditionNode') }}</p>
+                <p class="triggerConditionNode">
+                  {{ translate('TagManager_TriggerConditionNode') }}
+                </p>
               </div>
             </div>
           </div>
@@ -218,7 +219,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, nextTick} from 'vue';
+import { DeepReadonly, defineComponent, nextTick } from 'vue';
 import {
   translate,
   AjaxHelper,
@@ -226,9 +227,10 @@ import {
   Matomo,
   NotificationType,
   NotificationsStore,
-  clone, MatomoUrl,
+  clone,
+  MatomoUrl,
 } from 'CoreHome';
-import { Field, FormField, SaveButton } from 'CorePluginsAdmin';
+import { Field, GroupedSettings, SaveButton } from 'CorePluginsAdmin';
 import TriggersStore from './Triggers.store';
 import AvailableComparisonsStore from '../AvailableComparisons.store';
 import {
@@ -236,8 +238,8 @@ import {
   ContainerVariableCategory,
   Trigger,
   TriggerCategory,
+  TriggerType,
 } from '../types';
-import VariablesStore from '../Variable/Variables.store';
 
 interface Option {
   key: string;
@@ -248,7 +250,7 @@ interface Option {
 interface TriggerEditState {
   isDirty: boolean;
   chooseTriggerType: boolean;
-  availableTriggers: TriggerCategory[];
+  availableTriggers: DeepReadonly<TriggerCategory[]>;
   availableVariables: Option[];
   variableIdToName: Record<string, string>;
   trigger: Trigger;
@@ -260,12 +262,12 @@ interface TriggerEditState {
 const notificationId = 'tagvariablemanagement';
 
 const TRIGGER_TYPE_TO_CONDITION_ACTUAL: Record<string, string> = {
-  'AllElementsClick': 'ClickId',
-  'AllLinksClick': 'ClickId',
-  'DownloadClick': 'ClickId',
-  'ElementVisibility': 'VisibleElementClasses',
-  'FormSubmit': 'FormId',
-  'JavaScriptError': 'ErrorMessage'
+  AllElementsClick: 'ClickId',
+  AllLinksClick: 'ClickId',
+  DownloadClick: 'ClickId',
+  ElementVisibility: 'VisibleElementClasses',
+  FormSubmit: 'FormId',
+  JavaScriptError: 'ErrorMessage',
 };
 
 export default defineComponent({
@@ -288,7 +290,7 @@ export default defineComponent({
   components: {
     ContentBlock,
     Field,
-    FormField,
+    GroupedSettings,
     SaveButton,
   },
   data(): TriggerEditState {
@@ -389,9 +391,9 @@ export default defineComponent({
         method: 'TagManager.getContainer',
         idContainer: this.idContainer,
         filter_limit: '-1',
-      }).then((container) => {
-        return TriggersStore.fetchAvailableTriggers(container.context);
-      }).then((triggers) => {
+      }).then(
+        (container) => TriggersStore.fetchAvailableTriggers(container.context),
+      ).then((triggers) => {
         this.availableTriggers = triggers;
       }).then(() => {
         if (this.edit && this.idTrigger) {
@@ -405,8 +407,7 @@ export default defineComponent({
               return;
             }
 
-            this.trigger = clone(trigger);
-            this.trigger.idcontainer = this.idContainer;
+            this.trigger = clone(trigger) as unknown as Trigger;
             this.parameterValues = Object.fromEntries(trigger.typeMetadata.parameters.map(
               (s) => [s.name, s.value],
             ));
@@ -458,7 +459,7 @@ export default defineComponent({
         this.isDirty = true;
       }
     },
-    createTriggerType(triggerTemplate) {
+    createTriggerType(triggerTemplate: TriggerType) {
       if (triggerTemplate && this.isTriggerTemplateDisabled[triggerTemplate.id]) {
         return;
       }
@@ -466,16 +467,15 @@ export default defineComponent({
       this.chooseTriggerType = false;
       this.editTitle = translate('TagManager_CreateNewTrigger');
       this.trigger = {
-        idSite: Matomo.idSite,
+        idsite: parseInt(`${Matomo.idSite}`, 10),
         name: TriggersStore.suggestNameForType(triggerTemplate.name) || '',
         type: triggerTemplate.id,
-        idcontainer: this.idContainer,
         idcontainerversion: this.idContainerVersion,
         conditions: [],
         typeMetadata: triggerTemplate,
       };
 
-      this.parameterValues = Object.fromEntries(trigger.typeMetadata.parameters.map(
+      this.parameterValues = Object.fromEntries(triggerTemplate.parameters.map(
         (s) => [s.name, s.value],
       ));
 
@@ -525,7 +525,7 @@ export default defineComponent({
         this.isDirty = false;
         TriggersStore.reload(this.idContainer, this.idContainerVersion).then(() => {
           if (this.isEmbedded) {
-            this.trigger.idvariable = idTrigger;
+            this.trigger.idtrigger = idTrigger;
             this.$emit('changeTrigger', {
               trigger: this.trigger,
             });
@@ -569,13 +569,12 @@ export default defineComponent({
         this.idContainer,
         this.idContainerVersion,
         this.parameterValues,
-      ).then(function (response) {
+      ).then((response) => {
         if (!response) {
           return;
         }
 
         if (this.isEmbedded) {
-          this.trigger.idtrigger = this.idTrigger;
           this.$emit('changeTrigger', {
             trigger: this.trigger,
           });
@@ -650,7 +649,7 @@ export default defineComponent({
     defaultCondition() {
       let actual = 'PageUrl';
       if (this.trigger?.typeMetadata) {
-        var type = this.trigger.typeMetadata.id;
+        const type = this.trigger.typeMetadata.id;
         if (TRIGGER_TYPE_TO_CONDITION_ACTUAL[type]) {
           actual = TRIGGER_TYPE_TO_CONDITION_ACTUAL[type];
         }

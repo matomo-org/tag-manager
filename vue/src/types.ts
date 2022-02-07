@@ -120,14 +120,13 @@ export interface Trigger {
   created_date_pretty?: string;
   idcontainerversion: number;
   idsite: number;
-  idtrigger: number;
+  idtrigger?: number;
   name: string;
-  parameters: Record<string, string>;
-  status: string;
+  status?: string;
   type: string;
   typeMetadata: TriggerType;
   updated_date?: string;
-  updated_date_pretty?: "Dec 4, 2021 05:25:19"
+  updated_date_pretty?: string;
 }
 
 export interface TriggerReference {

@@ -144,7 +144,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { DeepReadonly, defineComponent } from 'vue';
 import {
   AjaxHelper,
   Matomo,
@@ -152,7 +152,7 @@ import {
   ContentTable, MatomoUrl,
 } from 'CoreHome';
 import TriggersStore from './Triggers.store';
-import { TriggerReference } from '../types';
+import { TriggerReference, Trigger } from '../types';
 
 interface TriggerListState {
   hasWriteAccess: boolean;
@@ -183,7 +183,7 @@ export default defineComponent({
     };
   },
   created() {
-    this.model.fetchTriggers(this.idContainer, this.idContainerVersion);
+    TriggersStore.fetchTriggers(this.idContainer, this.idContainerVersion);
   },
   methods: {
     createTrigger() {
@@ -195,12 +195,12 @@ export default defineComponent({
         idTrigger,
       });
     },
-    deleteTrigger(trigger) {
+    deleteTrigger(trigger: DeepReadonly<Trigger>) {
       AjaxHelper.fetch({
         method: 'TagManager.getContainerTriggerReferences',
         idContainer: this.idContainer,
         idContainerVersion: this.idContainerVersion,
-        idTrigger: trigger.idtrigger
+        idTrigger: trigger.idtrigger,
       }).then((references) => {
         if (!references || !references.length) {
           this.triggerReferences = [];
@@ -209,11 +209,11 @@ export default defineComponent({
             TriggersStore.deleteTrigger(
               this.idContainer,
               this.idContainerVersion,
-              trigger.idtrigger,
+              trigger.idtrigger!,
             ).then(() => {
               TriggersStore.reload(this.idContainer, this.idContainerVersion);
             });
-          }
+          };
 
           Matomo.helper.modalConfirm(this.$refs.confirmDeleteTrigger as HTMLElement, {
             yes: doDelete,

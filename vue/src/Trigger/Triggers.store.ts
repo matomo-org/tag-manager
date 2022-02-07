@@ -12,7 +12,7 @@ import {
   DeepReadonly,
 } from 'vue';
 import { AjaxHelper } from 'CoreHome';
-import {Trigger, TriggerCategory, Variable} from '../types';
+import { Trigger, TriggerCategory } from '../types';
 
 interface TriggersStoreState {
   triggers: Trigger[];
@@ -42,7 +42,7 @@ class TriggersStore {
 
   readonly triggers = computed(() => this.state.value.triggers);
 
-  private fetchPromise: Promise<Trigger[]>;
+  private fetchPromise: Promise<Trigger[]>|null = null;
 
   private availableTriggersPromises: AvailableTriggerPromises = {};
 
@@ -64,6 +64,7 @@ class TriggersStore {
 
     return Promise.resolve(this.fetchPromise).then((triggers) => {
       this.privateState.triggers = triggers;
+      return this.triggers.value;
     }).finally(() => {
       this.privateState.isLoadingTriggers = false;
     });
