@@ -78,7 +78,8 @@
         var createVueApp = CoreHome.createVueApp;
         var VariableEdit = TagManager.VariableEdit;
 
-        var template = $('<div class="tag-ui-confirm"><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/></div>')
+        var template = $('<div class="tag-ui-confirm"><div/><input role="no" type="button" value="'
+          + _pk_translate('General_Cancel') +'"/></div>')
 
         var app = createVueApp({
           render: function () {
@@ -101,7 +102,7 @@
             });
           },
         });
-        app.mount(template.children('.tag-ui-confirm')[0]);
+        app.mount(template.children()[0]);
 
         piwikHelper.modalConfirm(template, {}, {
           extraWide: true,
