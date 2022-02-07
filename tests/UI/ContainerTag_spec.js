@@ -8,9 +8,9 @@ describe("ContainerTag", function () {
     this.timeout(0);
 
     this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
-    //this.optionsOverride = {
-    //    'persist-fixture-data': false
-    //};
+    this.optionsOverride = {
+        'persist-fixture-data': false
+    };
 
     var generalParamsSite1 = '?idSite=2&period=day&date=2010-01-03',
         generalParamsSite5 = '?idSite=5&period=day&date=2010-01-03',
@@ -151,7 +151,7 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(400);
         await capture.modal(page, 'edit_trigger_directly_popup');
     });
-return;
+
     it('should be possible to edit a trigger directly', async function () {
         await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
         await page.waitForTimeout(100);
