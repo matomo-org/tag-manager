@@ -103,7 +103,7 @@
                         @update:model-value="condition.actual = $event; setValueHasChanged()"
                         :full-width="true"
                         :options="availableVariables"
-                        :title="variableIdToName.condition.actual || condition.actual"
+                        :title="variableIdToName[condition.actual] || condition.actual"
                       />
                     </div>
                     <div class="innerFormField comparisonField">
@@ -129,7 +129,7 @@
                     <span
                       class="icon-minus valign"
                       @click="removeConditionEntry(index)"
-                      v-show="!((index + 1) == (trigger.conditions.length))"
+                      v-show="!((index + 1) === trigger.conditions.length)"
                       :title="translate('General_Remove')"
                     />
                   </div>
@@ -439,11 +439,11 @@ export default defineComponent({
       }
 
       if (!this.trigger.conditions.length) {
-        this.trigger.conditions.push(this.defaultCondition);
+        this.trigger.conditions.push(this.makeDefaultCondition());
       }
     },
     addConditionEntry() {
-      this.trigger.conditions.push(this.defaultCondition);
+      this.trigger.conditions.push(this.makeDefaultCondition());
       this.isDirty = true;
     },
     removeConditionEntry(index: number) {
@@ -541,7 +541,7 @@ export default defineComponent({
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Trigger'));
             const wantToRedeploy = translate(
               'TagManager_WantToDeployThisChangeCreateVersion',
-              '<a onclick="tagManagerHelper.createNewVersion()">',
+              '<a href="" class="createNewVersionLink">',
               '</a>',
             );
 
@@ -589,12 +589,24 @@ export default defineComponent({
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Trigger'));
         const wantToDeploy = translate(
           'TagManager_WantToDeployThisChangeCreateVersion',
-          '<a onclick="tagManagerHelper.createNewVersion()">',
+          '<a href="" class="createNewVersionLink">',
           '</a>',
         );
 
         this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success');
+      }).finally(() => {
+        this.isUpdatingTrigger = false;
       });
+    },
+    makeDefaultCondition() {
+      let actual = 'PageUrl';
+      if (this.trigger?.typeMetadata) {
+        const type = this.trigger.typeMetadata.id;
+        if (TRIGGER_TYPE_TO_CONDITION_ACTUAL[type]) {
+          actual = TRIGGER_TYPE_TO_CONDITION_ACTUAL[type];
+        }
+      }
+      return { comparison: 'equals', actual, expected: '' };
     },
   },
   computed: {
@@ -632,8 +644,8 @@ export default defineComponent({
     },
     isTriggerTemplateDisabled() {
       const result: Record<string, boolean> = {};
-      this.availableTriggers.forEach((triggerCtegory) => {
-        triggerCtegory.types.forEach((trigger) => {
+      this.availableTriggers.forEach((triggerCategory) => {
+        triggerCategory.types.forEach((trigger) => {
           result[trigger.id] = !this.canUseCustomTemplates && trigger.isCustomTemplate;
         });
       });
@@ -645,16 +657,6 @@ export default defineComponent({
       }
 
       return this.parameterValues;
-    },
-    defaultCondition() {
-      let actual = 'PageUrl';
-      if (this.trigger?.typeMetadata) {
-        const type = this.trigger.typeMetadata.id;
-        if (TRIGGER_TYPE_TO_CONDITION_ACTUAL[type]) {
-          actual = TRIGGER_TYPE_TO_CONDITION_ACTUAL[type];
-        }
-      }
-      return { comparison: 'equals', actual, expected: '' };
     },
   },
 });
