@@ -58,6 +58,8 @@ class GenerateTrigger extends GeneratePluginBase
             'You can now start implementing the trigger',
             'Enjoy!'
         ));
+
+        return 0;
     }
 
     /**
