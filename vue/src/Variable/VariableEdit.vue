@@ -92,11 +92,10 @@
             </div>
           </div>
           <div v-show="showAdvanced && variable.typeMetadata?.hasAdvancedSettings">
-            <div>
+            <div class="innerFormField">
               <Field
                 uicontrol="text"
                 name="default_value"
-                class="innerFormField"
                 :model-value="variable.default_value"
                 @update:model-value="variable.default_value = $event; setValueHasChanged()"
                 :title="translate('TagManager_DefaultValue')"
@@ -112,33 +111,30 @@
                     :key="index"
                     :class="`lookupTable lookupTable${ index } multiple valign-wrapper`"
                   >
-                    <div>
+                    <div class="innerFormField comparisonField">
                       <Field
                         uicontrol="select"
                         name="lookup_table_comparison"
-                        class="innerFormField comparisonField"
                         :model-value="lookup.comparison"
                         @update:model-value="lookup.comparison = $event; setValueHasChanged()"
                         :full-width="true"
                         :options="availableLookUpComparisons"
                       />
                     </div>
-                    <div>
+                    <div class="innerFormField">
                       <Field
                         uicontrol="text"
                         name="lookup_table_matchvalue"
-                        class="innerFormField"
                         :model-value="lookup.match_value"
                         @update:model-value="lookup.match_value = $event; setValueHasChanged();"
                         :full-width="true"
                         :placeholder="translate('TagManager_LookupTableMatchValue')"
                       />
                     </div>
-                    <div>
+                    <div class="innerFormField">
                       <Field
                         uicontrol="text"
                         name="lookup_table_outvalue"
-                        class="innerFormField"
                         :model-value="lookup.out_value"
                         @update:model-value="lookup.out_value = $event; setValueHasChanged();"
                         :full-width="true"
