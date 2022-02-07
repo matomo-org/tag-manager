@@ -4,14 +4,6 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
-<todo>
-- look over component code
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <div class="editTrigger tagManagerManageEdit" ref="root">
     <ContentBlock
@@ -188,12 +180,12 @@
             class="collection-item avatar"
             @click="createTriggerType(triggerTemplate)"
             :class="{
-              disabledTemplate: triggerTemplate.isDisabled,
+              disabledTemplate: isTriggerTemplateDisabled[triggerTemplate.id],
               [`templateType${ triggerTemplate.id}`]: true,
             }"
             v-for="(triggerTemplate, index) in triggerCategory.types"
             :key="index"
-            :title="!triggerTemplate.isDisabled ? '' : collectionItemAvatarText"
+            :title="!isTriggerTemplateDisabled[triggerTemplate.id] ? '' : collectionItemAvatarText"
           >
             <img
               alt
@@ -226,31 +218,55 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent, nextTick} from 'vue';
 import {
   translate,
   AjaxHelper,
   ContentBlock,
-  Matomo, NotificationType, NotificationsStore,
+  Matomo,
+  NotificationType,
+  NotificationsStore,
+  clone, MatomoUrl,
 } from 'CoreHome';
 import { Field, FormField, SaveButton } from 'CorePluginsAdmin';
 import TriggersStore from './Triggers.store';
 import AvailableComparisonsStore from '../AvailableComparisons.store';
-import { ContainerVariableCategory, Trigger, TriggerCategory } from '../types';
+import {
+  Container,
+  ContainerVariableCategory,
+  Trigger,
+  TriggerCategory,
+} from '../types';
+import VariablesStore from '../Variable/Variables.store';
+
+interface Option {
+  key: string;
+  value: string;
+  group: string;
+}
 
 interface TriggerEditState {
   isDirty: boolean;
   chooseTriggerType: boolean;
-  canUseCustomTemplates: unknown; // TODO
   availableTriggers: TriggerCategory[];
-  availableVariables: ContainerVariableCategory[];
-  variableIdToName: Record<string, unknown>; // TODO
+  availableVariables: Option[];
+  variableIdToName: Record<string, string>;
   trigger: Trigger;
   editTitle: string;
   parameterValues: Record<string, unknown>;
+  isUpdatingTrigger: boolean;
 }
 
 const notificationId = 'tagvariablemanagement';
+
+const TRIGGER_TYPE_TO_CONDITION_ACTUAL: Record<string, string> = {
+  'AllElementsClick': 'ClickId',
+  'AllLinksClick': 'ClickId',
+  'DownloadClick': 'ClickId',
+  'ElementVisibility': 'VisibleElementClasses',
+  'FormSubmit': 'FormId',
+  'JavaScriptError': 'ErrorMessage'
+};
 
 export default defineComponent({
   props: {
@@ -279,26 +295,30 @@ export default defineComponent({
     return {
       isDirty: false,
       chooseTriggerType: false,
-      canUseCustomTemplates: Matomo.hasUserCapability('tagmanager_use_custom_templates'),
       availableTriggers: [],
       availableVariables: [],
       variableIdToName: {},
       editTitle: '',
       trigger: {} as unknown as Trigger,
       parameterValues: {},
+      isUpdatingTrigger: false,
     };
   },
   emits: ['changeTrigger'],
   created() {
-    this.model.fetchAvailableContainerVariables(this.idContainer, this.idContainerVersion).then(function (variables) {
-      this.availableVariables = [];
-      angular.forEach(variables, function (category) {
-        angular.forEach(category.types, function (variable) {
-          this.variableIdToName[variable.id] = variable.name;
+    AjaxHelper.fetch<ContainerVariableCategory[]>({
+      method: 'TagManager.getAvailableContainerVariables',
+      filter_limit: '-1',
+      idContainer: this.idContainer,
+      idContainerVersion: this.idContainerVersion,
+    }).then((categories) => {
+      categories.forEach((category) => {
+        category.types.forEach((v) => {
+          this.variableIdToName[v.id] = v.name;
           this.availableVariables.push({
-            key: variable.id,
-            value: variable.name,
-            group: category.name
+            key: v.id,
+            value: v.name,
+            group: category.name,
           });
         });
       });
@@ -307,28 +327,39 @@ export default defineComponent({
     // needed for suggestNameForType() to make sure it is aware of all names
     TriggersStore.fetchTriggersIfNotLoaded();
 
-    this.$watch('idTrigger', function (newValue, oldValue) {
+    this.initIdTrigger();
+  },
+  watch: {
+    idTrigger(newValue) {
       if (newValue === null) {
         return;
       }
 
-      if (newValue != oldValue || currentId === null) {
-        currentId = newValue;
-        init(newValue);
-      }
-    });
+      this.initIdTrigger();
+    },
+    triggerParameterValues: {
+      handler(newValue) {
+        if (!newValue) {
+          return;
+        }
+
+        this.isDirty = true;
+      },
+      deep: true,
+    },
   },
   methods: {
-    // TODO
-    enrichTemplateType(template) {
-      template.isDisabled = !this.canUseCustomTemplates && template && template.isCustomTemplate;
-      return template;
+    checkRequiredFieldsAreSet() {
+      if (!this.trigger.name) {
+        this.showErrorFieldNotProvidedNotification(translate('General_Name'));
+        return false;
+      }
+
+      return true;
     },
-    // TODO
     removeAnyTriggerNotification() {
-      var notification = this.notification;
-      notification.remove(notificationId);
-      notification.remove('ajaxHelper');
+      NotificationsStore.remove(notificationId);
+      NotificationsStore.remove('ajaxHelper');
     },
     showNotification(message: string, context: NotificationType['context']) {
       const notificationInstanceId = NotificationsStore.show({
@@ -341,112 +372,85 @@ export default defineComponent({
         NotificationsStore.scrollToNotification(notificationInstanceId);
       }, 200);
     },
-    // TODO
-    showErrorFieldNotProvidedNotification(title) {
-      var message = translate('TagManager_ErrorXNotProvided', [title]);
+    showErrorFieldNotProvidedNotification(title: string) {
+      const message = translate('TagManager_ErrorXNotProvided', [title]);
       this.showNotification(message, 'error');
     },
-    // TODO
-    init(idTrigger) {
-      this.create = this.idTrigger == '0';
-      this.edit = !this.create;
-      this.trigger = {};
+    initIdTrigger() {
+      this.trigger = {} as unknown as Trigger;
       this.chooseTriggerType = false;
       this.editTitle = '';
-      var dereg;
 
-      for (dereg = 0; dereg < deregisterWatches.length; dereg++) {
-        if ('function' === typeof deregisterWatches[dereg]) {
-          deregisterWatches[dereg]();
-        }
-      }
+      Matomo.helper.lazyScrollToContent();
 
-      piwik.helper.lazyScrollToContent();
       this.availableTriggers = [];
-      this.model.fetchContainer(this.idContainer).then(function (container) {
-        return this.model.fetchAvailableTriggers(container.context);
-      }).then(function (triggers) {
-        angular.forEach(triggers, function (triggersGroup) {
-          angular.forEach(triggersGroup.types, function (trigger) {
-            this.enrichTemplateType(trigger);
-          });
-        });
+
+      AjaxHelper.fetch<Container>({
+        method: 'TagManager.getContainer',
+        idContainer: this.idContainer,
+        filter_limit: '-1',
+      }).then((container) => {
+        return TriggersStore.fetchAvailableTriggers(container.context);
+      }).then((triggers) => {
         this.availableTriggers = triggers;
-      }).then(function () {
+      }).then(() => {
         if (this.edit && this.idTrigger) {
           this.editTitle = translate('TagManager_EditTrigger');
-          this.model.findTrigger(this.idContainer, this.idContainerVersion, this.idTrigger).then(function (trigger) {
+          TriggersStore.findTrigger(
+            this.idContainer,
+            this.idContainerVersion,
+            this.idTrigger,
+          ).then((trigger) => {
             if (!trigger) {
               return;
             }
 
-            this.trigger = angular.copy(trigger);
+            this.trigger = clone(trigger);
             this.trigger.idcontainer = this.idContainer;
-
-            if (this.trigger.typeMetadata) {
-              this.enrichTemplateType(this.trigger.typeMetadata);
-            }
+            this.parameterValues = Object.fromEntries(trigger.typeMetadata.parameters.map(
+              (s) => [s.name, s.value],
+            ));
 
             this.addConditionEntryIfNoneExists();
             this.onConditionChange();
-            this.addParameterWatch();
             this.isDirty = false;
           });
-        } else if (this.create) {
+          return;
+        }
+
+        if (this.create) {
           this.editTitle = translate('TagManager_ChooseTriggerToContinue');
           this.chooseTriggerType = true;
         }
       });
     },
-    // TODO
-    addParameterWatch() {
-      var index;
-
-      if (this.trigger.typeMetadata && this.trigger.typeMetadata.parameters) {
-        for (index = 0; index < this.trigger.typeMetadata.parameters.length; index++) {
-          deregisterWatches.push(this.$watch('editTrigger.trigger.typeMetadata.parameters[' + index + '].value', function (val, oldVal) {
-            if (val !== oldVal) {
-              this.isDirty = true;
-            }
-          }));
-        }
-      }
-    },
-    // TODO
     onConditionChange() {
-      var hasAll = true;
-      angular.forEach(this.trigger.conditions, function (condition) {
-        if (!condition || !condition.expected) {
-          hasAll = false;
-        }
-      });
-
+      const hasAll = (this.trigger.conditions || []).every((c) => !!c?.expected);
       if (hasAll) {
         this.addConditionEntry();
       }
     },
-    // TODO
     addConditionEntryIfNoneExists() {
-      if (!this.trigger.conditions || !angular.isArray(this.trigger.conditions)) {
+      if (!this.trigger.conditions
+        || !Array.isArray(this.trigger.conditions)
+      ) {
         this.trigger.conditions = [];
       }
 
       if (!this.trigger.conditions.length) {
-        this.trigger.conditions.push(this.getDefaultCondition());
+        this.trigger.conditions.push(this.defaultCondition);
       }
     },
-    // TODO
     addConditionEntry() {
-      this.trigger.conditions.push(this.getDefaultCondition());
+      this.trigger.conditions.push(this.defaultCondition);
       this.isDirty = true;
     },
-    // TODO
-    removeConditionEntry(index) {
+    removeConditionEntry(index: number) {
       if (index > -1) {
-        var lastIndex = this.trigger.conditions.length - 1;
+        const lastIndex = this.trigger.conditions.length - 1;
 
         if (lastIndex === index) {
-          this.trigger.conditions[index] = this.getDefaultCondition();
+          this.trigger.conditions[index] = this.defaultCondition;
         } else {
           this.trigger.conditions.splice(index, 1);
         }
@@ -454,119 +458,143 @@ export default defineComponent({
         this.isDirty = true;
       }
     },
-    // TODO
     createTriggerType(triggerTemplate) {
-      if (triggerTemplate && triggerTemplate.isDisabled) {
+      if (triggerTemplate && this.isTriggerTemplateDisabled[triggerTemplate.id]) {
         return;
       }
 
       this.chooseTriggerType = false;
       this.editTitle = translate('TagManager_CreateNewTrigger');
       this.trigger = {
-        idSite: piwik.idSite,
-        name: this.model.suggestNameForType(triggerTemplate.name),
+        idSite: Matomo.idSite,
+        name: TriggersStore.suggestNameForType(triggerTemplate.name) || '',
         type: triggerTemplate.id,
         idcontainer: this.idContainer,
         idcontainerversion: this.idContainerVersion,
-        parameters: {},
         conditions: [],
-        typeMetadata: triggerTemplate
+        typeMetadata: triggerTemplate,
       };
+
+      this.parameterValues = Object.fromEntries(trigger.typeMetadata.parameters.map(
+        (s) => [s.name, s.value],
+      ));
+
       this.addConditionEntry();
-      this.addParameterWatch();
-      this.isDirty = true; // we directly make the create button visible as sometimes some triggers do not have any settings
 
-      $timeout(function () {
-        var $editTrigger = $('.editTrigger');
+      // we directly make the create button visible as sometimes some triggers do not
+      // have any settings
+      this.isDirty = true;
 
-        if ($editTrigger.length && $editTrigger[0]) {
-          $editTrigger[0].scrollIntoView();
+      nextTick(() => {
+        if (!this.$refs.root) {
+          return;
         }
 
-        $('.editTrigger #name').focus();
-      }, 1);
+        const root = this.$refs.root as HTMLElement;
+        root.scrollIntoView();
+
+        const name = root.querySelector('#name') as HTMLElement;
+        if (name) {
+          name.focus();
+        }
+      });
     },
-    // TODO
     cancel() {
-      this.idTrigger = null;
-      currentId = null;
-      var $search = $location.search();
-      delete $search.idTrigger;
-      $location.search($search);
+      const newParams = { ...MatomoUrl.hashParsed.value };
+      delete newParams.idTrigger;
+
+      MatomoUrl.updateHash(newParams);
     },
-    // TODO
     createTrigger() {
       this.removeAnyTriggerNotification();
 
-      if (!this.checkRequiredFieldsAreSet) {
+      if (!this.checkRequiredFieldsAreSet()) {
         return;
       }
 
-      this.isUpdating = true;
-      tagManagerTriggerModel.createOrUpdateTrigger(this.trigger, 'TagManager.addContainerTrigger').then(function (response) {
-        this.isUpdating = false;
-
-        if (!response || response.type === 'error' || !response.response) {
-          return;
-        }
-
-        var this.idTrigger = response.response.value;
-
-        if ('function' === typeof this.onChangeTrigger) {
-          this.model.reload(this.idContainer, this.idContainerVersion);
-          this.trigger.idtrigger = this.idTrigger;
-          this.$emit('changeTrigger', {
-            trigger: this.trigger
-          });
-          return;
-        }
+      this.isUpdatingTrigger = true;
+      TriggersStore.createOrUpdateTrigger(
+        this.trigger,
+        'TagManager.addContainerTrigger',
+        this.idContainer,
+        this.idContainerVersion,
+        this.parameterValues,
+      ).then((response) => {
+        const idTrigger = response.value;
 
         this.isDirty = false;
-        tagManagerTriggerModel.reload(this.idContainer, this.idContainerVersion).then(function () {
-          var $search = $location.search();
-          $search.idTrigger = this.idTrigger;
-          $location.search($search);
-          $timeout(function () {
-            this.showNotification(translate('TagManager_CreatedX', translate('TagManager_Trigger')) + ' ' + translate('TagManager_WantToDeployThisChangeCreateVersion', '<a onclick="tagManagerHelper.createNewVersion()">', '</a>'), response.type);
+        TriggersStore.reload(this.idContainer, this.idContainerVersion).then(() => {
+          if (this.isEmbedded) {
+            this.trigger.idvariable = idTrigger;
+            this.$emit('changeTrigger', {
+              trigger: this.trigger,
+            });
+            return;
+          }
+
+          MatomoUrl.updateHash({
+            ...MatomoUrl.hashParsed.value,
+            idTrigger,
+          });
+
+          setTimeout(() => {
+            const createdX = translate('TagManager_CreatedX', translate('TagManager_Trigger'));
+            const wantToRedeploy = translate(
+              'TagManager_WantToDeployThisChangeCreateVersion',
+              '<a onclick="tagManagerHelper.createNewVersion()">',
+              '</a>',
+            );
+
+            this.showNotification(`${createdX} ${wantToRedeploy}`, 'success');
           }, 200);
         });
-      }, function () {
-        this.isUpdating = false;
+      }).finally(() => {
+        this.isUpdatingTrigger = false;
       });
     },
-    // TODO
     setValueHasChanged() {
       this.isDirty = true;
     },
-    // TODO
     updateTrigger() {
       this.removeAnyTriggerNotification();
 
-      if (!this.checkRequiredFieldsAreSet) {
+      if (!this.checkRequiredFieldsAreSet()) {
         return;
       }
 
-      this.isUpdating = true;
-      tagManagerTriggerModel.createOrUpdateTrigger(this.trigger, 'TagManager.updateContainerTrigger').then(function (response) {
-        if (response.type === 'error') {
+      this.isUpdatingTrigger = true;
+      TriggersStore.createOrUpdateTrigger(
+        this.trigger,
+        'TagManager.updateContainerTrigger',
+        this.idContainer,
+        this.idContainerVersion,
+        this.parameterValues,
+      ).then(function (response) {
+        if (!response) {
           return;
         }
 
-        if ('function' === typeof this.onChangeTrigger) {
+        if (this.isEmbedded) {
           this.trigger.idtrigger = this.idTrigger;
           this.$emit('changeTrigger', {
-            trigger: this.trigger
+            trigger: this.trigger,
           });
           return;
         }
 
-        var this.idTrigger = this.trigger.idtrigger;
         this.isDirty = false;
-        this.trigger = {};
-        tagManagerTriggerModel.reload(this.idContainer, this.idContainerVersion).then(function () {
-          this.init(this.idTrigger);
+        TriggersStore.reload(this.idContainer, this.idContainerVersion).then(() => {
+          this.initIdTrigger();
         });
-        this.showNotification(translate('TagManager_UpdatedX', translate('TagManager_Trigger')) + ' ' + translate('TagManager_WantToDeployThisChangeCreateVersion', '<a onclick="tagManagerHelper.createNewVersion()">', '</a>'), response.type);
+
+        const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Trigger'));
+        const wantToDeploy = translate(
+          'TagManager_WantToDeployThisChangeCreateVersion',
+          '<a onclick="tagManagerHelper.createNewVersion()">',
+          '</a>',
+        );
+
+        this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success');
       });
     },
   },
@@ -575,7 +603,7 @@ export default defineComponent({
       return TriggersStore.isLoading.value || AvailableComparisonsStore.isLoading.value;
     },
     isUpdating() {
-      return TriggersStore.isUpdating.value || this.isUpdatingVar;
+      return TriggersStore.isUpdating.value || this.isUpdatingTrigger;
     },
     create() {
       return this.idTrigger === 0;
@@ -583,8 +611,11 @@ export default defineComponent({
     edit() {
       return !this.create;
     },
+    canUseCustomTemplates() {
+      return Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
     isTriggerDisabled() {
-      // TODO
+      return !this.canUseCustomTemplates && this.trigger.typeMetadata?.isCustomTemplate;
     },
     saveButtonText() {
       return this.edit
@@ -600,17 +631,31 @@ export default defineComponent({
     availableComparisons() {
       return AvailableComparisonsStore.comparisonOptions.value;
     },
-    // TODO
-    checkRequiredFieldsAreSet() {
-      var title;
-
-      if (!this.trigger.name) {
-        title = translate('General_Name');
-        this.showErrorFieldNotProvidedNotification(title);
-        return false;
+    isTriggerTemplateDisabled() {
+      const result: Record<string, boolean> = {};
+      this.availableTriggers.forEach((triggerCtegory) => {
+        triggerCtegory.types.forEach((trigger) => {
+          result[trigger.id] = !this.canUseCustomTemplates && trigger.isCustomTemplate;
+        });
+      });
+      return result;
+    },
+    triggerParameterValues() {
+      if (!this.trigger.typeMetadata?.parameters) {
+        return null;
       }
 
-      return true;
+      return this.parameterValues;
+    },
+    defaultCondition() {
+      let actual = 'PageUrl';
+      if (this.trigger?.typeMetadata) {
+        var type = this.trigger.typeMetadata.id;
+        if (TRIGGER_TYPE_TO_CONDITION_ACTUAL[type]) {
+          actual = TRIGGER_TYPE_TO_CONDITION_ACTUAL[type];
+        }
+      }
+      return { comparison: 'equals', actual, expected: '' };
     },
   },
 });

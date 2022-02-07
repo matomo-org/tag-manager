@@ -167,23 +167,6 @@
 
         this.getDefaultCondition = function()
         {
-            var defaultActual = 'PageUrl';
-            if (this.trigger && this.trigger.typeMetadata) {
-                var types = {
-                    'AllElementsClick': 'ClickId',
-                    'AllLinksClick': 'ClickId',
-                    'DownloadClick': 'ClickId',
-                    'ElementVisibility': 'VisibleElementClasses',
-                    'FormSubmit': 'FormId',
-                    'JavaScriptError': 'ErrorMessage'
-                };
-                var type = this.trigger.typeMetadata.id;
-                if (type in types) {
-                    defaultActual = types[type];
-                }
-
-            }
-            return {comparison: 'equals', actual: defaultActual, expected: ''};
         }
 
         this.addConditionEntryIfNoneExists = function () {
