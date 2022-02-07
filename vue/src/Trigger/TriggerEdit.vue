@@ -340,8 +340,8 @@ export default defineComponent({
       this.initIdTrigger();
     },
     triggerParameterValues: {
-      handler(newValue) {
-        if (!newValue) {
+      handler(newValue, oldValue) {
+        if (!newValue || !oldValue) {
           return;
         }
 
