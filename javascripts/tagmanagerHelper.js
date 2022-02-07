@@ -248,5 +248,10 @@
         var debugSiteUrl = $(event.target).data('debug-site-url');
         tagManagerHelper.changeDebugUrl(idContainer, debugSiteUrl);
       });
+
+      $('body').on('click', 'a.createNewVersionLink', function (e) {
+        e.preventDefault();
+        tagManagerHelper.createNewVersion();
+      });
     });
 })(jQuery);
