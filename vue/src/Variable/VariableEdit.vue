@@ -327,8 +327,8 @@ export default defineComponent({
       this.initIdVariable();
     },
     variableParameterValues: {
-      handler(newValue) {
-        if (!newValue) {
+      handler(newValue, oldValue) {
+        if (!newValue || !oldValue) {
           return;
         }
 
