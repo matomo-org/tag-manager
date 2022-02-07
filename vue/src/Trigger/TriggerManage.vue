@@ -4,51 +4,41 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
-<todo>
-- conversion check (mistakes get fixed in quickmigrate)
-- property types
-- state types
-- look over template
-- look over component code
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <div class="manageTrigger">
     <div v-show="!editMode">
-      <div
-        piwik-trigger-list
-        :id-container="idContainer"
-        :id-container-version="idContainerVersion"
-      />
+      <div>
+        <TriggerList
+          :id-container="idContainer"
+          :id-container-version="idContainerVersion"
+        />
+      </div>
     </div>
     <div v-show="editMode">
-      <div
-        piwik-trigger-edit
-        :id-container="idContainer"
-        :id-container-version="idContainerVersion"
-        :id-trigger="idTrigger"
-      />
+      <div>
+        <TriggerEdit
+          :id-container="idContainer"
+          :id-container-version="idContainerVersion"
+          :id-trigger="idTrigger"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { translate, AjaxHelper } from 'CoreHome';
+import { defineComponent, watch } from 'vue';
+import { MatomoUrl, NotificationsStore, Matomo } from 'CoreHome';
 import TriggerList from '../Trigger/TriggerList.vue';
 import TriggerEdit from '../Trigger/TriggerEdit.vue';
 
 interface TriggerManageState {
-  editMode: boolean;
+  isAddAllowed: boolean;
 }
 
 export default defineComponent({
   props: {
-    idContainerVersion: String,
+    idContainerVersion: Number,
     idContainer: String,
   },
   components: {
@@ -57,16 +47,40 @@ export default defineComponent({
   },
   data(): TriggerManageState {
     return {
-      editMode: false,
+      isAddAllowed: false,
     };
   },
   created() {
-    initState();
-    this.$on('$destroy', function () {
-  if (onChangeSuccess) {
-    onChangeSuccess();
-  }
-});
+    // doing this in a watch because we don't want to post an event in a computed property
+    watch(() => MatomoUrl.hashParsed.value.idTrigger as string, (idTrigger) => {
+      this.onIdTriggerParamChange(idTrigger);
+    });
+
+    NotificationsStore.remove('triggertriggermanagement');
+
+    this.onIdTriggerParamChange(MatomoUrl.hashParsed.value.idTrigger as string);
+  },
+  methods: {
+    onIdTriggerParamChange(idTrigger: string) {
+      // for BC w/ angularjs only invoke event if idVariable is 0
+      if (idTrigger === '0') {
+        const parameters = { isAllowed: true };
+        Matomo.postEvent('TagManager.initAddTrigger', parameters);
+        this.isAddAllowed = !!parameters.isAllowed;
+      }
+    },
+  },
+  computed: {
+    idTrigger() {
+      const idTrigger = MatomoUrl.hashParsed.value.idTrigger as string;
+      if (!this.isAddAllowed && idTrigger === '0') {
+        return null;
+      }
+      return idTrigger ? parseInt(idTrigger, 10) : idTrigger;
+    },
+    editMode() {
+      return typeof this.idVariable === 'number';
+    },
   },
 });
 </script>
