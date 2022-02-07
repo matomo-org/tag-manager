@@ -3,13 +3,14 @@
     tagManagerHelper.editTrigger = function ($scope, idContainer, idContainerVersion, idTag, callback) {
       var createVNode = Vue.createVNode;
       var createVueApp = CoreHome.createVueApp;
-      var VariableEdit = TagManager.TriggerEdit;
+      var TriggerEdit = TagManager.TriggerEdit;
 
-      var template = $('<div class="tag-ui-confirm"><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/></div>')
+      var template = $('<div class="tag-ui-confirm"><div/><input role="no" type="button" value="'
+        + _pk_translate('General_Cancel') +'"/></div>')
 
       var app = createVueApp({
         render: function () {
-          return createVNode(VariableEdit, {
+          return createVNode(TriggerEdit, {
             idContainer: idContainer,
             idContainerVersion: parseInt(idContainerVersion, 10),
             idTrigger: parseInt(idTag,10),
@@ -27,7 +28,7 @@
           });
         },
       });
-      app.mount(template.children('.tag-ui-confirm')[0]);
+      app.mount(template.children()[0]);
 
       piwikHelper.modalConfirm(template, {}, {
         extraWide: true,
