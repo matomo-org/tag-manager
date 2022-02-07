@@ -5,7 +5,7 @@
       var createVueApp = CoreHome.createVueApp;
       var TriggerEdit = TagManager.TriggerEdit;
 
-      var template = $('<div class="tag-ui-confirm"><div/><input role="no" type="button" value="'
+      var template = $('<div class="tag-ui-confirm"><div></div><input role="no" type="button" value="'
         + _pk_translate('General_Cancel') +'"/></div>')
 
       var app = createVueApp({
