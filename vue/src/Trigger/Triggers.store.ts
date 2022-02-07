@@ -179,6 +179,27 @@ class TriggersStore {
     this.availableTriggersPromises = {};
     return this.fetchTriggers(idContainer, idContainerVersion);
   }
+
+  deleteTrigger(
+    idContainer: string,
+    idContainerVersion: number,
+    idTrigger: number,
+  ): Promise<void> {
+    this.privateState.isUpdating = true;
+    this.privateState.triggers = [];
+
+    return AjaxHelper.fetch(
+      {
+        idTrigger,
+        idContainerVersion,
+        idContainer,
+        method: 'TagManager.deleteContainerTrigger',
+      },
+      { withTokenInUrl: true },
+    ).finally(() => {
+      this.privateState.isUpdating = false;
+    });
+  }
 }
 
 export default new TriggersStore();

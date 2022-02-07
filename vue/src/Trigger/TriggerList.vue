@@ -4,18 +4,6 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
-<todo>
-- conversion check (mistakes get fixed in quickmigrate)
-- property types
-- state types
-- look over template
-- look over component code
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <div class="tagManagerManageList tagManagerTriggerList">
     <ContentBlock
@@ -33,16 +21,21 @@
             <th
               class="action"
               v-show="hasWriteAccess"
-            >{{ translate('General_Actions') }}</th>
+            >
+              {{ translate('General_Actions') }}
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-show="model.isLoading || model.isUpdating">
+          <tr v-show="isLoading || isUpdating">
             <td colspan="7">
-              <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('General_LoadingData') }}</span>
+              <span class="loadingPiwik">
+                <img src="plugins/Morpheus/images/loading-blue.gif" />
+                {{ translate('General_LoadingData') }}
+              </span>
             </td>
           </tr>
-          <tr v-show="!model.isLoading && length(model.triggers) == 0">
+          <tr v-show="!isLoading && triggers.length === 0">
             <td colspan="7">
               {{ translate('TagManager_NoTriggersFound') }}
               <a
@@ -53,23 +46,28 @@
             </td>
           </tr>
           <tr
-            id="trigger{{ trigger.idtrigger }}"
+            :id="`trigger${trigger.idtrigger}`"
             class="triggers"
-            v-for="trigger in orderBy(model.triggers, 'name', false)"
+            v-for="trigger in sortedTriggers"
+            :key="trigger.idtrigger"
           >
             <td class="name">{{ trigger.name }}</td>
             <td
               class="type"
               :title="trigger.typeMetadata.description"
             >{{ trigger.typeMetadata.name }}</td>
-            <td class="conditions"><span
+            <td class="conditions">
+              <span
                 class="icon-ok"
-                v-show="length(trigger.conditions)"
-              /></td>
+                v-show="trigger.conditions?.length"
+              />
+            </td>
             <td
               class="lastUpdated"
               :title="translate('TagManager_CreatedOnX', trigger.created_date_pretty)"
-            ><span>{{ trigger.updated_date_pretty }}</span></td>
+            >
+              <span>{{ trigger.updated_date_pretty }}</span>
+            </td>
             <td
               class="action"
               v-show="hasWriteAccess"
@@ -96,12 +94,16 @@
           class="createNewTrigger"
           value
           @click="createTrigger()"
-        ><span class="icon-add" /> {{ translate('TagManager_CreateNewTrigger') }}</a>
+        >
+          <span class="icon-add" />
+          {{ translate('TagManager_CreateNewTrigger') }}
+        </a>
       </div>
     </ContentBlock>
     <div
       class="ui-confirm"
       id="confirmDeleteTrigger"
+      ref="confirmDeleteTrigger"
     >
       <h2>{{ translate('TagManager_DeleteTriggerConfirm') }} </h2>
       <input
@@ -118,6 +120,7 @@
     <div
       class="ui-confirm"
       id="confirmDeleteTriggerNotPossible"
+      ref="confirmDeleteTriggerNotPossible"
     >
       <h2>{{ translate('TagManager_TriggerCannotBeDeleted') }}</h2>
       <p>{{ translate('TagManager_TriggerBeingUsedBy') }}</p>
@@ -125,6 +128,7 @@
         <li
           class="collection-item"
           v-for="reference in triggerReferences"
+          :key="reference.referenceId"
         >
           {{ reference.referenceTypeName }}: {{ reference.referenceName }}
         </li>
@@ -141,19 +145,30 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { translate, AjaxHelper, ContentBlock, ContentTable } from 'CoreHome';
-
+import {
+  AjaxHelper,
+  Matomo,
+  ContentBlock,
+  ContentTable, MatomoUrl,
+} from 'CoreHome';
+import TriggersStore from './Triggers.store';
+import { TriggerReference } from '../types';
 
 interface TriggerListState {
-  model: unknown; // TODO
-  hasWriteAccess: unknown; // TODO
-  triggerReferences: unknown[]; // TODO
+  hasWriteAccess: boolean;
+  triggerReferences: TriggerReference[];
 }
 
 export default defineComponent({
   props: {
-    idContainer: null, // TODO,
-    idContainerVersion: null, // TODO,
+    idContainer: {
+      type: String,
+      required: true,
+    },
+    idContainerVersion: {
+      type: Number,
+      required: true,
+    },
   },
   components: {
     ContentBlock,
@@ -163,8 +178,7 @@ export default defineComponent({
   },
   data(): TriggerListState {
     return {
-      model: tagManagerTriggerModel,
-      hasWriteAccess: piwik.hasUserCapability('tagmanager_write'),
+      hasWriteAccess: Matomo.hasUserCapability('tagmanager_write'),
       triggerReferences: [],
     };
   },
@@ -172,41 +186,64 @@ export default defineComponent({
     this.model.fetchTriggers(this.idContainer, this.idContainerVersion);
   },
   methods: {
-    // TODO
     createTrigger() {
       this.editTrigger(0);
     },
-    // TODO
-    editTrigger(idTrigger) {
-      var $search = $location.search();
-      $search.idTrigger = idTrigger;
-      $location.search($search);
+    editTrigger(idTrigger: number) {
+      MatomoUrl.updateHash({
+        ...MatomoUrl.hashParsed.value,
+        idTrigger,
+      });
     },
-    // TODO
     deleteTrigger(trigger) {
-      piwikApi.fetch({
+      AjaxHelper.fetch({
         method: 'TagManager.getContainerTriggerReferences',
         idContainer: this.idContainer,
         idContainerVersion: this.idContainerVersion,
         idTrigger: trigger.idtrigger
-      }).then(function (references) {
+      }).then((references) => {
         if (!references || !references.length) {
           this.triggerReferences = [];
-    
-          function doDelete() {
-            tagManagerTriggerModel.deleteTrigger(this.idContainer, this.idContainerVersion, trigger.idtrigger).then(function () {
-              tagManagerTriggerModel.reload(this.idContainer, this.idContainerVersion);
+
+          const doDelete = () => {
+            TriggersStore.deleteTrigger(
+              this.idContainer,
+              this.idContainerVersion,
+              trigger.idtrigger,
+            ).then(() => {
+              TriggersStore.reload(this.idContainer, this.idContainerVersion);
             });
           }
-    
-          piwik.helper.modalConfirm('#confirmDeleteTrigger', {
-            yes: doDelete
+
+          Matomo.helper.modalConfirm(this.$refs.confirmDeleteTrigger as HTMLElement, {
+            yes: doDelete,
           });
         } else {
           this.triggerReferences = references;
-          piwik.helper.modalConfirm('#confirmDeleteTriggerNotPossible', {});
+          Matomo.helper.modalConfirm(this.$refs.confirmDeleteTriggerNotPossible as HTMLElement, {});
         }
       });
+    },
+  },
+  computed: {
+    isLoading() {
+      return TriggersStore.isLoading.value;
+    },
+    isUpdating() {
+      return TriggersStore.isUpdating.value;
+    },
+    triggers() {
+      return TriggersStore.triggers.value;
+    },
+    sortedTriggers() {
+      const sorted = [...this.triggers];
+      sorted.sort((lhs, rhs) => {
+        if (lhs.name < rhs.name) {
+          return -1;
+        }
+        return lhs.name > rhs.name ? 1 : 0;
+      });
+      return sorted;
     },
   },
 });

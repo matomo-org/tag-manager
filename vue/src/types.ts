@@ -130,6 +130,12 @@ export interface Trigger {
   updated_date_pretty?: "Dec 4, 2021 05:25:19"
 }
 
+export interface TriggerReference {
+  referenceId: number;
+  referenceTypeName: string;
+  referenceName: string;
+}
+
 // container types
 export interface Draft {
   idcontainerversion: number;
