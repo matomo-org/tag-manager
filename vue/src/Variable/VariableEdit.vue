@@ -554,7 +554,7 @@ export default defineComponent({
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Variable'));
             const wantToRedeploy = translate(
               'TagManager_WantToDeployThisChangeCreateVersion',
-              '<a onclick="tagManagerHelper.createNewVersion()">',
+              '<a class="createNewVersionLink">',
               '</a>',
             );
 
@@ -603,7 +603,7 @@ export default defineComponent({
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Variable'));
         const wantToDeploy = translate(
           'TagManager_WantToDeployThisChangeCreateVersion',
-          '<a onclick="tagManagerHelper.createNewVersion()">',
+          '<a class="createNewVersionLink">',
           '</a>',
         );
 
