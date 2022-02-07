@@ -1,32 +1,41 @@
 (function ($) {
     var tagManagerHelper = {};
     tagManagerHelper.editTrigger = function ($scope, idContainer, idContainerVersion, idTag, callback) {
-        if (!$scope) {
-            $scope = piwikHelper.getAngularDependency('$rootScope');
-        }
+      var createVNode = Vue.createVNode;
+      var createVueApp = CoreHome.createVueApp;
+      var VariableEdit = TagManager.TriggerEdit;
 
-        var childScope = $scope.$new(true, $scope);
-        var template = $('<div class="tag-ui-confirm"><div piwik-trigger-edit id-container="idContainer" on-change-trigger="onChangeTrigger(trigger)" id-container-version="idContainerVersion" id-trigger="' + parseInt(idTag,10) +'"></div><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/></div>')
+      var template = $('<div class="tag-ui-confirm"><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/></div>')
 
-        var params = {
+      var app = createVueApp({
+        render: function () {
+          return createVNode(VariableEdit, {
             idContainer: idContainer,
-            idContainerVersion: idContainerVersion,
-            onChangeTrigger: function (trigger) {
-                if ('function' === typeof callback) {
-                    callback(trigger);
-                }
-                var modal = M.Modal.getInstance(template.parents('.modal.open'));
+            idContainerVersion: parseInt(idContainerVersion, 10),
+            idTrigger: parseInt(idTag,10),
+            isEmbedded: true,
+            onChangeTrigger: function (event) {
+              if ('function' === typeof callback) {
+                callback(event.trigger);
+              }
+              var modal = M.Modal.getInstance(template.parents('.modal.open'));
 
-                if (modal) {
-                    modal.close();
-                }
-            }
-        };
-        piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
-            childScope.$destroy();
-            template.empty();
-        }});
+              if (modal) {
+                modal.close();
+              }
+            },
+          });
+        },
+      });
+      app.mount(template.children('.tag-ui-confirm')[0]);
+
+      piwikHelper.modalConfirm(template, {}, {
+        extraWide: true,
+        onCloseEnd: function () {
+          app.unmount();
+          template.empty();
+        },
+      });
     };
 
     tagManagerHelper.createNewVersion = function () {
