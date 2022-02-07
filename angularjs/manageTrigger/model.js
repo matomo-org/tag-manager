@@ -190,6 +190,11 @@
             });
 
             delete trigger.typeMetadata;
+            delete trigger.created_date;
+            delete trigger.created_date_pretty;
+            delete trigger.status;
+            delete trigger.updated_date;
+            delete trigger.updated_date_pretty;
 
             var map = {
                 idTrigger: 'idtrigger',

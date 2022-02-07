@@ -50,7 +50,7 @@ SEPARATELY LICENSED COMPONENTS AND LIBRARIES
 	Link: https://github.com/FortAwesome/Font-Awesome/
 	License: CC BY 4.0 License (https://creativecommons.org/licenses/by/4.0/)
 
-	Name: IcoMoon - Free icons ("/images/icons/form.svg", "/images/icons/image.svg")
+	Name: IcoMoon - Free icons ("/images/icons/form.svg", "/images/icons/image.svg", "/templates/debug.twig/icon-checkmark")
 	Link: https://icomoon.io/#icons-icomoon
 	License: GPL
 
