@@ -6,5 +6,7 @@
  */
 
 import './ImportVersion/ImportVersion.adapter';
+import './VariableSelect/VariableSelect.adapter';
 
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
+export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
