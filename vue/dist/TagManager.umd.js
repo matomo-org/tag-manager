@@ -772,7 +772,7 @@ VariableSelectTypevue_type_script_lang_ts.render = VariableSelectTypevue_type_te
   $inject: ['$timeout'],
   events: {
     'update:modelValue': function updateModelValue(newValue, vm, scope, el, attrs, controller, $timeout) {
-      scope.value = Object(external_CoreHome_["clone"])(newValue);
+      scope.variable = Object(external_CoreHome_["clone"])(newValue);
       $timeout();
     }
   },
