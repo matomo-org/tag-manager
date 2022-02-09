@@ -73,7 +73,7 @@ export interface VariableType {
   isCustomTemplate: boolean;
   name: string;
   order: number;
-  parameters: Record<string, unknown>;
+  parameters: Record<string, unknown>[];
 }
 
 export interface VariableCategory {
@@ -133,6 +133,47 @@ export interface TriggerReference {
   referenceId: number;
   referenceTypeName: string;
   referenceName: string;
+}
+
+// tag types
+export interface TagType {
+  category: string;
+  contexts: string[];
+  description: string;
+  hasAdvancedSettings: boolean;
+  help: string;
+  icon: string;
+  id: string;
+  isCustomTemplate: boolean;
+  name: string;
+  order: number;
+  parameters: Record<string, unknown>[];
+}
+
+export interface TagTypeCategory {
+  name: string;
+  types: TagType[];
+}
+
+export interface Tag {
+  block_trigger_ids: number[];
+  created_date?: string;
+  created_date_pretty?: string;
+  end_date: string|null;
+  fire_delay: number;
+  fire_limit: string;
+  fire_trigger_ids: number[];
+  idcontainerversion: number;
+  idsite: number;
+  idtag: number;
+  name: string;
+  priority: number;
+  start_date: null|string;
+  status: string;
+  type: string;
+  typeMetadata: TagType;
+  updated_date?: string;
+  updated_date_pretty?: string;
 }
 
 // container types

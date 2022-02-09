@@ -59,7 +59,7 @@
         }
 
         function fetchContainerTriggers(idContainer, idContainerVersion) {
-            var params = {method: 'TagManager.getContainerTriggers', idContainer: idContainer, idContainerVersion: idContainerVersion, filter_limit: '-1'};
+            var params = {};
             return piwikApi.fetch(params);
         }
 
@@ -77,26 +77,6 @@
             return fireLimitsPromise;
         }
 
-        function fetchTags(idContainer, idContainerVersion) {
-            var params = {method: 'TagManager.getContainerTags', idContainer: idContainer,
-                          idContainerVersion: idContainerVersion,filter_limit: '-1'};
-
-            if (!fetchPromise) {
-                fetchPromise = piwikApi.fetch(params);
-            }
-
-            model.isLoading = true;
-            model.tags = [];
-
-            return fetchPromise.then(function (tags) {
-                model.tags = tags;
-
-                model.isLoading = false;
-                return tags;
-            }, function () {
-                model.isLoading = false;
-            });
-        }
 
         function findTag(idContainer, idContainerVersion, idTag) {
 
@@ -169,89 +149,6 @@
             }
         }
 
-        function createOrUpdateTag(tag, method) {
-            tag = angular.copy(tag);
-            tag.method = method;
-
-            tag.parameters = {};
-
-            angular.forEach(tag.typeMetadata.parameters, function (setting) {
-                var value = setting.value;
-                if (value === false) {
-                    value = '0';
-                } else if (value === true) {
-                    value = '1';
-                }
-                tag.parameters[setting.name] = value;
-            });
-
-            delete tag.typeMetadata;
-            delete tag.created_date;
-            delete tag.created_date_pretty;
-            delete tag.status;
-            delete tag.updated_date;
-            delete tag.updated_date_pretty;
-
-            var map = {
-                idTag: 'idtag',
-                idContainer: 'idcontainer',
-                idContainerVersion: 'idcontainerversion',
-                startDate: 'start_date',
-                endDate: 'end_date',
-                fireLimit: 'fire_limit',
-                fireDelay: 'fire_delay'
-            };
-
-            tag.fireTriggerIds = [];
-            angular.forEach(tag.fire_triggers, function (trigger) {
-                if (trigger && trigger.idtrigger) {
-                    tag.fireTriggerIds.push(trigger.idtrigger);
-                }
-            });
-
-            tag.blockTriggerIds = [];
-            angular.forEach(tag.block_triggers, function (trigger) {
-                if (trigger && trigger.idtrigger) {
-                    tag.blockTriggerIds.push(trigger.idtrigger);
-                }
-            });
-
-            delete tag.block_triggers;
-            delete tag.block_trigger_ids;
-            delete tag.fire_triggers;
-            delete tag.fire_trigger_ids;
-
-            angular.forEach(map, function (value, key) {
-                if (typeof tag[value] !== 'undefined') {
-                    tag[key] = tag[value];
-                    delete tag[value];
-                }
-            });
-
-            var postParams = ['parameters', 'fireTriggerIds', 'blockTriggerIds'];
-            var post = {};
-            for (var i = 0; i < postParams.length; i++) {
-                var postParam = postParams[i];
-                if (typeof tag[postParam] !== 'undefined') {
-                    post[postParam] = tag[postParam];
-                    delete tag[postParam];
-                }
-            }
-
-            model.isUpdating = true;
-
-            piwikApi.withTokenInUrl();
-
-            return piwikApi.post(tag, post).then(function (response) {
-                model.isUpdating = false;
-
-                return {type: 'success', response: response};
-
-            }, function (error) {
-                model.isUpdating = false;
-                return {type: 'error', message: error};
-            });
-        }
 
     }
 })();

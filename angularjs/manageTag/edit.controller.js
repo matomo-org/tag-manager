@@ -14,7 +14,7 @@
 
         var self = this;
         var currentId = null;
-        var notificationId = 'tagtagmanagement';
+        var
 
         var translate = $filter('translate');
 
@@ -31,97 +31,9 @@
         this.containerTriggers = [];
         this.currentTime = null;
 
-        function prefixDateZeroIfNeeded(number) {
-            var datePart = String(number);
 
-            if (datePart.length === 1) {
-                datePart = '0' + datePart;
-            }
 
-            return datePart;
-        }
 
-        function convertLocalDateToUtc(dateTime)
-        {
-            if (dateTime) {
-                dateTime = dateTime.replace(/-/g, '/');
-            }
-            try {
-                var localDate = new Date(dateTime)
-
-                var formatted = '';
-                formatted += localDate.getUTCFullYear() + '-' + prefixDateZeroIfNeeded(localDate.getUTCMonth()+1)+ '-' + prefixDateZeroIfNeeded(localDate.getUTCDate());
-                formatted += ' ';
-                formatted += prefixDateZeroIfNeeded(localDate.getUTCHours()) + ':' + prefixDateZeroIfNeeded(localDate.getUTCMinutes())+ ':' + prefixDateZeroIfNeeded(localDate.getUTCSeconds());
-
-                return formatted;
-            } catch (e) {
-                return dateTime;
-            }
-        }
-
-        function convertUtcToLocalDate(dateTime) {
-            if (!dateTime) {
-                return;
-            }
-
-            var isoDate = dateTime;
-            var result, datePart, timePart, dateParts, timeParts, newTime;
-
-            if (isoDate) {
-                isoDate = (isoDate + '').replace(/-/g, '/');
-
-                try {
-                    result = new Date(isoDate + ' UTC');
-
-                    return result;
-                } catch (e) {
-                    try {
-                        result = Date.parse(isoDate + ' UTC');
-                        result = new Date(result);
-
-                        return result;
-                    } catch (ex) {
-
-                        // eg phantomjs etc
-                        datePart = isoDate.substr(0, 10);
-                        timePart = isoDate.substr(11);
-
-                        dateParts = datePart.split('/');
-                        timeParts = timePart.split(':');
-                        if (dateParts.length === 3 && timeParts.length === 3) {
-                            result = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], timeParts[0], timeParts[1], timeParts[2]);
-                            newTime = result.getTime() + (result.getTimezoneOffset() * 60000);
-                            result = new Date(newTime);
-
-                            return result;
-                        }
-                    }
-                }
-            }
-        };
-
-        function convertUtcDateToLocalDatePart(isoDateTime)
-        {
-            var localStartDate = convertUtcToLocalDate(isoDateTime);
-            if (localStartDate) {
-                return localStartDate.getFullYear() + '-' + prefixDateZeroIfNeeded(localStartDate.getMonth()+1)+ '-' + prefixDateZeroIfNeeded(localStartDate.getDate());
-            }
-
-            var parts = isoDateTime.split(' ');
-            return parts[0];
-        }
-
-        function convertUtcDateToLocalTimePart(isoDateTime)
-        {
-            var localStartDate = convertUtcToLocalDate(isoDateTime);
-            if (localStartDate) {
-                return prefixDateZeroIfNeeded(localStartDate.getHours()) + ':' + prefixDateZeroIfNeeded(localStartDate.getMinutes())+ ':' + prefixDateZeroIfNeeded(localStartDate.getSeconds());
-            }
-
-            var parts = isoDateTime.split(' ');
-            return parts[1];
-        }
 
         function enrichTemplateType(template)
         {
@@ -140,12 +52,6 @@
         }
         updateAvailableTriggers();
 
-        function getCurrentTime() {
-            var date = new Date();
-            if (date && date.toString) {
-                return date.toString();
-            }
-        }
 
         function setCurrentTime() {
             self.currentTime = getCurrentTime();
@@ -541,18 +447,6 @@
                 showNotification(translate('TagManager_UpdatedX', translate('TagManager_Tag')) + ' ' + translate('TagManager_WantToDeployThisChangeCreateVersion', '<a onclick="tagManagerHelper.createNewVersion()">', '</a>'), response.type);
             });
         };
-
-        var options1 = piwik.getBaseDatePickerOptions(null);
-        delete options1.maxDate;
-        options1.minDate = new Date();
-        var options2 = angular.copy(options1);
-
-        $timeout(function () {
-            $(".tagStartDateInput").datepicker(options1);
-            $(".tagEndDateInput").datepicker(options2);
-            $('.tagStartTimeInput').timepicker({timeFormat: 'H:i:s'});
-            $('.tagEndTimeInput').timepicker({timeFormat: 'H:i:s'});
-        });
 
         $scope.$watch('idTag', function (newValue, oldValue) {
             if (newValue === null) {
