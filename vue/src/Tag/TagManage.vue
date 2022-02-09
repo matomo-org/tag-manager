@@ -4,30 +4,16 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
-<todo>
-- conversion check (mistakes get fixed in quickmigrate)
-- property types
-- state types
-- look over template
-- look over component code
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <div class="manageTag">
-    <div v-show="!editMode">
-      <div
-        piwik-tag-list
+    <div v-if="!editMode">
+      <TagList
         :id-container="idContainer"
         :id-container-version="idContainerVersion"
       />
     </div>
-    <div v-show="editMode">
-      <div
-        piwik-tag-edit
+    <div v-if="editMode">
+      <TagEdit
         :id-container="idContainer"
         :id-container-version="idContainerVersion"
         :id-tag="idTag"
@@ -37,13 +23,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { translate, AjaxHelper } from 'CoreHome';
-import TagList from '../TagList/TagList.vue';
-import TagEdit from '../TagEdit/TagEdit.vue';
+import { defineComponent, watch } from 'vue';
+import { MatomoUrl, NotificationsStore, Matomo } from 'CoreHome';
+import TagList from './TagList.vue';
+import TagEdit from './TagEdit.vue';
 
 interface TagManageState {
-  editMode: boolean;
+  isAddAllowed: boolean;
 }
 
 export default defineComponent({
@@ -55,18 +41,37 @@ export default defineComponent({
     TagList,
     TagEdit,
   },
-  data(): TagManageState {
-    return {
-      editMode: false,
-    };
-  },
   created() {
-    initState();
-    this.$on('$destroy', function () {
-  if (onChangeSuccess) {
-    onChangeSuccess();
-  }
-});
+    // doing this in a watch because we don't want to post an event in a computed property
+    watch(() => MatomoUrl.hashParsed.value.idTag as string, (idTag) => {
+      this.onIdTagParamChange(idTag);
+    });
+
+    NotificationsStore.remove('tagtagmanagement');
+
+    this.onIdTagParamChange(MatomoUrl.hashParsed.value.idTag as string);
+  },
+  methods: {
+    onIdTagParamChange(idTag: string) {
+      // for BC w/ angularjs only invoke event if idTag is 0
+      if (idTag === '0') {
+        const parameters = { isAllowed: true };
+        Matomo.postEvent('TagManager.initAddTag', parameters);
+        this.isAddAllowed = !!parameters.isAllowed;
+      }
+    },
+  },
+  computed: {
+    idTag() {
+      const idTag = MatomoUrl.hashParsed.value.idTag as string;
+      if (!this.isAddAllowed && idTag === '0') {
+        return null;
+      }
+      return idTag ? parseInt(idTag, 10) : idTag;
+    },
+    editMode() {
+      return typeof this.idTag === 'number';
+    },
   },
 });
 </script>

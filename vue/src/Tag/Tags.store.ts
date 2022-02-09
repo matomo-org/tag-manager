@@ -161,6 +161,27 @@ class TagsStore {
       this.privateState.isUpdating = false;
     });
   }
+
+  deleteTag(
+    idContainer: string,
+    idContainerVersion: number,
+    idTag: number,
+  ): Promise<void> {
+    this.privateState.isUpdating = true;
+    this.privateState.tags = [];
+
+    return AjaxHelper.fetch(
+      {
+        idTag,
+        idContainerVersion,
+        idContainer,
+        method: 'TagManager.deleteContainerTag',
+      },
+      { withTokenInUrl: true },
+    ).finally(() => {
+      this.privateState.isUpdating = false;
+    });
+  }
 }
 
-export default new VariablesStore();
+export default new TagsStore();

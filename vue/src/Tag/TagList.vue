@@ -4,18 +4,6 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
-<todo>
-- conversion check (mistakes get fixed in quickmigrate)
-- property types
-- state types
-- look over template
-- look over component code
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <div class="tagManagerManageList tagManagerTagList">
     <ContentBlock
@@ -37,12 +25,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-show="model.isLoading || model.isUpdating">
+          <tr v-show="isLoading || isUpdating">
             <td colspan="5">
               <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('General_LoadingData') }}</span>
             </td>
           </tr>
-          <tr v-show="!model.isLoading && length(model.tags) == 0">
+          <tr v-show="!isLoading && tags.length === 0">
             <td colspan="5">
               {{ translate('TagManager_NoTagsFound') }}
               <a
@@ -53,45 +41,68 @@
             </td>
           </tr>
           <tr
-            id="tag{{ tag.idtag }}"
             class="tags"
-            v-for="tag in orderBy(model.tags, 'name', false)"
+            v-for="tag in sortedTags"
+            :key="tag.idtag"
+            :id="`tag${ tag.idtag }`"
           >
             <td class="name">{{ tag.name }}</td>
             <td
               class="type"
               :title="tag.typeMetadata.description"
-            >{{ tag.typeMetadata.name }}</td>
+            >
+              {{ tag.typeMetadata.name }}
+            </td>
             <td class="triggers">
-              <span v-for="((fireTriggerIndex, fireTriggerId), fireTriggerIndex) in tag.fire_trigger_ids">
+              <span
+                v-for="(fireTriggerId, fireTriggerIndex) in tag.fire_trigger_ids"
+                :key="fireTriggerIndex"
+              >
                 <a
                   style="display: inline-block;vertical-align: top !important;"
                   class="chip"
                   v-show="hasWriteAccess"
-                  @click="editTrigger(fireTriggerId)"
-                >{{ triggers.fireTriggerId }}</a>
+                  href=""
+                  @click.prevent="editTrigger(fireTriggerId)"
+                >
+                  {{ fireTriggerId }}
+                </a>
                 <span
                   class="chip"
                   v-show="!hasWriteAccess"
-                >{{ triggers.fireTriggerId }}</span>
+                >
+                  {{ fireTriggerId }}
+                </span>
               </span>
-              <span v-show="length(tag.block_trigger_ids)">{{ translate('TagManager_Except') }}:
-                <span v-for="blockTriggerId in tag.block_trigger_ids">
+              <span v-show="tag.block_trigger_ids.length">
+                {{ translate('TagManager_Except') }}:
+                <span
+                  v-for="(blockTriggerId, index) in tag.block_trigger_ids"
+                  :key="index"
+                >
                   <a
                     class="chip"
                     v-show="hasWriteAccess"
-                    @click="editTrigger(blockTriggerId)"
-                  >{{ triggers.blockTriggerId }}</a>
+                    href=""
+                    @click.prevent="editTrigger(blockTriggerId)"
+                  >
+                    {{ blockTriggerId }}
+                  </a>
                   <span
                     class="chip"
                     v-show="!hasWriteAccess"
-                  >{{ triggers.blockTriggerId }}</span>
-                </span></span>
+                  >
+                    {{ blockTriggerId }}
+                  </span>
+                </span>
+              </span>
             </td>
             <td
               class="lastUpdated"
               :title="translate('TagManager_CreatedOnX', tag.created_date_pretty)"
-            ><span>{{ tag.updated_date_pretty }}</span></td>
+            >
+              <span>{{ tag.updated_date_pretty }}</span>
+            </td>
             <td
               class="action"
               v-show="hasWriteAccess"
@@ -118,12 +129,15 @@
           class="createNewTag"
           value
           @click="createTag()"
-        ><span class="icon-add" /> {{ translate('TagManager_CreateNewTag') }}</a>
+        >
+          <span class="icon-add" /> {{ translate('TagManager_CreateNewTag') }}
+        </a>
       </div>
     </ContentBlock>
     <div
       class="ui-confirm"
       id="confirmDeleteTag"
+      ref="confirmDeleteTag"
     >
       <h2>{{ translate('TagManager_DeleteTagConfirm') }} </h2>
       <input
@@ -141,20 +155,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { translate, AjaxHelper, ContentBlock, ContentTable } from 'CoreHome';
-
+import { defineComponent, watch } from 'vue';
+import {
+  ContentBlock,
+  ContentTable,
+  Matomo,
+  MatomoUrl,
+} from 'CoreHome';
+import TagsStore from './Tags.store';
+import TriggersStore from '../Trigger/Triggers.store';
+import { Tag, Trigger } from '../types';
 
 interface TagListState {
-  model: unknown; // TODO
-  hasWriteAccess: unknown; // TODO
-  triggers: Record<string, unknown>; // TODO
+  hasWriteAccess: boolean;
 }
+
+const { tagManagerHelper } = window;
 
 export default defineComponent({
   props: {
-    idContainer: null, // TODO,
-    idContainerVersion: null, // TODO,
+    idContainer: {
+      type: String,
+      required: true,
+    },
+    idContainerVersion: {
+      type: Number,
+      required: true,
+    },
   },
   components: {
     ContentBlock,
@@ -164,55 +191,80 @@ export default defineComponent({
   },
   data(): TagListState {
     return {
-      model: tagManagerTagModel,
-      hasWriteAccess: piwik.hasUserCapability('tagmanager_write'),
-      triggers: {},
+      hasWriteAccess: Matomo.hasUserCapability('tagmanager_write'),
     };
   },
   created() {
-    this.model.onReload = function () {
-  updateTriggers();
-};
-    this.model.fetchTags(this.idContainer, this.idContainerVersion);
-    updateTriggers();
+    watch(() => TagsStore.tags.value, () => {
+      this.reloadTriggers();
+    });
+
+    this.reloadTriggers();
+
+    TagsStore.fetchTags(this.idContainer, this.idContainerVersion);
   },
   methods: {
-    // TODO
-    updateTriggers() {
-      tagManagerTriggerModel.reload(this.idContainer, this.idContainerVersion).then(function (this.triggers) {
-        this.triggers = {};
-        angular.forEach(this.triggers, function (trigger) {
-          this.triggers[trigger.idtrigger] = trigger.name;
-        });
-      });
+    reloadTriggers() {
+      TriggersStore.reload(this.idContainer, this.idContainerVersion);
     },
-    // TODO
     createTag() {
       this.editTag(0);
     },
-    // TODO
-    editTrigger(idTrigger) {
-      tagManagerHelper.editTrigger(this, this.idContainer, this.idContainerVersion, idTrigger, function () {
-        this.updateTriggers();
+    editTrigger(idTrigger: number) {
+      tagManagerHelper.editTrigger(
+        null,
+        this.idContainer,
+        this.idContainerVersion,
+        idTrigger,
+        () => {
+          this.updateTriggers();
+        },
+      );
+    },
+    editTag(idTag: number) {
+      MatomoUrl.updateHash({
+        ...MatomoUrl.hashParsed.value,
+        idTag,
       });
     },
-    // TODO
-    editTag(idTag) {
-      var $search = $location.search();
-      $search.idTag = idTag;
-      $location.search($search);
-    },
-    // TODO
-    deleteTag(tag) {
-      function doDelete() {
-        tagManagerTagModel.deleteTag(this.idContainer, this.idContainerVersion, tag.idtag).then(function () {
-          tagManagerTagModel.reload(this.idContainer, this.idContainerVersion);
+    deleteTag(tag: Tag) {
+      const doDelete = () => {
+        TagsStore.deleteTag(this.idContainer, this.idContainerVersion, tag.idtag).then(() => {
+          TagsStore.reload(this.idContainer, this.idContainerVersion);
         });
-      }
-    
-      piwik.helper.modalConfirm('#confirmDeleteTag', {
-        yes: doDelete
+      };
+
+      Matomo.helper.modalConfirm('#confirmDeleteTag', {
+        yes: doDelete,
       });
+    },
+    sortedTags() {
+      const sorted = [...this.tags];
+      sorted.sort((lhs, rhs) => {
+        if (lhs.name < rhs.name) {
+          return -1;
+        }
+        return lhs.name > rhs.name ? 1 : 0;
+      });
+      return sorted;
+    },
+  },
+  computed: {
+    triggers() {
+      const triggers: Record<string, string> = {};
+      TriggersStore.triggers.value.forEach((t) => {
+        triggers[t.idtrigger] = t.name;
+      });
+      return triggers;
+    },
+    isLoading() {
+      return TagsStore.isLoading.value;
+    },
+    isUpdating() {
+      return TagsStore.isUpdating.value;
+    },
+    tags() {
+      return TagsStore.tags.value;
     },
   },
 });
