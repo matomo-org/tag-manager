@@ -26,9 +26,9 @@
             v-show="isTagDisabled"
           >
             {{ translate(
-            'TagManager_UseCustomTemplateCapabilityRequired',
-            translate('TagManager_CapabilityUseCustomTemplates'),
-          ) }}
+                'TagManager_UseCustomTemplateCapabilityRequired',
+                translate('TagManager_CapabilityUseCustomTemplates'),
+              ) }}
           </div>
           <div>
             <Field
