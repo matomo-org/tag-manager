@@ -96,7 +96,7 @@ interface VariableSelectState {
   preconfiguredVariables: ContainerVariableCategory[];
   containerVariables: ContainerVariableType[];
   isLoading: boolean;
-  actualIdContainerVersion?: string|number;
+  actualIdContainerVersion?: number;
 }
 
 type GetAvailableContainerVariablesResponse = ContainerVariableCategory[];
@@ -106,10 +106,10 @@ const { tagManagerHelper } = window;
 export default defineComponent({
   props: {
     idContainer: {
-      type: [String, Number],
+      type: String,
       required: true,
     },
-    idContainerVersion: [String, Number],
+    idContainerVersion: Number,
   },
   components: {
     ActivityIndicator,

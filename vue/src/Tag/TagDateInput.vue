@@ -30,6 +30,8 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import { defineComponent } from 'vue';
 import { Matomo } from 'CoreHome';
 
@@ -43,20 +45,20 @@ function prefixDateZeroIfNeeded(number: number) {
   return datePart;
 }
 
-function convertUtcToLocalDate(dateTime: string): Date {
+function convertUtcToLocalDate(dateTime: string): Date|undefined {
   if (!dateTime) {
-    return;
+    return undefined;
   }
 
   let isoDate = dateTime;
   if (isoDate) {
-    isoDate = (isoDate + '').replace(/-/g, '/');
+    isoDate = (`${isoDate}`).replace(/-/g, '/');
 
     try {
-      return new Date(isoDate + ' UTC');
+      return new Date(`${isoDate} UTC`);
     } catch (e) {
       try {
-        return new Date(Date.parse(isoDate + ' UTC'));
+        return new Date(Date.parse(`${isoDate} UTC`));
       } catch (ex) {
         // eg phantomjs etc
         const datePart = isoDate.substr(0, 10);
@@ -66,13 +68,13 @@ function convertUtcToLocalDate(dateTime: string): Date {
         const timeParts = timePart.split(':');
 
         if (dateParts.length === 3 && timeParts.length === 3) {
-          let result = new Date(
-            +dateParts[0],
-            dateParts[1] - 1,
-            +dateParts[2],
-            +timeParts[0],
-            +timeParts[1],
-            +timeParts[2],
+          const result = new Date(
+            parseInt(dateParts[0], 10),
+            parseInt(dateParts[1], 10) - 1,
+            parseInt(dateParts[2], 10),
+            parseInt(timeParts[0], 10),
+            parseInt(timeParts[1], 10),
+            parseInt(timeParts[2], 10),
           );
           const newTime = result.getTime() + (result.getTimezoneOffset() * 60000);
           return new Date(newTime);
@@ -80,12 +82,14 @@ function convertUtcToLocalDate(dateTime: string): Date {
       }
     }
   }
+
+  return undefined;
 }
 
 function convertUtcDateToLocalDatePart(isoDateTime: string): string {
   const localStartDate = convertUtcToLocalDate(isoDateTime);
   if (localStartDate) {
-    const month = prefixDateZeroIfNeeded(localStartDate.getMonth()+1);
+    const month = prefixDateZeroIfNeeded(localStartDate.getMonth() + 1);
     const date = prefixDateZeroIfNeeded(localStartDate.getDate());
     return `${localStartDate.getFullYear()}-${month}-${date}`;
   }
@@ -147,14 +151,16 @@ export default defineComponent({
     modelValue: String,
   },
   mounted() {
-    const datePickerOptions = {
+    const datePickerOptions: Record<string, unknown> = {
       ...Matomo.getBaseDatePickerOptions(null),
       minDate: new Date(),
     };
     delete datePickerOptions.maxDate;
 
     $(this.$refs.dateInput as HTMLElement).datepicker({ ...datePickerOptions });
-    $(this.$refs.timeInput).timepicker({ timeFormat: 'H:i:s' });
+
+    // @ts-ignore
+    $(this.$refs.timeInput as HTMLElement).timepicker({ timeFormat: 'H:i:s' });
   },
   computed: {
     dateText() {
@@ -175,7 +181,7 @@ export default defineComponent({
   methods: {
     onDateKeydown(event: KeyboardEvent) {
       setTimeout(() => {
-        const value = (event.target as HTMLInputElement).value;
+        const { value } = (event.target as HTMLInputElement);
         if (this.dateText === value) {
           return;
         }
@@ -185,7 +191,7 @@ export default defineComponent({
     },
     onTimeKeydown(event: KeyboardEvent) {
       setTimeout(() => {
-        const value = (event.target as HTMLInputElement).value;
+        const { value } = (event.target as HTMLInputElement);
         if (this.timeText === value) {
           return;
         }

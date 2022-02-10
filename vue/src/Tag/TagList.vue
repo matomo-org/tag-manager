@@ -27,7 +27,10 @@
         <tbody>
           <tr v-show="isLoading || isUpdating">
             <td colspan="5">
-              <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('General_LoadingData') }}</span>
+              <span class="loadingPiwik">
+                <img src="plugins/Morpheus/images/loading-blue.gif" />
+                {{ translate('General_LoadingData') }}
+              </span>
             </td>
           </tr>
           <tr v-show="!isLoading && tags.length === 0">
@@ -164,7 +167,7 @@ import {
 } from 'CoreHome';
 import TagsStore from './Tags.store';
 import TriggersStore from '../Trigger/Triggers.store';
-import { Tag, Trigger } from '../types';
+import { Tag } from '../types';
 
 interface TagListState {
   hasWriteAccess: boolean;
@@ -217,7 +220,7 @@ export default defineComponent({
         this.idContainerVersion,
         idTrigger,
         () => {
-          this.updateTriggers();
+          this.reloadTriggers();
         },
       );
     },
@@ -253,7 +256,7 @@ export default defineComponent({
     triggers() {
       const triggers: Record<string, string> = {};
       TriggersStore.triggers.value.forEach((t) => {
-        triggers[t.idtrigger] = t.name;
+        triggers[`${t.idtrigger}`] = t.name;
       });
       return triggers;
     },

@@ -11,10 +11,16 @@
       :content-title="editTitle"
     >
       <p v-show="model.isLoading">
-        <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('General_LoadingData') }}</span>
+        <span class="loadingPiwik">
+          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          {{ translate('General_LoadingData') }}
+        </span>
       </p>
       <p v-show="model.isUpdating">
-        <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('TagManager_UpdatingData') }}</span>
+        <span class="loadingPiwik">
+          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          {{ translate('TagManager_UpdatingData') }}
+        </span>
       </p>
       <form
         v-show="!chooseTagType && editTitle"
@@ -79,9 +85,13 @@
               :container-triggers="containerTriggers"
               type="fire"
               :title="translate('TagManager_FireTriggerTitle')"
-              :help="translate('TagManager_FireTriggerHelp', translate('TagManager_FireLimit'))"
+              :help="translate(
+                'TagManager_FireTriggerHelp',
+                translate('TagManager_FireLimit'),
+              )"
               :model-value="fireTriggers"
-              @update:model-value="fireTriggers = $event; setValueHasChanged(); onFireTriggerChange()"
+              @update:model-value="fireTriggers = $event; setValueHasChanged();
+                onFireTriggerChange()"
               @create="onCreateNewFireTrigger()"
               @edit="editTrigger($event)"
             />
@@ -93,7 +103,8 @@
               :title="translate('TagManager_BlockTriggerTitle')"
               :help="translate('TagManager_BlockTriggerHelp')"
               :model-value="blockTriggers"
-              @update:model-value="blockTriggers = $event; setValueHasChanged(); onBlockTriggerChange()"
+              @update:model-value="blockTriggers = $event; setValueHasChanged();
+                onBlockTriggerChange()"
               @create="onCreateNewBlockTrigger()"
               @edit="editTrigger($event)"
             />
@@ -175,11 +186,20 @@
                 <div class="form-help">
                 <span class="inline-help">
                   <span>
-                    <span v-html="$sanitize(translate('TagManager_TagStartDateHelp', '&lt;strong&gt;', '&lt;/strong&gt;'))" />
+                    <span v-html="translate(
+                      'TagManager_TagStartDateHelp',
+                      '&lt;strong&gt;',
+                      '&lt;/strong&gt;'
+                    )" />
                     <br />
                     <span
                       class="currentLocalTime"
-                      v-html="$sanitize(translate('TagManager_CurrentTimeInLocalTimezone', '&lt;strong&gt;', currentTime, '&lt;/strong&gt;'))"
+                      v-html="translate(
+                        'TagManager_CurrentTimeInLocalTimezone',
+                        '&lt;strong&gt;',
+                        currentTime,
+                        '&lt;/strong&gt;',
+                      )"
                     />
                   </span>
                 </span>
@@ -208,11 +228,20 @@
                 <div class="form-help">
                 <span class="inline-help">
                   <span>
-                    <span v-html="translate('TagManager_TagEndDateHelp', '&lt;strong&gt;', '&lt;/strong&gt;')" />
+                    <span v-html="translate(
+                      'TagManager_TagEndDateHelp',
+                      '&lt;strong&gt;',
+                      '&lt;/strong&gt;',
+                    )" />
                     <br />
                     <span
                       class="currentLocalTime"
-                      v-html="translate('TagManager_CurrentTimeInLocalTimezone', '&lt;strong&gt;', currentTime, '&lt;/strong&gt;')"
+                      v-html="translate(
+                        'TagManager_CurrentTimeInLocalTimezone',
+                        '&lt;strong&gt;',
+                        currentTime,
+                        '&lt;/strong&gt;',
+                      )"
                     />
                   </span>
                 </span>
@@ -296,24 +325,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { DeepReadonly, defineComponent } from 'vue';
 import {
   translate,
   AjaxHelper,
   ContentBlock,
   Matomo,
-  NotificationsStore, NotificationType, clone, MatomoUrl,
+  NotificationsStore,
+  NotificationType,
+  clone,
+  MatomoUrl,
 } from 'CoreHome';
 import { Field, SaveButton, GroupedSettings } from 'CorePluginsAdmin';
 import AvailableFireLimitsStore from '../AvailableFireLimit.store';
-import {Container, Tag, TagType, TagTypeCategory, Trigger, Variable} from '../types';
+import {
+  Container,
+  Tag,
+  TagType,
+  TagTypeCategory,
+  Trigger,
+} from '../types';
 import TriggersStore from '../Trigger/Triggers.store';
 import TagTriggerArray from './TagTriggerArray.vue';
 import TagDateInput from './TagDateInput.vue';
 import TagsStore from './Tags.store';
 
 interface TriggerId {
-  idtrigger: number;
+  idtrigger?: number;
 }
 
 interface Option {
@@ -325,7 +363,7 @@ interface TagEditState {
   isDirty: boolean;
   showAdvanced: boolean;
   chooseTagType: boolean;
-  availableTags: TagTypeCategory[];
+  availableTags: DeepReadonly<TagTypeCategory[]>;
   containerTriggers: Option[];
   currentTime: string|null;
   tag: Tag;
@@ -338,7 +376,7 @@ interface TagEditState {
 }
 
 function getCurrentTime(): string|null {
-  let date = new Date();
+  const date = new Date();
   if (date && date.toString) {
     return date.toString();
   }
@@ -420,7 +458,7 @@ export default defineComponent({
         filter_limit: '-1',
       }).then((triggers: Trigger[]) => {
         this.containerTriggers = triggers.map((t) => ({
-          key: t.idtrigger,
+          key: `${t.idtrigger}`,
           value: t.name,
         }));
       });
@@ -475,15 +513,17 @@ export default defineComponent({
             ));
 
             this.blockTriggers = (this.tag.block_trigger_ids || []).map(
-              (idtrigger) => { idtrigger },
+              (idtrigger) => ({ idtrigger }),
             );
             if (!this.blockTriggers.length) {
-              this.blockTriggers.push({ idtrigger: '' });
+              this.blockTriggers.push({});
             }
 
-            this.fireTriggers = (this.tag.fire_trigger_ids || []).map((idtrigger) => { idtrigger });
+            this.fireTriggers = (this.tag.fire_trigger_ids || []).map(
+              (idtrigger) => ({ idtrigger }),
+            );
             if (!this.fireTriggers.length) {
-              this.fireTriggers.push({ idtrigger: '' });
+              this.fireTriggers.push({});
             }
 
             this.onFireTriggerChange();
@@ -535,7 +575,7 @@ export default defineComponent({
         this.onFireTriggerChange();
       }, 0);
     },
-    editTrigger(idTrigger) {
+    editTrigger(idTrigger: number) {
       this.openEditTrigger(() => null, idTrigger);
     },
     openEditTrigger(callback: (trigger: Trigger) => void, idTag: number) {
@@ -543,7 +583,7 @@ export default defineComponent({
         null,
         this.idContainer,
         this.idContainerVersion,
-        this.idTag,
+        idTag,
         (trigger) => {
           this.updateAvailableTriggers();
           callback(trigger);
@@ -557,14 +597,14 @@ export default defineComponent({
       }
     },
     addBlockTrigger() {
-      this.blockTriggers.push({ idtrigger: '' });
+      this.blockTriggers.push({});
       this.isDirty = true;
     },
     removeBlockTrigger(index: number) {
       if (index > -1) {
         const lastIndex = this.blockTriggers.length - 1;
         if (lastIndex === index) {
-          this.blockTriggers[index] = { idtrigger: '' };
+          this.blockTriggers[index] = {};
         } else {
           this.blockTriggers.splice(index, 1);
         }
@@ -579,14 +619,14 @@ export default defineComponent({
       }
     },
     addFireTrigger() {
-      this.fireTriggers.push({ idtrigger: '' });
+      this.fireTriggers.push({});
       this.isDirty = true;
     },
     removeFireTrigger(index: number) {
       if (index > -1) {
         const lastIndex = this.fireTriggers.length - 1;
         if (lastIndex === index) {
-          this.fireTriggers[index] = { idtrigger: '' };
+          this.fireTriggers[index] = {};
         } else {
           this.fireTriggers.splice(index, 1);
         }
@@ -604,16 +644,16 @@ export default defineComponent({
 
       this.tag = {
         idsite: parseInt(`${Matomo.idSite}`, 10),
-        name: this.model.suggestNameForType(tagTemplate.name),
+        name: TagsStore.suggestNameForType(tagTemplate.name) || '',
         type: tagTemplate.id,
         fire_limit: 'unlimited',
         priority: 999,
         fire_delay: 0,
         typeMetadata: tagTemplate,
-      };
+      } as unknown as Tag;
 
-      this.blockTriggers = [{ idtrigger: '' }];
-      this.fireTriggers = [{ idtrigger: '' }];
+      this.blockTriggers = [{}];
+      this.fireTriggers = [{}];
 
       this.parameterValues = Object.fromEntries(tagTemplate.parameters.map(
         (s) => [s.name, s.value],
@@ -651,8 +691,8 @@ export default defineComponent({
         this.idContainer,
         this.idContainerVersion,
         this.parameterValues,
-        this.blockTriggers.map((t) => t.idtrigger),
-        this.fireTriggers.map((t) => t.idtrigger),
+        this.blockTriggers.map((t) => t.idtrigger!).filter((id) => !!id),
+        this.fireTriggers.map((t) => t.idtrigger!).filter((id) => !!id),
       ).then((response) => {
         if (!response) {
           return;
@@ -662,7 +702,7 @@ export default defineComponent({
 
         const idTag = response.value;
 
-        TagsStore.reload(this.idContainer, this.idContainerVersion).then(function () {
+        TagsStore.reload(this.idContainer, this.idContainerVersion).then(() => {
           MatomoUrl.updateHash({
             ...MatomoUrl.hashParsed.value,
             idTag,
@@ -700,8 +740,8 @@ export default defineComponent({
         this.idContainer,
         this.idContainerVersion,
         this.parameterValues,
-        this.blockTriggers.map((t) => t.idtrigger),
-        this.fireTriggers.map((t) => t.idtrigger),
+        this.blockTriggers.map((t) => t.idtrigger!).filter((id) => !!id),
+        this.fireTriggers.map((t) => t.idtrigger!).filter((id) => !!id),
       ).then((response) => {
         if (!response) {
           return;

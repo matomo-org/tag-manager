@@ -457,7 +457,7 @@ export default defineComponent({
       }
     },
     createVariableType(variableTemplate: VariableTypeMetadata) {
-     if (variableTemplate && this.isVariableTemplateDisabled[variableTemplate.id]) {
+      if (variableTemplate && this.isVariableTemplateDisabled[variableTemplate.id]) {
         return;
       }
 

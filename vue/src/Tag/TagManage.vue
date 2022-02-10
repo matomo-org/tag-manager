@@ -41,6 +41,11 @@ export default defineComponent({
     TagList,
     TagEdit,
   },
+  data(): TagManageState {
+    return {
+      isAddAllowed: false,
+    };
+  },
   created() {
     // doing this in a watch because we don't want to post an event in a computed property
     watch(() => MatomoUrl.hashParsed.value.idTag as string, (idTag) => {

@@ -50,7 +50,7 @@ export interface ContainerVariableType {
   category: string;
   description: string;
   id: string;
-  idvariable: string;
+  idvariable: number;
   is_pre_configured: boolean;
   name: string;
   order: number;
@@ -239,14 +239,22 @@ export interface Container {
 interface TagManagerHelper {
   editVariable(
     $scope: IScope|null,
-    idContainer: string|number,
-    idContainerVersion: string|number,
-    idVariable: string|number,
+    idContainer: string,
+    idContainerVersion: number,
+    idVariable: number,
     callback: (variable: Variable) => void,
     variableType?: string,
   ): void;
   selectVariable(callback: (variable: ContainerVariableType) => void): void;
   insertTextSnippetAtElement(inputField: HTMLTextAreaElement|HTMLInputElement, textToAdd: string): void;
+
+  editTrigger(
+    $scope: IScope|null,
+    idContainer: string,
+    idContainerVersion: number,
+    idTag: number,
+    callback: (trigger: Trigger) => void,
+  ): void;
 }
 
 declare global {

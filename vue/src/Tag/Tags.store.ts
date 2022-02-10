@@ -11,8 +11,11 @@ import {
   reactive,
   readonly,
 } from 'vue';
-import {TagTypeCategory, Tag, VariableCategory, Variable} from '../types';
-import {AjaxHelper} from '../../../../../@types/CoreHome';
+import { AjaxHelper } from 'CoreHome';
+import {
+  TagTypeCategory,
+  Tag,
+} from '../types';
 
 interface TagsStoreState {
   tags: Tag[];
@@ -46,7 +49,7 @@ class TagsStore {
 
   private availableTagsPromises: AvailableTagPromises = {};
 
-  fetchTags(idContainer: string, idContainerVersion: number): Tag[] {
+  fetchTags(idContainer: string, idContainerVersion: number): Promise<DeepReadonly<Tag[]>> {
     this.privateState.isLoadingTags = true;
     this.privateState.tags = [];
 
@@ -181,6 +184,21 @@ class TagsStore {
     ).finally(() => {
       this.privateState.isUpdating = false;
     });
+  }
+
+  suggestNameForType(templateId: string): string|undefined {
+    for (let counter = 0; counter < 100; counter += 1) {
+      let name = templateId;
+      if (counter) {
+        name = `${name} (${counter})`;
+      }
+
+      const isFree = !this.tags.value.some((v) => v.name === name);
+      if (isFree) {
+        return name;
+      }
+    }
+    return undefined;
   }
 }
 
