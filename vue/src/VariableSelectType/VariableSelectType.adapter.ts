@@ -32,7 +32,7 @@ export default createAngularJsAdapter<[ITimeoutService]>({
   $inject: ['$timeout'],
   events: {
     'update:modelValue': (newValue: string|null, vm, scope, el, attrs, controller, $timeout) => {
-      scope.value = clone(newValue);
+      scope.variable = clone(newValue);
       $timeout();
     },
   },
