@@ -18,6 +18,7 @@ import './Trigger/TriggerManage.adapter';
 import './Tag/TagEdit.adapter';
 import './Tag/TagList.adapter';
 import './Tag/TagManage.adapter';
+import './Version/VersionEdit.adapter';
 
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
 export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
@@ -34,3 +35,4 @@ export { default as TriggerManage } from './Trigger/TriggerManage.vue';
 export { default as TagEdit } from './Tag/TagEdit.vue';
 export { default as TagList } from './Tag/TagList.vue';
 export { default as TagManage } from './Tag/TagManage.vue';
+export { default as VersionEdit } from './Version/VersionEdit.vue';
