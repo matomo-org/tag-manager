@@ -327,7 +327,7 @@ export default defineComponent({
     });
 
     // needed for suggestNameForType() to make sure it is aware of all names
-    TriggersStore.fetchTriggersIfNotLoaded();
+    TriggersStore.fetchTriggersIfNotLoaded(this.idContainer, this.idContainerVersion);
 
     this.initIdTrigger();
   },

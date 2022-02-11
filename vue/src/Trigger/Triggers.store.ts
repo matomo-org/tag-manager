@@ -47,8 +47,8 @@ class TriggersStore {
   private availableTriggersPromises: AvailableTriggerPromises = {};
 
   fetchTriggers(
-    idContainer?: string,
-    idContainerVersion?: number,
+    idContainer: string,
+    idContainerVersion: number,
   ): Promise<DeepReadonly<Trigger[]>> {
     this.privateState.triggers = [];
     this.privateState.isLoadingTriggers = true;
@@ -70,10 +70,10 @@ class TriggersStore {
     });
   }
 
-  fetchTriggersIfNotLoaded() {
+  fetchTriggersIfNotLoaded(idContainer: string, idContainerVersion: number) {
     if (!this.fetchPromise) {
       // needed for suggestNameForType() to make sure it is aware of all names
-      this.fetchTriggers();
+      this.fetchTriggers(idContainer, idContainerVersion);
     }
   }
 
