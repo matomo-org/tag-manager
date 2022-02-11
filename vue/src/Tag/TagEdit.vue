@@ -10,13 +10,13 @@
       feature="Tag Manager"
       :content-title="editTitle"
     >
-      <p v-show="model.isLoading">
+      <p v-show="isLoading">
         <span class="loadingPiwik">
           <img src="plugins/Morpheus/images/loading-blue.gif" />
           {{ translate('General_LoadingData') }}
         </span>
       </p>
-      <p v-show="model.isUpdating">
+      <p v-show="isUpdating">
         <span class="loadingPiwik">
           <img src="plugins/Morpheus/images/loading-blue.gif" />
           {{ translate('TagManager_UpdatingData') }}
@@ -173,13 +173,14 @@
                       class="active"
                     >{{ translate('TagManager_StartDate') }}:</label>
                   </div>
-                  <TagDateInput
-                    class="tagStartDate"
-                    name="start_date"
-                    :model-value="tag.start_date"
-                    @update:model-value="tag.start_date = $event; setValueHasChanged();"
-                    default-time="00:00:00"
-                  />
+                  <div class="tagStartDate">
+                    <TagDateInput
+                      name="start_date"
+                      :model-value="tag.start_date"
+                      @update:model-value="tag.start_date = $event; setValueHasChanged();"
+                      default-time="00:00:00"
+                    />
+                  </div>
                 </div>
               </div>
               <div class="col s12 m6 ">
@@ -215,13 +216,14 @@
                       class="active"
                     >{{ translate('TagManager_EndDate') }}:</label>
                   </div>
-                  <TagDateInput
-                    class="tagEndDate"
-                    name="end_date"
-                    :model-value="tag.end_date"
-                    @update:model-value="tag.end_date = $event; setValueHasChanged();"
-                    default-time="23:59:59"
-                  />
+                  <div class="tagEndDate">
+                    <TagDateInput
+                      name="end_date"
+                      :model-value="tag.end_date"
+                      @update:model-value="tag.end_date = $event; setValueHasChanged();"
+                      default-time="23:59:59"
+                    />
+                  </div>
                 </div>
               </div>
               <div class="col s12 m6">

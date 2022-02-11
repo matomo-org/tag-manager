@@ -34,7 +34,7 @@ interface TagManageState {
 
 export default defineComponent({
   props: {
-    idContainerVersion: String,
+    idContainerVersion: Number,
     idContainer: String,
   },
   components: {

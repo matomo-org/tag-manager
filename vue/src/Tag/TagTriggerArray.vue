@@ -64,6 +64,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { Field } from 'CorePluginsAdmin';
 
 export default defineComponent({
   props: {
@@ -87,6 +88,9 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+  },
+  components: {
+    Field,
   },
   emits: ['update:modelValue', 'create', 'edit'],
   methods: {
