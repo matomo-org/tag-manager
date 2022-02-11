@@ -250,7 +250,7 @@ describe("ContainerTag", function () {
         await page.evaluate(() => {
           $('#tagtagmanagement .close').click();
         });
-        await page.click('.createNewFireTrigger');
+        await page.click('.fireTriggers .createNewTrigger');
         await page.mouse.move(-10, -10);
         await capture.modal(page, 'create_advanced_firetrigger_popup');
     });
@@ -268,7 +268,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to create a block trigger directly', async function () {
-        await page.click('.createBlockTriggerInHelp');
+        await page.click('.blockTriggers .createTriggerInHelp');
         await page.waitForNetworkIdle(); // wait for modal
         await page.waitForTimeout(250); // wait for modal
         await page.click('.modal.open .templateTypeAllElementsClick');
@@ -294,7 +294,7 @@ describe("ContainerTag", function () {
         permissions.setViewUser();
         await page.goto(container1Base);
         await capture.setTableRowHeight(page);
-        pageWrap = await page.$('[piwik-tag-manage]');
+        pageWrap = await page.$('.manageTag');
         expect(await pageWrap.screenshot()).to.matchImage('tag_some_exist_view_user');
     });
 });
