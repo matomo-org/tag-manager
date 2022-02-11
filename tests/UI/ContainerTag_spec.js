@@ -135,9 +135,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to go back to list of tags and show created tag', async function () {
-        await page.evaluate(() => {
-          $('#tagtagmanagement .close').click();
-        });
+        await page.click('.notification .close');
         await cancelTag();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'create_new_shown_in_list');
@@ -176,9 +174,7 @@ describe("ContainerTag", function () {
     });
 
     it('should have updated the list of tags', async function () {
-        await page.evaluate(() => {
-          $('#tagtagmanagement .close').click();
-        });
+        await page.click('.notification .close');
         await cancelTag();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'edit_updated_back_to_list');
@@ -247,9 +243,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to create a fire trigger directly', async function () {
-        await page.evaluate(() => {
-          $('#tagtagmanagement .close').click();
-        });
+        await page.click('.notification .close');
         await page.click('.fireTriggers .createNewTrigger');
         await page.mouse.move(-10, -10);
         await capture.modal(page, 'create_advanced_firetrigger_popup');
@@ -286,6 +280,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to create a tag with conditions filter', async function () {
+        await page.click('.notification .close');
         await cancelTag();
         await capture.page(page, 'create_advanced_verified');
     });

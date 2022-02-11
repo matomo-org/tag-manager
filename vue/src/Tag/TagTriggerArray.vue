@@ -5,59 +5,61 @@
 -->
 
 <template>
-  <div class="col s12 m6" :class="`${type}Triggers`">
-    <div>
-      <label :for="`${type}_triggers`">{{ title }}</label>
-      <p v-show="containerTriggers.length === 0">
-        <br />
-        {{ translate('TagManager_NoTriggersFound') }}.
-        <a
-          class="createNewTrigger"
-          @click="$emit('create')"
-        >{{ translate('TagManager_CreateNewTriggerNow') }}</a>
-      </p>
-      <div
-        class="multiple valign-wrapper"
-        v-for="(idTrigger, index) in modelValue"
-        :key="index"
-        :class="`${type}Trigger ${type}Trigger${index}`"
-        v-show="containerTriggers.length"
-      >
-        <div class="innerFormField" :name="`${type}_triggers`">
-          <Field
-            uicontrol="select"
-            :name="`${type}_triggers`"
-            :model-value="idTrigger"
-            @update:model-value="onChangeTrigger($event, index)"
-            :full-width="true"
-            :options="containerTriggers"
+  <div class="form-group row" :class="`${type}Triggers`">
+    <div class="col s12 m6">
+      <div>
+        <label :for="`${type}_triggers`">{{ title }}</label>
+        <p v-show="containerTriggers.length === 0">
+          <br />
+          {{ translate('TagManager_NoTriggersFound') }}.
+          <a
+            class="createNewTrigger"
+            @click="$emit('create')"
+          >{{ translate('TagManager_CreateNewTriggerNow') }}</a>
+        </p>
+        <div
+          class="multiple valign-wrapper"
+          v-for="(idTrigger, index) in modelValue"
+          :key="index"
+          :class="`${type}Trigger ${type}Trigger${index}`"
+          v-show="containerTriggers.length"
+        >
+          <div class="innerFormField" :name="`${type}_triggers`">
+            <Field
+              uicontrol="select"
+              :name="`${type}_triggers`"
+              :model-value="idTrigger"
+              @update:model-value="onChangeTrigger($event, index)"
+              :full-width="true"
+              :options="containerTriggers"
+            />
+          </div>
+          <span
+            class="icon-edit valign"
+            v-show="idTrigger"
+            @click="$emit('edit', idTrigger)"
+            :title="translate('General_Edit')"
+          />
+          <span
+            class="icon-minus valign"
+            @click="removeTrigger(index)"
+            v-show="(index + 1) !== modelValue.length"
+            :title="translate('General_Remove')"
           />
         </div>
-        <span
-          class="icon-edit valign"
-          v-show="idTrigger"
-          @click="$emit('edit', idTrigger)"
-          :title="translate('General_Edit')"
-        />
-        <span
-          class="icon-minus valign"
-          @click="removeTrigger(index)"
-          v-show="(index + 1) !== modelValue.length"
-          :title="translate('General_Remove')"
-        />
       </div>
     </div>
-  </div>
-  <div class="col s12 m6">
-    <div class="form-help">
-      <span class="inline-help">
-        {{ help }}
-        <br /><br />
-        <a
-          class="createTriggerInHelp"
-          @click="$emit('create')"
-        >{{ translate('TagManager_CreateNewTriggerNow') }}</a>
-      </span>
+    <div class="col s12 m6">
+      <div class="form-help">
+        <span class="inline-help">
+          {{ help }}
+          <br /><br />
+          <a
+            class="createTriggerInHelp"
+            @click="$emit('create')"
+          >{{ translate('TagManager_CreateNewTriggerNow') }}</a>
+        </span>
+      </div>
     </div>
   </div>
 </template>

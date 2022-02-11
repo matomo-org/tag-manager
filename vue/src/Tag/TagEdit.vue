@@ -80,35 +80,31 @@
               <h3>{{ translate('TagManager_ConfigureWhenTagDoes') }}</h3>
             </div>
           </div>
-          <div class="form-group row">
-            <TagTriggerArray
-              :container-triggers="containerTriggers"
-              type="fire"
-              :title="translate('TagManager_FireTriggerTitle')"
-              :help="translate(
-                'TagManager_FireTriggerHelp',
-                translate('TagManager_FireLimit'),
-              )"
-              :model-value="fireTriggers"
-              @update:model-value="fireTriggers = $event; setValueHasChanged();
-                onFireTriggerChange()"
-              @create="onCreateNewFireTrigger()"
-              @edit="editTrigger($event)"
-            />
-          </div>
-          <div class="form-group row">
-            <TagTriggerArray
-              :container-triggers="containerTriggers"
-              type="block"
-              :title="translate('TagManager_BlockTriggerTitle')"
-              :help="translate('TagManager_BlockTriggerHelp')"
-              :model-value="blockTriggers"
-              @update:model-value="blockTriggers = $event; setValueHasChanged();
-                onBlockTriggerChange()"
-              @create="onCreateNewBlockTrigger()"
-              @edit="editTrigger($event)"
-            />
-          </div>
+          <TagTriggerArray
+            :container-triggers="containerTriggers"
+            type="fire"
+            :title="translate('TagManager_FireTriggerTitle')"
+            :help="translate(
+              'TagManager_FireTriggerHelp',
+              translate('TagManager_FireLimit'),
+            )"
+            :model-value="fireTriggers"
+            @update:model-value="fireTriggers = $event; setValueHasChanged();
+              onFireTriggerChange()"
+            @create="onCreateNewFireTrigger()"
+            @edit="editTrigger($event)"
+          />
+          <TagTriggerArray
+            :container-triggers="containerTriggers"
+            type="block"
+            :title="translate('TagManager_BlockTriggerTitle')"
+            :help="translate('TagManager_BlockTriggerHelp')"
+            :model-value="blockTriggers"
+            @update:model-value="blockTriggers = $event; setValueHasChanged();
+              onBlockTriggerChange()"
+            @create="onCreateNewBlockTrigger()"
+            @edit="editTrigger($event)"
+          />
           <div
             class="form-group row"
             v-show="tag.typeMetadata?.hasAdvancedSettings"
