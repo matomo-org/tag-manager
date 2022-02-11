@@ -5,6 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 import { IScope } from 'angular';
+import {DeepReadonly} from 'vue';
 
 export interface LookupTableEntry {
   match_value: string;
@@ -14,7 +15,7 @@ export interface LookupTableEntry {
 
 export type LookupTable = LookupTableEntry[];
 
-export interface VariableTypeMetadata {
+export interface VariableType {
   category: string;
   contexts: string[];
   description: string;
@@ -42,7 +43,7 @@ export interface Variable {
   type: string;
   updated_date?: string;
   updated_date_pretty?: string;
-  typeMetadata: VariableTypeMetadata;
+  typeMetadata: DeepReadonly<VariableType>;
 }
 
 export interface ContainerVariableType {
@@ -59,20 +60,6 @@ export interface ContainerVariableType {
 export interface ContainerVariableCategory {
   name: string;
   types: ContainerVariableType[];
-}
-
-export interface VariableType {
-  category: string;
-  contexts: string[];
-  description: string;
-  hasAdvancedSettings: boolean;
-  help: string;
-  icon: string;
-  id: string;
-  isCustomTemplate: boolean;
-  name: string;
-  order: number;
-  parameters: Record<string, unknown>;
 }
 
 export interface VariableCategory {

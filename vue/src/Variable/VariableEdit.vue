@@ -257,7 +257,7 @@ import {
   Variable,
   VariableCategory,
   Container,
-  VariableTypeMetadata,
+  VariableType,
 } from '../types';
 import AvailableComparisonsStore from '../AvailableComparisons.store';
 
@@ -415,7 +415,12 @@ export default defineComponent({
           if (this.variableType) {
             this.availableVariables.forEach((category) => {
               if (!found) {
-                found = category.types.some((v) => v?.id === this.variableType);
+                const variable = category.types.find((v) => v?.id === this.variableType);
+                if (variable) {
+                  found = true;
+
+                  this.createVariableType(variable);
+                }
               }
             });
           }
@@ -456,7 +461,7 @@ export default defineComponent({
         this.isDirty = true;
       }
     },
-    createVariableType(variableTemplate: VariableTypeMetadata) {
+    createVariableType(variableTemplate: DeepReadonly<VariableType>) {
       if (variableTemplate && this.isVariableTemplateDisabled[variableTemplate.id]) {
         return;
       }
