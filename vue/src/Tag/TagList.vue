@@ -64,17 +64,17 @@
                 <a
                   style="display: inline-block;vertical-align: top !important;"
                   class="chip"
-                  v-show="hasWriteAccess"
+                  v-if="hasWriteAccess"
                   href=""
                   @click.prevent="editTrigger(fireTriggerId)"
                 >
-                  {{ fireTriggerId }}
+                  {{ this.triggers[fireTriggerId] }}
                 </a>
                 <span
                   class="chip"
-                  v-show="!hasWriteAccess"
+                  v-if="!hasWriteAccess"
                 >
-                  {{ fireTriggerId }}
+                  {{ this.triggers[fireTriggerId] }}
                 </span>
               </span>
               <span v-show="tag.block_trigger_ids.length">
@@ -89,13 +89,13 @@
                     href=""
                     @click.prevent="editTrigger(blockTriggerId)"
                   >
-                    {{ blockTriggerId }}
+                    {{ this.triggers[blockTriggerId] }}
                   </a>
                   <span
                     class="chip"
                     v-show="!hasWriteAccess"
                   >
-                    {{ blockTriggerId }}
+                    {{ this.triggers[blockTriggerId] }}
                   </span>
                 </span>
               </span>
@@ -241,16 +241,6 @@ export default defineComponent({
         yes: doDelete,
       });
     },
-    sortedTags() {
-      const sorted = [...this.tags];
-      sorted.sort((lhs, rhs) => {
-        if (lhs.name < rhs.name) {
-          return -1;
-        }
-        return lhs.name > rhs.name ? 1 : 0;
-      });
-      return sorted;
-    },
   },
   computed: {
     triggers() {
@@ -268,6 +258,16 @@ export default defineComponent({
     },
     tags() {
       return TagsStore.tags.value;
+    },
+    sortedTags() {
+      const sorted = [...this.tags];
+      sorted.sort((lhs, rhs) => {
+        if (lhs.name < rhs.name) {
+          return -1;
+        }
+        return lhs.name > rhs.name ? 1 : 0;
+      });
+      return sorted;
     },
   },
 });

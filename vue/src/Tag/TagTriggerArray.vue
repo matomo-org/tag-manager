@@ -18,7 +18,7 @@
       </p>
       <div
         class="multiple valign-wrapper"
-        v-for="(index, trigger) in modelValue"
+        v-for="(idTrigger, index) in modelValue"
         :key="index"
         :class="`${type}Trigger ${type}Trigger${index}`"
         v-show="containerTriggers.length"
@@ -27,7 +27,7 @@
           <Field
             uicontrol="select"
             :name="`${type}_triggers`"
-            :model-value="trigger.idtrigger"
+            :model-value="idTrigger"
             @update:model-value="onChangeTrigger($event, index)"
             :full-width="true"
             :options="containerTriggers"
@@ -35,8 +35,8 @@
         </div>
         <span
           class="icon-edit valign"
-          v-show="trigger.idtrigger"
-          @click="$emit('edit', trigger.idtrigger)"
+          v-show="idTrigger"
+          @click="$emit('edit', idTrigger)"
           :title="translate('General_Edit')"
         />
         <span
@@ -94,9 +94,9 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'create', 'edit'],
   methods: {
-    onChangeTrigger(idTrigger: number, index: number) {
+    onChangeTrigger(idTrigger: string, index: number) {
       const newValue = [...this.modelValue];
-      newValue[index] = idTrigger;
+      newValue[index] = parseInt(idTrigger, 10);
       this.$emit('update:modelValue', newValue);
     },
     removeTrigger(index: number) {
