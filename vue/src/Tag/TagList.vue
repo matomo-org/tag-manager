@@ -60,6 +60,7 @@
               <span
                 v-for="(fireTriggerId, fireTriggerIndex) in tag.fire_trigger_ids"
                 :key="fireTriggerIndex"
+                style="margin-right:3.5px;"
               >
                 <a
                   style="display: inline-block;vertical-align: top !important;"
