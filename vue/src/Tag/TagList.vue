@@ -82,6 +82,7 @@
                 <span
                   v-for="(blockTriggerId, index) in tag.block_trigger_ids"
                   :key="index"
+                  style="margin-right:3.5px;"
                 >
                   <a
                     class="chip"

@@ -724,8 +724,8 @@ export default defineComponent({
         this.idContainer,
         this.idContainerVersion,
         this.parameterValues,
-        this.blockTriggers.filter((id) => !!id) as unknown as number[],
         this.fireTriggers.filter((id) => !!id) as unknown as number[],
+        this.blockTriggers.filter((id) => !!id) as unknown as number[],
       ).then((response) => {
         if (!response) {
           return;
