@@ -353,7 +353,7 @@ import TagDateInput from './TagDateInput.vue';
 import TagsStore from './Tags.store';
 
 interface Option {
-  key: string;
+  key: number;
   value: string;
 }
 
@@ -458,7 +458,7 @@ export default defineComponent({
         filter_limit: '-1',
       }).then((triggers: Trigger[]) => {
         this.containerTriggers = triggers.map((t) => ({
-          key: t.idtrigger,
+          key: t.idtrigger!,
           value: t.name,
         }));
       });
@@ -542,9 +542,9 @@ export default defineComponent({
         const indexLastEntry = this.blockTriggers.length - 1;
 
         if (!this.blockTriggers[indexLastEntry]) {
-          this.blockTriggers[indexLastEntry] = trigger.idtrigger;
+          this.blockTriggers[indexLastEntry] = trigger.idtrigger!;
         } else {
-          this.blockTriggers.push(trigger.idtrigger);
+          this.blockTriggers.push(trigger.idtrigger!);
         }
 
         this.onBlockTriggerChange();
@@ -555,9 +555,9 @@ export default defineComponent({
         const indexLastEntry = this.fireTriggers.length - 1;
 
         if (!this.fireTriggers[indexLastEntry]) {
-          this.fireTriggers[indexLastEntry] = trigger.idtrigger;
+          this.fireTriggers[indexLastEntry] = trigger.idtrigger!;
         } else {
-          this.fireTriggers.push(trigger.idtrigger);
+          this.fireTriggers.push(trigger.idtrigger!);
         }
 
         this.onFireTriggerChange();
@@ -679,8 +679,8 @@ export default defineComponent({
         this.idContainer,
         this.idContainerVersion,
         this.parameterValues,
-        this.fireTriggers.filter((id) => !!id),
-        this.blockTriggers.filter((id) => !!id),
+        this.fireTriggers.filter((id) => !!id) as unknown as number[],
+        this.blockTriggers.filter((id) => !!id) as unknown as number[],
       ).then((response) => {
         if (!response) {
           return;
@@ -728,8 +728,8 @@ export default defineComponent({
         this.idContainer,
         this.idContainerVersion,
         this.parameterValues,
-        this.blockTriggers.filter((id) => !!id),
-        this.fireTriggers.filter((id) => !!id),
+        this.blockTriggers.filter((id) => !!id) as unknown as number[],
+        this.fireTriggers.filter((id) => !!id) as unknown as number[],
       ).then((response) => {
         if (!response) {
           return;
