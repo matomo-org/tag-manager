@@ -23,7 +23,7 @@
         :class="`${type}Trigger ${type}Trigger${index}`"
         v-show="containerTriggers.length"
       >
-        <div class="innerFormField">
+        <div class="innerFormField" :name="`${type}_triggers`">
           <Field
             uicontrol="select"
             :name="`${type}_triggers`"
