@@ -99,6 +99,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be able to prefill version', async function () {
+        await page.click('.notification .close');
         await setVersionName('My Version Name');
         await setVersionDescription('My Description');
         await capture.page(page, 'create_new_prefilled');
@@ -110,6 +111,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to go back to list of versions and show created version', async function () {
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'create_new_shown_in_list');
@@ -150,6 +152,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should have updated the list of versions', async function () {
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'updated_back_to_list');
