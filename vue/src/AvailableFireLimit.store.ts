@@ -35,13 +35,13 @@ class AvailableFireLimitStore {
   ));
 
   constructor() {
-    this.fetchAvailableComparisons();
+    this.fetchAvailableFireLimits();
   }
 
-  private fetchAvailableComparisons() {
+  private fetchAvailableFireLimits() {
     this.privateState.isLoading = true;
     AjaxHelper.fetch<FireLimit[]>({
-      method: 'TagManager.getAvailableTagFireLimits',
+      method: 'TagManager.getAvailableEnvironmentsWithPublishCapability',
       filter_limit: '-1',
     }).then((fireLimits) => {
       this.privateState.fireLimits = fireLimits;

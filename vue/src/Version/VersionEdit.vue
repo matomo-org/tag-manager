@@ -153,13 +153,18 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { translate, AjaxHelper, ContentBlock, ContentTable, ActivityIndicator } from 'CoreHome';
+import {
+  Matomo,
+  translate,
+  AjaxHelper,
+  ContentBlock,
+  ContentTable,
+  ActivityIndicator,
+} from 'CoreHome';
 import { Field, SaveButton } from 'CorePluginsAdmin';
-
 
 interface VersionEditState {
   isDirty: boolean;
-  model: unknown; // TODO
   environments: unknown[]; // TODO
   isEmbedded: unknown; // TODO
   lastVersion: unknown|null; // TODO
@@ -170,8 +175,14 @@ interface VersionEditState {
 
 export default defineComponent({
   props: {
-    idContainerVersion: null, // TODO,
-    idContainer: null, // TODO,
+    idContainerVersion: {
+      type: Number,
+      required: true,
+    },
+    idContainer: {
+      type: Number,
+      required: true,
+    },
   },
   components: {
     ContentBlock,
@@ -185,13 +196,12 @@ export default defineComponent({
   data(): VersionEditState {
     return {
       isDirty: false,
-      model: tagManagerVersionModel,
       environments: [],
       isEmbedded: !!this.onChangeVersion,
       lastVersion: null,
       versionChanges: [],
       isLoadingVersionChanges: false,
-      canPublishToLive: piwik.hasUserCapability('tagmanager_publish_live_container'),
+      canPublishToLive: Matomo.hasUserCapability('tagmanager_publish_live_container'),
     };
   },
   emits: ['changeVersion'],
@@ -213,7 +223,7 @@ export default defineComponent({
       if (newValue === null) {
         return;
       }
-    
+
       if (newValue != oldValue || currentId === null) {
         currentId = newValue;
         init(newValue);
@@ -254,19 +264,19 @@ export default defineComponent({
       tagManagerContainerModel.findContainer(this.idContainer).then(function (container) {
         this.isLoadingVersionChanges = false;
         this.lastVersion = null;
-    
+
         if (!container || !container.versions || !angular.isArray(container.versions) || !container.versions.length) {
           return;
         }
-    
+
         container = angular.copy(container); // we copy to not change original versions array
-    
+
         var versions = container.versions;
         versions.sort(function (a, b) {
           return a.revision < b.revision;
         });
         var lastContainerVersion = null;
-    
+
         if (this.create && versions[0] && versions[0].name) {
           this.lastVersion = versions[0].name;
           lastContainerVersion = versions[0].idcontainerversion;
@@ -279,14 +289,14 @@ export default defineComponent({
             }
           }
         }
-    
+
         if (this.lastVersion) {
           this.isLoadingVersionChanges = true;
           tagManagerVersionDiff.diffDraftVersion(this.idContainer, this.idContainerVersion, lastContainerVersion).then(function (diff) {
             this.versionChanges = diff;
             this.isLoadingVersionChanges = false;
           });
-    
+
           if (this.create && !this.version.name && /^\d+$/.test(this.lastVersion)) {
             this.version.name = parseInt(this.lastVersion, 10) + 1;
             this.isDirty = true;
@@ -294,14 +304,14 @@ export default defineComponent({
         }
       });
       piwik.helper.lazyScrollToContent();
-    
+
       if (this.edit && this.idContainerVersion) {
         this.editTitle = translate('TagManager_EditVersion');
         this.model.findVersion(this.idContainer, this.idContainerVersion).then(function (version) {
           if (!version) {
             return;
           }
-    
+
           this.version = angular.copy(version);
           this.isDirty = false;
         });
@@ -314,13 +324,13 @@ export default defineComponent({
           environment: '',
           description: ''
         };
-    
+
         if (this.canPublishToLive) {
           this.version.environment = 'live';
         } else if (angular.isArray(this.environments) && this.environments.length && this.environments[0]) {
           this.version.environment = this.environments[0].key;
         }
-    
+
         this.isDirty = false;
       }
     },
@@ -335,22 +345,22 @@ export default defineComponent({
     // TODO
     createVersion() {
       this.removeAnyVersionNotification();
-    
+
       if (!this.checkRequiredFieldsAreSet) {
         return;
       }
-    
+
       this.isUpdating = true;
       tagManagerVersionModel.createOrUpdateVersion(this.version, 'TagManager.createContainerVersion').then(function (response) {
         this.isUpdating = false;
-    
+
         if (!response || response.type === 'error' || !response.response) {
           return;
         }
-    
+
         this.isDirty = false;
         var idContainerVersion = response.response.value;
-    
+
         if ('function' === typeof this.onChangeVersion) {
           this.version.idcontainerversion = this.idContainerVersion;
           this.$emit('changeVersion', {
@@ -358,7 +368,7 @@ export default defineComponent({
           });
           return;
         }
-    
+
         tagManagerVersionModel.reload(this.idContainer).then(function () {
           var $search = $location.search();
           $search.idContainerVersion = this.idContainerVersion;
@@ -374,36 +384,36 @@ export default defineComponent({
     // TODO
     createVersionAndPublish() {
       this.removeAnyVersionNotification();
-    
+
       if (!this.checkRequiredFieldsAreSet) {
         return;
       }
-    
+
       this.isUpdating = true;
       tagManagerVersionModel.createOrUpdateVersion(this.version, 'TagManager.createContainerVersion').then(function (response) {
         if (!response || response.type === 'error' || !response.response || !response.response.value) {
           this.isUpdating = false;
           return;
         }
-    
+
         var idContainerVersion = response.response.value;
         this.version.idcontainerversion = this.idContainerVersion;
         tagManagerVersionModel.publishVersion(this.idContainer, this.idContainerVersion, this.version.environment).then(function (response) {
           this.isUpdating = false;
-    
+
           if (!response || response.type === 'error') {
             return;
           }
-    
+
           this.isDirty = false;
-    
+
           if ('function' === typeof this.onChangeVersion) {
             this.$emit('changeVersion', {
               version: this.version
             });
             return;
           }
-    
+
           tagManagerVersionModel.reload(this.idContainer).then(function () {
             var $search = $location.search();
             $search.idContainerVersion = this.idContainerVersion;
@@ -424,26 +434,26 @@ export default defineComponent({
     // TODO
     updateVersion() {
       this.removeAnyVersionNotification();
-    
+
       if (!this.checkRequiredFieldsAreSet) {
         return;
       }
-    
+
       this.isUpdating = true;
       tagManagerVersionModel.createOrUpdateVersion(this.version, 'TagManager.updateContainerVersion').then(function (response) {
         if (response.type === 'error') {
           return;
         }
-    
+
         var idContainerVersion = this.version.idcontainerversion;
-    
+
         if ('function' === typeof this.onChangeVersion) {
           this.$emit('changeVersion', {
             version: this.version
           });
           return;
         }
-    
+
         this.isDirty = false;
         this.version = {};
         tagManagerVersionModel.reload(this.idContainer).then(function () {
@@ -457,19 +467,19 @@ export default defineComponent({
     // TODO
     notification() {
       var UI = require('piwik/UI');
-    
+
       return new UI.Notification();
     },
     // TODO
     checkRequiredFieldsAreSet() {
       var title;
-    
+
       if (!this.version.name) {
         title = translate('General_Name');
         this.showErrorFieldNotProvidedNotification(title);
         return false;
       }
-    
+
       return true;
     },
   },
