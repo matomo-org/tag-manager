@@ -85,14 +85,13 @@
                 ) }}
             </div>
           </div>
-          <div>
+          <div v-if="create && environments.length">
             <Field
               uicontrol="select"
               name="environment"
               inline-help="#selectTagManagerEnvironmentHelp"
-              :model-value="version.environments[0]"
+              :model-value="version.environments?.[0]"
               @update:model-value="version.environments[0] = $event; setValueHasChanged()"
-              v-show="create && environments.length"
               :options="environments"
               :introduction="translate('TagManager_OrCreateAndPublishVersion')"
               :title="translate('TagManager_Environment')"
@@ -100,7 +99,7 @@
           </div>
           <SaveButton
             class="publishButton"
-            v-show="create && environments.length"
+            v-if="create && environments.length"
             @confirm="createVersionAndPublish()"
             :disabled="isUpdating || !isDirty"
             :saving="isUpdating"
@@ -337,6 +336,8 @@ export default defineComponent({
 
         if (this.canPublishToLive) {
           this.version.environments = ['live'];
+        } else if (!this.version.environments) {
+          this.version.environments = [];
         }
 
         this.isDirty = false;
@@ -481,6 +482,8 @@ export default defineComponent({
         });
 
         this.showNotification(translate('TagManager_UpdatedX', translate('TagManager_Version')), 'success');
+      }).finally(() => {
+        this.isUpdatingVersion = false;
       });
     },
     checkRequiredFieldsAreSet() {

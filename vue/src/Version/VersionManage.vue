@@ -6,12 +6,12 @@
 
 <template>
   <div class="manageVersion">
-    <div v-show="!editMode">
+    <div v-if="!editMode">
       <VersionList
         :id-container="idContainer"
       />
     </div>
-    <div v-show="editMode">
+    <div v-if="editMode">
       <VersionEdit
         :id-container="idContainer"
         :id-container-version="idContainerVersion"

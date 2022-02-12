@@ -13,9 +13,6 @@ export default createAngularJsAdapter({
   scope: {
     idContainer: {
       angularJsBind: '@',
-      transform(value: unknown) {
-        return value ? parseInt(value as string, 10) : undefined;
-      },
     },
   },
   directiveName: 'piwikVersionManage',

@@ -75,10 +75,10 @@ class VersionsStore {
 
   findVersion(
     idContainer: string,
-    idVersion: number,
+    idContainerVersion: number,
   ): Promise<DeepReadonly<Version>> {
     // before going through an API request we first try to find it in loaded versions
-    const found = this.versions.value.find((v) => v.idcontainerversion === idVersion);
+    const found = this.versions.value.find((v) => v.idcontainerversion === idContainerVersion);
     if (found) {
       return Promise.resolve(found);
     }
@@ -86,7 +86,7 @@ class VersionsStore {
     // otherwise we fetch it via API
     this.privateState.isLoadingSingle = true;
     return AjaxHelper.fetch<Version>({
-      idVersion,
+      idContainerVersion,
       idContainer,
       method: 'TagManager.getContainerVersion',
       filter_limit: '-1',
@@ -100,14 +100,14 @@ class VersionsStore {
 
   deleteVersion(
     idContainer: string,
-    idVersion: number,
+    idContainerVersion: number,
   ): Promise<void> {
     this.privateState.isUpdating = true;
     this.privateState.versions = [];
 
     return AjaxHelper.fetch(
       {
-        idVersion,
+        idContainerVersion,
         idContainer,
         method: 'TagManager.deleteContainerVersion',
       },
@@ -146,7 +146,10 @@ class VersionsStore {
         idContainer,
         idContainerVersion: version.idcontainerversion,
       },
-      {},
+      {
+        name: version.name,
+        description: version.description,
+      },
       { withTokenInUrl: true },
     ).finally(() => {
       this.privateState.isUpdating = false;

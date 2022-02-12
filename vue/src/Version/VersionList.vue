@@ -70,8 +70,8 @@
                   release.release_date_pretty
                 )"
               >
-                {{ ucfirst(release.environment) }}
-                <span v-show="!$last">, </span>
+                {{ ucfirst(release.environment) }}<span
+                  v-show="index !== version.releases.length - 1">, </span>
               </span>
             </td>
             <td class="created"><span>{{ version.created_date_pretty }}</span></td>
@@ -157,7 +157,7 @@
       id="confirmPublishVersion"
       ref="confirmPublishVersion"
     >
-      <h2>{{ translate('TagManager_PublishVersion', versionToBePublished.name) }}</h2>
+      <h2>{{ translate('TagManager_PublishVersion', versionToBePublished?.name) }}</h2>
       <div v-show="availableEnvironmentsToPublish.environnments.length">
         <div>
           <Field
