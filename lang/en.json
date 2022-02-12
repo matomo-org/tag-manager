@@ -121,6 +121,7 @@
         "CreateNewVariable": "Create new variable",
         "CreateNewVariableNow": "Create a new variable now",
         "CreateNewVersion": "Create new version",
+        "CreateNewVersionNow": "Create a new version now",
         "CreateNewX": "Create new %s",
         "CreateVersionAndPublishRelease": "Create new version and publish release",
         "CreateVersionWithoutPublishing": "Create new version (without publishing)",

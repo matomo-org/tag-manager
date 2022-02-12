@@ -5,152 +5,153 @@
 -->
 
 <template>
-  <ContentBlock
-    class="editVersion tagManagerManageEdit"
-    feature="Tag Manager"
-    :content-title="editTitle"
-  >
-    <p v-show="isLoading">
-      <span class="loadingPiwik">
-        <img src="plugins/Morpheus/images/loading-blue.gif" />
-        {{ translate('General_LoadingData') }}
-      </span>
-    </p>
-    <p v-show="isUpdating">
-      <span class="loadingPiwik">
-        <img src="plugins/Morpheus/images/loading-blue.gif" />
-        {{ translate('TagManager_UpdatingData') }}
-      </span>
-    </p>
-    <form @submit="edit ? updateVersion() : createVersion()">
-      <div
-        id="versionNameHelpText"
-        class="inline-help-node"
-      >
-        {{ translate('TagManager_VersionNameHelp') }}
-        <br /><br />
-        <span
-          v-show="lastVersion"
-          v-html="translate(
-            'TagManager_NameOfLatestVersion',
-            `<strong>${lastVersion}</strong>`,
-          )"
-        ></span>
-      </div>
-      <div>
-        <div>
-          <Field
-            uicontrol="text"
-            name="name"
-            inline-help="#versionNameHelpText"
-            :model-value="version.name"
-            @update:model-value="version.name = $event; setValueHasChanged()"
-            :maxlength="30"
-            :title="translate('TagManager_VersionName')"
-          />
-        </div>
-        <div>
-          <Field
-            uicontrol="text"
-            name="description"
-            :model-value="version.description"
-            @update:model-value="version.description = $event; setValueHasChanged()"
-            :title="translate('TagManager_VersionDescription')"
-            :inline-help="translate('TagManager_VersionDescriptionHelp')"
-          />
-        </div>
-        <SaveButton
-          class="createButton no-publish"
-          @confirm="edit ? updateVersion() : createVersion()"
-          :disabled="isUpdating || !isDirty"
-          :saving="isUpdating"
-          :value="edit
-            ? translate('CoreUpdater_UpdateTitle') :
-            translate('TagManager_CreateVersionWithoutPublishing')"
-        >
-        </SaveButton>
+  <div class="editVersion tagManagerManageEdit">
+    <ContentBlock
+      feature="Tag Manager"
+      :content-title="editTitle"
+    >
+      <p v-show="isLoading">
+        <span class="loadingPiwik">
+          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          {{ translate('General_LoadingData') }}
+        </span>
+      </p>
+      <p v-show="isUpdating">
+        <span class="loadingPiwik">
+          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          {{ translate('TagManager_UpdatingData') }}
+        </span>
+      </p>
+      <form @submit="edit ? updateVersion() : createVersion()">
         <div
-          id="selectTagManagerEnvironmentHelp"
+          id="versionNameHelpText"
           class="inline-help-node"
         >
-          <div>{{ translate('TagManager_VersionEnvironmentHelp') }}</div>
-          <div
-            class="alert alert-info"
-            style="margin-bottom: 0;padding-bottom: 0;"
-            v-show="!canPublishToLive"
-          >
-            {{ translate(
-                'TagManager_PublishLiveEnvironmentCapabilityRequired',
-                translate('TagManager_CapabilityPublishLiveContainer'),
-              ) }}
-          </div>
+          {{ translate('TagManager_VersionNameHelp') }}
+          <br /><br />
+          <span
+            v-show="lastVersion"
+            v-html="translate(
+              'TagManager_NameOfLatestVersion',
+              `<strong>${lastVersion}</strong>`,
+            )"
+          ></span>
         </div>
         <div>
-          <Field
-            uicontrol="select"
-            name="environment"
-            inline-help="#selectTagManagerEnvironmentHelp"
-            :model-value="version.environments[0]"
-            @update:model-value="version.environments[0] = $event; setValueHasChanged()"
+          <div>
+            <Field
+              uicontrol="text"
+              name="name"
+              inline-help="#versionNameHelpText"
+              :model-value="version.name"
+              @update:model-value="version.name = $event; setValueHasChanged()"
+              :maxlength="30"
+              :title="translate('TagManager_VersionName')"
+            />
+          </div>
+          <div>
+            <Field
+              uicontrol="text"
+              name="description"
+              :model-value="version.description"
+              @update:model-value="version.description = $event; setValueHasChanged()"
+              :title="translate('TagManager_VersionDescription')"
+              :inline-help="translate('TagManager_VersionDescriptionHelp')"
+            />
+          </div>
+          <SaveButton
+            class="createButton no-publish"
+            @confirm="edit ? updateVersion() : createVersion()"
+            :disabled="isUpdating || !isDirty"
+            :saving="isUpdating"
+            :value="edit
+              ? translate('CoreUpdater_UpdateTitle') :
+              translate('TagManager_CreateVersionWithoutPublishing')"
+          >
+          </SaveButton>
+          <div
+            id="selectTagManagerEnvironmentHelp"
+            class="inline-help-node"
+          >
+            <div>{{ translate('TagManager_VersionEnvironmentHelp') }}</div>
+            <div
+              class="alert alert-info"
+              style="margin-bottom: 0;padding-bottom: 0;"
+              v-show="!canPublishToLive"
+            >
+              {{ translate(
+                  'TagManager_PublishLiveEnvironmentCapabilityRequired',
+                  translate('TagManager_CapabilityPublishLiveContainer'),
+                ) }}
+            </div>
+          </div>
+          <div>
+            <Field
+              uicontrol="select"
+              name="environment"
+              inline-help="#selectTagManagerEnvironmentHelp"
+              :model-value="version.environments[0]"
+              @update:model-value="version.environments[0] = $event; setValueHasChanged()"
+              v-show="create && environments.length"
+              :options="environments"
+              :introduction="translate('TagManager_OrCreateAndPublishVersion')"
+              :title="translate('TagManager_Environment')"
+            />
+          </div>
+          <SaveButton
+            class="publishButton"
             v-show="create && environments.length"
-            :options="environments"
-            :introduction="translate('TagManager_OrCreateAndPublishVersion')"
-            :title="translate('TagManager_Environment')"
-          />
+            @confirm="createVersionAndPublish()"
+            :disabled="isUpdating || !isDirty"
+            :saving="isUpdating"
+            :value="translate('TagManager_CreateVersionAndPublishRelease')"
+          >
+          </SaveButton>
+          <div
+            class="versionChanges"
+            v-if="lastVersion"
+          >
+            <h3>{{ translate('TagManager_ChangesSinceLastVersion') }}:</h3>
+            <table v-content-table>
+              <thead>
+                <tr>
+                  <th>{{ translate('SitesManager_Type') }}</th>
+                  <th>{{ translate('General_Name') }}</th>
+                  <th>{{ translate('TagManager_Change') }}</th>
+                  <th>{{ translate('TagManager_LastUpdated') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-if="isLoadingVersionChanges">
+                  <td colspan="4">
+                    <ActivityIndicator
+                      :loading-message="translate('TagManager_DetectingChanges')"
+                      :loading="true"
+                    />
+                  </td>
+                </tr>
+                <tr v-if="!versionChanges.length && !isLoadingVersionChanges">
+                  <td colspan="4">{{ translate('UserCountryMap_None') }}</td>
+                </tr>
+                <tr v-for="(versionChange, index) in versionChanges" :key="index">
+                  <td>{{ translate(versionChange.entityType) }}</td>
+                  <td>{{ versionChange.name }}</td>
+                  <td>{{ translate(versionChange.type) }}</td>
+                  <td class="lastUpdated"><span>{{ versionChange.lastChanged }}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="entityCancel"
+            v-show="!isEmbedded"
+          >
+            <a @click="cancel()">{{ translate('General_Cancel') }}</a>
+          </div>
         </div>
-        <SaveButton
-          class="publishButton"
-          v-show="create && environments.length"
-          @confirm="createVersionAndPublish()"
-          :disabled="isUpdating || !isDirty"
-          :saving="isUpdating"
-          :value="translate('TagManager_CreateVersionAndPublishRelease')"
-        >
-        </SaveButton>
-        <div
-          class="versionChanges"
-          v-if="lastVersion"
-        >
-          <h3>{{ translate('TagManager_ChangesSinceLastVersion') }}:</h3>
-          <table v-content-table>
-            <thead>
-              <tr>
-                <th>{{ translate('SitesManager_Type') }}</th>
-                <th>{{ translate('General_Name') }}</th>
-                <th>{{ translate('TagManager_Change') }}</th>
-                <th>{{ translate('TagManager_LastUpdated') }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-if="isLoadingVersionChanges">
-                <td colspan="4">
-                  <ActivityIndicator
-                    :loading-message="translate('TagManager_DetectingChanges')"
-                    :loading="true"
-                  />
-                </td>
-              </tr>
-              <tr v-if="!versionChanges.length && !isLoadingVersionChanges">
-                <td colspan="4">{{ translate('UserCountryMap_None') }}</td>
-              </tr>
-              <tr v-for="(versionChange, index) in versionChanges" :key="index">
-                <td>{{ translate(versionChange.entityType) }}</td>
-                <td>{{ versionChange.name }}</td>
-                <td>{{ translate(versionChange.type) }}</td>
-                <td class="lastUpdated"><span>{{ versionChange.lastChanged }}</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div
-          class="entityCancel"
-          v-show="!isEmbedded"
-        >
-          <a @click="cancel()">{{ translate('General_Cancel') }}</a>
-        </div>
-      </div>
-    </form>
-  </ContentBlock>
+      </form>
+    </ContentBlock>
+  </div>
 </template>
 
 <script lang="ts">
@@ -191,7 +192,7 @@ export default defineComponent({
       required: true,
     },
     idContainer: {
-      type: Number,
+      type: String,
       required: true,
     },
     isEmbedded: {
@@ -252,14 +253,8 @@ export default defineComponent({
       const message = translate('TagManager_ErrorXNotProvided', [title]);
       this.showNotification(message, 'error');
     },
-    create() {
-      return this.idContainerVersion === 0;
-    },
-    edit() {
-      return !this.create;
-    },
     initIdContainerVersion() {
-      this.version = {} as unknown as Version
+      this.version = {} as unknown as Version;
 
       this.lastVersion = null;
       this.versionChanges = [];
@@ -275,10 +270,8 @@ export default defineComponent({
 
         const container = clone(c) as unknown as Container;
 
-        const versions = container.versions;
-        versions.sort((a, b) => {
-          return a.revision < b.revision ? 1 : 0;
-        });
+        const { versions } = container;
+        versions.sort((a, b) => (a.revision < b.revision ? 1 : 0));
 
         let lastContainerVersion = null;
 
@@ -304,14 +297,14 @@ export default defineComponent({
           diffDraftVersion(
             this.idContainer,
             this.idContainerVersion,
-            lastContainerVersion,
+            lastContainerVersion!,
           ).then((diff) => {
             this.versionChanges = diff;
             this.isLoadingVersionChanges = false;
           });
 
           if (this.create && !this.version.name && /^\d+$/.test(this.lastVersion)) {
-            this.version.name = parseInt(this.lastVersion, 10) + 1;
+            this.version.name = `${parseInt(this.lastVersion, 10) + 1}`;
             this.isDirty = true;
           }
         }
@@ -339,14 +332,11 @@ export default defineComponent({
           idSite: Matomo.idSite,
           idcontainer: this.idContainer,
           name: '',
-          environment: '',
           description: '',
         } as unknown as Version;
 
         if (this.canPublishToLive) {
-          this.version.environment = 'live';
-        } else if (this.environments.length && this.environments[0]) {
-          this.version.environment = this.environments[0].key;
+          this.version.environments = ['live'];
         }
 
         this.isDirty = false;
@@ -387,9 +377,6 @@ export default defineComponent({
         }
 
         VersionsStore.reload(this.idContainer).then(() => {
-
-        });
-        VersionsStore.reload(this.idContainer).then(function () {
           MatomoUrl.updateHash({
             ...MatomoUrl.hashParsed.value,
             idContainerVersion,
@@ -424,7 +411,7 @@ export default defineComponent({
         this.idContainer,
       ).then((response) => {
         if (!response) {
-          return;
+          return null;
         }
 
         const idContainerVersion = response.value;
@@ -433,8 +420,8 @@ export default defineComponent({
         return VersionsStore.publishVersion(
           this.idContainer,
           this.idContainerVersion,
-          this.version.environment,
-        ).then((response) => {
+          this.version.environments[0],
+        ).then(() => {
           this.isDirty = false;
 
           if (this.isEmbedded) {
@@ -479,8 +466,6 @@ export default defineComponent({
           return;
         }
 
-        const idContainerVersion = this.version.idcontainerversion;
-
         if (this.isEmbedded) {
           this.$emit('changeVersion', {
             version: this.version,
@@ -492,7 +477,7 @@ export default defineComponent({
         this.version = {} as unknown as Version;
 
         VersionsStore.reload(this.idContainer).then(() => {
-          this.init(idContainerVersion);
+          this.initIdContainerVersion();
         });
 
         this.showNotification(translate('TagManager_UpdatedX', translate('TagManager_Version')), 'success');
@@ -510,7 +495,7 @@ export default defineComponent({
   },
   computed: {
     create() {
-      return this.idVariable === 0;
+      return this.idContainerVersion === 0;
     },
     edit() {
       return !this.create;

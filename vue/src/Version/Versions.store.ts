@@ -118,15 +118,15 @@ class VersionsStore {
   }
 
   publishVersion(
-    idContainer: number,
+    idContainer: string,
     idContainerVersion: number,
     environment: string,
   ): Promise<void> {
     this.privateState.isUpdating = true;
     return AjaxHelper.fetch({
-      idContainer: idContainer,
-      idContainerVersion: idContainerVersion,
-      environment: environment,
+      idContainer,
+      idContainerVersion,
+      environment,
       method: 'TagManager.publishContainerVersion',
     }).finally(() => {
       this.privateState.isUpdating = false;

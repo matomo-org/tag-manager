@@ -4,29 +4,15 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
-<todo>
-- conversion check (mistakes get fixed in quickmigrate)
-- property types
-- state types
-- look over template
-- look over component code
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <div class="manageVersion">
     <div v-show="!editMode">
-      <div
-        piwik-version-list
+      <VersionList
         :id-container="idContainer"
       />
     </div>
     <div v-show="editMode">
-      <div
-        piwik-version-edit
+      <VersionEdit
         :id-container="idContainer"
         :id-container-version="idContainerVersion"
       />
@@ -35,13 +21,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { translate, Matomo } from 'CoreHome';
-import VersionList from 'VersionList.vue';
-import VersionEdit from 'VersionEdit.vue';
+import { defineComponent, watch } from 'vue';
+import { Matomo, NotificationsStore, MatomoUrl } from 'CoreHome';
+import VersionList from './VersionList.vue';
+import VersionEdit from './VersionEdit.vue';
 
 interface VersionManageState {
-  editMode: boolean;
+  isAddAllowed: boolean;
 }
 
 export default defineComponent({
@@ -54,50 +40,39 @@ export default defineComponent({
   },
   data(): VersionManageState {
     return {
-      editMode: false,
+      isAddAllowed: false,
     };
   },
   created() {
-    this.initState();
-    this.$on('$destroy', function () {
-      if (onChangeSuccess) {
-        onChangeSuccess();
-      }
+    // doing this in a watch because we don't want to post an event in a computed property
+    watch(() => MatomoUrl.hashParsed.value.idContainerVersion as string, (v) => {
+      this.onIdContainerVersionParamChange(v);
     });
+
+    NotificationsStore.remove('versiontagmanagement');
+
+    this.onIdContainerVersionParamChange(MatomoUrl.hashParsed.value.idContainerVersion as string);
   },
   methods: {
-    // TODO
-    removeAnyVersionNotification() {
-      var UI = require('piwik/UI');
-    
-      new UI.Notification().remove('versiontagmanagement');
-    },
-    // TODO
-    initState() {
-      var $search = $location.search();
-    
-      if ('idContainerVersion' in $search) {
-        if ($search.idContainerVersion === 0 || $search.idContainerVersion === '0') {
-          var parameters = {
-            isAllowed: true
-          };
-          Matomo.postEvent('TagManager.initAddVersion', parameters);
-    
-          if (parameters && !parameters.isAllowed) {
-            this.editMode = false;
-            this.idContainerVersion = null;
-            return;
-          }
-        }
-    
-        this.editMode = true;
-        this.idContainerVersion = parseInt($search.idContainerVersion, 10);
-      } else {
-        this.editMode = false;
-        this.idContainerVersion = null;
+    onIdContainerVersionParamChange(idContainerVersion: string) {
+      // for BC w/ angularjs only invoke event if idContainerVersion is 0
+      if (idContainerVersion === '0') {
+        const parameters = { isAllowed: true };
+        Matomo.postEvent('TagManager.initAddVersion', parameters);
+        this.isAddAllowed = !!parameters.isAllowed;
       }
-    
-      this.removeAnyVersionNotification();
+    },
+  },
+  computed: {
+    idContainerVersion() {
+      const idContainerVersion = MatomoUrl.hashParsed.value.idContainerVersion as string;
+      if (!this.isAddAllowed && idContainerVersion === '0') {
+        return null;
+      }
+      return idContainerVersion ? parseInt(idContainerVersion, 10) : idContainerVersion;
+    },
+    editMode() {
+      return typeof this.idContainerVersion === 'number';
     },
   },
 });

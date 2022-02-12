@@ -19,8 +19,8 @@ import './Tag/TagEdit.adapter';
 import './Tag/TagList.adapter';
 import './Tag/TagManage.adapter';
 import './Version/VersionEdit.adapter';
-import './VersionList/VersionList.adapter';
-import './VersionManage/VersionManage.adapter';
+import './Version/VersionList.adapter';
+import './Version/VersionManage.adapter';
 
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
 export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
@@ -38,5 +38,5 @@ export { default as TagEdit } from './Tag/TagEdit.vue';
 export { default as TagList } from './Tag/TagList.vue';
 export { default as TagManage } from './Tag/TagManage.vue';
 export { default as VersionEdit } from './Version/VersionEdit.vue';
-export { default as VersionList } from './VersionList/VersionList.vue';
-export { default as VersionManage } from './VersionManage/VersionManage.vue';
+export { default as VersionList } from './Version/VersionList.vue';
+export { default as VersionManage } from './Version/VersionManage.vue';

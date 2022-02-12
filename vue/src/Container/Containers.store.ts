@@ -79,7 +79,6 @@ class ContainersStore {
     this.privateState.isLoadingSingle = true;
     return AjaxHelper.fetch<Container>({
       idContainer,
-      idContainer,
       method: 'TagManager.getContainer',
       filter_limit: '-1',
     }).then((record) => {

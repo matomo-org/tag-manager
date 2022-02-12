@@ -275,6 +275,10 @@ interface TagManagerHelper {
     idTag: number,
     callback: (trigger: Trigger) => void,
   ): void;
+
+  importVersion($scope: IScope|null, idContainer: string): void;
+
+  enablePreviewMode(idContainer: string, idContainerVersion: number): void;
 }
 
 declare global {

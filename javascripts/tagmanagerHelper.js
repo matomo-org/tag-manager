@@ -233,17 +233,29 @@
 
     };
     tagManagerHelper.importVersion = function ($scope, idContainer) {
-        var childScope = $scope.$new(true, $scope);
-        var template = $('<div class="ui-confirm"><div piwik-import-version id-container="idContainer"></div><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/>')
+        var createVNode = Vue.createVNode;
+        var createVueApp = CoreHome.createVueApp;
+        var ImportVersion = TagManager.ImportVersion;
 
-        var params = {
-            idContainer: idContainer
-        };
-        piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
-            childScope.$destroy();
+        var template = $('<div class="tag-ui-confirm"><div></div><input role="no" type="button" value="'
+          + _pk_translate('General_Cancel') +'"/></div>')
+
+        var app = createVueApp({
+          render: function () {
+            return createVNode(ImportVersion, {
+              idContainer: idContainer,
+            });
+          },
+        });
+        app.mount(template.children()[0]);
+
+        piwikHelper.modalConfirm(template, {}, {
+          extraWide: true,
+          onCloseEnd() {
+            app.unmount();
             template.empty();
-        }});
+          },
+        });
     };
 
     window.tagManagerHelper = tagManagerHelper;

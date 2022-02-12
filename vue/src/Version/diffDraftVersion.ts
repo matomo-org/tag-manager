@@ -25,7 +25,7 @@ interface MixedInTag extends Tag {
 export default function diffDraftVersion(
   idContainer: string,
   idContainerVersionNew: number,
-  idContainerVersionPrevious: string,
+  idContainerVersionPrevious: number,
 ): Promise<SingleDiff[]> {
   function findEntryInArray(array: Entity[], name: string) {
     return array.find((v) => v.name === name);
@@ -41,7 +41,7 @@ export default function diffDraftVersion(
 
     array1.forEach((array1Item) => {
       const matchingEntry = findEntryInArray(array2, array1Item.name as string);
-      if (!!matchingEntry) {
+      if (matchingEntry) {
         keysToCheck.some((key) => {
           if (JSON.stringify(array1Item[key]) !== JSON.stringify(matchingEntry[key])) {
             // matching, check if different
@@ -91,14 +91,14 @@ export default function diffDraftVersion(
       tag.fire_trigger_ids.forEach((idtrigger) => {
         const trigger = triggers.find((t) => t.idtrigger === idtrigger);
         if (trigger) {
-          tag.fire_triggers.push(trigger.name);
+          tag.fire_triggers!.push(trigger.name);
         }
       });
 
       tag.block_trigger_ids.forEach((idtrigger) => {
         const trigger = triggers.find((t) => t.idtrigger === idtrigger);
         if (trigger) {
-          tag.block_triggers.push(trigger.name);
+          tag.block_triggers!.push(trigger.name);
         }
       });
     });
@@ -124,14 +124,16 @@ export default function diffDraftVersion(
     filter_limit: -1,
   };
 
-  return AjaxHelper.bulkFetch<ExportedVersion[]>([draftVersion, lastVersion]).then(([draft, last]) => {
+  return AjaxHelper.bulkFetch<ExportedVersion[]>(
+    [draftVersion, lastVersion],
+  ).then(([draft, last]) => {
     mixinTagTriggers(draft.tags, draft.triggers);
     mixinTagTriggers(last.tags, last.triggers);
 
     const diff1 = getDifference(
       'TagManager_Tag',
-      draft.tags,
-      last.tags,
+      draft.tags as unknown as Entity[],
+      last.tags as unknown as Entity[],
       [
         'name',
         'type',
@@ -146,15 +148,15 @@ export default function diffDraftVersion(
 
     const diff2 = getDifference(
       'TagManager_Trigger',
-      draft.triggers,
-      last.triggers,
+      draft.triggers as unknown as Entity[],
+      last.triggers as unknown as Entity[],
       ['name', 'type', 'conditions', 'parameters'],
     );
 
     const diff3 = getDifference(
       'TagManager_Variable',
-      draft.variables,
-      last.variables,
+      draft.variables as unknown as Entity[],
+      last.variables as unknown as Entity[],
       ['name', 'type', 'lookup_table', 'default_value', 'parameters'],
     );
 
