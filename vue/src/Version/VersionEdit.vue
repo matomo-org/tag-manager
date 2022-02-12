@@ -4,29 +4,23 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
-<todo>
-- conversion check (mistakes get fixed in quickmigrate)
-- property types
-- state types
-- look over template
-- look over component code
-- get to build
-- test in UI
-- create PR
-</todo>
-
 <template>
   <ContentBlock
     class="editVersion tagManagerManageEdit"
     feature="Tag Manager"
     :content-title="editTitle"
   >
-    <p v-show="model.isLoading">
-      <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('General_LoadingData') }}</span>
+    <p v-show="isLoading">
+      <span class="loadingPiwik">
+        <img src="plugins/Morpheus/images/loading-blue.gif" />
+        {{ translate('General_LoadingData') }}
+      </span>
     </p>
-    <p v-show="model.isUpdating">
-      <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif" /> {{ translate('TagManager_UpdatingData') }}</span>
+    <p v-show="isUpdating">
+      <span class="loadingPiwik">
+        <img src="plugins/Morpheus/images/loading-blue.gif" />
+        {{ translate('TagManager_UpdatingData') }}
+      </span>
     </p>
     <form @submit="edit ? updateVersion() : createVersion()">
       <div
@@ -37,8 +31,11 @@
         <br /><br />
         <span
           v-show="lastVersion"
-          v-html="$sanitize(translate('TagManager_NameOfLatestVersion', '&lt;strong&gt;' + lastVersion + '&lt;/strong&gt;'))"
-        />
+          v-html="translate(
+            'TagManager_NameOfLatestVersion',
+            `<strong>${lastVersion}</strong>`,
+          )"
+        ></span>
       </div>
       <div>
         <div>
@@ -65,9 +62,11 @@
         <SaveButton
           class="createButton no-publish"
           @confirm="edit ? updateVersion() : createVersion()"
-          :disabled="model.isUpdating || !isDirty"
-          :saving="model.isUpdating"
-          :value="edit ? translate('CoreUpdater_UpdateTitle') : translate('TagManager_CreateVersionWithoutPublishing')"
+          :disabled="isUpdating || !isDirty"
+          :saving="isUpdating"
+          :value="edit
+            ? translate('CoreUpdater_UpdateTitle') :
+            translate('TagManager_CreateVersionWithoutPublishing')"
         >
         </SaveButton>
         <div
@@ -80,7 +79,10 @@
             style="margin-bottom: 0;padding-bottom: 0;"
             v-show="!canPublishToLive"
           >
-            {{ translate('TagManager_PublishLiveEnvironmentCapabilityRequired', translate('TagManager_CapabilityPublishLiveContainer')) }}
+            {{ translate(
+                'TagManager_PublishLiveEnvironmentCapabilityRequired',
+                translate('TagManager_CapabilityPublishLiveContainer'),
+              ) }}
           </div>
         </div>
         <div>
@@ -88,8 +90,8 @@
             uicontrol="select"
             name="environment"
             inline-help="#selectTagManagerEnvironmentHelp"
-            :model-value="version.environment"
-            @update:model-value="version.environment = $event; setValueHasChanged()"
+            :model-value="version.environments[0]"
+            @update:model-value="version.environments[0] = $event; setValueHasChanged()"
             v-show="create && environments.length"
             :options="environments"
             :introduction="translate('TagManager_OrCreateAndPublishVersion')"
@@ -100,8 +102,8 @@
           class="publishButton"
           v-show="create && environments.length"
           @confirm="createVersionAndPublish()"
-          :disabled="model.isUpdating || !isDirty"
-          :saving="model.isUpdating"
+          :disabled="isUpdating || !isDirty"
+          :saving="isUpdating"
           :value="translate('TagManager_CreateVersionAndPublishRelease')"
         >
         </SaveButton>
@@ -131,7 +133,7 @@
               <tr v-if="!versionChanges.length && !isLoadingVersionChanges">
                 <td colspan="4">{{ translate('UserCountryMap_None') }}</td>
               </tr>
-              <tr v-for="versionChange in versionChanges">
+              <tr v-for="(versionChange, index) in versionChanges" :key="index">
                 <td>{{ translate(versionChange.entityType) }}</td>
                 <td>{{ versionChange.name }}</td>
                 <td>{{ translate(versionChange.type) }}</td>
@@ -156,22 +158,28 @@ import { defineComponent } from 'vue';
 import {
   Matomo,
   translate,
-  AjaxHelper,
   ContentBlock,
   ContentTable,
   ActivityIndicator,
-  NotificationsStore, NotificationType,
+  NotificationsStore, NotificationType, clone, MatomoUrl,
 } from 'CoreHome';
 import { Field, SaveButton } from 'CorePluginsAdmin';
 import AvailableEnvironmentsStore from '../AvailableEnvironments.store';
+import VariablesStore from '../Variable/Variables.store';
+import AvailableComparisonsStore from '../AvailableComparisons.store';
+import diffDraftVersion, { SingleDiff } from './diffDraftVersion';
+import { Container, Version } from '../types';
+import VersionsStore from './Versions.store';
+import ContainersStore from '../Container/Containers.store';
 
 interface VersionEditState {
   isDirty: boolean;
-  isEmbedded: unknown; // TODO
-  lastVersion: unknown|null; // TODO
-  versionChanges: unknown[]; // TODO
+  lastVersion: string|null;
+  versionChanges: SingleDiff[];
   isLoadingVersionChanges: boolean;
-  canPublishToLive: unknown; // TODO
+  isUpdatingVersion: boolean;
+  editTitle: string;
+  version: Version;
 }
 
 const notificationId = 'versiontagmanagement';
@@ -186,6 +194,10 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    isEmbedded: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     ContentBlock,
@@ -199,11 +211,12 @@ export default defineComponent({
   data(): VersionEditState {
     return {
       isDirty: false,
-      isEmbedded: !!this.onChangeVersion,
       lastVersion: null,
       versionChanges: [],
       isLoadingVersionChanges: false,
-      canPublishToLive: Matomo.hasUserCapability('tagmanager_publish_live_container'),
+      isUpdatingVersion: false,
+      editTitle: '',
+      version: {} as unknown as Version,
     };
   },
   emits: ['changeVersion'],
@@ -239,46 +252,60 @@ export default defineComponent({
       const message = translate('TagManager_ErrorXNotProvided', [title]);
       this.showNotification(message, 'error');
     },
-    // TODO
+    create() {
+      return this.idContainerVersion === 0;
+    },
+    edit() {
+      return !this.create;
+    },
     initIdContainerVersion() {
-      this.create = this.idContainerVersion == '0';
-      this.edit = !this.create;
-      this.version = {};
+      this.version = {} as unknown as Version
+
       this.lastVersion = null;
       this.versionChanges = [];
       this.isLoadingVersionChanges = true;
-      tagManagerContainerModel.findContainer(this.idContainer).then(function (container) {
+
+      ContainersStore.findContainer(this.idContainer).then((c) => {
         this.isLoadingVersionChanges = false;
         this.lastVersion = null;
 
-        if (!container || !container.versions || !angular.isArray(container.versions) || !container.versions.length) {
+        if (!c?.versions?.length) {
           return;
         }
 
-        container = angular.copy(container); // we copy to not change original versions array
+        const container = clone(c) as unknown as Container;
 
-        var versions = container.versions;
-        versions.sort(function (a, b) {
-          return a.revision < b.revision;
+        const versions = container.versions;
+        versions.sort((a, b) => {
+          return a.revision < b.revision ? 1 : 0;
         });
-        var lastContainerVersion = null;
 
-        if (this.create && versions[0] && versions[0].name) {
+        let lastContainerVersion = null;
+
+        if (this.create && versions[0]?.name) {
           this.lastVersion = versions[0].name;
           lastContainerVersion = versions[0].idcontainerversion;
         } else if (this.edit) {
-          for (var i = 0; i < versions.length - 1; i++) {
+          versions.forEach((v, i) => {
             // we stop before the last one because it cannot have an entry
-            if (versions[i].idcontainerversion === parseInt(this.idContainerVersion, 10) && versions[i + 1]) {
+            if (i >= versions.length - 1) {
+              return;
+            }
+
+            if (v.idcontainerversion === this.idContainerVersion && versions[i + 1]) {
               this.lastVersion = versions[i + 1].name;
               lastContainerVersion = versions[i + 1].idcontainerversion;
             }
-          }
+          });
         }
 
         if (this.lastVersion) {
           this.isLoadingVersionChanges = true;
-          tagManagerVersionDiff.diffDraftVersion(this.idContainer, this.idContainerVersion, lastContainerVersion).then(function (diff) {
+          diffDraftVersion(
+            this.idContainer,
+            this.idContainerVersion,
+            lastContainerVersion,
+          ).then((diff) => {
             this.versionChanges = diff;
             this.isLoadingVersionChanges = false;
           });
@@ -289,187 +316,216 @@ export default defineComponent({
           }
         }
       });
-      piwik.helper.lazyScrollToContent();
+
+      Matomo.helper.lazyScrollToContent();
 
       if (this.edit && this.idContainerVersion) {
         this.editTitle = translate('TagManager_EditVersion');
-        this.model.findVersion(this.idContainer, this.idContainerVersion).then(function (version) {
+        VersionsStore.findVersion(this.idContainer, this.idContainerVersion).then((version) => {
           if (!version) {
             return;
           }
 
-          this.version = angular.copy(version);
+          this.version = clone(version) as unknown as Version;
           this.isDirty = false;
         });
-      } else if (this.create) {
+
+        return;
+      }
+
+      if (this.create) {
         this.editTitle = translate('TagManager_CreateNewVersion');
         this.version = {
-          idSite: piwik.idSite,
+          idSite: Matomo.idSite,
           idcontainer: this.idContainer,
           name: '',
           environment: '',
-          description: ''
-        };
+          description: '',
+        } as unknown as Version;
 
         if (this.canPublishToLive) {
           this.version.environment = 'live';
-        } else if (angular.isArray(this.environments) && this.environments.length && this.environments[0]) {
+        } else if (this.environments.length && this.environments[0]) {
           this.version.environment = this.environments[0].key;
         }
 
         this.isDirty = false;
       }
     },
-    // TODO
     cancel() {
-      this.idContainerVersion = null;
-      currentId = null;
-      var $search = $location.search();
-      delete $search.idContainerVersion;
-      $location.search($search);
+      const newParams = { ...MatomoUrl.hashParsed.value };
+      delete newParams.idContainerVersion;
+      MatomoUrl.updateHash(newParams);
     },
-    // TODO
     createVersion() {
       this.removeAnyVersionNotification();
 
-      if (!this.checkRequiredFieldsAreSet) {
+      if (!this.checkRequiredFieldsAreSet()) {
         return;
       }
 
-      this.isUpdating = true;
-      tagManagerVersionModel.createOrUpdateVersion(this.version, 'TagManager.createContainerVersion').then(function (response) {
-        this.isUpdating = false;
-
-        if (!response || response.type === 'error' || !response.response) {
+      this.isUpdatingVersion = true;
+      VersionsStore.createOrUpdateVersion(
+        this.version,
+        'TagManager.createContainerVersion',
+        this.idContainer,
+      ).then((response) => {
+        if (!response) {
           return;
         }
 
         this.isDirty = false;
-        var idContainerVersion = response.response.value;
 
-        if ('function' === typeof this.onChangeVersion) {
-          this.version.idcontainerversion = this.idContainerVersion;
+        const idContainerVersion = response.value;
+
+        if (this.isEmbedded) {
+          this.version.idcontainerversion = idContainerVersion;
           this.$emit('changeVersion', {
-            version: this.version
+            version: this.version,
           });
           return;
         }
 
-        tagManagerVersionModel.reload(this.idContainer).then(function () {
-          var $search = $location.search();
-          $search.idContainerVersion = this.idContainerVersion;
-          $location.search($search);
-          setTimeout(function () {
-            this.showNotification(translate('TagManager_CreatedX', translate('TagManager_Version')), response.type);
+        VersionsStore.reload(this.idContainer).then(() => {
+
+        });
+        VersionsStore.reload(this.idContainer).then(function () {
+          MatomoUrl.updateHash({
+            ...MatomoUrl.hashParsed.value,
+            idContainerVersion,
+          });
+
+          setTimeout(() => {
+            const createdX = translate('TagManager_CreatedX', translate('TagManager_Version'));
+            const wantToRedeploy = translate(
+              'TagManager_WantToDeployThisChangeCreateVersion',
+              '<a class="createNewVersionLink">',
+              '</a>',
+            );
+
+            this.showNotification(`${createdX} ${wantToRedeploy}`, 'success');
           }, 200);
         });
-      }, function () {
-        this.isUpdating = false;
+      }).finally(() => {
+        this.isUpdatingVersion = false;
       });
     },
-    // TODO
     createVersionAndPublish() {
       this.removeAnyVersionNotification();
 
-      if (!this.checkRequiredFieldsAreSet) {
+      if (!this.checkRequiredFieldsAreSet()) {
         return;
       }
 
-      this.isUpdating = true;
-      tagManagerVersionModel.createOrUpdateVersion(this.version, 'TagManager.createContainerVersion').then(function (response) {
-        if (!response || response.type === 'error' || !response.response || !response.response.value) {
-          this.isUpdating = false;
+      this.isUpdatingVersion = true;
+      VersionsStore.createOrUpdateVersion(
+        this.version,
+        'TagManager.createContainerVersion',
+        this.idContainer,
+      ).then((response) => {
+        if (!response) {
           return;
         }
 
-        var idContainerVersion = response.response.value;
-        this.version.idcontainerversion = this.idContainerVersion;
-        tagManagerVersionModel.publishVersion(this.idContainer, this.idContainerVersion, this.version.environment).then(function (response) {
-          this.isUpdating = false;
+        const idContainerVersion = response.value;
 
-          if (!response || response.type === 'error') {
-            return;
-          }
-
+        this.version.idcontainerversion = idContainerVersion;
+        return VersionsStore.publishVersion(
+          this.idContainer,
+          this.idContainerVersion,
+          this.version.environment,
+        ).then((response) => {
           this.isDirty = false;
 
-          if ('function' === typeof this.onChangeVersion) {
+          if (this.isEmbedded) {
             this.$emit('changeVersion', {
-              version: this.version
+              version: this.version,
             });
             return;
           }
 
-          tagManagerVersionModel.reload(this.idContainer).then(function () {
-            var $search = $location.search();
-            $search.idContainerVersion = this.idContainerVersion;
-            $location.search($search);
-            setTimeout(function () {
-              this.showNotification(translate('TagManager_VersionPublishSuccess'), response.type);
+          VersionsStore.reload(this.idContainer).then(() => {
+            MatomoUrl.updateHash({
+              ...MatomoUrl.hashParsed.value,
+              idContainerVersion,
+            });
+
+            setTimeout(() => {
+              this.showNotification(translate('TagManager_VersionPublishSuccess'), 'success');
             }, 200);
           });
         });
-      }, function () {
-        this.isUpdating = false;
+      }).finally(() => {
+        this.isUpdatingVersion = false;
       });
     },
-    // TODO
     setValueHasChanged() {
       this.isDirty = true;
     },
-    // TODO
     updateVersion() {
       this.removeAnyVersionNotification();
 
-      if (!this.checkRequiredFieldsAreSet) {
+      if (!this.checkRequiredFieldsAreSet()) {
         return;
       }
 
-      this.isUpdating = true;
-      tagManagerVersionModel.createOrUpdateVersion(this.version, 'TagManager.updateContainerVersion').then(function (response) {
-        if (response.type === 'error') {
+      this.isUpdatingVersion = true;
+      VersionsStore.createOrUpdateVersion(
+        this.version,
+        'TagManager.updateContainerVersion',
+        this.idContainer,
+      ).then((response) => {
+        if (!response) {
           return;
         }
 
-        var idContainerVersion = this.version.idcontainerversion;
+        const idContainerVersion = this.version.idcontainerversion;
 
-        if ('function' === typeof this.onChangeVersion) {
+        if (this.isEmbedded) {
           this.$emit('changeVersion', {
-            version: this.version
+            version: this.version,
           });
           return;
         }
 
         this.isDirty = false;
-        this.version = {};
-        tagManagerVersionModel.reload(this.idContainer).then(function () {
-          this.init(this.idContainerVersion);
+        this.version = {} as unknown as Version;
+
+        VersionsStore.reload(this.idContainer).then(() => {
+          this.init(idContainerVersion);
         });
-        this.showNotification(translate('TagManager_UpdatedX', translate('TagManager_Version')), response.type);
+
+        this.showNotification(translate('TagManager_UpdatedX', translate('TagManager_Version')), 'success');
       });
     },
-  },
-  computed: {
-    environments() {
-      return AvailableEnvironmentsStore.environmentsWithPublishOptions.value;
-    },
-    // TODO
-    notification() {
-      var UI = require('piwik/UI');
-
-      return new UI.Notification();
-    },
-    // TODO
     checkRequiredFieldsAreSet() {
-      var title;
-
       if (!this.version.name) {
-        title = translate('General_Name');
+        const title = translate('General_Name');
         this.showErrorFieldNotProvidedNotification(title);
         return false;
       }
 
       return true;
+    },
+  },
+  computed: {
+    create() {
+      return this.idVariable === 0;
+    },
+    edit() {
+      return !this.create;
+    },
+    isLoading() {
+      return VariablesStore.isLoading.value || AvailableComparisonsStore.isLoading.value;
+    },
+    isUpdating() {
+      return VariablesStore.isUpdating.value || this.isUpdatingVersion;
+    },
+    environments() {
+      return AvailableEnvironmentsStore.environmentsWithPublishOptions.value;
+    },
+    canPublishToLive() {
+      return Matomo.hasUserCapability('tagmanager_publish_live_container');
     },
   },
 });

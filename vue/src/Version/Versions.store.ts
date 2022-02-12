@@ -153,3 +153,5 @@ class VersionsStore {
     });
   }
 }
+
+export default new VersionsStore();

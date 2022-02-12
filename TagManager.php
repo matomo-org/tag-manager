@@ -543,7 +543,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/vue/src/VariableSelectType/VariableSelectType.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Field/FieldVariableTemplate.less";
         $stylesheets[] = "plugins/TagManager/angularjs/containerSelector/container-selector.less";
-        $stylesheets[] = "plugins/TagManager/angularjs/manageVersion/edit.directive.less";
+        $stylesheets[] = "plugins/TagManager/vue/src/Version/VersionEdit.less";
     }
 
     public function getJsFiles(&$jsFiles)

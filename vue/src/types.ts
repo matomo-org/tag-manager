@@ -233,6 +233,12 @@ export interface Version {
   releases: Release[];
 }
 
+export interface ExportedVersion extends Version {
+  tags: Tag[];
+  triggers: Trigger[];
+  variables: Variable[];
+}
+
 export interface Container {
   context: string;
   created_date: string;
