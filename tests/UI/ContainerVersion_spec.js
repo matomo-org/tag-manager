@@ -99,7 +99,6 @@ describe("ContainerVersion", function () {
     });
 
     it('should be able to prefill version', async function () {
-        await page.click('.notification .close');
         await setVersionName('My Version Name');
         await setVersionDescription('My Description');
         await capture.page(page, 'create_new_prefilled');
