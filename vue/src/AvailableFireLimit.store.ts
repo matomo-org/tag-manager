@@ -44,6 +44,10 @@ class AvailableFireLimitStore {
       method: 'TagManager.getAvailableEnvironmentsWithPublishCapability',
       filter_limit: '-1',
     }).then((fireLimits) => {
+      if (!fireLimits?.map) {
+        console.log(JSON.stringify(fireLimits));
+      }
+
       if (typeof fireLimits === 'object' && !Object.keys(fireLimits).length) {
         this.privateState.fireLimits = [];
         return;
