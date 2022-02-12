@@ -160,18 +160,21 @@ import {
   ContentBlock,
   ContentTable,
   ActivityIndicator,
+  NotificationsStore, NotificationType,
 } from 'CoreHome';
 import { Field, SaveButton } from 'CorePluginsAdmin';
+import AvailableEnvironmentsStore from '../AvailableEnvironments.store';
 
 interface VersionEditState {
   isDirty: boolean;
-  environments: unknown[]; // TODO
   isEmbedded: unknown; // TODO
   lastVersion: unknown|null; // TODO
   versionChanges: unknown[]; // TODO
   isLoadingVersionChanges: boolean;
   canPublishToLive: unknown; // TODO
 }
+
+const notificationId = 'versiontagmanagement';
 
 export default defineComponent({
   props: {
@@ -196,7 +199,6 @@ export default defineComponent({
   data(): VersionEditState {
     return {
       isDirty: false,
-      environments: [],
       isEmbedded: !!this.onChangeVersion,
       lastVersion: null,
       versionChanges: [],
@@ -206,55 +208,39 @@ export default defineComponent({
   },
   emits: ['changeVersion'],
   created() {
-    tagManagerVersionModel.fetchAvailableEnvironmentsWithPublishPermission().then(function (environments) {
-      this.environments = [];
-      angular.forEach(environments, function (environment) {
-        this.environments.push({
-          key: environment.id,
-          value: environment.name
-        });
-      });
-    });
-    this.$on('$destroy', function () {
-      this.idContainerVersion = null;
-      currentId = null;
-    });
-    this.$watch('idContainerVersion', function (newValue, oldValue) {
+    this.initIdContainerVersion();
+  },
+  watch: {
+    idContainerVersion(newValue) {
       if (newValue === null) {
         return;
       }
 
-      if (newValue != oldValue || currentId === null) {
-        currentId = newValue;
-        init(newValue);
-      }
-    });
+      this.initIdContainerVersion();
+    },
   },
   methods: {
-    // TODO
     removeAnyVersionNotification() {
-      var notification = this.notification;
-      notification.remove(notificationId);
-      notification.remove('ajaxHelper');
+      NotificationsStore.remove(notificationId);
+      NotificationsStore.remove('ajaxHelper');
     },
-    // TODO
-    showNotification(message, context) {
-      var notification = this.notification;
-      notification.show(message, {
-        context: context,
-        id: notificationId
+    showNotification(message: string, context: NotificationType['context']) {
+      const notificationInstanceId = NotificationsStore.show({
+        message,
+        context,
+        id: notificationId,
+        type: 'transient',
       });
-      setTimeout(function () {
-        notification.scrollToNotification();
+      setTimeout(() => {
+        NotificationsStore.scrollToNotification(notificationInstanceId);
       }, 200);
     },
-    // TODO
-    showErrorFieldNotProvidedNotification(title) {
-      var message = translate('TagManager_ErrorXNotProvided', [title]);
+    showErrorFieldNotProvidedNotification(title: string) {
+      const message = translate('TagManager_ErrorXNotProvided', [title]);
       this.showNotification(message, 'error');
     },
     // TODO
-    init(idContainerVersion) {
+    initIdContainerVersion() {
       this.create = this.idContainerVersion == '0';
       this.edit = !this.create;
       this.version = {};
@@ -464,6 +450,9 @@ export default defineComponent({
     },
   },
   computed: {
+    environments() {
+      return AvailableEnvironmentsStore.environmentsWithPublishOptions.value;
+    },
     // TODO
     notification() {
       var UI = require('piwik/UI');
