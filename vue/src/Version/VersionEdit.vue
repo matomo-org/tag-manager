@@ -23,26 +23,13 @@
         </span>
       </p>
       <form @submit="edit ? updateVersion() : createVersion()">
-        <div
-          id="versionNameHelpText"
-          class="inline-help-node"
-        >
-          {{ translate('TagManager_VersionNameHelp') }}
-          <br /><br />
-          <span
-            v-show="lastVersion"
-            v-html="translate(
-              'TagManager_NameOfLatestVersion',
-              `<strong>${lastVersion}</strong>`,
-            )"
-          ></span>
-        </div>
         <div>
           <div>
             <Field
               uicontrol="text"
               name="name"
-              inline-help="#versionNameHelpText"
+              :inline-help="versionNameHelpText"
+              :inline-help-bind="{ lastVersion }"
               :model-value="version.name"
               @update:model-value="version.name = $event; setValueHasChanged()"
               :maxlength="30"
@@ -69,27 +56,12 @@
               translate('TagManager_CreateVersionWithoutPublishing')"
           >
           </SaveButton>
-          <div
-            id="selectTagManagerEnvironmentHelp"
-            class="inline-help-node"
-          >
-            <div>{{ translate('TagManager_VersionEnvironmentHelp') }}</div>
-            <div
-              class="alert alert-info"
-              style="margin-bottom: 0;padding-bottom: 0;"
-              v-show="!canPublishToLive"
-            >
-              {{ translate(
-                  'TagManager_PublishLiveEnvironmentCapabilityRequired',
-                  translate('TagManager_CapabilityPublishLiveContainer'),
-                ) }}
-            </div>
-          </div>
           <div v-if="create && environments.length">
             <Field
               uicontrol="select"
               name="environment"
-              inline-help="#selectTagManagerEnvironmentHelp"
+              :inline-help="selectTagManagerEnvironmentHelp"
+              :inline-help-bind="{ canPublishToLive }"
               :model-value="version.environments?.[0]"
               @update:model-value="version.environments[0] = $event; setValueHasChanged()"
               :options="environments"
@@ -154,23 +126,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, markRaw } from 'vue';
 import {
   Matomo,
   translate,
   ContentBlock,
   ContentTable,
   ActivityIndicator,
-  NotificationsStore, NotificationType, clone, MatomoUrl,
+  NotificationsStore,
+  NotificationType,
+  clone,
+  MatomoUrl,
 } from 'CoreHome';
 import { Field, SaveButton } from 'CorePluginsAdmin';
 import AvailableEnvironmentsStore from '../AvailableEnvironments.store';
 import VariablesStore from '../Variable/Variables.store';
 import AvailableComparisonsStore from '../AvailableComparisons.store';
 import diffDraftVersion, { SingleDiff } from './diffDraftVersion';
-import { Container, Version } from '../types';
+import { Version } from '../types';
 import VersionsStore from './Versions.store';
-import ContainersStore from '../Container/Containers.store';
+import VersionNameHelpText from './VersionNameHelpText.vue';
+import SelectTagManagerEnvironmentHelpText from './SelectTagManagerEnvironmentHelpText.vue';
 
 interface VersionEditState {
   isDirty: boolean;
@@ -259,17 +235,15 @@ export default defineComponent({
       this.versionChanges = [];
       this.isLoadingVersionChanges = true;
 
-      ContainersStore.findContainer(this.idContainer).then((c) => {
+      VersionsStore.fetchVersions(this.idContainer).then(() => {
         this.isLoadingVersionChanges = false;
         this.lastVersion = null;
 
-        if (!c?.versions?.length) {
+        const versions = [...VersionsStore.versions.value];
+        if (!versions?.length) {
           return;
         }
 
-        const container = clone(c) as unknown as Container;
-
-        const { versions } = container;
         versions.sort((a, b) => (a.revision < b.revision ? 1 : 0));
 
         let lastContainerVersion = null;
@@ -420,7 +394,7 @@ export default defineComponent({
         this.version.idcontainerversion = idContainerVersion;
         return VersionsStore.publishVersion(
           this.idContainer,
-          this.idContainerVersion,
+          idContainerVersion,
           this.version.environments[0],
         ).then(() => {
           this.isDirty = false;
@@ -514,6 +488,12 @@ export default defineComponent({
     },
     canPublishToLive() {
       return Matomo.hasUserCapability('tagmanager_publish_live_container');
+    },
+    versionNameHelpText() {
+      return markRaw(VersionNameHelpText);
+    },
+    selectTagManagerEnvironmentHelp() {
+      return markRaw(SelectTagManagerEnvironmentHelpText);
     },
   },
 });

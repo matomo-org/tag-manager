@@ -139,6 +139,7 @@
     <div
       class="ui-confirm"
       id="confirmDeleteVersion"
+      ref="confirmDeleteVersion"
     >
       <h2>{{ translate('TagManager_DeleteVersionConfirm') }} </h2>
       <input

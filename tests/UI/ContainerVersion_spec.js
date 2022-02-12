@@ -129,6 +129,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to verify it was released', async function () {
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'publish_new_shown_in_list');

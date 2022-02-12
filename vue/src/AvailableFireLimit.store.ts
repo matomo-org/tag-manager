@@ -40,20 +40,18 @@ class AvailableFireLimitStore {
 
   private fetchAvailableFireLimits() {
     this.privateState.isLoading = true;
-    AjaxHelper.fetch<FireLimit[]>({
+    AjaxHelper.fetch<FireLimit[]|Record<string, FireLimit>>({
       method: 'TagManager.getAvailableEnvironmentsWithPublishCapability',
       filter_limit: '-1',
     }).then((fireLimits) => {
-      if (!fireLimits?.map) {
-        console.log(JSON.stringify(fireLimits));
+      let entities: FireLimit[];
+      if (Array.isArray(fireLimits)) {
+        entities = fireLimits as FireLimit[];
+      } else {
+        entities = Object.values(fireLimits as Record<string, FireLimit>);
       }
 
-      if (typeof fireLimits === 'object' && !Object.keys(fireLimits).length) {
-        this.privateState.fireLimits = [];
-        return;
-      }
-
-      this.privateState.fireLimits = fireLimits;
+      this.privateState.fireLimits = entities;
     }).finally(() => {
       this.privateState.isLoading = false;
     });

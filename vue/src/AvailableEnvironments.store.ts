@@ -42,11 +42,18 @@ class AvailableEnvironmentStore {
 
   private fetchEnvironments() {
     this.privateState.isLoading = true;
-    AjaxHelper.fetch<Environment[]>({
+    AjaxHelper.fetch<Environment[]|Record<string, Environment>>({
       method: 'TagManager.getAvailableEnvironmentsWithPublishCapability',
       filter_limit: '-1',
     }).then((environmentsWithPublish) => {
-      this.privateState.environmentsWithPublish = environmentsWithPublish;
+      let entities: Environment[];
+      if (Array.isArray(environmentsWithPublish)) {
+        entities = environmentsWithPublish as Environment[];
+      } else {
+        entities = Object.values(environmentsWithPublish as Record<string, Environment>);
+      }
+
+      this.privateState.environmentsWithPublish = entities;
     }).finally(() => {
       this.privateState.isLoading = false;
     });
