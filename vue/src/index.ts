@@ -24,6 +24,7 @@ import './Version/VersionManage.adapter';
 import './Container/ContainerEdit.adapter';
 import './Container/ContainerList.adapter';
 import './Container/ContainerManage.adapter';
+import './ContainerDashboard/ContainerDashboard.adapter';
 
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
 export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
@@ -46,3 +47,4 @@ export { default as VersionManage } from './Version/VersionManage.vue';
 export { default as ContainerEdit } from './Container/ContainerEdit.vue';
 export { default as ContainerList } from './Container/ContainerList.vue';
 export { default as ContainerManage } from './Container/ContainerManage.vue';
+export { default as ContainerDashboard } from './ContainerDashboard/ContainerDashboard.vue';
