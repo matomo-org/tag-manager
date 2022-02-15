@@ -7,6 +7,12 @@
 import { IScope } from 'angular';
 import {DeepReadonly} from 'vue';
 
+export interface InstallInstructions {
+  description: string;
+  embedCode: string;
+  helpUrl: string;
+}
+
 // variable types
 export interface LookupTableEntry {
   match_value: string;

@@ -4,14 +4,7 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-// TODO
 <todo>
-- conversion check (mistakes get fixed in quickmigrate)
-- property types
-- state types
-- look over template
-- look over component code
-- get to build
 - test in UI
 - check uses:
   ./plugins/TagManager/templates/trackingCode.twig
@@ -22,7 +15,7 @@
 <template>
   <div class="tagManagerTrackingCode">
     <ActivityIndicator
-      :style="{opacity: trackingCode.isLoading ? 1 : 0}"
+      :style="{opacity: isLoading ? 1 : 0}"
       :loading="true"
     />
     <div class="row">
@@ -52,8 +45,8 @@
             name="containers"
             :model-value="idContainer"
             @update:model-value="idContainer = $event; onContainerChange()"
-            :options="containers"
-            :disabled="containers.length <= 1"
+            :options="containerOptions"
+            :disabled="containerOptions.length <= 1"
             :full-width="true"
             :title="translate('TagManager_Container')"
           >
@@ -78,20 +71,20 @@
     </div>
     <div
       class="alert alert-info"
-      v-show="idContainer && noReleaseFound"
+      v-if="idContainer && noReleaseFound"
     >
       {{ translate('TagManager_NoReleasesFoundForContainer') }}
       <a href>{{ translate('TagManager_PublishVersionToEnvironmentToViewEmbedCode') }} </a>
     </div>
     <div
-      v-for="installInstruction in installInstructions"
-      :key="TODO"
+      v-for="(installInstruction, index) in installInstructions"
+      :key="index"
     >
       <p>{{ installInstruction.description }}
         <br />
         <a
           target="_blank"
-          v-show="installInstruction.helpUrl"
+          v-if="installInstruction.helpUrl"
           :href="installInstruction.helpUrl"
         >{{ translate('TagManager_LearnMore') }}</a>
       </p>
@@ -99,63 +92,88 @@
         class="codeblock"
         v-text="installInstruction.embedCode"
         v-select-on-focus="{}"
-      >
-      </pre>
+        ref="codeblock"
+      />
     </div>
-    <h3 v-show="idContainer">
+    <h3 v-if="idContainer">
       {{ translate('TagManager_CustomizeTracking') }}
     </h3>
-    <p v-show="idContainer">{{ translate('TagManager_CustomizeTrackingTeaser') }}</p>
-    <ul v-show="idContainer">
-      <li v-show="!matomoConfigs.length">{{ translate('TagManager_NoMatomoConfigFoundForContainer') }}</li>
+    <p v-if="idContainer">{{ translate('TagManager_CustomizeTrackingTeaser') }}</p>
+    <ul v-if="idContainer">
+      <li v-if="!matomoConfigs.length">
+        {{ translate('TagManager_NoMatomoConfigFoundForContainer') }}
+      </li>
       <li
         v-for="matomoConfig in matomoConfigs"
-        :key="TODO"
-      ><a :href="linkTo('manageVariables', idContainer, 'idVariable=' + matomoConfig.idvariable)"><span
-            class="icon-edit"
-          /> {{ matomoConfig.name }}</a></li>
+        :key="matomoConfig.idvariable"
+      >
+        <a :href="linkTo('manageVariables', idContainer,
+        {idVariable: matomoConfig.idvariable})"
+        >
+          <span class="icon-edit"/> {{ matomoConfig.name }}
+        </a>
+      </li>
     </ul>
-    <p v-show="idContainer">
+    <p v-if="idContainer">
       <br />
-      <a :href="linkTo('dashboard', idContainer)"><span class="icon-show" />
-        {{ translate('TagManager_ViewContainerDashboard') }}</a>
+      <a :href="linkTo('dashboard', idContainer)">
+        <span class="icon-show" /> {{ translate('TagManager_ViewContainerDashboard') }}
+      </a>
     </p>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, nextTick } from 'vue';
 import {
-  translate,
   AjaxHelper,
-  Matomo,
   ActivityIndicator,
   SiteSelector,
-  SelectOnFocus
+  SelectOnFocus,
+  SiteRef,
+  MatomoUrl,
+  Matomo,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
+import {
+  Container,
+  InstallInstructions,
+  Release,
+  Variable,
+} from '../types';
 
+interface Environment {
+  id: string;
+  name: string;
+}
+
+interface Option {
+  key: string;
+  value: string;
+}
 
 interface TagmanagerTrackingCodeState {
-  containerVariables: unknown[]; // TODO
+  containerVariables: Variable[];
   isLoading: boolean;
-  idContainer: number;
+  idContainer: string;
   environment: string;
-  environmentNameMap: Record<string, unknown>; // TODO
-  environments: unknown[]; // TODO
-  containers: unknown[]; // TODO
-  containerMap: Record<string, unknown>; // TODO
-  site: unknown|null; // TODO
-  matomoConfigs: unknown[]; // TODO
-  releases: unknown[]; // TODO
-  installInstructions: unknown[]; // TODO
+  environments: Option[];
+  environmentNameMap: Record<string, string>;
+  containerMap: Record<string, Container>;
+  containerOptions: Option[];
+  site: SiteRef|null;
+  matomoConfigs: Variable[];
+  releases: Release[];
+  installInstructions: InstallInstructions[];
   noReleaseFound: boolean;
-  firstTime: boolean;
+}
+
+function ucfirst(s: string): string {
+  return `${s.substr(0, 1).toUpperCase()}${s.substr(1)}`;
 }
 
 export default defineComponent({
-  props: {
-  },
+  props: {},
   components: {
     ActivityIndicator,
     SiteSelector,
@@ -168,84 +186,91 @@ export default defineComponent({
     return {
       containerVariables: [],
       isLoading: false,
-      idContainer: 0,
+      idContainer: '',
       environment: '',
-      environmentNameMap: {},
       environments: [],
-      containers: [],
+      environmentNameMap: {},
       containerMap: {},
-      site: null,
+      containerOptions: [],
+      site: {
+        id: Matomo.idSite,
+        name: Matomo.helper.htmlDecode(Matomo.siteName),
+      },
       matomoConfigs: [],
       releases: [],
       installInstructions: [],
       noReleaseFound: false,
-      firstTime: true,
     };
   },
   created() {
-    AjaxHelper.fetch({
+    AjaxHelper.fetch<Environment[]|Record<string, Environment>>({
       method: 'TagManager.getAvailableEnvironments',
-      filter_limit: '-1'
+      filter_limit: '-1',
     }).then((environments) => {
-      angular.forEach(this.environments, (environment) => {
-        this.environmentNameMap[environment.id] = environment.name;
-      });
-    });
-    this.$watch('tagTrackingCode.site.id', (val, oldVal) => {
-      if (val !== oldVal || this.firstTime) {
-        this.onSiteChange();
+      let entities: Environment[];
+      if (Array.isArray(environments)) {
+        entities = environments as Environment[];
+      } else {
+        entities = Object.values(environments as Record<string, Environment>);
       }
+
+      this.environmentNameMap = Object.fromEntries(entities.map(({ id, name }) => [id, name]));
     });
+
+    this.onSiteChange();
+  },
+  watch: {
+    site() {
+      this.onSiteChange();
+    },
   },
   methods: {
-    // TODO
     onSiteChange() {
       this.installInstructions = [];
-      this.containers = [];
+      this.containerOptions = [];
+      this.containerMap = {};
       this.environments = [];
       this.matomoConfigs = [];
       this.idContainer = '';
-      this.firstTime = false;
 
-      if (!this.site || !this.site.id) {
+      if (!this.site?.id) {
         return;
       }
 
       this.isLoading = true;
-      AjaxHelper.fetch({
+      AjaxHelper.fetch<Container[]>({
         method: 'TagManager.getContainers',
         filter_limit: '-1',
-        idSite: this.site.id
+        idSite: this.site.id,
       }).then((containers) => {
-        this.isLoading = false;
-        this.containers = [];
+        this.containerOptions = [];
 
-        if (!this.containers || !containers.length) {
+        if (!containers?.length) {
           this.idContainer = '';
-          this.containers.push({
+          this.containerOptions.push({
             key: '',
-            value: this.translate('TagManager_NoContainersFound')
+            value: this.translate('TagManager_NoContainersFound'),
           });
           return;
         }
 
-        angular.forEach(this.containers, (container) => {
+        containers.forEach((container) => {
           if (!this.idContainer) {
             this.idContainer = container.idcontainer;
           }
 
           this.containerMap[container.idcontainer] = container;
-          this.containers.push({
+          this.containerOptions.push({
             key: container.idcontainer,
-            value: container.name
+            value: container.name,
           });
         });
+
         this.onContainerChange();
-      }, () => {
+      }).finally(() => {
         this.isLoading = false;
       });
     },
-    // TODO
     onContainerChange() {
       this.noReleaseFound = false;
 
@@ -258,13 +283,15 @@ export default defineComponent({
       const draftVersion = container.draft.idcontainerversion;
       this.environment = '';
       this.environments = [];
-      angular.forEach(container.releases, (release) => {
-        if (release.environment === 'live') {
-          // we always prefer to pre-select the live environment
-          this.environment = release.environment;
-        }
-      });
-      angular.forEach(container.releases, (release) => {
+
+      const releases = container.releases || [];
+
+      if (releases.find((r) => r.environment === 'live')) {
+        // we always prefer to pre-select the live environment
+        this.environment = 'live';
+      }
+
+      releases.forEach((release) => {
         if (release.environment === 'preview') {
           return; // there is nothing to embed for this environment
         }
@@ -273,15 +300,14 @@ export default defineComponent({
           this.environment = release.environment;
         }
 
-        const name = this.ucfirst(release.environment);
-
+        let name = ucfirst(release.environment);
         if (release.environment in this.environmentNameMap) {
           name = this.environmentNameMap[release.environment];
         }
 
         this.environments.push({
           key: release.environment,
-          value: name
+          value: name,
         });
       });
 
@@ -289,74 +315,71 @@ export default defineComponent({
         this.noReleaseFound = true;
         this.environments.push({
           key: '',
-          value: this.translate('TagManager_NoReleasesFound')
+          value: this.translate('TagManager_NoReleasesFound'),
         });
       }
 
       this.fetchInstallInstructions();
       this.fetchVariables(draftVersion);
     },
-    // TODO
-    linkTo(action, idContainer, hash) {
-      const currentUrl = window.location.pathname + window.location.search;
-      const newUrl = Matomo.broadcast.updateParamValue('module=TagManager', currentUrl);
-      newUrl = Matomo.broadcast.updateParamValue('action=' + action, newUrl);
-      newUrl = Matomo.broadcast.updateParamValue('idContainer=' + this.idContainer, newUrl);
+    linkTo(action: string, idContainer: string, hash: QueryParameters) {
+      const newQuery = MatomoUrl.stringify({
+        ...MatomoUrl.urlParsed.value,
+        module: 'TagManager',
+        action,
+        idContainer,
+      });
 
-      if ('undefined' !== typeof hash && hash) {
-        newUrl += '#?' + hash;
+      let newUrl = `${window.location.pathname}?${newQuery}`;
+      if (hash) {
+        newUrl += `#?${MatomoUrl.stringify(hash)}`;
       }
-
       return newUrl;
     },
-    // TODO
     fetchInstallInstructions() {
-      this.installInstructions = {};
+      this.installInstructions = [];
 
-      if (!this.idContainer || !this.environment || !this.site || !this.site.id) {
+      if (!this.idContainer || !this.environment || !this.site?.id) {
         return;
       }
 
       this.isLoading = true;
-      AjaxHelper.fetch({
+      AjaxHelper.fetch<InstallInstructions[]>({
         method: 'TagManager.getContainerInstallInstructions',
         filter_limit: '-1',
         idContainer: this.idContainer,
         environment: this.environment,
-        idSite: this.site.id
+        idSite: this.site.id,
       }).then((instructions) => {
         this.installInstructions = instructions;
-        this.isLoading = false;
-        setTimeout(() => {
-          const codeBlock = $('.tagManagerTrackingCode .codeblock');
-          codeBlock.effect("highlight", {}, 1500);
+        nextTick(() => {
+          const codeblocks = Array.isArray(this.$refs.codeblock)
+            ? this.$refs.codeblock
+            : [this.$refs.codeblock];
+          (codeblocks as HTMLElement[]).forEach((n) => {
+            $(n).effect('highlight', {}, 1500);
+          });
         });
-      }, () => {
+      }).finally(() => {
         this.isLoading = false;
       });
     },
-    // TODO
-    fetchVariables(containerDraftVersion) {
+    fetchVariables(containerDraftVersion: number) {
       this.matomoConfigs = [];
 
-      if (!this.idContainer || !this.site || !this.site.id || !containerDraftVersion) {
+      if (!this.idContainer || !this.site?.id || !containerDraftVersion) {
         return;
       }
 
-      AjaxHelper.fetch({
+      AjaxHelper.fetch<Variable[]>({
         method: 'TagManager.getContainerVariables',
         filter_limit: '-1',
         idContainer: this.idContainer,
         idContainerVersion: containerDraftVersion,
-        idSite: this.site.id
+        idSite: this.site.id,
       }).then((variables) => {
-        this.matomoConfigs = [];
-        angular.forEach(variables, (variable) => {
-          if (variable.type === 'MatomoConfiguration') {
-            this.matomoConfigs.push(variable);
-          }
-        });
-      }, () => {
+        this.matomoConfigs = variables.filter((v) => v.type === 'MatomoConfiguration');
+      }).finally(() => {
         this.isLoading = false;
       });
     },
