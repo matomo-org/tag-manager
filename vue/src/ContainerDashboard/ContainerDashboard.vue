@@ -162,7 +162,7 @@
               <span v-show="container.releases.length">
                 <br />
                 {{ translate('TagManager_Environments') }}:
-                <span v-for="(release, index) in container.releases">
+                <span v-for="(release, index) in container.releases" :key="index">
                   <span
                     :title="releaseTooltip(release)"
                   >{{ ucfirst(release.environment) }}</span><span
@@ -203,12 +203,17 @@ import {
   MatomoUrl,
 } from 'CoreHome';
 import AvailableContextsStore from '../AvailableContexts.store';
-import { Container, Release, Version } from '../types';
+import {
+  Container,
+  ExportedVersion,
+  Release,
+  Version,
+} from '../types';
 
 interface ContainerDashboardState {
   availableContexts: Record<string, string>;
   container: Container|null;
-  containerVersion: Version|null;
+  containerVersion: ExportedVersion|null;
   isLoading: boolean;
 }
 
@@ -251,7 +256,7 @@ export default defineComponent({
       this.container = container;
     });
 
-    const versionPromise = AjaxHelper.fetch<Version>({
+    const versionPromise = AjaxHelper.fetch<ExportedVersion>({
       method: 'TagManager.exportContainerVersion',
       idContainer: this.idContainer,
     }).then((containerVersion) => {
@@ -310,9 +315,9 @@ export default defineComponent({
     containerMetaInformation() {
       return translate(
         'TagManager_ContainerMetaInformation',
-        this.containerVersion?.idcontainer,
-        this.availableContexts[this.container.context],
-        this.containerVersion?.created_date_pretty,
+        this.containerVersion?.idcontainer || '',
+        this.container ? this.availableContexts[this.container.context] : '',
+        this.containerVersion?.created_date_pretty || '',
       );
     },
     sortedContainerVersionTags() {
@@ -337,7 +342,7 @@ export default defineComponent({
       return this.containerVersion?.triggers.length;
     },
     versionCount() {
-      return this.containerVersion?.version.length;
+      return this.container?.versions.length;
     },
     variableCount() {
       return this.containerVersion?.variables.length;
