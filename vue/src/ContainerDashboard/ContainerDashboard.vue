@@ -13,13 +13,15 @@
           <EnrichedHeadline
             feature-name="Tag Manager"
             :inline-help="translate('TagManager_GettingStartedNotice')"
-          />
+          >
+            {{ translate('TagManager_ContainerX', container?.name) }}
+          </EnrichedHeadline>
         </h2>
         <p class="dashboardCreationDate">
           {{ containerMetaInformation }}
-          <span v-if="containerVersion.description">
+          <span v-if="containerVersion?.description">
             <br />
-            {{ translate('General_Description') }}: {{ containerVersion.description }}
+            {{ translate('General_Description') }}: {{ containerVersion?.description }}
           </span>
         </p>
       </div>
@@ -61,7 +63,7 @@
             </a>
             <a
               class="btn-flat"
-              :href="linkTo('manageTags', 'idTag=0')"
+              :href="linkTo('manageTags', { idTag: 0 })"
             >
               <span class="icon-add" /> {{ translate('TagManager_CreateNewTag') }}
             </a>
@@ -96,7 +98,7 @@
             </a>
             <a
               class="btn-flat"
-              :href="linkTo('manageTriggers', 'idTrigger=0')"
+              :href="linkTo('manageTriggers', { idTrigger: 0 })"
             >
               <span class="icon-add" /> {{ translate('TagManager_CreateNewTrigger') }}
             </a>
@@ -279,7 +281,7 @@ export default defineComponent({
         url += `#?${MatomoUrl.stringify(hash)}`;
       }
 
-      return url;
+      return `?${url}`;
     },
     lastVersionLinkTitle(lastVersion: Version): string {
       return `Created on ${lastVersion.created_date_pretty}`
