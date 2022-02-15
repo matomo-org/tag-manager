@@ -554,8 +554,6 @@ class TagManager extends \Piwik\Plugin
         $jsFiles[] = "plugins/TagManager/javascripts/tagmanagerHelper.js";
 
 
-        $jsFiles[] = "plugins/TagManager/angularjs/tagmanagerTrackingCode/tagmanager.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/tagmanagerTrackingCode/tagmanager.directive.js";
 
         $jsFiles[] = "plugins/TagManager/angularjs/debugging/debugging.controller.js";
     }
