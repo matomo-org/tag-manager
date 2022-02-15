@@ -4,14 +4,6 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 
-<todo>
-- test in UI
-- check uses:
-  ./plugins/TagManager/templates/trackingCode.twig
-  ./plugins/TagManager/angularjs/tagmanagerTrackingCode/tagmanager.directive.js
-- create PR
-</todo>
-
 <template>
   <div class="tagManagerTrackingCode">
     <ActivityIndicator
