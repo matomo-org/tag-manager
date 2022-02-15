@@ -149,17 +149,7 @@ export default defineComponent({
   },
   created() {
     this.isLoading = true;
-
-    const environmentsPromise = AjaxHelper.fetch<Environment[]>({
-      method: 'TagManager.getAvailableEnvironments',
-      filter_limit: '-1',
-    }).then((environments) => {
-      this.environments = environments.map((e) => ({ key: e.id, value: e.name }));
-    });
-
-    const releasesPromise = this.fetchReleases();
-
-    Promise.all([environmentsPromise, releasesPromise]).finally(() => {
+    this.fetchReleases().finally(() => {
       this.isLoading = false;
     });
   },
@@ -187,11 +177,19 @@ export default defineComponent({
       });
     },
     fetchReleases() {
-      return AjaxHelper.fetch<Container>({
-        method: 'TagManager.getContainer',
-        idContainer: this.idContainer,
-        filter_limit: '-1',
-      }).then((container) => {
+      return AjaxHelper.fetch<[Environment[], Container]>([
+        {
+          method: 'TagManager.getAvailableEnvironments',
+          filter_limit: '-1',
+        },
+        {
+          method: 'TagManager.getContainer',
+          idContainer: this.idContainer,
+          filter_limit: '-1',
+        },
+      ]).then(([environments, container]) => {
+        this.environments = environments.map((e) => ({ key: e.id, value: e.name }));
+
         this.container = container;
 
         const hasLive = container.releases.some((r) => r.environment === 'live');
