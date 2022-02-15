@@ -26,6 +26,7 @@ import './Container/ContainerList.adapter';
 import './Container/ContainerManage.adapter';
 import './ContainerDashboard/ContainerDashboard.adapter';
 import './ContainerSelector/ContainerSelector.adapter';
+import './ManageInstallTagCode/ManageInstallTagCode.adapter';
 
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
 export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
@@ -50,3 +51,4 @@ export { default as ContainerList } from './Container/ContainerList.vue';
 export { default as ContainerManage } from './Container/ContainerManage.vue';
 export { default as ContainerDashboard } from './ContainerDashboard/ContainerDashboard.vue';
 export { default as ContainerSelector } from './ContainerSelector/ContainerSelector.vue';
+export { default as ManageInstallTagCode } from './ManageInstallTagCode/ManageInstallTagCode.vue';
