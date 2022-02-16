@@ -550,12 +550,7 @@ class TagManager extends \Piwik\Plugin
     public function getJsFiles(&$jsFiles)
     {
         $jsFiles[] = "plugins/TagManager/libs/jquery-timepicker/jquery.timepicker.min.js";
-
         $jsFiles[] = "plugins/TagManager/javascripts/tagmanagerHelper.js";
-
-
-
-        $jsFiles[] = "plugins/TagManager/angularjs/debugging/debugging.controller.js";
     }
 
     private function hasMeasurableTypeWebsite($idSite)
