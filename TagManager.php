@@ -40,6 +40,17 @@ class TagManager extends \Piwik\Plugin
 {
     public static $enableAutoContainerCreation = true;
 
+    public function __construct($pluginName = false)
+    {
+        parent::__construct();
+        if (extension_loaded('xdebug')) {
+            $xdebugMaxNestingLevel = ini_get('xdebug.max_nesting_level');
+            if ($xdebugMaxNestingLevel && is_numeric($xdebugMaxNestingLevel) && $xdebugMaxNestingLevel < 2500) {
+                ini_set('xdebug.max_nesting_level', 2500);
+            }
+        }
+    }
+
     public function registerEvents()
     {
         return array(
