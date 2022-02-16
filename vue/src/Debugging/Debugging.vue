@@ -1,0 +1,336 @@
+<!--
+  Matomo - free/libre analytics platform
+  @link https://matomo.org
+  @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+-->
+
+<template>
+  <nav>
+    <div class="nav-wrapper">
+      <ul>
+        <li><slot name="logo"></slot></li>
+        <li :class="{'active': (contentTab === 'tags' || !contentTab)}">
+          <a @click="contentTab = 'tags'">Tags</a>
+        </li>
+        <li :class="{'active': (contentTab === 'triggers')}">
+          <a @click="contentTab = 'triggers'">Triggers</a>
+        </li>
+        <li :class="{'active': (contentTab === 'variables')}">
+          <a @click="contentTab = 'variables'">Variables</a>
+        </li>
+        <li :class="{'active': (contentTab === 'dataLayer')}">
+          <a @click="contentTab = 'dataLayer'">Data Layer</a>
+        </li>
+        <li :class="{'active': (contentTab === 'logs')}">
+          <a @click="contentTab = 'logs'">Logs</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <svg
+    aria-hidden="true"
+    style="position: absolute; width: 0; height: 0; overflow: hidden;"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+  >
+    <defs>
+      <symbol id="tm-icon-checkmark" viewBox="0 0 32 32">
+        <path d="M27 4l-15 15-7-7-5 5 12 12 20-20z"></path>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="page" style="clear:both;">
+    <div
+      id="secondNavBar"
+      class="Menu--dashboard z-depth-1"
+      v-if="contentTab !== 'logs'"
+    >
+      <ul class="navbar" role="menu" style="padding: 0;">
+        <li class="menuTab" role="menuitem">
+          <span class="item" style="font-weight: normal;"> Events
+              <span v-if="mtmEvents.length > 0">
+                  <br><br>
+                  <input
+                    type="checkbox"
+                    class="onlyFiredTags-chk"
+                    name="onlyfiredTags"
+                    id="onlyfiredTags"
+                    value="1" v-model="onlyfiredTags"
+                  />
+                  <label for="onlyfiredTags" class="lbl-onlyfiredTags">Only fired tags</label>
+              </span>
+          </span>
+        </li>
+        <li v-if="mtmEvents.length === 0" style="padding: 0 0 1rem 1.2rem;">No event executed</li>
+        <li
+          class="menuTab"
+          role="menuitem"
+          :class="{'active': eventIndex === selectedEventIndex}"
+          v-for="(event, index) in mtmEventsReversed"
+          :key="index"
+          v-show="event.tags.length || !onlyfiredTags"
+        >
+          <a
+            class="item"
+            @click="selectEvent(event.index0)"
+            :title="`Time: ${event.time}. Trigger: ${event.metTrigger.name}`">
+            {{ event.index }}: {{ event.name }}
+            <span title="This tag was fired" v-show="event.tags.length">
+              <svg class="tm-icon tm-icon-checkmark">
+                <use xlink:href="#tm-icon-checkmark"></use>
+              </svg>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="pageWrap">
+      <div class="home" id="content">
+        <h2 v-show="contentTab !== 'logs'">
+          {{ homeTabTitle }}
+        </h2>
+
+        <div v-show="contentTab === 'tags' || !contentTab">
+          <h3>Fired Tags</h3>
+          <table class="entityTable">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Fired count</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr v-show="selectedEvent.tags.length === 0">
+              <td colspan="4">No tags</td>
+            </tr>
+            <tr v-for="(tag, index) in selectedEvent.tags" :key="index">
+              <td>{{ tag.action }}</td>
+              <td>{{ tag.name }}</td>
+              <td>{{ tag.type }}</td>
+              <td>{{ tag.numExecuted }}</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <h3 style="margin-top:30px;">Not Yet Fired Tags</h3>
+          <table class="entityTable">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-show="notFiredTags.length === 0">
+              <td colspan="4">No tags</td>
+            </tr>
+            <tr v-for="(tag, index) in notFiredTags" :key="index">
+              <td>{{ tag.name }}</td>
+              <td>{{ tag.type }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-show="contentTab === 'triggers'">
+          <h3>Triggers</h3>
+
+          <table class="entityTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-show="!selectedEvent.metTrigger">
+                <td colspan="4">No trigger</td>
+              </tr>
+              <tr v-show="selectedEvent.metTrigger">
+                <td>{{ selectedEvent.metTrigger.name }}</td>
+                <td>{{ selectedEvent.metTrigger.type }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-show="contentTab === 'dataLayer'">
+          <h3>Pushed data by this event</h3>
+
+          <table class="entityTable">
+            <tbody>
+            <tr>
+              <td>{{ JSON.stringify(selectedEvent.eventData) }}</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <h3>Content after this event</h3>
+
+          <table class="entityTable">
+            <tbody>
+            <tr >
+              <td>{{ JSON.stringify(selectedEvent.container.dataLayer) }}</td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <div v-show="contentTab === 'variables'">
+          <table class="entityTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-if="!selectedEvent?.container?.variables?.length">
+                <td colspan="3">No variables</td>
+              </tr>
+              <tr v-for="(variable, index) in selectedEvent.container.variables" :key="index">
+                <td>{{ variable.name }}</td>
+                <td>{{ variable.type }}</td>
+                <td>{{ JSON.stringify(variable.value) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-show="contentTab === 'logs'">
+          <table class="entityTable">
+            <thead>
+            <tr>
+              <th>Time</th>
+              <th>Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(log, index) in mtmLogs" :key="index">
+              <td>{{ log.time }}</td>
+              <td><span v-for="(logMessage, index) in log.messages" :key="index">
+                {{ logMessage }}<br /></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { defineComponent, reactive } from 'vue';
+
+interface TagDebugData {
+  action: string;
+  type: string;
+  name: string;
+  numExecuted: number;
+}
+
+interface VariableDebugData {
+  name: string;
+  type: string;
+  value: any;
+}
+
+interface MtmEvent {
+  tags: TagDebugData[],
+  variables: VariableDebugData[],
+  metTrigger: null,
+  name: string;
+  eventData: any;
+  container: any;
+  time: string;
+  index0: number;
+  index: number;
+}
+
+interface MtmLog {
+  time: string;
+  messages: string[];
+}
+
+interface DebuggingState {
+  contentTab: string;
+  selectedEventIndex: number;
+}
+
+interface MtmData {
+  mtmEvents: MtmEvent[];
+  mtmLogs: MtmLog[];
+}
+
+declare global {
+  interface Window {
+    mtmDbgData: MtmData;
+  }
+}
+
+window.mtmDbgData = reactive<MtmData>({
+  mtmEvents: window.mtmDbgData?.mtmEvents || [],
+  mtmLogs: window.mtmDbgData?.mtmLogs || [],
+}) as unknown as MtmData;
+
+export default defineComponent({
+  data(): DebuggingState {
+    return {
+      contentTab: 'tags',
+      selectedEventIndex: 0,
+    };
+  },
+  methods: {
+    selectEvent(eventIndex: number) {
+      if (!this.mtmEvents[eventIndex]) {
+        return;
+      }
+
+      this.selectedEventIndex = eventIndex;
+    },
+  },
+  computed: {
+    homeTabTitle(): string {
+      const versionName = this.selectedEvent.container.versionName || 'Draft version';
+      const container = this.selectedEvent.container.id;
+      const eventNum = this.selectedEventIndex + 1;
+      return `Event ${eventNum}: ${this.selectedEvent.name} (${container} - ${versionName})`;
+    },
+    notFiredTags(): any[] {
+      const eventIndex = this.selectedEventIndex;
+
+      const tagsFired: string[] = [];
+      this.mtmEvents.forEach((event, i) => {
+        if (i > eventIndex) {
+          return;
+        }
+
+        tagsFired.push(...event.tags.map((tag: any) => tag.name as string));
+      });
+
+      const tagsNotFired: any[] = [];
+      this.selectedEvent.container.tags.forEach((tag: any) => {
+        if (tagsFired.indexOf(tag.name) === -1) {
+          tagsNotFired.push(tag);
+        }
+      });
+      return tagsNotFired;
+    },
+    selectedEvent(): MtmEvent {
+      return this.mtmEvents[this.selectedEventIndex];
+    },
+    mtmEvents(): MtmEvent[] {
+      return window.mtmDbgData.mtmEvents;
+    },
+    mtmLogs(): MtmLog[] {
+      return window.mtmDbgData.mtmLogs;
+    },
+  },
+});
+</script>

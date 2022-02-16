@@ -45,217 +45,29 @@
         var piwik_translations = {};
     </script>
     <script type="text/javascript">
-
-        window.angularDigest = function () {
-            if ('undefined' === typeof jQuery) {
-                return;
-            }
-            jQuery(function () {
-                var $timeout = piwikHelper.getAngularDependency('$timeout');
-                if ($timeout) {
-                    $timeout(function () {});
-                }
-            });
+        window.mtmDbgData = {
+            mtmEvents: [],
+            mtmLogs: []
         };
         window.mtmEvents = {
-            events: [],
             push: function (event) {
                 if (event) {
-                    event.index0 = this.events.length;
-                    event.index = this.events.length + 1;
+                    event.index0 = events.length;
+                    event.index = events.length + 1;
                 }
-                this.events.push(event);
-
-                window.angularDigest();
+                window.mtmDbgData.mtmEvents.push(event);
             }
         };
         window.mtmLogs = {
-            logs: [],
             push: function (log) {
-                this.logs.push(log);
-
-                window.angularDigest();
+                window.mtmDbgData.mtmLogs.push(log);
             }
         };
     </script>
 </head>
 <body ng-app="app" >
-    <div id="root" ng-controller="MtmDebugController as mtmDebug">
-        <nav>
-            <div class="nav-wrapper">
-                <ul>
-                    <li>{% include "@CoreHome/_logo.twig" %}</li>
-                    <li ng-class="{'active': (mtmDebug.contentTab == 'tags' || !mtmDebug.contentTab)}"><a ng-click="mtmDebug.contentTab = 'tags'">Tags</a></li>
-                    <li ng-class="{'active': (mtmDebug.contentTab == 'triggers')}"><a ng-click="mtmDebug.contentTab = 'triggers'">Triggers</a></li>
-                    <li ng-class="{'active': (mtmDebug.contentTab == 'variables')}"><a ng-click="mtmDebug.contentTab = 'variables'">Variables</a></li>
-                    <li ng-class="{'active': (mtmDebug.contentTab == 'dataLayer')}"><a ng-click="mtmDebug.contentTab = 'dataLayer'">Data Layer</a></li>
-                    <li ng-class="{'active': (mtmDebug.contentTab == 'logs')}"><a ng-click="mtmDebug.contentTab = 'logs'">Logs</a></li>
-                </ul>
-            </div>
-        </nav>
-
-        <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs>
-                <symbol id="tm-icon-checkmark" viewBox="0 0 32 32">
-                    <path d="M27 4l-15 15-7-7-5 5 12 12 20-20z"></path>
-                </symbol>
-            </defs>
-        </svg>
-
-        <div class="page" style="clear:both;">
-            <div id="secondNavBar" class="Menu--dashboard z-depth-1"
-                 ng-show="mtmDebug.contentTab != 'logs'">
-                <ul class="navbar" role="menu" style="padding: 0;">
-                    <li class="menuTab" role="menuitem">
-                        <span class="item" style="font-weight: normal;"> Events
-                            <span ng-hide="(mtmDebug.mtmEvents|length) == 0">
-                                <br><br>
-                                <input type="checkbox" class="onlyFiredTags-chk" name="onlyfiredTags" id="onlyfiredTags" value="1" ng-model="onlyfiredTags">
-                                <label for="onlyfiredTags" class="lbl-onlyfiredTags">Only fired tags</label>
-                            </span>
-                        </span>
-                    </li>
-                    <li ng-show="(mtmDebug.mtmEvents|length) == 0" style="padding: 0 0 1rem 1.2rem;">No event executed</li>
-                    <li class="menuTab" role="menuitem" ng-class="{'active': eventIndex === mtmDebug.selectedEventIndex}"
-                    ng-repeat="event in mtmDebug.mtmEvents | orderBy:'$index':true" ng-hide="!event.tags.length && onlyfiredTags">
-                        <a class="item ng-binding"  ng-click="mtmDebug.selectEvent(event.index0)" title="Time: {{ '{{ event.time }}'|raw }}. Trigger: '{{ '{{ event.metTrigger.name }}'|raw }}'">
-                            {{ '{{ event.index }}'|raw }}: {{ '{{ event.name }}'|raw }} <span title="This tag was fired" ng-show="event.tags.length">
-                                 <svg class="tm-icon tm-icon-checkmark"><use xlink:href="#tm-icon-checkmark"></use></svg>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="pageWrap">
-                <div class="home" id="content" ng-cloak>
-                    <h2 ng-show="mtmDebug.contentTab != 'logs'">Event {{ '{{ mtmDebug.selectedEventIndex + 1 }}'|raw }}: {{ '{{ mtmDebug.selectedEvent.name }}'|raw }} ({{ '{{ mtmDebug.selectedEvent.container.id }} - {{ mtmDebug.selectedEvent.container.versionName || "Draft version" }}'|raw }})</h2>
-
-                    <div ng-show="mtmDebug.contentTab == 'tags' || !mtmDebug.contentTab">
-                        <h3>Fired Tags</h3>
-                        <table class="entityTable">
-                            <thead>
-                            <tr>
-                                <th>Action</th>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Fired count</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-show="(mtmDebug.selectedEvent.tags|length) == 0">
-                                    <td colspan="4">No tags</td>
-                                </tr>
-                                <tr ng-repeat="tag in mtmDebug.selectedEvent.tags">
-                                    <td>{{ '{{tag.action }}'|raw }}</td>
-                                    <td>{{ '{{tag.name }}'|raw }}</td>
-                                    <td>{{ '{{tag.type }}'|raw }}</td>
-                                    <td>{{ '{{tag.numExecuted }}'|raw }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <h3 style="margin-top:30px;">Not Yet Fired Tags</h3>
-                        <table class="entityTable">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-show="(mtmDebug.selectedEvent.notFiredTags|length) == 0">
-                                <td colspan="4">No tags</td>
-                            </tr>
-                            <tr ng-repeat="tag in mtmDebug.selectedEvent.notFiredTags">
-                                <td>{{ '{{tag.name }}'|raw }}</td>
-                                <td>{{ '{{tag.type }}'|raw }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div ng-show="mtmDebug.contentTab == 'triggers'">
-                        <h3>Triggers</h3>
-
-                        <table class="entityTable">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-show="!mtmDebug.selectedEvent.metTrigger">
-                                    <td colspan="4">No trigger</td>
-                                </tr>
-                                <tr ng-show="mtmDebug.selectedEvent.metTrigger">
-                                    <td>{{ '{{mtmDebug.selectedEvent.metTrigger.name }}'|raw }}</td>
-                                    <td>{{ '{{mtmDebug.selectedEvent.metTrigger.type }}'|raw }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div ng-show="mtmDebug.contentTab == 'dataLayer'">
-                        <h3>Pushed data by this event</h3>
-
-                        <table class="entityTable">
-                            <tbody>
-                            <tr>
-                                <td>{{ '{{ mtmDebug.selectedEvent.eventData|json }}'|raw }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <h3>Content after this event</h3>
-
-                        <table class="entityTable">
-                            <tbody>
-                            <tr >
-                                <td>{{ '{{ mtmDebug.selectedEvent.container.dataLayer|json }}'|raw }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <div ng-show="mtmDebug.contentTab == 'variables'">
-                        <table class="entityTable">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Value</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-if="!mtmDebug.selectedEvent.container.variables.length">
-                                <td colspan="3">No variables</td>
-                            </tr>
-                            <tr ng-repeat="variable in mtmDebug.selectedEvent.container.variables">
-                                <td>{{ '{{variable.name }}'|raw }}</td>
-                                <td>{{ '{{variable.type }}'|raw }}</td>
-                                <td>{{ '{{variable.value|json }}'|raw }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div ng-show="mtmDebug.contentTab == 'logs'">
-                        <table class="entityTable">
-                            <thead>
-                            <tr>
-                                <th>Time</th>
-                                <th>Message</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="log in mtmDebug.mtmLogs">
-                                <td>{{ '{{log.time }}'|raw }}</td>
-                                <td><span ng-repeat="logMessage in log.messages">{{ '{{ logMessage }}'|raw }}<br /></span></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="root" vue-entry="TagManager.Debugging">
+        <template v-slot:logo>{% include "@CoreHome/_logo.twig" %}</template>
     </div>
     {% include "_jsCssIncludes.twig" %}
 </body>
