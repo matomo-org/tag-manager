@@ -51,11 +51,12 @@
         };
         window.mtmEvents = {
             push: function (event) {
+                var events = window.mtmDbgData.mtmEvents;
                 if (event) {
                     event.index0 = events.length;
                     event.index = events.length + 1;
                 }
-                window.mtmDbgData.mtmEvents.push(event);
+                events.push(event);
             }
         };
         window.mtmLogs = {
