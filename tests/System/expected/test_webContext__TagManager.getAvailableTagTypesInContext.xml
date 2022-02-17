@@ -1296,8 +1296,8 @@
 					<row>
 						<name>tawkToWidgetId</name>
 						<title>tawk.to Widget ID</title>
-						<value />
-						<defaultValue />
+						<value>default</value>
+						<defaultValue>default</defaultValue>
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
