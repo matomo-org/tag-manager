@@ -360,7 +360,7 @@
         "MatomoConfigurationMatomoCustomDimensionsTitle": "Përmasa Vetjake",
         "MatomoConfigurationMatomoDisableCookiesDescription": "Çaktivizon krejt cookie-t prej pale të parë.",
         "MatomoConfigurationMatomoDisableCookiesTitle": "Çaktivizo cookie-t",
-        "MatomoConfigurationMatomoDomainsDescription": "E përdorur për të pikasur lidhje për jashtë. Shtoni emërstrehë ose përkatësi që duhen trajtuar si vendore. Për nënpërkatësi me shenjë të gjithëpushtetshme, mund të përdorni: “.shembull.com”, ose “*.shembull.com”. Mundeni edhe të përcaktoni një shteg tok me një përkatësi: “*.shembull.com/nënsajti1”.",
+        "MatomoConfigurationMatomoDomainsDescription": "E përdorur për të pikasur lidhje për jashtë. Shtoni strehëemër ose përkatësi që duhen trajtuar si vendore. Për nënpërkatësi me shenjë të gjithëpushtetshme, mund të përdorni: “.shembull.com”, ose “*.shembull.com”. Mundeni edhe të përcaktoni një shteg tok me një përkatësi: “*.shembull.com/nënsajti1”.",
         "MatomoConfigurationMatomoDomainsException": "Vlera lypset të jetë një matricë",
         "MatomoConfigurationMatomoDomainsTitle": "Përkatësi",
         "MatomoConfigurationMatomoEnableCrossDomainLinkingDescription": "Aktivizojeni këtë për të matur saktë të njëjtin vizitor nëpër shumë emra përkatësish.",
