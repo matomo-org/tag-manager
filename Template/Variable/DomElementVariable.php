@@ -50,10 +50,16 @@ class DomElementVariable extends BaseVariable
                         throw new \Exception('Please specify a value for ' . $field->title);
                     }
                 };
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('attributeName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Attribute Name';
                 $field->inlineHelp = 'If a value is entered, the value of the attribute will be returned instead of the text content of the element.';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
 
         );
