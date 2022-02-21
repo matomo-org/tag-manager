@@ -33,6 +33,9 @@ class BugsnagTag extends BaseTag
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = "You can find your API key in your project settings from your Bugsnag dashboard.";
                 $field->validators[] = new NotEmpty();
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('collectUserIp', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'collect user IP';
