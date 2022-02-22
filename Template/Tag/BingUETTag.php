@@ -26,7 +26,14 @@ class BingUETTag extends BaseTag
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = 'You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Manager.';
                 $field->validators[] = new NotEmpty();
-                $field->validators[] = new NumberRange();
+                $field->validate = function ($value) {
+                    $value = trim($value);
+                    $numberRange =  new NumberRange();
+                    $numberRange->validate($value);
+                };
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }

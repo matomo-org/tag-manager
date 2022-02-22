@@ -1293,6 +1293,22 @@
 						<introduction />
 						<condition />
 					</row>
+					<row>
+						<name>tawkToWidgetId</name>
+						<title>tawk.to Widget ID</title>
+						<value>default</value>
+						<defaultValue>default</defaultValue>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can get the Widget ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Chat Widget&quot; and selecting an appropriate widget. The widget ID can be retrieved from &quot;Direct Chat Link&quot; as https://tawk.to/chat/{SITE_ID}/{WIDGET_ID}.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
 				</parameters>
 			</row>
 			<row>

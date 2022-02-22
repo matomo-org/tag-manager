@@ -125,6 +125,13 @@ class API extends \Piwik\Plugin\API
 
     public function __construct(Tag $tags, Trigger $triggers, Variable $variables, Container $containers, TagsProvider $tagsProvider, TriggersProvider $triggersProvider, VariablesProvider $variablesProvider, ContextProvider $contextProvider, AccessValidator $validator, Environment $environment, Comparison $comparisons, Export $export, Import $import, VariablesDao $variablesDao)
     {
+        //Started updating xdebug.max_nesting_level as infinite loop is detected due to variable is doing a self referencing when xdebug is active and max_nesting_level is set to lower value
+        if (extension_loaded('xdebug')) {
+            $xdebugMaxNestingLevel = ini_get('xdebug.max_nesting_level');
+            if ($xdebugMaxNestingLevel && is_numeric($xdebugMaxNestingLevel) && $xdebugMaxNestingLevel < 2500) {
+                ini_set('xdebug.max_nesting_level', 2500);
+            }
+        }
         $this->tags = $tags;
         $this->triggers = $triggers;
         $this->variables = $variables;

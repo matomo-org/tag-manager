@@ -33,7 +33,14 @@ class DriftTag extends BaseTag
                 $field->title = 'Drift ID';
                 $field->description = 'The Drift ID is the text between brackets without quotes at the end of the JS snippet: drift.load(\'mdp4r5w7rh3y\');';
                 $field->validators[] = new NotEmpty();
-                $field->validators[] = new CharacterLength(12, 12); 
+                $field->validate = function ($value) {
+                    $value = trim($value);
+                    $characterLength = new CharacterLength(12, 12);
+                    $characterLength->validate($value);
+                };
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }
