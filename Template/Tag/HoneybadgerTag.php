@@ -29,6 +29,9 @@ class HoneybadgerTag extends BaseTag
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = "The apiKey of your honeybadger project";
                 $field->validators[] = new NotEmpty();
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('honeybadgerEnvironment', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Environment';

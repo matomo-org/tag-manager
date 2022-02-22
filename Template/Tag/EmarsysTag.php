@@ -38,7 +38,14 @@ class EmarsysTag extends BaseTag
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = 'Your Emarsys Merchant ID';
                 $field->validators[] = new NotEmpty();
-                $field->validators[] = new CharacterLength(1, 500);
+                $field->validate = function ($value) {
+                    $value = trim($value);
+                    $characterLength = new CharacterLength(1, 500);
+                    $characterLength->validate($value);
+                };
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('commandCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'category';
