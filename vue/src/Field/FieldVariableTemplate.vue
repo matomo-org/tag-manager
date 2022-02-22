@@ -24,6 +24,7 @@
       :title="translate('TagManager_ChooseVariable')"
       @click="selectVariable()"
     ></span>
+    <br/>
     <label :for="name" v-html="$sanitize(title)"></label>
   </div>
 </template>
