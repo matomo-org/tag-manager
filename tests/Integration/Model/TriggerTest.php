@@ -182,12 +182,12 @@ class TriggerTest extends IntegrationTestCase
                         'description' => 'The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({"event": "my-custom-event"});',
                         'inlineHelp' => null,
                         'templateFile' => '',
+                        'introduction' => null,
+                        'condition' => null,
                         'component' => [
                             'plugin' => 'TagManager',
                             'name' => 'FieldVariableTemplate',
                         ],
-                        'introduction' => null,
-                        'condition' => null,
                     )
                 )
             )
@@ -246,12 +246,12 @@ class TriggerTest extends IntegrationTestCase
                         'description' => 'The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({"event": "my-custom-event"});',
                         'inlineHelp' => null,
                         'templateFile' => '',
+                        'introduction' => null,
+                        'condition' => null,
                         'component' => [
                             'plugin' => 'TagManager',
                             'name' => 'FieldVariableTemplate',
                         ],
-                        'introduction' => null,
-                        'condition' => null,
                     )
                 )
             )
@@ -363,12 +363,12 @@ class TriggerTest extends IntegrationTestCase
                         'description' => 'The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({"event": "my-custom-event"});',
                         'inlineHelp' => null,
                         'templateFile' => '',
+                        'introduction' => null,
+                        'condition' => null,
                         'component' => [
                             'plugin' => 'TagManager',
                             'name' => 'FieldVariableTemplate',
                         ],
-                        'introduction' => null,
-                        'condition' => null,
                     )
                 )
             )
