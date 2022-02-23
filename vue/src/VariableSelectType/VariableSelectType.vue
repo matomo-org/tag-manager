@@ -31,7 +31,7 @@
 import { defineComponent } from 'vue';
 import { AjaxHelper, MatomoUrl } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
-import { Container, VariableCategory } from '../types';
+import { Container, ContainerVariableCategory } from '../types';
 
 interface Option {
   key: string;
@@ -75,7 +75,7 @@ export default defineComponent({
       this.fetchContainer().then((container) => {
         this.isLoading = true;
         this.idContainerVersion = container.draft.idcontainerversion;
-        return AjaxHelper.fetch<VariableCategory[]>({
+        return AjaxHelper.fetch<ContainerVariableCategory[]>({
           method: 'TagManager.getAvailableContainerVariables',
           filter_limit: '-1',
           idContainer: MatomoUrl.parsed.value.idContainer as string,
