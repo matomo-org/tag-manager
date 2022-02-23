@@ -65,6 +65,9 @@ class MatomoTag extends BaseTag
                     $field->validators[] = new NotEmpty();
                     $field->validators[] = new CharacterLength(1, 500);
                 }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('documentTitle', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Custom Title';
@@ -83,6 +86,9 @@ class MatomoTag extends BaseTag
                 if ($trackingType->getValue() === 'pageview') {
                     $field->validators[] = new CharacterLength(0, 500);
                 }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('eventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Event Category';

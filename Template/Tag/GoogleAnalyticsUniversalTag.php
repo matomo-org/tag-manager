@@ -26,9 +26,13 @@ class GoogleAnalyticsUniversalTag extends BaseTag
                 $field->description = 'For example "UA-XXXXX-Y"';
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
+                    $value = trim($value);
                     if (!preg_match('/^ua-\d{4,9}-\d{1,4}$/i', strval($value))) {
                         throw new \Exception('The Property ID seems to not have a valid format');
                     }
+                };
+                $field->transform = function ($value) {
+                    return trim($value);
                 };
             }),
             $this->makeSetting('trackingType', 'pageview', FieldConfig::TYPE_STRING, function (FieldConfig $field) {

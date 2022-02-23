@@ -31,6 +31,9 @@ class SentryRavenTag extends BaseTag
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = "The DSN (Data Source Name) of your sentry.io project. It should look like 'https://<key>@sentry.io/<project>'";
                 $field->validators[] = new NotEmpty();
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }
