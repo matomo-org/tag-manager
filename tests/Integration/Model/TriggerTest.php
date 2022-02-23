@@ -181,7 +181,11 @@ class TriggerTest extends IntegrationTestCase
                         'availableValues' => null,
                         'description' => 'The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({"event": "my-custom-event"});',
                         'inlineHelp' => null,
-                        'templateFile' => 'plugins/TagManager/angularjs/form-field/field-variable-template.html',
+                        'templateFile' => '',
+                        'component' => [
+                            'plugin' => 'TagManager',
+                            'name' => 'FieldVariableTemplate',
+                        ],
                         'introduction' => null,
                         'condition' => null,
                     )
@@ -241,7 +245,11 @@ class TriggerTest extends IntegrationTestCase
                         'availableValues' => null,
                         'description' => 'The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({"event": "my-custom-event"});',
                         'inlineHelp' => null,
-                        'templateFile' => 'plugins/TagManager/angularjs/form-field/field-variable-template.html',
+                        'templateFile' => '',
+                        'component' => [
+                            'plugin' => 'TagManager',
+                            'name' => 'FieldVariableTemplate',
+                        ],
                         'introduction' => null,
                         'condition' => null,
                     )
@@ -354,7 +362,11 @@ class TriggerTest extends IntegrationTestCase
                         'availableValues' => null,
                         'description' => 'The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({"event": "my-custom-event"});',
                         'inlineHelp' => null,
-                        'templateFile' => 'plugins/TagManager/angularjs/form-field/field-variable-template.html',
+                        'templateFile' => '',
+                        'component' => [
+                            'plugin' => 'TagManager',
+                            'name' => 'FieldVariableTemplate',
+                        ],
                         'introduction' => null,
                         'condition' => null,
                     )
