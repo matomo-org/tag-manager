@@ -51,9 +51,13 @@
 				<availableValues />
 				<description>You can define any image URL. We recommend to define a URL that starts with &quot;//&quot; so it will work on HTTP and HTTPS pages. If your website only supports HTTPS, it should start with &quot;https://&quot;.</description>
 				<inlineHelp />
-				<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+				<templateFile />
 				<introduction />
 				<condition />
+				<component>
+					<plugin>TagManager</plugin>
+					<name>FieldVariableTemplate</name>
+				</component>
 			</row>
 			<row>
 				<name>cacheBusterEnabled</name>

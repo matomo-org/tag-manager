@@ -33,13 +33,13 @@ class AddThisTag extends BaseTag
             $this->makeSetting('AddThisPubId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'AddThis PubId';
                 $field->description = 'Create a new site in Shareaholic and paste the site ID here';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new NotEmpty();
             }),
             $this->makeSetting('AddThisParentSelector', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Inline Tools Parent Selector';
                 $field->description = 'Optionally enter a CSS selector to the element where the Inline Tools should be added.';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
             })
         );
     }

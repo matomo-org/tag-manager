@@ -34,7 +34,7 @@ class TimerTrigger extends BaseTrigger
             $this->makeSetting('eventName', 'mtm.Timer', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Event Name';
                 $field->description = 'You can optionally change the name of this event. This can be useful if you have for example multiple timers on the page and want to perform different logic based on the name of the timer.';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
             }),
             $this->makeSetting('triggerLimit', 0, FieldConfig::TYPE_INT, function (FieldConfig $field) {
                 $field->title = 'Trigger limit';

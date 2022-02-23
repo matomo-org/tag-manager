@@ -51,14 +51,14 @@ class MatomoTag extends BaseTag
             $this->makeSetting(self::PARAM_MATOMO_CONFIG, '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Matomo Configuration';
                 $field->description = 'Assign a Matomo configuration in order to track data into a specific site.';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE_TYPE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_TYPE_COMPONENT;
                 $field->uiControlAttributes = array('variableType' => 'MatomoConfiguration');
                 $field->validators[] = new NotEmpty();
             }),
             $trackingType,
             $this->makeSetting('idGoal', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Goal ID';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'The ID of the goal you want to track manually.';
                 $field->condition = 'trackingType == "goal"';
                 if ($trackingType->getValue() === 'goal') {
@@ -71,7 +71,7 @@ class MatomoTag extends BaseTag
             }),
             $this->makeSetting('documentTitle', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Custom Title';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'Optionally, specify a custom document title which should be tracked instead of the default document title.';
                 $field->condition = 'trackingType == "pageview"';
                 if ($trackingType->getValue() === 'pageview') {
@@ -80,7 +80,7 @@ class MatomoTag extends BaseTag
             }),
             $this->makeSetting('customUrl', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Custom URL';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'Optionally, specify a custom URL which should be tracked instead of the current location.';
                 $field->condition = 'trackingType == "pageview"';
                 if ($trackingType->getValue() === 'pageview') {
@@ -92,7 +92,7 @@ class MatomoTag extends BaseTag
             }),
             $this->makeSetting('eventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Event Category';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'The event\'s category, for example Videos, Music, Games...';
                 $field->condition = 'trackingType == "event"';
                 if ($trackingType->getValue() === 'event') {
@@ -102,7 +102,7 @@ class MatomoTag extends BaseTag
             }),
             $this->makeSetting('eventAction', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = 'Event Action';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'The event\'s action, for example Play, Pause, Duration, Add Playlist, Downloaded, Clicked...';
                 $field->condition = 'trackingType == "event"';
                 if ($trackingType->getValue() === 'event') {
@@ -112,14 +112,14 @@ class MatomoTag extends BaseTag
             }),
             $this->makeSetting('eventName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Event Name';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'The event\'s object Name, for example a particular Movie name, or Song name, or File name...';
                 $field->condition = 'trackingType == "event"';
                 $field->validators[] = new CharacterLength(0, 500);
             }),
             $this->makeSetting('eventValue', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Event Value';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'The event\'s value, for example "50" as in user has stayed on the website for 50 seconds.';
                 $field->condition = 'trackingType == "event"';
                 $field->validators[] = new CharacterLength(0, 500);

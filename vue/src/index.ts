@@ -12,3 +12,6 @@ import './VariableSelectType/VariableSelectType.adapter';
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
 export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
 export { default as VariableSelectType } from './VariableSelectType/VariableSelectType.vue';
+export { default as FieldTextareaVariable } from './Field/FieldTextareaVariable.vue';
+export { default as FieldVariableTemplate } from './Field/FieldVariableTemplate.vue';
+export { default as FieldVariableTypeTemplate } from './Field/FieldVariableTypeTemplate.vue';
