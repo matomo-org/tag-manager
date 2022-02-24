@@ -4,9 +4,11 @@
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
-import { IScope } from 'angular';
-import {DeepReadonly} from 'vue';
 
+import { IScope } from 'angular';
+import { DeepReadonly } from 'vue';
+
+// variable types
 export interface LookupTableEntry {
   match_value: string;
   comparison: string;
@@ -74,6 +76,54 @@ export interface VariableReference {
   referenceTypeName: string;
 }
 
+// trigger types
+export interface TriggerType {
+  category: string;
+  contexts: string[];
+  description: string;
+  hasAdvancedSettings: boolean;
+  help: string;
+  icon: string;
+  id: string;
+  isCustomTemplate: boolean;
+  name: string;
+  order: number;
+  parameters: Record<string, unknown>[];
+}
+
+export interface TriggerCategory {
+  name: string;
+  types: TriggerType[];
+}
+
+export interface TriggerCondition {
+  actual: string;
+  comparison: string;
+  expected: string;
+}
+
+export interface Trigger {
+  conditions: TriggerCondition[];
+  created_date?: string;
+  created_date_pretty?: string;
+  idcontainerversion: number;
+  idsite: number;
+  idtrigger?: number;
+  name: string;
+  status?: string;
+  type: string;
+  typeMetadata: TriggerType;
+  updated_date?: string;
+  updated_date_pretty?: string;
+}
+
+export interface TriggerReference {
+  referenceId: number;
+  referenceTypeName: string;
+  referenceName: string;
+}
+
+// container types
 export interface Draft {
   idcontainerversion: number;
   idcontainer: string;

@@ -354,7 +354,7 @@
                 } else {
                     this.tag.block_triggers.splice(index, 1);
                 }
-                
+
                 this.isDirty = true;
             }
         };

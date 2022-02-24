@@ -148,7 +148,7 @@ describe("ContainerTag", function () {
     it('should be possible to edit a trigger directly', async function () {
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
-        await page.waitForTimeout(250);
+        await page.waitForTimeout(400);
         await capture.modal(page, 'edit_trigger_directly_popup');
     });
 

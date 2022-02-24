@@ -40,7 +40,7 @@
             <Field
               uicontrol="text"
               name="type"
-              v-model="variable.name"
+              :model-value="variable.name"
               :disabled="true"
               :inline-help="typeInlineHelp"
               :title="translate('TagManager_Type')"
