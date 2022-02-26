@@ -532,7 +532,6 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_InstallCode';
         $result[] = 'TagManager_InstallCodePublishEnvironmentNote';
         $result[] = 'TagManager_GettingStartedNotice';
-        $result[] = 'TagManager_CreateNewVersionNow';
     }
 
     public function getStylesheetFiles(&$stylesheets)
@@ -544,7 +543,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/vue/src/VariableSelectType/VariableSelectType.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Field/FieldVariableTemplate.less";
         $stylesheets[] = "plugins/TagManager/angularjs/containerSelector/container-selector.less";
-        $stylesheets[] = "plugins/TagManager/vue/src/Version/VersionEdit.less";
+        $stylesheets[] = "plugins/TagManager/angularjs/manageVersion/edit.directive.less";
     }
 
     public function getJsFiles(&$jsFiles)
@@ -554,6 +553,10 @@ class TagManager extends \Piwik\Plugin
         $jsFiles[] = "plugins/TagManager/javascripts/tagmanagerHelper.js";
 
         $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/model.js";
+        $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/list.controller.js";
+        $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/list.directive.js";
+        $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/edit.controller.js";
+        $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/edit.directive.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/manage.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageContainer/manage.directive.js";
 
