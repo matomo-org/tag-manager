@@ -52,9 +52,13 @@
 					<availableValues />
 					<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
 					<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
-					<templateFile>plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html</templateFile>
+					<templateFile />
 					<introduction />
 					<condition />
+					<component>
+						<plugin>TagManager</plugin>
+						<name>FieldTextareaVariable</name>
+					</component>
 				</row>
 				<row>
 					<name>htmlPosition</name>
@@ -131,9 +135,13 @@
 					<availableValues />
 					<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
 					<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
-					<templateFile>plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html</templateFile>
+					<templateFile />
 					<introduction />
 					<condition />
+					<component>
+						<plugin>TagManager</plugin>
+						<name>FieldTextareaVariable</name>
+					</component>
 				</row>
 				<row>
 					<name>htmlPosition</name>
@@ -211,9 +219,13 @@
 					<availableValues />
 					<description>You can define any image URL. We recommend to define a URL that starts with &quot;//&quot; so it will work on HTTP and HTTPS pages. If your website only supports HTTPS, it should start with &quot;https://&quot;.</description>
 					<inlineHelp />
-					<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+					<templateFile />
 					<introduction />
 					<condition />
+					<component>
+						<plugin>TagManager</plugin>
+						<name>FieldVariableTemplate</name>
+					</component>
 				</row>
 				<row>
 					<name>cacheBusterEnabled</name>

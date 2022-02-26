@@ -38,7 +38,14 @@ class VisualWebsiteOptimizerTag extends BaseTag
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = 'Your Visual Website Optimizer Account ID';
                 $field->validators[] = new NotEmpty();
-                $field->validators[] = new NumberRange();
+                $field->validate = function ($value) {
+                    $value = trim($value);
+                    $numberRange =  new NumberRange();
+                    $numberRange->validate($value);
+                };
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }

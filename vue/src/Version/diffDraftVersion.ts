@@ -124,7 +124,7 @@ export default function diffDraftVersion(
     filter_limit: -1,
   };
 
-  return AjaxHelper.bulkFetch<ExportedVersion[]>(
+  return AjaxHelper.fetch<ExportedVersion[]>(
     [draftVersion, lastVersion],
   ).then(([draft, last]) => {
     mixinTagTriggers(draft.tags, draft.triggers);
