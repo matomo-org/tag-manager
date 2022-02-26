@@ -3993,7 +3993,7 @@ var AvailableFireLimit_store_AvailableFireLimitStore = /*#__PURE__*/function () 
 
       this.privateState.isLoading = true;
       external_CoreHome_["AjaxHelper"].fetch({
-        method: 'TagManager.getAvailableEnvironmentsWithPublishCapability',
+        method: 'TagManager.getAvailableTagFireLimits',
         filter_limit: '-1'
       }).then(function (fireLimits) {
         var entities;
