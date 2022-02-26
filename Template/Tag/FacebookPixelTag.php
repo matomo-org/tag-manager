@@ -23,6 +23,9 @@ class FacebookPixelTag extends BaseTag
             $this->makeSetting('pixelId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Pixel ID';
                 $field->validators[] = new NotEmpty();
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             })
         );
     }

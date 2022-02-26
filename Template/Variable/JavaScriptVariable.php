@@ -26,6 +26,9 @@ class JavaScriptVariable extends BaseVariable
                 $field->description = 'The name of any variable that is available within the global scope. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example "document.referrer".';
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength(1, 500);
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }

@@ -27,9 +27,13 @@ class ThemeColorTag extends BaseTag
                 $field->description = "Please enter a color as a hexadecimal string (e.g. '#11ee33')";
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value, Setting $setting) {
+                    $value = trim($value);
                     if (!preg_match("/^#(?:[0-9a-fA-F]{3}){1,2}$/", $value)) {
                         throw new \Exception('Please enter a valid hexadecimal color');
                     }
+                };
+                $field->transform = function ($value) {
+                    return trim($value);
                 };
             }),
         );

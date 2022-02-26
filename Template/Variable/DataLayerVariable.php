@@ -33,6 +33,9 @@ class DataLayerVariable extends BaseVariable
                 $field->description = 'The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example "object1.myPropertyOfObject1".';
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength(1, 300);
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }
