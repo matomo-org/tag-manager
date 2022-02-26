@@ -9,7 +9,7 @@
 // hardcoding to 78px here for screenshot tests.
 exports.setTableRowHeight = async function (page) {
     await page.waitForSelector('#content .card-content');
-    await page.addStyleTag({
+    await page.webpage.addStyleTag({
       content: 'table tr { height: 78px; }',
     });
 };
