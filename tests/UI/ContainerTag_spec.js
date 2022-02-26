@@ -135,6 +135,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to go back to list of tags and show created tag', async function () {
+        await page.click('.notification .close');
         await cancelTag();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'create_new_shown_in_list');
@@ -173,6 +174,7 @@ describe("ContainerTag", function () {
     });
 
     it('should have updated the list of tags', async function () {
+        await page.click('.notification .close');
         await cancelTag();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'edit_updated_back_to_list');
@@ -241,7 +243,8 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to create a fire trigger directly', async function () {
-        await page.click('.createNewFireTrigger');
+        await page.click('.notification .close');
+        await page.click('.fireTriggers .createNewTrigger');
         await page.mouse.move(-10, -10);
         await capture.modal(page, 'create_advanced_firetrigger_popup');
     });
@@ -259,7 +262,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to create a block trigger directly', async function () {
-        await page.click('.createBlockTriggerInHelp');
+        await page.click('.blockTriggers .createTriggerInHelp');
         await page.waitForNetworkIdle(); // wait for modal
         await page.waitForTimeout(250); // wait for modal
         await page.click('.modal.open .templateTypeAllElementsClick');
@@ -277,6 +280,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to create a tag with conditions filter', async function () {
+        await page.click('.notification .close');
         await cancelTag();
         await capture.page(page, 'create_advanced_verified');
     });
@@ -285,7 +289,7 @@ describe("ContainerTag", function () {
         permissions.setViewUser();
         await page.goto(container1Base);
         await capture.setTableRowHeight(page);
-        pageWrap = await page.$('[piwik-tag-manage]');
+        pageWrap = await page.$('.manageTag');
         expect(await pageWrap.screenshot()).to.matchImage('tag_some_exist_view_user');
     });
 });

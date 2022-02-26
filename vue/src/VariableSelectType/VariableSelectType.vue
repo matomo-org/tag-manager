@@ -41,7 +41,7 @@ interface Option {
 interface VariableSelectTypeState {
   containerVariables: Option[];
   isLoading: boolean;
-  idContainerVersion: string|number|null;
+  idContainerVersion: number|null;
 }
 
 const { tagManagerHelper } = window;

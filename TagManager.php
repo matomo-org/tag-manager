@@ -539,7 +539,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/stylesheets/manageList.less";
         $stylesheets[] = "plugins/TagManager/stylesheets/manageEdit.less";
         $stylesheets[] = "plugins/TagManager/stylesheets/gettingStarted.less";
-        $stylesheets[] = "plugins/TagManager/angularjs/manageTag/edit.directive.less";
+        $stylesheets[] = "plugins/TagManager/vue/src/Tag/TagEdit.less";
         $stylesheets[] = "plugins/TagManager/vue/src/VariableSelectType/VariableSelectType.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Field/FieldVariableTemplate.less";
         $stylesheets[] = "plugins/TagManager/angularjs/containerSelector/container-selector.less";
@@ -568,14 +568,6 @@ class TagManager extends \Piwik\Plugin
         $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/edit.directive.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/manage.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageVersion/manage.directive.js";
-
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/model.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/list.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/list.directive.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/edit.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/edit.directive.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/manage.controller.js";
-        $jsFiles[] = "plugins/TagManager/angularjs/manageTag/manage.directive.js";
 
         $jsFiles[] = "plugins/TagManager/angularjs/manageInstallCode/manage-install-tag-code.controller.js";
         $jsFiles[] = "plugins/TagManager/angularjs/manageInstallCode/manage-install-tag-code.directive.js";
