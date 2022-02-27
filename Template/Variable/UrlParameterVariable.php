@@ -24,6 +24,9 @@ class UrlParameterVariable extends BaseVariable
                 $field->title = 'URL Parameter Name';
                 $field->description = 'For example when your page has URL parameters such as "?lang=NZ" and you want to get the value "NZ", then you need to enter "lang".';
                 $field->validators[] = new CharacterLength(1, 300);
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
 
         );

@@ -46,6 +46,9 @@ class CustomJsFunctionVariable extends BaseVariable
                         throw new \Exception('The function needs to return a value');
                     }
                 };
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }

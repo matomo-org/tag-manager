@@ -95,6 +95,7 @@ describe("Container", function () {
     });
 
     it('should have updated the list of containers', async function () {
+        await page.evaluate(() => $('.notification .close').click());
         await cancelContainer();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'updated_back_to_list');

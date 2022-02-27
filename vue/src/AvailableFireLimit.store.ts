@@ -41,7 +41,7 @@ class AvailableFireLimitStore {
   private fetchAvailableFireLimits() {
     this.privateState.isLoading = true;
     AjaxHelper.fetch<FireLimit[]|Record<string, FireLimit>>({
-      method: 'TagManager.getAvailableEnvironmentsWithPublishCapability',
+      method: 'TagManager.getAvailableTagFireLimits',
       filter_limit: '-1',
     }).then((fireLimits) => {
       let entities: FireLimit[];
