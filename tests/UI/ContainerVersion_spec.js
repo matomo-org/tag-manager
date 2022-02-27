@@ -198,7 +198,6 @@ describe("ContainerVersion", function () {
         });
         await setVersionName('Menu Version Name', '.modal.open');
         await setVersionDescription('My Version Description', '.modal.open');
-        await page.mouse.move(0, 0);
         await capture.modal(page, 'create_through_menu_prefilled');
     });
 
