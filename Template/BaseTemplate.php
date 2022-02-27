@@ -28,17 +28,17 @@ abstract class BaseTemplate
     protected $templateType = '';
 
     /**
-     * @deprecated
+     * @deprecated Use self::FIELD_VARIABLE_COMPONENT instead.
      */
     const FIELD_TEMPLATE_VARIABLE = 'plugins/TagManager/angularjs/form-field/field-variable-template.html';
 
     /**
-     * @deprecated
+     * @deprecated Use self::FIELD_TEXTAREA_VARIABLE_COMPONENT instead.
      */
     const FIELD_TEMPLATE_TEXTAREA_VARIABLE = 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html';
 
     /**
-     * @deprecated
+     * @deprecated Use self::FIELD_VARIABLE_TYPE_COMPONENT instead.
      */
     const FIELD_TEMPLATE_VARIABLE_TYPE = 'plugins/TagManager/angularjs/form-field/field-variabletype-template.html';
 

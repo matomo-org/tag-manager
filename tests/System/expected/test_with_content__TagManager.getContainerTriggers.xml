@@ -42,9 +42,13 @@
 					<availableValues />
 					<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
 					<inlineHelp />
-					<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+					<templateFile />
 					<introduction />
 					<condition />
+					<component>
+						<plugin>TagManager</plugin>
+						<name>FieldVariableTemplate</name>
+					</component>
 				</row>
 			</parameters>
 		</typeMetadata>
@@ -160,9 +164,13 @@
 					<availableValues />
 					<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
 					<inlineHelp />
-					<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+					<templateFile />
 					<introduction />
 					<condition />
+					<component>
+						<plugin>TagManager</plugin>
+						<name>FieldVariableTemplate</name>
+					</component>
 				</row>
 			</parameters>
 		</typeMetadata>

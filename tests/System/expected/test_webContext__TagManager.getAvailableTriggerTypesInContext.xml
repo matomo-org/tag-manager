@@ -478,9 +478,13 @@
 						<availableValues />
 						<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 				</parameters>
 			</row>
@@ -542,9 +546,13 @@
 						<availableValues />
 						<description>You can optionally change the name of this event. This can be useful if you have for example multiple timers on the page and want to perform different logic based on the name of the timer.</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>triggerLimit</name>
