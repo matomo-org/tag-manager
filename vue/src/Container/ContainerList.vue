@@ -186,7 +186,7 @@ export default defineComponent({
         if (lhs.created_date < rhs.created_date) {
           return 1;
         }
-        return lhs.created_date > rhs.created_date ? 0 : 1;
+        return lhs.created_date > rhs.created_date ? -1 : 0;
       });
       return sorted;
     },
