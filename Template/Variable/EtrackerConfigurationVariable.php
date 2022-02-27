@@ -42,6 +42,9 @@ class EtrackerConfigurationVariable extends BaseVariable
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'The etracker ID you want to track data into. The ID is required. You may  find the ID of your website under "Administration => Setup/Tracking Code" in etracker.';
                 $field->validators[] = new NotEmpty();
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('etrackerBlockCookies', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'Block cookies by default';
@@ -53,41 +56,65 @@ class EtrackerConfigurationVariable extends BaseVariable
                 $field->title = 'Variable et_pagename';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'Set variable if you want to overwrite the default value';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('et_areas', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Variable et_areas';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'Set variable if you want to overwrite the default value';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('et_target', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Variable et_target';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'Set variable if you want to overwrite the default value';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('et_tval', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Variable et_tval';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'Set variable if you want to overwrite the default value';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('et_tonr', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Variable et_tonr';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'Set variable if you want to overwrite the default value';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('et_tsale', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Variable et_tsale';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'Set variable if you want to overwrite the default value';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('et_basket', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Variable et_basket';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'Set variable if you want to overwrite the default value';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('et_cust', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Variable et_cust';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = 'Set variable if you want to overwrite the default value';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('customDimensions', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
                 $field->title = 'Custom Dimensions';

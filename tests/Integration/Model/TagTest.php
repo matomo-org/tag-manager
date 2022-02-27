@@ -273,9 +273,13 @@ class TagTest extends IntegrationTestCase
                                     'availableValues' => NULL,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
                                     'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
-                                    'templateFile' => 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html',
+                                    'templateFile' => '',
                                     'introduction' => NULL,
                                     'condition' => NULL,
+                                    'component' => [
+                                        'plugin' => 'TagManager',
+                                        'name' => 'FieldTextareaVariable',
+                                    ],
                                 ),
                                 array (
                                     'name' => 'htmlPosition',
@@ -362,9 +366,13 @@ class TagTest extends IntegrationTestCase
                                     'availableValues' => NULL,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
                                     'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
-                                    'templateFile' => 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html',
+                                    'templateFile' => '',
                                     'introduction' => NULL,
                                     'condition' => NULL,
+                                    'component' => [
+                                        'plugin' => 'TagManager',
+                                        'name' => 'FieldTextareaVariable',
+                                    ],
                                 ),
                                 array (
                                     'name' => 'htmlPosition',
@@ -547,9 +555,13 @@ class TagTest extends IntegrationTestCase
                                 'availableValues' => NULL,
                                 'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
                                 'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
-                                'templateFile' => 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html',
+                                'templateFile' => '',
                                 'introduction' => NULL,
                                 'condition' => NULL,
+                                'component' => [
+                                    'plugin' => 'TagManager',
+                                    'name' => 'FieldTextareaVariable',
+                                ],
                             ),
                             array (
                                 'name' => 'htmlPosition',
@@ -792,9 +804,13 @@ class TagTest extends IntegrationTestCase
                                     'availableValues' => NULL,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
                                     'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
-                                    'templateFile' => 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html',
+                                    'templateFile' => '',
                                     'introduction' => NULL,
                                     'condition' => NULL,
+                                    'component' => [
+                                        'plugin' => 'TagManager',
+                                        'name' => 'FieldTextareaVariable',
+                                    ],
                                 ),
                                 array (
                                     'name' => 'htmlPosition',

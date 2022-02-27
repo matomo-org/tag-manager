@@ -66,10 +66,7 @@ interface ContainerSelectorState {
 
 export default defineComponent({
   props: {
-    containerName: {
-      type: String,
-      required: true,
-    },
+    containerName: String,
   },
   components: {
     ActivityIndicator,
