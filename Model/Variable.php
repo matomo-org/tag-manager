@@ -283,7 +283,8 @@ class Variable extends BaseModel
         foreach ($entity['typeMetadata']['parameters'] as $parameter) {
             $paramName = $parameter['name'];
             if (($parameter['templateFile'] === BaseTemplate::FIELD_TEMPLATE_VARIABLE
-                    || $parameter['component'] === BaseTemplate::FIELD_VARIABLE_COMPONENT)
+                    || (isset($parameter['component'])
+                        && $parameter['component'] === BaseTemplate::FIELD_VARIABLE_COMPONENT))
                 && isset($parameters[$paramName])
                 && is_string($parameters[$paramName])
                 && strpos($parameters[$paramName], $oldVarNameTemplate) !== false) {
