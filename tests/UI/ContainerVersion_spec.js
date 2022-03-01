@@ -110,6 +110,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to go back to list of versions and show created version', async function () {
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'create_new_shown_in_list');
@@ -128,6 +129,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to verify it was released', async function () {
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'publish_new_shown_in_list');
@@ -150,6 +152,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should have updated the list of versions', async function () {
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'updated_back_to_list');
@@ -195,6 +198,7 @@ describe("ContainerVersion", function () {
         });
         await setVersionName('Menu Version Name', '.modal.open');
         await setVersionDescription('My Version Description', '.modal.open');
+        await page.mouse.move(-10, -10);
         await capture.modal(page, 'create_through_menu_prefilled');
     });
 
@@ -259,7 +263,7 @@ describe("ContainerVersion", function () {
     it('should be possible to confirm and import the version', async function () {
         await modal.clickButton(page, 'Yes');
         await page.waitForNetworkIdle();
-        await page.waitForSelector('.tagManagerManageList tr');
+        await page.waitForSelector('.tagManagerManageList td');
         await capture.page(page, 'import_version_confirmed');
     });
 

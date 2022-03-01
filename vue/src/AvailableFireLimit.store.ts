@@ -35,16 +35,23 @@ class AvailableFireLimitStore {
   ));
 
   constructor() {
-    this.fetchAvailableComparisons();
+    this.fetchAvailableFireLimits();
   }
 
-  private fetchAvailableComparisons() {
+  private fetchAvailableFireLimits() {
     this.privateState.isLoading = true;
-    AjaxHelper.fetch<FireLimit[]>({
+    AjaxHelper.fetch<FireLimit[]|Record<string, FireLimit>>({
       method: 'TagManager.getAvailableTagFireLimits',
       filter_limit: '-1',
     }).then((fireLimits) => {
-      this.privateState.fireLimits = fireLimits;
+      let entities: FireLimit[];
+      if (Array.isArray(fireLimits)) {
+        entities = fireLimits as FireLimit[];
+      } else {
+        entities = Object.values(fireLimits as Record<string, FireLimit>);
+      }
+
+      this.privateState.fireLimits = entities;
     }).finally(() => {
       this.privateState.isLoading = false;
     });

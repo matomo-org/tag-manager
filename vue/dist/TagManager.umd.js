@@ -140,6 +140,9 @@ __webpack_require__.d(__webpack_exports__, "TriggerManage", function() { return 
 __webpack_require__.d(__webpack_exports__, "TagEdit", function() { return /* reexport */ TagEdit; });
 __webpack_require__.d(__webpack_exports__, "TagList", function() { return /* reexport */ TagList; });
 __webpack_require__.d(__webpack_exports__, "TagManage", function() { return /* reexport */ TagManage; });
+__webpack_require__.d(__webpack_exports__, "VersionEdit", function() { return /* reexport */ VersionEdit; });
+__webpack_require__.d(__webpack_exports__, "VersionList", function() { return /* reexport */ VersionList; });
+__webpack_require__.d(__webpack_exports__, "VersionManage", function() { return /* reexport */ VersionManage; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -3977,12 +3980,12 @@ var AvailableFireLimit_store_AvailableFireLimitStore = /*#__PURE__*/function () 
       });
     }));
 
-    this.fetchAvailableComparisons();
+    this.fetchAvailableFireLimits();
   }
 
   AvailableFireLimit_store_createClass(AvailableFireLimitStore, [{
-    key: "fetchAvailableComparisons",
-    value: function fetchAvailableComparisons() {
+    key: "fetchAvailableFireLimits",
+    value: function fetchAvailableFireLimits() {
       var _this2 = this;
 
       this.privateState.isLoading = true;
@@ -3990,7 +3993,15 @@ var AvailableFireLimit_store_AvailableFireLimitStore = /*#__PURE__*/function () 
         method: 'TagManager.getAvailableTagFireLimits',
         filter_limit: '-1'
       }).then(function (fireLimits) {
-        _this2.privateState.fireLimits = fireLimits;
+        var entities;
+
+        if (Array.isArray(fireLimits)) {
+          entities = fireLimits;
+        } else {
+          entities = Object.values(fireLimits);
+        }
+
+        _this2.privateState.fireLimits = entities;
       }).finally(function () {
         _this2.privateState.isLoading = false;
       });
@@ -5534,6 +5545,1539 @@ TagManagevue_type_script_lang_ts.render = TagManagevue_type_template_id_6c7abea5
   },
   directiveName: 'piwikTagManage'
 }));
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Version/VersionEdit.vue?vue&type=template&id=7ba6f724
+
+var VersionEditvue_type_template_id_7ba6f724_hoisted_1 = {
+  class: "editVersion tagManagerManageEdit"
+};
+var VersionEditvue_type_template_id_7ba6f724_hoisted_2 = {
+  class: "loadingPiwik"
+};
+
+var VersionEditvue_type_template_id_7ba6f724_hoisted_3 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("img", {
+  src: "plugins/Morpheus/images/loading-blue.gif"
+}, null, -1);
+
+var VersionEditvue_type_template_id_7ba6f724_hoisted_4 = {
+  class: "loadingPiwik"
+};
+
+var VersionEditvue_type_template_id_7ba6f724_hoisted_5 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("img", {
+  src: "plugins/Morpheus/images/loading-blue.gif"
+}, null, -1);
+
+var VersionEditvue_type_template_id_7ba6f724_hoisted_6 = {
+  key: 0
+};
+var VersionEditvue_type_template_id_7ba6f724_hoisted_7 = {
+  key: 2,
+  class: "versionChanges"
+};
+var VersionEditvue_type_template_id_7ba6f724_hoisted_8 = {
+  key: 0
+};
+var VersionEditvue_type_template_id_7ba6f724_hoisted_9 = {
+  colspan: "4"
+};
+var VersionEditvue_type_template_id_7ba6f724_hoisted_10 = {
+  key: 1
+};
+var VersionEditvue_type_template_id_7ba6f724_hoisted_11 = {
+  colspan: "4"
+};
+var VersionEditvue_type_template_id_7ba6f724_hoisted_12 = {
+  class: "lastUpdated"
+};
+var VersionEditvue_type_template_id_7ba6f724_hoisted_13 = {
+  class: "entityCancel"
+};
+function VersionEditvue_type_template_id_7ba6f724_render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_Field = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("Field");
+
+  var _component_SaveButton = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("SaveButton");
+
+  var _component_ActivityIndicator = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("ActivityIndicator");
+
+  var _component_ContentBlock = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("ContentBlock");
+
+  var _directive_content_table = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveDirective"])("content-table");
+
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VersionEditvue_type_template_id_7ba6f724_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_ContentBlock, {
+    feature: "Tag Manager",
+    "content-title": _ctx.editTitle
+  }, {
+    default: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withCtx"])(function () {
+      var _ctx$version$environm;
+
+      return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", VersionEditvue_type_template_id_7ba6f724_hoisted_2, [VersionEditvue_type_template_id_7ba6f724_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_LoadingData')), 1)])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.isLoading]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", VersionEditvue_type_template_id_7ba6f724_hoisted_4, [VersionEditvue_type_template_id_7ba6f724_hoisted_5, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_UpdatingData')), 1)])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.isUpdating]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("form", {
+        onSubmit: _cache[6] || (_cache[6] = function ($event) {
+          return _ctx.edit ? _ctx.updateVersion() : _ctx.createVersion();
+        })
+      }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_Field, {
+        uicontrol: "text",
+        name: "name",
+        "inline-help": _ctx.versionNameHelpText,
+        "inline-help-bind": {
+          lastVersion: _ctx.lastVersion
+        },
+        "model-value": _ctx.version.name,
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          _ctx.version.name = $event;
+
+          _ctx.setValueHasChanged();
+        }),
+        maxlength: 30,
+        title: _ctx.translate('TagManager_VersionName')
+      }, null, 8, ["inline-help", "inline-help-bind", "model-value", "title"])]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_Field, {
+        uicontrol: "text",
+        name: "description",
+        "model-value": _ctx.version.description,
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          _ctx.version.description = $event;
+
+          _ctx.setValueHasChanged();
+        }),
+        title: _ctx.translate('TagManager_VersionDescription'),
+        "inline-help": _ctx.translate('TagManager_VersionDescriptionHelp')
+      }, null, 8, ["model-value", "title", "inline-help"])]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_SaveButton, {
+        class: "createButton no-publish",
+        onConfirm: _cache[2] || (_cache[2] = function ($event) {
+          return _ctx.edit ? _ctx.updateVersion() : _ctx.createVersion();
+        }),
+        disabled: _ctx.isUpdating || !_ctx.isDirty,
+        saving: _ctx.isUpdating,
+        value: _ctx.edit ? _ctx.translate('CoreUpdater_UpdateTitle') : _ctx.translate('TagManager_CreateVersionWithoutPublishing')
+      }, null, 8, ["disabled", "saving", "value"]), _ctx.create && _ctx.environments.length ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VersionEditvue_type_template_id_7ba6f724_hoisted_6, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_Field, {
+        uicontrol: "select",
+        name: "environment",
+        "inline-help": _ctx.selectTagManagerEnvironmentHelp,
+        "inline-help-bind": {
+          canPublishToLive: _ctx.canPublishToLive
+        },
+        "model-value": (_ctx$version$environm = _ctx.version.environments) === null || _ctx$version$environm === void 0 ? void 0 : _ctx$version$environm[0],
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+          _ctx.version.environments[0] = $event;
+
+          _ctx.setValueHasChanged();
+        }),
+        options: _ctx.environments,
+        introduction: _ctx.translate('TagManager_OrCreateAndPublishVersion'),
+        title: _ctx.translate('TagManager_Environment')
+      }, null, 8, ["inline-help", "inline-help-bind", "model-value", "options", "introduction", "title"])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), _ctx.create && _ctx.environments.length ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])(_component_SaveButton, {
+        key: 1,
+        class: "publishButton",
+        onConfirm: _cache[4] || (_cache[4] = function ($event) {
+          return _ctx.createVersionAndPublish();
+        }),
+        disabled: _ctx.isUpdating || !_ctx.isDirty,
+        saving: _ctx.isUpdating,
+        value: _ctx.translate('TagManager_CreateVersionAndPublishRelease')
+      }, null, 8, ["disabled", "saving", "value"])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), _ctx.lastVersion ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VersionEditvue_type_template_id_7ba6f724_hoisted_7, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h3", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_ChangesSinceLastVersion')) + ":", 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("table", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("thead", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("tr", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("th", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('SitesManager_Type')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("th", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_Name')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("th", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_Change')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("th", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_LastUpdated')), 1)])]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("tbody", null, [_ctx.isLoadingVersionChanges ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("tr", VersionEditvue_type_template_id_7ba6f724_hoisted_8, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", VersionEditvue_type_template_id_7ba6f724_hoisted_9, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_ActivityIndicator, {
+        "loading-message": _ctx.translate('TagManager_DetectingChanges'),
+        loading: true
+      }, null, 8, ["loading-message"])])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), !_ctx.versionChanges.length && !_ctx.isLoadingVersionChanges ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("tr", VersionEditvue_type_template_id_7ba6f724_hoisted_10, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", VersionEditvue_type_template_id_7ba6f724_hoisted_11, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('UserCountryMap_None')), 1)])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(_ctx.versionChanges, function (versionChange, index) {
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("tr", {
+          key: index
+        }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate(versionChange.entityType)), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(versionChange.name), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate(versionChange.type)), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", VersionEditvue_type_template_id_7ba6f724_hoisted_12, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(versionChange.lastChanged), 1)])]);
+      }), 128))])], 512), [[_directive_content_table]])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VersionEditvue_type_template_id_7ba6f724_hoisted_13, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+        onClick: _cache[5] || (_cache[5] = function ($event) {
+          return _ctx.cancel();
+        })
+      }, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_Cancel')), 1)], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.isEmbedded]])])], 32)];
+    }),
+    _: 1
+  }, 8, ["content-title"])]);
+}
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionEdit.vue?vue&type=template&id=7ba6f724
+
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/AvailableEnvironments.store.ts
+function AvailableEnvironments_store_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function AvailableEnvironments_store_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function AvailableEnvironments_store_createClass(Constructor, protoProps, staticProps) { if (protoProps) AvailableEnvironments_store_defineProperties(Constructor.prototype, protoProps); if (staticProps) AvailableEnvironments_store_defineProperties(Constructor, staticProps); return Constructor; }
+
+function AvailableEnvironments_store_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/*!
+ * Matomo - free/libre analytics platform
+ *
+ * @link https://matomo.org
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ */
+
+
+
+var AvailableEnvironments_store_AvailableEnvironmentStore = /*#__PURE__*/function () {
+  function AvailableEnvironmentStore() {
+    var _this = this;
+
+    AvailableEnvironments_store_classCallCheck(this, AvailableEnvironmentStore);
+
+    AvailableEnvironments_store_defineProperty(this, "privateState", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])({
+      environmentsWithPublish: [],
+      isLoading: false
+    }));
+
+    AvailableEnvironments_store_defineProperty(this, "state", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(function () {
+      return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["readonly"])(_this.privateState);
+    }));
+
+    AvailableEnvironments_store_defineProperty(this, "isLoading", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(function () {
+      return _this.state.value.isLoading;
+    }));
+
+    AvailableEnvironments_store_defineProperty(this, "environmentsWithPublish", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(function () {
+      return _this.state.value.environmentsWithPublish;
+    }));
+
+    AvailableEnvironments_store_defineProperty(this, "environmentsWithPublishOptions", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(function () {
+      return _this.environmentsWithPublish.value.map(function (_ref) {
+        var id = _ref.id,
+            name = _ref.name;
+        return {
+          key: id,
+          value: name
+        };
+      });
+    }));
+
+    this.fetchEnvironments();
+  }
+
+  AvailableEnvironments_store_createClass(AvailableEnvironmentStore, [{
+    key: "fetchEnvironments",
+    value: function fetchEnvironments() {
+      var _this2 = this;
+
+      this.privateState.isLoading = true;
+      external_CoreHome_["AjaxHelper"].fetch({
+        method: 'TagManager.getAvailableEnvironmentsWithPublishCapability',
+        filter_limit: '-1'
+      }).then(function (environmentsWithPublish) {
+        var entities;
+
+        if (Array.isArray(environmentsWithPublish)) {
+          entities = environmentsWithPublish;
+        } else {
+          entities = Object.values(environmentsWithPublish);
+        }
+
+        _this2.privateState.environmentsWithPublish = entities;
+      }).finally(function () {
+        _this2.privateState.isLoading = false;
+      });
+    }
+  }]);
+
+  return AvailableEnvironmentStore;
+}();
+
+/* harmony default export */ var AvailableEnvironments_store = (Object(external_CoreHome_["lazyInitSingleton"])(AvailableEnvironments_store_AvailableEnvironmentStore));
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/diffDraftVersion.ts
+function diffDraftVersion_toConsumableArray(arr) { return diffDraftVersion_arrayWithoutHoles(arr) || diffDraftVersion_iterableToArray(arr) || diffDraftVersion_unsupportedIterableToArray(arr) || diffDraftVersion_nonIterableSpread(); }
+
+function diffDraftVersion_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function diffDraftVersion_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function diffDraftVersion_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return diffDraftVersion_arrayLikeToArray(arr); }
+
+function diffDraftVersion_slicedToArray(arr, i) { return diffDraftVersion_arrayWithHoles(arr) || diffDraftVersion_iterableToArrayLimit(arr, i) || diffDraftVersion_unsupportedIterableToArray(arr, i) || diffDraftVersion_nonIterableRest(); }
+
+function diffDraftVersion_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function diffDraftVersion_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return diffDraftVersion_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return diffDraftVersion_arrayLikeToArray(o, minLen); }
+
+function diffDraftVersion_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function diffDraftVersion_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function diffDraftVersion_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+/**
+ * Matomo - free/libre analytics platform
+ *
+ * @link https://matomo.org
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ */
+
+function diffDraftVersion(idContainer, idContainerVersionNew, idContainerVersionPrevious) {
+  function findEntryInArray(array, name) {
+    return array.find(function (v) {
+      return v.name === name;
+    });
+  }
+
+  function getDifference(entityType, array1, array2, keysToCheck) {
+    var diff = [];
+    array1.forEach(function (array1Item) {
+      var matchingEntry = findEntryInArray(array2, array1Item.name);
+
+      if (matchingEntry) {
+        keysToCheck.some(function (key) {
+          if (JSON.stringify(array1Item[key]) !== JSON.stringify(matchingEntry[key])) {
+            // matching, check if different
+            diff.push({
+              entityType: entityType,
+              type: 'TagManager_DiffModified',
+              name: array1Item.name,
+              lastChanged: array1Item.updated_date_pretty
+            });
+            return true;
+          }
+
+          return false;
+        });
+        return;
+      }
+
+      diff.push({
+        entityType: entityType,
+        type: 'TagManager_DiffAdded',
+        name: array1Item.name,
+        lastChanged: array1Item.updated_date_pretty
+      });
+    });
+    array2.forEach(function (array2Item) {
+      if (!findEntryInArray(array1, array2Item.name)) {
+        diff.push({
+          entityType: entityType,
+          type: 'TagManager_DiffDeleted',
+          name: array2Item.name,
+          lastChanged: array2Item.updated_date_pretty
+        });
+      }
+    });
+    return diff;
+  }
+
+  function mixinTagTriggers(tags, triggers) {
+    tags.forEach(function (tag) {
+      tag.fire_triggers = [];
+      tag.block_triggers = [];
+      tag.fire_trigger_ids.forEach(function (idtrigger) {
+        var trigger = triggers.find(function (t) {
+          return t.idtrigger === idtrigger;
+        });
+
+        if (trigger) {
+          tag.fire_triggers.push(trigger.name);
+        }
+      });
+      tag.block_trigger_ids.forEach(function (idtrigger) {
+        var trigger = triggers.find(function (t) {
+          return t.idtrigger === idtrigger;
+        });
+
+        if (trigger) {
+          tag.block_triggers.push(trigger.name);
+        }
+      });
+    });
+  }
+
+  var draftVersion = {
+    module: 'API',
+    method: 'TagManager.exportContainerVersion',
+    format: 'json',
+    idContainer: idContainer,
+    filter_limit: -1
+  };
+
+  if (idContainerVersionNew) {
+    draftVersion.idContainerVersion = idContainerVersionNew;
+  }
+
+  var lastVersion = {
+    module: 'API',
+    method: 'TagManager.exportContainerVersion',
+    format: 'json',
+    idContainer: idContainer,
+    idContainerVersion: idContainerVersionPrevious,
+    filter_limit: -1
+  };
+  return external_CoreHome_["AjaxHelper"].fetch([draftVersion, lastVersion]).then(function (_ref) {
+    var _ref2 = diffDraftVersion_slicedToArray(_ref, 2),
+        draft = _ref2[0],
+        last = _ref2[1];
+
+    mixinTagTriggers(draft.tags, draft.triggers);
+    mixinTagTriggers(last.tags, last.triggers);
+    var diff1 = getDifference('TagManager_Tag', draft.tags, last.tags, ['name', 'type', 'fire_limit', 'priority', 'fire_delay', 'fire_triggers', 'block_triggers', 'parameters']);
+    var diff2 = getDifference('TagManager_Trigger', draft.triggers, last.triggers, ['name', 'type', 'conditions', 'parameters']);
+    var diff3 = getDifference('TagManager_Variable', draft.variables, last.variables, ['name', 'type', 'lookup_table', 'default_value', 'parameters']);
+    return [].concat(diffDraftVersion_toConsumableArray(diff1), diffDraftVersion_toConsumableArray(diff2), diffDraftVersion_toConsumableArray(diff3));
+  });
+}
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/Versions.store.ts
+function Versions_store_toConsumableArray(arr) { return Versions_store_arrayWithoutHoles(arr) || Versions_store_iterableToArray(arr) || Versions_store_unsupportedIterableToArray(arr) || Versions_store_nonIterableSpread(); }
+
+function Versions_store_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function Versions_store_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Versions_store_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Versions_store_arrayLikeToArray(o, minLen); }
+
+function Versions_store_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function Versions_store_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return Versions_store_arrayLikeToArray(arr); }
+
+function Versions_store_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function Versions_store_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Versions_store_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function Versions_store_createClass(Constructor, protoProps, staticProps) { if (protoProps) Versions_store_defineProperties(Constructor.prototype, protoProps); if (staticProps) Versions_store_defineProperties(Constructor, staticProps); return Constructor; }
+
+function Versions_store_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/*!
+ * Matomo - free/libre analytics platform
+ *
+ * @link https://matomo.org
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ */
+
+
+
+var Versions_store_VersionsStore = /*#__PURE__*/function () {
+  function VersionsStore() {
+    var _this = this;
+
+    Versions_store_classCallCheck(this, VersionsStore);
+
+    Versions_store_defineProperty(this, "privateState", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])({
+      versions: [],
+      isLoadingVersions: false,
+      isLoadingSingle: false,
+      isUpdating: false
+    }));
+
+    Versions_store_defineProperty(this, "state", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(function () {
+      return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["readonly"])(_this.privateState);
+    }));
+
+    Versions_store_defineProperty(this, "isLoading", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(function () {
+      var state = _this.state.value;
+      return state.isLoadingVersions || state.isLoadingSingle;
+    }));
+
+    Versions_store_defineProperty(this, "isUpdating", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(function () {
+      return _this.state.value.isUpdating;
+    }));
+
+    Versions_store_defineProperty(this, "versions", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])(function () {
+      return _this.state.value.versions;
+    }));
+
+    Versions_store_defineProperty(this, "fetchPromise", null);
+  }
+
+  Versions_store_createClass(VersionsStore, [{
+    key: "reload",
+    value: function reload(idContainer) {
+      this.privateState.versions = [];
+      this.fetchPromise = null;
+      return this.fetchVersions(idContainer);
+    }
+  }, {
+    key: "fetchVersions",
+    value: function fetchVersions(idContainer) {
+      var _this2 = this;
+
+      this.privateState.isLoadingVersions = true;
+      this.privateState.versions = [];
+
+      if (!this.fetchPromise) {
+        this.fetchPromise = external_CoreHome_["AjaxHelper"].fetch({
+          method: 'TagManager.getContainerVersions',
+          idContainer: idContainer,
+          filter_limit: '-1'
+        });
+      }
+
+      return Promise.resolve(this.fetchPromise).then(function (versions) {
+        _this2.privateState.versions = versions;
+        _this2.privateState.isLoadingVersions = false;
+        return _this2.versions.value;
+      }).finally(function () {
+        _this2.privateState.isLoadingVersions = false;
+      });
+    }
+  }, {
+    key: "findVersion",
+    value: function findVersion(idContainer, idContainerVersion) {
+      var _this3 = this;
+
+      // before going through an API request we first try to find it in loaded versions
+      var found = this.versions.value.find(function (v) {
+        return v.idcontainerversion === idContainerVersion;
+      });
+
+      if (found) {
+        return Promise.resolve(found);
+      } // otherwise we fetch it via API
+
+
+      this.privateState.isLoadingSingle = true;
+      return external_CoreHome_["AjaxHelper"].fetch({
+        idContainerVersion: idContainerVersion,
+        idContainer: idContainer,
+        method: 'TagManager.getContainerVersion',
+        filter_limit: '-1'
+      }).then(function (record) {
+        _this3.privateState.versions = [].concat(Versions_store_toConsumableArray(_this3.privateState.versions), [record]);
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["readonly"])(record);
+      }).finally(function () {
+        _this3.privateState.isLoadingSingle = false;
+      });
+    }
+  }, {
+    key: "deleteVersion",
+    value: function deleteVersion(idContainer, idContainerVersion) {
+      var _this4 = this;
+
+      this.privateState.isUpdating = true;
+      this.privateState.versions = [];
+      return external_CoreHome_["AjaxHelper"].fetch({
+        idContainerVersion: idContainerVersion,
+        idContainer: idContainer,
+        method: 'TagManager.deleteContainerVersion'
+      }, {
+        withTokenInUrl: true
+      }).finally(function () {
+        _this4.privateState.isUpdating = false;
+      });
+    }
+  }, {
+    key: "publishVersion",
+    value: function publishVersion(idContainer, idContainerVersion, environment) {
+      var _this5 = this;
+
+      this.privateState.isUpdating = true;
+      return external_CoreHome_["AjaxHelper"].fetch({
+        idContainer: idContainer,
+        idContainerVersion: idContainerVersion,
+        environment: environment,
+        method: 'TagManager.publishContainerVersion'
+      }).finally(function () {
+        _this5.privateState.isUpdating = false;
+      });
+    }
+  }, {
+    key: "createOrUpdateVersion",
+    value: function createOrUpdateVersion(version, method, idContainer) {
+      var _this6 = this;
+
+      this.privateState.isUpdating = true;
+      return external_CoreHome_["AjaxHelper"].post({
+        method: method,
+        idContainer: idContainer,
+        idContainerVersion: version.idcontainerversion
+      }, {
+        name: version.name,
+        description: version.description
+      }, {
+        withTokenInUrl: true
+      }).finally(function () {
+        _this6.privateState.isUpdating = false;
+      });
+    }
+  }]);
+
+  return VersionsStore;
+}();
+
+/* harmony default export */ var Versions_store = (new Versions_store_VersionsStore());
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Version/VersionNameHelpText.vue?vue&type=template&id=59dcd857
+
+var VersionNameHelpTextvue_type_template_id_59dcd857_hoisted_1 = {
+  id: "versionNameHelpText",
+  class: "inline-help-node"
+};
+
+var VersionNameHelpTextvue_type_template_id_59dcd857_hoisted_2 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("br", null, null, -1);
+
+var VersionNameHelpTextvue_type_template_id_59dcd857_hoisted_3 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("br", null, null, -1);
+
+var VersionNameHelpTextvue_type_template_id_59dcd857_hoisted_4 = ["innerHTML"];
+function VersionNameHelpTextvue_type_template_id_59dcd857_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VersionNameHelpTextvue_type_template_id_59dcd857_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_VersionNameHelp')) + " ", 1), VersionNameHelpTextvue_type_template_id_59dcd857_hoisted_2, VersionNameHelpTextvue_type_template_id_59dcd857_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
+    innerHTML: _ctx.translate('TagManager_NameOfLatestVersion', "<strong>".concat(_ctx.lastVersion, "</strong>"))
+  }, null, 8, VersionNameHelpTextvue_type_template_id_59dcd857_hoisted_4), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.lastVersion]])]);
+}
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionNameHelpText.vue?vue&type=template&id=59dcd857
+
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Version/VersionNameHelpText.vue?vue&type=script&lang=ts
+
+/* harmony default export */ var VersionNameHelpTextvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  props: {
+    lastVersion: String
+  }
+}));
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionNameHelpText.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionNameHelpText.vue
+
+
+
+VersionNameHelpTextvue_type_script_lang_ts.render = VersionNameHelpTextvue_type_template_id_59dcd857_render
+
+/* harmony default export */ var VersionNameHelpText = (VersionNameHelpTextvue_type_script_lang_ts);
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Version/SelectTagManagerEnvironmentHelpText.vue?vue&type=template&id=40d41b93
+
+var SelectTagManagerEnvironmentHelpTextvue_type_template_id_40d41b93_hoisted_1 = {
+  id: "selectTagManagerEnvironmentHelp",
+  class: "inline-help-node"
+};
+function SelectTagManagerEnvironmentHelpTextvue_type_template_id_40d41b93_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", SelectTagManagerEnvironmentHelpTextvue_type_template_id_40d41b93_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_VersionEnvironmentHelp')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", {
+    class: "alert alert-info",
+    style: {
+      "margin-bottom": "0",
+      "padding-bottom": "0"
+    }
+  }, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_PublishLiveEnvironmentCapabilityRequired', _ctx.translate('TagManager_CapabilityPublishLiveContainer'))), 513), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.canPublishToLive]])]);
+}
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/SelectTagManagerEnvironmentHelpText.vue?vue&type=template&id=40d41b93
+
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Version/SelectTagManagerEnvironmentHelpText.vue?vue&type=script&lang=ts
+
+/* harmony default export */ var SelectTagManagerEnvironmentHelpTextvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  props: {
+    canPublishToLive: Boolean
+  }
+}));
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/SelectTagManagerEnvironmentHelpText.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/SelectTagManagerEnvironmentHelpText.vue
+
+
+
+SelectTagManagerEnvironmentHelpTextvue_type_script_lang_ts.render = SelectTagManagerEnvironmentHelpTextvue_type_template_id_40d41b93_render
+
+/* harmony default export */ var SelectTagManagerEnvironmentHelpText = (SelectTagManagerEnvironmentHelpTextvue_type_script_lang_ts);
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Version/VersionEdit.vue?vue&type=script&lang=ts
+function VersionEditvue_type_script_lang_ts_toConsumableArray(arr) { return VersionEditvue_type_script_lang_ts_arrayWithoutHoles(arr) || VersionEditvue_type_script_lang_ts_iterableToArray(arr) || VersionEditvue_type_script_lang_ts_unsupportedIterableToArray(arr) || VersionEditvue_type_script_lang_ts_nonIterableSpread(); }
+
+function VersionEditvue_type_script_lang_ts_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function VersionEditvue_type_script_lang_ts_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return VersionEditvue_type_script_lang_ts_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return VersionEditvue_type_script_lang_ts_arrayLikeToArray(o, minLen); }
+
+function VersionEditvue_type_script_lang_ts_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function VersionEditvue_type_script_lang_ts_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return VersionEditvue_type_script_lang_ts_arrayLikeToArray(arr); }
+
+function VersionEditvue_type_script_lang_ts_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+
+
+
+
+
+
+
+
+var VersionEditvue_type_script_lang_ts_notificationId = 'versiontagmanagement';
+/* harmony default export */ var VersionEditvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  props: {
+    idContainerVersion: {
+      type: Number,
+      required: true
+    },
+    idContainer: {
+      type: String,
+      required: true
+    },
+    isEmbedded: {
+      type: Boolean,
+      default: false
+    }
+  },
+  components: {
+    ContentBlock: external_CoreHome_["ContentBlock"],
+    Field: external_CorePluginsAdmin_["Field"],
+    SaveButton: external_CorePluginsAdmin_["SaveButton"],
+    ActivityIndicator: external_CoreHome_["ActivityIndicator"]
+  },
+  directives: {
+    ContentTable: external_CoreHome_["ContentTable"]
+  },
+  data: function data() {
+    return {
+      isDirty: false,
+      lastVersion: null,
+      versionChanges: [],
+      isLoadingVersionChanges: false,
+      isUpdatingVersion: false,
+      editTitle: '',
+      version: {}
+    };
+  },
+  emits: ['changeVersion'],
+  created: function created() {
+    this.initIdContainerVersion();
+  },
+  watch: {
+    idContainerVersion: function idContainerVersion(newValue) {
+      if (newValue === null) {
+        return;
+      }
+
+      this.initIdContainerVersion();
+    }
+  },
+  methods: {
+    removeAnyVersionNotification: function removeAnyVersionNotification() {
+      external_CoreHome_["NotificationsStore"].remove(VersionEditvue_type_script_lang_ts_notificationId);
+      external_CoreHome_["NotificationsStore"].remove('ajaxHelper');
+    },
+    showNotification: function showNotification(message, context) {
+      var notificationInstanceId = external_CoreHome_["NotificationsStore"].show({
+        message: message,
+        context: context,
+        id: VersionEditvue_type_script_lang_ts_notificationId,
+        type: 'transient'
+      });
+      setTimeout(function () {
+        external_CoreHome_["NotificationsStore"].scrollToNotification(notificationInstanceId);
+      }, 200);
+    },
+    showErrorFieldNotProvidedNotification: function showErrorFieldNotProvidedNotification(title) {
+      var message = Object(external_CoreHome_["translate"])('TagManager_ErrorXNotProvided', [title]);
+      this.showNotification(message, 'error');
+    },
+    initIdContainerVersion: function initIdContainerVersion() {
+      var _this = this;
+
+      this.version = {};
+      this.lastVersion = null;
+      this.versionChanges = [];
+      this.isLoadingVersionChanges = true;
+      Versions_store.fetchVersions(this.idContainer).then(function () {
+        var _versions$;
+
+        _this.isLoadingVersionChanges = false;
+        _this.lastVersion = null;
+
+        var versions = VersionEditvue_type_script_lang_ts_toConsumableArray(Versions_store.versions.value);
+
+        if (!(versions !== null && versions !== void 0 && versions.length)) {
+          return;
+        }
+
+        versions.sort(function (a, b) {
+          return a.revision < b.revision ? 1 : 0;
+        });
+        var lastContainerVersion = null;
+
+        if (_this.create && (_versions$ = versions[0]) !== null && _versions$ !== void 0 && _versions$.name) {
+          _this.lastVersion = versions[0].name;
+          lastContainerVersion = versions[0].idcontainerversion;
+        } else if (_this.edit) {
+          versions.forEach(function (v, i) {
+            // we stop before the last one because it cannot have an entry
+            if (i >= versions.length - 1) {
+              return;
+            }
+
+            if (v.idcontainerversion === _this.idContainerVersion && versions[i + 1]) {
+              _this.lastVersion = versions[i + 1].name;
+              lastContainerVersion = versions[i + 1].idcontainerversion;
+            }
+          });
+        }
+
+        if (_this.lastVersion) {
+          _this.isLoadingVersionChanges = true;
+          diffDraftVersion(_this.idContainer, _this.idContainerVersion, lastContainerVersion).then(function (diff) {
+            _this.versionChanges = diff;
+            _this.isLoadingVersionChanges = false;
+          });
+
+          if (_this.create && !_this.version.name && /^\d+$/.test(_this.lastVersion)) {
+            _this.version.name = "".concat(parseInt(_this.lastVersion, 10) + 1);
+            _this.isDirty = true;
+          }
+        }
+      });
+      external_CoreHome_["Matomo"].helper.lazyScrollToContent();
+
+      if (this.edit && this.idContainerVersion) {
+        this.editTitle = Object(external_CoreHome_["translate"])('TagManager_EditVersion');
+        Versions_store.findVersion(this.idContainer, this.idContainerVersion).then(function (version) {
+          if (!version) {
+            return;
+          }
+
+          _this.version = Object(external_CoreHome_["clone"])(version);
+          _this.isDirty = false;
+        });
+        return;
+      }
+
+      if (this.create) {
+        this.editTitle = Object(external_CoreHome_["translate"])('TagManager_CreateNewVersion');
+        this.version = {
+          idSite: external_CoreHome_["Matomo"].idSite,
+          idcontainer: this.idContainer,
+          name: '',
+          description: ''
+        };
+
+        if (this.canPublishToLive) {
+          this.version.environments = ['live'];
+        } else if (!this.version.environments) {
+          this.version.environments = [];
+        }
+
+        this.isDirty = false;
+      }
+    },
+    cancel: function cancel() {
+      var newParams = Object.assign({}, external_CoreHome_["MatomoUrl"].hashParsed.value);
+      delete newParams.idContainerVersion;
+      external_CoreHome_["MatomoUrl"].updateHash(newParams);
+    },
+    createVersion: function createVersion() {
+      var _this2 = this;
+
+      this.removeAnyVersionNotification();
+
+      if (!this.checkRequiredFieldsAreSet()) {
+        return;
+      }
+
+      this.isUpdatingVersion = true;
+      Versions_store.createOrUpdateVersion(this.version, 'TagManager.createContainerVersion', this.idContainer).then(function (response) {
+        if (!response) {
+          return;
+        }
+
+        _this2.isDirty = false;
+        var idContainerVersion = response.value;
+
+        if (_this2.isEmbedded) {
+          _this2.version.idcontainerversion = idContainerVersion;
+
+          _this2.$emit('changeVersion', {
+            version: _this2.version
+          });
+
+          return;
+        }
+
+        Versions_store.reload(_this2.idContainer).then(function () {
+          external_CoreHome_["MatomoUrl"].updateHash(Object.assign(Object.assign({}, external_CoreHome_["MatomoUrl"].hashParsed.value), {}, {
+            idContainerVersion: idContainerVersion
+          }));
+          setTimeout(function () {
+            var createdX = Object(external_CoreHome_["translate"])('TagManager_CreatedX', Object(external_CoreHome_["translate"])('TagManager_Version'));
+            var wantToRedeploy = Object(external_CoreHome_["translate"])('TagManager_WantToDeployThisChangeCreateVersion', '<a class="createNewVersionLink">', '</a>');
+
+            _this2.showNotification("".concat(createdX, " ").concat(wantToRedeploy), 'success');
+          }, 200);
+        });
+      }).finally(function () {
+        _this2.isUpdatingVersion = false;
+      });
+    },
+    createVersionAndPublish: function createVersionAndPublish() {
+      var _this3 = this;
+
+      this.removeAnyVersionNotification();
+
+      if (!this.checkRequiredFieldsAreSet()) {
+        return;
+      }
+
+      this.isUpdatingVersion = true;
+      Versions_store.createOrUpdateVersion(this.version, 'TagManager.createContainerVersion', this.idContainer).then(function (response) {
+        if (!response) {
+          return null;
+        }
+
+        var idContainerVersion = response.value;
+        _this3.version.idcontainerversion = idContainerVersion;
+        return Versions_store.publishVersion(_this3.idContainer, idContainerVersion, _this3.version.environments[0]).then(function () {
+          _this3.isDirty = false;
+
+          if (_this3.isEmbedded) {
+            _this3.$emit('changeVersion', {
+              version: _this3.version
+            });
+
+            return;
+          }
+
+          Versions_store.reload(_this3.idContainer).then(function () {
+            external_CoreHome_["MatomoUrl"].updateHash(Object.assign(Object.assign({}, external_CoreHome_["MatomoUrl"].hashParsed.value), {}, {
+              idContainerVersion: idContainerVersion
+            }));
+            setTimeout(function () {
+              _this3.showNotification(Object(external_CoreHome_["translate"])('TagManager_VersionPublishSuccess'), 'success');
+            }, 200);
+          });
+        });
+      }).finally(function () {
+        _this3.isUpdatingVersion = false;
+      });
+    },
+    setValueHasChanged: function setValueHasChanged() {
+      this.isDirty = true;
+    },
+    updateVersion: function updateVersion() {
+      var _this4 = this;
+
+      this.removeAnyVersionNotification();
+
+      if (!this.checkRequiredFieldsAreSet()) {
+        return;
+      }
+
+      this.isUpdatingVersion = true;
+      Versions_store.createOrUpdateVersion(this.version, 'TagManager.updateContainerVersion', this.idContainer).then(function (response) {
+        if (!response) {
+          return;
+        }
+
+        if (_this4.isEmbedded) {
+          _this4.$emit('changeVersion', {
+            version: _this4.version
+          });
+
+          return;
+        }
+
+        _this4.isDirty = false;
+        _this4.version = {};
+        Versions_store.reload(_this4.idContainer).then(function () {
+          _this4.initIdContainerVersion();
+        });
+
+        _this4.showNotification(Object(external_CoreHome_["translate"])('TagManager_UpdatedX', Object(external_CoreHome_["translate"])('TagManager_Version')), 'success');
+      }).finally(function () {
+        _this4.isUpdatingVersion = false;
+      });
+    },
+    checkRequiredFieldsAreSet: function checkRequiredFieldsAreSet() {
+      if (!this.version.name) {
+        var title = Object(external_CoreHome_["translate"])('General_Name');
+        this.showErrorFieldNotProvidedNotification(title);
+        return false;
+      }
+
+      return true;
+    }
+  },
+  computed: {
+    create: function create() {
+      return this.idContainerVersion === 0;
+    },
+    edit: function edit() {
+      return !this.create;
+    },
+    isLoading: function isLoading() {
+      return Variables_store.isLoading.value || AvailableComparisons_store.isLoading.value;
+    },
+    isUpdating: function isUpdating() {
+      return Variables_store.isUpdating.value || this.isUpdatingVersion;
+    },
+    environments: function environments() {
+      return AvailableEnvironments_store.environmentsWithPublishOptions.value;
+    },
+    canPublishToLive: function canPublishToLive() {
+      return external_CoreHome_["Matomo"].hasUserCapability('tagmanager_publish_live_container');
+    },
+    versionNameHelpText: function versionNameHelpText() {
+      return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["markRaw"])(VersionNameHelpText);
+    },
+    selectTagManagerEnvironmentHelp: function selectTagManagerEnvironmentHelp() {
+      return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["markRaw"])(SelectTagManagerEnvironmentHelpText);
+    }
+  }
+}));
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionEdit.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionEdit.vue
+
+
+
+VersionEditvue_type_script_lang_ts.render = VersionEditvue_type_template_id_7ba6f724_render
+
+/* harmony default export */ var VersionEdit = (VersionEditvue_type_script_lang_ts);
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionEdit.adapter.ts
+/*!
+ * Matomo - free/libre analytics platform
+ *
+ * @link https://matomo.org
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ */
+
+
+/* harmony default export */ var VersionEdit_adapter = (Object(external_CoreHome_["createAngularJsAdapter"])({
+  component: VersionEdit,
+  scope: {
+    idContainerVersion: {
+      angularJsBind: '='
+    },
+    idContainer: {
+      angularJsBind: '='
+    },
+    onChangeVersion: {
+      angularJsBind: '&?',
+      vue: 'changeVersion'
+    }
+  },
+  directiveName: 'piwikVersionEdit'
+}));
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Version/VersionList.vue?vue&type=template&id=a601b24e
+
+var VersionListvue_type_template_id_a601b24e_hoisted_1 = {
+  class: "tagManagerManageList tagManagerVersionList"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_2 = {
+  class: "index"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_3 = {
+  class: "name"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_4 = {
+  class: "description"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_5 = {
+  class: "environments"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_6 = {
+  class: "created"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_7 = {
+  class: "action"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_8 = {
+  colspan: "7"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_9 = {
+  class: "loadingPiwik"
+};
+
+var VersionListvue_type_template_id_a601b24e_hoisted_10 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("img", {
+  src: "plugins/Morpheus/images/loading-blue.gif"
+}, null, -1);
+
+var VersionListvue_type_template_id_a601b24e_hoisted_11 = {
+  colspan: "7"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_12 = ["id"];
+var VersionListvue_type_template_id_a601b24e_hoisted_13 = {
+  class: "index"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_14 = {
+  class: "name"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_15 = ["title"];
+var VersionListvue_type_template_id_a601b24e_hoisted_16 = {
+  class: "environments"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_17 = ["title"];
+var VersionListvue_type_template_id_a601b24e_hoisted_18 = {
+  class: "created"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_19 = {
+  class: "action"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_20 = ["onClick", "title"];
+var VersionListvue_type_template_id_a601b24e_hoisted_21 = ["onClick", "title"];
+var VersionListvue_type_template_id_a601b24e_hoisted_22 = ["onClick", "href", "title"];
+var VersionListvue_type_template_id_a601b24e_hoisted_23 = ["onClick", "title"];
+var VersionListvue_type_template_id_a601b24e_hoisted_24 = ["onClick", "title"];
+var VersionListvue_type_template_id_a601b24e_hoisted_25 = {
+  class: "tableActionBar"
+};
+
+var VersionListvue_type_template_id_a601b24e_hoisted_26 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
+  class: "icon-add"
+}, null, -1);
+
+var VersionListvue_type_template_id_a601b24e_hoisted_27 = ["href"];
+
+var VersionListvue_type_template_id_a601b24e_hoisted_28 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
+  class: "icon-export"
+}, null, -1);
+
+var VersionListvue_type_template_id_a601b24e_hoisted_29 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
+  class: "icon-upload"
+}, null, -1);
+
+var VersionListvue_type_template_id_a601b24e_hoisted_30 = {
+  class: "ui-confirm",
+  id: "confirmDeleteVersion",
+  ref: "confirmDeleteVersion"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_31 = ["value"];
+var VersionListvue_type_template_id_a601b24e_hoisted_32 = ["value"];
+var VersionListvue_type_template_id_a601b24e_hoisted_33 = {
+  class: "ui-confirm",
+  id: "confirmPublishVersion",
+  ref: "confirmPublishVersion"
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_34 = {
+  key: 0,
+  class: "alert alert-info",
+  style: {
+    "margin-top": "16px"
+  }
+};
+var VersionListvue_type_template_id_a601b24e_hoisted_35 = ["value"];
+var VersionListvue_type_template_id_a601b24e_hoisted_36 = ["value"];
+function VersionListvue_type_template_id_a601b24e_render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _ctx$versionToBePubli;
+
+  var _component_ContentBlock = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("ContentBlock");
+
+  var _component_Field = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("Field");
+
+  var _directive_content_table = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveDirective"])("content-table");
+
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VersionListvue_type_template_id_a601b24e_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_ContentBlock, {
+    feature: "Tag Manager",
+    "content-title": _ctx.translate('TagManager_ManageX', _ctx.translate('TagManager_Versions'))
+  }, {
+    default: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withCtx"])(function () {
+      return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_VersionUsageBenefits')) + " " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_ConfigureEnvironmentsSuperUser')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("table", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("thead", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("tr", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("th", VersionListvue_type_template_id_a601b24e_hoisted_2, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_Revision')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("th", VersionListvue_type_template_id_a601b24e_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_Name')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("th", VersionListvue_type_template_id_a601b24e_hoisted_4, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_Description')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("th", VersionListvue_type_template_id_a601b24e_hoisted_5, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_Environments')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("th", VersionListvue_type_template_id_a601b24e_hoisted_6, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_Created')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("th", VersionListvue_type_template_id_a601b24e_hoisted_7, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_Actions')), 1)])]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("tbody", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("tr", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", VersionListvue_type_template_id_a601b24e_hoisted_8, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", VersionListvue_type_template_id_a601b24e_hoisted_9, [VersionListvue_type_template_id_a601b24e_hoisted_10, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_LoadingData')), 1)])])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.isLoading || _ctx.isUpdating]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("tr", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", VersionListvue_type_template_id_a601b24e_hoisted_11, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_NoVersionsFound')) + " ", 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+        class: "createContainerVersionNow",
+        onClick: _cache[0] || (_cache[0] = function ($event) {
+          return _ctx.createVersion();
+        })
+      }, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_CreateNewVersionNow')), 513), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.hasWriteAccess]])])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.isLoading && _ctx.versions.length === 0]]), (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(_ctx.sortedVersions, function (version) {
+        return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("tr", {
+          id: "version".concat(version.idcontainerversion),
+          class: "versions",
+          key: version.revision
+        }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", VersionListvue_type_template_id_a601b24e_hoisted_13, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(version.revision), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", VersionListvue_type_template_id_a601b24e_hoisted_14, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(version.name), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", {
+          class: "description",
+          title: version.description
+        }, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.truncateText(version.description, 30)), 9, VersionListvue_type_template_id_a601b24e_hoisted_15), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", VersionListvue_type_template_id_a601b24e_hoisted_16, [(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(version.releases, function (release, index) {
+          return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("span", {
+            key: index,
+            title: _ctx.translate('TagManager_ReleaseInfo', release.release_login, release.release_date_pretty)
+          }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.ucfirst(release.environment)), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", null, ", ", 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], index !== version.releases.length - 1]])], 8, VersionListvue_type_template_id_a601b24e_hoisted_17);
+        }), 128))]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", VersionListvue_type_template_id_a601b24e_hoisted_18, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(version.created_date_pretty), 1)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("td", VersionListvue_type_template_id_a601b24e_hoisted_19, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+          class: "table-action icon-rocket",
+          onClick: function onClick($event) {
+            return _ctx.publishVersion(version);
+          },
+          title: _ctx.translate('TagManager_PublishVersion', version.name)
+        }, null, 8, VersionListvue_type_template_id_a601b24e_hoisted_20), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.hasWriteAccess]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+          class: "table-action icon-bug",
+          onClick: function onClick($event) {
+            return _ctx.enableDebugMode(version.idcontainerversion);
+          },
+          title: _ctx.translate('TagManager_EnablePreviewDebug')
+        }, null, 8, VersionListvue_type_template_id_a601b24e_hoisted_21), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.hasWriteAccess]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+          target: "_blank",
+          class: "table-action icon-export",
+          onClick: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withModifiers"])(function ($event) {
+            _ctx.exportVersion(version.idcontainerversion, version.name);
+          }, ["prevent"]),
+          href: _ctx.getExportUrl(version),
+          title: _ctx.translate('TagManager_ExportX', _ctx.translate('TagManager_Version'))
+        }, null, 8, VersionListvue_type_template_id_a601b24e_hoisted_22), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+          class: "table-action icon-edit",
+          onClick: function onClick($event) {
+            return _ctx.editVersion(version.idcontainerversion);
+          },
+          title: _ctx.translate('TagManager_EditX', _ctx.translate('TagManager_Version'))
+        }, null, 8, VersionListvue_type_template_id_a601b24e_hoisted_23), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.hasWriteAccess]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+          class: "table-action icon-delete",
+          onClick: function onClick($event) {
+            return _ctx.deleteVersion(version);
+          },
+          title: _ctx.translate('TagManager_DeleteX', _ctx.translate('TagManager_Version'))
+        }, null, 8, VersionListvue_type_template_id_a601b24e_hoisted_24), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], version.releases.length === 0 && _ctx.hasWriteAccess]])])], 8, VersionListvue_type_template_id_a601b24e_hoisted_12);
+      }), 128))])], 512), [[_directive_content_table]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VersionListvue_type_template_id_a601b24e_hoisted_25, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+        class: "createNewVersion",
+        onClick: _cache[1] || (_cache[1] = function ($event) {
+          return _ctx.createVersion();
+        })
+      }, [VersionListvue_type_template_id_a601b24e_hoisted_26, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_CreateNewVersion')), 1)], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.hasWriteAccess]]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+        class: "exportDraft",
+        target: "_blank",
+        onClick: _cache[2] || (_cache[2] = function ($event) {
+          _ctx.exportVersion(null, 'draft');
+
+          $event.preventDefault();
+        }),
+        href: _ctx.getExportDraftUrl()
+      }, [VersionListvue_type_template_id_a601b24e_hoisted_28, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_ExportDraft')), 1)], 8, VersionListvue_type_template_id_a601b24e_hoisted_27), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("a", {
+        class: "importVersion",
+        onClick: _cache[3] || (_cache[3] = function ($event) {
+          return _ctx.importVersion();
+        })
+      }, [VersionListvue_type_template_id_a601b24e_hoisted_29, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(" " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_Import')), 1)], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.hasWriteAccess]])])];
+    }),
+    _: 1
+  }, 8, ["content-title"]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VersionListvue_type_template_id_a601b24e_hoisted_30, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h2", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_DeleteVersionConfirm')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
+    role: "yes",
+    type: "button",
+    value: _ctx.translate('General_Yes')
+  }, null, 8, VersionListvue_type_template_id_a601b24e_hoisted_31), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
+    role: "no",
+    type: "button",
+    value: _ctx.translate('General_No')
+  }, null, 8, VersionListvue_type_template_id_a601b24e_hoisted_32)], 512), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", VersionListvue_type_template_id_a601b24e_hoisted_33, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h2", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_PublishVersion', (_ctx$versionToBePubli = _ctx.versionToBePublished) === null || _ctx$versionToBePubli === void 0 ? void 0 : _ctx$versionToBePubli.name)), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_Field, {
+    uicontrol: "select",
+    name: "environment",
+    modelValue: _ctx.availableEnvironmentsToPublish.deployEnvironment,
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return _ctx.availableEnvironmentsToPublish.deployEnvironment = $event;
+    }),
+    options: _ctx.availableEnvironmentsToPublish.environnments,
+    "full-width": true,
+    title: _ctx.translate('TagManager_Environment')
+  }, null, 8, ["modelValue", "options", "title"])]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", {
+    style: {
+      "margin-bottom": "0"
+    },
+    class: "alert alert-info"
+  }, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_PublishLiveEnvironmentCapabilityRequired', _ctx.translate('TagManager_CapabilityPublishLiveContainer'))), 513), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], !_ctx.canPublishToLive]])], 512), [[external_commonjs_vue_commonjs2_vue_root_Vue_["vShow"], _ctx.availableEnvironmentsToPublish.environnments.length]]), !_ctx.availableEnvironmentsToPublish.environnments.length ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VersionListvue_type_template_id_a601b24e_hoisted_34, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_VersionAlreadyPublishedToAllEnvironments')), 1)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
+    role: "yes",
+    type: "button",
+    value: _ctx.translate('TagManager_PublishRelease')
+  }, null, 8, VersionListvue_type_template_id_a601b24e_hoisted_35), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
+    role: "no",
+    type: "button",
+    value: _ctx.translate('General_Cancel')
+  }, null, 8, VersionListvue_type_template_id_a601b24e_hoisted_36)], 512)]);
+}
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionList.vue?vue&type=template&id=a601b24e
+
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Version/VersionList.vue?vue&type=script&lang=ts
+function VersionListvue_type_script_lang_ts_toConsumableArray(arr) { return VersionListvue_type_script_lang_ts_arrayWithoutHoles(arr) || VersionListvue_type_script_lang_ts_iterableToArray(arr) || VersionListvue_type_script_lang_ts_unsupportedIterableToArray(arr) || VersionListvue_type_script_lang_ts_nonIterableSpread(); }
+
+function VersionListvue_type_script_lang_ts_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function VersionListvue_type_script_lang_ts_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return VersionListvue_type_script_lang_ts_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return VersionListvue_type_script_lang_ts_arrayLikeToArray(o, minLen); }
+
+function VersionListvue_type_script_lang_ts_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function VersionListvue_type_script_lang_ts_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return VersionListvue_type_script_lang_ts_arrayLikeToArray(arr); }
+
+function VersionListvue_type_script_lang_ts_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+
+
+
+var VersionListvue_type_script_lang_ts_window = window,
+    VersionListvue_type_script_lang_ts_tagManagerHelper = VersionListvue_type_script_lang_ts_window.tagManagerHelper;
+/* harmony default export */ var VersionListvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  props: {
+    idContainer: {
+      type: String,
+      required: true
+    }
+  },
+  components: {
+    ContentBlock: external_CoreHome_["ContentBlock"],
+    Field: external_CorePluginsAdmin_["Field"]
+  },
+  directives: {
+    ContentTable: external_CoreHome_["ContentTable"]
+  },
+  data: function data() {
+    return {
+      versionToBePublished: null
+    };
+  },
+  created: function created() {
+    Versions_store.fetchVersions(this.idContainer);
+  },
+  methods: {
+    createVersion: function createVersion() {
+      this.editVersion(0);
+    },
+    truncateText: function truncateText(text, length) {
+      if (text.length > length) {
+        return "".concat(text.substr(0, length - 3), "...");
+      }
+
+      return text;
+    },
+    publishVersion: function publishVersion(version) {
+      var _this = this;
+
+      this.versionToBePublished = version;
+      external_CoreHome_["Matomo"].helper.modalConfirm(this.$refs.confirmPublishVersion, {
+        yes: function yes() {
+          var deployEnvironment = _this.availableEnvironmentsToPublish.deployEnvironment;
+
+          if (deployEnvironment) {
+            Versions_store.publishVersion(version.idcontainer, version.idcontainerversion, deployEnvironment).then(function () {
+              Versions_store.reload(_this.idContainer);
+            });
+          }
+        }
+      });
+    },
+    enableDebugMode: function enableDebugMode(idContainerVersion) {
+      VersionListvue_type_script_lang_ts_tagManagerHelper.enablePreviewMode(this.idContainer, idContainerVersion);
+    },
+    exportVersion: function exportVersion(idContainerVersion, versionName) {
+      var params = {
+        module: 'API',
+        method: 'TagManager.exportContainerVersion',
+        format: 'json',
+        idContainer: this.idContainer,
+        filter_limit: -1
+      };
+
+      if (idContainerVersion) {
+        params.idContainerVersion = idContainerVersion;
+      }
+
+      var filename = "container_".concat(this.idContainer);
+
+      if (versionName) {
+        filename += "_".concat(versionName);
+      }
+
+      external_CoreHome_["AjaxHelper"].fetch(params).then(function (exportedContainer) {
+        external_CoreHome_["Matomo"].helper.sendContentAsDownload("".concat(filename, ".json"), JSON.stringify(exportedContainer));
+      });
+    },
+    editVersion: function editVersion(idContainerVersion) {
+      external_CoreHome_["MatomoUrl"].updateHash(Object.assign(Object.assign({}, external_CoreHome_["MatomoUrl"].hashParsed.value), {}, {
+        idContainerVersion: idContainerVersion
+      }));
+    },
+    importVersion: function importVersion() {
+      VersionListvue_type_script_lang_ts_tagManagerHelper.importVersion(null, this.idContainer);
+    },
+    deleteVersion: function deleteVersion(version) {
+      var _this2 = this;
+
+      var doDelete = function doDelete() {
+        Versions_store.deleteVersion(_this2.idContainer, version.idcontainerversion).then(function () {
+          Versions_store.reload(_this2.idContainer);
+        });
+      };
+
+      external_CoreHome_["Matomo"].helper.modalConfirm(this.$refs.confirmDeleteVersion, {
+        yes: doDelete
+      });
+    },
+    ucfirst: function ucfirst(s) {
+      return "".concat(s.substring(0, 1).toUpperCase()).concat(s.substring(1));
+    },
+    getExportUrl: function getExportUrl(version) {
+      return "?module=TagManager&action=exportContainerVersion&idContainer=".concat(this.idContainer) + "&idContainerVersion=".concat(version.idcontainerversion, "&idSite=").concat(version.idsite) + '&period=day&date=yesterday';
+    },
+    getExportDraftUrl: function getExportDraftUrl() {
+      return "?module=TagManager&action=exportContainerVersion&idContainer=".concat(this.idContainer) + "&idSite=".concat(this.idSite, "&period=day&date=yesterday");
+    }
+  },
+  computed: {
+    environments: function environments() {
+      return AvailableEnvironments_store.environmentsWithPublishOptions.value;
+    },
+    availableEnvironmentsToPublish: function availableEnvironmentsToPublish() {
+      var _this3 = this;
+
+      var deployEnvironment = '';
+      var environnments = this.environments.filter(function (env) {
+        var _this3$versionToBePub, _this3$versionToBePub2;
+
+        if (!((_this3$versionToBePub = _this3.versionToBePublished) !== null && _this3$versionToBePub !== void 0 && _this3$versionToBePub.releases)) {
+          return true;
+        }
+
+        var found = (_this3$versionToBePub2 = _this3.versionToBePublished) === null || _this3$versionToBePub2 === void 0 ? void 0 : _this3$versionToBePub2.releases.some(function (r) {
+          return r.environment === (env === null || env === void 0 ? void 0 : env.key);
+        });
+
+        if (!found && !deployEnvironment) {
+          deployEnvironment = env.key;
+        }
+
+        return !found;
+      });
+      return {
+        deployEnvironment: deployEnvironment,
+        environnments: environnments
+      };
+    },
+    idSite: function idSite() {
+      return external_CoreHome_["Matomo"].idSite;
+    },
+    isLoading: function isLoading() {
+      return Versions_store.isLoading.value;
+    },
+    isUpdating: function isUpdating() {
+      return Versions_store.isUpdating.value;
+    },
+    versions: function versions() {
+      return Versions_store.versions.value;
+    },
+    sortedVersions: function sortedVersions() {
+      var sorted = VersionListvue_type_script_lang_ts_toConsumableArray(this.versions);
+
+      sorted.sort(function (lhs, rhs) {
+        if (lhs.revision < rhs.revision) {
+          return 1;
+        }
+
+        return lhs.revision > rhs.revision ? 0 : 1;
+      });
+      return sorted;
+    },
+    hasWriteAccess: function hasWriteAccess() {
+      return external_CoreHome_["Matomo"].hasUserCapability('tagmanager_write');
+    },
+    canPublishToLive: function canPublishToLive() {
+      return external_CoreHome_["Matomo"].hasUserCapability('tagmanager_publish_live_container');
+    }
+  }
+}));
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionList.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionList.vue
+
+
+
+VersionListvue_type_script_lang_ts.render = VersionListvue_type_template_id_a601b24e_render
+
+/* harmony default export */ var VersionList = (VersionListvue_type_script_lang_ts);
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionList.adapter.ts
+/*!
+ * Matomo - free/libre analytics platform
+ *
+ * @link https://matomo.org
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ */
+
+
+/* harmony default export */ var VersionList_adapter = (Object(external_CoreHome_["createAngularJsAdapter"])({
+  component: VersionList,
+  scope: {
+    idContainer: {
+      angularJsBind: '='
+    }
+  },
+  directiveName: 'piwikVersionList'
+}));
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Version/VersionManage.vue?vue&type=template&id=e2c86f86
+
+var VersionManagevue_type_template_id_e2c86f86_hoisted_1 = {
+  class: "manageVersion"
+};
+var VersionManagevue_type_template_id_e2c86f86_hoisted_2 = {
+  key: 0
+};
+var VersionManagevue_type_template_id_e2c86f86_hoisted_3 = {
+  key: 1
+};
+function VersionManagevue_type_template_id_e2c86f86_render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_VersionList = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("VersionList");
+
+  var _component_VersionEdit = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("VersionEdit");
+
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VersionManagevue_type_template_id_e2c86f86_hoisted_1, [!_ctx.editMode ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VersionManagevue_type_template_id_e2c86f86_hoisted_2, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_VersionList, {
+    "id-container": _ctx.idContainer
+  }, null, 8, ["id-container"])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), _ctx.editMode ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", VersionManagevue_type_template_id_e2c86f86_hoisted_3, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_VersionEdit, {
+    "id-container": _ctx.idContainer,
+    "id-container-version": _ctx.idContainerVersion
+  }, null, 8, ["id-container", "id-container-version"])])) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true)]);
+}
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionManage.vue?vue&type=template&id=e2c86f86
+
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Version/VersionManage.vue?vue&type=script&lang=ts
+
+
+
+
+/* harmony default export */ var VersionManagevue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  props: {
+    idContainer: String
+  },
+  components: {
+    VersionList: VersionList,
+    VersionEdit: VersionEdit
+  },
+  data: function data() {
+    return {
+      isAddAllowed: false
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    // doing this in a watch because we don't want to post an event in a computed property
+    Object(external_commonjs_vue_commonjs2_vue_root_Vue_["watch"])(function () {
+      return external_CoreHome_["MatomoUrl"].hashParsed.value.idContainerVersion;
+    }, function (v) {
+      _this.onIdContainerVersionParamChange(v);
+    });
+    external_CoreHome_["NotificationsStore"].remove('versiontagmanagement');
+    this.onIdContainerVersionParamChange(external_CoreHome_["MatomoUrl"].hashParsed.value.idContainerVersion);
+  },
+  methods: {
+    onIdContainerVersionParamChange: function onIdContainerVersionParamChange(idContainerVersion) {
+      // for BC w/ angularjs only invoke event if idContainerVersion is 0
+      if (idContainerVersion === '0') {
+        var parameters = {
+          isAllowed: true
+        };
+        external_CoreHome_["Matomo"].postEvent('TagManager.initAddVersion', parameters);
+        this.isAddAllowed = !!parameters.isAllowed;
+      }
+    }
+  },
+  computed: {
+    idContainerVersion: function idContainerVersion() {
+      var idContainerVersion = external_CoreHome_["MatomoUrl"].hashParsed.value.idContainerVersion;
+
+      if (!this.isAddAllowed && idContainerVersion === '0') {
+        return null;
+      }
+
+      return idContainerVersion ? parseInt(idContainerVersion, 10) : idContainerVersion;
+    },
+    editMode: function editMode() {
+      return typeof this.idContainerVersion === 'number';
+    }
+  }
+}));
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionManage.vue?vue&type=script&lang=ts
+ 
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionManage.vue
+
+
+
+VersionManagevue_type_script_lang_ts.render = VersionManagevue_type_template_id_e2c86f86_render
+
+/* harmony default export */ var VersionManage = (VersionManagevue_type_script_lang_ts);
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Version/VersionManage.adapter.ts
+/*!
+ * Matomo - free/libre analytics platform
+ *
+ * @link https://matomo.org
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ */
+
+
+/* harmony default export */ var VersionManage_adapter = (Object(external_CoreHome_["createAngularJsAdapter"])({
+  component: VersionManage,
+  scope: {
+    idContainer: {
+      angularJsBind: '@'
+    }
+  },
+  directiveName: 'piwikVersionManage'
+}));
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Field/FieldTextareaVariable.vue?vue&type=template&id=36f615a2
 
 var FieldTextareaVariablevue_type_template_id_36f615a2_hoisted_1 = {
@@ -5810,6 +7354,12 @@ FieldVariableTypeTemplatevue_type_script_lang_ts.render = FieldVariableTypeTempl
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
+
+
+
+
+
 
 
 
