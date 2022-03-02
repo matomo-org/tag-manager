@@ -280,6 +280,8 @@ interface TagManagerHelper {
   importVersion($scope: IScope|null, idContainer: string): void;
 
   enablePreviewMode(idContainer: string, idContainerVersion: number): void;
+
+  showInstallCode(idContainer: string): void;
 }
 
 declare global {

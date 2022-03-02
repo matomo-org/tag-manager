@@ -21,6 +21,9 @@ import './Tag/TagManage.adapter';
 import './Version/VersionEdit.adapter';
 import './Version/VersionList.adapter';
 import './Version/VersionManage.adapter';
+import './Container/ContainerEdit.adapter';
+import './Container/ContainerList.adapter';
+import './Container/ContainerManage.adapter';
 
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
 export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
@@ -40,3 +43,6 @@ export { default as TagManage } from './Tag/TagManage.vue';
 export { default as VersionEdit } from './Version/VersionEdit.vue';
 export { default as VersionList } from './Version/VersionList.vue';
 export { default as VersionManage } from './Version/VersionManage.vue';
+export { default as ContainerEdit } from './Container/ContainerEdit.vue';
+export { default as ContainerList } from './Container/ContainerList.vue';
+export { default as ContainerManage } from './Container/ContainerManage.vue';
