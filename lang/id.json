@@ -19,6 +19,7 @@
         "DomElementVariableName": "Elemen DOM",
         "DomReadyTriggerName": "DOM Siap",
         "Filter": "Saring",
+        "Names": "Nama",
         "PageTitleVariableName": "Judul Halaman",
         "PageUrlVariableName": "URL Halaman",
         "ReferrerUrlVariableName": "URL Pengarah",
