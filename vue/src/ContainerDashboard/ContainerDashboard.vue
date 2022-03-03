@@ -213,7 +213,6 @@ import {
 } from '../types';
 
 interface ContainerDashboardState {
-  availableContexts: Record<string, string>;
   container: Container|null;
   containerVersion: ExportedVersion|null;
   isLoading: boolean;
@@ -242,7 +241,6 @@ export default defineComponent({
   },
   data(): ContainerDashboardState {
     return {
-      availableContexts: {},
       container: null,
       containerVersion: null,
       isLoading: false,
@@ -318,7 +316,7 @@ export default defineComponent({
       return translate(
         'TagManager_ContainerMetaInformation',
         this.containerVersion?.idcontainer || '',
-        this.container ? this.availableContexts[this.container.context] : '',
+        this.contexts[this.container?.context || ''] || '',
         this.containerVersion?.created_date_pretty || '',
       );
     },
