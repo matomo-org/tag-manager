@@ -126,6 +126,7 @@
         "CreateNewVariable": "Δημιουργία νέας μεταβλητής",
         "CreateNewVariableNow": "Δημιουργία νέας μεταβλητής τώρα",
         "CreateNewVersion": "Δημιουργία νέας έκδοσης",
+        "CreateNewVersionNow": "Δημιουργία νέας έκδοσης τώρα",
         "CreateNewX": "Δημιουργία νέου %s",
         "CreateVersionAndPublishRelease": "Δημιουργία νέας έκδοσης και δημοσίευση κυκλοφορίας",
         "CreateVersionWithoutPublishing": "Δημιουργία νέας έκδοσης (χωρίς δημοσίευση)",
