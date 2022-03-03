@@ -226,10 +226,10 @@ export default defineComponent({
       const sorted = [...(this.container?.releases || [])];
       sorted.sort((lhs, rhs) => {
         if (lhs.release_date < rhs.release_date) {
-          return -1;
+          return 1;
         }
 
-        return lhs.release_date > rhs.release_date ? 1 : 0;
+        return lhs.release_date > rhs.release_date ? -1 : 0;
       });
       return sorted;
     },

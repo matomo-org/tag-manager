@@ -175,7 +175,7 @@
       var createVueApp = CoreHome.createVueApp;
       var ManageInstallTagCode = TagManager.ManageInstallTagCode;
 
-      var template = $('<div class="tag-ui-confirm"><div></div><input role="no" '
+      var template = $('<div class="tag-ui-confirm" ui-confirm><div></div><input role="no" '
         + 'type="button" value="' + _pk_translate('General_Cancel') +'"/>')
 
       var app = createVueApp({
