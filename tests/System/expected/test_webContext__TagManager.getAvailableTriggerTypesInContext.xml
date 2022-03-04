@@ -6,10 +6,10 @@
 			<row>
 				<id>AllDownloadsClick</id>
 				<name>All Downloads Click</name>
-				<description>Triggered when a link is clicked which links to a downloadable file.</description>
+				<description>Triggered when a link is clicked which links to a downloadable file. It will be triggered on left, middle and right click.</description>
 				<category>Click</category>
 				<icon>plugins/TagManager/images/icons/pointer.svg</icon>
-				<help>Triggered when a user clicks on an &quot;A&quot; or &quot;AREA&quot; element and the link points to a file with a downloadable file extension.</help>
+				<help>Triggered when a user clicks on an &quot;A&quot; or &quot;AREA&quot; element and the link points to a file with a downloadable file extension. To enable tracking on specific click button, please add conditions based on a &quot;ClickButton&quot; variable in the advanced settings.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -38,10 +38,10 @@
 			<row>
 				<id>AllElementsClick</id>
 				<name>All Elements Click</name>
-				<description>Triggered when any element is clicked.</description>
+				<description>Triggered when any element is clicked. It will be triggered on left, middle and right click.</description>
 				<category>Click</category>
 				<icon>plugins/TagManager/images/icons/pointer.svg</icon>
-				<help>Triggered on any click on any element. To listen to clicks on specific elements, please add conditions based on a &quot;click&quot; variable in the advanced settings.</help>
+				<help>Triggered on any click on any element. To listen to clicks on specific elements or specific click button, please add conditions based on a &quot;Click&quot; variable or on a &quot;ClickButton&quot; variable in the advanced settings.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -54,10 +54,10 @@
 			<row>
 				<id>AllLinksClick</id>
 				<name>All Links Click</name>
-				<description>Triggered when a link is clicked.</description>
+				<description>Triggered when a link is clicked. It will be triggered on left, middle and right click.</description>
 				<category>Click</category>
 				<icon>plugins/TagManager/images/icons/pointer.svg</icon>
-				<help>Triggered on any click on any element. To listen to clicks on specific elements, please add conditions based on a &quot;click&quot; variable in the advanced settings.</help>
+				<help>Triggered on any click on any element. To listen to clicks on specific elements or specific click button, please add conditions based on a &quot;Click&quot; variable or on a &quot;ClickButton&quot; variable in the advanced settings.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -226,6 +226,22 @@
 						<introduction />
 						<condition />
 					</row>
+					<row>
+						<name>observeDomChanges</name>
+						<title>Observe DOM Changes</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>Enable if you want to track dynamic DOM elements. &lt;br&gt;&lt;strong&gt;Note: This might slow down the website if there are lot of DOM changes&lt;/strong&gt;</inlineHelp>
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
 				</parameters>
 			</row>
 			<row>
@@ -389,7 +405,7 @@
 				<description>Triggered when the user is about to leave the current page by moving the mouse outside the window.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
-				<help>This trigger is triggered when the user is possibly about to leave the website and moves her or his mouse outside of the current web page for example towards the browser URL address line or any other buttons. This can be useful to keep your visitor engaged and not lose the visitor, for example by showing an exit popup. You may be also interested in the &quot;Window Unload&quot; trigger which is triggered as soon as the user has actually left the current page.</help>
+				<help>This trigger is triggered when the user is possibly about to leave the website and moves their mouse outside of the current web page, for example towards the browser URL address line or any other buttons. This can be useful to keep your visitor engaged and not lose the visitor, for example by showing an exit popup. You may be also interested in the &quot;Window Unload&quot; trigger which is triggered as soon as the user has actually left the current page.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -462,9 +478,13 @@
 						<availableValues />
 						<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 				</parameters>
 			</row>
@@ -526,9 +546,13 @@
 						<availableValues />
 						<description>You can optionally change the name of this event. This can be useful if you have for example multiple timers on the page and want to perform different logic based on the name of the timer.</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>triggerLimit</name>

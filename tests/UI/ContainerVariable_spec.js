@@ -61,7 +61,7 @@ describe("ContainerVariable", function () {
         }
         await page.click('.tagManagerVariableList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
     }
 
     async function createOrUpdateVariable()
@@ -82,7 +82,7 @@ describe("ContainerVariable", function () {
 
     it('should load variables page with some variables', async function () {
         await page.goto(container1Base);
-        await page.waitFor(1000);
+        await page.waitForTimeout(1000);
         await capture.page(page, 'variable_some_exist');
     });
 
@@ -90,7 +90,7 @@ describe("ContainerVariable", function () {
         await page.click('.createNewVariable');
         await page.waitForNetworkIdle();
         await page.mouse.move(-10, -10);
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.page(page, 'create_new');
     });
 
@@ -220,7 +220,7 @@ describe("ContainerVariable", function () {
     it('should load variables page with some variables as view user', async function () {
         permissions.setViewUser();
         await page.goto(container1Base);
-        await page.waitFor(1000);
+        await page.waitForTimeout(1000);
         await capture.page(page, 'variable_some_exist_view_user');
     });
 

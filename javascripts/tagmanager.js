@@ -930,6 +930,29 @@
                             callback();
                         }
                     });
+                },
+                onClick: function (callback, element) {
+                    if (typeof element === 'undefined') {
+                        element = documentAlias.body;
+                    }
+                    TagManager.dom.addEventListener(element, 'click', function (event) {
+                        var clickKey = (event.which ? event.which : 1);
+                        if (clickKey === 1) {
+                          callback(event, 'left');
+                        }
+                    }, true)
+                    TagManager.dom.addEventListener(element, 'auxclick', function (event) {
+                        var clickKey = (event.which ? event.which : 2);
+                        if (clickKey === 2) {
+                          callback(event, 'middle');
+                        }
+                    }, true)
+                    TagManager.dom.addEventListener(element, 'contextmenu', function (event) {
+                        var clickKey = (event.which ? event.which : 3);
+                        if (clickKey === 3) {
+                          callback(event, 'right');
+                        }
+                    }, true)
                 }
             };
 
@@ -1621,6 +1644,19 @@
                 throwError: throwError,
                 Container: Container,
                 addContainer: function (containerConfig, templates) {
+                    var mtmSetDebugFlag = urlHelper.getQueryParameter('mtmSetDebugFlag');
+                    if (mtmSetDebugFlag) {
+                        var idSite = encodeURIComponent(containerConfig.idsite);
+                        var containerID = encodeURIComponent(containerConfig.id);
+                        if (mtmSetDebugFlag == 1) {
+                            var date = new Date();
+                            date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
+                            document.cookie = 'mtmPreviewMode=mtmPreview' + idSite + '_' + containerID + '%3D1;expires=' + date.toUTCString() + ';SameSite=Lax';
+                        } else {
+                            document.cookie = 'mtmPreviewMode=mtmPreview' + idSite + '_' + containerID + '%3D1;expires=Thu, 01 Jan 1970 00:00:00 UTC;SameSite=Lax';
+                            window.close();
+                        }
+                    }
                     if (!window.mtmPreviewWindow) {
                         // interesting when multiple containers are registered... we check if meanwhile a
                         // debug container has been added
@@ -1644,7 +1680,7 @@
             };
 
             if ('matomoTagManagerAsyncInit' in windowAlias && utils.isFunction(windowAlias.matomoTagManagerAsyncInit)) {
-                windowAlias.matomoTagManagerAsyncInit();
+                windowAlias.matomoTagManagerAsyncInit(TagManager);
             }
             function processMtmPush() {
                 var i, j, methodName, parameterArray, theCall;

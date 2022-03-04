@@ -56,6 +56,8 @@ class GenerateDataLayerVariable extends GeneratePluginBase
             'You can now start implementing the preconfigured data layer variable',
             'Enjoy!'
         ));
+
+        return 0;
     }
 
     /**

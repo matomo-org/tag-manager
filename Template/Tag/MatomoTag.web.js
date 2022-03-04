@@ -65,7 +65,7 @@
             // installed which another doesn't have.
             libLoaded = true;
             var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.src=url+jsEndpoint; s.parentNode.insertBefore(g,s);
+            g.async=true; g.src=url+jsEndpoint; s.parentNode.insertBefore(g,s);
         }
     }
 
@@ -217,7 +217,7 @@
                     var dimIndex;
                     for (dimIndex = 0; dimIndex < matomoConfig.customDimensions.length; dimIndex++) {
                         var dimension = matomoConfig.customDimensions[dimIndex];
-                        if (dimension && TagManager.utils.isObject(dimension) && dimension.index && dimension.value) {
+                        if (dimension && TagManager.utils.isObject(dimension) && dimension.index && dimension.hasOwnProperty('value')) {
                             tracker.setCustomDimension(dimension.index, dimension.value);
                         }
                     }

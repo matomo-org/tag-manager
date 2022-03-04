@@ -522,7 +522,6 @@
         "WeekdayVariableDescription": "Devuelve el actual día de la semana, ejemplo lunes, martes, miércoles, ...",
         "WeekdayVariableName": "Día de la semana",
         "WindowLeaveTriggerDescription": "Activado cuando el usuario está a punto de abandonar la actual página al mover el ratón fuera de la ventana.",
-        "WindowLeaveTriggerHelp": "Este activador se activa cuando el usuario posiblemente está a punto de abandonar el sitio web y mueve su ratón fuera de la página web actual, por ejemplo, hacia la línea de dirección URL del navegador o cualquier otro botón. Esto puede ser útil para mantener a su visitante ocupado y no perderlo, por ejemplo, mostrando una ventana emergente de salida. Es posible que también esté interesado en el activador \"Descarga de ventana\" que se activa tan pronto como el usuario haya abandonado la página actual.",
         "WindowLeaveTriggerName": "Abandonar ventana",
         "WindowLoadedTriggerDescription": "Activado cuando la página está completamente cargada, incluidas todas las imágenes, etc.",
         "WindowLoadedTriggerHelp": "Esta etapa de cargar una página web es cuando la misma está completamente cargada respecto del navegador. En la mayoría de los casos, esto significa que también se cargan todas las imágenes, se aplican todos los estilos, etc. Este activador siempre se activa en algún momento después de \"DOM Ready\".",

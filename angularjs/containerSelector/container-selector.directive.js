@@ -12,9 +12,9 @@
 (function () {
     angular.module('piwikApp').directive('piwikContainerSelector', piwikContainerSelector);
 
-    piwikContainerSelector.$inject = ['piwik'];
+    piwikContainerSelector.$inject = ['piwik', '$timeout'];
 
-    function piwikContainerSelector(piwik){
+    function piwikContainerSelector(piwik, $timeout) {
 
 
         return {
@@ -26,9 +26,10 @@
             controller: 'ContainerSelectorController',
             controllerAs: 'containerSelector',
             compile: function (element, attrs) {
-
                 return function (scope, element, attrs) {
-
+                    $timeout(function () {
+                      initTopControls();
+                    });
                 };
             }
         };

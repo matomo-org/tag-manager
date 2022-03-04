@@ -38,7 +38,7 @@ describe("ContainerTag", function () {
     {
         await page.click('.editTag .collection-item.templateType' + tagType);
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
     }
 
     async function setTagName(name, prefix)
@@ -68,7 +68,7 @@ describe("ContainerTag", function () {
         }
         await page.click('.tagManagerTagList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
     }
 
     async function createOrUpdateTag()
@@ -76,7 +76,7 @@ describe("ContainerTag", function () {
         await page.click('.editTag .createButton');
         await page.waitForNetworkIdle();
         await page.mouse.move(-10, -10);
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
     }
 
     async function cancelTag()
@@ -86,14 +86,14 @@ describe("ContainerTag", function () {
 
     it('should load tags page with some tags', async function () {
         await page.goto(container1Base);
-        await page.waitFor(1000);
+        await page.waitForTimeout(1000);
         await capture.page(page, 'tag_some_exist');
     });
 
     it('should be able to create a new tag and show list of available types', async function () {
         await page.click('.createNewTag');
         await page.waitForNetworkIdle();
-        await page.waitFor(500);
+        await page.waitForTimeout(500);
         await capture.page(page, 'create_new');
     });
 
@@ -114,7 +114,7 @@ describe("ContainerTag", function () {
         await page.click('.createNewTag');
         await page.waitForNetworkIdle();
         await page.mouse.move(-10, -10);
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.page(page, 'create_new_custom_templates_restricted');
     });
 
@@ -122,7 +122,7 @@ describe("ContainerTag", function () {
         await page.goto(container1Base);
         await page.click('.createNewTag');
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await selectTagType('CustomHtml');
         await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
         await setParameterValue('customHtml', '<script></script>');
@@ -135,6 +135,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to go back to list of tags and show created tag', async function () {
+        await page.click('.notification .close');
         await cancelTag();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'create_new_shown_in_list');
@@ -148,16 +149,16 @@ describe("ContainerTag", function () {
     it('should be possible to edit a trigger directly', async function () {
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(400);
         await capture.modal(page, 'edit_trigger_directly_popup');
     });
 
     it('should be possible to edit a trigger directly', async function () {
         await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
-        await page.waitFor(100);
+        await page.waitForTimeout(100);
         await page.click('.modal.open .createButton');
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.page(page, 'edit_trigger_directly_updated');
     });
 
@@ -173,6 +174,7 @@ describe("ContainerTag", function () {
     });
 
     it('should have updated the list of tags', async function () {
+        await page.click('.notification .close');
         await cancelTag();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'edit_updated_back_to_list');
@@ -212,7 +214,7 @@ describe("ContainerTag", function () {
     it('should open create tag page when clicking on create a tag now link', async function () {
         await page.click('.createContainerTagNow');
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.page(page, 'tag_none_exist_yet_create_now');
     });
 
@@ -241,7 +243,8 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to create a fire trigger directly', async function () {
-        await page.click('.createNewFireTrigger');
+        await page.click('.notification .close');
+        await page.click('.fireTriggers .createNewTrigger');
         await page.mouse.move(-10, -10);
         await capture.modal(page, 'create_advanced_firetrigger_popup');
     });
@@ -254,14 +257,14 @@ describe("ContainerTag", function () {
     it('should be possible to prefill fire trigger', async function () {
         await page.click('.modal.open .createButton');
         await page.waitForNetworkIdle();
-        await page.waitFor(200);
+        await page.waitForTimeout(200);
         await capture.page(page, 'create_advanced_firetrigger_created');
     });
 
     it('should be possible to create a block trigger directly', async function () {
-        await page.click('.createBlockTriggerInHelp');
+        await page.click('.blockTriggers .createTriggerInHelp');
         await page.waitForNetworkIdle(); // wait for modal
-        await page.waitFor(250); // wait for modal
+        await page.waitForTimeout(250); // wait for modal
         await page.click('.modal.open .templateTypeAllElementsClick');
         await page.click('.modal.open .createButton');
         await page.waitForNetworkIdle();
@@ -277,6 +280,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to create a tag with conditions filter', async function () {
+        await page.click('.notification .close');
         await cancelTag();
         await capture.page(page, 'create_advanced_verified');
     });
@@ -285,7 +289,7 @@ describe("ContainerTag", function () {
         permissions.setViewUser();
         await page.goto(container1Base);
         await capture.setTableRowHeight(page);
-        pageWrap = await page.$('[piwik-tag-manage]');
+        pageWrap = await page.$('.manageTag');
         expect(await pageWrap.screenshot()).to.matchImage('tag_some_exist_view_user');
     });
 });

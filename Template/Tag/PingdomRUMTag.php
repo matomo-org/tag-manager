@@ -31,6 +31,9 @@ class PingdomRUMTag extends BaseTag
                 $field->title = 'Pingdom RUM Site ID';
                 $field->description = 'You can get the Site ID by logging into Pingdom, going to "Monitoring" and clicking on "Real User Monitoring". Every added site will get its own Site ID.';
                 $field->validators[] = new NotEmpty();
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }

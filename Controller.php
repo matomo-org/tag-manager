@@ -157,8 +157,23 @@ class Controller extends \Piwik\Plugin\Controller
 
                 $mtmPreviewId = PreviewCookie::COOKIE_NAME . '=' .$idContainer;
                 $mtmPreviewId = SafeDecodeLabel::decodeLabelSafe($mtmPreviewId);
-                $disableLink = '<a class="title disablePreviewDebug" onclick=\'tagManagerHelper.disablePreviewMode(' . json_encode($release['idcontainer']) . ')\'>' . Piwik::translate('TagManager_DisablePreview') .'</a>';
-                $notification = new Notification(Piwik::translate('TagManager_PreviewDebugEnabledNotification', array($version, '<strong>', '</strong>', '<strong>?' . $mtmPreviewId . '</strong>', '<strong>&' . $mtmPreviewId . '</strong>', $disableLink)));
+                $previewCookie = new PreviewCookie();
+                $debugSiteUrl = $previewCookie->getDebugSiteUrl();
+                $previewUrl = '';
+                if (!empty($debugSiteUrl)) {
+                    $previewUrl = $debugSiteUrl . (stripos($debugSiteUrl, '?') !== False ? '&' : '?') . $mtmPreviewId;
+                }
+
+                $notificationMessage = $this->renderTemplate('previewDebugNotification.twig', array(
+                        'idcontainer' => $release['idcontainer'],
+                        'debugSiteUrl' => $debugSiteUrl,
+                        'version' => $version,
+                        'mtmPreviewId' => $mtmPreviewId,
+                        'previewUrl' => $previewUrl
+                    )
+                );
+
+                $notification = new Notification($notificationMessage);
                 $notification->context = Notification::CONTEXT_INFO;
                 $notification->raw = true;
                 NotificationManager::notify('previewDebugMode', $notification);

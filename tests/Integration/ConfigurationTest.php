@@ -10,10 +10,6 @@ namespace Piwik\Plugins\TagManager\tests\Integration;
 
 use Piwik\Config;
 use Piwik\Plugins\TagManager\Configuration;
-use Piwik\Plugins\TagManager\Model\Environment;
-use Piwik\Plugins\TagManager\SystemSettings;
-use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
-use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
 
 /**

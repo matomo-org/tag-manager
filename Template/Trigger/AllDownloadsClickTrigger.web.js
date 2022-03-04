@@ -12,7 +12,11 @@
                     return nodeName === 'A' || nodeName === 'AREA';
                 }
 
-                TagManager.dom.addEventListener(parameters.document.body, 'click', function (event) {
+                TagManager.dom.onClick(function (event, clickButton) {
+                    clickCallback(event, triggerEvent, clickButton);
+                });
+
+                function clickCallback(event, triggerEvent, clickButton) {
                     if (!event.target) {
                         return;
                     }
@@ -43,12 +47,13 @@
                                 'mtm.clickElementClasses': TagManager.dom.getElementClassNames(target),
                                 'mtm.clickText': TagManager.dom.getElementText(target),
                                 'mtm.clickNodeName': nodeName,
-                                'mtm.clickElementUrl': link
+                                'mtm.clickElementUrl': link,
+                                'mtm.clickButton': clickButton
                             });
                         }
 
                     }
-                }, true);
+                }
             });
         };
     };

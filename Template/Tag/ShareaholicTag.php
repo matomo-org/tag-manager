@@ -42,7 +42,7 @@ class ShareaholicTag extends BaseTag
             $this->makeSetting('shareaholicSiteId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Shareaholic Site ID';
                 $field->description = 'Create a new site in Shareaholic and paste the site ID here';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new NotEmpty();
             }),
             $InPageApp,
@@ -50,7 +50,7 @@ class ShareaholicTag extends BaseTag
                 $field->title = 'In-Page App ID';
                 $field->description = 'If you want to add an In-Page App enter the App ID here. It is about eight digits long. The App ID is not required for the Total Share Counter.';
                 $field->condition = 'shareaholicInPageApp && shareaholicInPageApp !== "total_share_count"';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validate = function ($value) use ($InPageApp, $field) {
                     if (!empty($InPageApp->getValue()) && $InPageApp->getValue() != 'total_share_count' && empty($value)) {
                         throw new \Exception('You need to specify an App ID if you want to use a InPageApp');
@@ -65,7 +65,7 @@ class ShareaholicTag extends BaseTag
                 $field->title = 'In-Page App Parent Selector';
                 $field->description = 'Enter a CSS selector to the element where the In-Page App should be added.';
                 $field->condition = 'shareaholicInPageApp';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validate = function ($value) use ($InPageApp, $field) {
                     if (!empty($InPageApp->getValue()) && empty($value)) {
                         throw new \Exception('You need to specify a Parent Selector if you want to use a InPageApp');

@@ -510,9 +510,13 @@
 						<availableValues />
 						<description>The etracker ID you want to track data into. The ID is required. You may  find the ID of your website under &quot;Administration =&gt; Setup/Tracking Code&quot; in etracker.</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerBlockCookies</name>
@@ -558,9 +562,13 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>et_areas</name>
@@ -574,9 +582,13 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>et_target</name>
@@ -590,9 +602,13 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>et_tval</name>
@@ -606,9 +622,13 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>et_tonr</name>
@@ -622,9 +642,13 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>et_tsale</name>
@@ -638,9 +662,13 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>et_basket</name>
@@ -654,9 +682,13 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>et_cust</name>
@@ -670,9 +702,13 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>customDimensions</name>
@@ -688,14 +724,22 @@
 								<key>index</key>
 								<title>Index</title>
 								<uiControl>text</uiControl>
-								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<templateFile />
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
 								<availableValues />
 							</field1>
 							<field2>
 								<key>value</key>
 								<title>Value</title>
 								<uiControl>text</uiControl>
-								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<templateFile />
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
 								<availableValues />
 							</field2>
 						</uiControlAttributes>
@@ -734,9 +778,13 @@
 						<availableValues />
 						<description>The URL of your Matomo instance. It should not include &quot;/index.php&quot; or &quot;piwik.php&quot;. The URL of your current Matomo URL instance is preconfigured.</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>idSite</name>
@@ -750,9 +798,13 @@
 						<availableValues />
 						<description>The idSite you want to track data into. The idSite of the current website is preconfigured. You may also find the idSite of any other website under &quot;Administration =&gt; Manage Measurables/Websites&quot;.</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>enableLinkTracking</name>
@@ -796,8 +848,8 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description />
-						<inlineHelp />
+						<description>Enable this feature to not track users who opt out of tracking using Mozilla's (proposed) Do Not Track setting</description>
+						<inlineHelp>&lt;strong&gt;Note: When enabled it sets _paq.push([&quot;setDoNotTrack&quot;, true]); which will not send any tracking request when a visitor has DNT enabled unlike the &quot;DNT Matomo Setting&quot; which drops the request on the server when a visitor has DNT enabled.&lt;/strong&gt;</inlineHelp>
 						<templateFile />
 						<introduction />
 						<condition />
@@ -940,11 +992,15 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: &quot;.example.com&quot; or &quot;*.example.com&quot;.</description>
-						<inlineHelp />
+						<description />
+						<inlineHelp>The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: &quot;.example.com&quot; or &quot;*.example.com&quot;. &lt;br&gt;&lt;strong&gt;Note: The variable is only evaluated at the time when tracker is being created, make sure you have the variable defined before that.&lt;/strong&gt;</inlineHelp>
 						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>cookiePath</name>
@@ -996,7 +1052,11 @@
 								<key>domain</key>
 								<title>Domain</title>
 								<uiControl>text</uiControl>
-								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<templateFile />
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
 								<availableValues />
 							</field1>
 						</uiControlAttributes>
@@ -1017,7 +1077,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Enables send beacon usage instead of a regular ajax request. This means when a user clicks for example on an outlink, the navigation to this page will happen much faster.</description>
+						<description>Enables sendBeacon usage instead of a regular ajax request. This means when a user clicks for example on an outlink, the navigation to this page will happen much faster.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -1035,9 +1095,13 @@
 						<availableValues />
 						<description>Sets a User ID to this user (such as an email address or a username).</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<templateFile />
 						<introduction />
 						<condition />
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>customDimensions</name>
@@ -1053,14 +1117,22 @@
 								<key>index</key>
 								<title>Index</title>
 								<uiControl>text</uiControl>
-								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<templateFile />
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
 								<availableValues />
 							</field1>
 							<field2>
 								<key>value</key>
 								<title>Value</title>
 								<uiControl>text</uiControl>
-								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<templateFile />
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
 								<availableValues />
 							</field2>
 						</uiControlAttributes>
@@ -1081,7 +1153,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>By bundling the Matomo JavaScript tracker directly into the container it may improve the performance of your website as it reduces the number of needed requests. It is recommended to bundle the Matomo tracker because in most cases the tracker would otherwise be otherwise loaded in a separate request on page view anyway. Note: If you use two different Matomo configurations in one container, the setting of the first configuration used in the first Matomo Tag will be applied to all Matomo tags within one container.</description>
+						<description>By bundling the Matomo JavaScript tracker directly into the container it may improve the performance of your website as it reduces the number of needed requests. It is recommended to bundle the Matomo tracker because in most cases the tracker would otherwise be loaded in a separate request on page view anyway. Note: If you use two different Matomo configurations in one container, the setting of the first configuration used in the first Matomo Tag will be applied to all Matomo tags within one container.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />

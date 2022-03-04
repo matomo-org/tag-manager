@@ -70,7 +70,7 @@ class JavaScriptTagManagerLoader
             $debugContent = FrontController::getInstance()->dispatch('TagManager', 'debug');
         });
 
-        $debugContent = str_replace(Piwik::getCurrentUserTokenAuth(), 'anonymous', $debugContent); // make sure to not expose somehow the token
+        $debugContent = str_replace(Piwik::getCurrentUserTokenAuth() ?? '', 'anonymous', $debugContent); // make sure to not expose somehow the token
         $debugContent = json_encode($debugContent);
         $previewJs = str_replace(array('/*!! previewContent */', '/*!!! previewContent */'), $debugContent, $previewJs);
 

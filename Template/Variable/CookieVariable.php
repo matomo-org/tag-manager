@@ -25,6 +25,9 @@ class CookieVariable extends BaseVariable
                 $field->title = 'Cookie Name';
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength(1, 500);
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('urlDecode', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = 'URI-decode Cookie';

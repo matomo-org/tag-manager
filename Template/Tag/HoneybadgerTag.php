@@ -29,17 +29,20 @@ class HoneybadgerTag extends BaseTag
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = "The apiKey of your honeybadger project";
                 $field->validators[] = new NotEmpty();
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('honeybadgerEnvironment', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Environment';
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = "The environment where the container is included (production, dev, etc.). Leave empty to default to the environment of this container.";
             }),
             $this->makeSetting('honeybadgerRevision', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = 'Code Revision';
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = "(optional) the version of your project";
             }),
         );

@@ -61,7 +61,7 @@ describe("ContainerVersion", function () {
         }
         await page.click('.tagManagerVersionList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
     }
 
     async function createOrUpdateVersion()
@@ -110,6 +110,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to go back to list of versions and show created version', async function () {
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'create_new_shown_in_list');
@@ -118,7 +119,7 @@ describe("ContainerVersion", function () {
     it('should be possible to publish new version', async function () {
         await page.click('.createNewVersion');
         await setVersionName('v3.0');
-        await page.waitFor(500);
+        await page.waitForTimeout(500);
         await capture.page(page, 'publish_new_prefilled');
     });
 
@@ -128,6 +129,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to verify it was released', async function () {
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'publish_new_shown_in_list');
@@ -150,6 +152,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should have updated the list of versions', async function () {
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'updated_back_to_list');
@@ -195,14 +198,15 @@ describe("ContainerVersion", function () {
         });
         await setVersionName('Menu Version Name', '.modal.open');
         await setVersionDescription('My Version Description', '.modal.open');
+        await page.mouse.move(-10, -10);
         await capture.modal(page, 'create_through_menu_prefilled');
     });
 
     it('should be possible to create a new version and show update afterwards', async function () {
         await page.click('.modal.open .editVersion .createButton');
         await page.waitForNetworkIdle();
-        await page.waitFor('.tagManagerManageList tr', { visible: true });
-        await page.waitFor(500);
+        await page.waitForSelector('.tagManagerManageList tr', { visible: true });
+        await page.waitForTimeout(500);
         await capture.page(page, 'create_through_menu_submitted');
     });
 
@@ -231,7 +235,7 @@ describe("ContainerVersion", function () {
     it('should load versions page with no versions as view user', async function () {
         permissions.setViewUser();
         await page.goto(container3Base);
-        await page.waitFor('.manageVersion', { visible: true });
+        await page.waitForSelector('.manageVersion', { visible: true });
         await capture.selector(page, 'version_none_exist_view_user', '.manageVersion');
     });
 
@@ -244,6 +248,7 @@ describe("ContainerVersion", function () {
     it('should be able to show an error when not json formatted', async function () {
         await form.sendFieldValue(page, '.modal.open [id=importContent]', 'import test');
         await page.click('.modal.open .importVersion');
+        await page.waitForTimeout(200);
         await capture.modal(page, 'import_version_shows_error_not_json');
     });
 
@@ -251,13 +256,14 @@ describe("ContainerVersion", function () {
         await form.sendFieldValue(page, '.modal.open [id=backupName]', 'vb0392');
         await form.sendFieldValue(page, '.modal.open [id=importContent]', '{"tags": [], "triggers": [], "variables": [], "idcontainer": [], "context": "web"}');
         await page.click('.modal.open .importVersion');
+        await page.waitForTimeout(200);
         await capture.modal(page, 'import_version_asks_confirmation');
     });
 
     it('should be possible to confirm and import the version', async function () {
         await modal.clickButton(page, 'Yes');
         await page.waitForNetworkIdle();
-        await page.waitFor('.tagManagerManageList tr');
+        await page.waitForSelector('.tagManagerManageList td');
         await capture.page(page, 'import_version_confirmed');
     });
 
