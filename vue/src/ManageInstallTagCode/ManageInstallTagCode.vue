@@ -223,13 +223,17 @@ export default defineComponent({
       return result;
     },
     sortedReleases() {
-      const sorted = [...(this.container?.releases || [])];
+      const sorted = [...(this.container?.releases || []).map((r, i) => ({ ...r, index: i }))];
       sorted.sort((lhs, rhs) => {
         if (lhs.release_date < rhs.release_date) {
           return 1;
         }
 
-        return lhs.release_date > rhs.release_date ? -1 : 0;
+        if (lhs.release_date > rhs.release_date) {
+          return -1;
+        }
+
+        return rhs.index - lhs.index; // angularjs sort defaults to using index when key is same
       });
       return sorted;
     },
