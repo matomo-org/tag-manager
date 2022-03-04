@@ -353,7 +353,6 @@
 
         function commonTrigger(triggerEvent, percentVisible, node) {
             var dom = TagManager.dom;
-            console.log(node);
             triggerEvent({
                 event: 'mtm.ElementVisibility',
                 'mtm.elementVisibilityElement': node,
