@@ -355,6 +355,7 @@
             var dom = TagManager.dom;
             triggerEvent({
                 event: 'mtm.ElementVisibility',
+                'mtm.elementVisibilityElement': node,
                 'mtm.elementVisibilityPercentage': Math.round(percentVisible * 100) / 100,
                 'mtm.elementVisibilityId': dom.getElementAttribute(node, 'id'),
                 'mtm.elementVisibilityClasses': dom.getElementClassNames(node),
