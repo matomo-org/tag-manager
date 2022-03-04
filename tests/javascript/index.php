@@ -2306,6 +2306,7 @@
                 deepEqual([{
                     "event": "mtm.ElementVisibility",
                     "mtm.elementVisibilityClasses": "",
+                    "mtm.elementVisibilityElement":  document.getElementById('qunit-header'),
                     "mtm.elementVisibilityId": "qunit-header",
                     "mtm.elementVisibilityNodeName": 'H1',
                     "mtm.elementVisibilityPercentage": 79.17,
