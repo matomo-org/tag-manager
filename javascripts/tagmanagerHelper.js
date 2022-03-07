@@ -171,18 +171,29 @@
     };
 
     tagManagerHelper.showInstallCode = function (idContainer) {
-        var $scope = piwikHelper.getAngularDependency('$rootScope');
-        var childScope = $scope.$new(true, $scope);
-        var template = $('<div class="tag-ui-confirm"><div piwik-manage-install-tag-code id-container="{{ idContainer }}"></div><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/>')
+      var createVNode = Vue.createVNode;
+      var createVueApp = CoreHome.createVueApp;
+      var ManageInstallTagCode = TagManager.ManageInstallTagCode;
 
-        var params = {
-            idContainer: idContainer
-        };
-        piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {extraWide: true, onCloseEnd: function () {
-            childScope.$destroy();
-            template.empty();
-        }});
+      var template = $('<div class="tag-ui-confirm" ui-confirm><div></div><input role="no" '
+        + 'type="button" value="' + _pk_translate('General_Cancel') +'"/>')
+
+      var app = createVueApp({
+        render: function () {
+          return createVNode(ManageInstallTagCode, {
+            idContainer: idContainer,
+          });
+        },
+      });
+      app.mount(template.children()[0]);
+
+      piwikHelper.modalConfirm(template, {}, {
+        extraWide: true,
+        onCloseEnd: function () {
+          app.unmount();
+          template.empty();
+        },
+      });
     };
     tagManagerHelper.enablePreviewMode = function (idContainer, idContainerVersion) {
         if (!idContainerVersion) {
