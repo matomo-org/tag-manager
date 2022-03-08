@@ -92,7 +92,7 @@ import {
   ContentTable,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
-import { Container, Version } from '../types';
+import { Container, Version, InstallInstructions } from '../types';
 
 interface Environment {
   id: string;
@@ -102,12 +102,6 @@ interface Environment {
 interface Option {
   key: string;
   value: string;
-}
-
-interface InstallInstructions {
-  description: string;
-  embedCode: string;
-  helpUrl: string;
 }
 
 interface ManageInstallTagCodeState {
