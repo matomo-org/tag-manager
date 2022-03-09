@@ -78,9 +78,9 @@
               v-if="(event.tags || []).length || !onlyfiredTags"
               class="item"
               @click="selectEvent(event.index0)"
-              :title="`Time: ${event.time}. Trigger: ${event.metTrigger.name}`">
+              :title="`Time: ${event.time}. Trigger: ${event.metTrigger?.name}`">
               {{ event.index }}: {{ event.name }}
-              <span title="This tag was fired" v-show="event.tags.length">
+              <span title="This tag was fired" v-show="event.tags?.length">
                 <svg class="tm-icon tm-icon-checkmark">
                   <use xlink:href="#tm-icon-checkmark"></use>
                 </svg>
@@ -107,7 +107,7 @@
                 </tr>
               </thead>
               <tbody>
-              <tr v-if="!selectedEvent?.tags.length">
+              <tr v-if="!selectedEvent?.tags?.length">
                 <td colspan="4">No tags</td>
               </tr>
               <tr v-for="(tag, index) in (selectedEvent?.tags || [])" :key="index">
@@ -200,7 +200,7 @@
                   <td colspan="3">No variables</td>
                 </tr>
                 <tr
-                  v-for="(variable, index) in selectedEvent?.container.variables || []"
+                  v-for="(variable, index) in selectedEvent?.container?.variables || []"
                   :key="index"
                 >
                   <td>{{ variable.name }}</td>
