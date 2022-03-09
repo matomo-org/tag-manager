@@ -126,6 +126,7 @@
         "CreateNewVariable": "Yeni değişken ekle",
         "CreateNewVariableNow": "Şimdi yeni bir tetikleyici ekle",
         "CreateNewVersion": "Yeni sürüm ekle",
+        "CreateNewVersionNow": "Şimdi yeni bir sürüm ekle",
         "CreateNewX": "Yeni %s ekle",
         "CreateVersionAndPublishRelease": "Yeni sürüm ekle ve yayınla",
         "CreateVersionWithoutPublishing": "Yeni sürüm ekle (yayınlamadan)",
