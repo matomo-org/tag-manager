@@ -6,7 +6,7 @@
  */
 
 import { reactive, computed, readonly } from 'vue';
-import { AjaxHelper, lazyInitSingleton } from 'CoreHome';
+import { AjaxHelper } from 'CoreHome';
 
 interface Environment {
   id: string;
@@ -36,13 +36,19 @@ class AvailableEnvironmentStore {
     ),
   );
 
-  constructor() {
-    this.fetchEnvironments();
+  private initializePromise: Promise<void>|null = null;
+
+  init() {
+    if (!this.initializePromise) {
+      this.initializePromise = this.fetchEnvironments();
+    }
+
+    return Promise.resolve(this.initializePromise);
   }
 
   private fetchEnvironments() {
     this.privateState.isLoading = true;
-    AjaxHelper.fetch<Environment[]|Record<string, Environment>>({
+    return AjaxHelper.fetch<Environment[]|Record<string, Environment>>({
       method: 'TagManager.getAvailableEnvironmentsWithPublishCapability',
       filter_limit: '-1',
     }).then((environmentsWithPublish) => {
@@ -60,4 +66,4 @@ class AvailableEnvironmentStore {
   }
 }
 
-export default lazyInitSingleton(AvailableEnvironmentStore) as AvailableEnvironmentStore;
+export default new AvailableEnvironmentStore();

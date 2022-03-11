@@ -247,6 +247,8 @@ export default defineComponent({
     };
   },
   created() {
+    AvailableContextsStore.init();
+
     this.isLoading = true;
 
     const containerPromise = AjaxHelper.fetch<Container>({

@@ -420,6 +420,8 @@ export default defineComponent({
     };
   },
   created() {
+    AvailableFireLimitsStore.init();
+
     this.updateAvailableTriggers();
     this.setCurrentTime();
 

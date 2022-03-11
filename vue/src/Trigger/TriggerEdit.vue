@@ -308,6 +308,8 @@ export default defineComponent({
   },
   emits: ['changeTrigger'],
   created() {
+    AvailableComparisonsStore.init();
+
     AjaxHelper.fetch<ContainerVariableCategory[]>({
       method: 'TagManager.getAvailableContainerVariables',
       filter_limit: '-1',

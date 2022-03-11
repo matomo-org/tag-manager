@@ -197,6 +197,8 @@ export default defineComponent({
   },
   emits: ['changeVersion'],
   created() {
+    AvailableComparisonsStore.init();
+    AvailableEnvironmentsStore.init();
     this.initIdContainerVersion();
   },
   watch: {

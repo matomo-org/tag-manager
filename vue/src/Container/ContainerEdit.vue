@@ -129,6 +129,9 @@ export default defineComponent({
     };
   },
   created() {
+    AvailableContextsStore.init();
+    AvailableComparisonsStore.init();
+
     this.initIdContainer();
   },
   watch: {
