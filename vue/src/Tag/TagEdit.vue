@@ -69,7 +69,7 @@
             <GroupedSettings
               :settings="tag.typeMetadata?.parameters || []"
               :all-setting-values="parameterValues"
-              @change="parameterValues[$event.name] = $event.value"
+              @change="parameterValues[$event.name] = $event.value; setValueHasChanged()"
             />
           </div>
           <div
