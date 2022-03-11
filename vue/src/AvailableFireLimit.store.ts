@@ -41,7 +41,7 @@ class AvailableFireLimitStore {
       this.initializePromise = this.fetchAvailableFireLimits();
     }
 
-    return Promise.resolve(this.initializePromise);
+    return this.initializePromise;
   }
 
   private fetchAvailableFireLimits() {

@@ -41,7 +41,7 @@ class AvailableComparisonsStore {
       this.initializePromise = this.fetchAvailableComparisons();
     }
 
-    return Promise.resolve(this.initializePromise);
+    return this.initializePromise;
   }
 
   private fetchAvailableComparisons() {

@@ -43,7 +43,7 @@ class AvailableEnvironmentStore {
       this.initializePromise = this.fetchEnvironments();
     }
 
-    return Promise.resolve(this.initializePromise);
+    return this.initializePromise;
   }
 
   private fetchEnvironments() {

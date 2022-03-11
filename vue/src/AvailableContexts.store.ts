@@ -41,7 +41,7 @@ class AvailableContextStore {
       this.initializePromise = this.fetchAvailableContexts();
     }
 
-    return Promise.resolve(this.initializePromise);
+    return this.initializePromise;
   }
 
   private fetchAvailableContexts() {

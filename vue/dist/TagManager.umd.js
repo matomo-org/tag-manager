@@ -1370,7 +1370,7 @@ var AvailableComparisons_store_AvailableComparisonsStore = /*#__PURE__*/function
         this.initializePromise = this.fetchAvailableComparisons();
       }
 
-      return Promise.resolve(this.initializePromise);
+      return this.initializePromise;
     }
   }, {
     key: "fetchAvailableComparisons",
@@ -4011,7 +4011,7 @@ var AvailableFireLimit_store_AvailableFireLimitStore = /*#__PURE__*/function () 
         this.initializePromise = this.fetchAvailableFireLimits();
       }
 
-      return Promise.resolve(this.initializePromise);
+      return this.initializePromise;
     }
   }, {
     key: "fetchAvailableFireLimits",
@@ -5783,7 +5783,7 @@ var AvailableEnvironments_store_AvailableEnvironmentStore = /*#__PURE__*/functio
         this.initializePromise = this.fetchEnvironments();
       }
 
-      return Promise.resolve(this.initializePromise);
+      return this.initializePromise;
     }
   }, {
     key: "fetchEnvironments",
@@ -7282,7 +7282,7 @@ var AvailableContexts_store_AvailableContextStore = /*#__PURE__*/function () {
         this.initializePromise = this.fetchAvailableContexts();
       }
 
-      return Promise.resolve(this.initializePromise);
+      return this.initializePromise;
     }
   }, {
     key: "fetchAvailableContexts",
