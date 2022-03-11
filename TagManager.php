@@ -244,7 +244,10 @@ class TagManager extends \Piwik\Plugin
         return StaticContainer::get('Piwik\Plugins\TagManager\Model\Container');
     }
 
-    public function regenerateReleasedContainers()
+    /**
+     * @param bool $onlyWithPreviewRelease if true only regenerates containers if there is a preview release.
+     */
+    public function regenerateReleasedContainers($onlyWithPreviewRelease = false)
     {
         $pluginManager = Plugin\Manager::getInstance();
         if (!$pluginManager->isPluginInstalled('TagManager')) {
@@ -265,7 +268,7 @@ class TagManager extends \Piwik\Plugin
             return;
         }
 
-        Access::doAsSuperUser(function () {
+        Access::doAsSuperUser(function () use ($onlyWithPreviewRelease) {
             // we need to run as super user because after a core update the user might not be an admin etc
             // (and admin is needed for debug action)
             $containerModel = StaticContainer::get('Piwik\Plugins\TagManager\Model\Container');
@@ -273,8 +276,12 @@ class TagManager extends \Piwik\Plugin
                 $containers = $containerModel->getActiveContainersInfo();
                 foreach ($containers as $container) {
                     try {
-                        Context::changeIdSite($container['idsite'], function () use ($containerModel, $container) {
-                            $containerModel->generateContainer($container['idsite'], $container['idcontainer']);
+                        Context::changeIdSite($container['idsite'], function () use ($containerModel, $container, $onlyWithPreviewRelease) {
+                            if ($onlyWithPreviewRelease) {
+                                $containerModel->generateContainerIfHasPreviewRelease($container['idsite'], $container['idcontainer']);
+                            } else {
+                                $containerModel->generateContainer($container['idsite'], $container['idcontainer']);
+                            }
                         });
                     } catch (UnexpectedWebsiteFoundException $e) {
                         // website was removed, ignore
@@ -549,12 +556,7 @@ class TagManager extends \Piwik\Plugin
     public function getJsFiles(&$jsFiles)
     {
         $jsFiles[] = "plugins/TagManager/libs/jquery-timepicker/jquery.timepicker.min.js";
-
         $jsFiles[] = "plugins/TagManager/javascripts/tagmanagerHelper.js";
-
-
-
-        $jsFiles[] = "plugins/TagManager/angularjs/debugging/debugging.controller.js";
     }
 
     private function hasMeasurableTypeWebsite($idSite)
