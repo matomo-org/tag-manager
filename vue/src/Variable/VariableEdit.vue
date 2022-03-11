@@ -40,7 +40,7 @@
             <Field
               uicontrol="text"
               name="type"
-              :model-value="variable.name"
+              :model-value="variable.typeMetadata?.name"
               :disabled="true"
               :inline-help="typeInlineHelp"
               :title="translate('TagManager_Type')"
