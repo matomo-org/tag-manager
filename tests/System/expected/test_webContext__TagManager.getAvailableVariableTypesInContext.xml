@@ -983,6 +983,22 @@
 						<condition />
 					</row>
 					<row>
+						<name>disableBrowserFeatureDetection</name>
+						<title>Disable Browser Feature Detection</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Disable detection of visitor's current browser resolution and browser plugins supported.</description>
+						<inlineHelp>&lt;br&gt;&lt;strong&gt;Note: When enabled sets _paq.push([&quot;disableBrowserFeatureDetection&quot;]); and no browser features will be accessed.&lt;/strong&gt;</inlineHelp>
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
 						<name>cookieDomain</name>
 						<title>Cookie Domain</title>
 						<value />
