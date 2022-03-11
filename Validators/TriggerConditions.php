@@ -67,7 +67,7 @@ class TriggerConditions extends BaseValidator
                 throw new Exception(Piwik::translate('TagManager_ErrorArrayMissingValue', array('comparison', $titlePlural, $index)));
             }
 
-            if (!is_string($condition['expected']) || 0 === strlen($condition['expected'])) {
+            if (!isset($condition['expected']) || !is_string($condition['expected']) || 0 === strlen($condition['expected'])) {
                 throw new Exception(Piwik::translate('TagManager_ErrorArrayMissingValue', array('expected', $titlePlural, $index)));
             }
 
