@@ -14,6 +14,7 @@
       class="dateInput"
       :value="dateText"
       @keydown="onDateKeydown($event)"
+      @change="onDateKeydown($event)"
     />
   </div>
   <div class="col s12 m6 input-field">
@@ -23,7 +24,7 @@
       :name="`${name}_time`"
       :id="`${name}_time`"
       class="timeInput"
-      :model-value="timeText"
+      :value="timeText"
       @keydown="onTimeKeydown($event)"
     />
   </div>
@@ -34,6 +35,7 @@
 
 import { defineComponent } from 'vue';
 import { Matomo } from 'CoreHome';
+import ChangeEvent = JQuery.ChangeEvent;
 
 function prefixDateZeroIfNeeded(number: number) {
   let datePart = String(number);
@@ -160,7 +162,13 @@ export default defineComponent({
     $(this.$refs.dateInput as HTMLElement).datepicker({ ...datePickerOptions });
 
     // @ts-ignore
-    $(this.$refs.timeInput as HTMLElement).timepicker({ timeFormat: 'H:i:s' });
+    $(this.$refs.timeInput as HTMLElement)
+      .timepicker({ timeFormat: 'H:i:s' })
+      // timepicker triggers a jquery event, not a addEventListener event, so vue doesn't catch
+      // it
+      .on('change', (event) => {
+        this.onTimeKeydown(event);
+      });
   },
   computed: {
     dateText() {
@@ -189,7 +197,7 @@ export default defineComponent({
         this.onChange(value, this.timeText);
       });
     },
-    onTimeKeydown(event: KeyboardEvent) {
+    onTimeKeydown(event: KeyboardEvent|ChangeEvent) {
       setTimeout(() => {
         const { value } = (event.target as HTMLInputElement);
         if (this.timeText === value) {
