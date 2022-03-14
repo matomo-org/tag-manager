@@ -137,6 +137,10 @@
                         tracker.setSecureCookie(true);
                     }
 
+                    if (matomoConfig.disableBrowserFeatureDetection && typeof tracker.disableBrowserFeatureDetection === 'function') {
+                        tracker.disableBrowserFeatureDetection();
+                    }
+
                     if (matomoConfig.cookieSameSite) {
                         tracker.setCookieSameSite(matomoConfig.cookieSameSite);
                     }
