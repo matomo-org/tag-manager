@@ -4164,18 +4164,18 @@ function TagTriggerArrayvue_type_script_lang_ts_arrayLikeToArray(arr, len) { if 
 TagTriggerArrayvue_type_script_lang_ts.render = TagTriggerArrayvue_type_template_id_c1c05b4a_render
 
 /* harmony default export */ var TagTriggerArray = (TagTriggerArrayvue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Tag/TagDateInput.vue?vue&type=template&id=17f6bda0
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Tag/TagDateInput.vue?vue&type=template&id=cd8af1f4
 
-var TagDateInputvue_type_template_id_17f6bda0_hoisted_1 = {
+var TagDateInputvue_type_template_id_cd8af1f4_hoisted_1 = {
   class: "col s12 m6 input-field"
 };
-var TagDateInputvue_type_template_id_17f6bda0_hoisted_2 = ["name", "id", "value"];
-var TagDateInputvue_type_template_id_17f6bda0_hoisted_3 = {
+var TagDateInputvue_type_template_id_cd8af1f4_hoisted_2 = ["name", "id", "value"];
+var TagDateInputvue_type_template_id_cd8af1f4_hoisted_3 = {
   class: "col s12 m6 input-field"
 };
-var TagDateInputvue_type_template_id_17f6bda0_hoisted_4 = ["name", "id", "model-value"];
-function TagDateInputvue_type_template_id_17f6bda0_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", TagDateInputvue_type_template_id_17f6bda0_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
+var TagDateInputvue_type_template_id_cd8af1f4_hoisted_4 = ["name", "id", "value"];
+function TagDateInputvue_type_template_id_cd8af1f4_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", TagDateInputvue_type_template_id_cd8af1f4_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
     ref: "dateInput",
     type: "text",
     name: "".concat(_ctx.name, "_date"),
@@ -4184,20 +4184,23 @@ function TagDateInputvue_type_template_id_17f6bda0_render(_ctx, _cache, $props, 
     value: _ctx.dateText,
     onKeydown: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.onDateKeydown($event);
+    }),
+    onChange: _cache[1] || (_cache[1] = function ($event) {
+      return _ctx.onDateKeydown($event);
     })
-  }, null, 40, TagDateInputvue_type_template_id_17f6bda0_hoisted_2)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", TagDateInputvue_type_template_id_17f6bda0_hoisted_3, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
+  }, null, 40, TagDateInputvue_type_template_id_cd8af1f4_hoisted_2)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", TagDateInputvue_type_template_id_cd8af1f4_hoisted_3, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
     ref: "timeInput",
     type: "text",
     name: "".concat(_ctx.name, "_time"),
     id: "".concat(_ctx.name, "_time"),
     class: "timeInput",
-    "model-value": _ctx.timeText,
-    onKeydown: _cache[1] || (_cache[1] = function ($event) {
+    value: _ctx.timeText,
+    onKeydown: _cache[2] || (_cache[2] = function ($event) {
       return _ctx.onTimeKeydown($event);
     })
-  }, null, 40, TagDateInputvue_type_template_id_17f6bda0_hoisted_4)])], 64);
+  }, null, 40, TagDateInputvue_type_template_id_cd8af1f4_hoisted_4)])], 64);
 }
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Tag/TagDateInput.vue?vue&type=template&id=17f6bda0
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Tag/TagDateInput.vue?vue&type=template&id=cd8af1f4
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Tag/TagDateInput.vue?vue&type=script&lang=ts
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -4314,6 +4317,8 @@ var TagDateInputvue_type_script_lang_ts_window = window,
     modelValue: String
   },
   mounted: function mounted() {
+    var _this = this;
+
     var datePickerOptions = Object.assign(Object.assign({}, external_CoreHome_["Matomo"].getBaseDatePickerOptions(null)), {}, {
       minDate: new Date()
     });
@@ -4322,6 +4327,10 @@ var TagDateInputvue_type_script_lang_ts_window = window,
 
     TagDateInputvue_type_script_lang_ts_$(this.$refs.timeInput).timepicker({
       timeFormat: 'H:i:s'
+    }) // timepicker triggers a jquery event, not a addEventListener event, so vue doesn't catch
+    // it
+    .on('change', function (event) {
+      _this.onTimeKeydown(event);
     });
   },
   computed: {
@@ -4342,29 +4351,29 @@ var TagDateInputvue_type_script_lang_ts_window = window,
   },
   methods: {
     onDateKeydown: function onDateKeydown(event) {
-      var _this = this;
-
-      setTimeout(function () {
-        var value = event.target.value;
-
-        if (_this.dateText === value) {
-          return;
-        }
-
-        _this.onChange(value, _this.timeText);
-      });
-    },
-    onTimeKeydown: function onTimeKeydown(event) {
       var _this2 = this;
 
       setTimeout(function () {
         var value = event.target.value;
 
-        if (_this2.timeText === value) {
+        if (_this2.dateText === value) {
           return;
         }
 
-        _this2.onChange(_this2.dateText, value);
+        _this2.onChange(value, _this2.timeText);
+      });
+    },
+    onTimeKeydown: function onTimeKeydown(event) {
+      var _this3 = this;
+
+      setTimeout(function () {
+        var value = event.target.value;
+
+        if (_this3.timeText === value) {
+          return;
+        }
+
+        _this3.onChange(_this3.dateText, value);
       });
     },
     onChange: function onChange(date, time) {
@@ -4385,7 +4394,7 @@ var TagDateInputvue_type_script_lang_ts_window = window,
 
 
 
-TagDateInputvue_type_script_lang_ts.render = TagDateInputvue_type_template_id_17f6bda0_render
+TagDateInputvue_type_script_lang_ts.render = TagDateInputvue_type_template_id_cd8af1f4_render
 
 /* harmony default export */ var TagDateInput = (TagDateInputvue_type_script_lang_ts);
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/Tag/Tags.store.ts
