@@ -139,11 +139,6 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetSecureCookieTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetSecureCookieDescription');
             }),
-            $this->makeSetting('disableBrowserFeatureDetection', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionTitle');
-                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionDescription');
-                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionInLineHelp', array('<br><strong>', '</strong>'));
-            }),
             $this->makeSetting('cookieDomain', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCookieDomainTitle');
                 $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoCookieDomainInlineHelp', array('<br><strong>', '</strong>'));
@@ -170,6 +165,11 @@ class MatomoConfigurationVariable extends BaseVariable
                     'None' => 'None',
                     'Strict' => 'Strict',
                 );
+            }),
+            $this->makeSetting('disableBrowserFeatureDetection', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionDescription');
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionInLineHelp', array('<br><strong>', '<a href="https://matomo.org/faq/how-to/how-do-i-disable-browser-feature-detection-completely/" target="_blank">', '</a>', '</strong>'));
             }),
             $this->makeSetting('domains', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDomainsTitle');

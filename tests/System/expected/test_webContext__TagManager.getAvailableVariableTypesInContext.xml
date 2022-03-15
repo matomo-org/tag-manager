@@ -983,22 +983,6 @@
 						<condition />
 					</row>
 					<row>
-						<name>disableBrowserFeatureDetection</name>
-						<title>Disable Browser Feature Detection</title>
-						<value>0</value>
-						<defaultValue>0</defaultValue>
-						<type>boolean</type>
-						<uiControl>checkbox</uiControl>
-						<uiControlAttributes>
-						</uiControlAttributes>
-						<availableValues />
-						<description>Disable detection of visitor's current browser resolution and browser plugins supported.</description>
-						<inlineHelp>&lt;br&gt;&lt;strong&gt;Note: When enabled sets _paq.push([&quot;disableBrowserFeatureDetection&quot;]); and no browser features will be accessed.&lt;/strong&gt;</inlineHelp>
-						<templateFile />
-						<introduction />
-						<condition />
-					</row>
-					<row>
 						<name>cookieDomain</name>
 						<title>Cookie Domain</title>
 						<value />
@@ -1050,6 +1034,22 @@
 						</availableValues>
 						<description>Set the SameSite attribute for cookies to a custom value. You might want to use this if your site is running in an iframe since then it will only be able to access the cookies if SameSite is set to &quot;None&quot;. Choosing &quot;None&quot; will only work on HTTPS and will automatically also set the secure cookie. If your site is available under http and https, using &quot;None&quot; might lead to duplicate or incomplete visits.</description>
 						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
+						<name>disableBrowserFeatureDetection</name>
+						<title>Disable Browser Feature Detection</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>By default, Matomo accesses some information from the visitor’s browser like the browser resolution. Some privacy regulations may allow access of such information from the visitor’s device only after having a consent. If this applies to you, you can disable this feature.</description>
+						<inlineHelp>&lt;br&gt;&lt;strong&gt;To learn more, check this &lt;a href=&quot;https://matomo.org/faq/how-to/how-do-i-disable-browser-feature-detection-completely/&quot; target=&quot;_blank&quot;&gt;FAQ&lt;/a&gt;.&lt;/strong&gt;</inlineHelp>
 						<templateFile />
 						<introduction />
 						<condition />

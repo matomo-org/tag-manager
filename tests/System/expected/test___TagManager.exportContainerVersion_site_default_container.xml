@@ -85,10 +85,10 @@
 				<requireConsent>0</requireConsent>
 				<requireCookieConsent>0</requireCookieConsent>
 				<setSecureCookie>0</setSecureCookie>
-				<disableBrowserFeatureDetection>0</disableBrowserFeatureDetection>
 				<cookieDomain />
 				<cookiePath />
 				<cookieSameSite>Lax</cookieSameSite>
+				<disableBrowserFeatureDetection>0</disableBrowserFeatureDetection>
 				<domains>
 				</domains>
 				<alwaysUseSendBeacon>0</alwaysUseSendBeacon>

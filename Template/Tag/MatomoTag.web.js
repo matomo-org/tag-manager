@@ -117,40 +117,41 @@
                     }
                     configuredTrackers[variableName] = tracker;
 
-                    if (matomoConfig.disableCookies) {
-                        tracker.disableCookies();
-                    }
-
                     if (matomoConfig.requireCookieConsent) {
-                        tracker.requireCookieConsent();
-                    }
-
-                    if (matomoConfig.requireConsent) {
-                        tracker.requireConsent();
-                    }
-
-                    if (matomoConfig.enableCrossDomainLinking) {
-                        tracker.enableCrossDomainLinking();
-                    }
-
-                    if (matomoConfig.setSecureCookie) {
-                        tracker.setSecureCookie(true);
+                      	tracker.requireCookieConsent();
                     }
 
                     if (matomoConfig.disableBrowserFeatureDetection && typeof tracker.disableBrowserFeatureDetection === 'function') {
                         tracker.disableBrowserFeatureDetection();
                     }
 
+                    if (matomoConfig.disableCookies) {
+                        tracker.disableCookies();
+                    }
+
+                    if (matomoConfig.enableCrossDomainLinking) {
+                        tracker.enableCrossDomainLinking();
+                    }
+
+                    if (matomoConfig.requireConsent) {
+                        tracker.requireConsent();
+                    }
+
                     if (matomoConfig.cookieSameSite) {
                         tracker.setCookieSameSite(matomoConfig.cookieSameSite);
                     }
 
-                    if (matomoConfig.cookieDomain) {
-                        tracker.setCookieDomain(matomoConfig.cookieDomain);
+                    if (matomoConfig.setSecureCookie) {
+                        tracker.setSecureCookie(true);
                     }
 
                     if (matomoConfig.cookiePath) {
                         tracker.setCookiePath(matomoConfig.cookiePath);
+                    }
+
+
+                    if (matomoConfig.cookieDomain) {
+                        tracker.setCookieDomain(matomoConfig.cookieDomain);
                     }
 
                     if (matomoConfig.domains
