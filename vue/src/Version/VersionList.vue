@@ -241,6 +241,7 @@ export default defineComponent({
     };
   },
   created() {
+    AvailableEnvironmentsStore.init();
     VersionsStore.fetchVersions(this.idContainer);
   },
   methods: {

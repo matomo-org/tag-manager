@@ -6,7 +6,7 @@
  */
 
 import { reactive, computed, readonly } from 'vue';
-import { AjaxHelper, lazyInitSingleton } from 'CoreHome';
+import { AjaxHelper } from 'CoreHome';
 
 interface Comparison {
   id: string;
@@ -34,13 +34,19 @@ class AvailableComparisonsStore {
     ({ id, name }) => ({ key: id, value: name }),
   ));
 
-  constructor() {
-    this.fetchAvailableComparisons();
+  private initializePromise: Promise<void>|null = null;
+
+  init() {
+    if (!this.initializePromise) {
+      this.initializePromise = this.fetchAvailableComparisons();
+    }
+
+    return this.initializePromise;
   }
 
   private fetchAvailableComparisons() {
     this.privateState.isLoading = true;
-    AjaxHelper.fetch<Comparison[]>({
+    return AjaxHelper.fetch<Comparison[]>({
       method: 'TagManager.getAvailableComparisons',
       filter_limit: '-1',
     }).then((comparisons) => {
@@ -51,4 +57,4 @@ class AvailableComparisonsStore {
   }
 }
 
-export default lazyInitSingleton(AvailableComparisonsStore) as AvailableComparisonsStore;
+export default new AvailableComparisonsStore();

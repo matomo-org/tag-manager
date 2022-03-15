@@ -6,7 +6,7 @@
  */
 
 import { reactive, computed, readonly } from 'vue';
-import { AjaxHelper, lazyInitSingleton } from 'CoreHome';
+import { AjaxHelper } from 'CoreHome';
 
 interface Context {
   id: string;
@@ -34,13 +34,19 @@ class AvailableContextStore {
     ({ id, name }) => ({ key: id, value: name }),
   ));
 
-  constructor() {
-    this.fetchAvailableContexts();
+  private initializePromise: Promise<void>|null = null;
+
+  init() {
+    if (!this.initializePromise) {
+      this.initializePromise = this.fetchAvailableContexts();
+    }
+
+    return this.initializePromise;
   }
 
   private fetchAvailableContexts() {
     this.privateState.isLoading = true;
-    AjaxHelper.fetch<Context[]|Record<string, Context>>({
+    return AjaxHelper.fetch<Context[]|Record<string, Context>>({
       method: 'TagManager.getAvailableContexts',
       filter_limit: '-1',
     }).then((contexts) => {
@@ -58,4 +64,4 @@ class AvailableContextStore {
   }
 }
 
-export default lazyInitSingleton(AvailableContextStore) as AvailableContextStore;
+export default new AvailableContextStore();

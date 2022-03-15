@@ -313,6 +313,8 @@ export default defineComponent({
   },
   emits: ['changeVariable'],
   created() {
+    AvailableComparisonsStore.init();
+
     // needed for suggestNameForType() to make sure it is aware of all names
     VariablesStore.fetchVariablesIfNotLoaded(this.idContainer, this.idContainerVersion);
 

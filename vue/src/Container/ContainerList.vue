@@ -155,6 +155,7 @@ export default defineComponent({
     ContentTable,
   },
   created() {
+    AvailableContextsStore.init();
     ContainersStore.fetchContainers();
   },
   computed: {
