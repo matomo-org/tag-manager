@@ -133,10 +133,6 @@
                         tracker.enableCrossDomainLinking();
                     }
 
-                    if (matomoConfig.requireConsent) {
-                        tracker.requireConsent();
-                    }
-
                     if (matomoConfig.cookieSameSite) {
                         tracker.setCookieSameSite(matomoConfig.cookieSameSite);
                     }
@@ -179,6 +175,11 @@
                     if (matomoConfig.enableLinkTracking) {
                         tracker.enableLinkTracking();
                     }
+
+                    if (matomoConfig.requireConsent) {
+                        tracker.requireConsent();
+                    }
+
                     if (matomoConfig.enableDoNotTrack) {
                         tracker.setDoNotTrack(1);
                     }

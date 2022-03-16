@@ -169,7 +169,7 @@ class MatomoConfigurationVariable extends BaseVariable
             $this->makeSetting('disableBrowserFeatureDetection', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionDescription');
-                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionInLineHelp', array('<br><strong>', '<a href="https://matomo.org/faq/how-to/how-do-i-disable-browser-feature-detection-completely/" target="_blank">', '</a>', '</strong>'));
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionInLineHelp', array('<br><strong>', '<a href="https://matomo.org/faq/how-to/how-do-i-disable-browser-feature-detection-completely/" target="_blank" rel="noreferrer noopener">', '</a>', '</strong>'));
             }),
             $this->makeSetting('domains', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDomainsTitle');
