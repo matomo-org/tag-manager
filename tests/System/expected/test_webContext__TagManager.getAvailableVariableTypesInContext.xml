@@ -1039,6 +1039,22 @@
 						<condition />
 					</row>
 					<row>
+						<name>disableBrowserFeatureDetection</name>
+						<title>Disable Browser Feature Detection</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>By default, Matomo accesses some information from the visitor’s browser like the browser resolution. Some privacy regulations may allow access of such information from the visitor’s device only after having a consent. If this applies to you, you can disable this feature.</description>
+						<inlineHelp>&lt;br&gt;&lt;strong&gt;To learn more, check this &lt;a href=&quot;https://matomo.org/faq/how-to/how-do-i-disable-browser-feature-detection-completely/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;FAQ&lt;/a&gt;.&lt;/strong&gt;</inlineHelp>
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
+					<row>
 						<name>domains</name>
 						<title>Domains</title>
 						<value>

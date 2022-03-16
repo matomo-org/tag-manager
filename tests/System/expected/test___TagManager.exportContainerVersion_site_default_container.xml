@@ -88,6 +88,7 @@
 				<cookieDomain />
 				<cookiePath />
 				<cookieSameSite>Lax</cookieSameSite>
+				<disableBrowserFeatureDetection>0</disableBrowserFeatureDetection>
 				<domains>
 				</domains>
 				<alwaysUseSendBeacon>0</alwaysUseSendBeacon>
