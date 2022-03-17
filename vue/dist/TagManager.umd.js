@@ -4599,7 +4599,8 @@ var Tags_store_TagsStore = /*#__PURE__*/function () {
         startDate: tag.start_date,
         endDate: tag.end_date,
         fireLimit: tag.fire_limit,
-        fireDelay: tag.fire_delay
+        fireDelay: tag.fire_delay,
+        priority: tag.priority
       }, {
         parameters: parameters,
         fireTriggerIds: fireTriggerIds,
