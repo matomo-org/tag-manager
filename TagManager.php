@@ -40,6 +40,11 @@ class TagManager extends \Piwik\Plugin
 {
     public static $enableAutoContainerCreation = true;
 
+    public function shouldLoadUmdOnDemand()
+    {
+        return true;
+    }
+
     public function registerEvents()
     {
         return array(
@@ -557,6 +562,7 @@ class TagManager extends \Piwik\Plugin
     {
         $jsFiles[] = "plugins/TagManager/libs/jquery-timepicker/jquery.timepicker.min.js";
         $jsFiles[] = "plugins/TagManager/javascripts/tagmanagerHelper.js";
+        $jsFiles[] = "plugins/TagManager/angularjs/vue-adapters.js";
     }
 
     private function hasMeasurableTypeWebsite($idSite)

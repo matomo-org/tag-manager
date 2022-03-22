@@ -3,7 +3,8 @@
     tagManagerHelper.editTrigger = function ($scope, idContainer, idContainerVersion, idTag, callback) {
       var createVNode = Vue.createVNode;
       var createVueApp = CoreHome.createVueApp;
-      var TriggerEdit = TagManager.TriggerEdit;
+      var useExternalPluginComponent = CoreHome.useExternalPluginComponent;
+      var TriggerEdit = useExternalPluginComponent('TagManager', 'TriggerEdit');
 
       var template = $('<div class="tag-ui-confirm"><div></div><input role="no" type="button" value="'
         + _pk_translate('General_Cancel') +'"/></div>')
@@ -47,7 +48,8 @@
     tagManagerHelper.editVersion = function ($scope, idContainer, idContainerVersion, callback) {
       var createVNode = Vue.createVNode;
       var createVueApp = CoreHome.createVueApp;
-      var VersionEdit = TagManager.VersionEdit;
+      var useExternalPluginComponent = CoreHome.useExternalPluginComponent;
+      var VersionEdit = useExternalPluginComponent('TagManager', 'VersionEdit');
 
       var template = $('<div class="tag-ui-confirm ui-confirm"><div></div><input role="no" type="button" value="'
         + _pk_translate('General_Cancel') +'"/></div>')
@@ -85,7 +87,8 @@
     tagManagerHelper.editVariable = function (ignored, idContainer, idContainerVersion, idVariable, callback, variableType) {
         var createVNode = Vue.createVNode;
         var createVueApp = CoreHome.createVueApp;
-        var VariableEdit = TagManager.VariableEdit;
+        var useExternalPluginComponent = CoreHome.useExternalPluginComponent;
+        var VariableEdit = useExternalPluginComponent('TagManager', 'VariableEdit');
 
         var template = $('<div class="tag-ui-confirm"><div></div><input role="no" type="button" value="'
           + _pk_translate('General_Cancel') +'"/></div>')
@@ -173,7 +176,8 @@
     tagManagerHelper.showInstallCode = function (idContainer) {
       var createVNode = Vue.createVNode;
       var createVueApp = CoreHome.createVueApp;
-      var ManageInstallTagCode = TagManager.ManageInstallTagCode;
+      var useExternalPluginComponent = CoreHome.useExternalPluginComponent;
+      var ManageInstallTagCode = useExternalPluginComponent('TagManager', 'ManageInstallTagCode');
 
       var template = $('<div class="tag-ui-confirm" ui-confirm><div></div><input role="no" '
         + 'type="button" value="' + _pk_translate('General_Cancel') +'"/>')
@@ -255,7 +259,8 @@
     tagManagerHelper.importVersion = function ($scope, idContainer) {
         var createVNode = Vue.createVNode;
         var createVueApp = CoreHome.createVueApp;
-        var ImportVersion = TagManager.ImportVersion;
+        var useExternalPluginComponent = CoreHome.useExternalPluginComponent;
+        var ImportVersion = useExternalPluginComponent('TagManager', 'ImportVersion');
 
         var template = $('<div class="ui-confirm"><div></div><input role="no" type="button" value="'
           + _pk_translate('General_Cancel') +'"/></div>')
