@@ -183,20 +183,20 @@
                 <div class="form-help">
                 <span class="inline-help">
                   <span>
-                    <span v-html="translate(
+                    <span v-html="$sanitize(translate(
                       'TagManager_TagStartDateHelp',
                       '&lt;strong&gt;',
                       '&lt;/strong&gt;'
-                    )" />
+                    ))" />
                     <br />
                     <span
                       class="currentLocalTime"
-                      v-html="translate(
+                      v-html="$sanitize(translate(
                         'TagManager_CurrentTimeInLocalTimezone',
                         '&lt;strong&gt;',
                         currentTime,
                         '&lt;/strong&gt;',
-                      )"
+                      ))"
                     />
                   </span>
                 </span>
@@ -226,20 +226,20 @@
                 <div class="form-help">
                 <span class="inline-help">
                   <span>
-                    <span v-html="translate(
+                    <span v-html="$sanitize(translate(
                       'TagManager_TagEndDateHelp',
                       '&lt;strong&gt;',
                       '&lt;/strong&gt;',
-                    )" />
+                    ))" />
                     <br />
                     <span
                       class="currentLocalTime"
-                      v-html="translate(
+                      v-html="$sanitize(translate(
                         'TagManager_CurrentTimeInLocalTimezone',
                         '&lt;strong&gt;',
                         currentTime,
                         '&lt;/strong&gt;',
-                      )"
+                      ))"
                     />
                   </span>
                 </span>
