@@ -101,25 +101,28 @@
 
             var src = TagManager.dom.getElementAttribute(element, 'src');
             if (src) {
-                newScript.src = src;
+                newScript.setAttribute('src', src);
             } else {
-                newScript.text = element.text || element.textContent || element.innerHTML || '';
+                newScript.setAttribute('text', (element.text || element.textContent || element.innerHTML || ''));
             }
 
-            if (element.id) {
-                newScript.id = element.id;
+            if (element.hasAttribute('id')) {
+                newScript.setAttribute('id', element.getAttribute('id'));
             }
-            if (element.charset) {
-                newScript.charset = element.charset;
+            if (element.hasAttribute('charset')) {
+                newScript.setAttribute('charset', element.getAttribute('charset'));
             }
-            if (element.defer) {
-                newScript.defer = element.defer;
+            if (element.hasAttribute('defer')) {
+                newScript.setAttribute('defer', element.getAttribute('defer'));
             }
-            if (element.async) {
-                newScript.async = element.async;
+            if (element.hasAttribute('async')) {
+                newScript.setAttribute('async',element.getAttribute('async'));
+            }
+            if (element.hasAttribute('onload')) {
+                newScript.setAttribute('onload', element.getAttribute('onload'));
             }
 
-            newScript.type = "text/javascript";
+            newScript.setAttribute('type', 'text/javascript');
 
             return newScript;
         }
@@ -141,11 +144,14 @@
             return element && element.innerHTML && element.innerHTML.toLowerCase().indexOf("<script") !== -1;
         }
 
-        function insertNode(parent, child, append)
+        function insertNode(parent, child, append, previousElement)
         {
             if (append || !parent.firstChild) {
-                parent.appendChild(child);
+                return parent.appendChild(child);
             } else {
+                if (previousElement) {
+                    return previousElement.parentNode.insertBefore(child, previousElement.nextSibling);
+                }
                 parent.insertBefore(child, parent.firstChild);
             }
         }
@@ -155,6 +161,7 @@
             var limit = 5000; // prevent endless loop
             var counter = 0;
             var child;
+            var previousElement = '';
 
             while (counter in children && children[counter] && counter < limit) {
                 child = children[counter];
@@ -162,16 +169,16 @@
 
                 if (isJavaScriptElement(child)) {
                     // we have to re-create the element, otherwise wouldn't be executed
-                    insertNode(parent, cloneScript(child), append);
+                    previousElement = insertNode(parent, cloneScript(child), append);
                 } else if (doChildrenContainJavaScript(child)) {
                     // it contains at least one script, we better move them individually...
                     // first we remove all children from the element to have only the plain element left
                     var subChildren = moveChildrenToArray(child);
-                    insertNode(parent, child, append);
+                    previousElement = insertNode(parent, child, append);
                     // then we move all nodes indidivdually into it
                     moveNodes(child, subChildren);
                 } else {
-                    insertNode(parent, child, append);
+                    previousElement = insertNode(parent, child, append);
                 }
             }
         }
