@@ -103,7 +103,7 @@
             if (src) {
                 newScript.setAttribute('src', src);
             } else {
-                newScript.setAttribute('text', (element.text || element.textContent || element.innerHTML || ''));
+                newScript.text = element.text || element.textContent || element.innerHTML || '';
             }
 
             if (element.hasAttribute('id')) {
@@ -121,8 +121,9 @@
             if (element.hasAttribute('onload')) {
                 newScript.setAttribute('onload', element.getAttribute('onload'));
             }
-
-            newScript.setAttribute('type', 'text/javascript');
+            if (element.hasAttribute('type')) {
+                newScript.setAttribute('type', element.getAttribute('type'));
+            }
 
             return newScript;
         }
@@ -152,7 +153,8 @@
                 if (previousElement) {
                     return previousElement.parentNode.insertBefore(child, previousElement.nextSibling);
                 }
-                parent.insertBefore(child, parent.firstChild);
+
+                return parent.insertBefore(child, parent.firstChild);
             }
         }
 
@@ -161,7 +163,7 @@
             var limit = 5000; // prevent endless loop
             var counter = 0;
             var child;
-            var previousElement = '';
+            var previousElement = null;
 
             while (counter in children && children[counter] && counter < limit) {
                 child = children[counter];
@@ -169,16 +171,16 @@
 
                 if (isJavaScriptElement(child)) {
                     // we have to re-create the element, otherwise wouldn't be executed
-                    previousElement = insertNode(parent, cloneScript(child), append);
+                    previousElement = insertNode(parent, cloneScript(child), append, previousElement);
                 } else if (doChildrenContainJavaScript(child)) {
                     // it contains at least one script, we better move them individually...
                     // first we remove all children from the element to have only the plain element left
                     var subChildren = moveChildrenToArray(child);
-                    previousElement = insertNode(parent, child, append);
+                    previousElement = insertNode(parent, child, append, previousElement);
                     // then we move all nodes indidivdually into it
                     moveNodes(child, subChildren);
                 } else {
-                    previousElement = insertNode(parent, child, append);
+                    previousElement = insertNode(parent, child, append, previousElement);
                 }
             }
         }
