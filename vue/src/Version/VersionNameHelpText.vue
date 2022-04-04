@@ -13,10 +13,10 @@
     <br /><br />
     <span
       v-show="lastVersion"
-      v-html="translate(
+      v-html="$sanitize(translate(
               'TagManager_NameOfLatestVersion',
               `<strong>${lastVersion}</strong>`,
-            )"
+            ))"
     ></span>
   </div>
 </template>
