@@ -25,6 +25,10 @@
           <li :class="{'active': (contentTab === 'logs')}">
             <a @click="contentTab = 'logs'">Logs</a>
           </li>
+          <li class="pull-right">
+            <a id="mtmUpdateDebugPosition"
+               @click="mtmUpdateDebugPosition()">{{ positionText }}</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -240,6 +244,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { defineComponent, reactive } from 'vue';
+import {
+  setCookie, getCookie,
+} from 'CoreHome';
 
 interface TagDebugData {
   action: string;
@@ -293,6 +300,7 @@ window.mtmDbgData = reactive<MtmData>({
   mtmLogs: window.mtmDbgData?.mtmLogs || [],
 }) as unknown as MtmData;
 
+const cookieName = 'mtmPreviewPosition';
 export default defineComponent({
   data(): DebuggingState {
     return {
@@ -302,6 +310,13 @@ export default defineComponent({
     };
   },
   methods: {
+    mtmUpdateDebugPosition() {
+      const sevenDays = 7 * 60 * 60 * 24 * 1000;
+      const currentCookieValue = getCookie(cookieName);
+      const cookieValue = (currentCookieValue === 'top' ? 'bottom' : 'top');
+      setCookie(cookieName, cookieValue, sevenDays);
+      window.parent.location.reload();
+    },
     selectEvent(eventIndex: number) {
       if (!this.mtmEvents[eventIndex]) {
         return;
@@ -311,6 +326,9 @@ export default defineComponent({
     },
   },
   computed: {
+    positionText(): string {
+      return getCookie(cookieName) === 'top' ? 'Stick to Bottom' : 'Stick to Top';
+    },
     homeTabTitle(): string {
       if (!this.selectedEvent?.container) {
         return '';
