@@ -224,7 +224,7 @@
 				<type>UtcDate</type>
 				<name>UTC Date</name>
 				<category>Date</category>
-				<description>The current data in UTC, for example &quot;Mon, 19 Mar 2018 14:00:00 GMT&quot;.</description>
+				<description>The current date in UTC, for example &quot;Mon, 19 Mar 2018 14:00:00 GMT&quot;.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
