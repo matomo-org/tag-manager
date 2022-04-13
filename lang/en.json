@@ -563,7 +563,7 @@
         "UseCustomTemplateCapabilityRequired": "This is a Custom Template which can only be created or edited by an \"Admin\" or a user with the \"%1$s\" capability",
         "UserAgentVariableDescription": "Gets the value of the user agent which includes the operating system and browser information about the current visitors' device.",
         "UserAgentVariableName": "User Agent",
-        "UtcDateVariableDescription": "The current data in UTC, for example \"Mon, 19 Mar 2018 14:00:00 GMT\".",
+        "UtcDateVariableDescription": "The current date in UTC, for example \"Mon, 19 Mar 2018 14:00:00 GMT\".",
         "UtcDateVariableName": "UTC Date",
         "Variable": "Variable",
         "VariableBeingUsedBy": "The variable is currently being used in the following places:",
