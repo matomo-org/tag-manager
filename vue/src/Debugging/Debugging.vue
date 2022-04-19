@@ -282,6 +282,7 @@ interface DebuggingState {
   contentTab: string;
   selectedEventIndex: number;
   onlyfiredTags: boolean;
+  positionText: string;
 }
 
 interface MtmData {
@@ -301,12 +302,15 @@ window.mtmDbgData = reactive<MtmData>({
 }) as unknown as MtmData;
 
 const cookieName = 'mtmPreviewPosition';
+const stickyTextTop = 'Stick to Top';
+const stickyTextBottom = 'Stick to Bottom';
 export default defineComponent({
   data(): DebuggingState {
     return {
       contentTab: 'tags',
       selectedEventIndex: 0,
       onlyfiredTags: false,
+      positionText: (getCookie(cookieName) === 'top' ? stickyTextBottom : stickyTextTop),
     };
   },
   methods: {
@@ -315,7 +319,16 @@ export default defineComponent({
       const currentCookieValue = getCookie(cookieName);
       const cookieValue = (currentCookieValue === 'top' ? 'bottom' : 'top');
       setCookie(cookieName, cookieValue, sevenDays);
-      window.parent.location.reload();
+      const iframe = window.parent.document.getElementById('mtmDebugFrame');
+      if (cookieValue === 'top') {
+        this.positionText = stickyTextBottom;
+        iframe!.classList.remove('mtmStickyBottom');
+        iframe!.classList.add('mtmStickyTop');
+      } else {
+        this.positionText = stickyTextTop;
+        iframe!.classList.remove('mtmStickyTop');
+        iframe!.classList.add('mtmStickyBottom');
+      }
     },
     selectEvent(eventIndex: number) {
       if (!this.mtmEvents[eventIndex]) {
@@ -326,9 +339,6 @@ export default defineComponent({
     },
   },
   computed: {
-    positionText(): string {
-      return getCookie(cookieName) === 'top' ? 'Stick to Bottom' : 'Stick to Top';
-    },
     homeTabTitle(): string {
       if (!this.selectedEvent?.container) {
         return '';

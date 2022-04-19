@@ -7,21 +7,8 @@ function htmlToElement(content)
 
 function createDebugFrame()
 {
-    var position = 'fixed';
-    if (CSS && typeof CSS.supports === 'function') {
-        if (CSS.supports("position", "sticky")) {
-            position = 'sticky';
-        } else if (CSS.supports("position", "-webkit-sticky")) {
-            position = '-webkit-sticky';
-        }
-    }
-    var top = 'initial';
-    var bottom = '0';
-    if (stickToTop()) {
-        top = '0';
-        bottom = 'initial';
-    }
-    return htmlToElement('<iframe id="mtmDebugFrame" src="about:blank" frameborder="0" style="background-color:#edecec !important; clip: initial !important; display: inline !important; height:33% !important; opacity: 1 !important; visibility:visible !important; padding:0 !important; margin:0 !important; border:0 !important; border-top: 2px solid #fff !important; position:' + position + ' !important; bottom:' +bottom+ ' !important; left:0 !important; top:' +top+ ' !important; width:100% !important; z-index:999999999 !important;min-height: 18rem;"></iframe>');
+    var iframeClass = stickToTop() ? 'mtmStickyTop' : 'mtmStickyBottom';
+    return htmlToElement('<iframe class="'+ iframeClass +'" id="mtmDebugFrame" src="about:blank" frameborder="0" style="background-color:#edecec !important; clip: initial !important; display: inline !important; height:33% !important; opacity: 1 !important; visibility:visible !important; padding:0 !important; margin:0 !important; border:0 !important; border-top: 2px solid #fff !important; position:fixed !important; left:0 !important; width:100% !important; z-index:999999999 !important;min-height: 18rem;"></iframe>');
 }
 
 function stickToTop() {
@@ -63,13 +50,10 @@ function renderPreviewFrame(theContent)
     if (!previewFrame) {
         // might already exist when embedding multiple containers
         previewFrame = createDebugFrame();
-        if (stickToTop()) {
-            var text = "Stick to Bottom";
-            document.body.prepend(previewFrame);
-        } else {
-            var text = "Stick to Top";
-            document.body.appendChild(previewFrame);
-        }
+        var sheet = document.createElement('style');
+        sheet.innerHTML = ".mtmStickyBottom { bottom: 0 !important; } .mtmStickyTop { top: 0 !important; }";
+        document.body.prepend(sheet);
+        document.body.prepend(previewFrame);
 
         var theDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
 
