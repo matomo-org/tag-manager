@@ -25,6 +25,10 @@
           <li :class="{'active': (contentTab === 'logs')}">
             <a @click="contentTab = 'logs'">Logs</a>
           </li>
+          <li class="pull-right">
+            <a id="mtmUpdateDebugPosition"
+               @click="mtmUpdateDebugPosition()">{{ positionText }}</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -240,6 +244,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { defineComponent, reactive } from 'vue';
+import {
+  setCookie, getCookie,
+} from 'CoreHome';
 
 interface TagDebugData {
   action: string;
@@ -275,6 +282,7 @@ interface DebuggingState {
   contentTab: string;
   selectedEventIndex: number;
   onlyfiredTags: boolean;
+  positionText: string;
 }
 
 interface MtmData {
@@ -293,15 +301,35 @@ window.mtmDbgData = reactive<MtmData>({
   mtmLogs: window.mtmDbgData?.mtmLogs || [],
 }) as unknown as MtmData;
 
+const cookieName = 'mtmPreviewPosition';
+const stickyTextTop = 'Stick to Top';
+const stickyTextBottom = 'Stick to Bottom';
 export default defineComponent({
   data(): DebuggingState {
     return {
       contentTab: 'tags',
       selectedEventIndex: 0,
       onlyfiredTags: false,
+      positionText: (getCookie(cookieName) === 'top' ? stickyTextBottom : stickyTextTop),
     };
   },
   methods: {
+    mtmUpdateDebugPosition() {
+      const sevenDays = 7 * 60 * 60 * 24 * 1000;
+      const currentCookieValue = getCookie(cookieName);
+      const cookieValue = (currentCookieValue === 'top' ? 'bottom' : 'top');
+      setCookie(cookieName, cookieValue, sevenDays);
+      const iframe = window.parent.document.getElementById('mtmDebugFrame');
+      if (cookieValue === 'top') {
+        this.positionText = stickyTextBottom;
+        iframe!.classList.remove('mtmStickyBottom');
+        iframe!.classList.add('mtmStickyTop');
+      } else {
+        this.positionText = stickyTextTop;
+        iframe!.classList.remove('mtmStickyTop');
+        iframe!.classList.add('mtmStickyBottom');
+      }
+    },
     selectEvent(eventIndex: number) {
       if (!this.mtmEvents[eventIndex]) {
         return;
