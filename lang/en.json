@@ -412,7 +412,7 @@
         "MatomoConfigurationMatomoJsEndpointDescription": "Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the \"Bundle Tracker\" option.",
         "MatomoConfigurationMatomoTrackingEndpointTitle": "Tracking Request Target Path",
         "MatomoConfigurationMatomoTrackingEndpointDescription": "Here you can configure the target path for tracking requests.",
-        "MatomoTagDescription": "Matomo, formerly known as Piwik, is the leading open source analytics platform.",
+        "MatomoTagDescription": "Matomo is the leading open source analytics platform.",
         "MatomoTagHelp": "This tag lets you track pageviews and events into your Matomo. You can customize the tracking to your needs.",
         "MatomoTagName": "Matomo Analytics",
         "MetaContentVariableDescription": "Reads a value from a \"meta\" HTML element.",
