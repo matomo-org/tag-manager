@@ -21,7 +21,7 @@ class PageHostnameVariable extends BasePreConfiguredVariable
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('window.location.hostname');
+                return $this->makeReturnTemplateMethod('parameters.window.location.hostname');
         }
     }
 
