@@ -8,7 +8,7 @@ function htmlToElement(content)
 function createDebugFrame()
 {
     var iframeClass = stickToTop() ? 'mtmStickyTop' : 'mtmStickyBottom';
-    return htmlToElement('<iframe class="'+ iframeClass +'" id="mtmDebugFrame" src="about:blank" frameborder="0" style="cursor: row-resize !important; background-color:#edecec !important; clip: initial !important; display: inline !important; height: ' + getHeight() + '; opacity: 1 !important; visibility:visible !important; padding:0 !important; margin:0 !important; position:fixed !important; left:0 !important; width:100% !important; z-index:999999999 !important;min-height: 18rem;"></iframe>');
+    return htmlToElement('<iframe class="'+ iframeClass +'" id="mtmDebugFrame" src="about:blank" frameborder="0" style="cursor: row-resize !important; background-color:#edecec !important; clip: initial !important; display: inline !important; height: ' + getHeight() + '; opacity: 1 !important; visibility:visible !important; padding:0 !important; margin:0 !important; position:fixed !important; left:0 !important; width:100% !important; z-index:999999999 !important;min-height: 10%;"></iframe>');
 }
 
 function hasCookie(cookie) {
@@ -42,9 +42,7 @@ function setSize( size ) {
 }
 
 function makeResizable(previewFrame) {
-
     function mouseDownListener(e) {
-
         e.preventDefault();
 
         var pointerEvents = previewFrame.style.pointerEvents;
