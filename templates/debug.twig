@@ -50,6 +50,8 @@
         var piwik_translations = {};
     </script>
     <script type="text/javascript">
+        window.piwik = window.piwik || {};
+        window.piwik.isPagesComparisonApiDisabled = true; // Disable API.getPagesComparisonsDisabledFor call
         window.mtmDbgData = {
             mtmEvents: [],
             mtmLogs: []
