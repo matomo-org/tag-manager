@@ -15,8 +15,8 @@
 
     window._paq = window._paq || [];
 
-    if ('object' !== typeof window.piwikPluginAsyncInit) {
-        window.piwikPluginAsyncInit = [];
+    if ('object' !== typeof window.matomoPluginAsyncInit) {
+        window.matomoPluginAsyncInit = [];
     }
 
     function executeCallbacks() {
@@ -29,7 +29,7 @@
         callbacks.callbacks = [];
     }
 
-    window.piwikPluginAsyncInit.push(function () {
+    window.matomoPluginAsyncInit.push(function () {
         libAvailable = true;
         executeCallbacks();
     });
