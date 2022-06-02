@@ -184,7 +184,7 @@
               <tr>
                 <td style="word-break: break-all">
                   {{ selectedEvent?.container?.dataLayer
-                    && JSON.stringify(selectedEvent.container.dataLayer) }}
+                    && JSON.stringify(selectedEvent.container.dataLayer, getCircularReplacer) }}
                 </td>
               </tr>
               </tbody>
@@ -210,7 +210,9 @@
                 >
                   <td>{{ variable.name }}</td>
                   <td>{{ variable.type }}</td>
-                  <td style="word-break: break-all">{{ JSON.stringify(variable.value) }}</td>
+                  <td style="word-break: break-all">
+                    {{ JSON.stringify(variable.value, getCircularReplacer) }}
+                  </td>
                 </tr>
               </tbody>
             </table>
