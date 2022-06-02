@@ -170,7 +170,8 @@
               <tbody>
               <tr>
                 <td style="word-break: break-all">
-                  {{ selectedEvent?.eventData && JSON.stringify(selectedEvent.eventData) }}
+                  {{ selectedEvent?.eventData &&
+                  JSON.stringify(selectedEvent.eventData, getCircularReplacer) }}
                 </td>
               </tr>
               </tbody>
@@ -329,6 +330,22 @@ export default defineComponent({
         iframe!.classList.remove('mtmStickyTop');
         iframe!.classList.add('mtmStickyBottom');
       }
+    },
+    getCircularReplacer() {
+      const seen = new WeakSet();
+      function circular(key: string, value: any) {
+        if (typeof value === 'object' && value !== null) {
+          if (seen.has(value)) {
+            return '';
+          }
+          seen.add(value);
+        }
+        if (typeof value === 'object' && value instanceof Node) {
+          return value.nodeName;
+        }
+        return value;
+      }
+      return circular;
     },
     selectEvent(eventIndex: number) {
       if (!this.mtmEvents[eventIndex]) {
