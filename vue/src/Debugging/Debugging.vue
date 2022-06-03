@@ -171,7 +171,7 @@
               <tr>
                 <td style="word-break: break-all">
                   {{ selectedEvent?.eventData &&
-                  JSON.stringify(selectedEvent.eventData, getCircularReplacer) }}
+                  JSON.stringify(selectedEvent.eventData, getCircularReplacer()) }}
                 </td>
               </tr>
               </tbody>
@@ -184,7 +184,7 @@
               <tr>
                 <td style="word-break: break-all">
                   {{ selectedEvent?.container?.dataLayer
-                    && JSON.stringify(selectedEvent.container.dataLayer, getCircularReplacer) }}
+                    && JSON.stringify(selectedEvent.container.dataLayer, getCircularReplacer()) }}
                 </td>
               </tr>
               </tbody>
@@ -211,7 +211,7 @@
                   <td>{{ variable.name }}</td>
                   <td>{{ variable.type }}</td>
                   <td style="word-break: break-all">
-                    {{ JSON.stringify(variable.value, getCircularReplacer) }}
+                    {{ JSON.stringify(variable.value, getCircularReplacer()) }}
                   </td>
                 </tr>
               </tbody>
@@ -341,9 +341,6 @@ export default defineComponent({
             return '';
           }
           seen.add(value);
-        }
-        if (typeof value === 'object' && value instanceof Node) {
-          return value.nodeName;
         }
         return value;
       }
