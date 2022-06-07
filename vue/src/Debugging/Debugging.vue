@@ -170,21 +170,20 @@
               <tbody>
               <tr>
                 <td style="word-break: break-all">
-                  {{ selectedEvent?.eventData &&
-                  JSON.stringify(selectedEvent.eventData, getCircularReplacer()) }}
+                  {{ selectedEventData }}
                 </td>
               </tr>
               </tbody>
             </table>
 
+            <br>
             <h3>Content after this event</h3>
 
             <table class="entityTable">
               <tbody>
               <tr>
                 <td style="word-break: break-all">
-                  {{ selectedEvent?.container?.dataLayer
-                    && JSON.stringify(selectedEvent.container.dataLayer, getCircularReplacer()) }}
+                  {{ selectedEventContainerDataLayer }}
                 </td>
               </tr>
               </tbody>
@@ -211,7 +210,7 @@
                   <td>{{ variable.name }}</td>
                   <td>{{ variable.type }}</td>
                   <td style="word-break: break-all">
-                    {{ JSON.stringify(variable.value, getCircularReplacer()) }}
+                    {{ stringifySelectedVariable(variable) }}
                   </td>
                 </tr>
               </tbody>
@@ -333,6 +332,13 @@ export default defineComponent({
         iframe!.classList.add('mtmStickyBottom');
       }
     },
+    selectEvent(eventIndex: number) {
+      if (!this.mtmEvents[eventIndex]) {
+        return;
+      }
+
+      this.selectedEventIndex = eventIndex;
+    },
     getCircularReplacer() {
       const seen = new WeakSet();
       function circular(key: string, value: any) {
@@ -346,12 +352,8 @@ export default defineComponent({
       }
       return circular;
     },
-    selectEvent(eventIndex: number) {
-      if (!this.mtmEvents[eventIndex]) {
-        return;
-      }
-
-      this.selectedEventIndex = eventIndex;
+    stringifySelectedVariable(variable: any) {
+      return JSON.stringify(variable.value, this.getCircularReplacer());
     },
   },
   computed: {
@@ -402,6 +404,14 @@ export default defineComponent({
     },
     mtmLogs(): MtmLog[] {
       return window.mtmDbgData.mtmLogs;
+    },
+    selectedEventData(): string {
+      return this.selectedEvent?.eventData
+        && JSON.stringify(this.selectedEvent.eventData, this.getCircularReplacer());
+    },
+    selectedEventContainerDataLayer(): string {
+      return this.selectedEvent?.container?.dataLayer
+        && JSON.stringify(this.selectedEvent.container.dataLayer, this.getCircularReplacer());
     },
   },
 });
