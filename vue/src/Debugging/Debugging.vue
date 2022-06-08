@@ -306,6 +306,21 @@ window.mtmDbgData = reactive<MtmData>({
 const cookieName = 'mtmPreviewPosition';
 const stickyTextTop = 'Stick to Top';
 const stickyTextBottom = 'Stick to Bottom';
+
+function getCircularReplacer() {
+  const seen = new WeakSet();
+  function circular(key: any, value: any) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return '';
+      }
+      seen.add(value);
+    }
+    return value;
+  }
+  return circular;
+}
+
 export default defineComponent({
   data(): DebuggingState {
     return {
@@ -339,21 +354,8 @@ export default defineComponent({
 
       this.selectedEventIndex = eventIndex;
     },
-    getCircularReplacer() {
-      const seen = new WeakSet();
-      function circular(key: string, value: any) {
-        if (typeof value === 'object' && value !== null) {
-          if (seen.has(value)) {
-            return '';
-          }
-          seen.add(value);
-        }
-        return value;
-      }
-      return circular;
-    },
     stringifySelectedVariable(variable: any) {
-      return JSON.stringify(variable.value, this.getCircularReplacer());
+      return JSON.stringify(variable.value, getCircularReplacer());
     },
   },
   computed: {
@@ -407,11 +409,11 @@ export default defineComponent({
     },
     selectedEventData(): string {
       return this.selectedEvent?.eventData
-        && JSON.stringify(this.selectedEvent.eventData, this.getCircularReplacer());
+        && JSON.stringify(this.selectedEvent.eventData, getCircularReplacer());
     },
     selectedEventContainerDataLayer(): string {
       return this.selectedEvent?.container?.dataLayer
-        && JSON.stringify(this.selectedEvent.container.dataLayer, this.getCircularReplacer());
+        && JSON.stringify(this.selectedEvent.container.dataLayer, getCircularReplacer());
     },
   },
 });
