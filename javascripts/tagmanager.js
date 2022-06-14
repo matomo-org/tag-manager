@@ -514,9 +514,9 @@
                                     return String(theUrl[urlPart]).replace('?', '');
                                 } else if ('port' === urlPart && !theUrl[urlPart]) {
                                     if (theUrl.protocol === 'https:') {
-                                        return 443;
+                                        return '443';
                                     } else if (theUrl.protocol === 'http:') {
-                                        return 80;
+                                        return '80';
                                     }
                                 }
                                 return theUrl[urlPart];
