@@ -134,7 +134,7 @@
         "CustomEventTriggerHelp": "Allows developers to define manually when this trigger should be triggered by pushing an event to the Data-Layer. This way you can for example execute certain actions when a product is added to the cart, or when a user logs in.",
         "CustomEventTriggerName": "Custom Event",
         "CustomHtmlTagDescription": "Allows you to embed any custom HTML, for example JavaScript or CSS Styles.",
-        "CustomHtmlTagHelp": "The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.",
+        "CustomHtmlTagHelp": "The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.",
         "CustomHtmlTagName": "Custom HTML",
         "LinkedinInsightTagName": "LinkedIn Insight Tag",
         "LinkedinInsightTagDescription": "Adds the LinkedIn Insight Tag so you can apply conversion tracking to your LinkedIn ad campaigns.",
