@@ -32,7 +32,7 @@
 			<description>Allows you to embed any custom HTML, for example JavaScript or CSS Styles.</description>
 			<category>Custom</category>
 			<icon>plugins/TagManager/images/icons/code.svg</icon>
-			<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.</help>
+			<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.</help>
 			<order>9999</order>
 			<contexts>
 				<row>web</row>
@@ -115,7 +115,7 @@
 			<description>Allows you to embed any custom HTML, for example JavaScript or CSS Styles.</description>
 			<category>Custom</category>
 			<icon>plugins/TagManager/images/icons/code.svg</icon>
-			<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.</help>
+			<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.</help>
 			<order>9999</order>
 			<contexts>
 				<row>web</row>
