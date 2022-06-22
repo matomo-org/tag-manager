@@ -3,61 +3,8 @@
 {% set title %}{{ 'TagManager_GettingStarted'|translate|e }}{% endset %}
 
 {% block content %}
-<div class="tagManagerGettingStarted">
-    <h2>{{ 'TagManager_GettingStarted'|translate|e }}</h2>
-    <div piwik-content-block content-title="{{ 'CorePluginsAdmin_WhatIsTagManager'|translate|e('html_attr') }}">
-        <p>{{ 'TagManager_GettingStartedWhatIsIntro'|translate|e }}</p>
-
-        <ul>
-            <li>{{ 'TagManager_GettingStartedAnalyticsTracking'|translate|e }}</li>
-            <li>{{ 'TagManager_GettingStartedConversionTracking'|translate|e }}</li>
-            <li>{{ 'TagManager_GettingStartedNewsletterSignups'|translate|e }}</li>
-            <li>{{ 'TagManager_GettingStartedExitActions'|translate|e }}</li>
-            <li>{{ 'TagManager_GettingStartedRemarketing'|translate|e }}</li>
-            <li>{{ 'TagManager_GettingStartedSocialWidgets'|translate|e }}</li>
-            <li>{{ 'TagManager_GettingStartedAffiliates'|translate|e }}</li>
-            <li>{{ 'TagManager_GettingStartedAds'|translate|e }}</li>
-            <li>{{ 'TagManager_GettingStartedAndMore'|translate|e }}</li>
-        </ul>
-
-        <p>
-            <br />
-            {{ 'TagManager_GettingStartedMainComponents'|translate|e }}
-        </p>
-        <ul>
-            <li>{{ 'TagManager_GettingStartedTagComponent'|translate|e }}</li>
-            <li>{{ 'TagManager_GettingStartedTriggerComponent'|translate|e }}</li>
-            <li>{{ 'TagManager_GettingStartedVariableComponent'|translate|e }}</li>
-        </ul>
-    </div>
-    <div piwik-content-block content-title="{{ 'TagManager_GettingStartedWhyDoINeed'|translate|e('html_attr') }}">
-        <p>
-            {{ 'TagManager_GettingStartedWhyMakesLifeEasier'|translate|e }}
-            <br /><br />
-            {{ 'TagManager_GettingStartedWhyThirdPartySnippets'|translate|e }}
-            <br /><br />
-            {{ 'TagManager_GettingStartedWhyAccuracyPerformance'|translate|e }}
-        </p>
-
-    </div>
-
-    {% if canEdit %}
-    <div piwik-content-block content-title="{{ 'TagManager_GettingStartedHowDoI'|translate|e('html_attr') }}">
-        <p>{{ 'TagManager_GettingStartedHowCreateContainer'|translate('<a href="' ~ linkTo({module: 'TagManager', 'action': 'manageContainers'}) ~ '">', '</a>')|raw }}
-            {{ 'TagManager_GettingStartedHowCopyCode'|translate|e }}
-            <br /><br />
-            {{ 'TagManager_GettingStartedHowAddTagsToContainer'|translate|e }}
-        </p>
-    </div>
-    {% endif %}
-
-    <div piwik-content-block content-title="{{ 'TagManager_GettingStartedWhatIfUnsupported'|translate|e('html_attr') }}">
-        <p>
-            {{ 'TagManager_GettingStartedCustomTags'|translate|e }}
-            <br /><br />
-            {{ 'TagManager_GettingStartedContributeTags'|translate('<a href="https://developer.matomo.org/guides/tagmanager/settingup" target="_blank" rel="noreferrer noopener">', '</a>')|raw }}
-        </p>
-
-    </div>
-</div>
+<div
+    vue-entry="TagManager.GettingStarted"
+    can-edit="{{ canEdit|default(null)|json_encode|e('html_attr') }}"
+></div>
 {% endblock %}

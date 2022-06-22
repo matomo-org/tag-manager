@@ -5,16 +5,22 @@
 {% block topcontrols %}
 
     <div class="top_bar_sites_selector piwikTopControl">
-        <div piwik-siteselector show-selected-site="true" class="sites_autocomplete"></div>
+        <div
+            vue-entry="CoreHome.SiteSelector"
+            show-selected-site="true"
+            class="sites_autocomplete"
+        ></div>
     </div>
 
     <div class="piwikTopControl">
-        <div piwik-container-selector {% if container is defined and container is not empty %}container-name="{{ container.name }}"{% endif %}></div>
+        <div
+            vue-entry="TagManager.ContainerSelector"
+            {% if container is defined and container is not empty %}container-name="{{ container.name|json_encode|e('html_attr') }}"{% endif %}
+        ></div>
     </div>
 
 {% endblock %}
 
 {% block content %}
-    <div piwik-container-manage>
-    </div>
+    <div vue-entry="TagManager.ContainerManage"></div>
 {% endblock %}

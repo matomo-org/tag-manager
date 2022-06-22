@@ -3,6 +3,9 @@
 {% set title = 'TagManager_Triggers'|translate %}
 
 {% block content %}
-    <div piwik-trigger-manage id-container="{{ container.idcontainer }}" id-container-version="{{ idcontainerversion }}">
-    </div>
+    <div
+        vue-entry="TagManager.TriggerManage"
+        id-container="{{ container.idcontainer|json_encode|e('html_attr') }}"
+        id-container-version="{{ idcontainerversion|json_encode|e('html_attr') }}"
+    ></div>
 {% endblock %}

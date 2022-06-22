@@ -545,17 +545,10 @@ export default defineComponent({
             return;
           }
 
-          if (Matomo.helper.isAngularRenderingThePage()) {
-            MatomoUrl.updateHash({
-              ...MatomoUrl.hashParsed.value,
-              idVariable,
-            });
-          } else {
-            // TODO: compare w/ original behavior
-            MatomoUrl.updateHash({
-              idVariable,
-            });
-          }
+          MatomoUrl.updateHash({
+            ...MatomoUrl.hashParsed.value,
+            idVariable,
+          });
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Variable'));

@@ -1,6 +1,6 @@
 (function ($) {
     var tagManagerHelper = {};
-    tagManagerHelper.editTrigger = function ($scope, idContainer, idContainerVersion, idTag, callback) {
+    tagManagerHelper.editTrigger = function (idContainer, idContainerVersion, idTag, callback) {
       var createVNode = Vue.createVNode;
       var createVueApp = CoreHome.createVueApp;
       var TriggerEdit = TagManager.TriggerEdit;
@@ -40,11 +40,10 @@
     };
 
     tagManagerHelper.createNewVersion = function () {
-        var piwikUrl = piwikHelper.getAngularDependency('piwikUrl');
-        var containerId = piwikUrl.getSearchParam('idContainer');
+        var containerId = CoreHome.MatomoUrl.parsed.value.idContainer;
         this.editVersion(null, containerId, 0, function () { window.location.reload(); });
     };
-    tagManagerHelper.editVersion = function ($scope, idContainer, idContainerVersion, callback) {
+    tagManagerHelper.editVersion = function (idContainer, idContainerVersion, callback) {
       var createVNode = Vue.createVNode;
       var createVueApp = CoreHome.createVueApp;
       var VersionEdit = TagManager.VersionEdit;
@@ -123,31 +122,39 @@
     };
 
     tagManagerHelper.selectVariable = function (callback) {
-        var $scope = piwikHelper.getAngularDependency('$rootScope');
-        var piwikUrl = piwikHelper.getAngularDependency('piwikUrl');
-        var containerId = piwikUrl.getSearchParam('idContainer');
+        var template = $('<div class="ui-confirm"><h2>Select a variable</h2><div></div><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/></div>')
 
-        var childScope = $scope.$new(true, $scope);
-        var template = $('<div class="ui-confirm"><h2>Select a variable</h2><div piwik-variable-select id-container="idContainer" on-select-variable="onSelectVariable(variable)"></div><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/></div>')
+        var createVNode = Vue.createVNode;
+        var createVueApp = CoreHome.createVueApp;
+        var VariableSelect = TagManager.VariableSelect;
+        var MatomoUrl = CoreHome.MatomoUrl;
+        var containerId = MatomoUrl.parsed.value.containerId;
 
-        var params = {
-            idContainer: containerId,
-            onSelectVariable: function (variable) {
+        var app = createVueApp({
+          render: function () {
+            return createVNode(VariableSelect, {
+              idContainer: containerId,
+              onSelectVariable: function (event) {
                 if ('function' === typeof callback) {
-                    callback(variable);
+                  callback(event.variable);
                 }
-                var modal = M.Modal.getInstance(template.parents('.modal.open'));
 
+                var modal = M.Modal.getInstance(template.parents('.modal.open'));
                 if (modal) {
-                    modal.close();
+                  modal.close();
                 }
-            }
-        };
-        piwikHelper.compileAngularComponents(template, {scope: childScope, params: params});
-        piwikHelper.modalConfirm(template, {}, {onCloseEnd: function () {
-            childScope.$destroy();
+              },
+            });
+          },
+        });
+        app.mount(template.children()[0]);
+
+        piwikHelper.modalConfirm(template, {}, {
+          onCloseEnd: function () {
+            app.unmount();
             template.empty();
-        }});
+          },
+        });
     };
     tagManagerHelper.insertTextSnippetAtElement = function(inputField, textToAdd) {
         if (!inputField || !textToAdd) {
@@ -199,18 +206,16 @@
         if (!idContainerVersion) {
             idContainerVersion = 0;
         }
-        var piwikApi = piwikHelper.getAngularDependency('piwikApi');
         var params = {method: 'TagManager.enablePreviewMode', idContainer: idContainer, idContainerVersion: idContainerVersion};
         piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_EnablingPreviewPleaseWait') + '</h2>', {});
-        piwikApi.fetch(params).then(function () {
+        CoreHome.AjaxHelper.fetch(params).then(function () {
             window.location.reload();
         });
     };
     tagManagerHelper.disablePreviewMode = function (idContainer) {
-        var piwikApi = piwikHelper.getAngularDependency('piwikApi');
         var params = {method: 'TagManager.disablePreviewMode', idContainer: idContainer};
         piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_DisablingPreviewPleaseWait') + '</h2>', {});
-        piwikApi.fetch(params).then(function () {
+        CoreHome.AjaxHelper.fetch(params).then(function () {
             tagManagerHelper.updateDebugSiteFlag(document.getElementById('previewDebugUrl').value, idContainer, -1);
             window.location.reload();
         });
@@ -252,7 +257,7 @@
         window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + encodeURIComponent(idContainer) + '&mtmSetDebugFlag=' + encodeURIComponent(debugFlag), '_blank', 'noreferrer');
 
     };
-    tagManagerHelper.importVersion = function ($scope, idContainer) {
+    tagManagerHelper.importVersion = function (idContainer) {
         var createVNode = Vue.createVNode;
         var createVueApp = CoreHome.createVueApp;
         var ImportVersion = TagManager.ImportVersion;
