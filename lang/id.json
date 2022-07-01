@@ -139,7 +139,7 @@
         "CustomEventTriggerHelp": "Memungkinkan pengembang untuk menentukan secara manual kapan pemicu ini harus dipicu dengan mendorong peristiwa ke Lapisan Data. Dengan cara ini, misalnya, Anda dapat menjalankan tindakan tertentu saat produk ditambahkan ke keranjang atau saat pengguna masuk.",
         "CustomEventTriggerName": "Peristiwa Khusus",
         "CustomHtmlTagDescription": "Memungkinkan Anda untuk menyematkan HTML khusus apa pun, misalnya JavaScript atau Gaya CSS.",
-        "CustomHtmlTagHelp": "Tag HTML Khusus memungkinkan Anda untuk menyematkan tag apa pun yang belum didukung. Kemungkinannya tidak terbatas.",
+        "CustomHtmlTagHelp": "Tag HTML Khusus memungkinkan Anda untuk menyematkan tag apa pun yang belum didukung. Kemungkinannya cukup banyak.",
         "CustomHtmlTagName": "HTML Khusus",
         "CustomImageTagDescription": "Memungkinkan Anda untuk menyematkan gambar apa pun, misalnya piksel pelacakan.",
         "CustomImageTagHelp": "Tag ini memungkinkan Anda untuk menambahkan, misalnya, piksel pelacakan transparan ke situs web Anda.",
