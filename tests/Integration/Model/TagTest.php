@@ -252,7 +252,7 @@ class TagTest extends IntegrationTestCase
                     'description' => 'Allows you to embed any custom HTML, for example JavaScript or CSS Styles.',
                     'category' => 'Custom',
                     'icon' => 'plugins/TagManager/images/icons/code.svg',
-                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.',
+                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.',
                     'order' => 9999,
                     'contexts' =>
                         array ('web'),
@@ -346,7 +346,7 @@ class TagTest extends IntegrationTestCase
                     'description' => 'Allows you to embed any custom HTML, for example JavaScript or CSS Styles.',
                     'category' => 'Custom',
                     'icon' => 'plugins/TagManager/images/icons/code.svg',
-                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.',
+                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.',
                     'order' => 9999,
                     'contexts' =>['web'],
                     'hasAdvancedSettings' => true,
@@ -535,7 +535,7 @@ class TagTest extends IntegrationTestCase
                     'description' => 'Allows you to embed any custom HTML, for example JavaScript or CSS Styles.',
                     'category' => 'Custom',
                     'icon' => 'plugins/TagManager/images/icons/code.svg',
-                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.',
+                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.',
                     'order' => 9999,
                     'contexts' =>['web'],
                     'hasAdvancedSettings' => true,
@@ -781,7 +781,7 @@ class TagTest extends IntegrationTestCase
                     'description' => 'Allows you to embed any custom HTML, for example JavaScript or CSS Styles.',
                     'category' => 'Custom',
                     'icon' => 'plugins/TagManager/images/icons/code.svg',
-                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.',
+                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.',
                     'order' => 9999,
                     'contexts' =>
                         array (
