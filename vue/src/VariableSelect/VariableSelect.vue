@@ -14,7 +14,7 @@
         @click="createVariable()"
       >
         <span class="icon-add" />
-        {{ translate('TagManager_CreateNewX', translate('TagManager_Variable')) }}
+        {{ translate('TagManager_CreateNewVariable') }}
       </a>
     </div>
     <ul class="collection with-header">
@@ -74,7 +74,7 @@
         @click="createVariable()"
       >
         <span class="icon-add" />
-        {{ translate('TagManager_CreateNewX', translate('TagManager_Variable')) }}
+        {{ translate('TagManager_CreateNewVariable', translate('TagManager_Variable')) }}
       </a>
     </div>
   </div>
