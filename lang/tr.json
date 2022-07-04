@@ -139,7 +139,7 @@
         "CustomEventTriggerHelp": "Bu seçenek geliştiricilerin, veri katmanına bir işlem gönderildiğinde bu tetikleyicinin ne zaman tetikleneceğini el ile ayarlayabilmesini sağlar. Böylece örneğin sepete bir ürün eklenmesi ya da bir kullanıcının oturum açması gibi durumlar için belirli işlemlerin yürütülmesi sağlanabilir.",
         "CustomEventTriggerName": "Özel işlem",
         "CustomHtmlTagDescription": "Örneğin bir JavaScript ya da CSS biçemi gibi herhangi bir HTML bileşeninin gömülmesini sağlar.",
-        "CustomHtmlTagHelp": "Özel HTML etiketi henüz desteklenmeyen etiketlerin eklenmesini sağlar. Bu tetikleyici türü ile yapılabileceklerin sınırsız olduğu söylenebilir.",
+        "CustomHtmlTagHelp": "Özel HTML etiketi henüz desteklenmeyen etiketlerin eklenmesini sağlar. Bu etiket türü ile yapılabileceklerin sınırsız olduğu söylenebilir.",
         "CustomHtmlTagName": "Özel HTML",
         "CustomImageTagDescription": "Örneğin bir izleme pikseli gibi herhangi bir görselin gömülmesini sağlar.",
         "CustomImageTagHelp": "Bu etiket web sitesine örneğin saydam bir izleme pikseli eklenmesini sağlar.",

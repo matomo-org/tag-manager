@@ -139,7 +139,7 @@
         "CustomEventTriggerHelp": "Permet als desenvolupadors definir manualment quan s'ha d'activar aquest activador enviant un esdeveniment a la capa de dades. D'aquesta manera, per exemple, podeu executar determinades accions quan s'afegeix un producte al carretó o quan un usuari inicia sessió.",
         "CustomEventTriggerName": "Esdeveniment personalitzat",
         "CustomHtmlTagDescription": "Us permet incrustar qualsevol HTML personalitzat, per exemple JavaScript o estils CSS.",
-        "CustomHtmlTagHelp": "L'etiqueta HTML personalitzada us permet inserir qualsevol etiqueta que encara no sigui compatible. Les possibilitats amb aquest disparador són pràcticament il·limitades.",
+        "CustomHtmlTagHelp": "L'etiqueta HTML personalitzada us permet inserir qualsevol etiqueta que encara no sigui compatible. Les possibilitats amb aquesta etiqueta són pràcticament il·limitades.",
         "CustomHtmlTagName": "HTML personalitzat",
         "CustomImageTagDescription": "Us permet incrustar qualsevol imatge, per exemple, un píxel de seguiment.",
         "CustomImageTagHelp": "Aquesta etiqueta us permet afegir, per exemple, un píxel de seguiment transparent al vostre lloc web.",
