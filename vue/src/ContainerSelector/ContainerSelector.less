@@ -1,6 +1,7 @@
-.tagContainerSelector  {
+.tagContainerSelector {
     a.title {
-        max-width: 250px;
+        // - (search + margins (14px*3)) - arrow
+        max-width: ~'calc(71vw - 250px - 1em)';
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -21,6 +22,14 @@
             &:hover {
                 background: @color-silver-l95;
             }
+        }
+    }
+}
+
+.tagmanager {
+    .siteSelector {
+        a.title {
+            max-width: ~'calc(58vw - 250px - 1em)';
         }
     }
 }
