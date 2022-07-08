@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="ng-app" ng-app="piwikApp">
+<html id="ng-app">
 <head>
     <title>Debug Matomo Tag Manager</title>
     <base href="{{ piwikUrl|e('html_attr') }}" >
@@ -73,7 +73,7 @@
         };
     </script>
 </head>
-<body ng-app="app" >
+<body>
     <div id="root" vue-entry="TagManager.Debugging">
         <template v-slot:logo>{% include "@CoreHome/_logo.twig" %}</template>
     </div>
