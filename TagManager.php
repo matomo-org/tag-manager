@@ -872,6 +872,17 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_VariableCannotBeDeleted';
         $result[] = 'TagManager_VariableBeingUsedBy';
         $result[] = 'TagManager_VariableBeingUsedNeedsRemove';
+
+        // add tagmanager menu translations
+        $menu = MenuTagManager::getInstance()->getMenu();
+        foreach ($menu as $level1 => $level2) {
+            $result[] = $level1;
+            foreach ($level2 as $name => $params) {
+                if (strpos($name, '_') !== 0) {
+                    $result[] = $name;
+                }
+            }
+        }
     }
 
     public function getStylesheetFiles(&$stylesheets)
