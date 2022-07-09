@@ -875,7 +875,9 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_VariableBeingUsedNeedsRemove';
 
         // add tagmanager menu translations
-        if (SettingsPiwik::isMatomoInstalled()) {
+        if (SettingsPiwik::isMatomoInstalled()
+            && Common::getRequestVar('module', '') != 'CoreUpdater'
+        ) {
             $menu = MenuTagManager::getInstance()->getMenu();
             foreach ($menu as $level1 => $level2) {
                 $result[] = $level1;
