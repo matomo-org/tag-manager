@@ -31,6 +31,7 @@ use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\CoreHome\SystemSummary;
 use Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator;
 use Piwik\Plugins\TagManager\Model\Salt;
+use Piwik\SettingsPiwik;
 use Piwik\Site;
 use Piwik\View;
 use Piwik\Context;
@@ -874,12 +875,14 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_VariableBeingUsedNeedsRemove';
 
         // add tagmanager menu translations
-        $menu = MenuTagManager::getInstance()->getMenu();
-        foreach ($menu as $level1 => $level2) {
-            $result[] = $level1;
-            foreach ($level2 as $name => $params) {
-                if (strpos($name, '_') !== 0) {
-                    $result[] = $name;
+        if (SettingsPiwik::isMatomoInstalled()) {
+            $menu = MenuTagManager::getInstance()->getMenu();
+            foreach ($menu as $level1 => $level2) {
+                $result[] = $level1;
+                foreach ($level2 as $name => $params) {
+                    if (strpos($name, '_') !== 0) {
+                        $result[] = $name;
+                    }
                 }
             }
         }
