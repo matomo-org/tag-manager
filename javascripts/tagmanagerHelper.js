@@ -1,4 +1,4 @@
-(function ($) {
+window.addEventListener('DOMContentLoaded', function () {
     var tagManagerHelper = {};
     tagManagerHelper.editTrigger = function (idContainer, idContainerVersion, idTag, callback) {
       var createVNode = Vue.createVNode;
@@ -302,4 +302,4 @@
         tagManagerHelper.createNewVersion();
       });
     });
-})(jQuery);
+});
