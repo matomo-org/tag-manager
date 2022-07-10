@@ -5,7 +5,7 @@
 {% block content %}
     <div
         vue-entry="TagManager.TriggerManage"
-        id-container="{{ container.idcontainer|json_encode|e('html_attr') }}"
-        id-container-version="{{ idcontainerversion|json_encode|e('html_attr') }}"
+        id-container="{{ container.idcontainer|json_encode }}"
+        id-container-version="{{ idcontainerversion|json_encode }}"
     ></div>
 {% endblock %}

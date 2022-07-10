@@ -15,7 +15,7 @@
     <div class="piwikTopControl">
         <div
             vue-entry="TagManager.ContainerSelector"
-            {% if container is defined and container is not empty %}container-name="{{ container.name|json_encode|e('html_attr') }}"{% endif %}
+            {% if container is defined and container is not empty %}container-name="{{ container.name|json_encode }}"{% endif %}
         ></div>
     </div>
 

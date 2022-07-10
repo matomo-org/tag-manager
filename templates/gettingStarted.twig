@@ -5,6 +5,6 @@
 {% block content %}
 <div
     vue-entry="TagManager.GettingStarted"
-    can-edit="{{ canEdit|default(null)|json_encode|e('html_attr') }}"
+    can-edit="{{ canEdit|default(null)|json_encode }}"
 ></div>
 {% endblock %}
