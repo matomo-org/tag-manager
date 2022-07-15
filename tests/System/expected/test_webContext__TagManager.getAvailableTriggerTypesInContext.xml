@@ -32,6 +32,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -157,6 +158,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>cssSelector</name>
@@ -173,6 +175,7 @@
 						<templateFile />
 						<introduction />
 						<condition>selectionMethod == &quot;cssSelector&quot;</condition>
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>elementId</name>
@@ -189,6 +192,7 @@
 						<templateFile />
 						<introduction />
 						<condition>selectionMethod == &quot;elementId&quot;</condition>
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>fireTriggerWhen</name>
@@ -209,6 +213,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>minPercentVisible</name>
@@ -225,6 +230,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>observeDomChanges</name>
@@ -241,6 +247,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -293,6 +300,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>triggerLimit</name>
@@ -309,6 +317,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -362,6 +371,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>pixels</name>
@@ -379,6 +389,7 @@
 						<templateFile />
 						<introduction />
 						<condition>scrollType == &quot;verticalpixel&quot; || scrollType == &quot;horizontalpixel&quot;</condition>
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>percentage</name>
@@ -396,6 +407,7 @@
 						<templateFile />
 						<introduction />
 						<condition>scrollType == &quot;verticalpercentage&quot; || scrollType == &quot;horizontalpercentage&quot;</condition>
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -428,6 +440,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -481,6 +494,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -533,6 +547,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>eventName</name>
@@ -549,6 +564,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -569,6 +585,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>

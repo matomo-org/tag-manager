@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -63,7 +64,7 @@ class VariableTest extends IntegrationTestCase
         $this->model = StaticContainer::get('Piwik\Plugins\TagManager\Model\Variable');
         $this->model->setCurrentDateTime($this->now);
 
-        $this->idVariable1 = $this->addContainerVariable($this->idSite, $this->containerVersion1, null, 'InitialVariable1', array('dataLayerName' => 'myVariable'), '');
+        $this->idVariable1 = $this->addContainerVariable($this->idSite, $this->containerVersion1, null, 'InitialVariable1', ['dataLayerName' => 'myVariable'], '');
     }
 
     public function tearDown(): void
@@ -72,7 +73,7 @@ class VariableTest extends IntegrationTestCase
         parent::tearDown();
     }
 
-    public function test_addContainerVariable_invalidSite()
+    public function testAddContainerVariableInvalidSite()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('idSite: An unexpected website was found');
@@ -80,7 +81,7 @@ class VariableTest extends IntegrationTestCase
         $this->addContainerVariable($idSite = 999, $this->containerVersion1);
     }
 
-    public function test_addContainerVariable_invalidName()
+    public function testAddContainerVariableInvalidName()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Name: The value contains');
@@ -88,67 +89,67 @@ class VariableTest extends IntegrationTestCase
         $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    public function test_addContainerVariable_invalidDefaultValue()
+    public function testAddContainerVariableInvalidDefaultValue()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The default value needs to be empty, a string');
 
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => ''), array('foobar'), array());
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['dataLayerName' => ''], ['foobar'], []);
     }
 
-    public function test_addContainerVariable_missingParameter()
+    public function testAddContainerVariableMissingParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Data Layer Variable Name: A value needs to be provided.');
 
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => ''), '', array());
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['dataLayerName' => ''], '', []);
     }
 
-    public function test_addContainerVariable_invalidParameter()
+    public function testAddContainerVariableInvalidParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Data Layer Variable Name: A value needs to be provided.');
 
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => ''), '', array());
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['dataLayerName' => ''], '', []);
     }
 
-    public function test_addContainerVariable_invalidLookupTable()
+    public function testAddContainerVariableInvalidLookupTable()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Lookup Table: Missing value for array key "comparison"');
 
-        $lookupTable = array(array('match_value' => 'five'));
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => '<div></div>'), '', $lookupTable);
+        $lookupTable = [['match_value' => 'five']];
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['dataLayerName' => '<div></div>'], '', $lookupTable);
     }
 
-    public function test_addContainerVariable_invalidLookupTable2()
+    public function testAddContainerVariableInvalidLookupTable2()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Lookup Table: The comparison "foobarbaz" is not supported');
 
-        $lookupTable = array(
-            array('match_value' => 'inval', 'comparison' => 'foobarbaz', 'out_value' => 'foobarout'),
-        );
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => '<div></div>'), '', $lookupTable);
+        $lookupTable = [
+            ['match_value' => 'inval', 'comparison' => 'foobarbaz', 'out_value' => 'foobarout'],
+        ];
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['dataLayerName' => '<div></div>'], '', $lookupTable);
     }
 
-    public function test_addContainerVariable_invalidType()
+    public function testAddContainerVariableInvalidType()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The variable "inValiDType" is not supported');
 
-        $lookupTable = array();
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, 'inValiDType', 'MyName', $parameters = array('dataLayerName' => '<div></div>'), '', $lookupTable);
+        $lookupTable = [];
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, 'inValiDType', 'MyName', $parameters = ['dataLayerName' => '<div></div>'], '', $lookupTable);
     }
 
-    public function test_addContainerVariable_successMinimal()
+    public function testAddContainerVariableSuccessMinimal()
     {
-        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, DataLayerVariable::ID, 'MyName', $parameters = array('dataLayerName' => 'fooBar'), '', array());
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, DataLayerVariable::ID, 'MyName', $parameters = ['dataLayerName' => 'fooBar'], '', []);
         $this->assertSame(2, $idVariable);
 
         $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
 
-        $expected = array (
+        $expected =  [
             'idvariable' => 2,
             'idcontainerversion' => 5,
             'idsite' => 1,
@@ -156,16 +157,16 @@ class VariableTest extends IntegrationTestCase
             'name' => 'MyName',
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'dataLayerName' => 'fooBar',
-                ),
-            'lookup_table' => array (),
+                ],
+            'lookup_table' =>  [],
             'default_value' => '',
             'created_date' => '2018-01-01 02:03:04',
             'updated_date' => '2018-01-01 02:03:04',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
-            'typeMetadata' => Array(
+            'typeMetadata' => [
                 'id' => 'DataLayer',
                 'name' => 'Data-Layer',
                 'description' => 'Reads a custom value from the Data-Layer.',
@@ -176,40 +177,41 @@ class VariableTest extends IntegrationTestCase
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
                 'isCustomTemplate' => false,
-                'parameters' => array (
-                   array(
+                'parameters' =>  [
+                   [
                         'name' => 'dataLayerName',
                         'title' => 'Data Layer Variable Name',
                         'value' => 'fooBar',
                         'defaultValue' => '',
                         'type' => 'string',
                         'uiControl' => 'text',
-                        'uiControlAttributes' => array(),
+                        'uiControlAttributes' => [],
                         'availableValues' => null,
                         'description' => 'The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example "object1.myPropertyOfObject1".',
                         'inlineHelp' => null,
                         'templateFile' => '',
                         'introduction' => null,
                         'condition' => null,
-                    )
-                )
-            )
-        );
+                        'fullWidth' => false,
+                    ]
+                ]
+            ]
+        ];
         $this->assertSame($expected, $variable);
     }
 
-    public function test_addContainerVariable_successFull()
+    public function testAddContainerVariableSuccessFull()
     {
-        $lookupTable = array(
-            array('match_value' => 'inval', 'comparison' => Comparison::ID_EQUALS, 'out_value' => 'errorfoo'),
-            array('match_value' => 'foobar', 'comparison' => Comparison::ID_CONTAINS, 'out_value' => 'barbaz'),
-        );
-        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, DataLayerVariable::ID, 'MyName', $parameters = array('dataLayerName' => 'fooBar'), 'myDefault', $lookupTable);
+        $lookupTable = [
+            ['match_value' => 'inval', 'comparison' => Comparison::ID_EQUALS, 'out_value' => 'errorfoo'],
+            ['match_value' => 'foobar', 'comparison' => Comparison::ID_CONTAINS, 'out_value' => 'barbaz'],
+        ];
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, DataLayerVariable::ID, 'MyName', $parameters = ['dataLayerName' => 'fooBar'], 'myDefault', $lookupTable);
         $this->assertSame(2, $idVariable);
 
         $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
 
-        $expected = array (
+        $expected =  [
             'idvariable' => $idVariable,
             'idcontainerversion' => 5,
             'idsite' => 1,
@@ -217,16 +219,16 @@ class VariableTest extends IntegrationTestCase
             'name' => 'MyName',
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'dataLayerName' => 'fooBar',
-                ),
+                ],
             'lookup_table' => $lookupTable,
             'default_value' => 'myDefault',
             'created_date' => '2018-01-01 02:03:04',
             'updated_date' => '2018-01-01 02:03:04',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
-            'typeMetadata' => Array(
+            'typeMetadata' => [
                 'id' => 'DataLayer',
                 'name' => 'Data-Layer',
                 'description' => 'Reads a custom value from the Data-Layer.',
@@ -237,29 +239,30 @@ class VariableTest extends IntegrationTestCase
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
                 'isCustomTemplate' => false,
-                'parameters' => array (
-                    array(
+                'parameters' =>  [
+                    [
                         'name' => 'dataLayerName',
                         'title' => 'Data Layer Variable Name',
                         'value' => 'fooBar',
                         'defaultValue' => '',
                         'type' => 'string',
                         'uiControl' => 'text',
-                        'uiControlAttributes' => array(),
+                        'uiControlAttributes' => [],
                         'availableValues' => null,
                         'description' => 'The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example "object1.myPropertyOfObject1".',
                         'inlineHelp' => null,
                         'templateFile' => '',
                         'introduction' => null,
                         'condition' => null,
-                    )
-                )
-            )
-        );
+                        'fullWidth' => false,
+                    ]
+                ]
+            ]
+        ];
         $this->assertSame($expected, $variable);
     }
 
-    public function test_updateContainerVariable_invalidSite()
+    public function testUpdateContainerVariableInvalidSite()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('idSite: An unexpected website was found');
@@ -267,7 +270,7 @@ class VariableTest extends IntegrationTestCase
         $this->updateContainerVariable($idSite = 999, $this->containerVersion1, $this->idVariable1);
     }
 
-    public function test_updateContainerVariable_invalidName()
+    public function testUpdateContainerVariableInvalidName()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Name: The value contains');
@@ -275,55 +278,55 @@ class VariableTest extends IntegrationTestCase
         $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    public function test_updateContainerVariable_missingParameter()
+    public function testUpdateContainerVariableMissingParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Data Layer Variable Name: A value needs to be provided.');
 
-        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyName', $parameters = array(), '', array());
+        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyName', $parameters = [], '', []);
     }
 
-    public function test_updateContainerVariable_invalidParameter()
+    public function testUpdateContainerVariableInvalidParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Data Layer Variable Name: A value needs to be provided.');
 
-        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyName', $parameters = array('dataLayerName' => ''), '', array());
+        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyName', $parameters = ['dataLayerName' => ''], '', []);
     }
 
-    public function test_updateContainerVariable_invalidCondition()
+    public function testUpdateContainerVariableInvalidCondition()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Lookup Table: Missing value for array key "comparison"');
 
-        $conditions = array(array('match_value' => 'five'));
-        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyName', $parameters = array('dataLayerName' => '<div></div>'), '', $conditions);
+        $conditions = [['match_value' => 'five']];
+        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyName', $parameters = ['dataLayerName' => '<div></div>'], '', $conditions);
     }
 
-    public function test_updateContainerVariable_invalidCondition2()
+    public function testUpdateContainerVariableInvalidCondition2()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Lookup Table: The comparison "inValId"');
 
-        $lookupTable = array(
-            array('match_value' => 'inval', 'comparison' => 'inValId', 'out_value' => 'outva'),
-        );
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('dataLayerName' => '<div></div>'), '', $lookupTable);
+        $lookupTable = [
+            ['match_value' => 'inval', 'comparison' => 'inValId', 'out_value' => 'outva'],
+        ];
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['dataLayerName' => '<div></div>'], '', $lookupTable);
     }
 
-    public function test_updateContainerVariable_success()
+    public function testUpdateContainerVariableSuccess()
     {
-        $lookupTable = array(
-            array('match_value' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_EQUALS, 'out_value' => 'errouprfoo'),
-            array('match_value' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'out_value' => 'bauprbaz'),
-        );
+        $lookupTable = [
+            ['match_value' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_EQUALS, 'out_value' => 'errouprfoo'],
+            ['match_value' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'out_value' => 'bauprbaz'],
+        ];
 
         $this->model->setCurrentDateTime('2018-02-01 05:06:07');
-        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyUpdatedName', $parameters = array('dataLayerName' => 'updatedVariable'), '', $lookupTable);
+        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyUpdatedName', $parameters = ['dataLayerName' => 'updatedVariable'], '', $lookupTable);
 
         $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
 
-        $expected = array (
+        $expected =  [
             'idvariable' => $this->idVariable1,
             'idcontainerversion' => 5,
             'idsite' => 1,
@@ -331,16 +334,16 @@ class VariableTest extends IntegrationTestCase
             'name' => 'MyUpdatedName',
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'dataLayerName' => 'updatedVariable'
-                ),
+                ],
             'lookup_table' => $lookupTable,
             'default_value' => '',
             'created_date' => '2018-01-01 02:03:04',
             'updated_date' => '2018-02-01 05:06:07',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Feb 1, 2018 05:06:07',
-            'typeMetadata' => Array(
+            'typeMetadata' => [
                 'id' => 'DataLayer',
                 'name' => 'Data-Layer',
                 'description' => 'Reads a custom value from the Data-Layer.',
@@ -351,36 +354,37 @@ class VariableTest extends IntegrationTestCase
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
                 'isCustomTemplate' => false,
-                'parameters' => array (
-                    array(
+                'parameters' =>  [
+                    [
                         'name' => 'dataLayerName',
                         'title' => 'Data Layer Variable Name',
                         'value' => 'updatedVariable',
                         'defaultValue' => '',
                         'type' => 'string',
                         'uiControl' => 'text',
-                        'uiControlAttributes' => array(),
+                        'uiControlAttributes' => [],
                         'availableValues' => null,
                         'description' => 'The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example "object1.myPropertyOfObject1".',
                         'inlineHelp' => null,
                         'templateFile' => '',
                         'introduction' => null,
                         'condition' => null,
-                    )
-                )
-            )
-        );
+                        'fullWidth' => false,
+                    ]
+                ]
+            ]
+        ];
         $this->assertSame($expected, $variable);
     }
 
-    public function test_getContainer()
+    public function testGetContainer()
     {
         // no need to create new test for this
-        $this->test_addContainerVariable_successFull();
-        $this->test_updateContainerVariable_success();
+        $this->testAddContainerVariableSuccessFull();
+        $this->testUpdateContainerVariableSuccess();
     }
 
-    public function test_getContainer_doesNotExist()
+    public function testGetContainerDoesNotExist()
     {
         $this->assertFalse($this->model->getContainerVariable(999, $this->containerVersion1, $this->idVariable1));
         $this->assertFalse($this->model->getContainerVariable($this->idSite, 9999, $this->idVariable1));
@@ -389,70 +393,70 @@ class VariableTest extends IntegrationTestCase
         $this->assertNotEmpty($this->model->getContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1));
     }
 
-    public function test_getContainer_doesNotReturnDeletedVariable()
+    public function testGetContainerDoesNotReturnDeletedVariable()
     {
         $this->assertNotEmpty($this->model->getContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1));
         $this->model->deleteContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
         $this->assertFalse($this->model->getContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1));
     }
 
-    public function test_getContainer_whenRelatedTypeNoLongerExists_ignoredTypeMetadata()
+    public function testGetContainerWhenRelatedTypeNoLongerExistsIgnoredTypeMetadata()
     {
-        $this->dao->updateVariableColumns($this->idSite, $this->containerVersion1, $this->idVariable1, array('type' => 'Foo'));
+        $this->dao->updateVariableColumns($this->idSite, $this->containerVersion1, $this->idVariable1, ['type' => 'Foo']);
         $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
 
-        $this->assertSame(array (
+        $this->assertSame([
             'idvariable' => 1,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => 'Foo',
             'name' => 'InitialVariable1',
             'status' => 'active',
-            'parameters' => array ('dataLayerName' => 'myVariable'),
-            'lookup_table' => array (),
+            'parameters' =>  ['dataLayerName' => 'myVariable'],
+            'lookup_table' =>  [],
             'default_value' => '',
             'created_date' => '2018-01-01 02:03:04',
             'updated_date' => '2018-01-01 02:03:04',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
-            'typeMetadata' => NULL,
-        ), $variable);
+            'typeMetadata' => null,
+        ], $variable);
     }
 
-    public function test_getContainerVariables_noVariableMatches()
+    public function testGetContainerVariablesNoVariableMatches()
     {
-        $this->assertSame(array(), $this->model->getContainerVariables(999, $this->containerVersion1));
-        $this->assertSame(array(), $this->model->getContainerVariables($this->idSite, 999));
+        $this->assertSame([], $this->model->getContainerVariables(999, $this->containerVersion1));
+        $this->assertSame([], $this->model->getContainerVariables($this->idSite, 999));
 
         // make sure with correct params we do get a result
         $this->assertNotEmpty($this->model->getContainerVariables($this->idSite, $this->containerVersion1));
     }
 
-    public function test_getContainerVariables_doesNotReturnDeleted()
+    public function testGetContainerVariablesDoesNotReturnDeleted()
     {
         $this->assertCount(1, $this->model->getContainerVariables($this->idSite, $this->containerVersion1));
         $this->model->deleteContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
-        $this->assertSame(array(), $this->model->getContainerVariables($this->idSite, $this->containerVersion1));
+        $this->assertSame([], $this->model->getContainerVariables($this->idSite, $this->containerVersion1));
     }
 
-    public function test_getContainerVariables_onlyReturnsContainersForThatSiteAndVersion()
+    public function testGetContainerVariablesOnlyReturnsContainersForThatSiteAndVersion()
     {
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, ReferrerUrlVariable::ID, 'v1', array());
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, ReferrerUrlVariable::ID, 'v2', array());
-        $this->addContainerVariable($this->idSite2, $this->containerVersion1, ReferrerUrlVariable::ID, 'v2', array());
-        $this->addContainerVariable($this->idSite2, $this->containerVersion1, ReferrerUrlVariable::ID, 'v3', array());
-        $this->addContainerVariable($this->idSite, $this->containerVersion2, ReferrerUrlVariable::ID, 'v4', array());
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, ReferrerUrlVariable::ID, 'v1', []);
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, ReferrerUrlVariable::ID, 'v2', []);
+        $this->addContainerVariable($this->idSite2, $this->containerVersion1, ReferrerUrlVariable::ID, 'v2', []);
+        $this->addContainerVariable($this->idSite2, $this->containerVersion1, ReferrerUrlVariable::ID, 'v3', []);
+        $this->addContainerVariable($this->idSite, $this->containerVersion2, ReferrerUrlVariable::ID, 'v4', []);
 
         $this->assertCount(3, $this->model->getContainerVariables($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerVariables($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerVariables($this->idSite, $this->containerVersion2));
         $this->assertCount(0, $this->model->getContainerVariables($this->idSite2, $this->containerVersion2));
-        $this->assertSame(array(), $this->model->getContainerVariables($this->idSite2, $this->containerVersion2));
+        $this->assertSame([], $this->model->getContainerVariables($this->idSite2, $this->containerVersion2));
     }
 
-    public function test_getContainerVariables_formatsValues()
+    public function testGetContainerVariablesFormatsValues()
     {
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, ReferrerUrlVariable::ID, 'v1', array());
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, ReferrerUrlVariable::ID, 'v1', []);
         $variables = $this->model->getContainerVariables($this->idSite, $this->containerVersion1);
 
         $this->assertCount(2, $variables);
@@ -461,13 +465,13 @@ class VariableTest extends IntegrationTestCase
         }
     }
 
-    public function test_deleteContainerVariable()
+    public function testDeleteContainerVariable()
     {
-        $this->addContainerVariable($this->idSite, $this->containerVersion1, ReferrerUrlVariable::ID, 'v1', array());
-        $idVariable3 = $this->addContainerVariable($this->idSite, $this->containerVersion1, ReferrerUrlVariable::ID, 'v2', array());
-        $this->addContainerVariable($this->idSite2, $this->containerVersion1, ReferrerUrlVariable::ID, 'v2', array());
-        $this->addContainerVariable($this->idSite2, $this->containerVersion1, ReferrerUrlVariable::ID, 'v3', array());
-        $this->addContainerVariable($this->idSite, $this->containerVersion2, ReferrerUrlVariable::ID, 'v4', array());
+        $this->addContainerVariable($this->idSite, $this->containerVersion1, ReferrerUrlVariable::ID, 'v1', []);
+        $idVariable3 = $this->addContainerVariable($this->idSite, $this->containerVersion1, ReferrerUrlVariable::ID, 'v2', []);
+        $this->addContainerVariable($this->idSite2, $this->containerVersion1, ReferrerUrlVariable::ID, 'v2', []);
+        $this->addContainerVariable($this->idSite2, $this->containerVersion1, ReferrerUrlVariable::ID, 'v3', []);
+        $this->addContainerVariable($this->idSite, $this->containerVersion2, ReferrerUrlVariable::ID, 'v4', []);
 
         $this->model->setCurrentDateTime('2019-03-04 03:03:03');
 
@@ -510,13 +514,13 @@ class VariableTest extends IntegrationTestCase
         $this->assertSame(1, $count);
     }
 
-    public function test_getVariableReferences_whenNoReferences()
+    public function testGetVariableReferencesWhenNoReferences()
     {
         // we test the references apart from this via API in system tests
-        $this->assertSame(array(), $this->model->getContainerVariableReferences($this->idSite, $this->containerVersion1, $this->idVariable1));
+        $this->assertSame([], $this->model->getContainerVariableReferences($this->idSite, $this->containerVersion1, $this->idVariable1));
     }
 
-    private function addContainerVariable($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = array(), $defaultValue = '', $lookupTable = array())
+    private function addContainerVariable($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $defaultValue = '', $lookupTable = [])
     {
         if (!isset($type)) {
             $type = DataLayerVariable::ID;
@@ -525,7 +529,7 @@ class VariableTest extends IntegrationTestCase
         return $this->model->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable);
     }
 
-    private function updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name = 'MyName', $parameters = array(), $defaultValue = '', $lookupTable = array())
+    private function updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name = 'MyName', $parameters = [], $defaultValue = '', $lookupTable = [])
     {
         return $this->model->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable);
     }

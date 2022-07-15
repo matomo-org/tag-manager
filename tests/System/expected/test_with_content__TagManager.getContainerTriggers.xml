@@ -45,6 +45,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 					<component>
 						<plugin>TagManager</plugin>
 						<name>FieldVariableTemplate</name>
@@ -167,6 +168,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 					<component>
 						<plugin>TagManager</plugin>
 						<name>FieldVariableTemplate</name>

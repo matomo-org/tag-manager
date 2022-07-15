@@ -51,6 +51,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 				</row>
 			</parameters>
 		</typeMetadata>
@@ -101,6 +102,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 				</row>
 			</parameters>
 		</typeMetadata>
@@ -151,6 +153,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 				</row>
 			</parameters>
 		</typeMetadata>

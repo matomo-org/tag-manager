@@ -55,6 +55,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 					<component>
 						<plugin>TagManager</plugin>
 						<name>FieldTextareaVariable</name>
@@ -80,6 +81,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 				</row>
 			</parameters>
 		</typeMetadata>
@@ -138,6 +140,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 					<component>
 						<plugin>TagManager</plugin>
 						<name>FieldTextareaVariable</name>
@@ -163,6 +166,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 				</row>
 			</parameters>
 		</typeMetadata>
@@ -222,6 +226,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 					<component>
 						<plugin>TagManager</plugin>
 						<name>FieldVariableTemplate</name>
@@ -242,6 +247,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 				</row>
 			</parameters>
 		</typeMetadata>
