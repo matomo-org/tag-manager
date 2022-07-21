@@ -22,6 +22,10 @@
             }
 
             if (ele) {
+                // If the data-matomo-mask attribute is present, don't return the value
+                if(dom.getElementAttribute(ele, 'data-matomo-mask') !== null) {
+                    return;
+                }
                 if (attributeName) {
                     if (String(attributeName).toLowerCase() === 'value'
                         && ele.nodeName === 'INPUT') {
