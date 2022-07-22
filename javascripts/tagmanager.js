@@ -742,6 +742,12 @@
                     if (!node) {
                         return;
                     }
+
+                  // If the content belongs to a masked element, return a masked string.
+                  if (TagManager.dom.shouldElementBeMasked(node)) {
+                      return '*******';
+                  }
+
                     var content = node.innerText || node.textContent || '';
                     content = content.replace(/([\s\uFEFF\xA0])+/g, " ");
                     content = content.replace(/(\s)+/g, " ");
@@ -754,6 +760,11 @@
                     return '';
                 },
                 getElementAttribute: function (node, attributeName) {
+                    // If the attribute belongs to a masked element, return a masked string.
+                    if (node && TagManager.dom.shouldElementBeMasked(node)) {
+                        return '*******';
+                    }
+
                     if (node && node.getAttribute) {
                         return node.getAttribute(attributeName);
                     }
@@ -953,6 +964,23 @@
                           callback(event, 'right');
                         }
                     }, true)
+                },
+                shouldElementBeMasked: function (node) {
+                    if (typeof node === 'undefined') {
+                        return false;
+                    }
+
+                    // If the element had the attribute indicating that it should be masked, return true.
+                    if (node.hasAttribute('data-matomo-mask') || node.hasAttribute('data-piwik-mask')) {
+                        return true;
+                    }
+
+                    // If any parent of the element has the attribute indicating that it should be masked, return true.
+                    if (node.closest('[data-matomo-mask]') !== null || node.closest('[data-piwik-mask]') !== null) {
+                        return true;
+                    }
+
+                    return false;
                 }
             };
 
