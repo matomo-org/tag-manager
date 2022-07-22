@@ -970,13 +970,19 @@
                         return false;
                     }
 
-                    // If the element had the attribute indicating that it should be masked, return true.
+                    // If the element has the attribute indicating that it should be masked, return true.
                     if (node.hasAttribute('data-matomo-mask') || node.hasAttribute('data-piwik-mask')) {
                         return true;
                     }
 
-                    // If any parent of the element has the attribute indicating that it should be masked, return true.
-                    if (node.closest('[data-matomo-mask]') !== null || node.closest('[data-piwik-mask]') !== null) {
+                    // If the element has the attribute indicating that it shouldn't be masked, return false.
+                    if (node.hasAttribute('data-matomo-unmask') || node.hasAttribute('data-piwik-unmask')) {
+                        return false;
+                    }
+
+                    // Find the closest parent with the mask or unmask attribute. If it's the mask, return true.
+                    var parentNode = node.closest('[data-matomo-mask],[data-piwik-mask],[data-matomo-unmask],[data-piwik-unmask]');
+                    if (parentNode !== null && !parentNode.hasAttribute('data-matomo-unmask') && !parentNode.hasAttribute('data-piwik-unmask')) {
                         return true;
                     }
 
