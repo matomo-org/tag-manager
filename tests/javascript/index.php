@@ -25,7 +25,7 @@
     </div>
     <foo id="customTag5"></foo>
 </div>
-<!-- Don't display this div so that it doesn't mess with the scroll event tests. -->
+<!-- This div is for testing the masking/unmasking of elements. -->
 <div id="TagManagerDivWithMasking" data-custom-attribute="custom_value">
     <div id="nonMaskedDiv" data-custom-attribute="custom_value">
         Content of non-masked div.
