@@ -25,6 +25,26 @@
     </div>
     <foo id="customTag5"></foo>
 </div>
+<!-- Don't display this div so that it doesn't mess with the scroll event tests. -->
+<div id="TagManagerDivWithMasking" data-custom-attribute="custom_value">
+    <div id="nonMaskedDiv" data-custom-attribute="custom_value">
+        Content of non-masked div.
+    </div>
+    <div id="maskedDiv1" data-custom-attribute="custom_value" data-matomo-mask>
+        <p id="maskedByParent" data-custom-attribute="custom_value">Paragraph masked by maskedDiv1 parent.</p>
+        <p id="unmaskedChildElement" data-custom-attribute="custom_value" data-matomo-unmask>Unmasked paragraph child of maskedDiv1.</p>
+    </div>
+    <div id="maskedDiv2" data-custom-attribute="custom_value" data-matomo-mask>
+        <div id="maskedChildDiv" data-custom-attribute="custom_value">
+            <p id="maskedByGrandparent" data-custom-attribute="custom_value">Paragraph masked by maskedDiv2 and maskedChildDiv parent.</p>
+            <p id="unmaskedGrandchild" data-custom-attribute="custom_value" data-matomo-unmask>Unmasked paragraph child of maskedChildDiv.</p>
+        </div>
+        <div id="unmaskedChildDiv" data-custom-attribute="custom_value" data-matomo-unmask>
+            <p id="maskedDespiteParent" data-custom-attribute="custom_value" data-matomo-mask>Masked paragraph child of unmaskedChildDiv.</p>
+            <p id="unmaskedByParent" data-custom-attribute="custom_value">Paragraph unmasked by parent unmaskedChildDiv.</p>
+        </div>
+    </div>
+</div>
 <a href="https://www.example.click" id="ClickTagManager1" class="tag123 clicktag23">my link</a>
 <a href="https://www.example.click/foo/bar" id="ClickTagManager2">my link</a>
 <a href="https://www.example.click/foo/bar3" id="ClickTagManager3"><span><span id="ClickTagManager3Span">my link</span></span></a>
@@ -596,7 +616,7 @@
         });
 
         test("Matomo TagManager dom", function() {
-            expect(78);
+            expect(126);
 
             var dom = window.MatomoTagManager.dom;
 
@@ -633,6 +653,78 @@
             strictEqual('', dom.getElementAttribute(TagManagerNode, 'attributeWithoutValue'), 'getElementAttribute, when attribute exists but has no value');
             strictEqual('test', dom.getElementAttribute(TagManagerNode, 'mytagattribute'), 'getElementAttribute, when attribute does exist and has value');
             strictEqual(null, dom.getElementAttribute(TagManagerNode, 'foobarnotexists'), 'getElementAttribute, when attribute does not exist');
+
+            var TagManagerMaskedNode = document.getElementById('TagManagerDivWithMasking');
+            strictEqual(false, dom.shouldElementBeMasked(TagManagerMaskedNode), 'shouldElementBeMasked, should return false because TagManagerDivWithMasking is not masked')
+            strictEqual(true, dom.elementHasMaskedChild(TagManagerMaskedNode), 'elementHasMaskedChild, should return true because TagManagerDivWithMasking has masked children')
+            strictEqual('Content of non-masked div. ******* Unmasked paragraph child of maskedDiv1. ******* Unmasked paragraph child of maskedChildDiv. ******* Paragraph unmasked by parent unmaskedChildDiv.', dom.getElementText(TagManagerMaskedNode), 'getElementTextWithMasking, should return inner text of TagManagerDivWithMasking with some content masked');
+            strictEqual('custom_value', dom.getElementAttribute(TagManagerMaskedNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when TagManagerDivWithMasking element is non-masked');
+
+            var NonMaskedDivNode = document.getElementById('nonMaskedDiv');
+            strictEqual(false, dom.shouldElementBeMasked(NonMaskedDivNode), 'shouldElementBeMasked, should return false because nonMaskedDiv is not masked')
+            strictEqual(false, dom.elementHasMaskedChild(NonMaskedDivNode), 'elementHasMaskedChild, should return false because nonMaskedDiv has no children')
+            strictEqual('Content of non-masked div.', dom.getElementText(NonMaskedDivNode), 'elementHasMaskedChild, should return inner text of nonMaskedDiv non-masked element');
+            strictEqual('custom_value', dom.getElementAttribute(NonMaskedDivNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when nonMaskedDiv element is non-masked');
+
+            var MaskedDiv1Node = document.getElementById('maskedDiv1');
+            strictEqual(true, dom.shouldElementBeMasked(MaskedDiv1Node), 'shouldElementBeMasked, returns whether or not the element should be masked')
+            strictEqual(true, dom.elementHasMaskedChild(MaskedDiv1Node), 'elementHasMaskedChild, returns whether or not any children should be masked')
+            strictEqual('******* Unmasked paragraph child of maskedDiv1.', dom.getElementText(MaskedDiv1Node), 'elementHasMaskedChild, should return partially masked inner text of masked maskedDiv1 element');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv1Node, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedDiv1 element is masked');
+
+            var MaskedByParentNode = document.getElementById('maskedByParent');
+            strictEqual(true, dom.shouldElementBeMasked(MaskedByParentNode), 'shouldElementBeMasked, should return true because maskedByParent has a parent that is masked')
+            strictEqual(false, dom.elementHasMaskedChild(MaskedByParentNode), 'elementHasMaskedChild, should return false because maskedByParent has no children')
+            strictEqual('*******', dom.getElementText(MaskedByParentNode), 'elementHasMaskedChild, should return masked inner text of maskedByParent element');
+            strictEqual('*******', dom.getElementAttribute(MaskedByParentNode, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedByParent element is masked');
+
+            var UnmaskedChildElementNode = document.getElementById('unmaskedChildElement');
+            strictEqual(false, dom.shouldElementBeMasked(UnmaskedChildElementNode), 'shouldElementBeMasked, should return false because UnmaskedChildElementNode has the unmask attribute and no children')
+            strictEqual(false, dom.elementHasMaskedChild(UnmaskedChildElementNode), 'elementHasMaskedChild, should return false because UnmaskedChildElementNode has the unmask attribute and no children')
+            strictEqual('Unmasked paragraph child of maskedDiv1.', dom.getElementText(UnmaskedChildElementNode), 'elementHasMaskedChild, should return unmasked inner text of unmaskedChildElement element');
+            strictEqual('custom_value', dom.getElementAttribute(UnmaskedChildElementNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when unmaskedChildElement element is unmasked');
+
+            var MaskedDiv2Node = document.getElementById('maskedDiv2');
+            strictEqual(true, dom.shouldElementBeMasked(MaskedDiv2Node), 'shouldElementBeMasked, should return true because maskedDiv2 has the mask attribute')
+            strictEqual(true, dom.elementHasMaskedChild(MaskedDiv2Node), 'elementHasMaskedChild, should return true because maskedDiv2 has masked children')
+            strictEqual('******* Unmasked paragraph child of maskedChildDiv. ******* Paragraph unmasked by parent unmaskedChildDiv.', dom.getElementText(MaskedDiv2Node), 'elementHasMaskedChild, should return partially masked inner text of maskedDiv2 element');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv2Node, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedDiv2 element is masked');
+
+            var MaskedChildDivNode = document.getElementById('maskedChildDiv');
+            strictEqual(true, dom.shouldElementBeMasked(MaskedChildDivNode), 'shouldElementBeMasked, should return true because maskedChildDiv has a parent with the mask attribute')
+            strictEqual(true, dom.elementHasMaskedChild(MaskedChildDivNode), 'elementHasMaskedChild, should return true because maskedChildDiv is masked and has children')
+            strictEqual('******* Unmasked paragraph child of maskedChildDiv.', dom.getElementText(MaskedChildDivNode), 'elementHasMaskedChild, should return partially masked inner text of maskedChildDiv element');
+            strictEqual('*******', dom.getElementAttribute(MaskedChildDivNode, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedChildDiv element is masked');
+
+            var MaskedByGrandparentNode = document.getElementById('maskedByGrandparent');
+            strictEqual(true, dom.shouldElementBeMasked(MaskedByGrandparentNode), 'shouldElementBeMasked, should return true because maskedByGrandparent has a parent with the mask attribute')
+            strictEqual(false, dom.elementHasMaskedChild(MaskedByGrandparentNode), 'elementHasMaskedChild, should return false because maskedByGrandparent has no children')
+            strictEqual('*******', dom.getElementText(MaskedByGrandparentNode), 'elementHasMaskedChild, should return masked inner text of maskedByGrandparent element');
+            strictEqual('*******', dom.getElementAttribute(MaskedByGrandparentNode, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedByGrandparent element is masked');
+
+            var UnmaskedGrandchildNode = document.getElementById('unmaskedGrandchild');
+            strictEqual(false, dom.shouldElementBeMasked(UnmaskedGrandchildNode), 'shouldElementBeMasked, should return false because unmaskedGrandchild has the unmask attribute')
+            strictEqual(false, dom.elementHasMaskedChild(UnmaskedGrandchildNode), 'elementHasMaskedChild, should return true because unmaskedGrandchild has no children')
+            strictEqual('Unmasked paragraph child of maskedChildDiv.', dom.getElementText(UnmaskedGrandchildNode), 'elementHasMaskedChild, should return unmasked inner text of masked unmaskedGrandchild element');
+            strictEqual('custom_value', dom.getElementAttribute(UnmaskedGrandchildNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when unmaskedGrandchild element is unmasked');
+
+            var UnmaskedChildDivNode = document.getElementById('unmaskedChildDiv');
+            strictEqual(false, dom.shouldElementBeMasked(UnmaskedChildDivNode), 'shouldElementBeMasked, should return false because unmaskedChildDiv has the unmask attribute')
+            strictEqual(true, dom.elementHasMaskedChild(UnmaskedChildDivNode), 'elementHasMaskedChild, should return true because unmaskedChildDiv has masked children')
+            strictEqual('******* Paragraph unmasked by parent unmaskedChildDiv.', dom.getElementText(UnmaskedChildDivNode), 'elementHasMaskedChild, should return partially masked inner text of unmaskedChildDiv element');
+            strictEqual('custom_value', dom.getElementAttribute(UnmaskedChildDivNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when unmaskedChildDiv element is masked');
+
+            var MaskedDespiteParentNode = document.getElementById('maskedDespiteParent');
+            strictEqual(true, dom.shouldElementBeMasked(MaskedDespiteParentNode), 'shouldElementBeMasked, should return true because maskedDespiteParent has the mask attribute')
+            strictEqual(false, dom.elementHasMaskedChild(MaskedDespiteParentNode), 'elementHasMaskedChild, should return false because maskedDespiteParent has no children')
+            strictEqual('*******', dom.getElementText(MaskedDespiteParentNode), 'elementHasMaskedChild, should return inner text of masked maskedDespiteParent element');
+            strictEqual('*******', dom.getElementAttribute(MaskedDespiteParentNode, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedDespiteParent element is masked');
+
+            var UnmaskedByParentNode = document.getElementById('unmaskedByParent');
+            strictEqual(false, dom.shouldElementBeMasked(UnmaskedByParentNode), 'shouldElementBeMasked, should return false because unmaskedByParent has the unmask attribute')
+            strictEqual(false, dom.elementHasMaskedChild(UnmaskedByParentNode), 'elementHasMaskedChild, should return false because unmaskedByParent has no children')
+            strictEqual('Paragraph unmasked by parent unmaskedChildDiv.', dom.getElementText(UnmaskedByParentNode), 'elementHasMaskedChild, returns inner text of unmasked unmaskedByParent element');
+            strictEqual('custom_value', dom.getElementAttribute(UnmaskedByParentNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when unmaskedByParent element is masked');
 
             var element = dom.byId('foobarwww');
             strictEqual(null, element, 'byId, when element does not exist');

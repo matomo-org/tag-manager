@@ -743,10 +743,15 @@
                         return;
                     }
 
-                  // If the content belongs to a masked element, return a masked string.
-                  if (TagManager.dom.shouldElementBeMasked(node)) {
-                      return '*******';
-                  }
+                    // If the content belongs to a masked element and it doesn't have any children, return a masked string.
+                    if (TagManager.dom.shouldElementBeMasked(node) && node.children.length === 0) {
+                        return '*******';
+                    }
+
+                    // If the element has children that should be masked, deal with that.
+                    if (TagManager.dom.elementHasMaskedChild(node)) {
+                       return TagManager.dom.getElementTextWithMaskedChildren(node);
+                    }
 
                     var content = node.innerText || node.textContent || '';
                     content = content.replace(/([\s\uFEFF\xA0])+/g, " ");
@@ -982,11 +987,38 @@
 
                     // Find the closest parent with the mask or unmask attribute. If it's the mask, return true.
                     var parentNode = node.closest('[data-matomo-mask],[data-piwik-mask],[data-matomo-unmask],[data-piwik-unmask]');
-                    if (parentNode !== null && !parentNode.hasAttribute('data-matomo-unmask') && !parentNode.hasAttribute('data-piwik-unmask')) {
+                    if (parentNode && !parentNode.hasAttribute('data-matomo-unmask') && !parentNode.hasAttribute('data-piwik-unmask')) {
                         return true;
                     }
 
                     return false;
+                },
+                elementHasMaskedChild: function (node) {
+                    if (typeof node === 'undefined') {
+                        return false;
+                    }
+
+                    // Does the element even have any children?
+                    if (node.children.length === 0) {
+                        return false;
+                    }
+
+                    // Does the current node have a mask attribute or a parent that does?
+                    if (node.hasAttribute('data-matomo-mask') || node.hasAttribute('data-piwik-mask') || TagManager.dom.shouldElementBeMasked(node)) {
+                        return true;
+                    }
+
+                    return node.querySelector('[data-matomo-mask],[data-piwik-mask]') !== null;
+                },
+                getElementTextWithMaskedChildren: function (node) {
+                    var text = '';
+                    var descendents = node.children;
+                    for (var i = 0; i < descendents.length; i++) {
+                        var item = descendents[i];
+                        text += TagManager.dom.getElementText(item) + ' ';
+                    }
+
+                    return utils.trim(text);
                 }
             };
 
