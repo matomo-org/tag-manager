@@ -970,49 +970,57 @@
                         }
                     }, true)
                 },
-                shouldElementBeMasked: function (node) {
-                    if (typeof node === 'undefined') {
+                shouldElementBeMasked: function (element) {
+                    if (typeof element === 'undefined') {
                         return false;
                     }
 
                     // If the element has the attribute indicating that it should be masked, return true.
-                    if (node.hasAttribute('data-matomo-mask') || node.hasAttribute('data-piwik-mask')) {
+                    if (element.hasAttribute('data-matomo-mask') || element.hasAttribute('data-piwik-mask')) {
                         return true;
                     }
 
                     // If the element has the attribute indicating that it shouldn't be masked, return false.
-                    if (node.hasAttribute('data-matomo-unmask') || node.hasAttribute('data-piwik-unmask')) {
+                    if (element.hasAttribute('data-matomo-unmask') || element.hasAttribute('data-piwik-unmask')) {
                         return false;
                     }
 
-                    // Find the closest parent with the mask or unmask attribute. If it's the mask, return true.
-                    var parentNode = node.closest('[data-matomo-mask],[data-piwik-mask],[data-matomo-unmask],[data-piwik-unmask]');
-                    if (parentNode && !parentNode.hasAttribute('data-matomo-unmask') && !parentNode.hasAttribute('data-piwik-unmask')) {
-                        return true;
+                    // Find the closest parent with the mask or unmask attribute. If it's the mask, return true. I originally used the closest function, but it appears that some browsers don't support it.
+                    var parentElement = element.parentElement;
+                    while (parentElement) {
+                        if (parentElement.hasAttribute('data-matomo-mask') || parentElement.hasAttribute('data-piwik-mask')) {
+                            return true;
+                        }
+
+                        if (parentElement.hasAttribute('data-matomo-unmask') || parentElement.hasAttribute('data-piwik-unmask')) {
+                            return false;
+                        }
+
+                        parentElement = parentElement.parentElement;
                     }
 
                     return false;
                 },
-                elementHasMaskedChild: function (node) {
-                    if (typeof node === 'undefined') {
+                elementHasMaskedChild: function (element) {
+                    if (typeof element === 'undefined') {
                         return false;
                     }
 
                     // Does the element even have any children?
-                    if (node.children.length === 0) {
+                    if (element.children.length === 0) {
                         return false;
                     }
 
                     // Does the current node have a mask attribute or a parent that does?
-                    if (node.hasAttribute('data-matomo-mask') || node.hasAttribute('data-piwik-mask') || TagManager.dom.shouldElementBeMasked(node)) {
+                    if (element.hasAttribute('data-matomo-mask') || element.hasAttribute('data-piwik-mask') || TagManager.dom.shouldElementBeMasked(element)) {
                         return true;
                     }
 
-                    return node.querySelector('[data-matomo-mask],[data-piwik-mask]') !== null;
+                    return element.querySelector('[data-matomo-mask],[data-piwik-mask]') !== null;
                 },
-                getElementTextWithMaskedChildren: function (node) {
+                getElementTextWithMaskedChildren: function (element) {
                     var text = '';
-                    var descendents = node.children;
+                    var descendents = element.children;
                     for (var i = 0; i < descendents.length; i++) {
                         var item = descendents[i];
                         text += TagManager.dom.getElementText(item) + ' ';
