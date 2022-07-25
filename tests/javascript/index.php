@@ -26,22 +26,22 @@
     <foo id="customTag5"></foo>
 </div>
 <!-- This div is for testing the masking/unmasking of elements. -->
-<div id="TagManagerDivWithMasking" data-custom-attribute="custom_value">
-    <div id="nonMaskedDiv" data-custom-attribute="custom_value">
+<div id="TagManagerDivWithMasking" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value">
+    <div id="nonMaskedDiv" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value">
         Content of non-masked div.
     </div>
-    <div id="maskedDiv1" data-custom-attribute="custom_value" data-matomo-mask>
-        <p id="maskedByParent" data-custom-attribute="custom_value">Paragraph masked by maskedDiv1 parent.</p>
-        <p id="unmaskedChildElement" data-custom-attribute="custom_value" data-matomo-unmask>Unmasked paragraph child of maskedDiv1.</p>
+    <div id="maskedDiv1" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value" data-matomo-mask>
+        <p id="maskedByParent" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value">Paragraph masked by maskedDiv1 parent.</p>
+        <p id="unmaskedChildElement" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value" data-matomo-unmask>Unmasked paragraph child of maskedDiv1.</p>
     </div>
-    <div id="maskedDiv2" data-custom-attribute="custom_value" data-matomo-mask>
-        <div id="maskedChildDiv" data-custom-attribute="custom_value">
-            <p id="maskedByGrandparent" data-custom-attribute="custom_value">Paragraph masked by maskedDiv2 and maskedChildDiv parent.</p>
-            <p id="unmaskedGrandchild" data-custom-attribute="custom_value" data-matomo-unmask>Unmasked paragraph child of maskedChildDiv.</p>
+    <div id="maskedDiv2" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value" data-matomo-mask>
+        <div id="maskedChildDiv" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value">
+            <p id="maskedByGrandparent" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value">Paragraph masked by maskedDiv2 and maskedChildDiv parent.</p>
+            <p id="unmaskedGrandchild" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value" data-matomo-unmask>Unmasked paragraph child of maskedChildDiv.</p>
         </div>
-        <div id="unmaskedChildDiv" data-custom-attribute="custom_value" data-matomo-unmask>
-            <p id="maskedDespiteParent" data-custom-attribute="custom_value" data-matomo-mask>Masked paragraph child of unmaskedChildDiv.</p>
-            <p id="unmaskedByParent" data-custom-attribute="custom_value">Paragraph unmasked by parent unmaskedChildDiv.</p>
+        <div id="unmaskedChildDiv" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value" data-matomo-unmask>
+            <p id="maskedDespiteParent" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value" data-matomo-mask>Masked paragraph child of unmaskedChildDiv.</p>
+            <p id="unmaskedByParent" value="value_attribute_value" title="title_attribute_value" alt="alt_attribute_value" placeholder="placeholder_attribute_value" label="label_attribute_value" data-custom-attribute="custom_value">Paragraph unmasked by parent unmaskedChildDiv.</p>
         </div>
     </div>
 </div>
@@ -616,7 +616,7 @@
         });
 
         test("Matomo TagManager dom", function() {
-            expect(126);
+            expect(186);
 
             var dom = window.MatomoTagManager.dom;
 
@@ -658,73 +658,133 @@
             strictEqual(false, dom.shouldElementBeMasked(TagManagerMaskedNode), 'shouldElementBeMasked, should return false because TagManagerDivWithMasking is not masked')
             strictEqual(true, dom.elementHasMaskedChild(TagManagerMaskedNode), 'elementHasMaskedChild, should return true because TagManagerDivWithMasking has masked children')
             strictEqual('Content of non-masked div. ******* Unmasked paragraph child of maskedDiv1. ******* Unmasked paragraph child of maskedChildDiv. ******* Paragraph unmasked by parent unmaskedChildDiv.', dom.getElementText(TagManagerMaskedNode), 'getElementTextWithMasking, should return inner text of TagManagerDivWithMasking with some content masked');
-            strictEqual('custom_value', dom.getElementAttribute(TagManagerMaskedNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when TagManagerDivWithMasking element is non-masked');
+            strictEqual('value_attribute_value', dom.getElementAttribute(TagManagerMaskedNode, 'value'), 'getElementAttribute, should return attribute value when TagManagerDivWithMasking element is non-masked');
+            strictEqual('title_attribute_value', dom.getElementAttribute(TagManagerMaskedNode, 'title'), 'getElementAttribute, should return attribute value when TagManagerDivWithMasking element is non-masked');
+            strictEqual('alt_attribute_value', dom.getElementAttribute(TagManagerMaskedNode, 'alt'), 'getElementAttribute, should return attribute value when TagManagerDivWithMasking element is non-masked');
+            strictEqual('label_attribute_value', dom.getElementAttribute(TagManagerMaskedNode, 'label'), 'getElementAttribute, should return attribute value when TagManagerDivWithMasking element is non-masked');
+            strictEqual('placeholder_attribute_value', dom.getElementAttribute(TagManagerMaskedNode, 'placeholder'), 'getElementAttribute, should return attribute value when TagManagerDivWithMasking element is non-masked');
+            strictEqual('custom_value', dom.getElementAttribute(TagManagerMaskedNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for TagManagerDivWithMasking element when attribute is not restricted');
 
             var NonMaskedDivNode = document.getElementById('nonMaskedDiv');
             strictEqual(false, dom.shouldElementBeMasked(NonMaskedDivNode), 'shouldElementBeMasked, should return false because nonMaskedDiv is not masked')
             strictEqual(false, dom.elementHasMaskedChild(NonMaskedDivNode), 'elementHasMaskedChild, should return false because nonMaskedDiv has no children')
             strictEqual('Content of non-masked div.', dom.getElementText(NonMaskedDivNode), 'elementHasMaskedChild, should return inner text of nonMaskedDiv non-masked element');
-            strictEqual('custom_value', dom.getElementAttribute(NonMaskedDivNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when nonMaskedDiv element is non-masked');
+            strictEqual('value_attribute_value', dom.getElementAttribute(NonMaskedDivNode, 'value'), 'getElementAttribute, should return attribute value when nonMaskedDiv element is non-masked');
+            strictEqual('title_attribute_value', dom.getElementAttribute(NonMaskedDivNode, 'title'), 'getElementAttribute, should return attribute value when nonMaskedDiv element is non-masked');
+            strictEqual('alt_attribute_value', dom.getElementAttribute(NonMaskedDivNode, 'alt'), 'getElementAttribute, should return attribute value when nonMaskedDiv element is non-masked');
+            strictEqual('label_attribute_value', dom.getElementAttribute(NonMaskedDivNode, 'label'), 'getElementAttribute, should return attribute value when nonMaskedDiv element is non-masked');
+            strictEqual('placeholder_attribute_value', dom.getElementAttribute(NonMaskedDivNode, 'placeholder'), 'getElementAttribute, should return attribute value when nonMaskedDiv element is non-masked');
+            strictEqual('custom_value', dom.getElementAttribute(NonMaskedDivNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for nonMaskedDiv element when attribute is not restricted');
 
             var MaskedDiv1Node = document.getElementById('maskedDiv1');
             strictEqual(true, dom.shouldElementBeMasked(MaskedDiv1Node), 'shouldElementBeMasked, returns whether or not the element should be masked')
             strictEqual(true, dom.elementHasMaskedChild(MaskedDiv1Node), 'elementHasMaskedChild, returns whether or not any children should be masked')
             strictEqual('******* Unmasked paragraph child of maskedDiv1.', dom.getElementText(MaskedDiv1Node), 'elementHasMaskedChild, should return partially masked inner text of masked maskedDiv1 element');
-            strictEqual('*******', dom.getElementAttribute(MaskedDiv1Node, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedDiv1 element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv1Node, 'value'), 'getElementAttribute, should return masked attribute value when maskedDiv1 element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv1Node, 'title'), 'getElementAttribute, should return masked attribute value when maskedDiv1 element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv1Node, 'alt'), 'getElementAttribute, should return masked attribute value when maskedDiv1 element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv1Node, 'label'), 'getElementAttribute, should return masked attribute value when maskedDiv1 element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv1Node, 'placeholder'), 'getElementAttribute, should return masked attribute value when maskedDiv1 element is masked');
+            strictEqual('custom_value', dom.getElementAttribute(MaskedDiv1Node, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for maskedDiv1 element when attribute is not restricted');
 
             var MaskedByParentNode = document.getElementById('maskedByParent');
             strictEqual(true, dom.shouldElementBeMasked(MaskedByParentNode), 'shouldElementBeMasked, should return true because maskedByParent has a parent that is masked')
             strictEqual(false, dom.elementHasMaskedChild(MaskedByParentNode), 'elementHasMaskedChild, should return false because maskedByParent has no children')
             strictEqual('*******', dom.getElementText(MaskedByParentNode), 'elementHasMaskedChild, should return masked inner text of maskedByParent element');
-            strictEqual('*******', dom.getElementAttribute(MaskedByParentNode, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedByParent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedByParentNode, 'value'), 'getElementAttribute, should return masked attribute value when maskedByParent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedByParentNode, 'title'), 'getElementAttribute, should return masked attribute value when maskedByParent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedByParentNode, 'alt'), 'getElementAttribute, should return masked attribute value when maskedByParent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedByParentNode, 'label'), 'getElementAttribute, should return masked attribute value when maskedByParent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedByParentNode, 'placeholder'), 'getElementAttribute, should return masked attribute value when maskedByParent element is masked');
+            strictEqual('custom_value', dom.getElementAttribute(MaskedByParentNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for maskedByParent element when attribute is not restricted');
 
             var UnmaskedChildElementNode = document.getElementById('unmaskedChildElement');
             strictEqual(false, dom.shouldElementBeMasked(UnmaskedChildElementNode), 'shouldElementBeMasked, should return false because UnmaskedChildElementNode has the unmask attribute and no children')
             strictEqual(false, dom.elementHasMaskedChild(UnmaskedChildElementNode), 'elementHasMaskedChild, should return false because UnmaskedChildElementNode has the unmask attribute and no children')
             strictEqual('Unmasked paragraph child of maskedDiv1.', dom.getElementText(UnmaskedChildElementNode), 'elementHasMaskedChild, should return unmasked inner text of unmaskedChildElement element');
-            strictEqual('custom_value', dom.getElementAttribute(UnmaskedChildElementNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when unmaskedChildElement element is unmasked');
+            strictEqual('value_attribute_value', dom.getElementAttribute(UnmaskedChildElementNode, 'value'), 'getElementAttribute, should return attribute value when unmaskedChildElement element is non-masked');
+            strictEqual('title_attribute_value', dom.getElementAttribute(UnmaskedChildElementNode, 'title'), 'getElementAttribute, should return attribute value when unmaskedChildElement element is non-masked');
+            strictEqual('alt_attribute_value', dom.getElementAttribute(UnmaskedChildElementNode, 'alt'), 'getElementAttribute, should return attribute value when unmaskedChildElement element is non-masked');
+            strictEqual('label_attribute_value', dom.getElementAttribute(UnmaskedChildElementNode, 'label'), 'getElementAttribute, should return attribute value when unmaskedChildElement element is non-masked');
+            strictEqual('placeholder_attribute_value', dom.getElementAttribute(UnmaskedChildElementNode, 'placeholder'), 'getElementAttribute, should return attribute value when unmaskedChildElement element is non-masked');
+            strictEqual('custom_value', dom.getElementAttribute(UnmaskedChildElementNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for unmaskedChildElement element when attribute is not restricted');
 
             var MaskedDiv2Node = document.getElementById('maskedDiv2');
             strictEqual(true, dom.shouldElementBeMasked(MaskedDiv2Node), 'shouldElementBeMasked, should return true because maskedDiv2 has the mask attribute')
             strictEqual(true, dom.elementHasMaskedChild(MaskedDiv2Node), 'elementHasMaskedChild, should return true because maskedDiv2 has masked children')
             strictEqual('******* Unmasked paragraph child of maskedChildDiv. ******* Paragraph unmasked by parent unmaskedChildDiv.', dom.getElementText(MaskedDiv2Node), 'elementHasMaskedChild, should return partially masked inner text of maskedDiv2 element');
-            strictEqual('*******', dom.getElementAttribute(MaskedDiv2Node, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedDiv2 element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv2Node, 'value'), 'getElementAttribute, should return masked attribute value when maskedDiv2 element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv2Node, 'title'), 'getElementAttribute, should return masked attribute value when maskedDiv2 element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv2Node, 'alt'), 'getElementAttribute, should return masked attribute value when maskedDiv2 element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv2Node, 'label'), 'getElementAttribute, should return masked attribute value when maskedDiv2 element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDiv2Node, 'placeholder'), 'getElementAttribute, should return masked attribute value when maskedDiv2 element is masked');
+            strictEqual('custom_value', dom.getElementAttribute(MaskedDiv2Node, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for maskedDiv2 element when attribute is not restricted');
 
             var MaskedChildDivNode = document.getElementById('maskedChildDiv');
             strictEqual(true, dom.shouldElementBeMasked(MaskedChildDivNode), 'shouldElementBeMasked, should return true because maskedChildDiv has a parent with the mask attribute')
             strictEqual(true, dom.elementHasMaskedChild(MaskedChildDivNode), 'elementHasMaskedChild, should return true because maskedChildDiv is masked and has children')
             strictEqual('******* Unmasked paragraph child of maskedChildDiv.', dom.getElementText(MaskedChildDivNode), 'elementHasMaskedChild, should return partially masked inner text of maskedChildDiv element');
-            strictEqual('*******', dom.getElementAttribute(MaskedChildDivNode, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedChildDiv element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedChildDivNode, 'value'), 'getElementAttribute, should return masked attribute value when maskedChildDiv element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedChildDivNode, 'title'), 'getElementAttribute, should return masked attribute value when maskedChildDiv element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedChildDivNode, 'alt'), 'getElementAttribute, should return masked attribute value when maskedChildDiv element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedChildDivNode, 'label'), 'getElementAttribute, should return masked attribute value when maskedChildDiv element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedChildDivNode, 'placeholder'), 'getElementAttribute, should return masked attribute value when maskedChildDiv element is masked');
+            strictEqual('custom_value', dom.getElementAttribute(MaskedChildDivNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for maskedChildDiv element when attribute is not restricted');
 
             var MaskedByGrandparentNode = document.getElementById('maskedByGrandparent');
             strictEqual(true, dom.shouldElementBeMasked(MaskedByGrandparentNode), 'shouldElementBeMasked, should return true because maskedByGrandparent has a parent with the mask attribute')
             strictEqual(false, dom.elementHasMaskedChild(MaskedByGrandparentNode), 'elementHasMaskedChild, should return false because maskedByGrandparent has no children')
             strictEqual('*******', dom.getElementText(MaskedByGrandparentNode), 'elementHasMaskedChild, should return masked inner text of maskedByGrandparent element');
-            strictEqual('*******', dom.getElementAttribute(MaskedByGrandparentNode, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedByGrandparent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedByGrandparentNode, 'value'), 'getElementAttribute, should return masked attribute value when maskedByGrandparent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedByGrandparentNode, 'title'), 'getElementAttribute, should return masked attribute value when maskedByGrandparent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedByGrandparentNode, 'alt'), 'getElementAttribute, should return masked attribute value when maskedByGrandparent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedByGrandparentNode, 'label'), 'getElementAttribute, should return masked attribute value when maskedByGrandparent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedByGrandparentNode, 'placeholder'), 'getElementAttribute, should return masked attribute value when maskedByGrandparent element is masked');
+            strictEqual('custom_value', dom.getElementAttribute(MaskedByGrandparentNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for maskedByGrandparent element when attribute is not restricted');
 
             var UnmaskedGrandchildNode = document.getElementById('unmaskedGrandchild');
             strictEqual(false, dom.shouldElementBeMasked(UnmaskedGrandchildNode), 'shouldElementBeMasked, should return false because unmaskedGrandchild has the unmask attribute')
             strictEqual(false, dom.elementHasMaskedChild(UnmaskedGrandchildNode), 'elementHasMaskedChild, should return true because unmaskedGrandchild has no children')
             strictEqual('Unmasked paragraph child of maskedChildDiv.', dom.getElementText(UnmaskedGrandchildNode), 'elementHasMaskedChild, should return unmasked inner text of masked unmaskedGrandchild element');
-            strictEqual('custom_value', dom.getElementAttribute(UnmaskedGrandchildNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when unmaskedGrandchild element is unmasked');
+            strictEqual('value_attribute_value', dom.getElementAttribute(UnmaskedGrandchildNode, 'value'), 'getElementAttribute, should return attribute value when unmaskedGrandchild element is non-masked');
+            strictEqual('title_attribute_value', dom.getElementAttribute(UnmaskedGrandchildNode, 'title'), 'getElementAttribute, should return attribute value when unmaskedGrandchild element is non-masked');
+            strictEqual('alt_attribute_value', dom.getElementAttribute(UnmaskedGrandchildNode, 'alt'), 'getElementAttribute, should return attribute value when unmaskedGrandchild element is non-masked');
+            strictEqual('label_attribute_value', dom.getElementAttribute(UnmaskedGrandchildNode, 'label'), 'getElementAttribute, should return attribute value when unmaskedGrandchild element is non-masked');
+            strictEqual('placeholder_attribute_value', dom.getElementAttribute(UnmaskedGrandchildNode, 'placeholder'), 'getElementAttribute, should return attribute value when unmaskedGrandchild element is non-masked');
+            strictEqual('custom_value', dom.getElementAttribute(UnmaskedGrandchildNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for unmaskedGrandchild element when attribute is not restricted');
 
             var UnmaskedChildDivNode = document.getElementById('unmaskedChildDiv');
             strictEqual(false, dom.shouldElementBeMasked(UnmaskedChildDivNode), 'shouldElementBeMasked, should return false because unmaskedChildDiv has the unmask attribute')
             strictEqual(true, dom.elementHasMaskedChild(UnmaskedChildDivNode), 'elementHasMaskedChild, should return true because unmaskedChildDiv has masked children')
             strictEqual('******* Paragraph unmasked by parent unmaskedChildDiv.', dom.getElementText(UnmaskedChildDivNode), 'elementHasMaskedChild, should return partially masked inner text of unmaskedChildDiv element');
-            strictEqual('custom_value', dom.getElementAttribute(UnmaskedChildDivNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when unmaskedChildDiv element is masked');
+            strictEqual('value_attribute_value', dom.getElementAttribute(UnmaskedChildDivNode, 'value'), 'getElementAttribute, should return attribute value when unmaskedChildDiv element is non-masked');
+            strictEqual('title_attribute_value', dom.getElementAttribute(UnmaskedChildDivNode, 'title'), 'getElementAttribute, should return attribute value when unmaskedChildDiv element is non-masked');
+            strictEqual('alt_attribute_value', dom.getElementAttribute(UnmaskedChildDivNode, 'alt'), 'getElementAttribute, should return attribute value when unmaskedChildDiv element is non-masked');
+            strictEqual('label_attribute_value', dom.getElementAttribute(UnmaskedChildDivNode, 'label'), 'getElementAttribute, should return attribute value when unmaskedChildDiv element is non-masked');
+            strictEqual('placeholder_attribute_value', dom.getElementAttribute(UnmaskedChildDivNode, 'placeholder'), 'getElementAttribute, should return attribute value when unmaskedChildDiv element is non-masked');
+            strictEqual('custom_value', dom.getElementAttribute(UnmaskedChildDivNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for unmaskedChildDiv element when attribute is not restricted');
 
             var MaskedDespiteParentNode = document.getElementById('maskedDespiteParent');
             strictEqual(true, dom.shouldElementBeMasked(MaskedDespiteParentNode), 'shouldElementBeMasked, should return true because maskedDespiteParent has the mask attribute')
             strictEqual(false, dom.elementHasMaskedChild(MaskedDespiteParentNode), 'elementHasMaskedChild, should return false because maskedDespiteParent has no children')
             strictEqual('*******', dom.getElementText(MaskedDespiteParentNode), 'elementHasMaskedChild, should return inner text of masked maskedDespiteParent element');
-            strictEqual('*******', dom.getElementAttribute(MaskedDespiteParentNode, 'data-custom-attribute'), 'getElementAttribute, should return masked attribute value when maskedDespiteParent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDespiteParentNode, 'value'), 'getElementAttribute, should return masked attribute value when maskedDespiteParent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDespiteParentNode, 'title'), 'getElementAttribute, should return masked attribute value when maskedDespiteParent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDespiteParentNode, 'alt'), 'getElementAttribute, should return masked attribute value when maskedDespiteParent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDespiteParentNode, 'label'), 'getElementAttribute, should return masked attribute value when maskedDespiteParent element is masked');
+            strictEqual('*******', dom.getElementAttribute(MaskedDespiteParentNode, 'placeholder'), 'getElementAttribute, should return masked attribute value when maskedDespiteParent element is masked');
+            strictEqual('custom_value', dom.getElementAttribute(MaskedDespiteParentNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for maskedDespiteParent element when attribute is not restricted');
 
             var UnmaskedByParentNode = document.getElementById('unmaskedByParent');
             strictEqual(false, dom.shouldElementBeMasked(UnmaskedByParentNode), 'shouldElementBeMasked, should return false because unmaskedByParent has the unmask attribute')
             strictEqual(false, dom.elementHasMaskedChild(UnmaskedByParentNode), 'elementHasMaskedChild, should return false because unmaskedByParent has no children')
             strictEqual('Paragraph unmasked by parent unmaskedChildDiv.', dom.getElementText(UnmaskedByParentNode), 'elementHasMaskedChild, returns inner text of unmasked unmaskedByParent element');
-            strictEqual('custom_value', dom.getElementAttribute(UnmaskedByParentNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value when unmaskedByParent element is masked');
+            strictEqual('value_attribute_value', dom.getElementAttribute(UnmaskedByParentNode, 'value'), 'getElementAttribute, should return attribute value when unmaskedByParent element is non-masked');
+            strictEqual('title_attribute_value', dom.getElementAttribute(UnmaskedByParentNode, 'title'), 'getElementAttribute, should return attribute value when unmaskedByParent element is non-masked');
+            strictEqual('alt_attribute_value', dom.getElementAttribute(UnmaskedByParentNode, 'alt'), 'getElementAttribute, should return attribute value when unmaskedByParent element is non-masked');
+            strictEqual('label_attribute_value', dom.getElementAttribute(UnmaskedByParentNode, 'label'), 'getElementAttribute, should return attribute value when unmaskedByParent element is non-masked');
+            strictEqual('placeholder_attribute_value', dom.getElementAttribute(UnmaskedByParentNode, 'placeholder'), 'getElementAttribute, should return attribute value when unmaskedByParent element is non-masked');
+            strictEqual('custom_value', dom.getElementAttribute(UnmaskedByParentNode, 'data-custom-attribute'), 'getElementAttribute, should return attribute value for unmaskedByParent element when attribute is not restricted');
 
             var element = dom.byId('foobarwww');
             strictEqual(null, element, 'byId, when element does not exist');

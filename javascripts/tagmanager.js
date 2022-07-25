@@ -750,7 +750,7 @@
 
                     // If the element has children that should be masked, deal with that.
                     if (TagManager.dom.elementHasMaskedChild(node)) {
-                       return TagManager.dom.getElementTextWithMaskedChildren(node);
+                        return TagManager.dom.getElementTextWithMaskedChildren(node);
                     }
 
                     var content = node.innerText || node.textContent || '';
@@ -765,8 +765,12 @@
                     return '';
                 },
                 getElementAttribute: function (node, attributeName) {
-                    // If the attribute belongs to a masked element, return a masked string.
-                    if (node && TagManager.dom.shouldElementBeMasked(node)) {
+                    if (!node || !attributeName) {
+                        return;
+                    }
+
+                    // If the attribute is one of the restricted attributes and belongs to a masked element, return a masked string.
+                    if (['value', 'title', 'alt', 'label', 'placeholder'].includes(attributeName) && TagManager.dom.shouldElementBeMasked(node)) {
                         return '*******';
                     }
 
