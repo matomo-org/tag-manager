@@ -770,7 +770,8 @@
                     }
 
                     // If the attribute is one of the restricted attributes and belongs to a masked element, return a masked string.
-                    if (['value', 'title', 'alt', 'label', 'placeholder'].includes(attributeName) && TagManager.dom.shouldElementBeMasked(node)) {
+                    var attr = attributeName.toLowerCase();
+                    if ((attr === 'value' || attr === 'title' || attr === 'alt' || attr === 'label' || attr === 'placeholder') && TagManager.dom.shouldElementBeMasked(node)) {
                         return '*******';
                     }
 
