@@ -332,6 +332,7 @@
         "IsoDateVariableDescription": "The current date and time in ISO format, for example \"2018-03-19T14:00:00.587Z\".",
         "IsoDateVariableName": "ISO Date",
         "InvalidDebugUrl": "The debug URL is invalid.",
+        "InvalidDebugUrlError": "Error",
         "JavaScriptErrorTriggerDescription": "Triggered when a JavaScript error happens.",
         "JavaScriptErrorTriggerName": "JavaScript Error",
         "JavaScriptVariableDescription": "Reads the value of a global JavaScript variable.",
