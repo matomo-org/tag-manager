@@ -1226,6 +1226,11 @@ class API extends \Piwik\Plugin\API
      */
     public function changeDebugUrl($idSite, $idContainer, $url)
     {
+        $this->accessValidator->checkWriteCapability($idSite);
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            throw new Exception(Piwik::translate('TagManager_InvalidDebugUrl'));
+        }
+
         $previewCookie = new PreviewCookie();
         $previewCookie->enableDebugSiteUrl($url);
     }
