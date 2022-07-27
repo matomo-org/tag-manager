@@ -343,6 +343,8 @@ abstract class BaseContext
     {
         if (is_array($variableNameOrVariable)) {
             $variable = $variableNameOrVariable;
+        } else if (isset($this->variables[$variableNameOrVariable])) {
+            return $this->variables[$variableNameOrVariable];
         } else {
             $variable = $this->variableModel->findVariableByName($container['idsite'], $container['idcontainerversion'], $variableNameOrVariable);
         }
