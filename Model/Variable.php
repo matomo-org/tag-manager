@@ -71,13 +71,13 @@ class Variable extends BaseModel
         BaseValidator::check(Piwik::translate('TagManager_LookupTable'), $lookupTable, [new LookupTable()]);
     }
 
-    public function addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable)
+    public function addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $checkNameInUse = true)
     {
         $this->validateValues($idSite, $name, $defaultValue, $lookupTable);
         $this->variablesProvider->checkIsValidVariable($type);
         $createdDate = $this->getCurrentDateTime();
         $parameters = $this->formatParameters($type, $parameters);
-        return $this->dao->createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate);
+        return $this->dao->createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate, $checkNameInUse);
     }
 
     public function updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable)

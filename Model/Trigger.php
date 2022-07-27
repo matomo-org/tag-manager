@@ -51,14 +51,14 @@ class Trigger extends BaseModel
         BaseValidator::check('Conditions', $conditions, [new TriggerConditions($idSite, $idContainerVersion)]);
     }
 
-    public function addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions)
+    public function addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $checkNameInUse = true)
     {
         $this->validateValues($idSite, $name, $idContainerVersion, $conditions);
         $this->triggersProvider->checkIsValidTrigger($type);
         $parameters = $this->formatParameters($type, $parameters);
         $createdDate = $this->getCurrentDateTime();
 
-        return $this->dao->createTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $createdDate);
+        return $this->dao->createTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $createdDate, $checkNameInUse);
     }
 
     public function updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions)

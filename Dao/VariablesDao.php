@@ -51,9 +51,9 @@ class VariablesDao extends BaseDao implements TagManagerDao
         return !empty($idSite);
     }
 
-    public function createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate)
+    public function createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate, $checkNameInUse = true)
     {
-        if ($this->isNameInUse($idSite, $idContainerVersion, $name)) {
+        if ($checkNameInUse && $this->isNameInUse($idSite, $idContainerVersion, $name)) {
             throw new Exception(Piwik::translate('TagManager_ErrorNameDuplicate'));
         }
 

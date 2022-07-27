@@ -50,9 +50,9 @@ class TriggersDao extends BaseDao implements TagManagerDao
         return !empty($idSite);
     }
 
-    public function createTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $createdDate)
+    public function createTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $createdDate, $checkNameInUse = true)
     {
-        if ($this->isNameInUse($idSite, $idContainerVersion, $name)) {
+        if ($checkNameInUse && $this->isNameInUse($idSite, $idContainerVersion, $name)) {
             throw new Exception(Piwik::translate('TagManager_ErrorNameDuplicate'));
         }
 
