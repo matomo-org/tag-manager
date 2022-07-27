@@ -187,6 +187,21 @@ class VariablesDao extends BaseDao implements TagManagerDao
         Db::query($query, $bind);
     }
 
+    /**
+     * @param int $idSite
+     * @param int $idContainerVersion
+     * @param string $deletedDate
+     */
+    public function deleteContainerVariables($idSite, $idContainerVersion, $deletedDate)
+    {
+        $table = $this->tablePrefixed;
+
+        $query = "UPDATE $table SET status = ?, deleted_date = ? WHERE idsite = ? and idcontainerversion = ? and status != ?";
+        $bind = array(self::STATUS_DELETED, $deletedDate, $idSite, $idContainerVersion, self::STATUS_DELETED);
+
+        Db::query($query, $bind);
+    }
+
     private function enrichVariables($variables)
     {
         if (empty($variables)) {

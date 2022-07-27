@@ -189,6 +189,21 @@ class TagsDao extends BaseDao implements TagManagerDao
         Db::query($query, $bind);
     }
 
+    /**
+     * @param int $idSite
+     * @param int $idContainerVersion
+     * @param string $deletedDate
+     */
+    public function deleteContainerTags($idSite, $idContainerVersion, $deletedDate)
+    {
+        $table = $this->tablePrefixed;
+
+        $query = "UPDATE $table SET status = ?, deleted_date = ? WHERE idsite = ? and idcontainerversion = ? and status != ?";
+        $bind = array(self::STATUS_DELETED, $deletedDate, $idSite, $idContainerVersion, self::STATUS_DELETED);
+
+        Db::query($query, $bind);
+    }
+
     private function enrichTags($tags)
     {
         if (empty($tags)) {
@@ -217,7 +232,7 @@ class TagsDao extends BaseDao implements TagManagerDao
         $tag['idcontainerversion'] = (int) $tag['idcontainerversion'];
         $tag['fire_delay'] = (int)$tag['fire_delay'];
         $tag['priority'] = (int)$tag['priority'];
-        
+
         if ($tag['start_date'] === '0000-00-00 00:00:00') {
             $tag['start_date'] = null;
         }
