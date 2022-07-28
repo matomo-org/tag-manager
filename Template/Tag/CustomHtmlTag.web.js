@@ -125,6 +125,12 @@
                 newScript.setAttribute('type', element.getAttribute('type'));
             }
 
+            // If this script is executing using a nonce, set the nonce on its children too.
+            var scriptWithNonce = document.querySelector('script[nonce]');
+            if (typeof scriptWithNonce !== 'undefined') {
+                newScript.nonce = scriptWithNonce.nonce;
+            }
+
             return newScript;
         }
 
