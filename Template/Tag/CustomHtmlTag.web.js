@@ -126,8 +126,9 @@
             }
 
             // If this script is executing using a nonce, set the nonce on its children too.
-            var scriptWithNonce = document.querySelector('script[nonce]');
-            if (typeof scriptWithNonce !== 'undefined') {
+            var scriptWithNonce = TagManager.dom.bySelector('script[nonce]');
+            if (Array.isArray(scriptWithNonce) && scriptWithNonce.length) {
+                scriptWithNonce = scriptWithNonce[0]; // Grab the first element.
                 newScript.nonce = scriptWithNonce.nonce;
             }
 
