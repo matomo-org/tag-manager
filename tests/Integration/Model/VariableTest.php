@@ -13,9 +13,14 @@ use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Model\Comparison;
+use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\Model\Variable;
 use Piwik\Plugins\TagManager\TagManager;
+use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
+use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
+use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
+use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ClickButtonVariable;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ErrorUrlVariable;
 use Piwik\Plugins\TagManager\Template\Variable\ReferrerUrlVariable;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
@@ -52,6 +57,11 @@ class VariableTest extends IntegrationTestCase
      */
     private $model;
 
+    /**
+     * @var Tag
+     */
+    private $tagModel;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -65,6 +75,9 @@ class VariableTest extends IntegrationTestCase
         $this->model->setCurrentDateTime($this->now);
 
         $this->idVariable1 = $this->addContainerVariable($this->idSite, $this->containerVersion1, null, 'InitialVariable1', ['dataLayerName' => 'myVariable'], '');
+
+        $this->tagModel = StaticContainer::get('Piwik\Plugins\TagManager\Model\Tag');
+        $this->tagModel->setCurrentDateTime($this->now);
     }
 
     public function tearDown(): void
@@ -375,6 +388,31 @@ class VariableTest extends IntegrationTestCase
             ]
         ];
         $this->assertSame($expected, $variable);
+    }
+
+    public function testUpdateContainerVariableNameReferences()
+    {
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, DataLayerVariable::ID, 'MyName', $parameters = ['dataLayerName' => 'fooBar'], 'myDefault');
+        $this->assertSame(2, $idVariable);
+
+        $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
+
+        $trigger = StaticContainer::get('Piwik\Plugins\TagManager\Model\Trigger');
+        $idTrigger1 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger1', [], []);
+        $this->assertSame(1, $idTrigger1);
+        $tagParameters = ['matomoConfig' => "{{{$variable['name']}}}", 'trackingType' => 'pageview'];
+        $idTag1 = $this->tagModel->addContainerTag($this->idSite, $this->containerVersion1, MatomoTag::ID, 'Tag1Name', $tagParameters, [$idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 0, 9999, $this->now, $this->now);
+        $this->assertSame(1, $idTag1);
+        $idTag2 = $this->tagModel->addContainerTag($this->idSite, $this->containerVersion1, MatomoTag::ID, 'Tag2Name', $tagParameters, [$idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 0, 9999, $this->now, $this->now);
+        $this->assertSame(2, $idTag2);
+
+        $newVariableName = 'NewVariableName';
+        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $idVariable, $newVariableName, ['dataLayerName' => 'updatedVariable']);
+
+        $tag1 = $this->tagModel->getContainerTag($this->idSite, $this->containerVersion1, $idTag1);
+        $this->assertSame("{{{$newVariableName}}}", $tag1['parameters']['matomoConfig']);
+        $tag2 = $this->tagModel->getContainerTag($this->idSite, $this->containerVersion1, $idTag2);
+        $this->assertSame("{{{$newVariableName}}}", $tag2['parameters']['matomoConfig']);
     }
 
     public function testGetContainer()

@@ -284,7 +284,7 @@ class Variable extends BaseModel
             $paramName = $parameter['name'];
             if (($parameter['templateFile'] === BaseTemplate::FIELD_TEMPLATE_VARIABLE
                     || (isset($parameter['component'])
-                        && $parameter['component'] === BaseTemplate::FIELD_VARIABLE_COMPONENT))
+                        && in_array($parameter['component'], [BaseTemplate::FIELD_VARIABLE_COMPONENT, BaseTemplate::FIELD_VARIABLE_TYPE_COMPONENT])))
                 && isset($parameters[$paramName])
                 && is_string($parameters[$paramName])
                 && strpos($parameters[$paramName], $oldVarNameTemplate) !== false) {
