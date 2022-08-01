@@ -2549,7 +2549,10 @@
             fireTemplateTag(templateToTest, params);
             var addedStyle4 = document.getElementById('customStyleTag4');
             strictEqual('var x = {};', addedStyle4.innerText, 'should have added element to start of head');
-            strictEqual('abc123123', addedStyle4.nonce, 'should have inherited nonce from main script');
+            // Use attribute for compatibility.
+            var nonceAttr = addedStyle4.getAttribute('nonce');
+            nonceAttr = nonceAttr ? nonceAttr : addedStyle4.nonce;
+            strictEqual('abc123123', nonceAttr, 'should have inherited nonce from main script');
             document.head.removeChild(addedStyle4);
 
             // auto escapes JS when through variable
