@@ -138,8 +138,8 @@ class WebContext extends BaseContext
             }
 
             foreach ($containerJs['variables'] as &$variable) {
-                $variable['Variable'] = $this->templateLocator->loadVariableTemplate($variable, self::ID);
                 $variable['parameters'] = $this->addVariableTemplateToParameters($variable['parameters']);
+                $variable['Variable'] = $this->templateLocator->loadVariableTemplate($variable, self::ID);
 
                 if (!$isPreviewRelease) {
                     $variable['name'] = $variable['type'];
