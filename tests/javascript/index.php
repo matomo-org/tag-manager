@@ -49,7 +49,7 @@
 <a href="https://www.example.click/foo/bar" id="ClickTagManager2">my link</a>
 <a href="https://www.example.click/foo/bar3" id="ClickTagManager3"><span><span id="ClickTagManager3Span">my link</span></span></a>
 
-<script type="text/javascript">
+<script type="text/javascript" nonce="abc123123">
 
     (function () {
 
@@ -2518,7 +2518,7 @@
         });
 
         test("Matomo TagManager Template CustomHtmlTag", function() {
-            expect(10);
+            expect(11);
             var templateToTest = 'CustomHtmlTag';
             var params = {document: document, customHtml: buildVariable('<div id="customHtmlTag1">my foo bar baz test</div><div id="customHtmlTag2">my test</div>')};
 
@@ -2549,6 +2549,10 @@
             fireTemplateTag(templateToTest, params);
             var addedStyle4 = document.getElementById('customStyleTag4');
             strictEqual('var x = {};', addedStyle4.innerText, 'should have added element to start of head');
+            // Use attribute for compatibility.
+            var nonceAttr = addedStyle4.getAttribute('nonce');
+            nonceAttr = nonceAttr ? nonceAttr : addedStyle4.nonce;
+            strictEqual('abc123123', nonceAttr, 'should have inherited nonce from main script');
             document.head.removeChild(addedStyle4);
 
             // auto escapes JS when through variable
