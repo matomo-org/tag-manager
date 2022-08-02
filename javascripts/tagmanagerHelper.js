@@ -233,7 +233,6 @@
             module: 'API',
             format: 'json',
             method: 'TagManager.changeDebugUrl',
-            idContainer: idContainer,
             url: newUrl
         }, 'get');
         ajaxRequest.withTokenInUrl();
