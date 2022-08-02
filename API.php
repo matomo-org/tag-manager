@@ -1224,7 +1224,7 @@ class API extends \Piwik\Plugin\API
      * @param string $idContainer  The id of a container, for example "6OMh6taM"
      * @param string $url  The url to enable debug
      */
-    public function changeDebugUrl($idSite, $idContainer, $url)
+    public function changeDebugUrl($idSite, $url)
     {
         $this->accessValidator->checkWriteCapability($idSite);
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
