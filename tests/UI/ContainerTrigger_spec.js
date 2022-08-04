@@ -97,6 +97,16 @@ describe("ContainerTrigger", function () {
         await capture.page(page, 'create_new_error');
     });
 
+    it('should show list of available variables with description tooltips', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTrigger');
+        await page.waitForNetworkIdle();
+        await selectTriggerType('DomReady');
+        await page.click('div.condition0 div.expandableSelector');
+        await page.click('ul.firstLevel > li.collection-item:first-child');
+        await capture.page(page, 'select_variable_filter');
+    });
+
     it('should be able to prefill trigger', async function () {
         await page.goto(container1Base);
         await page.click('.createNewTrigger');
