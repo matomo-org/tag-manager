@@ -160,6 +160,7 @@ class TriggersStore {
         idContainerVersion,
         type: trigger.type,
         name: trigger.name,
+        description: trigger.description,
       },
       {
         parameters,

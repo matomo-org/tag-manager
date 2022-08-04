@@ -57,6 +57,17 @@
               :inline-help="translate('TagManager_TriggerNameHelp')"
             />
           </div>
+          <div>
+            <Field
+              uicontrol="text"
+              name="description"
+              :model-value="trigger.description"
+              @update:model-value="trigger.description = $event; setValueHasChanged()"
+              :maxlength="1000"
+              :title="translate('General_Description')"
+              :inline-help="translate('TagManager_TriggerDescriptionHelp')"
+            />
+          </div>
           <div
             class="form-group row"
             v-show="trigger.typeMetadata?.parameters?.length"
@@ -471,6 +482,7 @@ export default defineComponent({
       this.trigger = {
         idsite: parseInt(`${Matomo.idSite}`, 10),
         name: TriggersStore.suggestNameForType(triggerTemplate.name) || '',
+        description: '',
         type: triggerTemplate.id,
         idcontainerversion: this.idContainerVersion,
         conditions: [],

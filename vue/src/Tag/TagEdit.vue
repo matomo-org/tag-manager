@@ -57,6 +57,17 @@
               :inline-help="translate('TagManager_TagNameHelp')"
             />
           </div>
+          <div>
+            <Field
+              uicontrol="text"
+              name="description"
+              :model-value="tag.description"
+              @update:model-value="tag.description = $event; setValueHasChanged()"
+              :maxlength="1000"
+              :title="translate('General_Description')"
+              :inline-help="translate('TagManager_TagDescriptionHelp')"
+            />
+          </div>
           <div
             class="form-group row"
             v-show="tag.typeMetadata?.parameters.length"

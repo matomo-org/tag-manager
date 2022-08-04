@@ -229,6 +229,7 @@ class TagTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => 'CustomHtml',
             'name' => 'MyName',
+            'description' => '',
             'status' => 'active',
             'parameters' =>
                  [
@@ -314,7 +315,8 @@ class TagTest extends IntegrationTestCase
 
     public function testAddContainerTagSuccessFull()
     {
-        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [$this->idTrigger3], Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, 9, '99', '2017-03-01 01:01:01', '2018-03-01 01:01:01');
+        $description = 'Test description of MyName tag';
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [$this->idTrigger3], Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, 9, '99', '2017-03-01 01:01:01', '2018-03-01 01:01:01', $description);
         $this->assertSame(2, $idTag);
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
@@ -325,6 +327,7 @@ class TagTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => 'CustomHtml',
             'name' => 'MyName',
+            'description' => $description,
             'status' => 'active',
             'parameters' =>
                  [
@@ -505,8 +508,9 @@ class TagTest extends IntegrationTestCase
 
     public function testUpdateContainerTagSuccess()
     {
+        $description = 'Test updated description for MyUpdatedName tag';
         $this->model->setCurrentDateTime('2018-02-01 05:06:07');
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyUpdatedName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [$this->idTrigger3], Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, 9, '99', '2017-03-01 01:01:01', '2018-03-01 01:01:01');
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyUpdatedName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [$this->idTrigger3], Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, 9, '99', '2017-03-01 01:01:01', '2018-03-01 01:01:01', $description);
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
 
@@ -516,6 +520,7 @@ class TagTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => 'CustomHtml',
             'name' => 'MyUpdatedName',
+            'description' => $description,
             'status' => 'active',
             'parameters' =>
                  [
@@ -632,6 +637,7 @@ class TagTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => 'Foo',
             'name' => 'InitialTag1',
+            'description' => '',
             'status' => 'active',
             'parameters' =>
                  [
@@ -759,6 +765,7 @@ class TagTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => 'CustomHtml',
             'name' => 'InitialTag1',
+            'description' => '',
             'status' => 'active',
             'parameters' =>
                  [
@@ -858,7 +865,7 @@ class TagTest extends IntegrationTestCase
         $this->model->updateParameters($this->idSite, $this->containerVersion1, $this->idTag1, $parameters = ['customHtml' => '']);
     }
 
-    private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null)
+    private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '')
     {
         if (!isset($type)) {
             $type = CustomHtmlTag::ID;
@@ -875,10 +882,10 @@ class TagTest extends IntegrationTestCase
             $endDate = $this->now;
         }
 
-        return $this->model->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
+        return $this->model->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
     }
 
-    private function updateContainerTag($idSite, $idContainerVersion, $idTag, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null)
+    private function updateContainerTag($idSite, $idContainerVersion, $idTag, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '')
     {
         if (!isset($fireLimit)) {
             $fireLimit = Tag::FIRE_LIMIT_UNLIMITED;
@@ -891,6 +898,6 @@ class TagTest extends IntegrationTestCase
             $endDate = $this->now;
         }
 
-        return $this->model->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
+        return $this->model->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
     }
 }

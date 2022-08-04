@@ -138,7 +138,7 @@ class TriggerTest extends IntegrationTestCase
 
     public function testAddContainerTriggerSuccessMinimal()
     {
-        $idTrigger = $this->addContainerTrigger($this->idSite, $this->containerVersion1, CustomEventTrigger::ID, 'MyName', $parameters = ['eventName' => 'fooBar'], []);
+        $idTrigger = $this->addContainerTrigger($this->idSite, $this->containerVersion1, CustomEventTrigger::ID, 'MyName', $parameters = ['eventName' => 'fooBar'], [], 'Test description for MyName tag');
         $this->assertSame(2, $idTrigger);
 
         $trigger = $this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $idTrigger);
@@ -149,6 +149,7 @@ class TriggerTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => CustomEventTrigger::ID,
             'name' => 'MyName',
+            'description' => '',
             'status' => 'active',
             'parameters' =>
                  [
@@ -162,6 +163,7 @@ class TriggerTest extends IntegrationTestCase
             'typeMetadata' => [
                 'id' => 'CustomEvent',
                 'name' => 'Custom Event',
+                'description' => 'Test description for MyName tag',
                 'description' => 'Triggered when a custom event is pushed to the Data-Layer.',
                 'category' => 'Others',
                 'icon' => 'plugins/TagManager/images/defaultIcon.svg',
@@ -203,7 +205,8 @@ class TriggerTest extends IntegrationTestCase
             ['actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errorfoo'],
             ['actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'expected' => 'barbaz'],
         ];
-        $idTrigger = $this->addContainerTrigger($this->idSite, $this->containerVersion1, CustomEventTrigger::ID, 'MyName', $parameters = ['eventName' => 'fooBar'], $conditions);
+        $description = 'Test description for MyName tag';
+        $idTrigger = $this->addContainerTrigger($this->idSite, $this->containerVersion1, CustomEventTrigger::ID, 'MyName', $parameters = ['eventName' => 'fooBar'], $conditions, $description);
         $this->assertSame(2, $idTrigger);
 
         $trigger = $this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $idTrigger);
@@ -214,6 +217,7 @@ class TriggerTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => CustomEventTrigger::ID,
             'name' => 'MyName',
+            'description' => 'Test description for MyName tag',
             'status' => 'active',
             'parameters' =>
                  [
@@ -320,9 +324,10 @@ class TriggerTest extends IntegrationTestCase
             ['actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errouprfoo'],
             ['actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'expected' => 'bauprbaz'],
         ];
+        $description = 'Test updated description for MyName tag';
 
         $this->model->setCurrentDateTime('2018-02-01 05:06:07');
-        $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyUpdatedName', $parameters = ['eventName' => 'updatedEvent'], $conditions);
+        $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyUpdatedName', $parameters = ['eventName' => 'updatedEvent'], $conditions, $description);
 
         $trigger = $this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1);
 
@@ -332,6 +337,7 @@ class TriggerTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => 'CustomEvent',
             'name' => 'MyUpdatedName',
+            'description' => $description,
             'status' => 'active',
             'parameters' =>
                  [
@@ -414,6 +420,7 @@ class TriggerTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => 'Foo',
             'name' => 'InitialTrigger1',
+            'description' => '',
             'status' => 'active',
             'parameters' =>  ['eventName' => 'myEvent'],
             'conditions' =>  [],
@@ -576,18 +583,18 @@ class TriggerTest extends IntegrationTestCase
         $this->assertSame($expected, $this->model->getTriggerReferences($this->idSite, $this->containerVersion1, $idTrigger4));
     }
 
-    private function updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name = 'MyName', $parameters = [], $conditions = [])
+    private function updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name = 'MyName', $parameters = [], $conditions = [], $description = '')
     {
-        return $this->model->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions);
+        return $this->model->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description);
     }
 
-    private function addContainerTrigger($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $conditions = [])
+    private function addContainerTrigger($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $conditions = [], $description = '')
     {
         if (!isset($type)) {
             $type = CustomEventTrigger::ID;
         }
 
-        return $this->model->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions);
+        return $this->model->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $description);
     }
 
     private function addContainerTag($idSite, $idContainerVersion = 5, $name = 'TagName', $fireTriggerIds = [], $blockTriggerIds = [])
