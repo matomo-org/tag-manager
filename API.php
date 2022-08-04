@@ -1227,7 +1227,7 @@ class API extends \Piwik\Plugin\API
     public function changeDebugUrl($idSite, $url)
     {
         $this->accessValidator->checkWriteCapability($idSite);
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        if (!filter_var($url, FILTER_VALIDATE_URL) || stripos($url, 'http') === FALSE) {
             throw new Exception(Piwik::translate('TagManager_InvalidDebugUrl'));
         }
 
