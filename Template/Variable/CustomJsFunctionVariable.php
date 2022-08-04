@@ -60,7 +60,7 @@ class CustomJsFunctionVariable extends BaseVariable
                 if (isset($js['joinedVariable']) && is_array($js['joinedVariable'])) {
                     $js = array_reduce($js['joinedVariable'], function ($carry, $item) {
                         if (is_array($item)) {
-                            return $carry . 'TagManager._buildVariable(' . json_encode($item) . ", parameters.get('container'))";
+                            return $carry . 'TagManager._buildVariable(' . json_encode($item) . ", parameters.get('container')).get()";
                         }
                         return $carry . $item;
                     }, "");
