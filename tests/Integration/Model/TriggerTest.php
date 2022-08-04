@@ -138,7 +138,7 @@ class TriggerTest extends IntegrationTestCase
 
     public function testAddContainerTriggerSuccessMinimal()
     {
-        $idTrigger = $this->addContainerTrigger($this->idSite, $this->containerVersion1, CustomEventTrigger::ID, 'MyName', $parameters = ['eventName' => 'fooBar'], [], 'Test description for MyName tag');
+        $idTrigger = $this->addContainerTrigger($this->idSite, $this->containerVersion1, CustomEventTrigger::ID, 'MyName', $parameters = ['eventName' => 'fooBar'], []);
         $this->assertSame(2, $idTrigger);
 
         $trigger = $this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $idTrigger);
@@ -163,7 +163,6 @@ class TriggerTest extends IntegrationTestCase
             'typeMetadata' => [
                 'id' => 'CustomEvent',
                 'name' => 'Custom Event',
-                'description' => 'Test description for MyName tag',
                 'description' => 'Triggered when a custom event is pushed to the Data-Layer.',
                 'category' => 'Others',
                 'icon' => 'plugins/TagManager/images/defaultIcon.svg',
