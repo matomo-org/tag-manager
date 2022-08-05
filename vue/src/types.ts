@@ -291,6 +291,8 @@ interface TagManagerHelper {
   enablePreviewMode(idContainer: string, idContainerVersion: number): void;
 
   showInstallCode(idContainer: string): void;
+
+  truncateText(text: string, maxLength: number): string;
 }
 
 declare global {
