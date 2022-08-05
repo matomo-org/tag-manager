@@ -138,6 +138,7 @@ describe("ContainerTag", function () {
         await page.click('.notification .close');
         await cancelTag();
         await page.mouse.move(-10, -10);
+        await page.waitForTimeout(250);
         await capture.page(page, 'create_new_shown_in_list');
     });
 
@@ -177,6 +178,7 @@ describe("ContainerTag", function () {
         await page.click('.notification .close');
         await cancelTag();
         await page.mouse.move(-10, -10);
+        await page.waitForTimeout(250);
         await capture.page(page, 'edit_updated_back_to_list');
     });
 
