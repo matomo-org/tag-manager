@@ -37,6 +37,7 @@ use Piwik\Plugins\TagManager\Template\Trigger\TriggersProvider;
 use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
 use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
 use Exception;
+use Piwik\UrlHelper;
 
 /**
  * API for plugin Tag Manager.
@@ -1227,7 +1228,12 @@ class API extends \Piwik\Plugin\API
     public function changeDebugUrl($idSite, $url)
     {
         $this->accessValidator->checkWriteCapability($idSite);
-        if (!filter_var($url, FILTER_VALIDATE_URL) || stripos($url, 'http') !== 0) {
+        if (
+            !filter_var($url, FILTER_VALIDATE_URL)
+            || stripos($url, 'http') !== 0
+            || !UrlHelper::isLookLikeSafeUrl($url)
+            || !UrlHelper::isLookLikeUrl($url)
+        ) {
             throw new Exception(Piwik::translate('TagManager_InvalidDebugUrl'));
         }
 

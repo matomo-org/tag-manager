@@ -558,6 +558,14 @@ class APITest extends IntegrationTestCase
         $this->api->changeDebugUrl($this->idSite, 'ssh://httpexample.org');
     }
 
+
+    public function test_changeDebugUrl_shouldChangeDebugUrlShouldFail4()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The debug URL is invalid.');
+        $this->api->changeDebugUrl($this->idSite, 'tel:12345');
+    }
+
     public function test_disablePreviewMode_success()
     {
         $this->assertNull($this->api->disablePreviewMode($this->idSite, $this->idContainer));
