@@ -7,7 +7,6 @@
  */
 namespace Piwik\Plugins\TagManager\API;
 
-use Piwik\API\Request;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
@@ -135,16 +134,15 @@ class Import
 
         foreach ($ecv['variables'] as $variable) {
             try {
-                Request::processRequest('TagManager.addContainerVariable', array(
-                    'idSite' => $idSite,
-                    'idContainer' => $idContainer,
-                    'idContainerVersion' => $idContainerVersion,
-                    'type' => $variable['type'],
-                    'name' => $variable['name'],
-                    'parameters' => $variable['parameters'],
-                    'defaultValue' => $variable['default_value'],
-                    'lookupTable' => $variable['lookup_table'],
-                ));
+                $this->variables->addContainerVariable(
+                    $idSite,
+                    $idContainerVersion,
+                    $variable['type'],
+                    $variable['name'],
+                    $variable['parameters'],
+                    $variable['default_value'],
+                    $variable['lookup_table']
+                );
             } catch (EntityRecursionException $e){
                 throw new \Exception(Piwik::translate('TagManager_EntityRecursionExceptionForVariable', array($variable['name'] . '(' . $variable['type'] . ')')));
             }
@@ -152,15 +150,14 @@ class Import
 
         $idTriggerMapping = array();
         foreach ($ecv['triggers'] as $trigger) {
-            $idTrigger = Request::processRequest('TagManager.addContainerTrigger', array(
-                'idSite' => $idSite,
-                'idContainer' => $idContainer,
-                'idContainerVersion' => $idContainerVersion,
-                'type' => $trigger['type'],
-                'name' => $trigger['name'],
-                'parameters' => $trigger['parameters'],
-                'conditions' => $trigger['conditions'],
-            ));
+            $idTrigger = $this->triggers->addContainerTrigger(
+                $idSite,
+                $idContainerVersion,
+                $trigger['type'],
+                $trigger['name'],
+                $trigger['parameters'],
+                $trigger['conditions']
+            );
 
             $idTriggerMapping[$trigger['idtrigger']] = $idTrigger;
         }
@@ -183,21 +180,20 @@ class Import
                 }
             }
 
-            Request::processRequest('TagManager.addContainerTag', array(
-                'idSite' => $idSite,
-                'idContainer' => $idContainer,
-                'idContainerVersion' => $idContainerVersion,
-                'type' => $tag['type'],
-                'name' => $tag['name'],
-                'parameters' => $tag['parameters'],
-                'fireTriggerIds' => $fireTriggerIds,
-                'blockTriggerIds' => $blockTriggerIds,
-                'fireLimit' => $tag['fire_limit'],
-                'fireDelay' => $tag['fire_delay'],
-                'priority' => $tag['priority'],
-                'startDate' => $tag['start_date'],
-                'endDate' => $tag['end_date'],
-            ));
+            $this->tags->addContainerTag(
+                $idSite,
+                $idContainerVersion,
+                $tag['type'],
+                $tag['name'],
+                $tag['parameters'],
+                $fireTriggerIds,
+                $blockTriggerIds,
+                $tag['fire_limit'],
+                $tag['fire_delay'],
+                $tag['priority'],
+                $tag['start_date'],
+                $tag['end_date']
+            );
         }
     }
 
