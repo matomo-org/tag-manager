@@ -256,6 +256,7 @@ interface Option {
   key: string;
   value: string;
   group: string;
+  tooltip: string;
 }
 
 interface TriggerEditState {
@@ -334,6 +335,7 @@ export default defineComponent({
             key: v.id,
             value: v.name,
             group: category.name,
+            tooltip: v.description,
           });
         });
       });
