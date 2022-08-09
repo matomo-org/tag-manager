@@ -331,6 +331,8 @@
         "InstallCodePublishEnvironmentNote": "Please note that in order for a container to be functional for a specific environment, you have to publish a version to that environment. You can find below a list of all environments that have a version published currently. When a \"%s\" is enabled, the preview will be loaded automatically through any of the environments when you access the page.",
         "IsoDateVariableDescription": "The current date and time in ISO format, for example \"2018-03-19T14:00:00.587Z\".",
         "IsoDateVariableName": "ISO Date",
+        "InvalidDebugUrl": "The debug URL is invalid.",
+        "InvalidDebugUrlError": "Error",
         "JavaScriptErrorTriggerDescription": "Triggered when a JavaScript error happens.",
         "JavaScriptErrorTriggerName": "JavaScript Error",
         "JavaScriptVariableDescription": "Reads the value of a global JavaScript variable.",
