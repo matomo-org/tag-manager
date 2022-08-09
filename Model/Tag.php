@@ -53,7 +53,7 @@ class Tag extends BaseModel
         ];
     }
 
-    public function addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate)
+    public function addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $checkNameInUse = true)
     {
         $this->validateValues($idSite, $name, $idContainerVersion, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
         $this->tagsProvider->checkIsValidTag($type);
@@ -61,7 +61,7 @@ class Tag extends BaseModel
 
         $createdDate = $this->getCurrentDateTime();
 
-        return $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate);
+        return $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $checkNameInUse);
     }
 
     private function validateValues($idSite, $name, $idContainerVersion, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate)
