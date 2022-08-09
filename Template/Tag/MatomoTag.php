@@ -8,6 +8,8 @@
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Container\StaticContainer;
+use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Validators\Numeric;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
@@ -36,30 +38,30 @@ class MatomoTag extends BaseTag
     public function getParameters()
     {
         $trackingType = $this->makeSetting('trackingType', 'pageview', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-            $field->title = 'Tracking Type';
-            $field->description = 'Choose which action should be executed when this tag is fired.';
+            $field->title = Piwik::translate('TagManager_TrackingType');
+            $field->description = Piwik::translate('TagManager_TrackingTypeHelp');
             $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
             $field->validators[] = new NotEmpty();
             $field->availableValues = array(
-                'pageview' => 'Pageview',
-                'event' => 'Event',
-                'goal' => 'Goal',
-                'initialise' => 'Initialise tracker only. Don\'t track anything.',
+                'pageview' => Piwik::translate('TagManager_PageViewTriggerName'),
+                'event' => Piwik::translate('Events_Event'),
+                'goal' => Piwik::translate('General_Goal'),
+                'initialise' => Piwik::translate('TagManager_InitializeTrackerOnly'),
             );
         });
         return array(
             $this->makeSetting(self::PARAM_MATOMO_CONFIG, '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Matomo Configuration';
-                $field->description = 'Assign a Matomo configuration in order to track data into a specific site.';
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationVariableName');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationFieldHelp');
                 $field->customFieldComponent = self::FIELD_VARIABLE_TYPE_COMPONENT;
                 $field->uiControlAttributes = array('variableType' => 'MatomoConfiguration');
                 $field->validators[] = new NotEmpty();
             }),
             $trackingType,
             $this->makeSetting('idGoal', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Goal ID';
+                $field->title = Piwik::translate('TagManager_GoalId');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'The ID of the goal you want to track manually.';
+                $field->description = Piwik::translate('TagManager_GoalIdHelp');
                 $field->condition = 'trackingType == "goal"';
                 if ($trackingType->getValue() === 'goal') {
                     $field->validators[] = new NotEmpty();
@@ -69,19 +71,31 @@ class MatomoTag extends BaseTag
                     return trim($value);
                 };
             }),
+            $this->makeSetting('goalCustomRevenue', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = Piwik::translate('Goals_GoalRevenue') . ' ' . Piwik::translate('Goals_Optional');
+                $field->description = Piwik::translate('TagManager_GoalRevenueHelp');
+                $field->condition = 'trackingType == "goal"';
+                if ($trackingType->getValue() === 'goal') {
+                    // The tracker.trackGoal JavaScript function indicates that it expects int|float for customRevenue.
+                    $field->validators[] = new Numeric(true);
+                }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
             $this->makeSetting('documentTitle', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Custom Title';
+                $field->title = Piwik::translate('TagManager_CustomTitle');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'Optionally, specify a custom document title which should be tracked instead of the default document title.';
+                $field->description = Piwik::translate('TagManager_CustomTitleHelp');
                 $field->condition = 'trackingType == "pageview"';
                 if ($trackingType->getValue() === 'pageview') {
                     $field->validators[] = new CharacterLength(0, 500);
                 }
             }),
             $this->makeSetting('customUrl', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Custom URL';
+                $field->title = Piwik::translate('TagManager_CustomUrl');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'Optionally, specify a custom URL which should be tracked instead of the current location.';
+                $field->description = Piwik::translate('TagManager_CustomUrlHelp');
                 $field->condition = 'trackingType == "pageview"';
                 if ($trackingType->getValue() === 'pageview') {
                     $field->validators[] = new CharacterLength(0, 500);
@@ -91,9 +105,9 @@ class MatomoTag extends BaseTag
                 };
             }),
             $this->makeSetting('eventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Event Category';
+                $field->title = Piwik::translate('Events_EventCategory');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'The event\'s category, for example Videos, Music, Games...';
+                $field->description = Piwik::translate('TagManager_EventCategoryHelp');
                 $field->condition = 'trackingType == "event"';
                 if ($trackingType->getValue() === 'event') {
                     $field->validators[] = new NotEmpty();
@@ -101,9 +115,9 @@ class MatomoTag extends BaseTag
                 }
             }),
             $this->makeSetting('eventAction', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Event Action';
+                $field->title = Piwik::translate('Events_EventAction');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'The event\'s action, for example Play, Pause, Duration, Add Playlist, Downloaded, Clicked...';
+                $field->description = Piwik::translate('TagManager_EventActionHelp');
                 $field->condition = 'trackingType == "event"';
                 if ($trackingType->getValue() === 'event') {
                     $field->validators[] = new NotEmpty();
@@ -111,16 +125,16 @@ class MatomoTag extends BaseTag
                 }
             }),
             $this->makeSetting('eventName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Event Name';
+                $field->title = Piwik::translate('Events_EventName');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'The event\'s object Name, for example a particular Movie name, or Song name, or File name...';
+                $field->description = Piwik::translate('TagManager_EventNameHelp');
                 $field->condition = 'trackingType == "event"';
                 $field->validators[] = new CharacterLength(0, 500);
             }),
             $this->makeSetting('eventValue', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Event Value';
+                $field->title = Piwik::translate('TagManager_EventValue');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'The event\'s value, for example "50" as in user has stayed on the website for 50 seconds.';
+                $field->description = Piwik::translate('TagManager_EventValueHelp');
                 $field->condition = 'trackingType == "event"';
                 $field->validators[] = new CharacterLength(0, 500);
                 $field->validate = function ($value) {
@@ -132,7 +146,7 @@ class MatomoTag extends BaseTag
                     }
                     $posBracket = strpos($value, '{{');
                     if ($posBracket === false || strpos($value, '}}', $posBracket) === false) {
-                        throw new \Exception('The event value can only include numeric values and variables.');
+                        throw new \Exception(Piwik::translate('TagManager_EventValueException'));
                     }
                 };
                 $field->transform = function ($value) {
