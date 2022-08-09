@@ -42,11 +42,6 @@ class Updates_4_12_0_b2 extends PiwikUpdates
      */
     public function getMigrations(Updater $updater)
     {
-        // many different migrations are available to be used via $this->migration factory
-        $migration1 = $this->migration->db->changeColumnType('log_visit', 'example', 'BOOLEAN NOT NULL');
-        // you can also define custom SQL migrations. If you need to bind parameters, use `->boundSql()`
-        $migration2 = $this->migration->db->sql($sqlQuery = 'SELECT 1');
-
         return array(
             $this->migration->db->addColumn('tagmanager_tag', 'description', 'VARCHAR(1000) NOT NULL DEFAULT \'\'', 'name'),
             $this->migration->db->addColumn('tagmanager_trigger', 'description', 'VARCHAR(1000) NOT NULL DEFAULT \'\'', 'name'),
