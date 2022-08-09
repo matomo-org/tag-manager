@@ -12,6 +12,9 @@
 >{{ 'TagManager_DisablePreview'|translate }}</a>
 <br>
 <div class="preview-debug-url-div">
+    <div piwik-alert="danger" id="debug-notification-alert" style="display: none">
+        <strong>{{ 'TagManager_InvalidDebugUrlError'|translate }}!</strong> <span id="debug-notification-alert-message"></span>
+    </div>
     <input type="url" id="previewDebugUrl" class="browser-default" placeholder="https://example.org"
            value="{{ debugSiteUrl|e('html_attr')}}">
     <button type="button" class="btn btn-small"

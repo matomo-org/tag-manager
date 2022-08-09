@@ -216,6 +216,7 @@
         });
     };
     tagManagerHelper.changeDebugUrl = function (idContainer, oldUrl) {
+        $('#debug-notification-alert').hide();
         var newUrl = document.getElementById('previewDebugUrl').value;
         var id = 'TagManager_changeDebugSiteUrl';
         var context = 'warning'; // or 'warning' or 'error' or 'success'
@@ -227,22 +228,34 @@
             return tagManagerHelper.updateDebugSiteFlag(newUrl, idContainer, 1);;
         }
         var ajaxRequest = new ajaxHelper();
+        var template = $('<h2>' + _pk_translate('TagManager_UpdatingDebugSiteUrlPleaseWait') + '</h2>');
         ajaxRequest.addParams({
             module: 'API',
+            format: 'json',
             method: 'TagManager.changeDebugUrl',
-            idContainer: idContainer,
             url: newUrl
         }, 'get');
         ajaxRequest.withTokenInUrl();
         ajaxRequest.setCallback(
             function (response) {
-                tagManagerHelper.updateDebugSiteFlag(oldUrl, idContainer, -1);
-                tagManagerHelper.updateDebugSiteFlag(newUrl, idContainer, 1);
-                window.location.reload();
+                var result = JSON.parse(response);
+                if (result.result && result.result === 'success') {
+                    tagManagerHelper.updateDebugSiteFlag(oldUrl, idContainer, -1);
+                    tagManagerHelper.updateDebugSiteFlag(newUrl, idContainer, 1);
+                    window.location.reload();
+                } else {
+                    var modal = M.Modal.getInstance(template.parents('.modal.open'));
+
+                    if (modal) {
+                        modal.close();
+                    }
+                    $('#debug-notification-alert-message').html(result.message);
+                    $('#debug-notification-alert').show();
+                }
             }
         );
         ajaxRequest.setFormat('html');
-        piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_UpdatingDebugSiteUrlPleaseWait') + '</h2>', {});
+        piwikHelper.modalConfirm(template, {});
         ajaxRequest.send();
     };
     tagManagerHelper.updateDebugSiteFlag = function (url, idContainer, debugFlag) {
