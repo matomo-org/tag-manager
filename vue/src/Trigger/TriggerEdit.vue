@@ -59,7 +59,7 @@
           </div>
           <div>
             <Field
-              uicontrol="text"
+              uicontrol="textarea"
               name="description"
               :model-value="trigger.description"
               @update:model-value="trigger.description = $event; setValueHasChanged()"
