@@ -118,17 +118,6 @@ describe("ContainerTag", function () {
         await capture.page(page, 'create_new_custom_templates_restricted');
     });
 
-    it('should be able to prefill tag', async function () {
-        await page.goto(container1Base);
-        await page.click('.createNewTag');
-        await page.waitForNetworkIdle();
-        await page.waitForTimeout(250);
-        await selectTagType('CustomHtml');
-        await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
-        await setParameterValue('customHtml', '<script></script>');
-        await capture.page(page, 'create_new_prefilled');
-    });
-
     it('should be able to select matomo tag with goal tracking type', async function () {
       await page.goto(container1Base);
       await page.click('.createNewTag');
@@ -138,6 +127,17 @@ describe("ContainerTag", function () {
       await page.waitForTimeout(250);
       await form.selectValue(page, 'form > div > div:nth-child(5) > div:nth-child(2) div.select-wrapper', 'Goal');
       await capture.page(page, 'create_new_with_goal_tracking_type');
+    });
+
+    it('should be able to prefill tag', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTag');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+        await selectTagType('CustomHtml');
+        await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
+        await setParameterValue('customHtml', '<script></script>');
+        await capture.page(page, 'create_new_prefilled');
     });
 
     it('should be able to create a new tag and show update afterwards', async function () {
