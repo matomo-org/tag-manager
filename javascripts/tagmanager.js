@@ -427,7 +427,7 @@
 
                     var start, end;
                     try {
-                        start = new Date(startDateTime + ' UTC');
+                        start = new Date(startDateTime + (startDateTime && startDateTime.split(' ').length === 2 ? ' UTC' : ''));
                     } catch (e) {
                         if (startDateTime) {
                             throwError('Invalid startDateTime given');
@@ -435,10 +435,10 @@
                     }
 
                     try {
-                        end = new Date(endDateTime + ' UTC');
+                        end = new Date(endDateTime + (endDateTime && endDateTime.split(' ').length === 2 ? ' UTC' : ''));
                     } catch (e) {
                         if (endDateTime) {
-                            throwError('Invalid startDateTime given');
+                            throwError('Invalid endDateTime given');
                         }
                     }
 
