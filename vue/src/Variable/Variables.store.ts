@@ -160,6 +160,7 @@ class VariablesStore {
         idContainerVersion,
         type: variable.type,
         name: variable.name,
+        description: variable.description,
         defaultValue: variable.default_value,
       },
       {

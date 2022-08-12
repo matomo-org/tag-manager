@@ -79,6 +79,7 @@ class TriggersDaoTest extends IntegrationTestCase
         $parameters = array();
         $conditions = array();
         $createdDate = $this->now;
+        $description = '';
 
         $idTrigger = $this->dao->createTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $createdDate);
         $this->assertSame(1, $idTrigger);
@@ -96,6 +97,7 @@ class TriggersDaoTest extends IntegrationTestCase
             'updated_date' => $createdDate,
             'deleted_date' => null,
             'status' => TriggersDao::STATUS_ACTIVE,
+            'description' => $description,
         ), $trigger);
     }
 
@@ -111,8 +113,9 @@ class TriggersDaoTest extends IntegrationTestCase
             array('actual' => 'Referrer', 'comparison' => 'contains', 'expected' => 'matomo'),
         );
         $createdDate = $this->now;
+        $description = 'Test description for My Name trigger';
 
-        $idTrigger = $this->dao->createTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $createdDate);
+        $idTrigger = $this->dao->createTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $createdDate, $description);
         $this->assertSame(1, $idTrigger);
 
         $trigger = $this->dao->getContainerTrigger($idSite, $idContainerVersion, $idTrigger);
@@ -128,6 +131,7 @@ class TriggersDaoTest extends IntegrationTestCase
             'updated_date' => $createdDate,
             'deleted_date' => null,
             'status' => TriggersDao::STATUS_ACTIVE,
+            'description' => $description,
         ), $trigger);
     }
 
@@ -273,6 +277,7 @@ class TriggersDaoTest extends IntegrationTestCase
             array('actual' => 'foobar', 'comparison' => 'ends_with', 'expected' => '.org')
         );
         $parameters = array('baz' => 'foo', 'hello' => 'world');
+        $description = 'Test description for My Name trigger';
 
         $idTrigger = $this->createTrigger($idSite = 4, $idContainerVersion = 6);
 
@@ -280,7 +285,8 @@ class TriggersDaoTest extends IntegrationTestCase
             'name' => 'My Changed Name',
             'conditions' => $conditions,
             'parameters' => $parameters,
-            'updated_date' => '2016-01-02 03:04:05'
+            'updated_date' => '2016-01-02 03:04:05',
+            'description' => $description
         );
         $this->dao->updateTriggerColumns($idSite = 4, $idContainerVersion = 6, $idTrigger, $columns);
 
@@ -297,6 +303,7 @@ class TriggersDaoTest extends IntegrationTestCase
             'updated_date' => '2016-01-02 03:04:05',
             'deleted_date' => null,
             'status' => TriggersDao::STATUS_ACTIVE,
+            'description' => $description,
         ), $trigger);
     }
 
@@ -331,6 +338,7 @@ class TriggersDaoTest extends IntegrationTestCase
             'updated_date' => $this->now,
             'deleted_date' => null,
             'status' => TriggersDao::STATUS_ACTIVE,
+            'description' => '',
         ), $trigger);
     }
 

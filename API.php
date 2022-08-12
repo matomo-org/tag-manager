@@ -467,10 +467,11 @@ class API extends \Piwik\Plugin\API
      * @param int $priority       Optional, a custom priority which defines the order in which certain tags will be executed if multiple will be triggered at once. The lower the priority is, the earlier this tag may be fired.
      * @param null|string $startDate     Optional, a start date to ensure the tag will be only executed after this date. Please provide the date in UTC.
      * @param null|string $endDate       Optional, an end date to ensure the tag will not be executed after this date. Please provide the date in UTC.
+     * @param null|string $description   Optional description
      *
      * @return int The ID of the created tag.
      */
-    public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null)
+    public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -481,7 +482,7 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
-        $idTag = $this->tags->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
+        $idTag = $this->tags->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
         return $idTag;
     }
@@ -504,8 +505,9 @@ class API extends \Piwik\Plugin\API
      * @param int $priority       Optional, a custom priority which defines the order in which certain tags will be executed if multiple will be triggered at once. The lower the priority is, the earlier this tag may be fired.
      * @param null|string $startDate     Optional, a start date to ensure the tag will be only executed after this date. Please provide the date in UTC.
      * @param null|string $endDate       Optional, an end date to ensure the tag will not be executed after this date. Please provide the date in UTC.
+     * @param null|string $description   Optional description
      */
-    public function updateContainerTag($idSite, $idContainer, $idContainerVersion, $idTag, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null)
+    public function updateContainerTag($idSite, $idContainer, $idContainerVersion, $idTag, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -517,7 +519,7 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
-        $return = $this->tags->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
+        $return = $this->tags->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
         return $return;
     }
@@ -622,10 +624,11 @@ class API extends \Piwik\Plugin\API
      * @param array[] $conditions An array containing one or multiple conditions to filter when a trigger will be triggered. For example:
      *                            array(array('actual' => 'VARIABLENAME', 'comparison' => 'equals', 'expected' => 'expectedValue'))
      *                           To get a list of available comparisons, call {@link TagManager.getAvailableComparisons}
+     * @param null|string $description   Optional description
      *
      * @return int   The id of the created trigger
      */
-    public function addContainerTrigger($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $conditions = [])
+    public function addContainerTrigger($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $conditions = [], $description = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -637,7 +640,7 @@ class API extends \Piwik\Plugin\API
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
 
-        $idTrigger = $this->triggers->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions);
+        $idTrigger = $this->triggers->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $description);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
         return $idTrigger;
     }
@@ -656,8 +659,9 @@ class API extends \Piwik\Plugin\API
      * @param array[] $conditions An array containing one or multiple conditions to filter when a trigger will be triggered. For example:
      *                            array(array('actual' => 'VARIABLENAME', 'comparison' => 'equals', 'expected' => 'expectedValue'))
      *                           To get a list of available comparisons, call {@link TagManager.getAvailableComparisons}
+     * @param null|string $description   Optional description
      */
-    public function updateContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger, $name, $parameters = [], $conditions = [])
+    public function updateContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger, $name, $parameters = [], $conditions = [], $description= '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -670,7 +674,7 @@ class API extends \Piwik\Plugin\API
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
 
-        $return = $this->triggers->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions);
+        $return = $this->triggers->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
         return $return;
     }
@@ -826,10 +830,11 @@ class API extends \Piwik\Plugin\API
      * @param array[] $lookupTable An array containing one or multiple lookup configurations. For example:
      *                             array(array('match_value' => 'inval', 'comparison' => 'equals', 'out_value' => 'outval'))
      *                             For a list of available comparisons see {@link TagManager.getAvailableComparisons}
+     * @param null|string $description   Optional description
      *
      * @return int The ID of the created variable
      */
-    public function addContainerVariable($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $defaultValue = false, $lookupTable = [])
+    public function addContainerVariable($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $defaultValue = false, $lookupTable = [], $description = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -842,7 +847,7 @@ class API extends \Piwik\Plugin\API
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
         $name = urldecode($name);
 
-        $idVariable = $this->variables->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable);
+        $idVariable = $this->variables->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $description);
 
         try {
             $this->updateContainerPreviewRelease($idSite, $idContainer);
@@ -878,8 +883,9 @@ class API extends \Piwik\Plugin\API
      * @param array[] $lookupTable An array containing one or multiple lookup configurations. For example:
      *                             array(array('match_value' => 'inval', 'comparison' => 'equals', 'out_value' => 'outval'))
      *                             For a list of available comparisons see {@link TagManager.getAvailableComparisons}
+     * @param null|string $description   Optional description
      */
-    public function updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name, $parameters = [], $defaultValue = null, $lookupTable = [])
+    public function updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name, $parameters = [], $defaultValue = null, $lookupTable = [], $description = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -893,7 +899,7 @@ class API extends \Piwik\Plugin\API
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
         $name = urldecode($name);
 
-        $return = $this->variables->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable);
+        $return = $this->variables->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description);
 
         try {
             $this->updateContainerPreviewRelease($idSite, $idContainer);

@@ -540,6 +540,9 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_InstallCodePublishEnvironmentNote';
         $result[] = 'TagManager_GettingStartedNotice';
         $result[] = 'TagManager_InvalidDebugUrlError';
+        $result[] = 'TagManager_TagDescriptionHelp';
+        $result[] = 'TagManager_TriggerDescriptionHelp';
+        $result[] = 'TagManager_VariableDescriptionHelp';
     }
 
     public function getStylesheetFiles(&$stylesheets)

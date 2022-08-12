@@ -5,6 +5,7 @@
 	<idsite>2</idsite>
 	<type>DataLayer</type>
 	<name>My Var 1</name>
+	<description/>
 	<status>active</status>
 	<parameters>
 		<dataLayerName>fooBarName</dataLayerName>

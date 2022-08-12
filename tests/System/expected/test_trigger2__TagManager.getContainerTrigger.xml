@@ -5,6 +5,7 @@
 	<idsite>2</idsite>
 	<type>WindowLoaded</type>
 	<name>Mytrigger2</name>
+	<description/>
 	<status>active</status>
 	<parameters>
 	</parameters>

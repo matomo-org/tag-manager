@@ -141,6 +141,7 @@ class Import
                     'idContainerVersion' => $idContainerVersion,
                     'type' => $variable['type'],
                     'name' => $variable['name'],
+                    'description' => $variable['description'],
                     'parameters' => $variable['parameters'],
                     'defaultValue' => $variable['default_value'],
                     'lookupTable' => $variable['lookup_table'],
@@ -158,6 +159,7 @@ class Import
                 'idContainerVersion' => $idContainerVersion,
                 'type' => $trigger['type'],
                 'name' => $trigger['name'],
+                'description' => $trigger['description'],
                 'parameters' => $trigger['parameters'],
                 'conditions' => $trigger['conditions'],
             ));
@@ -189,6 +191,7 @@ class Import
                 'idContainerVersion' => $idContainerVersion,
                 'type' => $tag['type'],
                 'name' => $tag['name'],
+                'description' => $tag['description'],
                 'parameters' => $tag['parameters'],
                 'fireTriggerIds' => $fireTriggerIds,
                 'blockTriggerIds' => $blockTriggerIds,

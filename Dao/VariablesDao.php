@@ -12,6 +12,7 @@ use Piwik\Db;
 use Piwik\DbHelper;
 use Piwik\Piwik;
 use Exception;
+use Piwik\Plugins\TagManager\Input\Description;
 use Piwik\Plugins\TagManager\Input\Name;
 
 class VariablesDao extends BaseDao implements TagManagerDao
@@ -26,6 +27,7 @@ class VariablesDao extends BaseDao implements TagManagerDao
                   `idsite` int(11) UNSIGNED NOT NULL,
                   `type` VARCHAR(50) NOT NULL,
                   `name` VARCHAR(" . Name::MAX_LENGTH . ") NOT NULL,
+                  `description` VARCHAR(" . Description::MAX_LENGTH . ") NOT NULL,
                   `status` VARCHAR(10) NOT NULL,
                   `parameters` MEDIUMTEXT NOT NULL DEFAULT '',
                   `lookup_table` MEDIUMTEXT NOT NULL DEFAULT '',
@@ -51,7 +53,7 @@ class VariablesDao extends BaseDao implements TagManagerDao
         return !empty($idSite);
     }
 
-    public function createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate)
+    public function createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate, $description = '')
     {
         if ($this->isNameInUse($idSite, $idContainerVersion, $name)) {
             throw new Exception(Piwik::translate('TagManager_ErrorNameDuplicate'));
@@ -63,6 +65,7 @@ class VariablesDao extends BaseDao implements TagManagerDao
             'status' => self::STATUS_ACTIVE,
             'type' => $type,
             'name' => $name,
+            'description' => $description,
             'parameters' => $parameters,
             'lookup_table' => $lookupTable,
             'default_value' => $defaultValue,

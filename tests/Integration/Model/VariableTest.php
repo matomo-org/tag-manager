@@ -168,6 +168,7 @@ class VariableTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => DataLayerVariable::ID,
             'name' => 'MyName',
+            'description' => '',
             'status' => 'active',
             'parameters' =>
                  [
@@ -215,11 +216,12 @@ class VariableTest extends IntegrationTestCase
 
     public function testAddContainerVariableSuccessFull()
     {
+        $description = 'Test description for MyName variable';
         $lookupTable = [
             ['match_value' => 'inval', 'comparison' => Comparison::ID_EQUALS, 'out_value' => 'errorfoo'],
             ['match_value' => 'foobar', 'comparison' => Comparison::ID_CONTAINS, 'out_value' => 'barbaz'],
         ];
-        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, DataLayerVariable::ID, 'MyName', $parameters = ['dataLayerName' => 'fooBar'], 'myDefault', $lookupTable);
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, DataLayerVariable::ID, 'MyName', $parameters = ['dataLayerName' => 'fooBar'], 'myDefault', $lookupTable, $description);
         $this->assertSame(2, $idVariable);
 
         $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
@@ -230,6 +232,7 @@ class VariableTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => DataLayerVariable::ID,
             'name' => 'MyName',
+            'description' => $description,
             'status' => 'active',
             'parameters' =>
                  [
@@ -329,13 +332,14 @@ class VariableTest extends IntegrationTestCase
 
     public function testUpdateContainerVariableSuccess()
     {
+        $description = 'Test updated description of MyUpdatedName variable';
         $lookupTable = [
             ['match_value' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_EQUALS, 'out_value' => 'errouprfoo'],
             ['match_value' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'out_value' => 'bauprbaz'],
         ];
 
         $this->model->setCurrentDateTime('2018-02-01 05:06:07');
-        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyUpdatedName', $parameters = ['dataLayerName' => 'updatedVariable'], '', $lookupTable);
+        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'MyUpdatedName', $parameters = ['dataLayerName' => 'updatedVariable'], '', $lookupTable, $description);
 
         $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
 
@@ -345,6 +349,7 @@ class VariableTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => 'DataLayer',
             'name' => 'MyUpdatedName',
+            'description' => $description,
             'status' => 'active',
             'parameters' =>
                  [
@@ -449,6 +454,7 @@ class VariableTest extends IntegrationTestCase
             'idsite' => 1,
             'type' => 'Foo',
             'name' => 'InitialVariable1',
+            'description' => '',
             'status' => 'active',
             'parameters' =>  ['dataLayerName' => 'myVariable'],
             'lookup_table' =>  [],
@@ -558,17 +564,17 @@ class VariableTest extends IntegrationTestCase
         $this->assertSame([], $this->model->getContainerVariableReferences($this->idSite, $this->containerVersion1, $this->idVariable1));
     }
 
-    private function addContainerVariable($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $defaultValue = '', $lookupTable = [])
+    private function addContainerVariable($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $defaultValue = '', $lookupTable = [], $description = '')
     {
         if (!isset($type)) {
             $type = DataLayerVariable::ID;
         }
 
-        return $this->model->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable);
+        return $this->model->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $description);
     }
 
-    private function updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name = 'MyName', $parameters = [], $defaultValue = '', $lookupTable = [])
+    private function updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name = 'MyName', $parameters = [], $defaultValue = '', $lookupTable = [], $description = '')
     {
-        return $this->model->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable);
+        return $this->model->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description);
     }
 }
