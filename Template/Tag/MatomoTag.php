@@ -74,10 +74,11 @@ class MatomoTag extends BaseTag
             $this->makeSetting('goalCustomRevenue', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = Piwik::translate('Goals_GoalRevenue') . ' ' . Piwik::translate('Goals_Optional');
                 $field->description = Piwik::translate('TagManager_GoalRevenueHelp');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "goal"';
                 if ($trackingType->getValue() === 'goal') {
                     // The tracker.trackGoal JavaScript function indicates that it expects int|float for customRevenue.
-                    $field->validators[] = new Numeric(true);
+                    $field->validators[] = new Numeric(true, true);
                 }
                 $field->transform = function ($value) {
                     return trim($value);
@@ -137,18 +138,7 @@ class MatomoTag extends BaseTag
                 $field->description = Piwik::translate('TagManager_EventValueHelp');
                 $field->condition = 'trackingType == "event"';
                 $field->validators[] = new CharacterLength(0, 500);
-                $field->validate = function ($value) {
-                    if (empty($value)) {
-                        return;
-                    }
-                    if (is_numeric($value)) {
-                        return; // valid
-                    }
-                    $posBracket = strpos($value, '{{');
-                    if ($posBracket === false || strpos($value, '}}', $posBracket) === false) {
-                        throw new \Exception(Piwik::translate('TagManager_EventValueException'));
-                    }
-                };
+                $field->validators[] = new Numeric(true, true);
                 $field->transform = function ($value) {
                     if ($value === null || $value === false || $value === ''){
                         // we make sure in those cases we do not case the value to float automatically by Setting class because
