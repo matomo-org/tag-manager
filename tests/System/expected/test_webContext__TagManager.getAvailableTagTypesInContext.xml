@@ -130,7 +130,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues/>
-						<description>The estimated revenue value to track when the goal is triggered manually. As this value will be used in a calculation, it must either be a numeric value or it must reference a variable that contains a numeric value. If a variable is referenced that doesn't contain a valid numeric value, it will be omitted when the goal is triggered. A valid numeric value is something like 2430 or 2430.00 (note the absence of commas).</description>
+						<description>The estimated revenue value to track when the goal is triggered manually. As this value will be used in a calculation, it must either be a numeric value or it must reference a variable that contains a numeric value. If this field is empty or references a variable that doesn't contain a valid numeric value, the value will default to the revenue configured as part of the goal being triggered. A valid numeric value is something like 2430 or 2430.00 (note the absence of commas).</description>
 						<inlineHelp/>
 						<templateFile/>
 						<introduction/>

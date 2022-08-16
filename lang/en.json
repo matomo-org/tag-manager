@@ -311,7 +311,7 @@
         "GettingStartedContributeTags": "If you use features regularly which are not available yet, or you have a product you want to integrate into the Tag Manager, please check out our %1$sdeveloper documentation%2$s on how to add your own tags, triggers, and variables. It is really easy.",
         "GoalId": "Goal ID",
         "GoalIdHelp": "The ID of the goal you want to track manually.",
-        "GoalRevenueHelp": "The estimated revenue value to track when the goal is triggered manually. As this value will be used in a calculation, it must either be a numeric value or it must reference a variable that contains a numeric value. If a variable is referenced that doesn't contain a valid numeric value, it will be omitted when the goal is triggered. A valid numeric value is something like 2430 or 2430.00 (note the absence of commas).",
+        "GoalRevenueHelp": "The estimated revenue value to track when the goal is triggered manually. As this value will be used in a calculation, it must either be a numeric value or it must reference a variable that contains a numeric value. If this field is empty or references a variable that doesn't contain a valid numeric value, the value will default to the revenue configured as part of the goal being triggered. A valid numeric value is something like 2430 or 2430.00 (note the absence of commas).",
         "GoogleAnalyticsUniversalTagDescription": "Google Analytics is a web analytics service offered by Google.",
         "GoogleAnalyticsUniversalTagHelp": "This tag lets you track website pageviews into your Google Analytics. To obtain the Property-ID please log in to your Google Analytics account.",
         "GoogleAnalyticsUniversalTagName": "Google Analytics (Universal)",
