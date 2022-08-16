@@ -119,12 +119,11 @@ describe("ContainerTag", function () {
     });
 
     it('should be able to select matomo tag with goal tracking type', async function () {
-      await page.goto(container1Base);
+      await page.goto(container3Base);
       await page.click('.createNewTag');
       await page.waitForNetworkIdle();
       await page.waitForTimeout(250);
       await selectTagType('Matomo');
-      await page.waitForTimeout(500);
       await form.selectValue(page, 'form > div > div:nth-child(5) > div:nth-child(2) div.select-wrapper', 'Goal');
       await capture.page(page, 'create_new_with_goal_tracking_type');
     });
