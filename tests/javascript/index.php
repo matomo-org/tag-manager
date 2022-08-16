@@ -318,14 +318,14 @@
                 {expected: false, now: pastDateCet, start: '2014/01/01 01:04:04 UTC', end: '2014/01/01 03:04:04 UTC'},
 
                 //now is in IST and start and end date will be in UTC, so 16th Aug 2022 10:27 AM IST will be converted to 16th Aug 2022 04:57 AM UTC and compared
-                {expected: false, now: new Date('2022-08-16 10:27:00 GMT+0530'), start: '2022/08/16 06:00:00', end: '2022-08-16 13:00:00'},
-                {expected: true, now: new Date('2022-08-16 10:27:00 GMT+0530'), start: '2022/08/16 04:00:00', end: '2022-08-16 13:00:00'},
+                {expected: false, now: new Date('2022/01/01 10:27:00 GMT+0530'), start: '2022/01/01 06:00:00', end: '2022/01/01 13:00:00'},
+                {expected: true, now: new Date('2022/01/01 10:27:00 GMT+0530'), start: '2022/01/01 04:00:00', end: '2022/01/01 13:00:00'},
 
                 //now is in NZST and start and end date will be in UTC, so 16th Aug 2022 10:27 AM NZST will be converted to 15th Aug 2022 10:27 PM
-                {expected: false, now: new Date('2022-08-16 10:27:00 GMT+1200') , start: '2022/08/16 04:00:00', end: '2022-08-16 13:00:00'},
-                {expected: false, now: new Date('2022-08-16 10:27:00 GMT+1200') , start: '2022/08/15 22:30:00', end: '2022-08-16 13:00:00'},
-                {expected: true, now: new Date('2022-08-16 10:27:00 GMT+1200') , start: '2022/08/15 22:00:00', end: '2022-08-16 13:00:00'},
-                {expected: true, now: new Date('2022-08-15 22:27:00 GMT+1200') , start: '2022/08/15 04:00:00', end: '2022-08-15 10:27:00'},
+                {expected: false, now: new Date('2022/01/01 10:27:00 GMT+1200'), start: '2022/01/01 04:00:00', end: '2022/01/01 13:00:00'},
+                {expected: false, now: new Date('2022/01/01 10:27:00 GMT+1200'), start: '2022/01/01 04:30:00', end: '2022/01/01 13:00:00'},
+                {expected: true, now: new Date('2022/01/01 10:27:00 GMT+1200'), start: '2021/12/31 04:00:00', end: '2022/11/01 13:00:00'},
+                {expected: true, now: new Date('2021/12/31 22:27:00 GMT+1200'), start: '2021/12/31 04:00:00', end: '2021/12/31 10:30:00'},
             ];
 
             for (var i = 0; i < tests.length; i++) {
