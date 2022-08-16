@@ -125,6 +125,7 @@ describe("ContainerVersion", function () {
 
     it('should be possible to publish new version', async function () {
         await publishVersion();
+        await page.waitForTimeout(500);
         await capture.page(page, 'publish_new_submitted');
     });
 

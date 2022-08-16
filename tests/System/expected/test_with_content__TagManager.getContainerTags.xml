@@ -6,6 +6,7 @@
 		<idsite>2</idsite>
 		<type>CustomHtml</type>
 		<name>My Tag 2</name>
+		<description>My Tag 2 description</description>
 		<status>active</status>
 		<parameters>
 			<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
@@ -92,6 +93,7 @@
 		<idsite>2</idsite>
 		<type>CustomHtml</type>
 		<name>My Tag 1</name>
+		<description/>
 		<status>active</status>
 		<parameters>
 			<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
@@ -177,6 +179,7 @@
 		<idsite>2</idsite>
 		<type>CustomImage</type>
 		<name>My Tag 3</name>
+		<description/>
 		<status>active</status>
 		<parameters>
 			<customImageSrc>/plugins/tracking.png</customImageSrc>

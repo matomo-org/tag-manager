@@ -12,6 +12,7 @@ use Piwik\Db;
 use Piwik\DbHelper;
 use Piwik\Piwik;
 use Exception;
+use Piwik\Plugins\TagManager\Input\Description;
 use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Model\Tag;
 
@@ -27,6 +28,7 @@ class TagsDao extends BaseDao implements TagManagerDao
                   `idsite` int(11) UNSIGNED NOT NULL,
                   `type` VARCHAR(50) NOT NULL,
                   `name` VARCHAR(" . Name::MAX_LENGTH . ") NOT NULL,
+                  `description` VARCHAR(" . Description::MAX_LENGTH . ") NOT NULL,
                   `status` VARCHAR(10) NOT NULL,
                   `parameters` MEDIUMTEXT NOT NULL DEFAULT '',
                   `fire_trigger_ids` TEXT NOT NULL DEFAULT '',
@@ -57,7 +59,7 @@ class TagsDao extends BaseDao implements TagManagerDao
         return !empty($idSite);
     }
 
-    public function createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate)
+    public function createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description = '')
     {
         if ($this->isNameInUse($idSite, $idContainerVersion, $name)) {
             throw new Exception(Piwik::translate('TagManager_ErrorNameDuplicate'));
@@ -69,6 +71,7 @@ class TagsDao extends BaseDao implements TagManagerDao
             'status' => self::STATUS_ACTIVE,
             'type' => $type,
             'name' => $name,
+            'description' => $description,
             'parameters' => $parameters,
             'fire_trigger_ids' => $fireTriggerIds,
             'block_trigger_ids' => $blockTriggerIds,

@@ -38,7 +38,7 @@
           </div>
           <div>
             <Field
-              uicontrol="text"
+              uicontrol="textarea"
               name="description"
               :model-value="version.description"
               @update:model-value="version.description = $event; setValueHasChanged()"
@@ -312,8 +312,10 @@ export default defineComponent({
 
         if (this.canPublishToLive) {
           this.version.environments = ['live'];
-        } else if (!this.version.environments) {
-          this.version.environments = [];
+        } else {
+          // If the user can't publish to live, select the next available option.
+          const notLive = this.environments.find((obj) => obj.key !== 'live');
+          this.version.environments = notLive ? [notLive.key] : [];
         }
 
         this.isDirty = false;
@@ -486,7 +488,15 @@ export default defineComponent({
       return VariablesStore.isUpdating.value || this.isUpdatingVersion;
     },
     environments() {
-      return AvailableEnvironmentsStore.environmentsWithPublishOptions.value;
+      const environments = AvailableEnvironmentsStore.environmentsWithPublishOptions.value;
+      if (!this.canPublishToLive) {
+        // If the user can't publish to live, disable that option.
+        const liveIndex = environments.findIndex((obj) => obj.key === 'live');
+        if (liveIndex > -1) {
+          environments[liveIndex].disabled = true;
+        }
+      }
+      return environments;
     },
     canPublishToLive() {
       return Matomo.hasUserCapability('tagmanager_publish_live_container');

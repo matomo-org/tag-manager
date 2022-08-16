@@ -57,6 +57,17 @@
               :inline-help="translate('TagManager_VariableNameHelp')"
             />
           </div>
+          <div>
+            <Field
+              uicontrol="textarea"
+              name="description"
+              :model-value="variable.description"
+              @update:model-value="variable.description = $event; setValueHasChanged()"
+              :maxlength="1000"
+              :title="translate('General_Description')"
+              :inline-help="translate('TagManager_VariableDescriptionHelp')"
+            />
+          </div>
           <div
             class="form-group row"
             v-if="variable.typeMetadata?.parameters?.length"
@@ -474,6 +485,7 @@ export default defineComponent({
       this.variable = {
         idsite: parseInt(`${Matomo.idSite}`, 10),
         name: VariablesStore.suggestNameForType(variableTemplate.name) || '',
+        description: '',
         type: variableTemplate.id,
         idcontainer: this.idContainer,
         idcontainerversion: this.idContainerVersion,
