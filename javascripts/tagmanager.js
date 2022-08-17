@@ -427,7 +427,7 @@
 
                     var start, end;
                     try {
-                        start = new Date(startDateTime + (startDateTime && startDateTime.split(' ').length === 2 ? ' UTC' : ''));
+                        start = this.convertStringToDate(startDateTime);
                     } catch (e) {
                         if (startDateTime) {
                             throwError('Invalid startDateTime given');
@@ -435,7 +435,7 @@
                     }
 
                     try {
-                        end = new Date(endDateTime + (endDateTime && endDateTime.split(' ').length === 2 ? ' UTC' : ''));
+                        end = this.convertStringToDate(endDateTime);
                     } catch (e) {
                         if (endDateTime) {
                             throwError('Invalid endDateTime given');
@@ -459,6 +459,12 @@
                     }
 
                     return true;
+                },
+                convertStringToDate: function (dateString) {
+                    var timezonePresent = (dateString && dateString.split(' ').length > 2);
+                    dateString = dateString + (dateString && dateString.toLowerCase() !== 'invalid date' && !timezonePresent ? ' UTC' : '');
+
+                    return new Date(dateString);
                 }
             };
 
