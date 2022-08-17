@@ -9,6 +9,8 @@
 
 namespace Piwik\Plugins\TagManager;
 
+use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
+use Piwik\Plugins\TagManager\Updates\NewTagParameterMigrator;
 use Piwik\Updater;
 use Piwik\Updates as PiwikUpdates;
 use Piwik\Updater\Migration;
@@ -60,5 +62,9 @@ class Updates_4_12_0_b2 extends PiwikUpdates
     public function doUpdate(Updater $updater)
     {
         $updater->executeMigrations(__FILE__, $this->getMigrations($updater));
+
+        // Migrate the Matomo type tags to all include the newly configured field.
+        $migrator = new NewTagParameterMigrator(MatomoTag::ID, 'goalCustomRevenue');
+        $migrator->migrate();
     }
 }
