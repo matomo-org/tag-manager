@@ -2,6 +2,8 @@
 
 namespace Piwik\Plugins\TagManager\Updates;
 
+use Piwik\Container\StaticContainer;
+use Piwik\Date;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
 use Piwik\Plugins\TagManager\Dao\ContainerVersionsDao;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
@@ -14,11 +16,11 @@ class NewTagParameterMigrator
 
     private $tagsDao;
 
+    private $tagsModel;
+
     private $tagType;
 
-    private $tagFieldName;
-
-    private $defaultFieldValue;
+    private $fieldMap;
 
     /**
      * @param string $tagType Indicates the type of tag that needs to be migrated, such as 'Matomo', 'CustomHtml', ...
@@ -30,9 +32,23 @@ class NewTagParameterMigrator
         $this->containersDao = new ContainersDao();
         $this->containerVersionsDao = new ContainerVersionsDao();
         $this->tagsDao = new TagsDao();
+        $this->tagsModel = StaticContainer::get('Piwik\Plugins\TagManager\Model\Tag');
+        $this->tagsModel->setCurrentDateTime(gmdate(Date::DATE_TIME_FORMAT));
         $this->tagType = $tagType;
-        $this->tagFieldName = $tagFieldName;
-        $this->defaultFieldValue = $defaultFieldValue;
+        $this->fieldMap = [
+            $tagFieldName => $defaultFieldValue
+        ];
+    }
+
+    /**
+     * Specify an additional field to include in the migration.
+     *
+     * @param string $tagFieldName The name of the new field being added to the parameters JSON.
+     * @param string $defaultFieldValue The value to default the parameter to. The default is an empty string.
+     */
+    public function addField($tagFieldName, $defaultFieldValue = '')
+    {
+        $this->fieldMap[$tagFieldName] = $defaultFieldValue;
     }
 
     /**
@@ -82,12 +98,14 @@ class NewTagParameterMigrator
     private function updateTagParameters($idSite, $idVersion, $idTag)
     {
         $tagInfo = $this->tagsDao->getContainerTag($idSite, $idVersion, $idTag);
-        // It shouldn't ever already exist, but let's be sure we don't overwrite existing values.
-        if(empty($tagInfo['parameters'][$this->tagFieldName])) {
-            $tagInfo['parameters'][$this->tagFieldName] = $this->defaultFieldValue;
+        foreach ($this->fieldMap as $key => $value) {
+            // It shouldn't ever already exist, but let's be sure we don't overwrite existing values.
+            if(empty($tagInfo['parameters'][$key])) {
+                $tagInfo['parameters'][$key] = $value;
+            }
         }
-        $this->tagsDao->updateTagColumns($idSite, $idVersion, $idTag, [
-            'parameters' => $tagInfo['parameters']
-        ]);
+
+        // We use the model method to make sure that the parameters are set in the correct order.
+        $this->tagsModel->updateParameters($idSite, $idVersion, $idTag, $tagInfo['parameters']);
     }
 }

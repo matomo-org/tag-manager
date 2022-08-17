@@ -42,7 +42,7 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->newTagParameterMigrator = new NewTagParameterMigrator(MatomoTag::ID, 'mynewparam');
+        $this->newTagParameterMigrator = new NewTagParameterMigrator(MatomoTag::ID, 'goalCustomRevenue');
     }
 
     private function createTag($idVersion, $type = MatomoTag::ID, $name = '', $parameters = [])
@@ -53,6 +53,9 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $startDate = $endDate = null;
         $createdDate = $this->dateString;
         $name = $name ?: uniqid('tagName');
+        if ($type === MatomoTag::ID) {
+            $parameters[MatomoTag::PARAM_MATOMO_CONFIG] = !empty($parameters[MatomoTag::PARAM_MATOMO_CONFIG]) ? $parameters[MatomoTag::PARAM_MATOMO_CONFIG] : 'someConfig';
+        }
 
         return $this->tagDao->createTag($this->idSite, $idVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate);
     }
@@ -85,7 +88,7 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $this->tagDao = new TagsDao();
         $idTag = $this->createTag($idVersion);
         $idCustomHtmlTag = $this->createTag($idVersion, CustomHtmlTag::ID, 'CustomHtml Tag Name');
-        $idTagWithParameters = $this->createTag($idVersion, MatomoTag::ID, 'Tag with parameters', [ 'somekey' => 'somevalue' ]);
+        $idTagWithParameters = $this->createTag($idVersion, MatomoTag::ID, 'Tag with parameters', [ 'idGoal' => '9' ]);
         $idDeletedTag = $this->createTag($idVersion);
         $this->tagDao->deleteContainerTag($this->idSite, $idVersion, $idDeletedTag, $this->dateString);
         $idDraftVersionTag = $this->createTag($idDraftVersion);
@@ -98,9 +101,9 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $this->assertSame($idTag, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
-        $this->assertCount(1, $tag['parameters']);
-        $this->assertArrayHasKey('mynewparam', $tag['parameters']);
-        $this->assertSame('', $tag['parameters']['mynewparam']);
+        $this->assertCount(2, $tag['parameters']);
+        $this->assertArrayHasKey('goalCustomRevenue', $tag['parameters']);
+        $this->assertSame('', $tag['parameters']['goalCustomRevenue']);
 
         $tag = $this->tagDao->getContainerTag($this->idSite, $idVersion, $idCustomHtmlTag);
         $this->assertSame($idCustomHtmlTag, $tag['idtag']);
@@ -112,40 +115,40 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $this->assertSame($idTagWithParameters, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
-        $this->assertCount(2, $tag['parameters']);
-        $this->assertArrayHasKey('mynewparam', $tag['parameters']);
-        $this->assertSame('', $tag['parameters']['mynewparam']);
+        $this->assertCount(3, $tag['parameters']);
+        $this->assertArrayHasKey('goalCustomRevenue', $tag['parameters']);
+        $this->assertSame('', $tag['parameters']['goalCustomRevenue']);
 
         $tag = $this->tagDao->getContainerTagAnyStatus($this->idSite, $idVersion, $idDeletedTag);
         $this->assertSame($idDeletedTag, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
-        $this->assertCount(0, $tag['parameters']);
+        $this->assertCount(1, $tag['parameters']);
 
         $tag = $this->tagDao->getContainerTag($this->idSite, $idDraftVersion, $idDraftVersionTag);
         $this->assertSame($idDraftVersionTag, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
-        $this->assertCount(1, $tag['parameters']);
-        $this->assertArrayHasKey('mynewparam', $tag['parameters']);
-        $this->assertSame('', $tag['parameters']['mynewparam']);
+        $this->assertCount(2, $tag['parameters']);
+        $this->assertArrayHasKey('goalCustomRevenue', $tag['parameters']);
+        $this->assertSame('', $tag['parameters']['goalCustomRevenue']);
 
         $tag = $this->tagDao->getContainerTag($this->idSite, $idDeletedVersion, $idDeletedVersionTag);
         $this->assertSame($idDeletedVersionTag, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
-        $this->assertCount(0, $tag['parameters']);
+        $this->assertCount(1, $tag['parameters']);
 
         $tag = $this->tagDao->getContainerTag($this->idSite, $idDeletedContainerVersion, $idDeletedContainerTag);
         $this->assertSame($idDeletedContainerTag, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
-        $this->assertCount(0, $tag['parameters']);
+        $this->assertCount(1, $tag['parameters']);
     }
 
     public function test_migratingTagsWithNewFieldAndDefaultValue()
     {
-        $this->newTagParameterMigrator = new NewTagParameterMigrator(MatomoTag::ID, 'mynewparam', 'mynewvalue');
+        $this->newTagParameterMigrator = new NewTagParameterMigrator(MatomoTag::ID, 'goalCustomRevenue', 'mynewvalue');
         $this->dateString = '2015-01-01 01:02:03';
 
         // Create some containers to test with.
@@ -171,9 +174,47 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $this->assertSame($idDraftVersionTag, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
-        $this->assertCount(1, $tag['parameters']);
-        $this->assertArrayHasKey('mynewparam', $tag['parameters']);
-        $this->assertSame('mynewvalue', $tag['parameters']['mynewparam']);
+        $this->assertCount(2, $tag['parameters']);
+        $this->assertArrayHasKey('goalCustomRevenue', $tag['parameters']);
+        $this->assertSame('mynewvalue', $tag['parameters']['goalCustomRevenue']);
+    }
+
+    public function test_migratingTagsWithAdditionalField()
+    {
+        $this->newTagParameterMigrator = new NewTagParameterMigrator(MatomoTag::ID, 'goalCustomRevenue', 'mynewvalue');
+        $this->newTagParameterMigrator->addField('documentTitle');
+        $this->newTagParameterMigrator->addField('notValidTemplateProperty');
+        $this->dateString = '2015-01-01 01:02:03';
+
+        // Create some containers to test with.
+        $containerDao = new ContainersDao();
+        $this->idSite = 2;
+        $idContainer = 'abcdef';
+        $context = WebContext::ID;
+        $name = 'My Container';
+        $description = 'My container description';
+        $containerDao->createContainer($this->idSite, $idContainer, $context, $name, $description, $this->dateString);
+
+        // Create some versions to test with.
+        $versionDao = new ContainerVersionsDao();
+        $idDraftVersion = $versionDao->createDraftVersion($this->idSite, $idContainer, $this->dateString);
+
+        // Create some tags to test with.
+        $this->tagDao = new TagsDao();
+        $idDraftVersionTag = $this->createTag($idDraftVersion);
+
+        $this->newTagParameterMigrator->migrate();
+
+        $tag = $this->tagDao->getContainerTag($this->idSite, $idDraftVersion, $idDraftVersionTag);
+        $this->assertSame($idDraftVersionTag, $tag['idtag']);
+        $this->assertIsArray($tag);
+        $this->assertIsArray($tag['parameters']);
+        $this->assertCount(3, $tag['parameters']);
+        $this->assertArrayHasKey('goalCustomRevenue', $tag['parameters']);
+        $this->assertSame('mynewvalue', $tag['parameters']['goalCustomRevenue']);
+        $this->assertArrayHasKey('documentTitle', $tag['parameters']);
+        $this->assertSame('', $tag['parameters']['documentTitle']);
+        $this->assertArrayNotHasKey('notValidTemplateProperty', $tag['parameters']);
     }
 
 }
