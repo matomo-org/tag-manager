@@ -29,6 +29,7 @@
 				<matomoConfig>{{Matomo Configuration}}</matomoConfig>
 				<trackingType>pageview</trackingType>
 				<idGoal />
+				<goalCustomRevenue />
 				<documentTitle />
 				<customUrl />
 				<eventCategory />

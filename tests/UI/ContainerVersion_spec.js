@@ -264,6 +264,7 @@ describe("ContainerVersion", function () {
         await modal.clickButton(page, 'Yes');
         await page.waitForNetworkIdle();
         await page.waitForSelector('.tagManagerManageList td');
+        await page.waitForTimeout(200);
         await capture.page(page, 'import_version_confirmed');
     });
 

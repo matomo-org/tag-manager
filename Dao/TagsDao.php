@@ -147,6 +147,22 @@ class TagsDao extends BaseDao implements TagManagerDao
     }
 
     /**
+     * @param int $idSite
+     * @param int $idContainerVersion
+     * @param string $tagType The type of tag to filter by, such as 'Matomo', 'CustomHtml', ...
+     * @return array
+     */
+    public function getContainerTagIdsByType($idSite, $idContainerVersion, $tagType)
+    {
+        $bind = [self::STATUS_ACTIVE, $idSite, $idContainerVersion, $tagType];
+
+        $table = $this->tablePrefixed;
+        $tags = Db::fetchAll("SELECT idtag FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? and type = ? ORDER BY priority, created_date ASC", $bind);
+
+        return is_array($tags) && count($tags) ? array_column($tags,'idtag') : [];
+    }
+
+    /**
      * @param $idSite
      * @param $idContainerVersion
      * @param $idTag
@@ -158,6 +174,22 @@ class TagsDao extends BaseDao implements TagManagerDao
         $table = $this->tablePrefixed;
         $bind = array(self::STATUS_ACTIVE, $idTag, $idContainerVersion, $idSite);
         $tag = Db::fetchRow("SELECT * FROM $table WHERE status = ? and idtag = ? and idcontainerversion = ? and idsite = ?", $bind);
+
+        return $this->enrichTag($tag);
+    }
+
+    /**
+     * @param $idSite
+     * @param $idContainerVersion
+     * @param $idTag
+     * @return array|false
+     * @throws \Exception
+     */
+    public function getContainerTagAnyStatus($idSite, $idContainerVersion, $idTag)
+    {
+        $table = $this->tablePrefixed;
+        $bind = array($idTag, $idContainerVersion, $idSite);
+        $tag = Db::fetchRow("SELECT * FROM $table WHERE idtag = ? and idcontainerversion = ? and idsite = ?", $bind);
 
         return $this->enrichTag($tag);
     }

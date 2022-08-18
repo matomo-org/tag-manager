@@ -121,6 +121,27 @@
 						</component>
 					</row>
 					<row>
+						<name>goalCustomRevenue</name>
+						<title>Goal Revenue (optional)</title>
+						<value/>
+						<defaultValue/>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues/>
+						<description>The estimated revenue value to track when the goal is triggered manually. As this value will be used in a calculation, it must either be a numeric value or it must reference a variable that contains a numeric value. If this field is empty or references a variable that doesn't contain a valid numeric value, the value will default to the revenue configured as part of the goal being triggered. A valid numeric value is something like 2430 or 2430.00 (note the absence of commas).</description>
+						<inlineHelp/>
+						<templateFile/>
+						<introduction/>
+						<condition>trackingType == "goal"</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
 						<name>documentTitle</name>
 						<title>Custom Title</title>
 						<value />
