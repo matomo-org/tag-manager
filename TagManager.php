@@ -532,7 +532,6 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_VersionImportContentTitle';
         $result[] = 'TagManager_VersionImportOverwriteContent';
         $result[] = 'TagManager_CustomVariables';
-        $result[] = 'TagManager_PreconfiguredVariables';
         $result[] = 'TagManager_EditContainer';
         $result[] = 'TagManager_CreateNewContainer';
         $result[] = 'TagManager_CreateNewContainerNow';
@@ -544,6 +543,36 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_InstallCode';
         $result[] = 'TagManager_InstallCodePublishEnvironmentNote';
         $result[] = 'TagManager_GettingStartedNotice';
+        $result[] = 'TagManager_GettingStarted';
+        $result[] = 'CorePluginsAdmin_WhatIsTagManager';
+        $result[] = 'TagManager_GettingStartedWhatIsIntro';
+        $result[] = 'TagManager_GettingStartedAnalyticsTracking';
+        $result[] = 'TagManager_GettingStartedConversionTracking';
+        $result[] = 'TagManager_GettingStartedNewsletterSignups';
+        $result[] = 'TagManager_GettingStartedExitActions';
+        $result[] = 'TagManager_GettingStartedRemarketing';
+        $result[] = 'TagManager_GettingStartedSocialWidgets';
+        $result[] = 'TagManager_GettingStartedAffiliates';
+        $result[] = 'TagManager_GettingStartedAds';
+        $result[] = 'TagManager_GettingStartedAndMore';
+        $result[] = 'TagManager_GettingStartedMainComponents';
+        $result[] = 'TagManager_GettingStartedTagComponent';
+        $result[] = 'TagManager_GettingStartedTriggerComponent';
+        $result[] = 'TagManager_GettingStartedVariableComponent';
+        $result[] = 'TagManager_GettingStartedWhyDoINeed';
+        $result[] = 'TagManager_GettingStartedWhyMakesLifeEasier';
+        $result[] = 'TagManager_GettingStartedWhyThirdPartySnippets';
+        $result[] = 'TagManager_GettingStartedWhyAccuracyPerformance';
+        $result[] = 'TagManager_GettingStartedHowDoI';
+        $result[] = 'TagManager_GettingStartedHowCreateContainer';
+        $result[] = 'TagManager_GettingStartedHowCopyCode';
+        $result[] = 'TagManager_GettingStartedHowAddTagsToContainer';
+        $result[] = 'TagManager_GettingStartedWhatIfUnsupported';
+        $result[] = 'TagManager_GettingStartedCustomTags';
+        $result[] = 'TagManager_GettingStartedContributeTags';
+        $result[] = 'TagManager_CreateNewVersionNow';
+        $result[] = 'TagManager_TagManager';
+        $result[] = 'TagManager_TagManagerTrackingInfo';
     }
 
     public function getStylesheetFiles(&$stylesheets)

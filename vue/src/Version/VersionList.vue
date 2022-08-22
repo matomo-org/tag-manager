@@ -304,7 +304,7 @@ export default defineComponent({
       });
     },
     importVersion() {
-      tagManagerHelper.importVersion(null, this.idContainer);
+      tagManagerHelper.importVersion(this.idContainer);
     },
     deleteVersion(version: Version) {
       const doDelete = () => {

@@ -3,7 +3,9 @@
 {% set title = 'Dashboard_Dashboard'|translate %}
 
 {% block content %}
-    <div piwik-container-dashboard id-container="{{ container.idcontainer }}">
-    </div>
+    <div
+        vue-entry="TagManager.ContainerDashboard"
+        id-container="{{ container.idcontainer|json_encode }}"
+    ></div>
 
 {% endblock %}

@@ -27,21 +27,6 @@ abstract class BaseTemplate
 
     protected $templateType = '';
 
-    /**
-     * @deprecated Use self::FIELD_VARIABLE_COMPONENT instead.
-     */
-    const FIELD_TEMPLATE_VARIABLE = 'plugins/TagManager/angularjs/form-field/field-variable-template.html';
-
-    /**
-     * @deprecated Use self::FIELD_TEXTAREA_VARIABLE_COMPONENT instead.
-     */
-    const FIELD_TEMPLATE_TEXTAREA_VARIABLE = 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html';
-
-    /**
-     * @deprecated Use self::FIELD_VARIABLE_TYPE_COMPONENT instead.
-     */
-    const FIELD_TEMPLATE_VARIABLE_TYPE = 'plugins/TagManager/angularjs/form-field/field-variabletype-template.html';
-
     const FIELD_TEXTAREA_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldTextareaVariable'];
     const FIELD_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTemplate'];
     const FIELD_VARIABLE_TYPE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTypeTemplate'];

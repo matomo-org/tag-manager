@@ -110,7 +110,6 @@ export default defineComponent({
       }
 
       tagManagerHelper.editVariable(
-        null,
         MatomoUrl.parsed.value.idContainer as string,
         this.idContainerVersion,
         0,

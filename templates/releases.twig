@@ -3,6 +3,8 @@
 {% set title = 'TagManager_InstallCode'|translate %}
 
 {% block content %}
-    <div piwik-manage-install-tag-code id-container="{{ container.idcontainer }}">
-    </div>
+    <div
+        vue-entry="TagManager.ManageInstallTagCode"
+        id-container="{{ container.idcontainer|json_encode }}"
+    ></div>
 {% endblock %}
