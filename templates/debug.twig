@@ -40,11 +40,18 @@
             pointer-events: all !important;
             top: 2px;
         }
+        .brand-logo {
+            padding-top: unset !important;
+            top: 0.8rem;
+            width: 14rem;
+        }
     </style>
     <script>
         var piwik_translations = {};
     </script>
     <script type="text/javascript">
+        window.piwik = window.piwik || {};
+        window.piwik.isPagesComparisonApiDisabled = true; // Disable API.getPagesComparisonsDisabledFor call
         window.mtmDbgData = {
             mtmEvents: [],
             mtmLogs: []

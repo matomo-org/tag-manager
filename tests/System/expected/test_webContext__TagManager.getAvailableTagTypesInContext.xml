@@ -43,7 +43,7 @@
 			<row>
 				<id>Matomo</id>
 				<name>Matomo Analytics</name>
-				<description>Matomo, formerly known as Piwik, is the leading open source analytics platform.</description>
+				<description>Matomo is the leading open source analytics platform.</description>
 				<category>Analytics</category>
 				<icon>plugins/TagManager/images/MatomoIcon.png</icon>
 				<help>This tag lets you track pageviews and events into your Matomo. You can customize the tracking to your needs.</help>
@@ -756,7 +756,7 @@
 				<description>Allows you to embed any custom HTML, for example JavaScript or CSS Styles.</description>
 				<category>Custom</category>
 				<icon>plugins/TagManager/images/icons/code.svg</icon>
-				<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.</help>
+				<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>

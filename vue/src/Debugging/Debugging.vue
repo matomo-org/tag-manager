@@ -25,6 +25,10 @@
           <li :class="{'active': (contentTab === 'logs')}">
             <a @click="contentTab = 'logs'">Logs</a>
           </li>
+          <li class="pull-right">
+            <a id="mtmUpdateDebugPosition"
+               @click="mtmUpdateDebugPosition()">{{ positionText }}</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -166,20 +170,20 @@
               <tbody>
               <tr>
                 <td style="word-break: break-all">
-                  {{ selectedEvent?.eventData && JSON.stringify(selectedEvent.eventData) }}
+                  {{ selectedEventData }}
                 </td>
               </tr>
               </tbody>
             </table>
 
+            <br>
             <h3>Content after this event</h3>
 
             <table class="entityTable">
               <tbody>
               <tr>
                 <td style="word-break: break-all">
-                  {{ selectedEvent?.container?.dataLayer
-                    && JSON.stringify(selectedEvent.container.dataLayer) }}
+                  {{ selectedEventContainerDataLayer }}
                 </td>
               </tr>
               </tbody>
@@ -205,7 +209,9 @@
                 >
                   <td>{{ variable.name }}</td>
                   <td>{{ variable.type }}</td>
-                  <td style="word-break: break-all">{{ JSON.stringify(variable.value) }}</td>
+                  <td style="word-break: break-all">
+                    {{ stringifySelectedVariable(variable) }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -240,6 +246,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { defineComponent, reactive } from 'vue';
+import {
+  setCookie, getCookie,
+} from 'CoreHome';
 
 interface TagDebugData {
   action: string;
@@ -275,6 +284,7 @@ interface DebuggingState {
   contentTab: string;
   selectedEventIndex: number;
   onlyfiredTags: boolean;
+  positionText: string;
 }
 
 interface MtmData {
@@ -293,21 +303,59 @@ window.mtmDbgData = reactive<MtmData>({
   mtmLogs: window.mtmDbgData?.mtmLogs || [],
 }) as unknown as MtmData;
 
+const cookieName = 'mtmPreviewPosition';
+const stickyTextTop = 'Stick to Top';
+const stickyTextBottom = 'Stick to Bottom';
+
+function getCircularReplacer() {
+  const seen = new WeakSet();
+  function circular(key: any, value: any) {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return '';
+      }
+      seen.add(value);
+    }
+    return value;
+  }
+  return circular;
+}
+
 export default defineComponent({
   data(): DebuggingState {
     return {
       contentTab: 'tags',
       selectedEventIndex: 0,
       onlyfiredTags: false,
+      positionText: (getCookie(cookieName) === 'top' ? stickyTextBottom : stickyTextTop),
     };
   },
   methods: {
+    mtmUpdateDebugPosition() {
+      const sevenDays = 7 * 60 * 60 * 24 * 1000;
+      const currentCookieValue = getCookie(cookieName);
+      const cookieValue = (currentCookieValue === 'top' ? 'bottom' : 'top');
+      setCookie(cookieName, cookieValue, sevenDays);
+      const iframe = window.parent.document.getElementById('mtmDebugFrame');
+      if (cookieValue === 'top') {
+        this.positionText = stickyTextBottom;
+        iframe!.classList.remove('mtmStickyBottom');
+        iframe!.classList.add('mtmStickyTop');
+      } else {
+        this.positionText = stickyTextTop;
+        iframe!.classList.remove('mtmStickyTop');
+        iframe!.classList.add('mtmStickyBottom');
+      }
+    },
     selectEvent(eventIndex: number) {
       if (!this.mtmEvents[eventIndex]) {
         return;
       }
 
       this.selectedEventIndex = eventIndex;
+    },
+    stringifySelectedVariable(variable: any) {
+      return JSON.stringify(variable.value, getCircularReplacer());
     },
   },
   computed: {
@@ -358,6 +406,14 @@ export default defineComponent({
     },
     mtmLogs(): MtmLog[] {
       return window.mtmDbgData.mtmLogs;
+    },
+    selectedEventData(): string {
+      return this.selectedEvent?.eventData
+        && JSON.stringify(this.selectedEvent.eventData, getCircularReplacer());
+    },
+    selectedEventContainerDataLayer(): string {
+      return this.selectedEvent?.container?.dataLayer
+        && JSON.stringify(this.selectedEvent.container.dataLayer, getCircularReplacer());
     },
   },
 });
