@@ -283,7 +283,7 @@
         });
 
         test("Matomo TagManager date", function() {
-            expect(18);
+            expect(29);
 
             var dateHelper = window.MatomoTagManager.date;
 
@@ -316,6 +316,16 @@
                 {expected: true, now: pastDateCet, start: '2014/01/01 03:04:05 UTC', end: '2014/01/01 05:04:03 UTC'},
                 {expected: false, now: pastDateCet, start: '2014/01/01 06:04:04 UTC', end: '2014/01/01 08:04:04 UTC'},
                 {expected: false, now: pastDateCet, start: '2014/01/01 01:04:04 UTC', end: '2014/01/01 03:04:04 UTC'},
+
+                //now is in IST and start and end date will be in UTC, so 16th Aug 2022 10:27 AM IST will be converted to 16th Aug 2022 04:57 AM UTC and compared
+                {expected: false, now: new Date('2022/01/01 10:27:00 GMT+0530'), start: '2022/01/01 06:00:00', end: '2022/01/01 13:00:00'},
+                {expected: true, now: new Date('2022/01/01 10:27:00 GMT+0530'), start: '2022/01/01 04:00:00', end: '2022/01/01 13:00:00'},
+
+                //now is in NZST and start and end date will be in UTC, so 16th Aug 2022 10:27 AM NZST will be converted to 15th Aug 2022 10:27 PM
+                {expected: false, now: new Date('2022/01/01 10:27:00 GMT+1200'), start: '2022/01/01 04:00:00', end: '2022/01/01 13:00:00'},
+                {expected: false, now: new Date('2022/01/01 10:27:00 GMT+1200'), start: '2022/01/01 04:30:00', end: '2022/01/01 13:00:00'},
+                {expected: true, now: new Date('2022/01/01 10:27:00 GMT+1200'), start: '2021/12/31 04:00:00', end: '2022/11/01 13:00:00'},
+                {expected: true, now: new Date('2021/12/31 22:27:00 GMT+1200'), start: '2021/12/31 04:00:00', end: '2021/12/31 10:30:00'},
             ];
 
             for (var i = 0; i < tests.length; i++) {
@@ -336,6 +346,25 @@
                 ok(false, 'an expected exception has not been thrown');
             } catch (e) {
                 strictEqual('Invalid endDateTime given', e.message, 'End date time is validated');
+            }
+
+            var convertStingToDateTests = [
+                {expected: "Invalid Date", date: ''},
+                {expected: "Invalid Date", date: undefined},
+                {expected: 1641042000000, date: '2022/01/01 13:00:00'},
+                {expected: 1641022200000, date: '2022/01/01 13:00:00 GMT+5:30'},
+                {expected: 1640998800000, date: '2022/01/01 13:00:00 GMT+12:00'},
+            ]
+
+            for (i = 0; i < convertStingToDateTests.length; i++) {
+                atest = convertStingToDateTests[i];
+                result = dateHelper.convertStringToDate(atest.date);
+                if (atest.date) {
+                    result = result.getTime();
+                } else {
+                    result = result.toDateString();
+                }
+                strictEqual(atest.expected, result, 'convertStringToDate: ' + JSON.stringify(atest))
             }
 
         });

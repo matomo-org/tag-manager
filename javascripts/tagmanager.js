@@ -413,7 +413,9 @@
 
             var dateHelper = {
                 matchesDateRange: function(now, startDateTime, endDateTime) {
-                    var currentTimestampUTC = now.getTime() + (now.getTimezoneOffset() * 60000);
+                    var currentTimestampUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(),
+                      now.getUTCDate(), now.getUTCHours(),
+                      now.getUTCMinutes(), now.getUTCSeconds());
 
                     if (startDateTime) {
                         // needed eg for safari: 2014/01/02 instead of 2014-01-02
@@ -425,7 +427,7 @@
 
                     var start, end;
                     try {
-                        start = new Date(startDateTime);
+                        start = this.convertStringToDate(startDateTime);
                     } catch (e) {
                         if (startDateTime) {
                             throwError('Invalid startDateTime given');
@@ -433,10 +435,10 @@
                     }
 
                     try {
-                        end = new Date(endDateTime);
+                        end = this.convertStringToDate(endDateTime);
                     } catch (e) {
                         if (endDateTime) {
-                            throwError('Invalid startDateTime given');
+                            throwError('Invalid endDateTime given');
                         }
                     }
 
@@ -448,15 +450,21 @@
                         throwError('Invalid endDateTime given');
                     }
 
-                    if (startDateTime && currentTimestampUTC < (start.getTime() + (start.getTimezoneOffset() * 60000))) {
+                    if (startDateTime && currentTimestampUTC < start.getTime()) {
                         return false;
                     }
 
-                    if (endDateTime && currentTimestampUTC > (end.getTime() + (end.getTimezoneOffset() * 60000))) {
+                    if (endDateTime && currentTimestampUTC > end.getTime()) {
                         return false;
                     }
 
                     return true;
+                },
+                convertStringToDate: function (dateString) {
+                    var timezonePresent = (dateString && dateString.split(' ').length > 2);
+                    dateString = dateString + (dateString && dateString.toLowerCase() !== 'invalid date' && !timezonePresent ? ' UTC' : '');
+
+                    return new Date(dateString);
                 }
             };
 
