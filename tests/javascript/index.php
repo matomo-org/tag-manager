@@ -351,9 +351,9 @@
             var convertStingToDateTests = [
                 {expected: "Invalid Date", date: ''},
                 {expected: "Invalid Date", date: undefined},
-                {expected: 1641042000000, date: '2022-01-01 13:00:00'},
-                {expected: 1641022200000, date: '2022-01-01 13:00:00 GMT+5:30'},
-                {expected: 1640998800000, date: '2022-01-01 13:00:00 GMT+12:00'},
+                {expected: 1641042000000, date: '2022/01/01 13:00:00'},
+                {expected: 1641022200000, date: '2022/01/01 13:00:00 GMT+5:30'},
+                {expected: 1640998800000, date: '2022/01/01 13:00:00 GMT+12:00'},
             ]
 
             for (i = 0; i < convertStingToDateTests.length; i++) {
