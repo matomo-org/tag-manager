@@ -619,6 +619,11 @@ export default defineComponent({
           this.initIdVariable();
         });
 
+        // Return so that we don't display the message below. The reload above is all that's needed.
+        if (this.isEmbedded) {
+          return;
+        }
+
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Variable'));
         const wantToDeploy = translate(
           'TagManager_WantToDeployThisChangeCreateVersion',
