@@ -607,15 +607,15 @@ export default defineComponent({
           return;
         }
 
-        if (this.isEmbedded) {
-          this.$emit('changeVariable', {
-            variable: this.variable,
-          });
-          return;
-        }
-
         this.isDirty = false;
         VariablesStore.reload(this.idContainer, this.idContainerVersion).then(() => {
+          // This emit and return was moved from above because we still need to reload the store.
+          if (this.isEmbedded) {
+            this.$emit('changeVariable', {
+              variable: this.variable,
+            });
+            return;
+          }
           this.initIdVariable();
         });
 
