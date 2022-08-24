@@ -399,6 +399,7 @@ export default defineComponent({
             this.idContainer,
             this.idContainerVersion,
             this.idVariable,
+            this.isEmbedded,
           ).then((variable) => {
             if (!variable) {
               return;
@@ -607,22 +608,17 @@ export default defineComponent({
           return;
         }
 
-        this.isDirty = false;
-        VariablesStore.reload(this.idContainer, this.idContainerVersion).then(() => {
-          // This emit and return was moved from above because we still need to reload the store.
-          if (this.isEmbedded) {
-            this.$emit('changeVariable', {
-              variable: this.variable,
-            });
-            return;
-          }
-          this.initIdVariable();
-        });
-
-        // Return so that we don't display the message below. The reload above is all that's needed.
         if (this.isEmbedded) {
+          this.$emit('changeVariable', {
+            variable: this.variable,
+          });
           return;
         }
+
+        this.isDirty = false;
+        VariablesStore.reload(this.idContainer, this.idContainerVersion).then(() => {
+          this.initIdVariable();
+        });
 
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Variable'));
         const wantToDeploy = translate(
