@@ -57,10 +57,11 @@ class VariablesStore {
     idContainer: string,
     idContainerVersion: number,
     idVariable: number,
+    ignoreCache: boolean,
   ): Promise<DeepReadonly<Variable>> {
     // before going through an API request we first try to find it in loaded variables
     const found = this.variables.value.find((v) => v.idvariable === idVariable);
-    if (found) {
+    if (found && !ignoreCache) {
       return Promise.resolve(found);
     }
 

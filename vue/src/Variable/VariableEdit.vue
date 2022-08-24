@@ -399,6 +399,7 @@ export default defineComponent({
             this.idContainer,
             this.idContainerVersion,
             this.idVariable,
+            this.isEmbedded,
           ).then((variable) => {
             if (!variable) {
               return;
