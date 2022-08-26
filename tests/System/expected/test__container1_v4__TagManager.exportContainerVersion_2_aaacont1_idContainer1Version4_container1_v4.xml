@@ -24,6 +24,7 @@
 			<idtag>10</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 2</name>
+			<description>My Tag 2 description</description>
 			<parameters>
 				<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
 				<htmlPosition>bodyEnd</htmlPosition>
@@ -48,6 +49,7 @@
 			<idtag>11</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 1</name>
+			<description />
 			<parameters>
 				<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
 				<htmlPosition>bodyEnd</htmlPosition>
@@ -71,6 +73,7 @@
 			<idtag>12</idtag>
 			<type>CustomImage</type>
 			<name>My Tag 3</name>
+			<description />
 			<parameters>
 				<customImageSrc>/plugins/tracking.png</customImageSrc>
 				<cacheBusterEnabled>1</cacheBusterEnabled>
@@ -97,6 +100,7 @@
 			<idtrigger>13</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
+			<description>My trigger1 description</description>
 			<parameters>
 				<eventName>foo</eventName>
 			</parameters>
@@ -111,6 +115,7 @@
 			<idtrigger>14</idtrigger>
 			<type>WindowLoaded</type>
 			<name>Mytrigger2</name>
+			<description />
 			<parameters>
 			</parameters>
 			<conditions>
@@ -129,6 +134,7 @@
 			<idtrigger>15</idtrigger>
 			<type>DomReady</type>
 			<name>Mytrigger3</name>
+			<description />
 			<parameters>
 			</parameters>
 			<conditions>

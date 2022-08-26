@@ -24,10 +24,12 @@
 			<idtag>25</idtag>
 			<type>Matomo</type>
 			<name>Pageview</name>
+			<description />
 			<parameters>
 				<matomoConfig>{{Matomo Configuration}}</matomoConfig>
 				<trackingType>pageview</trackingType>
 				<idGoal />
+				<goalCustomRevenue />
 				<documentTitle />
 				<customUrl />
 				<eventCategory />
@@ -56,6 +58,7 @@
 			<idtrigger>33</idtrigger>
 			<type>PageView</type>
 			<name>Pageview</name>
+			<description />
 			<parameters>
 			</parameters>
 			<conditions>
@@ -71,6 +74,7 @@
 			<idvariable>18</idvariable>
 			<type>MatomoConfiguration</type>
 			<name>Matomo Configuration</name>
+			<description />
 			<parameters>
 				<matomoUrl>//example.com/piwik/tests/PHPUnit/proxy/</matomoUrl>
 				<idSite>6</idSite>

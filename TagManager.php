@@ -543,6 +543,10 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_InstallCode';
         $result[] = 'TagManager_InstallCodePublishEnvironmentNote';
         $result[] = 'TagManager_GettingStartedNotice';
+        $result[] = 'TagManager_InvalidDebugUrlError';
+        $result[] = 'TagManager_TagDescriptionHelp';
+        $result[] = 'TagManager_TriggerDescriptionHelp';
+        $result[] = 'TagManager_VariableDescriptionHelp';
         $result[] = 'TagManager_GettingStarted';
         $result[] = 'CorePluginsAdmin_WhatIsTagManager';
         $result[] = 'TagManager_GettingStartedWhatIsIntro';
@@ -584,6 +588,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/vue/src/VariableSelectType/VariableSelectType.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Field/FieldVariableTemplate.less";
         $stylesheets[] = "plugins/TagManager/vue/src/ContainerSelector/ContainerSelector.less";
+        $stylesheets[] = "plugins/TagManager/vue/src/ContainerDashboard/ContainerDashboard.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Version/VersionEdit.less";
     }
 
@@ -638,5 +643,4 @@ class TagManager extends \Piwik\Plugin
         }
         $dao->deleteContainersForSite($idSite, $deletedDate);
     }
-
 }

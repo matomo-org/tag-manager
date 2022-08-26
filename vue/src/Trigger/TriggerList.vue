@@ -15,6 +15,7 @@
         <thead>
           <tr>
             <th class="name">{{ translate('General_Name') }}</th>
+            <th class="description">{{ translate('General_Description') }}</th>
             <th class="type">{{ translate('TagManager_Type') }}</th>
             <th class="conditions">{{ translate('TagManager_Filter') }}</th>
             <th class="lastUpdated">{{ translate('TagManager_LastUpdated') }}</th>
@@ -52,6 +53,12 @@
             :key="trigger.idtrigger"
           >
             <td class="name">{{ trigger.name }}</td>
+            <td
+              class="description"
+              :title="trigger.description"
+            >
+              {{ truncateText(trigger.description, 30) }}
+            </td>
             <td
               class="type"
               :title="trigger.typeMetadata.description"
@@ -159,6 +166,8 @@ interface TriggerListState {
   triggerReferences: TriggerReference[];
 }
 
+const { tagManagerHelper } = window;
+
 export default defineComponent({
   props: {
     idContainer: {
@@ -223,6 +232,9 @@ export default defineComponent({
           Matomo.helper.modalConfirm(this.$refs.confirmDeleteTriggerNotPossible as HTMLElement, {});
         }
       });
+    },
+    truncateText(text: string, length: number) {
+      return tagManagerHelper.truncateText(text, length);
     },
   },
   computed: {

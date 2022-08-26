@@ -16,6 +16,7 @@
         <thead>
           <tr>
             <th class="name">{{ translate('General_Name') }}</th>
+            <th class="description">{{ translate('General_Description') }}</th>
             <th class="type">{{ translate('TagManager_Type') }}</th>
             <th class="lookupTable">{{ translate('TagManager_LookupTable') }}</th>
             <th class="lastUpdated">{{ translate('TagManager_LastUpdated') }}</th>
@@ -53,6 +54,12 @@
             :key="variable.idvariable"
           >
             <td class="name">{{ variable.name }}</td>
+            <td
+              class="description"
+              :title="variable.description"
+            >
+              {{ truncateText(variable.description, 30) }}
+            </td>
             <td
               class="type"
               :title="variable.typeMetadata.description"
@@ -206,6 +213,8 @@ interface VariableListState {
   containerVariables: ContainerVariableCategory[];
 }
 
+const { tagManagerHelper } = window;
+
 export default defineComponent({
   props: {
     idContainer: {
@@ -281,6 +290,9 @@ export default defineComponent({
           );
         }
       });
+    },
+    truncateText(text: string, length: number) {
+      return tagManagerHelper.truncateText(text, length);
     },
   },
   computed: {

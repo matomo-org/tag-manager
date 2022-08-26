@@ -5,6 +5,7 @@
 	<idsite>2</idsite>
 	<type>CustomEvent</type>
 	<name>My trigger1</name>
+	<description>My trigger1 description</description>
 	<status>active</status>
 	<parameters>
 		<eventName>foo</eventName>
@@ -44,6 +45,7 @@
 				<templateFile />
 				<introduction />
 				<condition />
+				<fullWidth>0</fullWidth>
 				<component>
 					<plugin>TagManager</plugin>
 					<name>FieldVariableTemplate</name>

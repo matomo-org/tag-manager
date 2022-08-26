@@ -53,7 +53,7 @@ class Tag extends BaseModel
         ];
     }
 
-    public function addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate)
+    public function addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description = '')
     {
         $this->validateValues($idSite, $name, $idContainerVersion, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
         $this->tagsProvider->checkIsValidTag($type);
@@ -61,7 +61,7 @@ class Tag extends BaseModel
 
         $createdDate = $this->getCurrentDateTime();
 
-        return $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate);
+        return $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description);
     }
 
     private function validateValues($idSite, $name, $idContainerVersion, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate)
@@ -130,7 +130,7 @@ class Tag extends BaseModel
         }
     }
 
-    public function updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate)
+    public function updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description = '')
     {
         $this->validateValues($idSite, $name, $idContainerVersion, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
 
@@ -139,6 +139,7 @@ class Tag extends BaseModel
             $parameters = $this->formatParameters($tag['type'], $parameters);
             $columns = array(
                 'name' => $name,
+                'description' => $description,
                 'parameters' => $parameters,
                 'fire_trigger_ids' => $fireTriggerIds,
                 'block_trigger_ids' => $blockTriggerIds,

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -14,30 +15,50 @@ use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Settings\FieldConfig;
 use Piwik\Settings\Setting;
 
-class CustomTestTemplate extends BaseTemplate {
+class CustomTestTemplate extends BaseTemplate
+{
+    public $loadedFiles = [];
+    public $templateFileChecks = [];
 
-    public $loadedFiles = array();
-    public $templateFileChecks = array();
-
-    public function getId(){
+    public function getId()
+    {
         return $this->makeIdFromClassname('Template');
     }
-    public function getName(){ return 'Custom Template'; }
-    public function getDescription(){ return 'This is my description'; }
-    public function getHelp(){ return 'This is my help'; }
-    public function getParameters(){
-        return array($this->makeSetting('value', 'foo', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-            $field->title = 'Value';
-        }));
-    }
-    public function getCategory(){
-        return 'TestCategory';
-    }
-    public function getSupportedContexts(){
-        return array(WebContext::ID);
+
+    public function getName()
+    {
+        return 'Custom Template';
     }
 
-    public function makeSetting($name, $defaultValue, $type, $fieldConfigCallback){
+    public function getDescription()
+    {
+        return 'This is my description';
+    }
+
+    public function getHelp()
+    {
+        return 'This is my help';
+    }
+
+    public function getParameters()
+    {
+        return [$this->makeSetting('value', 'foo', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $field->title = 'Value';
+        })];
+    }
+
+    public function getCategory()
+    {
+        return 'TestCategory';
+    }
+
+    public function getSupportedContexts()
+    {
+        return [WebContext::ID];
+    }
+
+    public function makeSetting($name, $defaultValue, $type, $fieldConfigCallback)
+    {
         return parent::makeSetting($name, $defaultValue, $type, $fieldConfigCallback);
     }
 
@@ -52,7 +73,6 @@ class CustomTestTemplate extends BaseTemplate {
         $this->loadedFiles[] = $file;
         return parent::loadTemplateFile($file);
     }
-
 }
 
 /**
@@ -75,15 +95,16 @@ class BaseTemplateTest extends IntegrationTestCase
         $this->template = new CustomTestTemplate();
     }
 
-    public function test_makeSetting_failsWhenUsingReservedName()
+    public function testMakeSettingFailsWhenUsingReservedName()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The setting name "trigger" is reserved and cannot be used');
 
-        $this->template->makeSetting($name = 'trigger', $defaultValue = false, FieldConfig::TYPE_BOOL, function () {});
+        $this->template->makeSetting($name = 'trigger', $defaultValue = false, FieldConfig::TYPE_BOOL, function () {
+        });
     }
 
-    public function test_makeSetting_assignsValues()
+    public function testMakeSettingAssignsValues()
     {
         $setting = $this->template->makeSetting('value', 'foo', FieldConfig::TYPE_INT, function (FieldConfig $field) {
             $field->title = 'Value';
@@ -94,14 +115,14 @@ class BaseTemplateTest extends IntegrationTestCase
         $this->assertSame(FieldConfig::TYPE_INT, $setting->getType());
     }
 
-    public function test_makeIdFromClassname()
+    public function testMakeIdFromClassname()
     {
         $this->assertSame('CustomTest', $this->template->getId());
     }
 
-    public function test_loadTemplate_templateDoesNotExist()
+    public function testLoadTemplateTemplateDoesNotExist()
     {
-        $this->assertNull($this->template->loadTemplate(WebContext::ID, array()));
+        $this->assertNull($this->template->loadTemplate(WebContext::ID, []));
         $this->assertSame([], $this->template->loadedFiles);
         $this->assertSame([
             PIWIK_DOCUMENT_ROOT . '/plugins/TagManager/tests/Integration/Template/BaseTemplateTest.web.min.js',
@@ -109,9 +130,9 @@ class BaseTemplateTest extends IntegrationTestCase
         ], $this->template->templateFileChecks);
     }
 
-    public function test_toArray()
+    public function testToArray()
     {
-        $expected = array (
+        $expected =  [
             'id' => 'CustomTest',
             'name' => 'Custom Template',
             'description' => 'This is my description',
@@ -119,34 +140,35 @@ class BaseTemplateTest extends IntegrationTestCase
             'icon' => 'plugins/TagManager/images/defaultIcon.svg',
             'help' => 'This is my help',
             'order' => 9999,
-            'contexts' => array(WebContext::ID),
+            'contexts' => [WebContext::ID],
             'hasAdvancedSettings' => true,
             'isCustomTemplate' => false,
-            'parameters' => array (
-                array (
+            'parameters' =>  [
+                 [
                     'name' => 'value',
                     'title' => 'Value',
                     'value' => 'foo',
                     'defaultValue' => 'foo',
                     'type' => FieldConfig::TYPE_STRING,
                     'uiControl' => FieldConfig::UI_CONTROL_TEXT,
-                    'uiControlAttributes' => array (),
-                    'availableValues' => NULL,
-                    'description' => NULL,
-                    'inlineHelp' => NULL,
+                    'uiControlAttributes' =>  [],
+                    'availableValues' => null,
+                    'description' => null,
+                    'inlineHelp' => null,
                     'templateFile' => '',
-                    'introduction' => NULL,
-                    'condition' => NULL,
-                ),
-            ),
-        );
+                    'introduction' => null,
+                    'condition' => null,
+                    'fullWidth' => false,
+                 ],
+            ],
+        ];
         $this->assertSame($expected, $this->template->toArray());
     }
 
     public function provideContainerConfig()
     {
-        return array(
+        return [
             'TagManagerJSMinificationEnabled' => true
-        );
+        ];
     }
 }
