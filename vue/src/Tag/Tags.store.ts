@@ -154,7 +154,6 @@ class TagsStore {
         endDate: tag.end_date,
         fireLimit: tag.fire_limit,
         fireDelay: tag.fire_delay,
-        priority: tag.priority,
       },
       {
         parameters,

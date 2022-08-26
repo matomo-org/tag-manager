@@ -3,6 +3,9 @@
 {% set title = 'TagManager_Tags'|translate %}
 
 {% block content %}
-    <div piwik-tag-manage id-container="{{ container.idcontainer }}" id-container-version="{{ idcontainerversion }}">
-    </div>
+    <div
+        vue-entry="TagManager.TagManage"
+        id-container="{{ container.idcontainer|json_encode }}"
+        id-container-version="{{ idcontainerversion|json_encode }}"
+    ></div>
 {% endblock %}

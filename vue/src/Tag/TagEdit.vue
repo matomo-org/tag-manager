@@ -577,7 +577,6 @@ export default defineComponent({
     },
     openEditTrigger(callback: (trigger: Trigger) => void, idTag: number) {
       tagManagerHelper.editTrigger(
-        null,
         this.idContainer,
         this.idContainerVersion,
         idTag,
