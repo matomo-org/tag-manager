@@ -44,6 +44,13 @@
     </div>
     <p>{{ translate('TagManager_InstallCodePublishEnvironmentNote', 'preview') }}
       {{ translate('TagManager_ConfigureEnvironmentsSuperUser') }}</p>
+    <p style="margin-top: 1rem;">{{ translate('TagManager_InstallCodeDataLayerNote') }}
+      <br />
+      <a
+        target="_blank"
+        href="https://matomo.org/faq/tag-manager/data-layer-in-matomo-tag-manager/"
+      >{{ translate('TagManager_LearnMore') }}</a>
+    </p>
     <h2>{{ translate('TagManager_ReleasesOverview') }}</h2>
     <table v-content-table>
       <thead>
