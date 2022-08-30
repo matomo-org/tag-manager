@@ -45,7 +45,11 @@
     <p>{{ translate('TagManager_InstallCodePublishEnvironmentNote', 'preview') }}
       {{ translate('TagManager_ConfigureEnvironmentsSuperUser') }}</p>
     <p style="margin-top: 1rem;">
-      <span v-html="translate('TagManager_InstallCodeDataLayerNote')"></span>
+      <span v-html="$sanitize(translate(
+        'TagManager_InstallCodeDataLayerNote',
+        '&lt;strong&gt;',
+        '&lt;/strong&gt;'
+      ))" />
       <br />
       <a
         target="_blank"
