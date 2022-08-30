@@ -44,7 +44,8 @@
     </div>
     <p>{{ translate('TagManager_InstallCodePublishEnvironmentNote', 'preview') }}
       {{ translate('TagManager_ConfigureEnvironmentsSuperUser') }}</p>
-    <p style="margin-top: 1rem;">{{ translate('TagManager_InstallCodeDataLayerNote') }}
+    <p style="margin-top: 1rem;">
+      <span v-html="translate('TagManager_InstallCodeDataLayerNote')"></span>
       <br />
       <a
         target="_blank"
