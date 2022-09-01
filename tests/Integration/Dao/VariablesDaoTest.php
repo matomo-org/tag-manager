@@ -80,6 +80,7 @@ class VariablesDaoTest extends IntegrationTestCase
         $parameters = array();
         $lookupTable = array();
         $createdDate = $this->now;
+        $description = '';
 
         $idVariable = $this->dao->createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate);
         $this->assertSame(1, $idVariable);
@@ -98,6 +99,7 @@ class VariablesDaoTest extends IntegrationTestCase
             'updated_date' => $createdDate,
             'deleted_date' => null,
             'status' => VariablesDao::STATUS_ACTIVE,
+            'description' => $description,
         ), $variable);
     }
 
@@ -114,8 +116,9 @@ class VariablesDaoTest extends IntegrationTestCase
         );
         $createdDate = $this->now;
         $defaultValue = 'foobar';
+        $description = 'Test description for My Name variable';
 
-        $idVariable = $this->dao->createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate);
+        $idVariable = $this->dao->createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate, $description);
         $this->assertSame(1, $idVariable);
 
         $variable = $this->dao->getContainerVariable($idSite, $idContainerVersion, $idVariable);
@@ -132,6 +135,7 @@ class VariablesDaoTest extends IntegrationTestCase
             'updated_date' => $createdDate,
             'deleted_date' => null,
             'status' => VariablesDao::STATUS_ACTIVE,
+            'description' => $description,
         ), $variable);
     }
 
@@ -277,6 +281,7 @@ class VariablesDaoTest extends IntegrationTestCase
             array('match_value' => 'foobar', 'comparison' => 'ends_with', 'out_value' => '.org')
         );
         $parameters = array('baz' => 'foo', 'hello' => 'world');
+        $description = 'Test description for My Name variable';
 
         $idVariable = $this->createVariable($idSite = 4, $idContainerVersion = 6);
 
@@ -285,7 +290,8 @@ class VariablesDaoTest extends IntegrationTestCase
             'default_value' => 4334,
             'lookup_table' => $lookupTable,
             'parameters' => $parameters,
-            'updated_date' => '2016-01-02 03:04:05'
+            'updated_date' => '2016-01-02 03:04:05',
+            'description' => $description,
         );
         $this->dao->updateVariableColumns($idSite = 4, $idContainerVersion = 6, $idVariable, $columns);
 
@@ -303,6 +309,7 @@ class VariablesDaoTest extends IntegrationTestCase
             'updated_date' => '2016-01-02 03:04:05',
             'deleted_date' => null,
             'status' => VariablesDao::STATUS_ACTIVE,
+            'description' => $description,
         ), $variable);
     }
 
@@ -338,6 +345,7 @@ class VariablesDaoTest extends IntegrationTestCase
             'updated_date' => $this->now,
             'deleted_date' => null,
             'status' => VariablesDao::STATUS_ACTIVE,
+            'description' => '',
         ), $variable);
     }
 
@@ -361,6 +369,7 @@ class VariablesDaoTest extends IntegrationTestCase
             'updated_date' => $this->now,
             'deleted_date' => null,
             'status' => VariablesDao::STATUS_ACTIVE,
+            'description' => '',
         ), $variable);
     }
 

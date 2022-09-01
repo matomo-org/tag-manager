@@ -32,6 +32,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -70,6 +71,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTypeTemplate</name>
@@ -95,6 +97,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>idGoal</name>
@@ -111,6 +114,28 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;goal&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>goalCustomRevenue</name>
+						<title>Goal Revenue (optional)</title>
+						<value/>
+						<defaultValue/>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues/>
+						<description>The estimated revenue value to track when the goal is triggered manually. As this value will be used in a calculation, it must either be a numeric value or it must reference a variable that contains a numeric value. If this field is empty or references a variable that doesn't contain a valid numeric value, the value will default to the revenue configured as part of the goal being triggered. A valid numeric value is something like 2430 or 2430.00 (note the absence of commas).</description>
+						<inlineHelp/>
+						<templateFile/>
+						<introduction/>
+						<condition>trackingType == "goal"</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -131,6 +156,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;pageview&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -151,6 +177,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;pageview&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -171,6 +198,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -191,6 +219,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -211,6 +240,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -231,6 +261,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -267,6 +298,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>commandCategory</name>
@@ -283,6 +315,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>commandView</name>
@@ -299,6 +332,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>commandTag</name>
@@ -315,6 +349,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>commandGo</name>
@@ -331,6 +366,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -363,6 +399,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>trackingType</name>
@@ -381,6 +418,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -413,6 +451,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -445,6 +484,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -481,6 +521,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>etrackerConfig</name>
@@ -498,6 +539,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType != &quot;event&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTypeTemplate</name>
@@ -518,6 +560,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -538,6 +581,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -558,6 +602,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -578,6 +623,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -598,6 +644,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -618,6 +665,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -638,6 +686,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -658,6 +707,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -678,6 +728,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -698,6 +749,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -718,6 +770,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -738,6 +791,7 @@
 						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -779,6 +833,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldTextareaVariable</name>
@@ -804,6 +859,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -836,6 +892,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -856,6 +913,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -893,6 +951,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>collectUserIp</name>
@@ -909,6 +968,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -941,6 +1001,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>honeybadgerEnvironment</name>
@@ -957,6 +1018,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -977,6 +1039,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -1013,6 +1076,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>raygunEnablePulse</name>
@@ -1029,6 +1093,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -1061,6 +1126,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -1098,6 +1164,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -1118,6 +1185,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -1154,6 +1222,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -1186,6 +1255,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -1218,6 +1288,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -1250,6 +1321,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>LivezillaDynamicDomain</name>
@@ -1266,6 +1338,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>LivezillaDynamicDefer</name>
@@ -1282,6 +1355,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -1314,6 +1388,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -1340,6 +1415,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>shareaholicAppId</name>
@@ -1356,6 +1432,7 @@
 						<templateFile />
 						<introduction />
 						<condition>shareaholicInPageApp &amp;&amp; shareaholicInPageApp !== &quot;total_share_count&quot;</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -1376,6 +1453,7 @@
 						<templateFile />
 						<introduction />
 						<condition>shareaholicInPageApp</condition>
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -1412,6 +1490,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>tawkToWidgetId</name>
@@ -1428,6 +1507,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -1460,6 +1540,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -1497,6 +1578,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>

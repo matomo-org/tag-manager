@@ -24,6 +24,7 @@
 			<idtag>19</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 2</name>
+			<description>My Tag 2 description</description>
 			<parameters>
 				<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
 				<htmlPosition>bodyEnd</htmlPosition>
@@ -48,6 +49,7 @@
 			<idtag>20</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 1</name>
+			<description />
 			<parameters>
 				<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
 				<htmlPosition>bodyEnd</htmlPosition>
@@ -71,6 +73,7 @@
 			<idtag>21</idtag>
 			<type>CustomImage</type>
 			<name>My Tag 3</name>
+			<description />
 			<parameters>
 				<customImageSrc>/plugins/tracking.png</customImageSrc>
 				<cacheBusterEnabled>1</cacheBusterEnabled>
@@ -97,6 +100,7 @@
 			<idtrigger>25</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
+			<description>My trigger1 description</description>
 			<parameters>
 				<eventName>foo</eventName>
 			</parameters>
@@ -111,6 +115,7 @@
 			<idtrigger>26</idtrigger>
 			<type>WindowLoaded</type>
 			<name>Mytrigger2</name>
+			<description />
 			<parameters>
 			</parameters>
 			<conditions>
@@ -129,6 +134,7 @@
 			<idtrigger>27</idtrigger>
 			<type>DomReady</type>
 			<name>Mytrigger3</name>
+			<description />
 			<parameters>
 			</parameters>
 			<conditions>
@@ -142,6 +148,7 @@
 			<idtrigger>28</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger4</name>
+			<description />
 			<parameters>
 				<eventName>foo{{My Var 3}}bar{{My Var 2}}baz{{PageUrl}}yeah</eventName>
 			</parameters>
@@ -158,6 +165,7 @@
 			<idvariable>12</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 1</name>
+			<description />
 			<parameters>
 				<dataLayerName>fooBarName</dataLayerName>
 			</parameters>
@@ -178,6 +186,7 @@
 			<idvariable>13</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 2</name>
+			<description />
 			<parameters>
 				<dataLayerName>dataVarName</dataLayerName>
 			</parameters>
@@ -193,6 +202,7 @@
 			<idvariable>14</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 3</name>
+			<description>My Var 3 description</description>
 			<parameters>
 				<dataLayerName>dataVarName</dataLayerName>
 			</parameters>

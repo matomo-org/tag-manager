@@ -86,6 +86,7 @@ class TagsDaoTest extends IntegrationTestCase
         $startDate = null;
         $endDate = null;
         $createdDate = $this->now;
+        $description = '';
 
         $idTag = $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate);
         $this->assertSame(1, $idTag);
@@ -109,6 +110,7 @@ class TagsDaoTest extends IntegrationTestCase
             'updated_date' => $createdDate,
             'deleted_date' => null,
             'status' => TagsDao::STATUS_ACTIVE,
+            'description' => $description
         ), $tag);
     }
 
@@ -127,8 +129,9 @@ class TagsDaoTest extends IntegrationTestCase
         $startDate = '2014-05-07 08:09:10';
         $endDate = '2018-05-07 08:09:10';
         $createdDate = $this->now;
+        $description = 'Test description for My Name tag';
 
-        $idTag = $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate);
+        $idTag = $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description);
         $this->assertSame(1, $idTag);
 
         $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
@@ -150,6 +153,7 @@ class TagsDaoTest extends IntegrationTestCase
             'updated_date' => $createdDate,
             'deleted_date' => null,
             'status' => TagsDao::STATUS_ACTIVE,
+            'description' => $description
         ), $tag);
     }
 
@@ -293,6 +297,7 @@ class TagsDaoTest extends IntegrationTestCase
         $fireTriggerIds = array(5,10, 21);
         $blockTriggerIds = array(19, 4);
         $parameters = array('baz' => 'foo', 'hello' => 'world');
+        $description = 'Test description for My Name tag';
 
         $idTag = $this->createTag($idSite = 4, $idContainerVersion = 6);
 
@@ -301,7 +306,8 @@ class TagsDaoTest extends IntegrationTestCase
             'fire_trigger_ids' => $fireTriggerIds,
             'block_trigger_ids' => $blockTriggerIds,
             'parameters' => $parameters,
-            'updated_date' => '2016-01-02 03:04:05'
+            'updated_date' => '2016-01-02 03:04:05',
+            'description' => $description
         );
         $this->dao->updateTagColumns($idSite = 4, $idContainerVersion = 6, $idTag, $columns);
 
@@ -324,6 +330,7 @@ class TagsDaoTest extends IntegrationTestCase
             'updated_date' => '2016-01-02 03:04:05',
             'deleted_date' => null,
             'status' => TagsDao::STATUS_ACTIVE,
+            'description' => $description,
         ), $tag);
     }
 
@@ -362,6 +369,7 @@ class TagsDaoTest extends IntegrationTestCase
             'updated_date' => $this->now,
             'deleted_date' => null,
             'status' => TagsDao::STATUS_ACTIVE,
+            'description' => '',
         ), $tag);
     }
 

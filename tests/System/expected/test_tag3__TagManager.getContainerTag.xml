@@ -5,6 +5,7 @@
 	<idsite>2</idsite>
 	<type>CustomImage</type>
 	<name>My Tag 3</name>
+	<description/>
 	<status>active</status>
 	<parameters>
 		<customImageSrc>/plugins/tracking.png</customImageSrc>
@@ -54,6 +55,7 @@
 				<templateFile />
 				<introduction />
 				<condition />
+				<fullWidth>0</fullWidth>
 				<component>
 					<plugin>TagManager</plugin>
 					<name>FieldVariableTemplate</name>
@@ -74,6 +76,7 @@
 				<templateFile />
 				<introduction />
 				<condition />
+				<fullWidth>0</fullWidth>
 			</row>
 		</parameters>
 	</typeMetadata>

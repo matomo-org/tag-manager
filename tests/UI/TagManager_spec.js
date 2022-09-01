@@ -92,6 +92,32 @@ describe("TagManager", function () {
         await capture.page(page, 'preview_enable');
     });
 
+    it('should change debug URL', async function () {
+        await page.evaluate(function() {
+            $('#previewDebugUrl').val('https://example.com');
+        });
+        await page.evaluate(function() {
+            $('[data-debug-site-url]').click();
+        });
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'change_debug_url');
+    });
+
+    it('should show error for invalid debug URL', async function () {
+        await page.evaluate(function() {
+          $('#previewDebugUrl').val('javascript:alert(123456);//');
+        });
+        await page.evaluate(function() {
+          $('[data-debug-site-url]').click();
+        });
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'invalid_debug_url');
+    });
+
     it('should be able to disable preview', async function () {
         await page.click('#notificationContainer .disablePreviewDebug');
         await page.waitForNetworkIdle();

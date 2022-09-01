@@ -71,16 +71,16 @@ class Variable extends BaseModel
         BaseValidator::check(Piwik::translate('TagManager_LookupTable'), $lookupTable, [new LookupTable()]);
     }
 
-    public function addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable)
+    public function addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $description = '')
     {
         $this->validateValues($idSite, $name, $defaultValue, $lookupTable);
         $this->variablesProvider->checkIsValidVariable($type);
         $createdDate = $this->getCurrentDateTime();
         $parameters = $this->formatParameters($type, $parameters);
-        return $this->dao->createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate);
+        return $this->dao->createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate, $description);
     }
 
-    public function updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable)
+    public function updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description = '')
     {
         $this->validateValues($idSite, $name, $defaultValue, $lookupTable);
         $variable = $this->dao->getContainerVariable($idSite, $idContainerVersion, $idVariable);
@@ -88,6 +88,7 @@ class Variable extends BaseModel
             $parameters = $this->formatParameters($variable['type'], $parameters);
             $columns = array(
                 'name' => $name,
+                'description' => $description,
                 'default_value' => $defaultValue,
                 'lookup_table' => $lookupTable,
                 'parameters' => $parameters
@@ -275,8 +276,9 @@ class Variable extends BaseModel
         $parameters = $entity['parameters'];
         foreach ($entity['typeMetadata']['parameters'] as $parameter) {
             $paramName = $parameter['name'];
-            if ((isset($parameter['component'])
-                    && $parameter['component'] === BaseTemplate::FIELD_VARIABLE_COMPONENT)
+            if (($parameter['templateFile'] === BaseTemplate::FIELD_TEMPLATE_VARIABLE
+                    || (isset($parameter['component'])
+                        && in_array($parameter['component'], [BaseTemplate::FIELD_VARIABLE_COMPONENT, BaseTemplate::FIELD_VARIABLE_TYPE_COMPONENT])))
                 && isset($parameters[$paramName])
                 && is_string($parameters[$paramName])
                 && strpos($parameters[$paramName], $oldVarNameTemplate) !== false) {

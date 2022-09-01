@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div class="containerDashboard.containerDashboard">
+  <div class="containerDashboard">
     <ActivityIndicator :loading="isLoading" />
     <div v-if="!isLoading">
       <div v-content-intro>

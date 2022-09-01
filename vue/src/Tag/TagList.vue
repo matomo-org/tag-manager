@@ -15,6 +15,7 @@
         <thead>
           <tr>
             <th class="name">{{ translate('General_Name') }}</th>
+            <th class="description">{{ translate('General_Description') }}</th>
             <th class="type">{{ translate('TagManager_Type') }}</th>
             <th class="triggers">{{ translate('TagManager_Triggers') }}</th>
             <th class="lastUpdated">{{ translate('TagManager_LastUpdated') }}</th>
@@ -50,6 +51,12 @@
             :id="`tag${ tag.idtag }`"
           >
             <td class="name">{{ tag.name }}</td>
+            <td
+              class="description"
+              :title="tag.description"
+            >
+              {{ truncateText(tag.description, 30) }}
+            </td>
             <td
               class="type"
               :title="tag.typeMetadata.description"
@@ -241,6 +248,9 @@ export default defineComponent({
       Matomo.helper.modalConfirm('#confirmDeleteTag', {
         yes: doDelete,
       });
+    },
+    truncateText(text: string, length: number) {
+      return tagManagerHelper.truncateText(text, length);
     },
   },
   computed: {

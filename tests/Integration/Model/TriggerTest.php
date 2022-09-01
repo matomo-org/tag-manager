@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -65,7 +66,7 @@ class TriggerTest extends IntegrationTestCase
         $this->model = StaticContainer::get('Piwik\Plugins\TagManager\Model\Trigger');
         $this->model->setCurrentDateTime($this->now);
 
-        $this->idTrigger1 = $this->addContainerTrigger($this->idSite, $this->containerVersion1, null, 'InitialTrigger1', array('eventName' => 'myEvent'));
+        $this->idTrigger1 = $this->addContainerTrigger($this->idSite, $this->containerVersion1, null, 'InitialTrigger1', ['eventName' => 'myEvent']);
     }
 
     public function tearDown(): void
@@ -74,7 +75,7 @@ class TriggerTest extends IntegrationTestCase
         parent::tearDown();
     }
 
-    public function test_addContainerTrigger_invalidSite()
+    public function testAddContainerTriggerInvalidSite()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('idSite: An unexpected website was found');
@@ -82,7 +83,7 @@ class TriggerTest extends IntegrationTestCase
         $this->addContainerTrigger($idSite = 999);
     }
 
-    public function test_addContainerTrigger_invalidName()
+    public function testAddContainerTriggerInvalidName()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Name: The value contains');
@@ -90,75 +91,76 @@ class TriggerTest extends IntegrationTestCase
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    public function test_addContainerTrigger_missingParameter()
+    public function testAddContainerTriggerMissingParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Event Name: A value needs to be provided.');
 
-        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('eventName' => ''), array());
+        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['eventName' => ''], []);
     }
 
-    public function test_addContainerTrigger_invalidParameter()
+    public function testAddContainerTriggerInvalidParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Event Name: A value needs to be provided.');
 
-        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('eventName' => ''), array());
+        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['eventName' => ''], []);
     }
 
-    public function test_addContainerTrigger_invalidCondition()
+    public function testAddContainerTriggerInvalidCondition()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Conditions: Missing value for array key "comparison"');
 
-        $conditions = array(array('actual' => 'five'));
-        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('eventName' => '<div></div>'), $conditions);
+        $conditions = [['actual' => 'five']];
+        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['eventName' => '<div></div>'], $conditions);
     }
 
-    public function test_addContainerTrigger_invalidCondition2()
+    public function testAddContainerTriggerInvalidCondition2()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Conditions: The variable "invalid" in the condition');
 
-        $conditions = array(
-            array('actual' => 'invalid', 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errorfoo'),
-        );
-        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('eventName' => '<div></div>'), $conditions);
+        $conditions = [
+            ['actual' => 'invalid', 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errorfoo'],
+        ];
+        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['eventName' => '<div></div>'], $conditions);
     }
 
-    public function test_addContainerTrigger_invalidType()
+    public function testAddContainerTriggerInvalidType()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The trigger "MyBarBaz" is not supported');
 
-        $conditions = array();
-        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = 'MyBarBaz', 'MyName', $parameters = array('eventName' => '<div></div>'), $conditions);
+        $conditions = [];
+        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = 'MyBarBaz', 'MyName', $parameters = ['eventName' => '<div></div>'], $conditions);
     }
 
-    public function test_addContainerTrigger_successMinimal()
+    public function testAddContainerTriggerSuccessMinimal()
     {
-        $idTrigger = $this->addContainerTrigger($this->idSite, $this->containerVersion1, CustomEventTrigger::ID, 'MyName', $parameters = array('eventName' => 'fooBar'), array());
+        $idTrigger = $this->addContainerTrigger($this->idSite, $this->containerVersion1, CustomEventTrigger::ID, 'MyName', $parameters = ['eventName' => 'fooBar'], []);
         $this->assertSame(2, $idTrigger);
 
         $trigger = $this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $idTrigger);
 
-        $expected = array (
+        $expected =  [
             'idtrigger' => 2,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => CustomEventTrigger::ID,
             'name' => 'MyName',
+            'description' => '',
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'eventName' => 'fooBar',
-                ),
-            'conditions' => array (),
+                ],
+            'conditions' =>  [],
             'created_date' => '2018-01-01 02:03:04',
             'updated_date' => '2018-01-01 02:03:04',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
-            'typeMetadata' => Array(
+            'typeMetadata' => [
                 'id' => 'CustomEvent',
                 'name' => 'Custom Event',
                 'description' => 'Triggered when a custom event is pushed to the Data-Layer.',
@@ -169,60 +171,63 @@ class TriggerTest extends IntegrationTestCase
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
                 'isCustomTemplate' => false,
-                'parameters' => array (
-                   array(
+                'parameters' =>  [
+                   [
                         'name' => 'eventName',
                         'title' => 'Event Name',
                         'value' => 'fooBar',
                         'defaultValue' => '',
                         'type' => 'string',
                         'uiControl' => 'text',
-                        'uiControlAttributes' => array(),
+                        'uiControlAttributes' => [],
                         'availableValues' => null,
                         'description' => 'The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({"event": "my-custom-event"});',
                         'inlineHelp' => null,
                         'templateFile' => '',
                         'introduction' => null,
                         'condition' => null,
+                        'fullWidth' => false,
                         'component' => [
                             'plugin' => 'TagManager',
                             'name' => 'FieldVariableTemplate',
                         ],
-                    )
-                )
-            )
-        );
+                    ]
+                ]
+            ]
+        ];
         $this->assertSame($expected, $trigger);
     }
 
-    public function test_addContainerTrigger_successFull()
+    public function testAddContainerTriggerSuccessFull()
     {
-        $conditions = array(
-            array('actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errorfoo'),
-            array('actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'expected' => 'barbaz'),
-        );
-        $idTrigger = $this->addContainerTrigger($this->idSite, $this->containerVersion1, CustomEventTrigger::ID, 'MyName', $parameters = array('eventName' => 'fooBar'), $conditions);
+        $conditions = [
+            ['actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errorfoo'],
+            ['actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'expected' => 'barbaz'],
+        ];
+        $description = 'Test description for MyName tag';
+        $idTrigger = $this->addContainerTrigger($this->idSite, $this->containerVersion1, CustomEventTrigger::ID, 'MyName', $parameters = ['eventName' => 'fooBar'], $conditions, $description);
         $this->assertSame(2, $idTrigger);
 
         $trigger = $this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $idTrigger);
 
-        $expected = array (
+        $expected =  [
             'idtrigger' => $idTrigger,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => CustomEventTrigger::ID,
             'name' => 'MyName',
+            'description' => 'Test description for MyName tag',
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'eventName' => 'fooBar',
-                ),
+                ],
             'conditions' => $conditions,
             'created_date' => '2018-01-01 02:03:04',
             'updated_date' => '2018-01-01 02:03:04',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
-            'typeMetadata' => Array(
+            'typeMetadata' => [
                 'id' => 'CustomEvent',
                 'name' => 'Custom Event',
                 'description' => 'Triggered when a custom event is pushed to the Data-Layer.',
@@ -233,33 +238,34 @@ class TriggerTest extends IntegrationTestCase
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
                 'isCustomTemplate' => false,
-                'parameters' => array (
-                    array(
+                'parameters' =>  [
+                    [
                         'name' => 'eventName',
                         'title' => 'Event Name',
                         'value' => 'fooBar',
                         'defaultValue' => '',
                         'type' => 'string',
                         'uiControl' => 'text',
-                        'uiControlAttributes' => array(),
+                        'uiControlAttributes' => [],
                         'availableValues' => null,
                         'description' => 'The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({"event": "my-custom-event"});',
                         'inlineHelp' => null,
                         'templateFile' => '',
                         'introduction' => null,
                         'condition' => null,
+                        'fullWidth' => false,
                         'component' => [
                             'plugin' => 'TagManager',
                             'name' => 'FieldVariableTemplate',
                         ],
-                    )
-                )
-            )
-        );
+                    ]
+                ]
+            ]
+        ];
         $this->assertSame($expected, $trigger);
     }
 
-    public function test_updateContainerTrigger_invalidSite()
+    public function testUpdateContainerTriggerInvalidSite()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('idSite: An unexpected website was found');
@@ -267,7 +273,7 @@ class TriggerTest extends IntegrationTestCase
         $this->updateContainerTrigger($idSite = 999, $this->containerVersion1, $this->idTrigger1);
     }
 
-    public function test_updateContainerTrigger_invalidName()
+    public function testUpdateContainerTriggerInvalidName()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Name: The value contains');
@@ -275,71 +281,73 @@ class TriggerTest extends IntegrationTestCase
         $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    public function test_updateContainerTrigger_missingParameter()
+    public function testUpdateContainerTriggerMissingParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Event Name: A value needs to be provided.');
 
-        $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyName', $parameters = array(), array());
+        $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyName', $parameters = [], []);
     }
 
-    public function test_updateContainerTrigger_invalidParameter()
+    public function testUpdateContainerTriggerInvalidParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Event Name: A value needs to be provided.');
 
-        $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyName', $parameters = array('eventName' => ''), array());
+        $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyName', $parameters = ['eventName' => ''], []);
     }
 
-    public function test_updateContainerTrigger_invalidCondition()
+    public function testUpdateContainerTriggerInvalidCondition()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Conditions: Missing value for array key "comparison"');
 
-        $conditions = array(array('actual' => 'five'));
-        $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyName', $parameters = array('eventName' => '<div></div>'), $conditions);
+        $conditions = [['actual' => 'five']];
+        $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyName', $parameters = ['eventName' => '<div></div>'], $conditions);
     }
 
-    public function test_updateContainerTrigger_invalidCondition2()
+    public function testUpdateContainerTriggerInvalidCondition2()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Conditions: The variable "invalid" in the condition');
 
-        $conditions = array(
-            array('actual' => 'invalid', 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errorfoo'),
-        );
-        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('eventName' => '<div></div>'), $conditions);
+        $conditions = [
+            ['actual' => 'invalid', 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errorfoo'],
+        ];
+        $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['eventName' => '<div></div>'], $conditions);
     }
 
-    public function test_updateContainerTrigger_success()
+    public function testUpdateContainerTriggerSuccess()
     {
-        $conditions = array(
-            array('actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errouprfoo'),
-            array('actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'expected' => 'bauprbaz'),
-        );
+        $conditions = [
+            ['actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_EQUALS, 'expected' => 'errouprfoo'],
+            ['actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'expected' => 'bauprbaz'],
+        ];
+        $description = 'Test updated description for MyName tag';
 
         $this->model->setCurrentDateTime('2018-02-01 05:06:07');
-        $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyUpdatedName', $parameters = array('eventName' => 'updatedEvent'), $conditions);
+        $this->updateContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, 'MyUpdatedName', $parameters = ['eventName' => 'updatedEvent'], $conditions, $description);
 
         $trigger = $this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1);
 
-        $expected = array (
+        $expected =  [
             'idtrigger' => $this->idTrigger1,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => 'CustomEvent',
             'name' => 'MyUpdatedName',
+            'description' => $description,
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'eventName' => 'updatedEvent'
-                ),
+                ],
             'conditions' => $conditions,
             'created_date' => '2018-01-01 02:03:04',
             'updated_date' => '2018-02-01 05:06:07',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Feb 1, 2018 05:06:07',
-            'typeMetadata' => Array(
+            'typeMetadata' => [
                 'id' => 'CustomEvent',
                 'name' => 'Custom Event',
                 'description' => 'Triggered when a custom event is pushed to the Data-Layer.',
@@ -350,40 +358,41 @@ class TriggerTest extends IntegrationTestCase
                 'contexts' => ['web'],
                 'hasAdvancedSettings' => true,
                 'isCustomTemplate' => false,
-                'parameters' => array (
-                    array(
+                'parameters' =>  [
+                    [
                         'name' => 'eventName',
                         'title' => 'Event Name',
                         'value' => 'updatedEvent',
                         'defaultValue' => '',
                         'type' => 'string',
                         'uiControl' => 'text',
-                        'uiControlAttributes' => array(),
+                        'uiControlAttributes' => [],
                         'availableValues' => null,
                         'description' => 'The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({"event": "my-custom-event"});',
                         'inlineHelp' => null,
                         'templateFile' => '',
                         'introduction' => null,
                         'condition' => null,
+                        'fullWidth' => false,
                         'component' => [
                             'plugin' => 'TagManager',
                             'name' => 'FieldVariableTemplate',
                         ],
-                    )
-                )
-            )
-        );
+                    ]
+                ]
+            ]
+        ];
         $this->assertSame($expected, $trigger);
     }
 
-    public function test_getContainer()
+    public function testGetContainer()
     {
         // no need to create new test for this
-        $this->test_addContainerTrigger_successFull();
-        $this->test_updateContainerTrigger_success();
+        $this->testAddContainerTriggerSuccessFull();
+        $this->testUpdateContainerTriggerSuccess();
     }
 
-    public function test_getContainer_doesNotExist()
+    public function testGetContainerDoesNotExist()
     {
         $this->assertFalse($this->model->getContainerTrigger(999, $this->containerVersion1, $this->idTrigger1));
         $this->assertFalse($this->model->getContainerTrigger($this->idSite, 9999, $this->idTrigger1));
@@ -392,52 +401,53 @@ class TriggerTest extends IntegrationTestCase
         $this->assertNotEmpty($this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1));
     }
 
-    public function test_getContainer_doesNotReturnDeletedTrigger()
+    public function testGetContainerDoesNotReturnDeletedTrigger()
     {
         $this->assertNotEmpty($this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1));
         $this->model->deleteContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1);
         $this->assertFalse($this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1));
     }
 
-    public function test_getContainer_whenRelatedTypeNoLongerExists_ignoredTypeMetadata()
+    public function testGetContainerWhenRelatedTypeNoLongerExists_ignoredTypeMetadata()
     {
-        $this->dao->updateTriggerColumns($this->idSite, $this->containerVersion1, $this->idTrigger1, array('type' => 'Foo'));
+        $this->dao->updateTriggerColumns($this->idSite, $this->containerVersion1, $this->idTrigger1, ['type' => 'Foo']);
         $trigger = $this->model->getContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1);
 
-        $this->assertSame(array (
+        $this->assertSame([
             'idtrigger' => 1,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => 'Foo',
             'name' => 'InitialTrigger1',
+            'description' => '',
             'status' => 'active',
-            'parameters' => array ('eventName' => 'myEvent'),
-            'conditions' => array (),
+            'parameters' =>  ['eventName' => 'myEvent'],
+            'conditions' =>  [],
             'created_date' => '2018-01-01 02:03:04',
             'updated_date' => '2018-01-01 02:03:04',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
-            'typeMetadata' => NULL,
-        ), $trigger);
+            'typeMetadata' => null,
+        ], $trigger);
     }
 
-    public function test_getContainerTriggers_noTriggerMatches()
+    public function testGetContainerTriggersNoTriggerMatches()
     {
-        $this->assertSame(array(), $this->model->getContainerTriggers(999, $this->containerVersion1));
-        $this->assertSame(array(), $this->model->getContainerTriggers($this->idSite, 999));
+        $this->assertSame([], $this->model->getContainerTriggers(999, $this->containerVersion1));
+        $this->assertSame([], $this->model->getContainerTriggers($this->idSite, 999));
 
         // make sure with correct params we do get a result
         $this->assertNotEmpty($this->model->getContainerTriggers($this->idSite, $this->containerVersion1));
     }
 
-    public function test_getContainerTriggers_doesNotReturnDeleted()
+    public function testGetContainerTriggersDoesNotReturnDeleted()
     {
         $this->assertCount(1, $this->model->getContainerTriggers($this->idSite, $this->containerVersion1));
         $this->model->deleteContainerTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1);
-        $this->assertSame(array(), $this->model->getContainerTriggers($this->idSite, $this->containerVersion1));
+        $this->assertSame([], $this->model->getContainerTriggers($this->idSite, $this->containerVersion1));
     }
 
-    public function test_getContainerTriggers_onlyReturnsContainersForThatSiteAndVersion()
+    public function testGetContainerTriggersOnlyReturnsContainersForThatSiteAndVersion()
     {
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'v1');
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'v2');
@@ -449,10 +459,10 @@ class TriggerTest extends IntegrationTestCase
         $this->assertCount(2, $this->model->getContainerTriggers($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTriggers($this->idSite, $this->containerVersion2));
         $this->assertCount(0, $this->model->getContainerTriggers($this->idSite2, $this->containerVersion2));
-        $this->assertSame(array(), $this->model->getContainerTriggers($this->idSite2, $this->containerVersion2));
+        $this->assertSame([], $this->model->getContainerTriggers($this->idSite2, $this->containerVersion2));
     }
 
-    public function test_getContainerTriggers_formatsValues()
+    public function testGetContainerTriggersFormatsValues()
     {
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'v1');
         $triggers = $this->model->getContainerTriggers($this->idSite, $this->containerVersion1);
@@ -463,7 +473,7 @@ class TriggerTest extends IntegrationTestCase
         }
     }
 
-    public function test_deleteContainerTrigger()
+    public function testDeleteContainerTrigger()
     {
         $this->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'v1');
         $idTrigger3 = $this->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'v2');
@@ -513,83 +523,83 @@ class TriggerTest extends IntegrationTestCase
         $this->assertSame(1, $count);
     }
 
-    public function test_getTriggerReferences_whenNoReferences()
+    public function testGetTriggerReferencesWhenNoReferences()
     {
-        $this->assertSame(array(), $this->model->getTriggerReferences($this->idSite, $this->containerVersion1, $this->idTrigger1));
+        $this->assertSame([], $this->model->getTriggerReferences($this->idSite, $this->containerVersion1, $this->idTrigger1));
     }
 
-    public function test_getTriggerReferences_withReferences()
+    public function testGetTriggerReferencesWithReferences()
     {
-        $idTrigger2 = $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName2', $parameters = array('eventName' => '<div></div>'));
-        $idTrigger3 = $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName3', $parameters = array('eventName' => '<div></div>'));
-        $idTrigger4 = $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName4', $parameters = array('eventName' => '<div></div>'));
+        $idTrigger2 = $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName2', $parameters = ['eventName' => '<div></div>']);
+        $idTrigger3 = $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName3', $parameters = ['eventName' => '<div></div>']);
+        $idTrigger4 = $this->addContainerTrigger($this->idSite, $this->containerVersion1, $type = null, 'MyName4', $parameters = ['eventName' => '<div></div>']);
 
-        $idTrigger5 = $this->addContainerTrigger($this->idSite, $this->containerVersion2, $type = null, 'MyName5', $parameters = array('eventName' => '<div></div>'));
-        $idTrigger6 = $this->addContainerTrigger($this->idSite2, $this->containerVersion1, $type = null, 'MyName6', $parameters = array('eventName' => '<div></div>'));
+        $idTrigger5 = $this->addContainerTrigger($this->idSite, $this->containerVersion2, $type = null, 'MyName5', $parameters = ['eventName' => '<div></div>']);
+        $idTrigger6 = $this->addContainerTrigger($this->idSite2, $this->containerVersion1, $type = null, 'MyName6', $parameters = ['eventName' => '<div></div>']);
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, 'TagName1', $fire = array($idTrigger3), $block = array($this->idTrigger1));
-        $this->addContainerTag($this->idSite, $this->containerVersion1, 'TagName2', $fire = array($this->idTrigger1), $block = array($idTrigger2));
-        $this->addContainerTag($this->idSite, $this->containerVersion1, 'TagName3', $fire = array($this->idTrigger1), $block = array());
-        $this->addContainerTag($this->idSite, $this->containerVersion2, 'TagName4', $fire = array($idTrigger5), $block = array());
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'TagName1', $fire = [$idTrigger3], $block = [$this->idTrigger1]);
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'TagName2', $fire = [$this->idTrigger1], $block = [$idTrigger2]);
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'TagName3', $fire = [$this->idTrigger1], $block = []);
+        $this->addContainerTag($this->idSite, $this->containerVersion2, 'TagName4', $fire = [$idTrigger5], $block = []);
 
         // is finding triggers in fire and block trigger
-        $expected = array (
-                array (
+        $expected =  [
+                 [
                     'referenceId' => 1,
                     'referenceType' => 'tag',
                     'referenceTypeName' => 'Tag',
                     'referenceName' => 'TagName1',
-                ),
-                array (
+                 ],
+                 [
                     'referenceId' => 2,
                     'referenceType' => 'tag',
                     'referenceTypeName' => 'Tag',
                     'referenceName' => 'TagName2',
-                ),
-                array (
+                 ],
+                 [
                     'referenceId' => 3,
                     'referenceType' => 'tag',
                     'referenceTypeName' => 'Tag',
                     'referenceName' => 'TagName3',
-                ),
-        );
+                 ],
+        ];
 
         $this->assertSame($expected, $this->model->getTriggerReferences($this->idSite, $this->containerVersion1, $this->idTrigger1));
 
         // is finding them in block trigger
-        $expected = array (
-                array (
+        $expected =  [
+                 [
                     'referenceId' => 2,
                     'referenceType' => 'tag',
                     'referenceTypeName' => 'Tag',
                     'referenceName' => 'TagName2',
-                ),
-        );
+                 ],
+        ];
         $this->assertSame($expected, $this->model->getTriggerReferences($this->idSite, $this->containerVersion1, $idTrigger2));
 
         // when nothing matches
-        $expected = array();
+        $expected = [];
         $this->assertSame($expected, $this->model->getTriggerReferences($this->idSite, $this->containerVersion1, $idTrigger4));
     }
 
-    private function updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name = 'MyName', $parameters = array(), $conditions = array())
+    private function updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name = 'MyName', $parameters = [], $conditions = [], $description = '')
     {
-        return $this->model->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions);
+        return $this->model->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description);
     }
 
-    private function addContainerTrigger($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = array(), $conditions = array())
+    private function addContainerTrigger($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $conditions = [], $description = '')
     {
         if (!isset($type)) {
             $type = CustomEventTrigger::ID;
         }
 
-        return $this->model->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions);
+        return $this->model->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $description);
     }
 
-    private function addContainerTag($idSite, $idContainerVersion = 5, $name = 'TagName', $fireTriggerIds = array(), $blockTriggerIds = array())
+    private function addContainerTag($idSite, $idContainerVersion = 5, $name = 'TagName', $fireTriggerIds = [], $blockTriggerIds = [])
     {
         $type = CustomHtmlTag::ID;
-        $parameters = array('customHtml' => '<p></p>');
+        $parameters = ['customHtml' => '<p></p>'];
         $tag = StaticContainer::get('Piwik\Plugins\TagManager\Model\Tag');
         return $tag->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit = Tag::FIRE_LIMIT_UNLIMITED, $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null);
     }

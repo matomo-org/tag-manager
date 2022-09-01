@@ -568,6 +568,11 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_CreateNewVersionNow';
         $result[] = 'TagManager_TagManager';
         $result[] = 'TagManager_TagManagerTrackingInfo';
+        $result[] = 'TagManager_InvalidDebugUrlError';
+        $result[] = 'TagManager_TagDescriptionHelp';
+        $result[] = 'TagManager_TriggerDescriptionHelp';
+        $result[] = 'TagManager_VariableDescriptionHelp';
+        $result[] = 'TagManager_InstallCodeDataLayerNote';
     }
 
     public function getStylesheetFiles(&$stylesheets)
@@ -579,6 +584,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/vue/src/VariableSelectType/VariableSelectType.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Field/FieldVariableTemplate.less";
         $stylesheets[] = "plugins/TagManager/vue/src/ContainerSelector/ContainerSelector.less";
+        $stylesheets[] = "plugins/TagManager/vue/src/ContainerDashboard/ContainerDashboard.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Version/VersionEdit.less";
     }
 

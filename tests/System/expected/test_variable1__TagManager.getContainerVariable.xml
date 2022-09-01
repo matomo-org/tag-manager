@@ -5,6 +5,7 @@
 	<idsite>2</idsite>
 	<type>DataLayer</type>
 	<name>My Var 1</name>
+	<description/>
 	<status>active</status>
 	<parameters>
 		<dataLayerName>fooBarName</dataLayerName>
@@ -50,6 +51,7 @@
 				<templateFile />
 				<introduction />
 				<condition />
+				<fullWidth>0</fullWidth>
 			</row>
 		</parameters>
 	</typeMetadata>
