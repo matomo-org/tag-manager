@@ -13,6 +13,11 @@
                 return;
             }
             var target = event.target;
+
+            if (target.shadowRoot) {
+                target = event.composedPath()[0];
+            }
+
             triggerEvent({
                 event: 'mtm.AllElementsClick',
                 'mtm.clickElement': target,
