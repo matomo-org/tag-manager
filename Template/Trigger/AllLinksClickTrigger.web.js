@@ -19,6 +19,10 @@
                     }
 
                     var target = event.target;
+                    if (target.shadowRoot) {
+                        target = event.composedPath()[0];
+                    }
+                    
                     var nodeName = target.nodeName;
 
                     while (!isClickNode(nodeName) && target && target.parentNode) {
