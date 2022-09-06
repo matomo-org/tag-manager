@@ -12,7 +12,15 @@
             if (!event.target) {
                 return;
             }
+
             var target = event.target;
+            if (target.shadowRoot) {
+                var composedPath = event.composedPath();
+                if (composedPath.length) {
+                      target = composedPath[0];   //In shadow DOM select the first event path as the target
+                }
+            }
+
             triggerEvent({
                 event: 'mtm.AllElementsClick',
                 'mtm.clickElement': target,
