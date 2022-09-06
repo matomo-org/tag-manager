@@ -18,9 +18,12 @@
                         return;
                     }
 
-                    var target = event.target;
+                    var target = event.target;                    
                     if (target.shadowRoot) {
-                        target = event.composedPath()[0];
+                        var composedPath = event.composedPath();
+                        if (composedPath.length) {
+                            target = composedPath[0];   //In shadow DOM select the first event path as the target
+                        }
                     }
                     
                     var nodeName = target.nodeName;
