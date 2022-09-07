@@ -573,6 +573,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_TriggerDescriptionHelp';
         $result[] = 'TagManager_VariableDescriptionHelp';
         $result[] = 'TagManager_InstallCodeDataLayerNote';
+        $result[] = 'TagManager_SelectAVariable';
     }
 
     public function getStylesheetFiles(&$stylesheets)

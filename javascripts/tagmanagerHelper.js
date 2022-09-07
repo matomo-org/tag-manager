@@ -81,7 +81,7 @@
       });
     };
 
-    tagManagerHelper.editVariable = function (ignored, idContainer, idContainerVersion, idVariable, callback, variableType) {
+    tagManagerHelper.editVariable = function (idContainer, idContainerVersion, idVariable, callback, variableType) {
         var createVNode = Vue.createVNode;
         var createVueApp = CoreHome.createVueApp;
         var VariableEdit = TagManager.VariableEdit;
@@ -122,13 +122,15 @@
     };
 
     tagManagerHelper.selectVariable = function (callback) {
-        var template = $('<div class="ui-confirm"><h2>Select a variable</h2><div></div><input role="no" type="button" value="' + _pk_translate('General_Cancel') +'"/></div>')
+        var template = $('<div class="ui-confirm"><h2>' + _pk_translate('TagManager_SelectAVariable') +
+          '</h2><div></div><input role="no" type="button" value="' + _pk_translate('General_Cancel') +
+          '"/></div>')
 
         var createVNode = Vue.createVNode;
         var createVueApp = CoreHome.createVueApp;
         var VariableSelect = TagManager.VariableSelect;
         var MatomoUrl = CoreHome.MatomoUrl;
-        var containerId = MatomoUrl.parsed.value.containerId;
+        var containerId = MatomoUrl.parsed.value.idContainer;
 
         var app = createVueApp({
           render: function () {
