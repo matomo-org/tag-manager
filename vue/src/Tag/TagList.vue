@@ -224,7 +224,6 @@ export default defineComponent({
     },
     editTrigger(idTrigger: number) {
       tagManagerHelper.editTrigger(
-        null,
         this.idContainer,
         this.idContainerVersion,
         idTrigger,

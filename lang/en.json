@@ -644,6 +644,7 @@
         "ZendeskChatTagName": "Zendesk Chat (formerly Zopim)",
         "SettingElementVisibilityObserveDomChangesTitle": "Observe DOM Changes",
         "SettingElementVisibilityObserveDomChangesDescription": "Enable if you want to track dynamic DOM elements. %1$sNote: This might slow down the website if there are lot of DOM changes%2$s",
-        "EntityRecursionExceptionForVariable": "It seems an entity references itself or a recursion is caused in some other way. It may be related due to this entry: \"%1$s\""
+        "EntityRecursionExceptionForVariable": "It seems an entity references itself or a recursion is caused in some other way. It may be related due to this entry: \"%1$s\"",
+        "SelectAVariable": "Select a variable"
     }
 }

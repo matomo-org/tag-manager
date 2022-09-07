@@ -173,7 +173,6 @@ export default defineComponent({
       }
 
       tagManagerHelper.editVariable(
-        null,
         this.idContainer,
         this.actualIdContainerVersion,
         variable.idvariable,
@@ -188,7 +187,6 @@ export default defineComponent({
       }
 
       tagManagerHelper.editVariable(
-        null,
         this.idContainer,
         this.actualIdContainerVersion,
         0,
