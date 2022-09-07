@@ -298,6 +298,7 @@
         });
     };
     tagManagerHelper.truncateText = function (text, maxLength) {
+        text = text || '';
         if (text.length > maxLength) {
             return `${text.substr(0, maxLength - 3)}...`;
         }
