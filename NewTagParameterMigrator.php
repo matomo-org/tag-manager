@@ -1,6 +1,6 @@
 <?php
 
-namespace Piwik\Plugins\TagManager\Updates;
+namespace Piwik\Plugins\TagManager;
 
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
