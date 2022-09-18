@@ -5,6 +5,7 @@
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\API;
 
 use Piwik\API\Request;
@@ -16,6 +17,10 @@ use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\Model\Trigger;
 use Piwik\Plugins\TagManager\Model\Variable;
 use Exception;
+use Piwik\Date;
+use Piwik\Plugins\TagManager\Dao\TagsDao;
+use Piwik\Plugins\TagManager\Dao\TriggersDao;
+use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\TagManager\Template\Tag\TagsProvider;
 use Piwik\Plugins\TagManager\Template\Trigger\TriggersProvider;
 use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
@@ -62,16 +67,48 @@ class Import
      */
     private $accessValidator;
 
-    public function __construct(Tag $tags, Trigger $triggers, Variable $variables, Container $containers, AccessValidator $accessValidator, TagsProvider $tagsProvider, TriggersProvider $triggersProvider, VariablesProvider $variablesProvider)
-    {
+    /**
+     * @var TagsDao
+     */
+    protected $tagsDao;
+
+    /**
+     * @var TriggersDao
+     */
+    protected $triggersDao;
+
+    /**
+     * @var VariablesDao
+     */
+    protected $variablesDao;
+
+    public function __construct(
+        Tag $tags,
+        Trigger $triggers,
+        Variable $variables,
+        Container $containers,
+        AccessValidator $accessValidator,
+        TagsProvider $tagsProvider,
+        TriggersProvider $triggersProvider,
+        VariablesProvider $variablesProvider,
+        TagsDao $tagsDao,
+        TriggersDao $triggersDao,
+        VariablesDao $variablesDao
+    ) {
         $this->tags = $tags;
         $this->triggers = $triggers;
         $this->variables = $variables;
         $this->containers = $containers;
+
         $this->accessValidator = $accessValidator;
+
         $this->tagsProvider = $tagsProvider;
         $this->triggersProvider = $triggersProvider;
         $this->variablesProvider = $variablesProvider;
+
+        $this->tagsDao = $tagsDao;
+        $this->triggersDao = $triggersDao;
+        $this->variablesDao = $variablesDao;
     }
 
     public function checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer)
@@ -119,17 +156,10 @@ class Import
     {
         $this->checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer);
 
-        foreach ($this->tags->getContainerTags($idSite, $idContainerVersion) as $tag) {
-            $this->tags->deleteContainerTag($idSite, $idContainerVersion, $tag['idtag']);
-        }
-
-        foreach ($this->triggers->getContainerTriggers($idSite, $idContainerVersion) as $trigger) {
-            $this->triggers->deleteContainerTrigger($idSite, $idContainerVersion, $trigger['idtrigger']);
-        }
-
-        foreach ($this->variables->getContainerVariables($idSite, $idContainerVersion) as $variable) {
-            $this->variables->deleteContainerVariable($idSite, $idContainerVersion, $variable['idvariable']);
-        }
+        $now = Date::now()->getDatetime();
+        $this->tagsDao->deleteContainerTags($idSite, $idContainerVersion, $now);
+        $this->triggersDao->deleteContainerTriggers($idSite, $idContainerVersion, $now);
+        $this->variablesDao->deleteContainerVariables($idSite, $idContainerVersion, $now);
 
         $ecv = $exportedContainerVersion;
 
@@ -146,7 +176,7 @@ class Import
                     'defaultValue' => $variable['default_value'],
                     'lookupTable' => $variable['lookup_table'],
                 ));
-            } catch (EntityRecursionException $e){
+            } catch (EntityRecursionException $e) {
                 throw new \Exception(Piwik::translate('TagManager_EntityRecursionExceptionForVariable', array($variable['name'] . '(' . $variable['type'] . ')')));
             }
         }
@@ -203,6 +233,4 @@ class Import
             ));
         }
     }
-
-
 }

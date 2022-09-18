@@ -173,6 +173,21 @@ class TriggersDao extends BaseDao implements TagManagerDao
         Db::query($query, $bind);
     }
 
+    /**
+     * @param int $idSite
+     * @param int $idContainerVersion
+     * @param string $deletedDate
+     */
+    public function deleteContainerTriggers($idSite, $idContainerVersion, $deletedDate)
+    {
+        $table = $this->tablePrefixed;
+
+        $query = "UPDATE $table SET status = ?, deleted_date = ? WHERE idsite = ? and idcontainerversion = ? and status != ?";
+        $bind = array(self::STATUS_DELETED, $deletedDate, $idSite, $idContainerVersion, self::STATUS_DELETED);
+
+        Db::query($query, $bind);
+    }
+
     private function enrichTriggers($triggers)
     {
         if (empty($triggers)) {
