@@ -545,6 +545,10 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_VariableDescriptionHelp';
         $result[] = 'TagManager_InstallCodeDataLayerNote';
         $result[] = 'TagManager_DashboardHelp';
+        $result[] = 'TagManager_DashboardTagsHelp';
+        $result[] = 'TagManager_DashboardTriggersHelp';
+        $result[] = 'TagManager_DashboardVariablesHelp';
+        $result[] = 'TagManager_DashboardVersionsHelp';
         $result[] = 'TagManager_ManageTagsHelp';
         $result[] = 'TagManager_ManageTriggersHelp';
         $result[] = 'TagManager_ManageVariablesHelp';
