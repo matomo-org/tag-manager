@@ -9,7 +9,7 @@
     <ContentBlock
       feature="Tag Manager"
       :content-title="translate('TagManager_ManageX', translate('TagManager_Triggers'))"
-      :help-text="translate('TagManager_ManageTriggersHelp', helpTextArguments)"
+      :help-text="translatedHelpText"
     >
       <p>{{ translate('TagManager_TriggerUsageBenefits') }}</p>
       <table v-content-table>
@@ -258,15 +258,15 @@ export default defineComponent({
       });
       return sorted;
     },
-    helpTextArguments(): string[] {
-      return [
+    translatedHelpText(): string {
+      return this.translate('TagManager_ManageTriggersHelp', [
         '<a href="https://matomo.org/guide/tag-manager/triggers/" rel="noreferrer noopener" target="_blank">',
         '</a>',
         '<a href="https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/" rel="noreferrer noopener" target="_blank">',
         '</a>',
         '<a href="https://matomo.org/tag-manager-training/" rel="noreferrer noopener" target="_blank">',
         '</a>',
-      ];
+      ]);
     },
   },
 });
