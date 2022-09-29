@@ -12,7 +12,7 @@
         <h2>
           <EnrichedHeadline
             feature-name="Tag Manager"
-            :inline-help="translate('TagManager_GettingStartedNotice')"
+            :inline-help="translate('TagManager_DashboardHelp', helpTextArguments)"
           >
             {{ translate('TagManager_ContainerX', container?.name) }}
           </EnrichedHeadline>
@@ -348,6 +348,12 @@ export default defineComponent({
     },
     variableCount() {
       return this.containerVersion?.variables.length;
+    },
+    helpTextArguments(): string[] {
+      return [
+        '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
+        '</a>',
+      ];
     },
   },
 });
