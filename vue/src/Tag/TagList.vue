@@ -15,13 +15,17 @@
       <table v-content-table>
         <thead>
           <tr>
-            <th class="name">{{ translate('General_Name') }}</th>
-            <th class="description">{{ translate('General_Description') }}</th>
-            <th class="type">{{ translate('TagManager_Type') }}</th>
-            <th class="triggers">{{ translate('TagManager_Triggers') }}</th>
-            <th class="lastUpdated">{{ translate('TagManager_LastUpdated') }}</th>
+            <th class="name" :title="nameTranslatedText">{{ translate('General_Name') }}</th>
+            <th class="description" :title="descriptionTranslatedText">
+              {{ translate('General_Description') }}</th>
+            <th class="type" :title="typeTranslatedText">{{ translate('TagManager_Type') }}</th>
+            <th class="triggers" :title="triggersTranslatedText">
+              {{ translate('TagManager_Triggers') }}</th>
+            <th class="lastUpdated" :title="lastUpdatedTranslatedText">
+              {{ translate('TagManager_LastUpdated') }}</th>
             <th
               class="action"
+              :title="actionTranslatedText"
               v-show="hasWriteAccess"
             >{{ translate('General_Actions') }}</th>
           </tr>
@@ -291,6 +295,24 @@ export default defineComponent({
         '<a href="https://matomo.org/tag-manager-training/" rel="noreferrer noopener" target="_blank">',
         '</a>',
       ]);
+    },
+    nameTranslatedText(): string {
+      return this.translate('TagManager_TagsNameDescription');
+    },
+    descriptionTranslatedText(): string {
+      return this.translate('TagManager_TagsDescriptionDescription');
+    },
+    typeTranslatedText(): string {
+      return this.translate('TagManager_TagsTypeDescription');
+    },
+    triggersTranslatedText(): string {
+      return this.translate('TagManager_TagsTriggersDescription');
+    },
+    lastUpdatedTranslatedText(): string {
+      return this.translate('TagManager_TagsLastUpdatedDescription');
+    },
+    actionTranslatedText(): string {
+      return this.translate('TagManager_TagsActionDescription');
     },
   },
 });

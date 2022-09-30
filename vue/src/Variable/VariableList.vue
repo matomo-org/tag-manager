@@ -16,13 +16,17 @@
       <table v-content-table>
         <thead>
           <tr>
-            <th class="name">{{ translate('General_Name') }}</th>
-            <th class="description">{{ translate('General_Description') }}</th>
-            <th class="type">{{ translate('TagManager_Type') }}</th>
-            <th class="lookupTable">{{ translate('TagManager_LookupTable') }}</th>
-            <th class="lastUpdated">{{ translate('TagManager_LastUpdated') }}</th>
+            <th class="name" :title="nameTranslatedText">{{ translate('General_Name') }}</th>
+            <th class="description" :title="descriptionTranslatedText">
+              {{ translate('General_Description') }}</th>
+            <th class="type" :title="typeTranslatedText">{{ translate('TagManager_Type') }}</th>
+            <th class="lookupTable"
+              :title="lookupTableTranslatedText">{{ translate('TagManager_LookupTable') }}</th>
+            <th class="lastUpdated"
+              :title="lastUpdatedTranslatedText">{{ translate('TagManager_LastUpdated') }}</th>
             <th
               class="action"
+              :title="actionTranslatedText"
               v-show="hasWriteAccess"
             >{{ translate('General_Actions') }}</th>
           </tr>
@@ -325,6 +329,24 @@ export default defineComponent({
         '<a href="https://matomo.org/tag-manager-training/" rel="noreferrer noopener" target="_blank">',
         '</a>',
       ]);
+    },
+    nameTranslatedText(): string {
+      return this.translate('TagManager_VariablesNameDescription');
+    },
+    descriptionTranslatedText(): string {
+      return this.translate('TagManager_VariablesDescriptionDescription');
+    },
+    typeTranslatedText(): string {
+      return this.translate('TagManager_VariablesTypeDescription');
+    },
+    lookupTableTranslatedText(): string {
+      return this.translate('TagManager_VariablesLookupTableDescription');
+    },
+    lastUpdatedTranslatedText(): string {
+      return this.translate('TagManager_VariablesLastUpdatedDescription');
+    },
+    actionTranslatedText(): string {
+      return this.translate('TagManager_VariablesActionDescription');
     },
   },
 });

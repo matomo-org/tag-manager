@@ -18,12 +18,17 @@
       <table v-content-table>
         <thead>
           <tr>
-            <th class="index">{{ translate('TagManager_Revision') }}</th>
-            <th class="name">{{ translate('General_Name') }}</th>
-            <th class="description">{{ translate('General_Description') }}</th>
-            <th class="environments">{{ translate('TagManager_Environments') }}</th>
-            <th class="created">{{ translate('TagManager_Created') }}</th>
-            <th class="action">{{ translate('General_Actions') }}</th>
+            <th class="index"
+              :title="revisionTranslatedText">{{ translate('TagManager_Revision') }}</th>
+            <th class="name" :title="nameTranslatedText">{{ translate('General_Name') }}</th>
+            <th class="description"
+              :title="descriptionTranslatedText">{{ translate('General_Description') }}</th>
+            <th class="environments"
+              :title="environmentTranslatedText">{{ translate('TagManager_Environments') }}</th>
+            <th class="created"
+              :title="createdTranslatedText">{{ translate('TagManager_Created') }}</th>
+            <th class="action"
+              :title="actionTranslatedText">{{ translate('General_Actions') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -388,6 +393,24 @@ export default defineComponent({
         '<a href="https://matomo.org/tag-manager-training/" rel="noreferrer noopener" target="_blank">',
         '</a>',
       ]);
+    },
+    revisionTranslatedText(): string {
+      return this.translate('TagManager_VersionsRevisionDescription');
+    },
+    nameTranslatedText(): string {
+      return this.translate('TagManager_VersionsNameDescription');
+    },
+    descriptionTranslatedText(): string {
+      return this.translate('TagManager_VersionsDescriptionDescription');
+    },
+    environmentTranslatedText(): string {
+      return this.translate('TagManager_VersionsEnvironmentsDescription');
+    },
+    createdTranslatedText(): string {
+      return this.translate('TagManager_VersionsCreatedDescription');
+    },
+    actionTranslatedText(): string {
+      return this.translate('TagManager_VersionsActionDescription');
     },
   },
 });
