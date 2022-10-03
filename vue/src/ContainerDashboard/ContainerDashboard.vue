@@ -12,7 +12,7 @@
         <h2>
           <EnrichedHeadline
             feature-name="Tag Manager"
-            :inline-help="dashboardTranslatedHelpText"
+            :inline-help="dashboardHelpText"
           >
             {{ translate('TagManager_ContainerX', container?.name) }}
           </EnrichedHeadline>
@@ -33,7 +33,7 @@
           <ContentBlock
             feature="Tag Manager"
             :content-title="`${tagCount} ${translate('TagManager_Tags')}`"
-            :help-text="tagsTranslatedHelpText"
+            :help-text="tagsHelpText"
           >
             <p>
               <span v-if="tagCount">
@@ -75,7 +75,7 @@
           <ContentBlock
             feature="Tag Manager"
             :content-title="`${triggerCount} ${translate('TagManager_Triggers')}`"
-            :help-text="triggersTranslatedHelpText"
+            :help-text="triggersHelpText"
           >
             <p> <span v-if="triggerCount">
                 {{ translate('TagManager_Names') }}:
@@ -118,7 +118,7 @@
           <ContentBlock
             feature="Tag Manager"
             :content-title="`${variableCount} ${translate('TagManager_Variables')}`"
-            :help-text="variablesTranslatedHelpText"
+            :help-text="variablesHelpText"
           >
             <p> <span v-show="variableCount">
                 {{ translate('TagManager_Names') }}:
@@ -156,7 +156,7 @@
           <ContentBlock
             feature="Tag Manager"
             :content-title="`${versionCount} ${translate('TagManager_Versions')}`"
-            :help-text="versionsTranslatedHelpText"
+            :help-text="versionsHelpText"
           >
             <p> <span v-show="lastVersions.length">
                 {{ translate('TagManager_LastVersions') }}:
@@ -241,6 +241,11 @@ function sortByName<T extends { name: string }>(items: T[]) {
 export default defineComponent({
   props: {
     idContainer: String,
+    dashboardHelpText: String,
+    tagsHelpText: String,
+    triggersHelpText: String,
+    variablesHelpText: String,
+    versionsHelpText: String,
   },
   components: {
     ActivityIndicator,
@@ -359,44 +364,6 @@ export default defineComponent({
     },
     variableCount() {
       return this.containerVersion?.variables.length;
-    },
-    dashboardTranslatedHelpText(): string {
-      return this.translate('TagManager_DashboardHelp', [
-        '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-      ]);
-    },
-    tagsTranslatedHelpText(): string {
-      return this.translate('TagManager_DashboardTagsHelp', [
-        '<a href="https://matomo.org/guide/tag-manager/tags/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-        '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-      ]);
-    },
-    triggersTranslatedHelpText(): string {
-      return this.translate('TagManager_DashboardTriggersHelp', [
-        '<a href="https://matomo.org/guide/tag-manager/triggers/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-        '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-      ]);
-    },
-    variablesTranslatedHelpText(): string {
-      return this.translate('TagManager_DashboardVariablesHelp', [
-        '<a href="https://matomo.org/guide/tag-manager/variables/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-        '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-      ]);
-    },
-    versionsTranslatedHelpText(): string {
-      return this.translate('TagManager_DashboardVersionsHelp', [
-        '<a href="https://matomo.org/guide/tag-manager/versions-and-publish/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-        '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-      ]);
     },
   },
 });

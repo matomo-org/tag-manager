@@ -3,7 +3,12 @@
 {% set title = 'Dashboard_Dashboard'|translate %}
 
 {% block content %}
-    <div piwik-container-dashboard id-container="{{ container.idcontainer }}">
+    <div piwik-container-dashboard id-container="{{ container.idcontainer }}"
+        dashboard-help-text="{{ dashboardHelpText }}"
+        tags-help-text="{{ tagsHelpText }}"
+        triggers-help-text="{{ triggersHelpText }}"
+        variables-help-text="{{ variablesHelpText }}"
+        versions-help-text="{{ versionsHelpText }}">
     </div>
 
 {% endblock %}

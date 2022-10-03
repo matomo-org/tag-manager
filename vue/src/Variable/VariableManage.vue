@@ -10,6 +10,7 @@
       <VariableList
         :id-container-version="idContainerVersion"
         :id-container="idContainer"
+        :variables-help-text="variablesHelpText"
       />
     </div>
     <div v-if="editMode">
@@ -36,6 +37,7 @@ export default defineComponent({
   props: {
     idContainerVersion: Number,
     idContainer: String,
+    variablesHelpText: String,
   },
   components: {
     VariableList,

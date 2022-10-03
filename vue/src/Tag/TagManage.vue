@@ -10,6 +10,7 @@
       <TagList
         :id-container="idContainer"
         :id-container-version="idContainerVersion"
+        :tags-help-text="tagsHelpText"
       />
     </div>
     <div v-if="editMode">
@@ -36,6 +37,7 @@ export default defineComponent({
   props: {
     idContainerVersion: Number,
     idContainer: String,
+    tagsHelpText: String,
   },
   components: {
     TagList,

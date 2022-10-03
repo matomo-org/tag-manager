@@ -10,7 +10,7 @@
       feature="Tag Manager"
       class="tagManagerCustomVariablesList"
       :content-title="translate('TagManager_ManageX', translate('TagManager_Variables'))"
-      :help-text="translatedHelpText"
+      :help-text="variablesHelpText"
     >
       <p>{{ translate('TagManager_VariableUsageBenefits') }}</p>
       <table v-content-table>
@@ -230,6 +230,7 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    variablesHelpText: String,
   },
   components: {
     ContentBlock,
@@ -319,16 +320,6 @@ export default defineComponent({
         return lhs.name > rhs.name ? 1 : 0;
       });
       return sorted;
-    },
-    translatedHelpText(): string {
-      return this.translate('TagManager_ManageVariablesHelp', [
-        '<a href="https://matomo.org/guide/tag-manager/variables/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-        '<a href="https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-        '<a href="https://matomo.org/tag-manager-training/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-      ]);
     },
     nameTranslatedText(): string {
       return this.translate('TagManager_VariablesNameDescription');

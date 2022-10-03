@@ -9,7 +9,7 @@
     <ContentBlock
       feature="Tag Manager"
       :content-title="translate('TagManager_ManageX', translate('TagManager_Versions'))"
-      :help-text="translatedHelpText"
+      :help-text="versionsHelpText"
     >
       <p>
         {{ translate('TagManager_VersionUsageBenefits') }}
@@ -233,6 +233,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    versionsHelpText: String,
   },
   components: {
     ContentBlock,
@@ -383,16 +384,6 @@ export default defineComponent({
     },
     canPublishToLive() {
       return Matomo.hasUserCapability('tagmanager_publish_live_container');
-    },
-    translatedHelpText(): string {
-      return this.translate('TagManager_ManageVersionsHelp', [
-        '<a href="https://matomo.org/guide/tag-manager/versions/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-        '<a href="https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-        '<a href="https://matomo.org/tag-manager-training/" rel="noreferrer noopener" target="_blank">',
-        '</a>',
-      ]);
     },
     revisionTranslatedText(): string {
       return this.translate('TagManager_VersionsRevisionDescription');
