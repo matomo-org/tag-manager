@@ -118,6 +118,7 @@ describe("ContainerTrigger", function () {
 
     it('should be able to create a new trigger and show update afterwards', async function () {
         await createOrUpdateTrigger();
+      await page.waitForTimeout(250);
         await capture.page(page, 'create_new_submitted');
     });
 

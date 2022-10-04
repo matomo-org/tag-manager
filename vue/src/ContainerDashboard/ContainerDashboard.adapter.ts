@@ -14,6 +14,21 @@ export default createAngularJsAdapter({
     idContainer: {
       angularJsBind: '@',
     },
+    dashboardHelpText: {
+      angularJsBind: '@',
+    },
+    tagsHelpText: {
+      angularJsBind: '@',
+    },
+    triggersHelpText: {
+      angularJsBind: '@',
+    },
+    variablesHelpText: {
+      angularJsBind: '@',
+    },
+    versionsHelpText: {
+      angularJsBind: '@',
+    },
   },
   directiveName: 'piwikContainerDashboard',
 });

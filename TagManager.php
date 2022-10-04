@@ -544,6 +544,30 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_TriggerDescriptionHelp';
         $result[] = 'TagManager_VariableDescriptionHelp';
         $result[] = 'TagManager_InstallCodeDataLayerNote';
+        $result[] = 'TagManager_TagsNameDescription';
+        $result[] = 'TagManager_TagsDescriptionDescription';
+        $result[] = 'TagManager_TagsTypeDescription';
+        $result[] = 'TagManager_TagsTriggersDescription';
+        $result[] = 'TagManager_TagsLastUpdatedDescription';
+        $result[] = 'TagManager_TagsActionDescription';
+        $result[] = 'TagManager_TriggersNameDescription';
+        $result[] = 'TagManager_TriggersDescriptionDescription';
+        $result[] = 'TagManager_TriggersTypeDescription';
+        $result[] = 'TagManager_TriggersFilterDescription';
+        $result[] = 'TagManager_TriggersLastUpdatedDescription';
+        $result[] = 'TagManager_TriggersActionDescription';
+        $result[] = 'TagManager_VariablesNameDescription';
+        $result[] = 'TagManager_VariablesDescriptionDescription';
+        $result[] = 'TagManager_VariablesTypeDescription';
+        $result[] = 'TagManager_VariablesLookupTableDescription';
+        $result[] = 'TagManager_VariablesLastUpdatedDescription';
+        $result[] = 'TagManager_VariablesActionDescription';
+        $result[] = 'TagManager_VersionsRevisionDescription';
+        $result[] = 'TagManager_VersionsNameDescription';
+        $result[] = 'TagManager_VersionsDescriptionDescription';
+        $result[] = 'TagManager_VersionsEnvironmentsDescription';
+        $result[] = 'TagManager_VersionsCreatedDescription';
+        $result[] = 'TagManager_VersionsActionDescription';
     }
 
     public function getStylesheetFiles(&$stylesheets)
