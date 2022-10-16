@@ -43,7 +43,6 @@
 					<availableValues />
 					<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
 					<inlineHelp />
-					<templateFile />
 					<introduction />
 					<condition />
 					<fullWidth>0</fullWidth>
@@ -169,7 +168,6 @@
 					<availableValues />
 					<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
 					<inlineHelp />
-					<templateFile />
 					<introduction />
 					<condition />
 					<fullWidth>0</fullWidth>

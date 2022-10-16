@@ -29,7 +29,6 @@
 						<availableValues />
 						<description>You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Manager.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -68,7 +67,6 @@
 						<availableValues />
 						<description>Assign a Matomo configuration in order to track data into a specific site.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -94,7 +92,6 @@
 						</availableValues>
 						<description>Choose which action should be executed when this tag is fired.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -111,7 +108,6 @@
 						<availableValues />
 						<description>The ID of the goal you want to track manually.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;goal&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -153,7 +149,6 @@
 						<availableValues />
 						<description>Optionally, specify a custom document title which should be tracked instead of the default document title.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;pageview&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -174,7 +169,6 @@
 						<availableValues />
 						<description>Optionally, specify a custom URL which should be tracked instead of the current location.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;pageview&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -195,7 +189,6 @@
 						<availableValues />
 						<description>The event's category, for example Videos, Music, Games...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -216,7 +209,6 @@
 						<availableValues />
 						<description>The event's action, for example Play, Pause, Duration, Add Playlist, Downloaded, Clicked...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -237,7 +229,6 @@
 						<availableValues />
 						<description>The event's object Name, for example a particular Movie name, or Song name, or File name...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -258,7 +249,6 @@
 						<availableValues />
 						<description>The event's value, for example &quot;50&quot; as in user has stayed on the website for 50 seconds.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -295,7 +285,6 @@
 						<availableValues />
 						<description>Your Emarsys Merchant ID</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -312,7 +301,6 @@
 						<availableValues />
 						<description>Report the category currently browsed by the visitor.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -329,7 +317,6 @@
 						<availableValues />
 						<description>Report a product view.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -346,7 +333,6 @@
 						<availableValues />
 						<description>Add an arbitrary tag to the current event. The tag is collected and can be accessed later from other Emarsys products.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -363,7 +349,6 @@
 						<availableValues />
 						<description>Execute commands in the queue, that is, send them to the recommender service for processing.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -396,7 +381,6 @@
 						<availableValues />
 						<description>For example &quot;UA-XXXXX-Y&quot;</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -415,7 +399,6 @@
 						</availableValues>
 						<description>Only the tracking type &quot;Pageview&quot; is currently supported.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -448,7 +431,6 @@
 						<availableValues />
 						<description>You can get the Site ID by logging into Pingdom, going to &quot;Monitoring&quot; and clicking on &quot;Real User Monitoring&quot;. Every added site will get its own Site ID.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -481,7 +463,6 @@
 						<availableValues />
 						<description>Your Visual Website Optimizer Account ID</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -518,7 +499,6 @@
 						</availableValues>
 						<description>Choose which action should be executed when this tag is fired.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -536,7 +516,6 @@
 						<availableValues />
 						<description>Assign a etracker configuration in order to track data into a specific site.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType != &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -557,7 +536,6 @@
 						<availableValues />
 						<description>The wrappers's pagename</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -578,7 +556,6 @@
 						<availableValues />
 						<description>The area should be separated by Slash</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -599,7 +576,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -620,7 +596,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>

@@ -53,7 +53,6 @@
 					<availableValues />
 					<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
 					<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
-					<templateFile />
 					<introduction />
 					<condition />
 					<fullWidth>0</fullWidth>
@@ -79,7 +78,6 @@
 					</availableValues>
 					<description>Define the position of where the HTML should be inserted into your website.</description>
 					<inlineHelp />
-					<templateFile />
 					<introduction />
 					<condition />
 					<fullWidth>0</fullWidth>
@@ -139,7 +137,6 @@
 					<availableValues />
 					<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
 					<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
-					<templateFile />
 					<introduction />
 					<condition />
 					<fullWidth>0</fullWidth>
@@ -165,7 +162,6 @@
 					</availableValues>
 					<description>Define the position of where the HTML should be inserted into your website.</description>
 					<inlineHelp />
-					<templateFile />
 					<introduction />
 					<condition />
 					<fullWidth>0</fullWidth>
@@ -226,7 +222,6 @@
 					<availableValues />
 					<description>You can define any image URL. We recommend to define a URL that starts with &quot;//&quot; so it will work on HTTP and HTTPS pages. If your website only supports HTTPS, it should start with &quot;https://&quot;.</description>
 					<inlineHelp />
-					<templateFile />
 					<introduction />
 					<condition />
 					<fullWidth>0</fullWidth>
@@ -247,7 +242,6 @@
 					<availableValues />
 					<description>Makes sure the image will be fetched again every time it is added to the page by adding a URL parameter to the image URL with a random value, for example &quot;?mtmcb=12345&quot;..</description>
 					<inlineHelp />
-					<templateFile />
 					<introduction />
 					<condition />
 					<fullWidth>0</fullWidth>
