@@ -155,7 +155,6 @@ class BaseTemplateTest extends IntegrationTestCase
                     'availableValues' => null,
                     'description' => null,
                     'inlineHelp' => null,
-                    'templateFile' => '',
                     'introduction' => null,
                     'condition' => null,
                     'fullWidth' => false,
