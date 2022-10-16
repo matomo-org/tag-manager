@@ -616,7 +616,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -637,7 +636,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -658,7 +656,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -679,7 +676,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -700,7 +696,6 @@
 						<availableValues />
 						<description>The event's category, for example Navigation, Outbound Links, 404 Error...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -721,7 +716,6 @@
 						<availableValues />
 						<description>The event's object Name, for example a particular navigation element, a clicked element, form name,...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -742,7 +736,6 @@
 						<availableValues />
 						<description>The event's action, for example, click, open, close, play, pause...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -763,7 +756,6 @@
 						<availableValues />
 						<description>The event's type Name, for example an value of a send form...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -805,7 +797,6 @@
 						<availableValues />
 						<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
 						<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -831,7 +822,6 @@
 						</availableValues>
 						<description>Define the position of where the HTML should be inserted into your website.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -864,7 +854,6 @@
 						<availableValues />
 						<description>You can define any image URL. We recommend to define a URL that starts with &quot;//&quot; so it will work on HTTP and HTTPS pages. If your website only supports HTTPS, it should start with &quot;https://&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -885,7 +874,6 @@
 						<availableValues />
 						<description>Makes sure the image will be fetched again every time it is added to the page by adding a URL parameter to the image URL with a random value, for example &quot;?mtmcb=12345&quot;..</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -923,7 +911,6 @@
 						<availableValues />
 						<description>You can find your API key in your project settings from your Bugsnag dashboard.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -940,7 +927,6 @@
 						<availableValues />
 						<description>This should be disable if you don't want to track personal information about your users.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -973,7 +959,6 @@
 						<availableValues />
 						<description>The apiKey of your honeybadger project</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -990,7 +975,6 @@
 						<availableValues />
 						<description>The environment where the container is included (production, dev, etc.). Leave empty to default to the environment of this container.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1011,7 +995,6 @@
 						<availableValues />
 						<description>(optional) the version of your project</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1048,7 +1031,6 @@
 						<availableValues />
 						<description>When you create a new application in your Raygun dashboard, your app API key is displayed at the top of the instructions page. You can also find the API key by clicking the &quot;Application Settings&quot; button in the side bar of the Raygun dashboard.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1065,7 +1047,6 @@
 						<availableValues />
 						<description>Automatically identify front end performance issues causing slow page load speeds. See what your users see in the browser and discover why users had poor quality experiences.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1098,7 +1079,6 @@
 						<availableValues />
 						<description>The DSN (Data Source Name) of your sentry.io project. It should look like 'https://&lt;key&gt;@sentry.io/&lt;project&gt;'</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1136,7 +1116,6 @@
 						<availableValues />
 						<description>Create a new site in Shareaholic and paste the site ID here</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1157,7 +1136,6 @@
 						<availableValues />
 						<description>Optionally enter a CSS selector to the element where the Inline Tools should be added.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1194,7 +1172,6 @@
 						<availableValues />
 						<description>The Drift ID is the text between brackets without quotes at the end of the JS snippet: drift.load('mdp4r5w7rh3y');</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1227,7 +1204,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1260,7 +1236,6 @@
 						<availableValues />
 						<description>You can find the partner ID by logging into your LinkedIn Campaign Manager, and clicking on &quot;Account Assets&quot; followed by &quot;Insight Tag&quot;. If &quot;Insight Tag&quot; is not available, please set up the Insight Tag by clicking on &quot;Conversion Tracking&quot;. There you can enter a domain and continue the set up. You will find the partner ID in the line `_linkedin_partner_id = &quot;123456&quot;`. In this example the ID would be &quot;123456&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1293,7 +1268,6 @@
 						<availableValues />
 						<description>Insert the Livezilla ID from your Dynamic Code section.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1310,7 +1284,6 @@
 						<availableValues />
 						<description>Enter the Domain where Livezilla is installed. Example: https://www.example.com</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1327,7 +1300,6 @@
 						<availableValues />
 						<description>In most cases you should let it activated.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1360,7 +1332,6 @@
 						<availableValues />
 						<description>Create a new site in Shareaholic and paste the site ID here</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1387,7 +1358,6 @@
 						</availableValues>
 						<description>Here you can optionally add an In-Page App to your website.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1404,7 +1374,6 @@
 						<availableValues />
 						<description>If you want to add an In-Page App enter the App ID here. It is about eight digits long. The App ID is not required for the Total Share Counter.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>shareaholicInPageApp &amp;&amp; shareaholicInPageApp !== &quot;total_share_count&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -1425,7 +1394,6 @@
 						<availableValues />
 						<description>Enter a CSS selector to the element where the In-Page App should be added.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>shareaholicInPageApp</condition>
 						<fullWidth>0</fullWidth>
@@ -1462,7 +1430,6 @@
 						<availableValues />
 						<description>You can get the Site ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Property Settings&quot;. The Site ID has typically about 25 characters, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1479,7 +1446,6 @@
 						<availableValues />
 						<description>You can get the Widget ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Chat Widget&quot; and selecting an appropriate widget. The widget ID can be retrieved from &quot;Direct Chat Link&quot; as https://tawk.to/chat/{SITE_ID}/{WIDGET_ID}.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1512,7 +1478,6 @@
 						<availableValues />
 						<description>You can get the Site ID by logging into Zendesk Chat, going to &quot;Settings&quot; and clicking on &quot;Widget&quot;. The Site ID has typically about 32 characters and is the text coming directly after &quot;https://v2.zopim.com/?&quot;, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1550,7 +1515,6 @@
 						<availableValues />
 						<description>Please enter a color as a hexadecimal string (e.g. '#11ee33')</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>

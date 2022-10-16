@@ -546,7 +546,6 @@
 						<availableValues />
 						<description>You can optionally change the name of this event. This can be useful if you have for example multiple timers on the page and want to perform different logic based on the name of the timer.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -567,7 +566,6 @@
 						<availableValues />
 						<description>Enter &quot;0&quot; to not limit the trigger.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
