@@ -98,6 +98,9 @@ class NewVariableParameterMigrator
     private function updateVariableParameters($idSite, $idVersion, $idVariable)
     {
         $variableInfo = $this->variablesDao->getContainerVariable($idSite, $idVersion, $idVariable);
+        if (empty($variableInfo['parameters'])) {
+            return;
+        }
         foreach ($this->fieldMap as $key => $value) {
             // It shouldn't ever already exist, but let's be sure we don't overwrite existing values.
             if(empty($variableInfo['parameters'][$key])) {
