@@ -190,6 +190,22 @@ class VariablesDao extends BaseDao implements TagManagerDao
         Db::query($query, $bind);
     }
 
+    /**
+     * @param int $idSite
+     * @param int $idContainerVersion
+     * @param string $variableType The type of variable to filter by, such as 'MatomoConfiguration'
+     * @return array
+     */
+    public function getContainerVariableIdsByType($idSite, $idContainerVersion, $variableType)
+    {
+        $bind = [self::STATUS_ACTIVE, $idSite, $idContainerVersion, $variableType];
+
+        $table = $this->tablePrefixed;
+        $variables = Db::fetchAll("SELECT idvariable FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? and type = ? ORDER BY created_date ASC", $bind);
+
+        return is_array($variables) && count($variables) ? array_column($variables,'idvariable') : [];
+    }
+
     private function enrichVariables($variables)
     {
         if (empty($variables)) {
