@@ -568,6 +568,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_VersionsEnvironmentsDescription';
         $result[] = 'TagManager_VersionsCreatedDescription';
         $result[] = 'TagManager_VersionsActionDescription';
+        $result[] = 'TagManager_CreateNewVersionNow';
     }
 
     public function getStylesheetFiles(&$stylesheets)
