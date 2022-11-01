@@ -135,6 +135,16 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentDescription');
                 $field->condition = '!requireConsent && !disableCookies';
             }),
+            $this->makeSetting('customCookieTimeOutEnable', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutEnableTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutEnableDescription');
+                $field->condition = '!disableCookies';
+            }),
+            $this->makeSetting('customCookieTimeOut', '33955200', FieldConfig::TYPE_INT, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutDescription');
+                $field->condition = 'customCookieTimeOutEnable == true';
+            }),
             $this->makeSetting('setSecureCookie', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetSecureCookieTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetSecureCookieDescription');
