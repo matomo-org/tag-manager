@@ -86,10 +86,10 @@
 				<trackAllContentImpressions>0</trackAllContentImpressions>
 				<trackVisibleContentImpressions>0</trackVisibleContentImpressions>
 				<disableCookies>0</disableCookies>
-				<customCookieTimeOutEnable>0</customCookieTimeOutEnable>
-				<customCookieTimeOut>33955200</customCookieTimeOut>
 				<requireConsent>0</requireConsent>
 				<requireCookieConsent>0</requireCookieConsent>
+				<customCookieTimeOutEnable>0</customCookieTimeOutEnable>
+				<customCookieTimeOut>0</customCookieTimeOut>
 				<setSecureCookie>0</setSecureCookie>
 				<cookieDomain />
 				<cookiePath />
