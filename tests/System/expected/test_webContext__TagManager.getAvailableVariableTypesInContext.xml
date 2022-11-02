@@ -972,6 +972,40 @@
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
+						<name>customCookieTimeOutEnable</name>
+						<title>Enable custom visitor Cookie timeout</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Allows you to set a custom time in seconds for the _pk_id cookie</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>!disableCookies</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>customCookieTimeOut</name>
+						<title>The pk_id expire time in seconds</title>
+						<value>33955200</value>
+						<defaultValue>33955200</defaultValue>
+						<type>int</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Timeout in seconds. By default, the Matomo tracking cookie expires in 13 months (365 + 28 days) = 33955200 seconds</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>customCookieTimeOutEnable == true</condition>
+						<fullWidth>0</fullWidth>
+					</row>					
+					<row>
 						<name>requireConsent</name>
 						<title>Require tracking consent</title>
 						<value>0</value>
