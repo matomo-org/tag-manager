@@ -105,6 +105,18 @@ class MatomoTag extends BaseTag
                     return trim($value);
                 };
             }),
+            $this->makeSetting('customUrlRef', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = Piwik::translate('TagManager_CustomUrlRef');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_CustomUrlRefHelp');
+                $field->condition = 'trackingType == "pageview"';
+                if ($trackingType->getValue() === 'pageview') {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),            
             $this->makeSetting('eventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = Piwik::translate('Events_EventCategory');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
