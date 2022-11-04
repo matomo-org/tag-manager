@@ -247,6 +247,10 @@
                         if (customUrl) {
                             tracker.setCustomUrl(customUrl);
                         }
+                        var customUrlRef = parameters.get('customUrlRef');
+                        if (customUrlRef) {
+                            tracker.setReferrerUrl(customUrlRef);
+                        }
                         tracker.trackPageView();
                     } else if (trackingType === 'event') {
                         tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'));
