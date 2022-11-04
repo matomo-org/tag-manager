@@ -9,18 +9,23 @@
     <ContentBlock
       feature="Tag Manager"
       :content-title="translate('TagManager_ManageX', translate('TagManager_Triggers'))"
+      :help-text="triggersHelpText"
     >
       <p>{{ translate('TagManager_TriggerUsageBenefits') }}</p>
       <table v-content-table>
         <thead>
           <tr>
-            <th class="name">{{ translate('General_Name') }}</th>
-            <th class="description">{{ translate('General_Description') }}</th>
-            <th class="type">{{ translate('TagManager_Type') }}</th>
-            <th class="conditions">{{ translate('TagManager_Filter') }}</th>
-            <th class="lastUpdated">{{ translate('TagManager_LastUpdated') }}</th>
+            <th class="name" :title="nameTranslatedText">{{ translate('General_Name') }}</th>
+            <th class="description" :title="descriptionTranslatedText">
+              {{ translate('General_Description') }}</th>
+            <th class="type" :title="typeTranslatedText">{{ translate('TagManager_Type') }}</th>
+            <th class="conditions"
+              :title="filterTranslatedText">{{ translate('TagManager_Filter') }}</th>
+            <th class="lastUpdated"
+              :title="lastUpdatedTranslatedText">{{ translate('TagManager_LastUpdated') }}</th>
             <th
               class="action"
+              :title="actionTranslatedText"
               v-show="hasWriteAccess"
             >
               {{ translate('General_Actions') }}
@@ -178,6 +183,7 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    triggersHelpText: String,
   },
   components: {
     ContentBlock,
@@ -256,6 +262,24 @@ export default defineComponent({
         return lhs.name > rhs.name ? 1 : 0;
       });
       return sorted;
+    },
+    nameTranslatedText(): string {
+      return this.translate('TagManager_TriggersNameDescription');
+    },
+    descriptionTranslatedText(): string {
+      return this.translate('TagManager_TriggersDescriptionDescription');
+    },
+    typeTranslatedText(): string {
+      return this.translate('TagManager_TriggersTypeDescription');
+    },
+    filterTranslatedText(): string {
+      return this.translate('TagManager_TriggersFilterDescription');
+    },
+    lastUpdatedTranslatedText(): string {
+      return this.translate('TagManager_TriggersLastUpdatedDescription');
+    },
+    actionTranslatedText(): string {
+      return this.translate('TagManager_TriggersActionDescription');
     },
   },
 });

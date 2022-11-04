@@ -195,6 +195,12 @@
                     if (matomoConfig.trackVisibleContentImpressions) {
                         tracker.trackVisibleContentImpressions();
                     }
+                    if (matomoConfig.hasOwnProperty('enableFormAnalytics') && !matomoConfig.enableFormAnalytics && window.Matomo && window.Matomo.FormAnalytics && typeof window.Matomo.FormAnalytics.disableFormAnalytics === 'function') {
+                        window.Matomo.FormAnalytics.disableFormAnalytics();
+                    }
+                    if (matomoConfig.hasOwnProperty('enableMediaAnalytics') && !matomoConfig.enableMediaAnalytics && window.Matomo && window.Matomo.MediaAnalytics && typeof window.Matomo.MediaAnalytics.disableMediaAnalytics === 'function') {
+                        window.Matomo.MediaAnalytics.disableMediaAnalytics();
+                    }
                 }
 
                 if ((matomoConfig.userId || tracker.getUserId()) && lastUserId !== matomoConfig.userId) {

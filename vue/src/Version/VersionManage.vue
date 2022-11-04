@@ -9,6 +9,7 @@
     <div v-if="!editMode">
       <VersionList
         :id-container="idContainer"
+        :versions-help-text="versionsHelpText"
       />
     </div>
     <div v-if="editMode">
@@ -33,6 +34,7 @@ interface VersionManageState {
 export default defineComponent({
   props: {
     idContainer: String,
+    versionsHelpText: String,
   },
   components: {
     VersionList,

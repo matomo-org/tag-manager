@@ -33,6 +33,7 @@ class AvailableEnvironmentStore {
 
   readonly environmentsWithPublishOptions = computed(
     () => this.environmentsWithPublish.value.map(
+      // eslint-disable-next-line
       ({ id, name, disabled }) => ({ key: id, value: name, disabled: false }),
     ),
   );

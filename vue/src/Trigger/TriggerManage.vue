@@ -11,6 +11,7 @@
         <TriggerList
           :id-container="idContainer"
           :id-container-version="idContainerVersion"
+          :triggers-help-text="triggersHelpText"
         />
       </div>
     </div>
@@ -40,6 +41,7 @@ export default defineComponent({
   props: {
     idContainerVersion: Number,
     idContainer: String,
+    triggersHelpText: String,
   },
   components: {
     TriggerList,
