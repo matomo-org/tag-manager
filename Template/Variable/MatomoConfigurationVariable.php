@@ -141,7 +141,7 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutEnableDescription');
                 $field->condition = '!disableCookies';
             }),
-            $this->makeSetting('customCookieTimeOut', '33955200', FieldConfig::TYPE_INT, function (FieldConfig $field) {
+            $this->makeSetting('customCookieTimeOut', '393', FieldConfig::TYPE_INT, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutDescription');
                 $field->condition = 'customCookieTimeOutEnable == true';

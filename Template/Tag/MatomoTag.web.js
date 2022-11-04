@@ -248,7 +248,7 @@
                             tracker.setCustomUrl(customUrl);
                         }
                         if (matomoConfig.customCookieTimeOutEnable) {  
-                            tracker.setVisitorCookieTimeout(matomoConfig.customCookieTimeOut);
+                            tracker.setVisitorCookieTimeout(matomoConfig.customCookieTimeOut * 86400);
                         }
                         tracker.trackPageView();
                     } else if (trackingType === 'event') {
