@@ -1027,7 +1027,7 @@
 						<title>The pk_id expire time in seconds</title>
 						<value>33955200</value>
 						<defaultValue>33955200</defaultValue>
-						<type>int</type>
+						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
