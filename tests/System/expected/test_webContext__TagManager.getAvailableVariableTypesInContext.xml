@@ -1015,7 +1015,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Allows you to set a custom time in seconds for the _pk_id cookie</description>
+						<description>Allows you to set a custom time in full days for the _pk_id cookie</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -1024,15 +1024,15 @@
 					</row>
 					<row>
 						<name>customCookieTimeOut</name>
-						<title>The pk_id expire time in seconds</title>
-						<value>33955200</value>
-						<defaultValue>33955200</defaultValue>
+						<title>The pk_id expire time in full days</title>
+						<value>393</value>
+						<defaultValue>393</defaultValue>
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Timeout in seconds. By default, the Matomo tracking cookie expires in 13 months (365 + 28 days) = 33955200 seconds</description>
+						<description>Timeout in full days. By default, the Matomo tracking cookie expires in 13 months (365 + 28 days) = 393 days</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
