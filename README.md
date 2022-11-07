@@ -1,6 +1,6 @@
 # Free Open Source Matomo Tag Manager
 
-[![Build Status](https://travis-ci.com/matomo-org/tag-manager.svg?branch=master)](https://travis-ci.com/matomo-org/tag-manager)
+[![Build Status](https://travis-ci.com/matomo-org/tag-manager.svg?branch=5.x-dev)](https://travis-ci.com/matomo-org/tag-manager)
 
 ## Description
 
