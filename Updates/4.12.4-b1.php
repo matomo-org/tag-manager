@@ -68,8 +68,8 @@ class Updates_4_12_4_b1 extends PiwikUpdates
     public function doUpdate(Updater $updater)
     {
         // Migrate the Matomo type tags to all include the newly configured field.
-        $migrator = new NewTagParameterMigrator(MatomoTag::ID, 'customCookieTimeOutEnable',0);
+        $migrator = new NewVariableParameterMigrator(MatomoConfigurationVariable::ID, 'customCookieTimeOutEnable',0);
         $migrator->addField('customCookieTimeOut',393); // This is optional and only needed if you added more than one parameter.
         $migrator->migrate(); // This kicks off the processing of the tag migration.
-    }
+    }    
 }
