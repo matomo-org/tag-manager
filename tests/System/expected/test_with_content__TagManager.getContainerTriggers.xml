@@ -43,7 +43,6 @@
 					<availableValues />
 					<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
 					<inlineHelp />
-					<templateFile />
 					<introduction />
 					<condition />
 					<fullWidth>0</fullWidth>
@@ -61,7 +60,7 @@
 		<idsite>2</idsite>
 		<type>WindowLoaded</type>
 		<name>Mytrigger2</name>
-		<description/>
+		<description />
 		<status>active</status>
 		<parameters>
 		</parameters>
@@ -99,7 +98,7 @@
 		<idsite>2</idsite>
 		<type>DomReady</type>
 		<name>Mytrigger3</name>
-		<description/>
+		<description />
 		<status>active</status>
 		<parameters>
 		</parameters>
@@ -132,7 +131,7 @@
 		<idsite>2</idsite>
 		<type>CustomEvent</type>
 		<name>My trigger4</name>
-		<description/>
+		<description />
 		<status>active</status>
 		<parameters>
 			<eventName>foo{{My Var 3}}bar{{My Var 2}}baz{{PageUrl}}yeah</eventName>
@@ -169,7 +168,6 @@
 					<availableValues />
 					<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
 					<inlineHelp />
-					<templateFile />
 					<introduction />
 					<condition />
 					<fullWidth>0</fullWidth>
