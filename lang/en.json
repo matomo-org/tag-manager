@@ -437,7 +437,7 @@
         "MatomoConfigurationMatomoRequireConsentTitle": "Require tracking consent",
         "MatomoConfigurationMatomoRequireConsentDescription": "Track only when user gave tracking consent. In a consent screen you need to call \"window._paq=window._paq||[];window._paq.push(['rememberConsentGiven']);\" when the user gives consent.",
         "MatomoConfigurationMatomoCustomCookieTimeOutEnableTitle": "Enable custom visitor Cookie timeout",
-        "MatomoConfigurationMatomoCustomCookieTimeOutEnableDescription": "Allows you to set a custom time in full days for the _pk_id cookie",
+        "MatomoConfigurationMatomoCustomCookieTimeOutEnableDescription": "Allows you to set a custom time in full days for the _pk_id cookie.",
         "MatomoConfigurationMatomoCustomCookieTimeOutTitle": "The pk_id expire time in full days",
         "MatomoConfigurationMatomoCustomCookieTimeOutDescription": "Timeout in full days. By default, the Matomo tracking cookie expires in 13 months (365 + 28 days) = 393 days",
         "MatomoConfigurationMatomoRequireCookieConsentTitle": "Require cookie consent",
