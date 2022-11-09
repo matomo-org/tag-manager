@@ -16,6 +16,7 @@ use Piwik\Site;
 use Piwik\Tracker\TrackerCodeGenerator;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
+use Piwik\Validators\NumberRange;
 
 class MatomoConfigurationVariable extends BaseVariable
 {
@@ -134,6 +135,17 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentDescription');
                 $field->condition = '!requireConsent && !disableCookies';
+            }),
+            $this->makeSetting('customCookieTimeOutEnable', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutEnableTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutEnableDescription');
+                $field->condition = '!disableCookies';
+            }),
+            $this->makeSetting('customCookieTimeOut', '393', FieldConfig::TYPE_INT, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutDescription');
+                $field->condition = 'customCookieTimeOutEnable == true';
+                $field->validators[] = new NumberRange($min = 1);
             }),
             $this->makeSetting('setSecureCookie', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetSecureCookieTitle');

@@ -247,6 +247,9 @@
                         if (customUrl) {
                             tracker.setCustomUrl(customUrl);
                         }
+                        if (matomoConfig.customCookieTimeOutEnable) {  
+                            tracker.setVisitorCookieTimeout(matomoConfig.customCookieTimeOut * 86400);
+                        }
                         tracker.trackPageView();
                     } else if (trackingType === 'event') {
                         tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'));
