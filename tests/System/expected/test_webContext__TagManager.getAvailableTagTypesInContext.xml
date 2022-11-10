@@ -1034,7 +1034,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>(optional) the version of your project</description>
+						<description>(optional) the version of your project.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />

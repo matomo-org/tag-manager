@@ -435,7 +435,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Enter &quot;0&quot; to not limit how often the trigger should be triggered</description>
+						<description>Enter &quot;0&quot; to not limit how often the trigger should be triggered.</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
