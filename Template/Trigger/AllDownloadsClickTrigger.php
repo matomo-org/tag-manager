@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Trigger;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
@@ -30,8 +31,8 @@ class AllDownloadsClickTrigger extends BaseTrigger
         return array(
 
             $this->makeSetting('downloadExtensions', $downloadFileExtensions, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Download Extensions';
-                $field->description = 'Comma separated list of file extensions which will be considered as a download.';
+                $field->title = Piwik::translate('TagManager_AllDownloadsClickTriggerDownloadExtensionsTitle');
+                $field->description = Piwik::translate('TagManager_AllDownloadsClickTriggerDownloadExtensionsDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength($min = 1, $max = 700);
                 $field->transform = function ($value) {
