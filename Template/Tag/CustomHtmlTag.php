@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 
@@ -33,15 +34,15 @@ class CustomHtmlTag extends BaseTag
     {
         return array(
             $this->makeSetting('customHtml', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Custom HTML';
+                $field->title = Piwik::translate('TagManager_CustomHtmlTagTitle');
                 $field->customFieldComponent = self::FIELD_TEXTAREA_VARIABLE_COMPONENT;
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;
-                $field->description = 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.';
-                $field->inlineHelp = '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>';
+                $field->description = Piwik::translate('TagManager_CustomHtmlTagDescriptionText');
+                $field->inlineHelp = Piwik::translate('TagManager_CustomHtmlTagHelpText', array('<a href="https://matomo.org/faq/tag-manager/faq_26815/">', '</a>'));
                 $field->validators[] = new NotEmpty();
             }),
             $this->makeSetting('htmlPosition', 'bodyEnd', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Position';
+                $field->title = Piwik::translate('TagManager_CustomHtmlHtmlPositionTitle');;
                 $field->availableValues = array(
                     'headStart' => 'Head Start',
                     'headEnd' => 'Head End',
@@ -49,7 +50,7 @@ class CustomHtmlTag extends BaseTag
                     'bodyEnd' => 'Body End',
                 );
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
-                $field->description = 'Define the position of where the HTML should be inserted into your website.';
+                $field->description = Piwik::translate('TagManager_CustomHtmlHtmlPositionDescription');;
             }),
         );
     }

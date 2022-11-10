@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Settings\Setting;
@@ -27,8 +28,8 @@ class ZendeskChatTag extends BaseTag
     public function getParameters() {
         return array(
             $this->makeSetting('zendeskChatId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Zendesk Chat ID';
-                $field->description = 'You can get the Site ID by logging into Zendesk Chat, going to "Settings" and clicking on "Widget". The Site ID has typically about 32 characters and is the text coming directly after "https://v2.zopim.com/?", for example "123451c27295ad739e46b6b1".';
+                $field->title = Piwik::translate('TagManager_ZendeskChatTagChatIdTitle');
+                $field->description = Piwik::translate('TagManager_ZendeskChatTagChatIdDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value, Setting $setting) {
                     $value = trim($value);

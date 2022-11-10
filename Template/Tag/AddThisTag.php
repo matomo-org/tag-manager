@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\NotEmpty;
@@ -31,14 +32,14 @@ class AddThisTag extends BaseTag
     {
         return array(
             $this->makeSetting('AddThisPubId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'AddThis PubId';
-                $field->description = 'Create a new site in Shareaholic and paste the site ID here';
+                $field->title = Piwik::translate('TagManager_AddThisTagPubIdTitle');
+                $field->description = Piwik::translate('TagManager_AddThisTagPubIdDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new NotEmpty();
             }),
             $this->makeSetting('AddThisParentSelector', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Inline Tools Parent Selector';
-                $field->description = 'Optionally enter a CSS selector to the element where the Inline Tools should be added.';
+                $field->title =  Piwik::translate('TagManager_AddThisParentSelectorTitle');
+                $field->description =  Piwik::translate('TagManager_AddThisParentSelectorDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
             })
         );

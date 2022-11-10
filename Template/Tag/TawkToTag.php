@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\CharacterLength;
@@ -30,8 +31,8 @@ class TawkToTag extends BaseTag
     public function getParameters() {
         return array(
             $this->makeSetting('tawkToId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'tawk.to Site ID';
-                $field->description = 'You can get the Site ID by logging into Tawk.to, going to "Administration" and clicking on "Property Settings". The Site ID has typically about 25 characters, for example "123451c27295ad739e46b6b1".';
+                $field->title = Piwik::translate('TagManager_TawkToTagIdTitle');
+                $field->description = Piwik::translate('TagManager_TawkToTagIdDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);
@@ -43,8 +44,8 @@ class TawkToTag extends BaseTag
                 };
             }),
             $this->makeSetting('tawkToWidgetId', 'default', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'tawk.to Widget ID';
-                $field->description = 'You can get the Widget ID by logging into Tawk.to, going to "Administration" and clicking on "Chat Widget" and selecting an appropriate widget. The widget ID can be retrieved from "Direct Chat Link" as https://tawk.to/chat/{SITE_ID}/{WIDGET_ID}.';
+                $field->title = Piwik::translate('TagManager_TawkToTagWidgetIdTitle');
+                $field->description = Piwik::translate('TagManager_TawkToTagWidgetIdDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);
