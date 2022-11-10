@@ -32,7 +32,7 @@ class DriftTag extends BaseTag
         return array(
             $this->makeSetting('driftId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_DriftTagDriftIdTitle');
-                $field->description = Piwik::translate('TagManager_DriftTagDriftIdTitle');
+                $field->description = Piwik::translate('TagManager_DriftTagDriftIdDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);

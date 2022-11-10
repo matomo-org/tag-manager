@@ -41,7 +41,7 @@
         "EtrackerTagWrapperAreaTitle": "etracker Wrapper area (et_area)",
         "EtrackerTagWrapperAreaDescription": "The area should be separated by Slash.",
         "EtrackerTagWrapperTargetTitle": "etracker Wrapper target (et_target)",
-        "EtrackerTagWrapperTvalTitle": "etracker Wrapper total order value (et_tval)'",
+        "EtrackerTagWrapperTvalTitle": "etracker Wrapper total order value (et_tval)",
         "EtrackerTagWrapperTonrTitle": "etracker Wrapper order number (et_tonr)",
         "EtrackerTagWrapperTsaleTitle": "etracker Wrapper order status (et_tsale)",
         "EtrackerTagWrapperTcustTitle": "etracker Wrapper customer status (et_cust)",
