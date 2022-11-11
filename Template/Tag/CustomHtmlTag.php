@@ -34,7 +34,7 @@ class CustomHtmlTag extends BaseTag
     {
         return array(
             $this->makeSetting('customHtml', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_CustomHtmlTagTitle');
+                $field->title = Piwik::translate('TagManager_CustomHtmlTagName');
                 $field->customFieldComponent = self::FIELD_TEXTAREA_VARIABLE_COMPONENT;
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;
                 $field->description = Piwik::translate('TagManager_CustomHtmlTagDescriptionText');

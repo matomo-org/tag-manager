@@ -35,7 +35,7 @@ class HoneybadgerTag extends BaseTag
                 };
             }),
             $this->makeSetting('honeybadgerEnvironment', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_HoneybadgerTagEnvironmentTitle');
+                $field->title = Piwik::translate('TagManager_Environment');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->description = Piwik::translate('TagManager_HoneybadgerTagEnvironmentDescription');

@@ -23,7 +23,7 @@ class ThemeColorTag extends BaseTag
     public function getParameters() {
         return array(
             $this->makeSetting('themeColor', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_ThemeColorTagThemeColorTitle');
+                $field->title = Piwik::translate('TagManager_ThemeColorTagName');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_ThemeColorTagThemeColorDescription');
                 $field->validators[] = new NotEmpty();

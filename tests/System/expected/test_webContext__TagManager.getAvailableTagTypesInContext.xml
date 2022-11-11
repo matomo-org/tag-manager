@@ -293,7 +293,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Your Emarsys Merchant ID.</description>
+						<description>Your Emarsys Merchant ID</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -479,7 +479,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Your Visual Website Optimizer Account ID.</description>
+						<description>Your Visual Website Optimizer Account ID</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -555,7 +555,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The wrappers's pagename.</description>
+						<description>The wrappers's pagename</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -576,7 +576,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The area should be separated by Slash.</description>
+						<description>The area should be separated by Slash</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -996,7 +996,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The apiKey of your honeybadger project.</description>
+						<description>The apiKey of your honeybadger project</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -1034,7 +1034,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>(optional) the version of your project.</description>
+						<description>(optional) the version of your project</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -1159,7 +1159,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Create a new site in Shareaholic and paste the site ID here.</description>
+						<description>Create a new site in Shareaholic and paste the site ID here</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />
@@ -1383,7 +1383,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Create a new site in Shareaholic and paste the site ID here.</description>
+						<description>Create a new site in Shareaholic and paste the site ID here</description>
 						<inlineHelp />
 						<templateFile />
 						<introduction />

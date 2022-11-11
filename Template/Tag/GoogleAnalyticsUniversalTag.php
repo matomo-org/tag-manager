@@ -37,7 +37,7 @@ class GoogleAnalyticsUniversalTag extends BaseTag
                 };
             }),
             $this->makeSetting('trackingType', 'pageview', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_GoogleAnalyticsUniversalTagTrackingTypeTitle');
+                $field->title = Piwik::translate('TagManager_TrackingType');
                 $field->description = Piwik::translate('TagManager_GoogleAnalyticsUniversalTagTrackingTypeDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->validators[] = new NotEmpty();
