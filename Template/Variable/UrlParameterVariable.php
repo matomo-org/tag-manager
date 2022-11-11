@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 
@@ -21,8 +22,8 @@ class UrlParameterVariable extends BaseVariable
     {
         return array(
             $this->makeSetting('parameterName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'URL Parameter Name';
-                $field->description = 'For example when your page has URL parameters such as "?lang=NZ" and you want to get the value "NZ", then you need to enter "lang".';
+                $field->title = Piwik::translate('TagManager_UrlParameterVariableNameTitle');
+                $field->description = Piwik::translate('TagManager_UrlParameterVariableNameDescription');
                 $field->validators[] = new CharacterLength(1, 300);
                 $field->transform = function ($value) {
                     return trim($value);

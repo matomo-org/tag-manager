@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 
@@ -21,7 +22,7 @@ class MetaContentVariable extends BaseVariable
     {
         return array(
             $this->makeSetting('metaName', 'keywords', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Meta Name';
+                $field->title = Piwik::translate('TagManager_MetaContentVariableNameTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->validators[] = new NotEmpty();
                 $field->availableValues = array(

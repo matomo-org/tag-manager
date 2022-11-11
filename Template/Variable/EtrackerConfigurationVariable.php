@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 
@@ -38,87 +39,87 @@ class EtrackerConfigurationVariable extends BaseVariable
     {
         return array(
             $this->makeSetting('etrackerID', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'etracker ID';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableIdTitle');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'The etracker ID you want to track data into. The ID is required. You may  find the ID of your website under "Administration => Setup/Tracking Code" in etracker.';
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariableIdDescription');
                 $field->validators[] = new NotEmpty();
                 $field->transform = function ($value) {
                     return trim($value);
                 };
             }),
             $this->makeSetting('etrackerBlockCookies', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Block cookies by default';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableBlockCookiesTitle');
             }),
             $this->makeSetting('etrackerDNT', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Respect Do Not Track in etracker';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableDNTTitle');
             }),
             $this->makeSetting('et_pagename', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Variable et_pagename';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariablePageNameTitle');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'Set variable if you want to overwrite the default value';
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariablePageNameDescription');
                 $field->transform = function ($value) {
                     return trim($value);
                 };
             }),
             $this->makeSetting('et_areas', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Variable et_areas';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableAreaTitle');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'Set variable if you want to overwrite the default value';
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariablePageNameDescription');
                 $field->transform = function ($value) {
                     return trim($value);
                 };
             }),
             $this->makeSetting('et_target', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Variable et_target';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableTargetTitle');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'Set variable if you want to overwrite the default value';
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariablePageNameDescription');
                 $field->transform = function ($value) {
                     return trim($value);
                 };
             }),
             $this->makeSetting('et_tval', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Variable et_tval';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableTValTitle');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'Set variable if you want to overwrite the default value';
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariablePageNameDescription');
                 $field->transform = function ($value) {
                     return trim($value);
                 };
             }),
             $this->makeSetting('et_tonr', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Variable et_tonr';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableTonrTitle');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'Set variable if you want to overwrite the default value';
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariablePageNameDescription');
                 $field->transform = function ($value) {
                     return trim($value);
                 };
             }),
             $this->makeSetting('et_tsale', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Variable et_tsale';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableTSaleTitle');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'Set variable if you want to overwrite the default value';
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariablePageNameDescription');
                 $field->transform = function ($value) {
                     return trim($value);
                 };
             }),
             $this->makeSetting('et_basket', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Variable et_basket';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableBasketTitle');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'Set variable if you want to overwrite the default value';
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariablePageNameDescription');
                 $field->transform = function ($value) {
                     return trim($value);
                 };
             }),
             $this->makeSetting('et_cust', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Variable et_cust';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableCustTitle');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = 'Set variable if you want to overwrite the default value';
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariablePageNameDescription');
                 $field->transform = function ($value) {
                     return trim($value);
                 };
             }),
             $this->makeSetting('customDimensions', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
-                $field->title = 'Custom Dimensions';
-                $field->description = 'Optionally set one or multiple custom dimensions.';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableCustomDimensionsTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariableCustomDimensionsDescription');
                 $field->validate = function ($value) {
                     if (empty($value)) {
                         return;

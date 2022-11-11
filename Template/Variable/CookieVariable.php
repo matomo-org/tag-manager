@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
@@ -22,7 +23,7 @@ class CookieVariable extends BaseVariable
     {
         return array(
             $this->makeSetting('cookieName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Cookie Name';
+                $field->title = Piwik::translate('TagManager_CookieVariableCookieNameTitle');
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength(1, 500);
                 $field->transform = function ($value) {
@@ -30,8 +31,8 @@ class CookieVariable extends BaseVariable
                 };
             }),
             $this->makeSetting('urlDecode', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'URI-decode Cookie';
-                $field->inlineHelp = 'If enabled, the value will be decoded';
+                $field->title = Piwik::translate('TagManager_CookieVariableUrlDecodeTitle');
+                $field->inlineHelp = Piwik::translate('TagManager_CookieVariableUrlDecodeDescription');
             }),
 
         );
