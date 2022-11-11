@@ -33,7 +33,7 @@ class TimerTrigger extends BaseTrigger
                 $field->validators[] = new NumberRange($min = 50);
             }),
             $this->makeSetting('eventName', 'mtm.Timer', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_TimerTriggerEventNameTitle');
+                $field->title = Piwik::translate('Events_EventName');
                 $field->description = Piwik::translate('TagManager_TimerTriggerEventNameDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
             }),

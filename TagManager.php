@@ -668,7 +668,6 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_ZendeskChatTagChatIdDescription';
         $result[] = 'TagManager_AllDownloadsClickTriggerDownloadExtensionsTitle';
         $result[] = 'TagManager_AllDownloadsClickTriggerDownloadExtensionsDescription';
-        $result[] = 'TagManager_CustomEventTriggerEventNameTitle';
         $result[] = 'TagManager_CustomEventTriggerEventNameDescription';
         $result[] = 'TagManager_ElementVisibilityTriggerSelectionMethodTitle';
         $result[] = 'TagManager_ElementVisibilityTriggerSelectionMethodDescription';
@@ -687,7 +686,6 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_ScrollReachTriggerPercentageTitle';
         $result[] = 'TagManager_ScrollReachTriggerPercentageDescription';
         $result[] = 'TagManager_TimerTriggerTriggerIntervalTitle';
-        $result[] = 'TagManager_TimerTriggerEventNameTitle';
         $result[] = 'TagManager_TimerTriggerEventNameDescription';
         $result[] = 'TagManager_TimerTriggerTriggerLimitTitle';
         $result[] = 'TagManager_TimerTriggerTriggerLimitDescription';

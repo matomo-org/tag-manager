@@ -30,7 +30,7 @@ class CustomEventTrigger extends BaseTrigger
     {
         return array(
             $this->makeSetting('eventName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_CustomEventTriggerEventNameTitle');
+                $field->title = Piwik::translate('Events_EventName');
                 $field->description = Piwik::translate('TagManager_CustomEventTriggerEventNameDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new NotEmpty();
