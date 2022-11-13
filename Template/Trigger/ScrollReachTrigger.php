@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Trigger;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
@@ -21,7 +22,7 @@ class ScrollReachTrigger extends BaseTrigger
     public function getParameters()
     {
         $scrollType = $this->makeSetting('scrollType', 'verticalpercentage', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Scroll Match Type';
+                $field->title = Piwik::translate('TagManager_ScrollReachTriggerScrollTypeTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->validators[] = new NotEmpty();
                 $field->availableValues = array(
@@ -34,8 +35,8 @@ class ScrollReachTrigger extends BaseTrigger
         return array(
             $scrollType,
             $this->makeSetting('pixels', 1, FieldConfig::TYPE_INT, function (FieldConfig $field) use ($scrollType) {
-                $field->title = 'Pixels';
-                $field->description = 'The amount in pixels that needs to be visible of this element depending on the selected scroll match type.';
+                $field->title = Piwik::translate('TagManager_ScrollReachTriggerPixelsTitle');
+                $field->description = Piwik::translate('TagManager_ScrollReachTriggerPixelsDescription');
                 $field->uiControlAttributes = array(
                     'placeholder' => 'eg. 50, 1020, 3059'
                 );
@@ -45,8 +46,8 @@ class ScrollReachTrigger extends BaseTrigger
                 }
             }),
             $this->makeSetting('percentage', 50, FieldConfig::TYPE_INT, function (FieldConfig $field) use ($scrollType) {
-                $field->title = 'Percentage';
-                $field->description = 'You can specify any number between 1 and 100. If you specify 50, then it means the element needs to be at least 50% visible depending on the scroll match type.';
+                $field->title = Piwik::translate('TagManager_ScrollReachTriggerPercentageTitle');
+                $field->description = Piwik::translate('TagManager_ScrollReachTriggerPercentageDescription');
                 $field->uiControlAttributes = array(
                     'placeholder' => 'eg. 20, 50, 75, 90'
                 );

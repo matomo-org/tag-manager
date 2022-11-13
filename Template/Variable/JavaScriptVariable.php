@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
@@ -22,8 +23,8 @@ class JavaScriptVariable extends BaseVariable
     {
         return array(
             $this->makeSetting('variableName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'JavaScript Variable Name';
-                $field->description = 'The name of any variable that is available within the global scope. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example "document.referrer".';
+                $field->title = Piwik::translate('TagManager_JavaScriptVariableNameTitle');
+                $field->description = Piwik::translate('TagManager_JavaScriptVariableNameDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength(1, 500);
                 $field->transform = function ($value) {

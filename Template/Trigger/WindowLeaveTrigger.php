@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Trigger;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 
 class WindowLeaveTrigger extends BaseTrigger
@@ -20,8 +21,8 @@ class WindowLeaveTrigger extends BaseTrigger
     {
         return array(
             $this->makeSetting('triggerLimit', 1, FieldConfig::TYPE_INT, function (FieldConfig $field) {
-                $field->title = 'Trigger limit';
-                $field->description = 'Enter "0" to not limit how often the trigger should be triggered';
+                $field->title = Piwik::translate('TagManager_WindowLeaveTriggerTriggerLimitTitle');
+                $field->description = Piwik::translate('TagManager_WindowLeaveTriggerTriggerLimitDescription');
             }),
         );
     }

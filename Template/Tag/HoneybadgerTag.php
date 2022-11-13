@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\NotEmpty;
@@ -25,25 +26,25 @@ class HoneybadgerTag extends BaseTag
     public function getParameters() {
         return array(
             $this->makeSetting('honeybadgerApiKey', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Honeybadger apiKey';
+                $field->title = Piwik::translate('TagManager_HoneybadgerTagApiKeyTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = "The apiKey of your honeybadger project";
+                $field->description = Piwik::translate('TagManager_HoneybadgerTagApiKeyDescription');
                 $field->validators[] = new NotEmpty();
                 $field->transform = function ($value) {
                     return trim($value);
                 };
             }),
             $this->makeSetting('honeybadgerEnvironment', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Environment';
+                $field->title = Piwik::translate('TagManager_Environment');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = "The environment where the container is included (production, dev, etc.). Leave empty to default to the environment of this container.";
+                $field->description = Piwik::translate('TagManager_HoneybadgerTagEnvironmentDescription');
             }),
             $this->makeSetting('honeybadgerRevision', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Code Revision';
+                $field->title = Piwik::translate('TagManager_HoneybadgerTagRevisionTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = "(optional) the version of your project";
+                $field->description = Piwik::translate('TagManager_HoneybadgerTagRevisionDescription');
             }),
         );
     }

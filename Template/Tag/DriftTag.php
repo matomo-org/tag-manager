@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\CharacterLength;
@@ -30,8 +31,8 @@ class DriftTag extends BaseTag
     public function getParameters() {
         return array(
             $this->makeSetting('driftId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Drift ID';
-                $field->description = 'The Drift ID is the text between brackets without quotes at the end of the JS snippet: drift.load(\'mdp4r5w7rh3y\');';
+                $field->title = Piwik::translate('TagManager_DriftTagDriftIdTitle');
+                $field->description = Piwik::translate('TagManager_DriftTagDriftIdDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);
