@@ -4,6 +4,16 @@
 		<name>Clicks</name>
 		<types>
 			<row>
+				<id>ClickButton</id>
+				<idvariable />
+				<type>ClickButton</type>
+				<name>Click Button</name>
+				<category>Clicks</category>
+				<description>Clicked button(left/middle/right)</description>
+				<order>9999</order>
+				<is_pre_configured>1</is_pre_configured>
+			</row>
+			<row>
 				<id>ClickClasses</id>
 				<idvariable />
 				<type>ClickClasses</type>
@@ -179,7 +189,7 @@
 				<type>UtcDate</type>
 				<name>UTC Date</name>
 				<category>Date</category>
-				<description>The current data in UTC, for example &quot;Mon, 19 Mar 2018 14:00:00 GMT&quot;.</description>
+				<description>The current date in UTC, for example &quot;Mon, 19 Mar 2018 14:00:00 GMT&quot;.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
@@ -289,7 +299,7 @@
 				<type>ErrorUrl</type>
 				<name>Error Url</name>
 				<category>Errors</category>
-				<description>Returns the url of an error, when an error was triggered previously.</description>
+				<description>Returns the URL of an error, when an error was triggered previously.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>

@@ -9,6 +9,7 @@ namespace Piwik\Plugins\TagManager\Template;
 
 use JShrink\Minifier;
 use Piwik\Common;
+use Piwik\Container\StaticContainer;
 use Piwik\Development;
 use Piwik\Piwik;
 use Piwik\Plugins\CorePluginsAdmin\SettingsMetadata;
@@ -26,9 +27,25 @@ abstract class BaseTemplate
 
     protected $templateType = '';
 
+    /**
+     * @deprecated Use self::FIELD_VARIABLE_COMPONENT instead.
+     */
     const FIELD_TEMPLATE_VARIABLE = 'plugins/TagManager/angularjs/form-field/field-variable-template.html';
+
+    /**
+     * @deprecated Use self::FIELD_TEXTAREA_VARIABLE_COMPONENT instead.
+     */
     const FIELD_TEMPLATE_TEXTAREA_VARIABLE = 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html';
+
+    /**
+     * @deprecated Use self::FIELD_VARIABLE_TYPE_COMPONENT instead.
+     */
     const FIELD_TEMPLATE_VARIABLE_TYPE = 'plugins/TagManager/angularjs/form-field/field-variabletype-template.html';
+
+    const FIELD_TEXTAREA_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldTextareaVariable'];
+    const FIELD_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTemplate'];
+    const FIELD_VARIABLE_TYPE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTypeTemplate'];
+
     public static $RESERVED_SETTING_NAMES = [
         'container', 'tag', 'variable', 'trigger', 'length', 'window', 'document', 'get', 'fire', 'setUp', 'set', 'reset', 'type', 'part',
         'default_value', 'lookup_table', 'conditions', 'condition', 'fire_limit', 'fire_delay', 'priority', 'parameters',
@@ -206,7 +223,9 @@ abstract class BaseTemplate
                 $file = $base . 'web.js';
                 $minFile = $base . 'web.min.js';
 
-                if (Development::isEnabled() && $this->hasTemplateFile($file)) {
+                if (!StaticContainer::get('TagManagerJSMinificationEnabled')) {
+                    return $this->loadTemplateFile($file); // avoid minification in test mode
+                } elseif (Development::isEnabled() && $this->hasTemplateFile($file)) {
                     // during dev mode we prefer the non-minified version for debugging purposes, but we still use
                     // the internal minifier to make sure we debug the same as a user would receive
                     $template = $this->loadTemplateFile($file);

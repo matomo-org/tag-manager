@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
@@ -34,11 +35,18 @@ class VisualWebsiteOptimizerTag extends BaseTag
     {
         return array(
             $this->makeSetting('accountId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Visual Website Optimizer Account ID';
+                $field->title = Piwik::translate('TagManager_VisualWebsiteOptimizerTagAccountIdTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = 'Your Visual Website Optimizer Account ID';
+                $field->description = Piwik::translate('TagManager_VisualWebsiteOptimizerTagAccountIdDescription');
                 $field->validators[] = new NotEmpty();
-                $field->validators[] = new NumberRange();
+                $field->validate = function ($value) {
+                    $value = trim($value);
+                    $numberRange =  new NumberRange();
+                    $numberRange->validate($value);
+                };
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }

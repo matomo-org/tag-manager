@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -65,12 +66,12 @@ class TagTest extends IntegrationTestCase
         $this->model->setCurrentDateTime($this->now);
 
         $trigger = StaticContainer::get('Piwik\Plugins\TagManager\Model\Trigger');
-        $this->idTrigger1 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger1', array(), array());
-        $this->idTrigger2 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion2, WindowLoadedTrigger::ID, 'MyTrigger2', array(), array());
-        $this->idTrigger3 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger3', array(), array());
-        $this->idTrigger4 = $trigger->addContainerTrigger($this->idSite2, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger3', array(), array());
+        $this->idTrigger1 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger1', [], []);
+        $this->idTrigger2 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion2, WindowLoadedTrigger::ID, 'MyTrigger2', [], []);
+        $this->idTrigger3 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger3', [], []);
+        $this->idTrigger4 = $trigger->addContainerTrigger($this->idSite2, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger3', [], []);
 
-        $this->idTag1 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'InitialTag1', array('customHtml' => '<script></script>'));
+        $this->idTag1 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'InitialTag1', ['customHtml' => '<script></script>']);
     }
 
     public function tearDown(): void
@@ -79,31 +80,31 @@ class TagTest extends IntegrationTestCase
         parent::tearDown();
     }
 
-    public function test_getFireLimits()
+    public function testGetFireLimits()
     {
         $fireLimits = $this->model->getFireLimits();
-        $expected = array (
-            array (
+        $expected =  [
+             [
                 'id' => 'unlimited',
                 'name' => 'Unlimited',
-            ),
-            array (
+             ],
+             [
                 'id' => 'once_page',
                 'name' => 'Once per pageview',
-            ),
-            array (
+             ],
+             [
                 'id' => 'once_24hours',
                 'name' => 'Once per 24 hours',
-            ),
-            array (
+             ],
+             [
                 'id' => 'once_lifetime',
                 'name' => 'Once in lifetime',
-            ),
-        );
+             ],
+        ];
         $this->assertSame($expected, $fireLimits);
     }
 
-    public function test_addContainerTag_invalidSite()
+    public function testAddContainerTagInvalidSite()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('idSite: An unexpected website was found');
@@ -111,7 +112,7 @@ class TagTest extends IntegrationTestCase
         $this->addContainerTag($idSite = 999);
     }
 
-    public function test_addContainerTag_invalidName()
+    public function testAddContainerTagInvalidName()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Name: The value contains');
@@ -119,123 +120,124 @@ class TagTest extends IntegrationTestCase
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    public function test_addContainerTag_missingParameter()
+    public function testAddContainerTagMissingParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Custom HTML: A value needs to be provided.');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array(), array($this->idTrigger1));
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = [], [$this->idTrigger1]);
     }
 
-    public function test_addContainerTag_invalidParameter()
+    public function testAddContainerTagInvalidParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Custom HTML: A value needs to be provided.');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => ''), array($this->idTrigger1));
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => ''], [$this->idTrigger1]);
     }
 
-    public function test_addContainerTag_missingFireTrigger()
+    public function testAddContainerTagMissingFireTrigger()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Fire Trigger: A value needs to be provided.');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array());
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => '<div></div>'], []);
     }
 
-    public function test_addContainerTag_invalidFireTrigger()
+    public function testAddContainerTagInvalidFireTrigger()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Fire Trigger: The trigger "2"');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger2));
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger2]);
     }
 
-    public function test_addContainerTag_invalidBlockTrigger()
+    public function testAddContainerTagInvalidBlockTrigger()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Block Trigger: The trigger "9999"');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(9999));
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [9999]);
     }
 
-    public function test_addContainerTag_invalidFireLimit()
+    public function testAddContainerTagInvalidFireLimit()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Fire limit: The value "firelimit" is not allowed');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), 'firelimit');
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], 'firelimit');
     }
 
-    public function test_addContainerTag_invalidFireDelay()
+    public function testAddContainerTagInvalidFireDelay()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Fire delay: The value is not a number.');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 'foobar99999999999');
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 'foobar99999999999');
     }
 
-    public function test_addContainerTag_invalidPriority()
+    public function testAddContainerTagInvalidPriority()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Priority: The value is not a number.');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, 'foobar99999999999');
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 9, 'foobar99999999999');
     }
 
-    public function test_addContainerTag_invalidStartDate()
+    public function testAddContainerTagInvalidStartDate()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Start date: Date format must be');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2099-43-31 14:99:99');
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2099-43-31 14:99:99');
     }
 
-    public function test_addContainerTag_invalidEndDate()
+    public function testAddContainerTagInvalidEndDate()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('End date: Date format must be');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2099-43-31 14:99:99');
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2099-43-31 14:99:99');
     }
 
-    public function test_addContainerTag_endDateBeforeStartDate()
+    public function testAddContainerTagEndDateBeforeStartDate()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The start date needs to be earlier than the end date');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2017-03-01 01:01:01');
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2017-03-01 01:01:01');
     }
 
-    public function test_addContainerTag_invalidType()
+    public function testAddContainerTagInvalidType()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The tag "foobarbaz" is not supported');
 
-        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = 'foobarbaz', 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED);
+        $this->addContainerTag($this->idSite, $this->containerVersion1, $type = 'foobarbaz', 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED);
     }
 
-    public function test_addContainerTag_successMinimal()
+    public function testAddContainerTagSuccessMinimal()
     {
-        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 0, '0', false, false);
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 0, '0', false, false);
         $this->assertSame(2, $idTag);
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
 
-        $expected = array (
+        $expected =  [
             'idtag' => 2,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => 'CustomHtml',
             'name' => 'MyName',
+            'description' => '',
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'customHtml' => '<div></div>',
                     'htmlPosition' => 'bodyEnd'
-                ),
-            'fire_trigger_ids' => array (1),
-            'block_trigger_ids' => array (),
+                ],
+            'fire_trigger_ids' =>  [1],
+            'block_trigger_ids' =>  [],
             'fire_limit' => 'unlimited',
             'priority' => 0,
             'fire_delay' => 0,
@@ -246,21 +248,21 @@ class TagTest extends IntegrationTestCase
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
             'typeMetadata' =>
-                array (
+                 [
                     'id' => 'CustomHtml',
                     'name' => 'Custom HTML',
                     'description' => 'Allows you to embed any custom HTML, for example JavaScript or CSS Styles.',
                     'category' => 'Custom',
                     'icon' => 'plugins/TagManager/images/icons/code.svg',
-                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.',
+                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.',
                     'order' => 9999,
                     'contexts' =>
-                        array ('web'),
+                         ['web'],
                     'hasAdvancedSettings' => true,
                     'isCustomTemplate' => true,
                     'parameters' =>
-                        array (
-                                array (
+                         [
+                                 [
                                     'name' => 'customHtml',
                                     'title' => 'Custom HTML',
                                     'value' => '<div></div>',
@@ -268,64 +270,72 @@ class TagTest extends IntegrationTestCase
                                     'type' => 'string',
                                     'uiControl' => 'textarea',
                                     'uiControlAttributes' =>
-                                        array (
-                                        ),
-                                    'availableValues' => NULL,
+                                         [
+                                        ],
+                                    'availableValues' => null,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
                                     'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
-                                    'templateFile' => 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html',
-                                    'introduction' => NULL,
-                                    'condition' => NULL,
-                                ),
-                                array (
+                                    'templateFile' => '',
+                                    'introduction' => null,
+                                    'condition' => null,
+                                    'fullWidth' => false,
+                                    'component' => [
+                                        'plugin' => 'TagManager',
+                                        'name' => 'FieldTextareaVariable',
+                                    ],
+                                 ],
+                                 [
                                     'name' => 'htmlPosition',
                                     'title' => 'Position',
                                     'value' => 'bodyEnd',
                                     'defaultValue' => 'bodyEnd',
                                     'type' => 'string',
                                     'uiControl' => 'select',
-                                    'uiControlAttributes' => array(),
-                                    'availableValues' => array(
+                                    'uiControlAttributes' => [],
+                                    'availableValues' => [
                                         'headStart' => 'Head Start',
                                         'headEnd' => 'Head End',
                                         'bodyStart' => 'Body Start',
                                         'bodyEnd' => 'Body End',
-                                    ),
+                                    ],
                                     'description' => 'Define the position of where the HTML should be inserted into your website.',
                                     'inlineHelp' => null,
                                     'templateFile' => '',
                                     'introduction' => null,
                                     'condition' => null,
-                            )
-                        ),
-                ),
-        );
+                                    'fullWidth' => false,
+                                 ]
+                        ],
+                ],
+        ];
 
         $tag['typeMetadata']['parameters'][1]['availableValues'] = (array) $tag['typeMetadata']['parameters'][1]['availableValues'];
         $this->assertSame($expected, $tag);
     }
 
-    public function test_addContainerTag_successFull()
+    public function testAddContainerTagSuccessFull()
     {
-        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array($this->idTrigger3), Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, 9, '99', '2017-03-01 01:01:01', '2018-03-01 01:01:01');
+        $description = 'Test description of MyName tag';
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [$this->idTrigger3], Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, 9, '99', '2017-03-01 01:01:01', '2018-03-01 01:01:01', $description);
         $this->assertSame(2, $idTag);
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
 
-        $expected = array (
+        $expected =  [
             'idtag' => $idTag,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => 'CustomHtml',
             'name' => 'MyName',
+            'description' => $description,
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'customHtml' => '<div></div>',
                     'htmlPosition' => 'bodyEnd'
-                ),
-            'fire_trigger_ids' =>[1],
-            'block_trigger_ids' =>[3],
+                ],
+            'fire_trigger_ids' => [1],
+            'block_trigger_ids' => [3],
             'fire_limit' => 'once_lifetime',
             'priority' => 99,
             'fire_delay' => 9,
@@ -336,20 +346,20 @@ class TagTest extends IntegrationTestCase
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
             'typeMetadata' =>
-                array (
+                 [
                     'id' => 'CustomHtml',
                     'name' => 'Custom HTML',
                     'description' => 'Allows you to embed any custom HTML, for example JavaScript or CSS Styles.',
                     'category' => 'Custom',
                     'icon' => 'plugins/TagManager/images/icons/code.svg',
-                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.',
+                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.',
                     'order' => 9999,
-                    'contexts' =>['web'],
+                    'contexts' => ['web'],
                     'hasAdvancedSettings' => true,
                     'isCustomTemplate' => true,
                     'parameters' =>
-                        array (
-                                array (
+                         [
+                                 [
                                     'name' => 'customHtml',
                                     'title' => 'Custom HTML',
                                     'value' => '<div></div>',
@@ -357,44 +367,50 @@ class TagTest extends IntegrationTestCase
                                     'type' => 'string',
                                     'uiControl' => 'textarea',
                                     'uiControlAttributes' =>
-                                        array (
-                                        ),
-                                    'availableValues' => NULL,
+                                         [
+                                        ],
+                                    'availableValues' => null,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
                                     'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
-                                    'templateFile' => 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html',
-                                    'introduction' => NULL,
-                                    'condition' => NULL,
-                                ),
-                                array (
+                                    'templateFile' => '',
+                                    'introduction' => null,
+                                    'condition' => null,
+                                    'fullWidth' => false,
+                                    'component' => [
+                                        'plugin' => 'TagManager',
+                                        'name' => 'FieldTextareaVariable',
+                                    ],
+                                 ],
+                                 [
                                     'name' => 'htmlPosition',
                                     'title' => 'Position',
                                     'value' => 'bodyEnd',
                                     'defaultValue' => 'bodyEnd',
                                     'type' => 'string',
                                     'uiControl' => 'select',
-                                    'uiControlAttributes' => array(),
-                                    'availableValues' => array(
+                                    'uiControlAttributes' => [],
+                                    'availableValues' => [
                                         'headStart' => 'Head Start',
                                         'headEnd' => 'Head End',
                                         'bodyStart' => 'Body Start',
                                         'bodyEnd' => 'Body End',
-                                    ),
+                                    ],
                                     'description' => 'Define the position of where the HTML should be inserted into your website.',
                                     'inlineHelp' => null,
                                     'templateFile' => '',
                                     'introduction' => null,
                                     'condition' => null,
-                                )
-                        ),
-                ),
-        );
+                                    'fullWidth' => false,
+                                 ]
+                        ],
+                ],
+        ];
 
         $tag['typeMetadata']['parameters'][1]['availableValues'] = (array) $tag['typeMetadata']['parameters'][1]['availableValues'];
         $this->assertSame($expected, $tag);
     }
 
-    public function test_updateContainerTag_invalidSite()
+    public function testUpdateContainerTagInvalidSite()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('idSite: An unexpected website was found');
@@ -402,7 +418,7 @@ class TagTest extends IntegrationTestCase
         $this->updateContainerTag($idSite = 999, $this->containerVersion1, $this->idTag1);
     }
 
-    public function test_updateContainerTag_invalidName()
+    public function testUpdateContainerTagInvalidName()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Name: The value contains');
@@ -410,107 +426,109 @@ class TagTest extends IntegrationTestCase
         $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, str_pad('4', Name::MAX_LENGTH + 1));
     }
 
-    public function test_updateContainerTag_invalidParameter()
+    public function testUpdateContainerTagInvalidParameter()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Custom HTML: A value needs to be provided.');
 
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => ''), array($this->idTrigger1));
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = ['customHtml' => ''], [$this->idTrigger1]);
     }
 
-    public function test_updateContainerTag_missingFireTrigger()
+    public function testUpdateContainerTagMissingFireTrigger()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Fire Trigger: A value needs to be provided.');
 
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array());
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = ['customHtml' => '<div></div>'], []);
     }
 
-    public function test_updateContainerTag_invalidFireTrigger()
+    public function testUpdateContainerTagInvalidFireTrigger()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Fire Trigger: The trigger "2"');
 
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger2));
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger2]);
     }
 
-    public function test_updateContainerTag_invalidBlockTrigger()
+    public function testUpdateContainerTagInvalidBlockTrigger()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Block Trigger: The trigger "9999"');
 
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(9999));
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [9999]);
     }
 
-    public function test_updateContainerTag_invalidFireLimit()
+    public function testUpdateContainerTagInvalidFireLimit()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Fire limit: The value "firelimit" is not allowed');
 
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), 'firelimit');
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], 'firelimit');
     }
 
-    public function test_updateContainerTag_invalidFireDelay()
+    public function testUpdateContainerTagInvalidFireDelay()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Fire delay: The value is not a number.');
 
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 'foobar99999999999');
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 'foobar99999999999');
     }
 
-    public function test_updateContainerTag_invalidPriority()
+    public function testUpdateContainerTagInvalidPriority()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Priority: The value is not a number.');
 
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, 'foobar99999999999');
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 9, 'foobar99999999999');
     }
 
-    public function test_updateContainerTag_invalidStartDate()
+    public function testUpdateContainerTagInvalidStartDate()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Start date: Date format must be');
 
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2099-43-31 14:99:99');
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2099-43-31 14:99:99');
     }
 
-    public function test_updateContainerTag_invalidEndDate()
+    public function testUpdateContainerTagInvalidEndDate()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('End date: Date format must be');
 
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2099-43-31 14:99:99');
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2099-43-31 14:99:99');
     }
 
-    public function test_updateContainerTag_endDateBeforeStartDate()
+    public function testUpdateContainerTagEndDateBeforeStartDate()
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The start date needs to be earlier than the end date');
 
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array(), Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2017-03-01 01:01:01');
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 9, '99', '2018-03-01 01:01:01', '2017-03-01 01:01:01');
     }
 
-    public function test_updateContainerTag_success()
+    public function testUpdateContainerTagSuccess()
     {
+        $description = 'Test updated description for MyUpdatedName tag';
         $this->model->setCurrentDateTime('2018-02-01 05:06:07');
-        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyUpdatedName', $parameters = array('customHtml' => '<div></div>'), array($this->idTrigger1), array($this->idTrigger3), Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, 9, '99', '2017-03-01 01:01:01', '2018-03-01 01:01:01');
+        $this->updateContainerTag($this->idSite, $this->containerVersion1, $this->idTag1, 'MyUpdatedName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [$this->idTrigger3], Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, 9, '99', '2017-03-01 01:01:01', '2018-03-01 01:01:01', $description);
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
 
-        $expected = array (
+        $expected =  [
             'idtag' => $this->idTag1,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => 'CustomHtml',
             'name' => 'MyUpdatedName',
+            'description' => $description,
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'customHtml' => '<div></div>',
                     'htmlPosition' => 'bodyEnd'
-                ),
-            'fire_trigger_ids' =>[1],
-            'block_trigger_ids' =>[3],
+                ],
+            'fire_trigger_ids' => [1],
+            'block_trigger_ids' => [3],
             'fire_limit' => 'once_lifetime',
             'priority' => 99,
             'fire_delay' => 9,
@@ -521,20 +539,20 @@ class TagTest extends IntegrationTestCase
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Feb 1, 2018 05:06:07',
             'typeMetadata' =>
-                array (
+                 [
                     'id' => 'CustomHtml',
                     'name' => 'Custom HTML',
                     'description' => 'Allows you to embed any custom HTML, for example JavaScript or CSS Styles.',
                     'category' => 'Custom',
                     'icon' => 'plugins/TagManager/images/icons/code.svg',
-                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.',
+                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.',
                     'order' => 9999,
-                    'contexts' =>['web'],
+                    'contexts' => ['web'],
                     'hasAdvancedSettings' => true,
                     'isCustomTemplate' => true,
                     'parameters' =>
-                        array (
-                            array (
+                         [
+                             [
                                 'name' => 'customHtml',
                                 'title' => 'Custom HTML',
                                 'value' => '<div></div>',
@@ -542,51 +560,57 @@ class TagTest extends IntegrationTestCase
                                 'type' => 'string',
                                 'uiControl' => 'textarea',
                                 'uiControlAttributes' =>
-                                    array (
-                                    ),
-                                'availableValues' => NULL,
+                                     [
+                                    ],
+                                'availableValues' => null,
                                 'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
                                 'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
-                                'templateFile' => 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html',
-                                'introduction' => NULL,
-                                'condition' => NULL,
-                            ),
-                            array (
+                                'templateFile' => '',
+                                'introduction' => null,
+                                'condition' => null,
+                                'fullWidth' => false,
+                                'component' => [
+                                    'plugin' => 'TagManager',
+                                    'name' => 'FieldTextareaVariable',
+                                ],
+                             ],
+                             [
                                 'name' => 'htmlPosition',
                                 'title' => 'Position',
                                 'value' => 'bodyEnd',
                                 'defaultValue' => 'bodyEnd',
                                 'type' => 'string',
                                 'uiControl' => 'select',
-                                'uiControlAttributes' => array(),
-                                'availableValues' => array(
+                                'uiControlAttributes' => [],
+                                'availableValues' => [
                                     'headStart' => 'Head Start',
                                     'headEnd' => 'Head End',
                                     'bodyStart' => 'Body Start',
                                     'bodyEnd' => 'Body End',
-                                ),
+                                ],
                                 'description' => 'Define the position of where the HTML should be inserted into your website.',
                                 'inlineHelp' => null,
                                 'templateFile' => '',
                                 'introduction' => null,
                                 'condition' => null,
-                            )
-                        ),
-                ),
-        );
+                                'fullWidth' => false,
+                             ]
+                        ],
+                ],
+        ];
 
         $tag['typeMetadata']['parameters'][1]['availableValues'] = (array) $tag['typeMetadata']['parameters'][1]['availableValues'];
         $this->assertSame($expected, $tag);
     }
 
-    public function test_getContainer()
+    public function testGetContainer()
     {
         // no need to create new test for this
-        $this->test_addContainerTag_successFull();
-        $this->test_updateContainerTag_success();
+        $this->testAddContainerTagSuccessFull();
+        $this->testUpdateContainerTagSuccess();
     }
 
-    public function test_getContainer_doesNotExist()
+    public function testGetContainerDoesNotExist()
     {
         $this->assertFalse($this->model->getContainerTag(999, $this->containerVersion1, $this->idTag1));
         $this->assertFalse($this->model->getContainerTag($this->idSite, 9999, $this->idTag1));
@@ -595,35 +619,36 @@ class TagTest extends IntegrationTestCase
         $this->assertNotEmpty($this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1));
     }
 
-    public function test_getContainer_doesNotReturnDeletedTag()
+    public function testGetContainerDoesNotReturnDeletedTag()
     {
         $this->assertNotEmpty($this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1));
         $this->model->deleteContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
         $this->assertFalse($this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1));
     }
 
-    public function test_getContainer_whenRelatedTypeNoLongerExists_ignoredTypeMetadata()
+    public function testGetContainerWhenRelatedTypeNoLongerExistsIgnoredTypeMetadata()
     {
-        $this->dao->updateTagColumns($this->idSite, $this->containerVersion1, $this->idTag1, array('type' => 'Foo'));
+        $this->dao->updateTagColumns($this->idSite, $this->containerVersion1, $this->idTag1, ['type' => 'Foo']);
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
 
-        $this->assertSame(array (
+        $this->assertSame([
             'idtag' => 1,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => 'Foo',
             'name' => 'InitialTag1',
+            'description' => '',
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'customHtml' => '<script></script>'
-                ),
+                ],
             'fire_trigger_ids' =>
-                array (1
-                ),
+                 [1
+                ],
             'block_trigger_ids' =>
-                array (
-                ),
+                 [
+                ],
             'fire_limit' => 'unlimited',
             'priority' => 9999,
             'fire_delay' => 0,
@@ -633,45 +658,45 @@ class TagTest extends IntegrationTestCase
             'updated_date' => '2018-01-01 02:03:04',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
-            'typeMetadata' => NULL,
-        ), $tag);
+            'typeMetadata' => null,
+        ], $tag);
     }
 
-    public function test_getContainerTags_noTagMatches()
+    public function testGetContainerTagsNoTagMatches()
     {
-        $this->assertSame(array(), $this->model->getContainerTags(999, $this->containerVersion1));
-        $this->assertSame(array(), $this->model->getContainerTags($this->idSite, 999));
+        $this->assertSame([], $this->model->getContainerTags(999, $this->containerVersion1));
+        $this->assertSame([], $this->model->getContainerTags($this->idSite, 999));
 
         // make sure with correct params we do get a result
         $this->assertNotEmpty($this->model->getContainerTags($this->idSite, $this->containerVersion1));
     }
 
-    public function test_getContainerTags_doesNotReturnDeleted()
+    public function testGetContainerTagsDoesNotReturnDeleted()
     {
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->model->deleteContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
-        $this->assertSame(array(), $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertSame([], $this->model->getContainerTags($this->idSite, $this->containerVersion1));
     }
 
-    public function test_getContainerTags_onlyReturnsContainersForThatSiteAndVersion()
+    public function testGetContainerTagsOnlyReturnsContainersForThatSiteAndVersion()
     {
-        $params = array('customHtml' => '<div>foo</div>');
+        $params = ['customHtml' => '<div>foo</div>'];
         $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v1', $params);
         $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v2', $params);
-        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v2', $params, array($this->idTrigger4));
-        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v3', $params, array($this->idTrigger4));
-        $this->addContainerTag($this->idSite, $this->containerVersion2, null, 'v4', $params, array($this->idTrigger2));
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v2', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v3', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite, $this->containerVersion2, null, 'v4', $params, [$this->idTrigger2]);
 
         $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
         $this->assertCount(0, $this->model->getContainerTags($this->idSite2, $this->containerVersion2));
-        $this->assertSame(array(), $this->model->getContainerTags($this->idSite2, $this->containerVersion2));
+        $this->assertSame([], $this->model->getContainerTags($this->idSite2, $this->containerVersion2));
     }
 
-    public function test_getContainerTags_formatsValues()
+    public function testGetContainerTagsFormatsValues()
     {
-        $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v1', array('customHtml' => '<div>foo</div>'));
+        $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v1', ['customHtml' => '<div>foo</div>']);
         $tags = $this->model->getContainerTags($this->idSite, $this->containerVersion1);
 
         $this->assertCount(2, $tags);
@@ -680,14 +705,14 @@ class TagTest extends IntegrationTestCase
         }
     }
 
-    public function test_deleteContainerTag()
+    public function testDeleteContainerTag()
     {
-        $params = array('customHtml' => '<div>foo</div>');
+        $params = ['customHtml' => '<div>foo</div>'];
         $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v1', $params);
         $idTag3 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v2', $params);
-        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v2', $params, array($this->idTrigger4));
-        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v3', $params, array($this->idTrigger4));
-        $this->addContainerTag($this->idSite, $this->containerVersion2, null, 'v4', $params, array($this->idTrigger2));
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v2', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v3', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite, $this->containerVersion2, null, 'v4', $params, [$this->idTrigger2]);
 
         $this->model->setCurrentDateTime('2019-03-04 03:03:03');
 
@@ -728,31 +753,32 @@ class TagTest extends IntegrationTestCase
         $this->assertSame(1, $count);
     }
 
-    public function test_updateParameters_success()
+    public function testUpdateParametersSuccess()
     {
         $this->model->setCurrentDateTime('2018-02-01 05:06:07');
-        $this->model->updateParameters($this->idSite, $this->containerVersion1, $this->idTag1, $parameters = array('customHtml' => '<div></div>'));
+        $this->model->updateParameters($this->idSite, $this->containerVersion1, $this->idTag1, $parameters = ['customHtml' => '<div></div>']);
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
-        $expected = array (
+        $expected =  [
             'idtag' => 1,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => 'CustomHtml',
             'name' => 'InitialTag1',
+            'description' => '',
             'status' => 'active',
             'parameters' =>
-                array (
+                 [
                     'customHtml' => '<div></div>',
                     'htmlPosition' => 'bodyEnd'
-                ),
+                ],
             'fire_trigger_ids' =>
-                array (
+                 [
                     1
-                ),
+                ],
             'block_trigger_ids' =>
-                array (
-                ),
+                 [
+                ],
             'fire_limit' => 'unlimited',
             'priority' => 9999,
             'fire_delay' => 0,
@@ -763,23 +789,23 @@ class TagTest extends IntegrationTestCase
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Feb 1, 2018 05:06:07',
             'typeMetadata' =>
-                array (
+                 [
                     'id' => 'CustomHtml',
                     'name' => 'Custom HTML',
                     'description' => 'Allows you to embed any custom HTML, for example JavaScript or CSS Styles.',
                     'category' => 'Custom',
                     'icon' => 'plugins/TagManager/images/icons/code.svg',
-                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.',
+                    'help' => 'The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.',
                     'order' => 9999,
                     'contexts' =>
-                        array (
+                         [
                             0 => 'web',
-                        ),
+                        ],
                     'hasAdvancedSettings' => true,
                     'isCustomTemplate' => true,
                     'parameters' =>
-                        array (
-                                array (
+                         [
+                                 [
                                     'name' => 'customHtml',
                                     'title' => 'Custom HTML',
                                     'value' => '<div></div>',
@@ -787,53 +813,59 @@ class TagTest extends IntegrationTestCase
                                     'type' => 'string',
                                     'uiControl' => 'textarea',
                                     'uiControlAttributes' =>
-                                        array (
-                                        ),
-                                    'availableValues' => NULL,
+                                         [
+                                        ],
+                                    'availableValues' => null,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
                                     'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
-                                    'templateFile' => 'plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html',
-                                    'introduction' => NULL,
-                                    'condition' => NULL,
-                                ),
-                                array (
+                                    'templateFile' => '',
+                                    'introduction' => null,
+                                    'condition' => null,
+                                    'fullWidth' => false,
+                                    'component' => [
+                                        'plugin' => 'TagManager',
+                                        'name' => 'FieldTextareaVariable',
+                                    ],
+                                 ],
+                                 [
                                     'name' => 'htmlPosition',
                                     'title' => 'Position',
                                     'value' => 'bodyEnd',
                                     'defaultValue' => 'bodyEnd',
                                     'type' => 'string',
                                     'uiControl' => 'select',
-                                    'uiControlAttributes' => array(),
-                                    'availableValues' => array(
+                                    'uiControlAttributes' => [],
+                                    'availableValues' => [
                                         'headStart' => 'Head Start',
                                         'headEnd' => 'Head End',
                                         'bodyStart' => 'Body Start',
                                         'bodyEnd' => 'Body End',
-                                    ),
+                                    ],
                                     'description' => 'Define the position of where the HTML should be inserted into your website.',
                                     'inlineHelp' => null,
                                     'templateFile' => '',
                                     'introduction' => null,
                                     'condition' => null,
-                                )
-                        ),
-                ),
-        );
+                                    'fullWidth' => false,
+                                 ]
+                        ],
+                ],
+        ];
 
         $tag['typeMetadata']['parameters'][1]['availableValues'] = (array) $tag['typeMetadata']['parameters'][1]['availableValues'];
 
         $this->assertSame($expected, $tag);
     }
 
-    public function test_updateParameters_validatesParameters()
+    public function testUpdateParametersValidatesParameters()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Custom HTML: A value needs to be provided.');
 
-        $this->model->updateParameters($this->idSite, $this->containerVersion1, $this->idTag1, $parameters = array('customHtml' => ''));
+        $this->model->updateParameters($this->idSite, $this->containerVersion1, $this->idTag1, $parameters = ['customHtml' => '']);
     }
 
-    private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = array(), $fireTriggerIds = array(1), $blockTriggerIds = array(), $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null)
+    private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '')
     {
         if (!isset($type)) {
             $type = CustomHtmlTag::ID;
@@ -850,10 +882,10 @@ class TagTest extends IntegrationTestCase
             $endDate = $this->now;
         }
 
-        return $this->model->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
+        return $this->model->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
     }
 
-    private function updateContainerTag($idSite, $idContainerVersion, $idTag, $name = 'MyName', $parameters = array(), $fireTriggerIds = array(1), $blockTriggerIds = array(), $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null)
+    private function updateContainerTag($idSite, $idContainerVersion, $idTag, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '')
     {
         if (!isset($fireLimit)) {
             $fireLimit = Tag::FIRE_LIMIT_UNLIMITED;
@@ -866,6 +898,6 @@ class TagTest extends IntegrationTestCase
             $endDate = $this->now;
         }
 
-        return $this->model->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
+        return $this->model->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
     }
 }

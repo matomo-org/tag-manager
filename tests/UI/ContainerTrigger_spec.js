@@ -60,7 +60,7 @@ describe("ContainerTrigger", function () {
             rowIndex = 3;
         }
         const selector = '.tagManagerTriggerList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action;
-        await page.waitFor(selector, { visible: true });
+        await page.waitForSelector(selector, { visible: true });
         await page.click(selector);
     }
 
@@ -77,7 +77,7 @@ describe("ContainerTrigger", function () {
 
     it('should load triggers page with some triggers', async function () {
         await page.goto(container1Base);
-        await page.waitFor(1000);
+        await page.waitForTimeout(1000);
         await capture.page(page, 'trigger_some_exist');
     });
 
@@ -97,6 +97,16 @@ describe("ContainerTrigger", function () {
         await capture.page(page, 'create_new_error');
     });
 
+    it('should show list of available variables with description tooltips', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTrigger');
+        await page.waitForNetworkIdle();
+        await selectTriggerType('DomReady');
+        await page.click('div.condition0 div.expandableSelector');
+        await page.click('ul.firstLevel > li.collection-item:first-child');
+        await capture.page(page, 'select_variable_filter');
+    });
+
     it('should be able to prefill trigger', async function () {
         await page.goto(container1Base);
         await page.click('.createNewTrigger');
@@ -108,6 +118,7 @@ describe("ContainerTrigger", function () {
 
     it('should be able to create a new trigger and show update afterwards', async function () {
         await createOrUpdateTrigger();
+      await page.waitForTimeout(250);
         await capture.page(page, 'create_new_submitted');
     });
 
@@ -120,7 +131,7 @@ describe("ContainerTrigger", function () {
     it('should be possible to edit a trigger by clicking on edit', async function () {
         await clickFirstRowTableAction('icon-edit');
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.page(page, 'edit_through_list');
     });
 
@@ -161,7 +172,7 @@ describe("ContainerTrigger", function () {
 
     it('should delete trigger when confirmed', async function () {
         await clickFirstRowTableAction('icon-delete', 3);
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await modal.clickButton(page, 'Yes');
         await page.waitForNetworkIdle();
         await capture.page(page, 'confirm_delete_trigger_confirmed');
@@ -182,7 +193,7 @@ describe("ContainerTrigger", function () {
         await page.click('.createContainerTriggerNow');
         await page.mouse.move(-10, -10);
         await page.waitForNetworkIdle();
-        await page.waitFor(200);
+        await page.waitForTimeout(200);
         await capture.page(page, 'trigger_none_exist_yet_create_now');
     });
 
@@ -207,7 +218,7 @@ describe("ContainerTrigger", function () {
     it('should load triggers page with some triggers as view user', async function () {
         permissions.setViewUser();
         await page.goto(container1Base);
-        await page.waitFor(1000);
+        await page.waitForTimeout(1000);
         await capture.page(page, 'trigger_some_exist_view_user');
     });
 

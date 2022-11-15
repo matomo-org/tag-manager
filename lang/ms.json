@@ -1,0 +1,14 @@
+{
+    "TagManager": {
+        "AddThisTagDescription": "Tambahkan butang media sosial AddThis dan banyak lagi pada tapak web anda.",
+        "AllElementsClickTriggerDescription": "Dicetuskan apabila mana-mana elemen diklik. Ia akan dicetuskan pada klik kiri, tengah dan kanan.",
+        "AllElementsClickTriggerHelp": "Dicetuskan pada sebarang klik pada mana-mana elemen. Untuk mendengar klik pada elemen tertentu atau butang klik tertentu, sila tambah syarat berdasarkan pembolehubah \"Klik\" atau pada pembolehubah \"ButangKlik\" dalam tetapan lanjutan.",
+        "AllElementsClickTriggerName": "Semua Elemen Klik",
+        "AllLinksClickTriggerDescription": "Dicetuskan apabila pautan diklik. Ia akan dicetuskan pada klik kiri, tengah dan kanan.",
+        "AllLinksClickTriggerHelp": "Dicetuskan pada sebarang klik pada mana-mana elemen. Untuk mendengar klik pada elemen tertentu atau butang klik tertentu, sila tambah syarat berdasarkan pembolehubah \"Klik\" atau pada pembolehubah \"ButangKlik\" dalam tetapan lanjutan.",
+        "AllLinksClickTriggerName": "Semua Pautan Klik",
+        "CategoryClicks": "Klik",
+        "PageUrlVariableName": "Laman URL",
+        "Version": "Versi"
+    }
+}

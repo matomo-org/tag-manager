@@ -10,6 +10,7 @@ namespace Piwik\Plugins\TagManager\Context;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Context\Storage\StorageInterface;
+use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Plugins\TagManager\Model\Salt;
@@ -59,6 +60,8 @@ abstract class BaseContext
 
     private $variables = array();
 
+    private $nestedVariableCals = [];
+
     public function __construct(VariablesProvider $variablesProvider, Variable $variableModel, Trigger $triggerModel, Tag $tagModel, Container $containerModel, StorageInterface $storage, Salt $salt)
     {
         $this->variablesProvider = $variablesProvider;
@@ -77,6 +80,8 @@ abstract class BaseContext
 
     protected function generatePublicContainer($container, $release)
     {
+        $this->nestedVariableCals = [];
+
         $idSite = $container['idsite'];
         $idContainer = $container['idcontainer'];
         $idContainerVersion = $release['idcontainerversion'];
@@ -156,6 +161,17 @@ abstract class BaseContext
 
     private function parametersToVariableJs($container, $entity)
     {
+        if (!empty($entity['name'])) {
+            $this->nestedVariableCals[] = $entity['name'];
+        }
+
+        if (count($this->nestedVariableCals) > 500) {
+            // eg MatomoConfiguration variable referencing itself in a variable like matomoUrl=https://matomo.org{{MatomoConfiguration}}
+            $entries = array_slice($this->nestedVariableCals, -3); // show last 3 entities in error message
+            $entries = array_unique($entries);
+            throw new EntityRecursionException('It seems an entity references itself or a recursion is caused in some other way. It may be related due to these entites: "'.implode(',', $entries). '". Please check if the entity references itself maybe or if a recursion might happen in another way.');
+        }
+
         $parameters = $entity['parameters'];
         $keyTemplateTypeSeparator = '____';
 
@@ -209,6 +225,11 @@ abstract class BaseContext
                 }
             }
         }
+
+        if (!empty($entity['name'])) {
+            array_pop($this->nestedVariableCals);
+        }
+
         return $vars;
     }
 
@@ -322,6 +343,8 @@ abstract class BaseContext
     {
         if (is_array($variableNameOrVariable)) {
             $variable = $variableNameOrVariable;
+        } else if (isset($this->variables[$variableNameOrVariable])) {
+            return $this->variables[$variableNameOrVariable];
         } else {
             $variable = $this->variableModel->findVariableByName($container['idsite'], $container['idcontainerversion'], $variableNameOrVariable);
         }

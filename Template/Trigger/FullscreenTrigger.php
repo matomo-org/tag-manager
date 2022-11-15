@@ -7,8 +7,8 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Trigger;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
-use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
 
@@ -28,7 +28,7 @@ class FullscreenTrigger extends BaseTrigger
     {
         return array(
             $this->makeSetting('triggerAction', 'enter', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Fire this trigger when action is';
+                $field->title = Piwik::translate('TagManager_FullscreenTriggerTriggerActionTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->validators[] = new NotEmpty();
                 $field->availableValues = array(
@@ -38,8 +38,8 @@ class FullscreenTrigger extends BaseTrigger
                 );
             }),
             $this->makeSetting('triggerLimit', 0, FieldConfig::TYPE_INT, function (FieldConfig $field) {
-                $field->title = 'Trigger limit';
-                $field->description = 'Enter "0" to trigger it each time the event occurs';
+                $field->title = Piwik::translate('TagManager_FullscreenTriggerTriggerLimitTitle');
+                $field->description = Piwik::translate('TagManager_FullscreenTriggerTriggerLimitDescription');
                 $field->validators[] = new NumberRange($min = 0);
             }),
         );

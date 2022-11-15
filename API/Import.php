@@ -9,6 +9,7 @@ namespace Piwik\Plugins\TagManager\API;
 
 use Piwik\API\Request;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Tag;
@@ -133,16 +134,21 @@ class Import
         $ecv = $exportedContainerVersion;
 
         foreach ($ecv['variables'] as $variable) {
-            Request::processRequest('TagManager.addContainerVariable', array(
-                'idSite' => $idSite,
-                'idContainer' => $idContainer,
-                'idContainerVersion' => $idContainerVersion,
-                'type' => $variable['type'],
-                'name' => $variable['name'],
-                'parameters' => $variable['parameters'],
-                'defaultValue' => $variable['default_value'],
-                'lookupTable' => $variable['lookup_table'],
-            ));
+            try {
+                Request::processRequest('TagManager.addContainerVariable', array(
+                    'idSite' => $idSite,
+                    'idContainer' => $idContainer,
+                    'idContainerVersion' => $idContainerVersion,
+                    'type' => $variable['type'],
+                    'name' => $variable['name'],
+                    'description' => $variable['description'],
+                    'parameters' => $variable['parameters'],
+                    'defaultValue' => $variable['default_value'],
+                    'lookupTable' => $variable['lookup_table'],
+                ));
+            } catch (EntityRecursionException $e){
+                throw new \Exception(Piwik::translate('TagManager_EntityRecursionExceptionForVariable', array($variable['name'] . '(' . $variable['type'] . ')')));
+            }
         }
 
         $idTriggerMapping = array();
@@ -153,6 +159,7 @@ class Import
                 'idContainerVersion' => $idContainerVersion,
                 'type' => $trigger['type'],
                 'name' => $trigger['name'],
+                'description' => $trigger['description'],
                 'parameters' => $trigger['parameters'],
                 'conditions' => $trigger['conditions'],
             ));
@@ -184,6 +191,7 @@ class Import
                 'idContainerVersion' => $idContainerVersion,
                 'type' => $tag['type'],
                 'name' => $tag['name'],
+                'description' => $tag['description'],
                 'parameters' => $tag['parameters'],
                 'fireTriggerIds' => $fireTriggerIds,
                 'blockTriggerIds' => $blockTriggerIds,

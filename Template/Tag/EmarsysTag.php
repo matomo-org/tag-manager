@@ -7,10 +7,10 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
-use Piwik\Validators\NumberRange;
 
 class EmarsysTag extends BaseTag
 {
@@ -35,34 +35,41 @@ class EmarsysTag extends BaseTag
     {
         return array(
             $this->makeSetting('merchantId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Emarsys Merchant ID';
+                $field->title = Piwik::translate('TagManager_EmarsysTagMerchantIdTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = 'Your Emarsys Merchant ID';
+                $field->description = Piwik::translate('TagManager_EmarsysTagMerchantIdDescription');
                 $field->validators[] = new NotEmpty();
-                $field->validators[] = new CharacterLength(1, 500);
+                $field->validate = function ($value) {
+                    $value = trim($value);
+                    $characterLength = new CharacterLength(1, 500);
+                    $characterLength->validate($value);
+                };
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('commandCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'category';
+                $field->title = Piwik::translate('TagManager_EmarsysTagCommandCategoryTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = 'Report the category currently browsed by the visitor.';
+                $field->description = Piwik::translate('TagManager_EmarsysTagCommandCategoryDescription');
                 $field->validators[] = new CharacterLength(0, 500);
             }),
             $this->makeSetting('commandView', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'view';
+                $field->title = Piwik::translate('TagManager_EmarsysTagCommandViewTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = 'Report a product view.';
+                $field->description = Piwik::translate('TagManager_EmarsysTagCommandViewDescription');
                 $field->validators[] = new CharacterLength(0, 500);
             }),
             $this->makeSetting('commandTag', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'tag';
+                $field->title = Piwik::translate('TagManager_EmarsysTagCommandTagTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = 'Add an arbitrary tag to the current event. The tag is collected and can be accessed later from other Emarsys products.';
+                $field->description = Piwik::translate('TagManager_EmarsysTagCommandTagDescription');
                 $field->validators[] = new CharacterLength(0, 500);
             }),
             $this->makeSetting('commandGo', '', FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'go';
+                $field->title = Piwik::translate('TagManager_EmarsysTagCommandGoTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
-                $field->description = 'Execute commands in the queue, that is, send them to the recommender service for processing.';
+                $field->description = Piwik::translate('TagManager_EmarsysTagCommandGoDescription');
             }),
         );
     }

@@ -1,6 +1,7 @@
 {
     "TagManager": {
         "CategoryClicks": "Prokliků",
+        "CategoryCustom": "Vlastní",
         "CategoryDate": "Datum",
         "CategoryDevice": "Zařízení",
         "CategoryEmail": "E-mail",
@@ -11,9 +12,11 @@
         "ComparisonGreaterThan": "je větší než",
         "ComparisonStartsWith": "začíná na",
         "Condition": "Podmínka",
+        "CreatedDate": "Datum vytvoření",
         "EndDate": "Koncové datum",
         "Filter": "Filtr",
         "LastUpdated": "Naposledy aktualizován",
+        "LearnMore": "Další informace",
         "ManageX": "Spravovat %s",
         "Change": "Změnit",
         "PageTitleVariableName": "Titulek stránky",

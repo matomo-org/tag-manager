@@ -26,6 +26,7 @@
 			<idtrigger>4</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
+			<description>My trigger1 description</description>
 			<parameters>
 				<eventName>foo</eventName>
 			</parameters>
@@ -40,6 +41,7 @@
 			<idtrigger>5</idtrigger>
 			<type>WindowLoaded</type>
 			<name>Mytrigger2</name>
+			<description />
 			<parameters>
 			</parameters>
 			<conditions>
@@ -58,6 +60,7 @@
 			<idtrigger>6</idtrigger>
 			<type>DomReady</type>
 			<name>Mytrigger3</name>
+			<description />
 			<parameters>
 			</parameters>
 			<conditions>

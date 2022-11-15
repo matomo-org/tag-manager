@@ -5,6 +5,7 @@
 	<idsite>2</idsite>
 	<type>CustomEvent</type>
 	<name>My trigger1</name>
+	<description>My trigger1 description</description>
 	<status>active</status>
 	<parameters>
 		<eventName>foo</eventName>
@@ -41,9 +42,14 @@
 				<availableValues />
 				<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
 				<inlineHelp />
-				<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+				<templateFile />
 				<introduction />
 				<condition />
+				<fullWidth>0</fullWidth>
+				<component>
+					<plugin>TagManager</plugin>
+					<name>FieldVariableTemplate</name>
+				</component>
 			</row>
 		</parameters>
 	</typeMetadata>

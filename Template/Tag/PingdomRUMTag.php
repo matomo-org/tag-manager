@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 
@@ -28,9 +29,12 @@ class PingdomRUMTag extends BaseTag
     public function getParameters() {
         return array(
             $this->makeSetting('pingdomROMId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Pingdom RUM Site ID';
-                $field->description = 'You can get the Site ID by logging into Pingdom, going to "Monitoring" and clicking on "Real User Monitoring". Every added site will get its own Site ID.';
+                $field->title = Piwik::translate('TagManager_PingdomRUMTagIdTitle');
+                $field->description = Piwik::translate('TagManager_PingdomRUMTagIdDescription');
                 $field->validators[] = new NotEmpty();
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }

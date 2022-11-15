@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Trigger;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
@@ -27,18 +28,18 @@ class TimerTrigger extends BaseTrigger
     {
         return array(
             $this->makeSetting('triggerInterval', 3000, FieldConfig::TYPE_INT, function (FieldConfig $field) {
-                $field->title = 'Trigger interval';
+                $field->title = Piwik::translate('TagManager_TimerTriggerTriggerIntervalTitle');
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new NumberRange($min = 50);
             }),
             $this->makeSetting('eventName', 'mtm.Timer', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Event Name';
-                $field->description = 'You can optionally change the name of this event. This can be useful if you have for example multiple timers on the page and want to perform different logic based on the name of the timer.';
-                $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->title = Piwik::translate('Events_EventName');
+                $field->description = Piwik::translate('TagManager_TimerTriggerEventNameDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
             }),
             $this->makeSetting('triggerLimit', 0, FieldConfig::TYPE_INT, function (FieldConfig $field) {
-                $field->title = 'Trigger limit';
-                $field->description = 'Enter "0" to not limit the trigger.';
+                $field->title = Piwik::translate('TagManager_TimerTriggerTriggerLimitTitle');
+                $field->description = Piwik::translate('TagManager_TimerTriggerTriggerLimitDescription');
                 $field->validators[] = new NumberRange($min = 0, $max = 900000);
             }),
         );

@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\NotEmpty;
@@ -29,15 +30,18 @@ class BugsnagTag extends BaseTag
     {
         return array(
             $this->makeSetting('apiKey', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'API key';
+                $field->title = Piwik::translate('TagManager_BugsnagTagApiKeyTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = "You can find your API key in your project settings from your Bugsnag dashboard.";
+                $field->description = Piwik::translate('TagManager_BugsnagTagApiKeyDescription');
                 $field->validators[] = new NotEmpty();
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('collectUserIp', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'collect user IP';
+                $field->title = Piwik::translate('TagManager_BugsnagTagCollectUserIpTitle');;
                 $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
-                $field->description = "This should be disable if you don't want to track personal information about your users.";
+                $field->description = Piwik::translate('TagManager_BugsnagTagCollectUserIpDescription');;
             }),
         );
     }

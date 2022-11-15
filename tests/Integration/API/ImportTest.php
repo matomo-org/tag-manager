@@ -11,7 +11,6 @@ namespace Piwik\Plugins\TagManager\tests\Integration;
 use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\API;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
-use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Mock\FakeAccess;

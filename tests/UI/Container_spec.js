@@ -42,7 +42,7 @@ describe("Container", function () {
     {
         await page.click('.editContainer .createButton');
         await page.waitForNetworkIdle();
-        await page.waitFor(150);
+        await page.waitForTimeout(150);
         await page.waitForNetworkIdle();
     }
 
@@ -95,6 +95,7 @@ describe("Container", function () {
     });
 
     it('should have updated the list of containers', async function () {
+        await page.evaluate(() => $('.notification .close').click());
         await cancelContainer();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'updated_back_to_list');
@@ -102,7 +103,7 @@ describe("Container", function () {
 
     it('should be possible to open install code for container', async function () {
         await page.click('#containeraaacont1 .table-action.installCode');
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await page.waitForNetworkIdle();
         await capture.modal(page, 'install_code_dialog');
     });
@@ -110,7 +111,7 @@ describe("Container", function () {
     it('should show confirm delete container dialog', async function () {
         await page.goto(generalParamsSite1 + urlBase);
         await page.click('#containeraaacont1 .table-action.icon-delete');
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.modal(page, 'confirm_delete_container');
     });
 

@@ -69,7 +69,7 @@ class TagManagerFixture extends Fixture
     {
         for ($i = 1; $i <= 5; $i++) {
             if (!self::siteCreated($i)) {
-                $idSite = self::createWebsite($this->dateTime, $ecommerce = 1, 'Site' . $i, $siteUrl = false,
+                $idSite = self::createWebsite($this->dateTime, $ecommerce = 1, 'Site' . $i, 'http://localhost/Site'.$i,
                     $siteSearch = 1, $searchKeywordParameters = null,
                     $searchCategoryParameters = null, $timezone = null, $type = 'mobileapp');
                 // we set type "mobileapp" to avoid the creation of a default container
@@ -105,14 +105,14 @@ class TagManagerFixture extends Fixture
 
         $this->api->createContainerVersion($this->idSite2, $this->idContainer2, 'container2_v1', 'Version from draft without content');
 
-        $idTrigger1Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My trigger1');
+        $idTrigger1Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My trigger1', array('eventName' => 'foo'), array(), 'My trigger1 description');
         $idTrigger2Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, WindowLoadedTrigger::ID, 'Mytrigger2', $params = array(), $conditions = array(array('actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'expected' => 'foo')));
         $idTrigger3Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, 'DomReady', 'Mytrigger3', $params = array());
 
         $this->idContainer1Version1 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v1', 'Version from draft with only triggers');
 
         $this->addContainerTag($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My Tag 1', array($idTrigger1Container1));
-        $this->addContainerTag($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, 'CustomHtml', 'My Tag 2', array($idTrigger1Container1), array($idTrigger2Container1), $params = array('customHtml' => '<script></script>'), Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, $fireDelay = 1350, $priority = 343, $startDate = '2017-01-02 03:04:05', $endDate = '2029-01-02 03:04:05');
+        $this->addContainerTag($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, 'CustomHtml', 'My Tag 2', array($idTrigger1Container1), array($idTrigger2Container1), $params = array('customHtml' => '<script></script>'), Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, $fireDelay = 1350, $priority = 343, $startDate = '2017-01-02 03:04:05', $endDate = '2029-01-02 03:04:05', 'My Tag 2 description');
         $this->addContainerTag($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, 'CustomImage', 'My Tag 3', array($idTrigger2Container1, $idTrigger3Container1), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'));
 
         $this->idContainer1Version2 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v2', 'Version from draft with tags and triggers');
@@ -123,7 +123,7 @@ class TagManagerFixture extends Fixture
         $this->idContainer1Version3 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v3', 'Version from draft with tags, triggers and variables');
         $this->idContainer1Version4 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v4_reversioned', 'new version from an older version', $this->idContainer1Version2);
 
-        $this->addContainerVariable($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My Var 3');
+        $this->addContainerVariable($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My Var 3', array('dataLayerName' => 'dataVarName'), false, [], 'My Var 3 description');
 
         $idTrigger1Container4 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My trigger4', array('eventName' => 'foo{{My Var 3}}bar{{My Var 2}}baz{{PageUrl}}yeah'));
 
@@ -171,7 +171,7 @@ class TagManagerFixture extends Fixture
         }
     }
 
-    public function addContainerTrigger($idSite, $idContainer, $idContainerVersion, $type = null, $name = 'MyName', $parameters = array('eventName' => 'foo'), $conditions = array())
+    public function addContainerTrigger($idSite, $idContainer, $idContainerVersion, $type = null, $name = 'MyName', $parameters = array('eventName' => 'foo'), $conditions = array(), $description = '')
     {
         $this->initIfNeeded();
 
@@ -179,24 +179,24 @@ class TagManagerFixture extends Fixture
             $type = CustomEventTrigger::ID;
         }
 
-        return $this->api->addContainerTrigger($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters, $conditions);
+        return $this->api->addContainerTrigger($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters, $conditions, $description);
     }
 
-    public function addContainerVariable($idSite, $idContainer, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = array('dataLayerName' => 'dataVarName'), $defaultValue = '', $lookupTable = array())
+    public function addContainerVariable($idSite, $idContainer, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = array('dataLayerName' => 'dataVarName'), $defaultValue = '', $lookupTable = array(), $description = '')
     {
         if (!isset($type)) {
             $type = DataLayerVariable::ID;
         }
 
-        return $this->api->addContainerVariable($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable);
+        return $this->api->addContainerVariable($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $description);
     }
 
-    public function updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name = 'MyName', $parameters = array(), $defaultValue = '', $lookupTable = array())
+    public function updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name = 'MyName', $parameters = array(), $defaultValue = '', $lookupTable = array(), $description = '')
     {
-        return $this->api->updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable);
+        return $this->api->updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description);
     }
 
-    public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type = null, $name = 'TagName', $fireTriggerIds = array(), $blockTriggerIds = array(), $parameters = array('customHtml' => '<p></p>'), $fireLimit = null, $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null)
+    public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type = null, $name = 'TagName', $fireTriggerIds = array(), $blockTriggerIds = array(), $parameters = array('customHtml' => '<p></p>'), $fireLimit = null, $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '')
     {
         $this->initIfNeeded();
 
@@ -207,7 +207,7 @@ class TagManagerFixture extends Fixture
             $fireLimit = Tag::FIRE_LIMIT_UNLIMITED;
         }
 
-        return $this->api->addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
+        return $this->api->addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
     }
 
     protected function initIfNeeded()

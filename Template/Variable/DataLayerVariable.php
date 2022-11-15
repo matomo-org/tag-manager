@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
@@ -29,10 +30,13 @@ class DataLayerVariable extends BaseVariable
     {
         return array(
             $this->makeSetting('dataLayerName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Data Layer Variable Name';
-                $field->description = 'The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example "object1.myPropertyOfObject1".';
+                $field->title =  Piwik::translate('TagManager_DataLayerVariableNameTitle');
+                $field->description =  Piwik::translate('TagManager_DataLayerVariableNameDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength(1, 300);
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
         );
     }

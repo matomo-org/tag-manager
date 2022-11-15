@@ -11,6 +11,7 @@
         "ComparisonGreaterThan": "on rohkem kui",
         "ComparisonStartsWith": "algab kui",
         "Condition": "Tingimus",
+        "CreatedDate": "Loomise kuupäev",
         "Filter": "Filter",
         "PageTitleVariableName": "Lehe pealkiri",
         "PageUrlVariableName": "Lehe URL",

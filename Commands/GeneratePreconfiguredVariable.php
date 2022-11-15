@@ -56,6 +56,8 @@ class GeneratePreconfiguredVariable extends GeneratePluginBase
             'You can now start implementing the preconfigured variable',
             'Enjoy!'
         ));
+
+        return 0;
     }
 
     /**

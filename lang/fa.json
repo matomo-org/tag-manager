@@ -1,6 +1,7 @@
 {
     "TagManager": {
         "CategoryClicks": "کلیک ها",
+        "CategoryCustom": "سفارشی",
         "CategoryDate": "تاریخ",
         "CategoryDevice": "وسیله",
         "CategoryEmail": "ایمیل",
@@ -11,6 +12,7 @@
         "ComparisonGreaterThan": "بیشتر است از",
         "ComparisonStartsWith": "شروع شده با",
         "Condition": "وضعیت",
+        "CreatedDate": "تاریخ ایجاد",
         "Filter": "فیلتر",
         "LearnMore": "اطلاعات بیشتر",
         "PageTitleVariableName": "عنوان صفحه",

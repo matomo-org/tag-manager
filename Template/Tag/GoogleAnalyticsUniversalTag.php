@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 
@@ -22,18 +23,22 @@ class GoogleAnalyticsUniversalTag extends BaseTag
     {
         return array(
             $this->makeSetting('propertyId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Property ID';
-                $field->description = 'For example "UA-XXXXX-Y"';
+                $field->title = Piwik::translate('TagManager_GoogleAnalyticsUniversalTagPropertyIdTitle');
+                $field->description = Piwik::translate('TagManager_GoogleAnalyticsUniversalTagPropertyIdDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
+                    $value = trim($value);
                     if (!preg_match('/^ua-\d{4,9}-\d{1,4}$/i', strval($value))) {
                         throw new \Exception('The Property ID seems to not have a valid format');
                     }
                 };
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
             }),
             $this->makeSetting('trackingType', 'pageview', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Tracking Type';
-                $field->description = 'Only the tracking type "Pageview" is currently supported.';
+                $field->title = Piwik::translate('TagManager_TrackingType');
+                $field->description = Piwik::translate('TagManager_GoogleAnalyticsUniversalTagTrackingTypeDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->validators[] = new NotEmpty();
                 $field->availableValues = array(

@@ -8,12 +8,12 @@
 
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Settings\Setting;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
-use Piwik\Validators\NumberRange;
 
 class ZendeskChatTag extends BaseTag
 {
@@ -28,14 +28,20 @@ class ZendeskChatTag extends BaseTag
     public function getParameters() {
         return array(
             $this->makeSetting('zendeskChatId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Zendesk Chat ID';
-                $field->description = 'You can get the Site ID by logging into Zendesk Chat, going to "Settings" and clicking on "Widget". The Site ID has typically about 32 characters and is the text coming directly after "https://v2.zopim.com/?", for example "123451c27295ad739e46b6b1".';
+                $field->title = Piwik::translate('TagManager_ZendeskChatTagChatIdTitle');
+                $field->description = Piwik::translate('TagManager_ZendeskChatTagChatIdDescription');
                 $field->validators[] = new NotEmpty();
-                $field->validators[] = new CharacterLength(20, 40);
                 $field->validate = function ($value, Setting $setting) {
+                    $value = trim($value);
                     if (substr($value, 0, 1) === "?") {
                         throw new \Exception("The Chat ID shouldn't include the staring '?'");
                     }
+
+                    $characterLength = new CharacterLength(20, 40);
+                    $characterLength->validate($value);
+                };
+                $field->transform = function ($value) {
+                    return trim($value);
                 };
 
             }),

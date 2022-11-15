@@ -6,6 +6,7 @@
 		<idsite>2</idsite>
 		<type>CustomHtml</type>
 		<name>My Tag 2</name>
+		<description>My Tag 2 description</description>
 		<status>active</status>
 		<parameters>
 			<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
@@ -32,7 +33,7 @@
 			<description>Allows you to embed any custom HTML, for example JavaScript or CSS Styles.</description>
 			<category>Custom</category>
 			<icon>plugins/TagManager/images/icons/code.svg</icon>
-			<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.</help>
+			<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.</help>
 			<order>9999</order>
 			<contexts>
 				<row>web</row>
@@ -52,9 +53,14 @@
 					<availableValues />
 					<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
 					<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
-					<templateFile>plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html</templateFile>
+					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
+					<component>
+						<plugin>TagManager</plugin>
+						<name>FieldTextareaVariable</name>
+					</component>
 				</row>
 				<row>
 					<name>htmlPosition</name>
@@ -76,6 +82,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 				</row>
 			</parameters>
 		</typeMetadata>
@@ -86,6 +93,7 @@
 		<idsite>2</idsite>
 		<type>CustomHtml</type>
 		<name>My Tag 1</name>
+		<description/>
 		<status>active</status>
 		<parameters>
 			<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
@@ -111,7 +119,7 @@
 			<description>Allows you to embed any custom HTML, for example JavaScript or CSS Styles.</description>
 			<category>Custom</category>
 			<icon>plugins/TagManager/images/icons/code.svg</icon>
-			<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this trigger are pretty much unlimited.</help>
+			<help>The Custom HTML tag allows you to embed any tag which is not supported yet. The possibilities with this tag are pretty much unlimited.</help>
 			<order>9999</order>
 			<contexts>
 				<row>web</row>
@@ -131,9 +139,14 @@
 					<availableValues />
 					<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
 					<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
-					<templateFile>plugins/TagManager/angularjs/form-field/field-textarea-variable-template.html</templateFile>
+					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
+					<component>
+						<plugin>TagManager</plugin>
+						<name>FieldTextareaVariable</name>
+					</component>
 				</row>
 				<row>
 					<name>htmlPosition</name>
@@ -155,6 +168,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 				</row>
 			</parameters>
 		</typeMetadata>
@@ -165,6 +179,7 @@
 		<idsite>2</idsite>
 		<type>CustomImage</type>
 		<name>My Tag 3</name>
+		<description/>
 		<status>active</status>
 		<parameters>
 			<customImageSrc>/plugins/tracking.png</customImageSrc>
@@ -211,9 +226,14 @@
 					<availableValues />
 					<description>You can define any image URL. We recommend to define a URL that starts with &quot;//&quot; so it will work on HTTP and HTTPS pages. If your website only supports HTTPS, it should start with &quot;https://&quot;.</description>
 					<inlineHelp />
-					<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
+					<component>
+						<plugin>TagManager</plugin>
+						<name>FieldVariableTemplate</name>
+					</component>
 				</row>
 				<row>
 					<name>cacheBusterEnabled</name>
@@ -230,6 +250,7 @@
 					<templateFile />
 					<introduction />
 					<condition />
+					<fullWidth>0</fullWidth>
 				</row>
 			</parameters>
 		</typeMetadata>

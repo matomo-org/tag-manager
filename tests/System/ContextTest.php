@@ -549,7 +549,8 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
             },
             'Piwik\Plugins\TagManager\Model\Salt' => function () {
                 return new Salt(sha1('foobar'));
-            }
+            },
+            'TagManagerJSMinificationEnabled' => true
         );
     }
 }

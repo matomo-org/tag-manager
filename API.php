@@ -10,13 +10,18 @@ namespace Piwik\Plugins\TagManager;
 
 use Piwik\API\Request;
 use Piwik\Common;
+use Piwik\Container\StaticContainer;
+use Piwik\Date;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\API\Export;
 use Piwik\Plugins\TagManager\API\Import;
 use Piwik\Plugins\TagManager\API\PreviewCookie;
 use Piwik\Plugins\TagManager\API\TemplateMetadata;
 use Piwik\Plugins\TagManager\Context\WebContext;
+use Piwik\Plugins\TagManager\Dao\BaseDao;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
+use Piwik\Plugins\TagManager\Dao\VariablesDao;
+use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Comparison;
 use Piwik\Plugins\TagManager\Model\Container;
@@ -32,6 +37,7 @@ use Piwik\Plugins\TagManager\Template\Trigger\TriggersProvider;
 use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
 use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
 use Exception;
+use Piwik\UrlHelper;
 
 /**
  * API for plugin Tag Manager.
@@ -111,8 +117,22 @@ class API extends \Piwik\Plugin\API
      */
     private $import;
 
-    public function __construct(Tag $tags, Trigger $triggers, Variable $variables, Container $containers, TagsProvider $tagsProvider, TriggersProvider $triggersProvider, VariablesProvider $variablesProvider, ContextProvider $contextProvider, AccessValidator $validator, Environment $environment, Comparison $comparisons, Export $export, Import $import)
+    /**
+     * @var VariablesDao
+     */
+    private $variablesDao;
+
+    private $enableGeneratePreview = true;
+
+    public function __construct(Tag $tags, Trigger $triggers, Variable $variables, Container $containers, TagsProvider $tagsProvider, TriggersProvider $triggersProvider, VariablesProvider $variablesProvider, ContextProvider $contextProvider, AccessValidator $validator, Environment $environment, Comparison $comparisons, Export $export, Import $import, VariablesDao $variablesDao)
     {
+        //Started updating xdebug.max_nesting_level as infinite loop is detected due to variable is doing a self referencing when xdebug is active and max_nesting_level is set to lower value
+        if (extension_loaded('xdebug')) {
+            $xdebugMaxNestingLevel = ini_get('xdebug.max_nesting_level');
+            if ($xdebugMaxNestingLevel && is_numeric($xdebugMaxNestingLevel) && $xdebugMaxNestingLevel < 2500) {
+                ini_set('xdebug.max_nesting_level', 2500);
+            }
+        }
         $this->tags = $tags;
         $this->triggers = $triggers;
         $this->variables = $variables;
@@ -126,6 +146,7 @@ class API extends \Piwik\Plugin\API
         $this->export = $export;
         $this->import = $import;
         $this->comparisons = $comparisons;
+        $this->variablesDao = $variablesDao;
     }
 
     /**
@@ -446,10 +467,11 @@ class API extends \Piwik\Plugin\API
      * @param int $priority       Optional, a custom priority which defines the order in which certain tags will be executed if multiple will be triggered at once. The lower the priority is, the earlier this tag may be fired.
      * @param null|string $startDate     Optional, a start date to ensure the tag will be only executed after this date. Please provide the date in UTC.
      * @param null|string $endDate       Optional, an end date to ensure the tag will not be executed after this date. Please provide the date in UTC.
+     * @param null|string $description   Optional description
      *
      * @return int The ID of the created tag.
      */
-    public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null)
+    public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -460,7 +482,7 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
-        $idTag = $this->tags->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
+        $idTag = $this->tags->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
         return $idTag;
     }
@@ -483,8 +505,9 @@ class API extends \Piwik\Plugin\API
      * @param int $priority       Optional, a custom priority which defines the order in which certain tags will be executed if multiple will be triggered at once. The lower the priority is, the earlier this tag may be fired.
      * @param null|string $startDate     Optional, a start date to ensure the tag will be only executed after this date. Please provide the date in UTC.
      * @param null|string $endDate       Optional, an end date to ensure the tag will not be executed after this date. Please provide the date in UTC.
+     * @param null|string $description   Optional description
      */
-    public function updateContainerTag($idSite, $idContainer, $idContainerVersion, $idTag, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null)
+    public function updateContainerTag($idSite, $idContainer, $idContainerVersion, $idTag, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -496,7 +519,7 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
-        $return = $this->tags->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
+        $return = $this->tags->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
         return $return;
     }
@@ -601,10 +624,11 @@ class API extends \Piwik\Plugin\API
      * @param array[] $conditions An array containing one or multiple conditions to filter when a trigger will be triggered. For example:
      *                            array(array('actual' => 'VARIABLENAME', 'comparison' => 'equals', 'expected' => 'expectedValue'))
      *                           To get a list of available comparisons, call {@link TagManager.getAvailableComparisons}
+     * @param null|string $description   Optional description
      *
      * @return int   The id of the created trigger
      */
-    public function addContainerTrigger($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $conditions = [])
+    public function addContainerTrigger($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $conditions = [], $description = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -616,7 +640,7 @@ class API extends \Piwik\Plugin\API
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
 
-        $idTrigger = $this->triggers->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions);
+        $idTrigger = $this->triggers->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $description);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
         return $idTrigger;
     }
@@ -635,8 +659,9 @@ class API extends \Piwik\Plugin\API
      * @param array[] $conditions An array containing one or multiple conditions to filter when a trigger will be triggered. For example:
      *                            array(array('actual' => 'VARIABLENAME', 'comparison' => 'equals', 'expected' => 'expectedValue'))
      *                           To get a list of available comparisons, call {@link TagManager.getAvailableComparisons}
+     * @param null|string $description   Optional description
      */
-    public function updateContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger, $name, $parameters = [], $conditions = [])
+    public function updateContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger, $name, $parameters = [], $conditions = [], $description= '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -649,7 +674,7 @@ class API extends \Piwik\Plugin\API
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
 
-        $return = $this->triggers->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions);
+        $return = $this->triggers->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
         return $return;
     }
@@ -805,10 +830,11 @@ class API extends \Piwik\Plugin\API
      * @param array[] $lookupTable An array containing one or multiple lookup configurations. For example:
      *                             array(array('match_value' => 'inval', 'comparison' => 'equals', 'out_value' => 'outval'))
      *                             For a list of available comparisons see {@link TagManager.getAvailableComparisons}
+     * @param null|string $description   Optional description
      *
      * @return int The ID of the created variable
      */
-    public function addContainerVariable($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $defaultValue = false, $lookupTable = [])
+    public function addContainerVariable($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $defaultValue = false, $lookupTable = [], $description = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -819,10 +845,29 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
+        $name = urldecode($name);
 
-        $idVariable = $this->variables->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
+        $idVariable = $this->variables->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $description);
+
+        try {
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+        } catch (EntityRecursionException $e) {
+            // we need to delete the previously added variable.... we first have to add the  variable to be able to
+            // detect recursion and simulate container generation... if it fails we delete it again
+            $this->forceDeleteVariable($idSite, $idContainerVersion, $idVariable);
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            throw $e;
+        }
+
         return $idVariable;
+    }
+
+    private function forceDeleteVariable($idSite, $idContainerVersion, $idVariable)
+    {
+        // we cannot use model here because it would trigger an error when a variable references itself
+        // that the variable cannot be deleted because it's still in use by another variable
+        $now = Date::now()->getDatetime();
+        $this->variablesDao->deleteContainerVariable($idSite, $idContainerVersion, $idVariable, $now);
     }
 
     /**
@@ -838,8 +883,9 @@ class API extends \Piwik\Plugin\API
      * @param array[] $lookupTable An array containing one or multiple lookup configurations. For example:
      *                             array(array('match_value' => 'inval', 'comparison' => 'equals', 'out_value' => 'outval'))
      *                             For a list of available comparisons see {@link TagManager.getAvailableComparisons}
+     * @param null|string $description   Optional description
      */
-    public function updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name, $parameters = [], $defaultValue = null, $lookupTable = [])
+    public function updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name, $parameters = [], $defaultValue = null, $lookupTable = [], $description = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -851,9 +897,21 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
+        $name = urldecode($name);
 
-        $return = $this->variables->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
+        $return = $this->variables->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description);
+
+        try {
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+        } catch (EntityRecursionException $e) {
+            // we need to restore the original value.... we first have to save update the original variable
+            // in order to be able to check for recursion by simulating the container... if it fails we restore original value
+            $this->variables->updateContainerVariable(
+                $variable['idsite'], $variable['idcontainerversion'], $variable['idvariable'], $variable['name'],
+                $variable['parameters'],$variable['default_value'], $variable['lookup_table']);
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            throw $e;
+        }
         return $return;
     }
 
@@ -967,7 +1025,12 @@ class API extends \Piwik\Plugin\API
             $idContainerVersion = $this->getContainerDraftVersion($idSite, $idContainer);
         }
 
-        return $this->containers->createContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
+        $this->enableGeneratePreview = false;
+        $container = $this->containers->createContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
+        // not needed to create a preview release as no actual change to container was made. Make it faster as the createContainerVersion
+        // uses "import" logic which would create a new preview release or check for recursions on every created tag/trigger/...
+        $this->enableGeneratePreview = true;
+        return $container;
     }
 
     /**
@@ -1158,6 +1221,30 @@ class API extends \Piwik\Plugin\API
 
         $cookie = new PreviewCookie();
         $cookie->disable($idSite, $idContainer);
+        $cookie->disableDebugSiteUrl();
+    }
+
+    /**
+     * Updates the debug siteurl cookie
+     *
+     * @param int $idSite The id of the site the given container belongs to
+     * @param string $idContainer  The id of a container, for example "6OMh6taM"
+     * @param string $url  The url to enable debug
+     */
+    public function changeDebugUrl($idSite, $url)
+    {
+        $this->accessValidator->checkWriteCapability($idSite);
+        if (
+            !filter_var($url, FILTER_VALIDATE_URL)
+            || stripos($url, 'http') !== 0
+            || !UrlHelper::isLookLikeSafeUrl($url)
+            || !UrlHelper::isLookLikeUrl($url)
+        ) {
+            throw new Exception(Piwik::translate('TagManager_InvalidDebugUrl'));
+        }
+
+        $previewCookie = new PreviewCookie();
+        $previewCookie->enableDebugSiteUrl($url);
     }
 
     /**
@@ -1227,13 +1314,33 @@ class API extends \Piwik\Plugin\API
         }
 
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+        $this->enableGeneratePreview = false;
         $this->import->importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion);
+        $this->enableGeneratePreview = true;
+        $this->updateContainerPreviewRelease($idSite, $idContainer);
     }
 
     private function updateContainerPreviewRelease($idSite, $idContainer)
     {
+        if (!$this->enableGeneratePreview) {
+            return;
+        }
         if ($this->containers->hasPreviewRelease($idSite, $idContainer)) {
             $this->containers->generateContainer($idSite, $idContainer);
+        } else {
+            // we simulate generate the container to possibly detect if a variable references itself. as there might not be
+            // any release and because we only want to simulate the current version we create a "fake" preview release
+            $simulatorContext = StaticContainer::get(SimulatorContext::class);
+            $container = $this->getContainer($idSite, $idContainer);
+            $container['releases'] = [[
+                'idcontainerrelease' => '',
+                'idcontainer' => $container['idcontainer'],
+                'idcontainerversion' => $this->getContainerDraftVersion($idSite, $idContainer),
+                'environment' => Environment::ENVIRONMENT_PREVIEW,
+                'release_login' => Piwik::getCurrentUserLogin(),
+                'status' => BaseDao::STATUS_ACTIVE,
+            ]];
+            $simulatorContext->generate($container);
         }
     }
 

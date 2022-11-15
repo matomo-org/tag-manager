@@ -77,7 +77,81 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $this->accessValidator->checkWriteCapability($this->idSite);
 
-        return $this->renderManageContainerTemplate('dashboard');
+        $dashboardHelpText = $this->renderTemplate('helpContent', [
+            'subHeading' => Piwik::translate('TagManager_DashboardHelp1'),
+            'paragraphs' => [
+                Piwik::translate('TagManager_DashboardHelp2'),
+                Piwik::translate('TagManager_DashboardHelp3'),
+                Piwik::translate('TagManager_DashboardHelp4', [
+                    '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                ]),
+            ]
+        ]);
+
+        $tagsHelpText = $this->renderTemplate('helpContent', [
+            'paragraphs' => [
+                Piwik::translate('TagManager_DashboardTagsHelp1', [
+                    '<a href="https://matomo.org/guide/tag-manager/tags/" rel="noreferrer noopener" target="_blank">',
+                    '</a>'
+                ]),
+                Piwik::translate('TagManager_DashboardTagsHelp2'),
+                Piwik::translate('TagManager_DashboardTagsHelp3', [
+                    '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                ]),
+            ]
+        ]);
+
+        $triggersHelpText = $this->renderTemplate('helpContent', [
+            'paragraphs' => [
+                Piwik::translate('TagManager_DashboardTriggersHelp1', [
+                    '<a href="https://matomo.org/guide/tag-manager/triggers/" rel="noreferrer noopener" target="_blank">',
+                    '</a>'
+                ]),
+                Piwik::translate('TagManager_DashboardTriggersHelp2'),
+                Piwik::translate('TagManager_DashboardTriggersHelp3', [
+                    '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                ]),
+            ]
+        ]);
+
+        $variablesHelpText = $this->renderTemplate('helpContent', [
+            'paragraphs' => [
+                Piwik::translate('TagManager_DashboardVariablesHelp1', [
+                    '<a href="https://matomo.org/guide/tag-manager/variables/" rel="noreferrer noopener" target="_blank">',
+                    '</a>'
+                ]),
+                Piwik::translate('TagManager_DashboardVariablesHelp2'),
+                Piwik::translate('TagManager_DashboardVariablesHelp3', [
+                    '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                ]),
+            ]
+        ]);
+
+        $versionsHelpText = $this->renderTemplate('helpContent', [
+            'paragraphs' => [
+                Piwik::translate('TagManager_DashboardVersionsHelp1', [
+                    '<a href="https://matomo.org/guide/tag-manager/versions-and-publish/" rel="noreferrer noopener" target="_blank">',
+                    '</a>'
+                ]),
+                Piwik::translate('TagManager_DashboardVersionsHelp2'),
+                Piwik::translate('TagManager_DashboardVersionsHelp3', [
+                    '<a href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                ]),
+            ]
+        ]);
+
+        return $this->renderManageContainerTemplate('dashboard', [
+            'dashboardHelpText' => $dashboardHelpText,
+            'tagsHelpText' => $tagsHelpText,
+            'triggersHelpText' => $triggersHelpText,
+            'variablesHelpText' => $variablesHelpText,
+            'versionsHelpText' => $versionsHelpText,
+        ]);
     }
 
     public function gettingStarted()
@@ -93,25 +167,90 @@ class Controller extends \Piwik\Plugin\Controller
 
     public function manageTags()
     {
-        return $this->renderManageContainerTemplate('manageTags');
+        $tagsHelpText = $this->renderTemplate('helpContent', [
+            'subHeading' => Piwik::translate('TagManager_ManageTagsHelp1'),
+            'paragraphs' => [
+                Piwik::translate('TagManager_ManageTagsHelp2'),
+                Piwik::translate('TagManager_ManageTagsHelp3', [
+                    '<a href="https://matomo.org/guide/tag-manager/tags/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                    '<a href="https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                    '<a href="https://matomo.org/tag-manager-training/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                ]),
+            ]
+        ]);
+
+        return $this->renderManageContainerTemplate('manageTags', [ 'tagsHelpText' => $tagsHelpText ]);
     }
 
     public function manageTriggers()
     {
-        return $this->renderManageContainerTemplate('manageTriggers');
+        $triggersHelpText = $this->renderTemplate('helpContent', [
+            'subHeading' => Piwik::translate('TagManager_ManageTriggersHelp1'),
+            'paragraphs' => [
+                Piwik::translate('TagManager_ManageTriggersHelp2'),
+                Piwik::translate('TagManager_ManageTriggersHelp3', [
+                    '<a href="https://matomo.org/guide/tag-manager/triggers/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                    '<a href="https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                    '<a href="https://matomo.org/tag-manager-training/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                ]),
+            ]
+        ]);
+
+        return $this->renderManageContainerTemplate('manageTriggers', [
+            'triggersHelpText' => $triggersHelpText
+        ]);
     }
 
     public function manageVariables()
     {
-        return $this->renderManageContainerTemplate('manageVariables');
+        $variablesHelpText = $this->renderTemplate('helpContent', [
+            'subHeading' => Piwik::translate('TagManager_ManageVariablesHelp1'),
+            'paragraphs' => [
+                Piwik::translate('TagManager_ManageVariablesHelp2'),
+                Piwik::translate('TagManager_ManageVariablesHelp3', [
+                    '<a href="https://matomo.org/guide/tag-manager/variables/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                    '<a href="https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                    '<a href="https://matomo.org/tag-manager-training/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                ]),
+            ]
+        ]);
+
+        return $this->renderManageContainerTemplate('manageVariables', [
+            'variablesHelpText' => $variablesHelpText
+        ]);
     }
 
     public function manageVersions()
     {
         $path = TagManager::getAbsolutePathToContainerDirectory();
         Filechecks::dieIfDirectoriesNotWritable(array($path));
+        $versionsHelpText = $this->renderTemplate('helpContent', [
+            'subHeading' => Piwik::translate('TagManager_ManageVersionsHelp1'),
+            'paragraphs' => [
+                Piwik::translate('TagManager_ManageVersionsHelp2'),
+                Piwik::translate('TagManager_ManageVersionsHelp3', [
+                    '<a href="https://matomo.org/guide/tag-manager/versions-and-publish/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                    '<a href="https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                    '<a href="https://matomo.org/tag-manager-training/" rel="noreferrer noopener" target="_blank">',
+                    '</a>',
+                ]),
+            ]
+        ]);
 
-        return $this->renderManageContainerTemplate('manageVersions');
+        return $this->renderManageContainerTemplate('manageVersions', [
+            'versionsHelpText' => $versionsHelpText
+        ]);
     }
 
     public function releases()
@@ -157,8 +296,23 @@ class Controller extends \Piwik\Plugin\Controller
 
                 $mtmPreviewId = PreviewCookie::COOKIE_NAME . '=' .$idContainer;
                 $mtmPreviewId = SafeDecodeLabel::decodeLabelSafe($mtmPreviewId);
-                $disableLink = '<a class="title disablePreviewDebug" onclick=\'tagManagerHelper.disablePreviewMode(' . json_encode($release['idcontainer']) . ')\'>' . Piwik::translate('TagManager_DisablePreview') .'</a>';
-                $notification = new Notification(Piwik::translate('TagManager_PreviewDebugEnabledNotification', array($version, '<strong>', '</strong>', '<strong>?' . $mtmPreviewId . '</strong>', '<strong>&' . $mtmPreviewId . '</strong>', $disableLink)));
+                $previewCookie = new PreviewCookie();
+                $debugSiteUrl = $previewCookie->getDebugSiteUrl();
+                $previewUrl = '';
+                if (!empty($debugSiteUrl)) {
+                    $previewUrl = $debugSiteUrl . (stripos($debugSiteUrl, '?') !== False ? '&' : '?') . $mtmPreviewId;
+                }
+
+                $notificationMessage = $this->renderTemplate('previewDebugNotification.twig', array(
+                        'idcontainer' => $release['idcontainer'],
+                        'debugSiteUrl' => $debugSiteUrl,
+                        'version' => $version,
+                        'mtmPreviewId' => $mtmPreviewId,
+                        'previewUrl' => $previewUrl
+                    )
+                );
+
+                $notification = new Notification($notificationMessage);
                 $notification->context = Notification::CONTEXT_INFO;
                 $notification->raw = true;
                 NotificationManager::notify('previewDebugMode', $notification);

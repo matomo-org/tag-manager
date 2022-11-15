@@ -8,11 +8,10 @@
 // the first table row can for some reason can have height that varies randomly by 1px.
 // hardcoding to 78px here for screenshot tests.
 exports.setTableRowHeight = async function (page) {
-    await page.evaluate(() => {
-        $('table tr').each(function () {
-            $(this).css('height', '78px');
-        });
-    });
+  await page.waitForSelector('#content .card-content');
+  await page.webpage.addStyleTag({
+    content: 'table tr { height: 78px; }',
+  });
 };
 
 exports.selector = async function (page, screenshotName, selector)
@@ -47,9 +46,9 @@ exports.notification = async function (page, screenshotName)
 exports.modal = async function (page, screenshotName)
 {
     await page.waitForNetworkIdle();
-    await page.waitFor(500); // ensure animation is finished
+    await page.waitForTimeout(500); // ensure animation is finished
 
-    pageWrap = await page.$('.modal.open');
+    pageWrap = await page.waitForSelector('.modal.open');
 
     await exports.setTableRowHeight(page);
     expect(await pageWrap.screenshot()).to.matchImage(screenshotName);

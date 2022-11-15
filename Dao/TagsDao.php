@@ -12,6 +12,7 @@ use Piwik\Db;
 use Piwik\DbHelper;
 use Piwik\Piwik;
 use Exception;
+use Piwik\Plugins\TagManager\Input\Description;
 use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Model\Tag;
 
@@ -27,6 +28,7 @@ class TagsDao extends BaseDao implements TagManagerDao
                   `idsite` int(11) UNSIGNED NOT NULL,
                   `type` VARCHAR(50) NOT NULL,
                   `name` VARCHAR(" . Name::MAX_LENGTH . ") NOT NULL,
+                  `description` VARCHAR(" . Description::MAX_LENGTH . ") NOT NULL,
                   `status` VARCHAR(10) NOT NULL,
                   `parameters` MEDIUMTEXT NOT NULL DEFAULT '',
                   `fire_trigger_ids` TEXT NOT NULL DEFAULT '',
@@ -57,7 +59,7 @@ class TagsDao extends BaseDao implements TagManagerDao
         return !empty($idSite);
     }
 
-    public function createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate)
+    public function createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description = '')
     {
         if ($this->isNameInUse($idSite, $idContainerVersion, $name)) {
             throw new Exception(Piwik::translate('TagManager_ErrorNameDuplicate'));
@@ -69,6 +71,7 @@ class TagsDao extends BaseDao implements TagManagerDao
             'status' => self::STATUS_ACTIVE,
             'type' => $type,
             'name' => $name,
+            'description' => $description,
             'parameters' => $parameters,
             'fire_trigger_ids' => $fireTriggerIds,
             'block_trigger_ids' => $blockTriggerIds,
@@ -144,6 +147,22 @@ class TagsDao extends BaseDao implements TagManagerDao
     }
 
     /**
+     * @param int $idSite
+     * @param int $idContainerVersion
+     * @param string $tagType The type of tag to filter by, such as 'Matomo', 'CustomHtml', ...
+     * @return array
+     */
+    public function getContainerTagIdsByType($idSite, $idContainerVersion, $tagType)
+    {
+        $bind = [self::STATUS_ACTIVE, $idSite, $idContainerVersion, $tagType];
+
+        $table = $this->tablePrefixed;
+        $tags = Db::fetchAll("SELECT idtag FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? and type = ? ORDER BY priority, created_date ASC", $bind);
+
+        return is_array($tags) && count($tags) ? array_column($tags,'idtag') : [];
+    }
+
+    /**
      * @param $idSite
      * @param $idContainerVersion
      * @param $idTag
@@ -155,6 +174,22 @@ class TagsDao extends BaseDao implements TagManagerDao
         $table = $this->tablePrefixed;
         $bind = array(self::STATUS_ACTIVE, $idTag, $idContainerVersion, $idSite);
         $tag = Db::fetchRow("SELECT * FROM $table WHERE status = ? and idtag = ? and idcontainerversion = ? and idsite = ?", $bind);
+
+        return $this->enrichTag($tag);
+    }
+
+    /**
+     * @param $idSite
+     * @param $idContainerVersion
+     * @param $idTag
+     * @return array|false
+     * @throws \Exception
+     */
+    public function getContainerTagAnyStatus($idSite, $idContainerVersion, $idTag)
+    {
+        $table = $this->tablePrefixed;
+        $bind = array($idTag, $idContainerVersion, $idSite);
+        $tag = Db::fetchRow("SELECT * FROM $table WHERE idtag = ? and idcontainerversion = ? and idsite = ?", $bind);
 
         return $this->enrichTag($tag);
     }
@@ -200,13 +235,7 @@ class TagsDao extends BaseDao implements TagManagerDao
         }
 
         usort($tags, function ($tagA, $tagB) use ($tags) {
-            if ($tagA['priority'] === $tagB['priority']) {
-                // for php5 making sure to have same sort order as on php7
-                $indexA = array_search($tagA, $tags);
-                $indexB = array_search($tagB, $tags);
-                return $indexA - $indexB;
-            }
-            return $tagA['priority'] > $tagB['priority'];
+            return strcasecmp($tagA['priority'], $tagB['priority']);
         });
 
         return $tags;

@@ -58,7 +58,7 @@ describe("TagManager", function () {
 
     it('should open container selector and show no containers exist', async function () {
         await page.click('.tagContainerSelector');
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.selector(page, 'top_controls_no_container_exists_open', selectorContainerOpen);
     });
 
@@ -69,7 +69,7 @@ describe("TagManager", function () {
 
     it('should open container selector and show available containers', async function () {
         await page.click('.tagContainerSelector');
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.selector(page, 'top_controls_container_empty_open', selectorContainerOpen);
     });
 
@@ -77,7 +77,7 @@ describe("TagManager", function () {
         await page.goto(containerEmpty);
         await (await page.jQuery('#secondNavBar .item:contains(Install Code)')).click();
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.modal(page, 'install_code_without_content');
     });
 
@@ -87,15 +87,41 @@ describe("TagManager", function () {
             $('#secondNavBar .item:contains(Preview)').click();
         });
         await page.waitForNetworkIdle();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await page.waitForNetworkIdle();
         await capture.page(page, 'preview_enable');
+    });
+
+    it('should change debug URL', async function () {
+        await page.evaluate(function() {
+            $('#previewDebugUrl').val('https://example.com');
+        });
+        await page.evaluate(function() {
+            $('[data-debug-site-url]').click();
+        });
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'change_debug_url');
+    });
+
+    it('should show error for invalid debug URL', async function () {
+        await page.evaluate(function() {
+          $('#previewDebugUrl').val('javascript:alert(123456);//');
+        });
+        await page.evaluate(function() {
+          $('[data-debug-site-url]').click();
+        });
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'invalid_debug_url');
     });
 
     it('should be able to disable preview', async function () {
         await page.click('#notificationContainer .disablePreviewDebug');
         await page.waitForNetworkIdle();
-        await page.waitFor('#content .card-content', { visible: true });
+        await page.waitForSelector('#content .card-content', { visible: true });
         await capture.page(page, 'preview_disable');
     });
 
@@ -106,14 +132,14 @@ describe("TagManager", function () {
 
     it('should show no containers exist in top bar', async function () {
         await page.click('.tagContainerSelector');
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.selector(page, 'top_controls_container_with_entries_open', selectorContainerOpen);
     });
 
     it('should be able to show install code page for container with content', async function () {
         await page.goto(containerWithEntries);
         await (await page.jQuery('#secondNavBar .item:contains(Install Code)')).click();
-        await page.waitFor(250);
+        await page.waitForTimeout(250);
         await capture.modal(page, 'install_code_with_content');
     });
 
@@ -123,7 +149,7 @@ describe("TagManager", function () {
             $('#secondNavBar .item:contains(Publish)').click();
         });
         await page.waitForNetworkIdle();
-        await page.waitFor(500);
+        await page.waitForTimeout(500);
         await capture.modal(page, 'publish_with_content');
     });
 

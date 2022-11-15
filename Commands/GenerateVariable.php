@@ -57,6 +57,8 @@ class GenerateVariable extends GeneratePluginBase
             'You can now start implementing the variable',
             'Enjoy!'
         ));
+
+        return 0;
     }
 
     /**
