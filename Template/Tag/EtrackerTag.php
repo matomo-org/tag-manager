@@ -129,8 +129,8 @@ class EtrackerTag extends BaseTag
                 $field->condition = 'trackingType == "event"';
             }),
             $this->makeSetting('etrackerTransactionType', 'sale', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'etracker Order Status';
-                $field->description = 'Sale / Lead / Partial Cancellation / Cancellation';
+                $field->title = Piwik::translate('TagManager_EtrackerTagTransactionTypeTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagTransactionTypeDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->condition = 'trackingType == "transaction"';
                 $field->availableValues = array(
@@ -144,8 +144,8 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerTransactionID', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'etracker Order number';
-                $field->description = 'Order ID, transaction id or similar - max 50 chars';
+                $field->title = Piwik::translate('TagManager_EtrackerTagTransactionIDTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagTransactionIDDescription');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "transaction"';
                 if ($trackingType->getValue() === 'transaction') {
@@ -153,8 +153,8 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerTransactionValue', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Order Value';
-                $field->description = 'Order Value';
+                $field->title = Piwik::translate('TagManager_EtrackerTagTransactionValueTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagTransactionValueDescription');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "transaction"';
                 if ($trackingType->getValue() === 'transaction') {
@@ -162,8 +162,8 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerTransactionCurrency', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Currency';
-                $field->description = 'Currency of the order according to ISO 4217 e.g.: EUR or USD';
+                $field->title = Piwik::translate('TagManager_EtrackerTagTransactionCurrencyTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagTransactionCurrencyDescription');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "transaction"';
                 if ($trackingType->getValue() === 'transaction') {
@@ -171,8 +171,8 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerTransactionBasket', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Basket';
-                $field->description = 'dataLayer object of basket - according to etracker reference';
+                $field->title = Piwik::translate('TagManager_EtrackerTagTransactionBasketTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagTransactionBasketDescription');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "transaction"';
                 if ($trackingType->getValue() === 'transaction') {
@@ -180,31 +180,34 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerTransactionCustomerGroup', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Customer Group';
-                $field->description = 'optional, e.g. new customer, existing customer, big buyer, VIP';
+                $field->title = Piwik::translate('TagManager_EtrackerTagTransactionCustomerGroupTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagTransactionCustomerGroupDescription');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "transaction"';
             }),
             $this->makeSetting('etrackerTransactionDeliveryConditions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Delivery Conditions';
-                $field->description = 'optional, e.g. Delivery to the kerb, Setup on site, Delivery to the pick-up station/parcel shop/branch';
+                $field->title = Piwik::translate('TagManager_EtrackerTagTransactionDeliveryConditionsTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagTransactionDeliveryConditionsDescription');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "transaction"';
             }),
             $this->makeSetting('etrackerTransactionPaymentConditions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = Piwik::translate('TagManager_EtrackerTagTransactionPaymentConditionsTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagTransactionPaymentConditionsDescription');
                 $field->title = 'Payment Conditions';
                 $field->description = 'optional, e.g. Special payment targets, Cash discount, Payment in instalments';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "transaction"';
             }),
             $this->makeSetting('etrackerTransactionDebugMode', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) use ($trackingType) {
+                $field->title = Piwik::translate('TagManager_EtrackerTagTransactionDebugModeTitle');
                 $field->title = 'etracker Ecommerce Debug Mode';
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "transaction"';
             }),
             $this->makeSetting('etrackerAddToCartProduct', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Product object';
-                $field->description = 'dataLayer object of the product - according to etracker reference';
+                $field->title = Piwik::translate('TagManager_EtrackerTagAddToCartProductTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagAddToCartProductDescription');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "addtocart"';
                 if ($trackingType->getValue() === 'addtocart') {
@@ -212,8 +215,8 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerAddToCartNumber', '1', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Number';
-                $field->description = 'Number of products added to the cart';
+                $field->title = Piwik::translate('TagManager_EtrackerTagAddToCartNumberTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagAddToCartNumberDescription');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "addtocart"';
                 if ($trackingType->getValue() === 'addtocart') {
@@ -221,8 +224,8 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerFormType', 'formConversion', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'etracker Form Type';
-                $field->description = 'Conversion / Form View / Field View / Field Interaction / Field Error';
+                $field->title = Piwik::translate('TagManager_EtrackerTagFormTypeTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagFormTypeDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->condition = 'trackingType == "form"';
                 $field->availableValues = array(
@@ -237,8 +240,8 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerFormName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Form Name';
-                $field->description = 'Form Name titles the report of the form which is tracked';
+                $field->title = Piwik::translate('TagManager_EtrackerTagFormNameTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagFormNameDescription');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "form"';
                 if ($trackingType->getValue() === 'form') {
@@ -246,8 +249,8 @@ class EtrackerTag extends BaseTag
                 }
             }),
             $this->makeSetting('etrackerFormData', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
-                $field->title = 'Form Data';
-                $field->description = 'eg. form section information. If used, a string is required';
+                $field->title = Piwik::translate('TagManager_EtrackerTagFormDataTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerTagFormDataDescription');
                 $field->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
                 $field->condition = 'trackingType == "form"';
             })
