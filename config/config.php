@@ -1,11 +1,14 @@
 <?php
 
+use Matomo\Dependencies\DI;
+use Matomo\Dependencies\Psr\Container\ContainerInterface;
+
 return array(
     'TagManagerContainerStorageDir' => function () {
         // the location where we store the generated javascript or json container files
         return '/js';
     },
-    'TagManagerContainerWebDir' => function (\Psr\Container\ContainerInterface $c) {
+    'TagManagerContainerWebDir' => function (ContainerInterface $c) {
         // the path under which the containers are available through the web. this may be different to the storage
         // path if using eg htaccess rewrites
         return $c->get('TagManagerContainerStorageDir');
@@ -18,7 +21,7 @@ return array(
     'fileintegrity.ignore' => DI\add(array(
         DI\get('fileintegrityIgnoreTagManager')
     )),
-    'fileintegrityIgnoreTagManager' => function (\Psr\Container\ContainerInterface $c) {
+    'fileintegrityIgnoreTagManager' => function (ContainerInterface $c) {
         $start = trim($c->get('TagManagerContainerStorageDir'), '/');
         return $start . '/' . $c->get('TagManagerContainerFilesPrefix') . '*.js';
     },

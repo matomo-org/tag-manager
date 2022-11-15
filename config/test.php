@@ -1,5 +1,7 @@
 <?php
 
+use Matomo\Dependencies\DI;
+
 return array(
     'Piwik\Plugins\TagManager\Context\Storage\StorageInterface' => DI\autowire('Piwik\Plugins\TagManager\Context\Storage\Memory'),
     'Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator' => DI\decorate(function ($previous) {
