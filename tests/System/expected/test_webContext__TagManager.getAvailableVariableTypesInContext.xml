@@ -970,7 +970,7 @@
 						<introduction />
 						<condition>!requireConsent &amp;&amp; !requireCookieConsent</condition>
 						<fullWidth>0</fullWidth>
-					</row>				
+					</row>
 					<row>
 						<name>requireConsent</name>
 						<title>Require tracking consent</title>
@@ -1038,7 +1038,7 @@
 						<introduction />
 						<condition>customCookieTimeOutEnable == true</condition>
 						<fullWidth>0</fullWidth>
-					</row>	
+					</row>
 					<row>
 						<name>setSecureCookie</name>
 						<title>Enable Secure Cookie</title>

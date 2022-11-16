@@ -5,7 +5,7 @@
 	<idsite>2</idsite>
 	<type>CustomHtml</type>
 	<name>My Tag 1</name>
-	<description/>
+	<description />
 	<status>active</status>
 	<parameters>
 		<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>

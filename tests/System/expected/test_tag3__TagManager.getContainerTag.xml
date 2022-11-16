@@ -5,7 +5,7 @@
 	<idsite>2</idsite>
 	<type>CustomImage</type>
 	<name>My Tag 3</name>
-	<description/>
+	<description />
 	<status>active</status>
 	<parameters>
 		<customImageSrc>/plugins/tracking.png</customImageSrc>
