@@ -515,6 +515,9 @@
 							<pageview>Pageview</pageview>
 							<wrapper>Wrapper</wrapper>
 							<event>Event</event>
+							<transaction>Transaction</transaction>
+							<addtocart>eCommerce Event - Add to cart</addtocart>
+							<form>Form Tracking</form>
 						</availableValues>
 						<description>Choose which action should be executed when this tag is fired.</description>
 						<inlineHelp />
@@ -538,7 +541,7 @@
 						<inlineHelp />
 						<templateFile />
 						<introduction />
-						<condition>trackingType != &quot;event&quot;</condition>
+						<condition>trackingType == &quot;pageview&quot; || trackingType ==&quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
@@ -796,6 +799,255 @@
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
 						</component>
+					</row>
+					<row>
+						<name>etrackerTransactionType</name>
+						<title>etracker Order Status</title>
+						<value>sale</value>
+						<defaultValue>sale</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<sale>Sale</sale>
+							<lead>Lead</lead>
+							<cancellation>Cancellation</cancellation>
+							<partial_cancellation>Partial Cancellation</partial_cancellation>
+						</availableValues>
+						<description>Sale / Lead / Partial Cancellation / Cancellation</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>trackingType == &quot;transaction&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerTransactionID</name>
+						<title>etracker Order number</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Order ID, transaction id or similar - max 50 chars</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;transaction&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerTransactionValue</name>
+						<title>Order Value</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Order Value</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;transaction&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerTransactionCurrency</name>
+						<title>Currency</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Currency of the order according to ISO 4217 e.g.: EUR or USD</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;transaction&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerTransactionBasket</name>
+						<title>Basket</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>dataLayer object of basket - according to etracker reference</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;transaction&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerTransactionCustomerGroup</name>
+						<title>Customer Group</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>optional, e.g. new customer, existing customer, big buyer, VIP</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;transaction&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerTransactionDeliveryConditions</name>
+						<title>Delivery Conditions</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>optional, e.g. Delivery to the kerb, Setup on site, Delivery to the pick-up station/parcel shop/branch</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;transaction&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerTransactionPaymentConditions</name>
+						<title>Payment Conditions</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>optional, e.g. Special payment targets, Cash discount, Payment in instalments</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;transaction&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerTransactionDebugMode</name>
+						<title>etracker Ecommerce Debug Mode</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;transaction&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerAddToCartProduct</name>
+						<title>Product object</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>dataLayer object of the product - according to etracker reference</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;addtocart&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerAddToCartNumber</name>
+						<title>Number</title>
+						<value>1</value>
+						<defaultValue>1</defaultValue>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Number of products added to the cart</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;addtocart&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerFormType</name>
+						<title>etracker Form Type</title>
+						<value>formConversion</value>
+						<defaultValue>formConversion</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<formConversion>Conversion</formConversion>
+							<formView>Form View</formView>
+							<formFieldsView>Field View</formFieldsView>
+							<formFieldInteraction>Field Interaction</formFieldInteraction>
+							<formFieldError>Field Error</formFieldError>
+						</availableValues>
+						<description>Conversion / Form View / Field View / Field Interaction / Field Error</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>trackingType == &quot;form&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerFormName</name>
+						<title>Form Name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Form Name titles the report of the form which is tracked</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;form&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>etrackerFormData</name>
+						<title>Form Data</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>eg. form section information. If used, a string is required</description>
+						<inlineHelp />
+						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+						<introduction />
+						<condition>trackingType == &quot;form&quot;</condition>
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
