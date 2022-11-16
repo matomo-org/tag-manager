@@ -846,7 +846,7 @@
         "ScrollReachTriggerPixelsTitle": "Pixels",
         "ScrollReachTriggerPixelsDescription": "The amount in pixels that needs to be visible of this element depending on the selected scroll match type.",
         "ScrollReachTriggerPercentageTitle": "Percentage",
-        "ScrollReachTriggerPercentageDescription": "You can specify any number between 1 and 100. If you specify 50, then it means the element needs to be at least 50% visible depending on the scroll match type.",
+        "ScrollReachTriggerPercentageDescription": "You can specify any number between 1 and 100. If you specify 50, then it means the element needs to be at least 50%% visible depending on the scroll match type.",
         "TimerTriggerTriggerIntervalTitle": "Trigger interval",
         "TimerTriggerEventNameDescription": "You can optionally change the name of this event. This can be useful if you have for example multiple timers on the page and want to perform different logic based on the name of the timer.",
         "TimerTriggerTriggerLimitTitle": "Trigger limit",
