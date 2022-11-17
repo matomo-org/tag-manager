@@ -14,6 +14,9 @@ export default createAngularJsAdapter({
     idContainer: {
       angularJsBind: '@',
     },
+    versionsHelpText: {
+      angularJsBind: '@',
+    },
   },
   directiveName: 'piwikVersionManage',
 });

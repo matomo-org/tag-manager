@@ -11,6 +11,7 @@ import { AjaxHelper } from 'CoreHome';
 interface Environment {
   id: string;
   name: string;
+  disabled: boolean;
 }
 
 interface AvailableEnvironmentStoreState {
@@ -32,7 +33,8 @@ class AvailableEnvironmentStore {
 
   readonly environmentsWithPublishOptions = computed(
     () => this.environmentsWithPublish.value.map(
-      ({ id, name }) => ({ key: id, value: name }),
+      // eslint-disable-next-line
+      ({ id, name, disabled }) => ({ key: id, value: name, disabled: false }),
     ),
   );
 

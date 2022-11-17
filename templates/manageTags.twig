@@ -3,6 +3,8 @@
 {% set title = 'TagManager_Tags'|translate %}
 
 {% block content %}
-    <div piwik-tag-manage id-container="{{ container.idcontainer }}" id-container-version="{{ idcontainerversion }}">
+    <div piwik-tag-manage id-container="{{ container.idcontainer }}"
+         id-container-version="{{ idcontainerversion }}"
+         tags-help-text="{{ tagsHelpText }}">
     </div>
 {% endblock %}

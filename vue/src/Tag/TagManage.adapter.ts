@@ -20,6 +20,9 @@ export default createAngularJsAdapter({
     idContainer: {
       angularJsBind: '@',
     },
+    tagsHelpText: {
+      angularJsBind: '@',
+    },
   },
   directiveName: 'piwikTagManage',
 });

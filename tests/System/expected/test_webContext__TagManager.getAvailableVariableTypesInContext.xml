@@ -36,6 +36,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -73,6 +74,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -108,6 +110,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>cssSelector</name>
@@ -124,6 +127,7 @@
 						<templateFile />
 						<introduction />
 						<condition>selectionMethod == &quot;cssSelector&quot;</condition>
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>elementId</name>
@@ -140,6 +144,7 @@
 						<templateFile />
 						<introduction />
 						<condition>selectionMethod == &quot;elementId&quot;</condition>
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>attributeName</name>
@@ -156,6 +161,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -188,6 +194,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -220,6 +227,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>urlDecode</name>
@@ -236,6 +244,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -268,6 +277,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -309,6 +319,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -341,6 +352,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -383,6 +395,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -439,6 +452,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -476,6 +490,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -513,6 +528,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -533,6 +549,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>etrackerDNT</name>
@@ -549,6 +566,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>et_pagename</name>
@@ -565,6 +583,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -585,6 +604,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -605,6 +625,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -625,6 +646,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -645,6 +667,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -665,6 +688,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -685,6 +709,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -705,6 +730,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -749,6 +775,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -781,6 +808,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -801,6 +829,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -821,6 +850,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>enableCrossDomainLinking</name>
@@ -837,6 +867,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>enableDoNotTrack</name>
@@ -853,6 +884,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>enableJSErrorTracking</name>
@@ -869,6 +901,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>enableHeartBeatTimer</name>
@@ -885,6 +918,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>trackAllContentImpressions</name>
@@ -901,6 +935,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>trackVisibleContentImpressions</name>
@@ -917,6 +952,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>disableCookies</name>
@@ -933,7 +969,8 @@
 						<templateFile />
 						<introduction />
 						<condition>!requireConsent &amp;&amp; !requireCookieConsent</condition>
-					</row>
+						<fullWidth>0</fullWidth>
+					</row>				
 					<row>
 						<name>requireConsent</name>
 						<title>Require tracking consent</title>
@@ -949,6 +986,7 @@
 						<templateFile />
 						<introduction />
 						<condition>!requireCookieConsent &amp;&amp; !disableCookies</condition>
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>requireCookieConsent</name>
@@ -965,7 +1003,42 @@
 						<templateFile />
 						<introduction />
 						<condition>!requireConsent &amp;&amp; !disableCookies</condition>
+						<fullWidth>0</fullWidth>
 					</row>
+					<row>
+						<name>customCookieTimeOutEnable</name>
+						<title>Enable custom visitor Cookie timeout</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Allows you to set a custom time in full days for the _pk_id cookie.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>!disableCookies</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>customCookieTimeOut</name>
+						<title>The pk_id expire time in full days</title>
+						<value>393</value>
+						<defaultValue>393</defaultValue>
+						<type>integer</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Timeout in full days. By default, the Matomo tracking cookie expires in 13 months (365 + 28 days) = 393 days.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>customCookieTimeOutEnable == true</condition>
+						<fullWidth>0</fullWidth>
+					</row>	
 					<row>
 						<name>setSecureCookie</name>
 						<title>Enable Secure Cookie</title>
@@ -981,6 +1054,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>cookieDomain</name>
@@ -997,6 +1071,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -1017,6 +1092,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>cookieSameSite</name>
@@ -1037,6 +1113,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>disableBrowserFeatureDetection</name>
@@ -1053,6 +1130,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>domains</name>
@@ -1082,6 +1160,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>alwaysUseSendBeacon</name>
@@ -1098,6 +1177,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>userId</name>
@@ -1114,6 +1194,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
@@ -1158,6 +1239,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>bundleTracker</name>
@@ -1174,6 +1256,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>registerAsDefaultTracker</name>
@@ -1190,6 +1273,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>jsEndpoint</name>
@@ -1211,6 +1295,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>trackingEndpoint</name>
@@ -1232,6 +1317,7 @@
 						<templateFile />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>

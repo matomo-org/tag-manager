@@ -12,7 +12,7 @@
         <h2>
           <EnrichedHeadline
             feature-name="Tag Manager"
-            :inline-help="translate('TagManager_GettingStartedNotice')"
+            :inline-help="dashboardHelpText"
           >
             {{ translate('TagManager_ContainerX', container?.name) }}
           </EnrichedHeadline>
@@ -31,7 +31,9 @@
       >
         <div class="col m6 s12">
           <ContentBlock
+            feature="Tag Manager"
             :content-title="`${tagCount} ${translate('TagManager_Tags')}`"
+            :help-text="tagsHelpText"
           >
             <p>
               <span v-if="tagCount">
@@ -71,7 +73,10 @@
         </div>
         <div class="col m6 s12">
           <ContentBlock
-            :content-title="`${triggerCount} ${translate('TagManager_Triggers')}`">
+            feature="Tag Manager"
+            :content-title="`${triggerCount} ${translate('TagManager_Triggers')}`"
+            :help-text="triggersHelpText"
+          >
             <p> <span v-if="triggerCount">
                 {{ translate('TagManager_Names') }}:
                 <span v-for="(trigger, index) in sortedTriggers" :key="index">
@@ -110,7 +115,11 @@
         style="margin-left: -0.75rem;"
       >
         <div class="col m6 s12">
-          <ContentBlock :content-title="`${variableCount} ${translate('TagManager_Variables')}`">
+          <ContentBlock
+            feature="Tag Manager"
+            :content-title="`${variableCount} ${translate('TagManager_Variables')}`"
+            :help-text="variablesHelpText"
+          >
             <p> <span v-show="variableCount">
                 {{ translate('TagManager_Names') }}:
                 <span v-for="(variable, index) in sortedVariables" :key="index">
@@ -145,7 +154,9 @@
         </div>
         <div class="col m6 s12">
           <ContentBlock
+            feature="Tag Manager"
             :content-title="`${versionCount} ${translate('TagManager_Versions')}`"
+            :help-text="versionsHelpText"
           >
             <p> <span v-show="lastVersions.length">
                 {{ translate('TagManager_LastVersions') }}:
@@ -230,6 +241,11 @@ function sortByName<T extends { name: string }>(items: T[]) {
 export default defineComponent({
   props: {
     idContainer: String,
+    dashboardHelpText: String,
+    tagsHelpText: String,
+    triggersHelpText: String,
+    variablesHelpText: String,
+    versionsHelpText: String,
   },
   components: {
     ActivityIndicator,

@@ -57,6 +57,17 @@
               :inline-help="translate('TagManager_TriggerNameHelp')"
             />
           </div>
+          <div>
+            <Field
+              uicontrol="textarea"
+              name="description"
+              :model-value="trigger.description"
+              @update:model-value="trigger.description = $event; setValueHasChanged()"
+              :maxlength="1000"
+              :title="translate('General_Description')"
+              :inline-help="translate('TagManager_TriggerDescriptionHelp')"
+            />
+          </div>
           <div
             class="form-group row"
             v-show="trigger.typeMetadata?.parameters?.length"
@@ -245,6 +256,7 @@ interface Option {
   key: string;
   value: string;
   group: string;
+  tooltip: string;
 }
 
 interface TriggerEditState {
@@ -323,6 +335,7 @@ export default defineComponent({
             key: v.id,
             value: v.name,
             group: category.name,
+            tooltip: v.description,
           });
         });
       });
@@ -471,6 +484,7 @@ export default defineComponent({
       this.trigger = {
         idsite: parseInt(`${Matomo.idSite}`, 10),
         name: TriggersStore.suggestNameForType(triggerTemplate.name) || '',
+        description: '',
         type: triggerTemplate.id,
         idcontainerversion: this.idContainerVersion,
         conditions: [],

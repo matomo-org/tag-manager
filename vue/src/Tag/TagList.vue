@@ -9,17 +9,23 @@
     <ContentBlock
       feature="Tag Manager"
       :content-title="translate('TagManager_ManageX', translate('TagManager_Tags'))"
+      :help-text="tagsHelpText"
     >
       <p>{{ translate('TagManager_TagUsageBenefits') }}</p>
       <table v-content-table>
         <thead>
           <tr>
-            <th class="name">{{ translate('General_Name') }}</th>
-            <th class="type">{{ translate('TagManager_Type') }}</th>
-            <th class="triggers">{{ translate('TagManager_Triggers') }}</th>
-            <th class="lastUpdated">{{ translate('TagManager_LastUpdated') }}</th>
+            <th class="name" :title="nameTranslatedText">{{ translate('General_Name') }}</th>
+            <th class="description" :title="descriptionTranslatedText">
+              {{ translate('General_Description') }}</th>
+            <th class="type" :title="typeTranslatedText">{{ translate('TagManager_Type') }}</th>
+            <th class="triggers" :title="triggersTranslatedText">
+              {{ translate('TagManager_Triggers') }}</th>
+            <th class="lastUpdated" :title="lastUpdatedTranslatedText">
+              {{ translate('TagManager_LastUpdated') }}</th>
             <th
               class="action"
+              :title="actionTranslatedText"
               v-show="hasWriteAccess"
             >{{ translate('General_Actions') }}</th>
           </tr>
@@ -50,6 +56,12 @@
             :id="`tag${ tag.idtag }`"
           >
             <td class="name">{{ tag.name }}</td>
+            <td
+              class="description"
+              :title="tag.description"
+            >
+              {{ truncateText(tag.description, 30) }}
+            </td>
             <td
               class="type"
               :title="tag.typeMetadata.description"
@@ -187,6 +199,7 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    tagsHelpText: String,
   },
   components: {
     ContentBlock,
@@ -243,6 +256,9 @@ export default defineComponent({
         yes: doDelete,
       });
     },
+    truncateText(text: string, length: number) {
+      return tagManagerHelper.truncateText(text, length);
+    },
   },
   computed: {
     triggers() {
@@ -270,6 +286,24 @@ export default defineComponent({
         return lhs.name > rhs.name ? 1 : 0;
       });
       return sorted;
+    },
+    nameTranslatedText(): string {
+      return this.translate('TagManager_TagsNameDescription');
+    },
+    descriptionTranslatedText(): string {
+      return this.translate('TagManager_TagsDescriptionDescription');
+    },
+    typeTranslatedText(): string {
+      return this.translate('TagManager_TagsTypeDescription');
+    },
+    triggersTranslatedText(): string {
+      return this.translate('TagManager_TagsTriggersDescription');
+    },
+    lastUpdatedTranslatedText(): string {
+      return this.translate('TagManager_TagsLastUpdatedDescription');
+    },
+    actionTranslatedText(): string {
+      return this.translate('TagManager_TagsActionDescription');
     },
   },
 });

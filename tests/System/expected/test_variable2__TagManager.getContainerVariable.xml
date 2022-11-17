@@ -5,6 +5,7 @@
 	<idsite>2</idsite>
 	<type>DataLayer</type>
 	<name>My Var 2</name>
+	<description/>
 	<status>active</status>
 	<parameters>
 		<dataLayerName>dataVarName</dataLayerName>
@@ -45,6 +46,7 @@
 				<templateFile />
 				<introduction />
 				<condition />
+				<fullWidth>0</fullWidth>
 			</row>
 		</parameters>
 	</typeMetadata>

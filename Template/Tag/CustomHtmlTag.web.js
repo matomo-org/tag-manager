@@ -125,6 +125,16 @@
                 newScript.setAttribute('type', element.getAttribute('type'));
             }
 
+            // If this script is executing using a nonce, set the nonce on its children too.
+            var scriptWithNonce = TagManager.dom.bySelector('script[nonce]');
+            if (scriptWithNonce.length && scriptWithNonce[0]) {
+                scriptWithNonce = scriptWithNonce[0]; // Grab the first element.
+                // Try using the attribute first for compatibility, then go to the property.
+                var nonceAttr = TagManager.dom.getElementAttribute(scriptWithNonce, 'nonce');
+                nonceAttr = nonceAttr ? nonceAttr : scriptWithNonce.nonce;
+                newScript.setAttribute('nonce', nonceAttr);
+            }
+
             return newScript;
         }
 

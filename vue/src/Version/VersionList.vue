@@ -9,6 +9,7 @@
     <ContentBlock
       feature="Tag Manager"
       :content-title="translate('TagManager_ManageX', translate('TagManager_Versions'))"
+      :help-text="versionsHelpText"
     >
       <p>
         {{ translate('TagManager_VersionUsageBenefits') }}
@@ -17,12 +18,17 @@
       <table v-content-table>
         <thead>
           <tr>
-            <th class="index">{{ translate('TagManager_Revision') }}</th>
-            <th class="name">{{ translate('General_Name') }}</th>
-            <th class="description">{{ translate('General_Description') }}</th>
-            <th class="environments">{{ translate('TagManager_Environments') }}</th>
-            <th class="created">{{ translate('TagManager_Created') }}</th>
-            <th class="action">{{ translate('General_Actions') }}</th>
+            <th class="index"
+              :title="revisionTranslatedText">{{ translate('TagManager_Revision') }}</th>
+            <th class="name" :title="nameTranslatedText">{{ translate('General_Name') }}</th>
+            <th class="description"
+              :title="descriptionTranslatedText">{{ translate('General_Description') }}</th>
+            <th class="environments"
+              :title="environmentTranslatedText">{{ translate('TagManager_Environments') }}</th>
+            <th class="created"
+              :title="createdTranslatedText">{{ translate('TagManager_Created') }}</th>
+            <th class="action"
+              :title="actionTranslatedText">{{ translate('General_Actions') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -227,6 +233,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    versionsHelpText: String,
   },
   components: {
     ContentBlock,
@@ -249,11 +256,7 @@ export default defineComponent({
       this.editVersion(0);
     },
     truncateText(text: string, length: number) {
-      if (text.length > length) {
-        return `${text.substr(0, length - 3)}...`;
-      }
-
-      return text;
+      return tagManagerHelper.truncateText(text, length);
     },
     publishVersion(version: Version) {
       this.versionToBePublished = version;
@@ -381,6 +384,24 @@ export default defineComponent({
     },
     canPublishToLive() {
       return Matomo.hasUserCapability('tagmanager_publish_live_container');
+    },
+    revisionTranslatedText(): string {
+      return this.translate('TagManager_VersionsRevisionDescription');
+    },
+    nameTranslatedText(): string {
+      return this.translate('TagManager_VersionsNameDescription');
+    },
+    descriptionTranslatedText(): string {
+      return this.translate('TagManager_VersionsDescriptionDescription');
+    },
+    environmentTranslatedText(): string {
+      return this.translate('TagManager_VersionsEnvironmentsDescription');
+    },
+    createdTranslatedText(): string {
+      return this.translate('TagManager_VersionsCreatedDescription');
+    },
+    actionTranslatedText(): string {
+      return this.translate('TagManager_VersionsActionDescription');
     },
   },
 });

@@ -47,6 +47,7 @@ export interface Variable {
   idvariable?: number;
   lookup_table: LookupTable;
   name: string;
+  description: string;
   status?: string;
   type: string;
   updated_date?: string;
@@ -130,6 +131,7 @@ export interface Trigger {
   idsite: number;
   idtrigger?: number;
   name: string;
+  description: string;
   status?: string;
   type: string;
   typeMetadata: TriggerType;
@@ -175,6 +177,7 @@ export interface Tag {
   idsite: number;
   idtag: number;
   name: string;
+  description: string;
   priority: number;
   start_date: null|string;
   status: string;
@@ -288,6 +291,8 @@ interface TagManagerHelper {
   enablePreviewMode(idContainer: string, idContainerVersion: number): void;
 
   showInstallCode(idContainer: string): void;
+
+  truncateText(text: string, maxLength: number): string;
 }
 
 declare global {

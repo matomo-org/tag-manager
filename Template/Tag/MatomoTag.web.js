@@ -94,7 +94,7 @@
                 // this is the matomoConfig variable name and the only way to differentiate two different tracker
                 // configurations
                 var variableName = parameters.matomoConfig.name;
-                
+
                 // we need to fetch matomoConfig again in case some parameters changed meanwhile that are variables...
                 // eg userId might be a variable and it's value might be different now
                 var matomoConfig = parameters.get('matomoConfig', {});
@@ -195,6 +195,12 @@
                     if (matomoConfig.trackVisibleContentImpressions) {
                         tracker.trackVisibleContentImpressions();
                     }
+                    if (matomoConfig.hasOwnProperty('enableFormAnalytics') && !matomoConfig.enableFormAnalytics && window.Matomo && window.Matomo.FormAnalytics && typeof window.Matomo.FormAnalytics.disableFormAnalytics === 'function') {
+                        window.Matomo.FormAnalytics.disableFormAnalytics();
+                    }
+                    if (matomoConfig.hasOwnProperty('enableMediaAnalytics') && !matomoConfig.enableMediaAnalytics && window.Matomo && window.Matomo.MediaAnalytics && typeof window.Matomo.MediaAnalytics.disableMediaAnalytics === 'function') {
+                        window.Matomo.MediaAnalytics.disableMediaAnalytics();
+                    }
                 }
 
                 if ((matomoConfig.userId || tracker.getUserId()) && lastUserId !== matomoConfig.userId) {
@@ -241,11 +247,14 @@
                         if (customUrl) {
                             tracker.setCustomUrl(customUrl);
                         }
+                        if (matomoConfig.customCookieTimeOutEnable) {  
+                            tracker.setVisitorCookieTimeout(matomoConfig.customCookieTimeOut * 86400);
+                        }
                         tracker.trackPageView();
                     } else if (trackingType === 'event') {
                         tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'));
                     } else if (trackingType === 'goal') {
-                        tracker.trackGoal(parameters.get('idGoal'));
+                        tracker.trackGoal(parameters.get('idGoal'), parameters.get('goalCustomRevenue'));
                     }
                 }
             });

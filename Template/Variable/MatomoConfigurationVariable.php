@@ -16,6 +16,7 @@ use Piwik\Site;
 use Piwik\Tracker\TrackerCodeGenerator;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
+use Piwik\Validators\NumberRange;
 
 class MatomoConfigurationVariable extends BaseVariable
 {
@@ -66,7 +67,7 @@ class MatomoConfigurationVariable extends BaseVariable
         $jsEndpoint = $trackerCodeGenerator->getJsTrackerEndpoint();
         $phpEndpoint = $trackerCodeGenerator->getPhpTrackerEndpoint();
 
-        return array(
+        $parameters = array(
             $matomoUrl,
             $this->makeSetting('idSite', $idSite, FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($matomoUrl, $url) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoIDSiteTitle');
@@ -134,6 +135,17 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentDescription');
                 $field->condition = '!requireConsent && !disableCookies';
+            }),
+            $this->makeSetting('customCookieTimeOutEnable', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutEnableTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutEnableDescription');
+                $field->condition = '!disableCookies';
+            }),
+            $this->makeSetting('customCookieTimeOut', '393', FieldConfig::TYPE_INT, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutDescription');
+                $field->condition = 'customCookieTimeOutEnable == true';
+                $field->validators[] = new NumberRange($min = 1);
             }),
             $this->makeSetting('setSecureCookie', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetSecureCookieTitle');
@@ -282,6 +294,49 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackingEndpointDescription');
             }),
         );
+
+        $pluginParameters = [];
+        if (\Piwik\Plugin\Manager::getInstance()->isPluginActivated('FormAnalytics')) {
+            $pluginParameters[] = $this->makeSetting('enableFormAnalytics', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableFormAnalyticsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableFormAnalyticsDescription');
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableFormAnalyticsInlineHelp', array('<strong>', '</strong>'));
+            });
+        }
+
+        if (\Piwik\Plugin\Manager::getInstance()->isPluginActivated('MediaAnalytics')) {
+            $pluginParameters[] = $this->makeSetting('enableMediaAnalytics', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableMediaAnalyticsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableMediaAnalyticsDescription');
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoEnableMediaAnalyticsInlineHelp', array('<strong>', '</strong>'));
+            });
+        }
+
+        $parameters = $this->insertPluginParameters($pluginParameters, $parameters, $insertAfter = 'enableLinkTracking');
+
+        return $parameters;
+    }
+
+    private function insertPluginParameters($pluginParameters, $parameters, $insertAfter)
+    {
+        if (empty($pluginParameters)) {
+            return $parameters;
+        }
+        $found = false;
+        foreach ($parameters as $key => $parameter) {
+            if ($parameter->getName() == $insertAfter) {
+                $found = $key;
+            }
+        }
+
+        if ($found === false) {
+            return array_merge($parameters, $pluginParameters);
+        }
+
+        $firstPart = array_slice($parameters, 0, $found + 1);
+        $secondPart = array_slice($parameters, $found + 1);
+
+        return array_merge(array_merge($firstPart, $pluginParameters), $secondPart);
     }
 
 }

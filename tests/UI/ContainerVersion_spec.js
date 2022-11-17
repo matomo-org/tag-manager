@@ -125,6 +125,7 @@ describe("ContainerVersion", function () {
 
     it('should be possible to publish new version', async function () {
         await publishVersion();
+        await page.waitForTimeout(500);
         await capture.page(page, 'publish_new_submitted');
     });
 
@@ -263,6 +264,7 @@ describe("ContainerVersion", function () {
         await modal.clickButton(page, 'Yes');
         await page.waitForNetworkIdle();
         await page.waitForSelector('.tagManagerManageList td');
+        await page.waitForTimeout(200);
         await capture.page(page, 'import_version_confirmed');
     });
 

@@ -5,6 +5,7 @@
 	<idsite>2</idsite>
 	<type>CustomHtml</type>
 	<name>My Tag 2</name>
+	<description>My Tag 2 description</description>
 	<status>active</status>
 	<parameters>
 		<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
@@ -54,6 +55,7 @@
 				<templateFile />
 				<introduction />
 				<condition />
+				<fullWidth>0</fullWidth>
 				<component>
 					<plugin>TagManager</plugin>
 					<name>FieldTextareaVariable</name>
@@ -79,6 +81,7 @@
 				<templateFile />
 				<introduction />
 				<condition />
+				<fullWidth>0</fullWidth>
 			</row>
 		</parameters>
 	</typeMetadata>

@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 
@@ -26,8 +27,8 @@ class TimeSinceLoadVariable extends BaseVariable
     {
         return array(
             $this->makeSetting('unit', 'ms', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Unit';
-                $field->description = 'Select in which unit you want to retrieve the time.';
+                $field->title = Piwik::translate('TagManager_TimeSinceLoadVariableUnitTitle');
+                $field->description = Piwik::translate('TagManager_TimeSinceLoadVariableUnitDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->validators[] = new NotEmpty();
                 $field->availableValues = array(
