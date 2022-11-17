@@ -208,7 +208,7 @@
         "ConfigureWhatTagDoes": "Configure what this tag should do",
         "ConfigureWhenTagDoes": "Configure when the tag should do this",
         "ConfigureX": "Configure %s",
-        "ConfirmImportContainerVersion": "Import this data and overwrite the working draft?",
+        "ConfirmImportContainerVersion": "Import this data and overwrite (!) the working draft for good?",
         "ConstantVariableDescription": "The variable is set to a fixed value.",
         "ConstantVariableName": "Constant",
         "Container": "Container",
