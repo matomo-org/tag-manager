@@ -250,6 +250,10 @@
                         var customUrlRef = parameters.get('customUrlRef');
                         if (customUrlRef) {
                             tracker.setReferrerUrl(customUrlRef);
+                        }    
+                        
+                        if (matomoConfig.customCookieTimeOutEnable) {  
+                            tracker.setVisitorCookieTimeout(matomoConfig.customCookieTimeOut * 86400);
                         }
                         tracker.trackPageView();
                     } else if (trackingType === 'event') {

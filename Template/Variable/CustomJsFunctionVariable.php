@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 
@@ -33,8 +34,8 @@ class CustomJsFunctionVariable extends BaseVariable
     {
         return array(
             $this->makeSetting('jsFunction', 'function () { return ""; }', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'JavaScript Function';
-                $field->description = 'The value should start with "function() { " and end with "return yourValue; }". You have to define a function and return a value. We highly recommend to test the pasted JavaScript function to avoid JavaScript errors on your website.';
+                $field->title = Piwik::translate('TagManager_CustomJsFunctionVariableJsFunctionTitle');
+                $field->description = Piwik::translate('TagManager_CustomJsFunctionVariableJsFunctionDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {

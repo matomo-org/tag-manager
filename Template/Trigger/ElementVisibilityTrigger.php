@@ -27,8 +27,8 @@ class ElementVisibilityTrigger extends BaseTrigger
     public function getParameters()
     {
         $selectionMethod = $this->makeSetting('selectionMethod', 'elementId', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-            $field->title = 'Selection Method';
-            $field->description = 'Select the way you want to identify an element you want to select.';
+            $field->title = Piwik::translate('TagManager_ElementVisibilityTriggerSelectionMethodTitle');
+            $field->description = Piwik::translate('TagManager_ElementVisibilityTriggerSelectionMethodDescription');
             $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
             $field->validators[] = new NotEmpty();
             $field->availableValues = array(
@@ -39,8 +39,8 @@ class ElementVisibilityTrigger extends BaseTrigger
         return array(
             $selectionMethod,
             $this->makeSetting('cssSelector', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($selectionMethod) {
-                $field->title = 'CSS Selector';
-                $field->description = 'A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are ".classname", "#id" or "li a".';
+                $field->title = Piwik::translate('TagManager_ElementVisibilityTriggerCssSelectorTitle');
+                $field->description = Piwik::translate('TagManager_ElementVisibilityTriggerCssSelectorDescription');
                 $field->condition = 'selectionMethod == "cssSelector"';
                 $field->validate = function ($value) use ($selectionMethod, $field) {
                     if ($selectionMethod->getValue() === 'cssSelector' && empty($value)) {
@@ -49,8 +49,8 @@ class ElementVisibilityTrigger extends BaseTrigger
                 };
             }),
             $this->makeSetting('elementId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($selectionMethod) {
-                $field->title = 'Element ID';
-                $field->description = 'The id attribute specifies a unique id for an HTML element. Insert here the value of an ID attribute of any element within your website.';
+                $field->title = Piwik::translate('TagManager_ElementVisibilityTriggerElementIDTitle');
+                $field->description = Piwik::translate('TagManager_ElementVisibilityTriggerElementIDDescription');
                 $field->condition = 'selectionMethod == "elementId"';
                 $field->validate = function ($value) use ($selectionMethod, $field) {
                     if ($selectionMethod->getValue() === 'elementId' && empty($value)) {
@@ -59,7 +59,7 @@ class ElementVisibilityTrigger extends BaseTrigger
                 };
             }),
             $this->makeSetting('fireTriggerWhen', 'oncePage', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Fire this trigger';
+                $field->title = Piwik::translate('TagManager_ElementVisibilityTriggerFireTriggerWhenTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->validators[] = new NotEmpty();
                 $field->availableValues = array(
@@ -69,7 +69,7 @@ class ElementVisibilityTrigger extends BaseTrigger
                 );
             }),
             $this->makeSetting('minPercentVisible', 50, FieldConfig::TYPE_INT, function (FieldConfig $field) {
-                $field->title = 'Minimum Percent Visible';
+                $field->title = Piwik::translate('TagManager_ElementVisibilityTriggerMinPercentVisibleTitle');
                 $field->validators[] = new NumberRange($min = 1, $max = 100);
             }),
             $this->makeSetting('observeDomChanges', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {

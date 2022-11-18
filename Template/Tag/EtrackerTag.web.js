@@ -44,7 +44,8 @@
                 if (etrackerConfig.etrackerDNT) {
                     script.setAttribute('data-respect-dnt', 'true');
                 }
-                script.src = '//static.etracker.com/code/e.js';
+                script.src = '//code.etracker.com/code/e.js';
+                script.setAttribute('async', '');
                 s.parentNode.insertBefore(script, s);
             }
         }
@@ -79,6 +80,27 @@
         // event tracking function
         if (trackingType === 'event' && typeof(_etracker) === "object") {
             _etracker.sendEvent(new et_UserDefinedEvent(parameters.get('etrackerEventObject'), parameters.get('etrackerEventCategory'), parameters.get('etrackerEventAction'), parameters.get('etrackerEventType')));
+        }
+        // async variable
+        var _etrackerOnReady = [];
+        // transaction tracking function
+        if (trackingType === 'transaction') {
+            if(parameters.get('etrackerTransactionDebugMode')){
+                etCommerce.debugMode = true;
+            }
+            var etorder = {orderNumber:parameters.get('etrackerTransactionID'),status:parameters.get('etrackerTransactionType'),orderPrice:parameters.get('etrackerTransactionValue').toString(),basket:parameters.get('etrackerTransactionBasket'),currency:parameters.get('etrackerTransactionCurrency'),customerGroup:parameters.get('etrackerTransactionCustomerGroup'),deliveryConditions:parameters.get('etrackerTransactionDeliveryConditions'),paymentConditions:parameters.get('etrackerTransactionPaymentConditions'),};
+            _etrackerOnReady.push(function() { etCommerce.sendEvent('order', etorder)});
+        }
+        // ecommerce - add to cart tracking function
+        if (trackingType === 'addtocart') {
+            _etrackerOnReady.push(function() { etCommerce.sendEvent('insertToBasket', parameters.get('etrackerAddToCartProduct'), Number(parameters.get('etrackerAddToCartNumber'))) });
+        }
+        // form - form tracking
+        if (trackingType === 'form' && typeof(_etracker) === "object") {
+            if(parameters.get('etrackerFormData')){
+                etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName'), parameters.get('etrackerFormData')) ;
+            }
+            else{ etForm.sendEvent(parameters.get('etrackerFormType'), parameters.get('etrackerFormName'));}
         }
         };
         };

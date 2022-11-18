@@ -89,6 +89,8 @@
 				<disableCookies>0</disableCookies>
 				<requireConsent>0</requireConsent>
 				<requireCookieConsent>0</requireCookieConsent>
+				<customCookieTimeOutEnable>0</customCookieTimeOutEnable>
+				<customCookieTimeOut>393</customCookieTimeOut>
 				<setSecureCookie>0</setSecureCookie>
 				<cookieDomain />
 				<cookiePath />

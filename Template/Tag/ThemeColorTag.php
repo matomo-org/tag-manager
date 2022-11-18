@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Settings\Setting;
@@ -22,9 +23,9 @@ class ThemeColorTag extends BaseTag
     public function getParameters() {
         return array(
             $this->makeSetting('themeColor', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Theme Color';
+                $field->title = Piwik::translate('TagManager_ThemeColorTagName');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = "Please enter a color as a hexadecimal string (e.g. '#11ee33')";
+                $field->description = Piwik::translate('TagManager_ThemeColorTagThemeColorDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value, Setting $setting) {
                     $value = trim($value);
