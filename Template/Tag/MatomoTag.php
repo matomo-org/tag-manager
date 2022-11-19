@@ -44,6 +44,7 @@ class MatomoTag extends BaseTag
             $field->validators[] = new NotEmpty();
             $field->availableValues = array(
                 'pageview' => Piwik::translate('TagManager_PageViewTriggerName'),
+                'search' => Piwik::translate('TagManager_SearchTagName'),
                 'event' => Piwik::translate('Events_Event'),
                 'goal' => Piwik::translate('General_Goal'),
                 'initialise' => Piwik::translate('TagManager_InitializeTrackerOnly'),
@@ -105,6 +106,34 @@ class MatomoTag extends BaseTag
                     return trim($value);
                 };
             }),
+            $this->makeSetting('searchKeyword', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = Piwik::translate('TagManager_SearchKeyWord');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_SearchKeyWordHelp');
+                $field->condition = 'trackingType == "search"';
+                if ($trackingType->getValue() === 'search') {
+                    $field->validators[] = new NotEmpty();
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+            }),
+            $this->makeSetting('searchCategory', 'false', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = Piwik::translate('TagManager_SearchCategory');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_SearchCategoryHelp');
+                $field->condition = 'trackingType == "search"';
+                if ($trackingType->getValue() === 'search') {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+            }),        
+            $this->makeSetting('searchCount', 'false', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
+                $field->title = Piwik::translate('TagManager_SearchCount');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_SearchCountHelp');
+                $field->condition = 'trackingType == "search"';
+                if ($trackingType->getValue() === 'search') {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+            }), 
             $this->makeSetting('eventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = Piwik::translate('Events_EventCategory');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;

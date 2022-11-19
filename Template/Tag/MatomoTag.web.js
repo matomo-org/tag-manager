@@ -251,6 +251,8 @@
                             tracker.setVisitorCookieTimeout(matomoConfig.customCookieTimeOut * 86400);
                         }
                         tracker.trackPageView();
+                    } else if (trackingType === 'search') {
+                        tracker.trackSiteSearch(parameters.get('searchKeyword'), parameters.get('searchCategory'), parameters.get('searchCount'));
                     } else if (trackingType === 'event') {
                         tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'));
                     } else if (trackingType === 'goal') {

@@ -88,6 +88,7 @@
 						</uiControlAttributes>
 						<availableValues>
 							<pageview>Pageview</pageview>
+							<event>Search</event>
 							<event>Event</event>
 							<goal>Goal</goal>
 							<initialise>Initialise tracker only. Don't track anything.</initialise>
@@ -183,6 +184,69 @@
 							<name>FieldVariableTemplate</name>
 						</component>
 					</row>
+					<row>
+						<name>searchKeyword</name>
+						<title>Search keyword</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The search keyword is what the user searched for.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>trackingType == &quot;search&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>	
+					<row>
+						<name>searchCategory</name>
+						<title>Search category</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Search category selected in your search engine. If you do not need this, set to false.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>trackingType == &quot;search&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>SearchCount</name>
+						<title>Search count</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The search count to use. Set to false if you don't know.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>trackingType == &quot;search&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>					
 					<row>
 						<name>eventCategory</name>
 						<title>Event Category</title>
