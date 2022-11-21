@@ -209,7 +209,7 @@
 						<name>searchCategory</name>
 						<title>Search category</title>
 						<value />
-						<defaultValue />
+						<defaultValue>false</defaultValue>
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
@@ -230,7 +230,7 @@
 						<name>SearchCount</name>
 						<title>Search count</title>
 						<value />
-						<defaultValue />
+						<defaultValue>false</defaultValue>
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
