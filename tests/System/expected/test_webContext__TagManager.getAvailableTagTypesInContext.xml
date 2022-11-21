@@ -227,7 +227,7 @@
 						</component>
 					</row>
 					<row>
-						<name>SearchCount</name>
+						<name>searchCount</name>
 						<title>Search count</title>
 						<value>false</value>
 						<defaultValue>false</defaultValue>
