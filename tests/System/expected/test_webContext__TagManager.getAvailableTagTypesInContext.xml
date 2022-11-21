@@ -208,7 +208,7 @@
 					<row>
 						<name>searchCategory</name>
 						<title>Search category</title>
-						<value />
+						<value>false</value>
 						<defaultValue>false</defaultValue>
 						<type>string</type>
 						<uiControl>text</uiControl>
@@ -229,7 +229,7 @@
 					<row>
 						<name>SearchCount</name>
 						<title>Search count</title>
-						<value />
+						<value>false</value>
 						<defaultValue>false</defaultValue>
 						<type>string</type>
 						<uiControl>text</uiControl>
