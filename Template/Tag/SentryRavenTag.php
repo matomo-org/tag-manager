@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\NotEmpty;
@@ -27,9 +28,9 @@ class SentryRavenTag extends BaseTag
     {
         return array(
             $this->makeSetting('sentryDSN', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Sentry.io DSN';
+                $field->title = Piwik::translate('TagManager_SentryRavenTagDSNTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = "The DSN (Data Source Name) of your sentry.io project. It should look like 'https://<key>@sentry.io/<project>'";
+                $field->description = Piwik::translate('TagManager_SentryRavenTagDSNDescription');
                 $field->validators[] = new NotEmpty();
                 $field->transform = function ($value) {
                     return trim($value);

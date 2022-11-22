@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 
@@ -28,8 +29,8 @@ class ReferrerUrlVariable extends BaseVariable
     {
         return array(
             $this->makeSetting('urlPart', 'href', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'URL Part';
-                $field->description = 'Select the part of the URL you want to retrieve.';
+                $field->title = Piwik::translate('TagManager_ReferrerUrlVariableUrlPartTitle');
+                $field->description = Piwik::translate('TagManager_ReferrerUrlVariableUrlPartDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field->validators[] = new NotEmpty();
                 $field->availableValues = array(

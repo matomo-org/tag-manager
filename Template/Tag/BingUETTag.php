@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
@@ -22,9 +23,9 @@ class BingUETTag extends BaseTag
     {
         return array(
             $this->makeSetting('bingAdID', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'ID';
+                $field->title = Piwik::translate('TagManager_BingUETTagIdTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
-                $field->description = 'You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Manager.';
+                $field->description = Piwik::translate('TagManager_BingUETTagIdDescription');
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);

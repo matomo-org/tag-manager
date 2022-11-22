@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\NotEmpty;
@@ -57,14 +58,14 @@ class CustomImageTag extends BaseTag
     {
         return array(
             $this->makeSetting('customImageSrc', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Image URL';
-                $field->description = 'You can define any image URL. We recommend to define a URL that starts with "//" so it will work on HTTP and HTTPS pages. If your website only supports HTTPS, it should start with "https://".';
+                $field->title = Piwik::translate('TagManager_CustomImageTagSrcTitle');
+                $field->description = Piwik::translate('TagManager_CustomImageTagSrcDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new NotEmpty();
             }),
             $this->makeSetting('cacheBusterEnabled', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = 'Enable Cache Buster';
-                $field->description = 'Makes sure the image will be fetched again every time it is added to the page by adding a URL parameter to the image URL with a random value, for example "?mtmcb=12345"..';
+                $field->title = Piwik::translate('TagManager_CustomImageTagCacheBusterEnabledTitle');;
+                $field->description = Piwik::translate('TagManager_CustomImageTagCacheBusterEnabledDescription');;
             }),
         );
     }

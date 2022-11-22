@@ -7,6 +7,7 @@
  */
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\NotEmpty;
@@ -26,7 +27,7 @@ class ShareaholicTag extends BaseTag
     public function getParameters()
     {
         $InPageApp = $this->makeSetting('shareaholicInPageApp', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-            $field->title = 'Shareaholic In-Page App';
+            $field->title = Piwik::translate('TagManager_ShareaholicTagInPageAppTitle');
             $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
             $field->availableValues = array(
                 '' => 'None',
@@ -36,19 +37,19 @@ class ShareaholicTag extends BaseTag
                 'total_share_count' => 'Total Share Counter' //TODO: Also supports data-link and data-services
             );
 
-            $field->description = 'Here you can optionally add an In-Page App to your website.';
+            $field->description = Piwik::translate('TagManager_ShareaholicTagInPageAppDescription');
         });
         return array(
             $this->makeSetting('shareaholicSiteId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = 'Shareaholic Site ID';
-                $field->description = 'Create a new site in Shareaholic and paste the site ID here';
+                $field->title = Piwik::translate('TagManager_ShareaholicTagSiteIdTitle');
+                $field->description = Piwik::translate('TagManager_ShareaholicTagSiteIdDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new NotEmpty();
             }),
             $InPageApp,
             $this->makeSetting('shareaholicAppId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($InPageApp) {
-                $field->title = 'In-Page App ID';
-                $field->description = 'If you want to add an In-Page App enter the App ID here. It is about eight digits long. The App ID is not required for the Total Share Counter.';
+                $field->title = Piwik::translate('TagManager_ShareaholicTagAppIdTitle');
+                $field->description = Piwik::translate('TagManager_ShareaholicTagAppIdDescription');
                 $field->condition = 'shareaholicInPageApp && shareaholicInPageApp !== "total_share_count"';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validate = function ($value) use ($InPageApp, $field) {
@@ -62,8 +63,8 @@ class ShareaholicTag extends BaseTag
 
             }),
             $this->makeSetting('shareaholicParentSelector', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($InPageApp) {
-                $field->title = 'In-Page App Parent Selector';
-                $field->description = 'Enter a CSS selector to the element where the In-Page App should be added.';
+                $field->title = Piwik::translate('TagManager_ShareaholicTagParentSelectorTitle');
+                $field->description = Piwik::translate('TagManager_ShareaholicTagParentSelectorDescription');
                 $field->condition = 'shareaholicInPageApp';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validate = function ($value) use ($InPageApp, $field) {
