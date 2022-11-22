@@ -856,7 +856,7 @@
         "ElementVisibilityTriggerCssSelectorDescription": "A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are \".classname\", \"#id\" or \"li a\".",
         "ElementVisibilityTriggerElementIDTitle": "Element ID",
         "ElementVisibilityTriggerElementIDDescription": "The ID attribute specifies a unique id for an HTML element. Insert here the value of an ID attribute of any element within your website.",
-        "ElementVisibilityTriggerFireTriggerWhenTitle": "Trigger this trigger",
+        "ElementVisibilityTriggerFireTriggerWhenTitle": "Fire this trigger",
         "ElementVisibilityTriggerMinPercentVisibleTitle": "Minimum Percent Visible",
         "FullscreenTriggerTriggerActionTitle": "Fire this trigger when action is",
         "FullscreenTriggerTriggerLimitTitle": "Trigger limit",
