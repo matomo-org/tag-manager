@@ -783,7 +783,6 @@
 						</availableValues>
 						<description>Sale / Lead / Partial Cancellation / Cancellation</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -800,10 +799,13 @@
 						<availableValues />
 						<description>Order ID, transaction id or similar - max 50 chars</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionValue</name>
@@ -817,10 +819,13 @@
 						<availableValues />
 						<description>Order Value</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionCurrency</name>
@@ -834,10 +839,13 @@
 						<availableValues />
 						<description>Currency of the order according to ISO 4217 e.g.: EUR or USD</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionBasket</name>
@@ -851,10 +859,13 @@
 						<availableValues />
 						<description>dataLayer object of basket - according to etracker reference</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionCustomerGroup</name>
@@ -868,10 +879,13 @@
 						<availableValues />
 						<description>optional, e.g. new customer, existing customer, big buyer, VIP</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionDeliveryConditions</name>
@@ -885,10 +899,13 @@
 						<availableValues />
 						<description>optional, e.g. Delivery to the kerb, Setup on site, Delivery to the pick-up station/parcel shop/branch</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionPaymentConditions</name>
@@ -902,10 +919,13 @@
 						<availableValues />
 						<description>optional, e.g. Special payment targets, Cash discount, Payment in instalments</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionDebugMode</name>
@@ -919,10 +939,13 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerAddToCartProduct</name>
@@ -936,10 +959,13 @@
 						<availableValues />
 						<description>dataLayer object of the product - according to etracker reference</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;addtocart&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerAddToCartNumber</name>
@@ -953,10 +979,13 @@
 						<availableValues />
 						<description>Number of products added to the cart</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;addtocart&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerFormType</name>
@@ -976,7 +1005,6 @@
 						</availableValues>
 						<description>Conversion / Form View / Field View / Field Interaction / Field Error</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;form&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -993,10 +1021,13 @@
 						<availableValues />
 						<description>Form Name titles the report of the form which is tracked</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;form&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerFormData</name>
@@ -1010,10 +1041,13 @@
 						<availableValues />
 						<description>eg. form section information. If used, a string is required</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;form&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 				</parameters>
 			</row>
