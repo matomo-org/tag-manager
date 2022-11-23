@@ -177,6 +177,27 @@
 						</component>
 					</row>
 					<row>
+						<name>customUrlRef</name>
+						<title>Custom URL Referrer</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally, specify a custom URL referrer which should be tracked instead of the current URL referrer. This is handy when you are working with SPA applications since the URL referrer is not updated correctly. Another scenario would be if you want to do some kind of replacement or modifications to the referrer URL to be tracked by Matomo.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
 						<name>eventCategory</name>
 						<title>Event Category</title>
 						<value />
