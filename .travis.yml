@@ -4,7 +4,6 @@ language: php
 
 php:
   - 7.2
-  - 7.4
 #  - hhvm
 
 services:
@@ -37,26 +36,25 @@ env:
     - TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
     - TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_CORE=minimum_required_piwik
     - TEST_SUITE=UITests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
+    - TEST_SUITE=JavascriptTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
 
 matrix:
   exclude:
     # execute latest stable tests only w/ PHP 5.6
     - php: 7.2
       env: TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_CORE=minimum_required_piwik
-    # execute UI tests only w/ PHP 5.6
-    - php: 7.4
-      env: TEST_SUITE=UITests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
   include:
-    - php: 7.4
-      env: TEST_SUITE=JavascriptTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
-      sudo: false
-      addons:
-        apt:
-          packages:
-            - nginx
-            - coreutils
     - php: 8.1
       env: TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET SKIP_COMPOSER_INSTALL=1
+      script:
+        - cd $PIWIK_ROOT_DIR
+        - composer install --ignore-platform-reqs
+        - composer remove --dev phpunit/phpunit
+        - composer require --dev phpunit/phpunit ~9.3 --ignore-platform-reqs
+        - cd tests/PHPUnit
+        - $PIWIK_ROOT_DIR/tests/travis/travis.sh
+    - php: 8.1
+      env: TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_CORE=minimum_required_piwik SKIP_COMPOSER_INSTALL=1
       script:
         - cd $PIWIK_ROOT_DIR
         - composer install --ignore-platform-reqs
@@ -67,7 +65,7 @@ matrix:
 
 dist: bionic
 
-sudo: required
+sudo: false
 
 script: $PIWIK_ROOT_DIR/tests/travis/travis.sh
 
@@ -91,7 +89,7 @@ install:
   - '[ -d ./tests/travis/.git ] || sh -c "rm -rf ./tests/travis && git clone https://github.com/matomo-org/travis-scripts.git ./tests/travis"'
   - cd ./tests/travis ; git checkout master ; cd ../..
 
-  - export GENERATE_TRAVIS_YML_COMMAND="php ./tests/travis/generator/main.php generate:travis-yml --plugin=\"TagManager\" --php-versions=\"7.2,7.4\" --distribution=\"bionic\" --verbose"
+  - export GENERATE_TRAVIS_YML_COMMAND="php ./tests/travis/generator/main.php generate:travis-yml --plugin=\"TagManager\" --php-versions=\"7.2\" --distribution=\"bionic\" --sudo-false --verbose"
   - '[[ "$TRAVIS_JOB_NUMBER" != *.1 || "$TRAVIS_PULL_REQUEST" != "false" ]] || ./tests/travis/autoupdate_travis_yml.sh'
 
   - ./tests/travis/checkout_test_against_branch.sh
