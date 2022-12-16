@@ -412,6 +412,22 @@
 				</parameters>
 			</row>
 			<row>
+				<id>UserInteraction</id>
+				<name>User Interaction</name>
+				<description>Triggered when user interacts with the site.</description>
+				<category>User Engagement</category>
+				<icon>plugins/TagManager/images/icons/interaction.svg</icon>
+				<help/>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+				</parameters>
+			</row>
+			<row>
 				<id>WindowLeave</id>
 				<name>Window Leave</name>
 				<description>Triggered when the user is about to leave the current page by moving the mouse outside the window.</description>
