@@ -417,7 +417,7 @@
 				<description>Triggered when user interacts with the site, i. e. touch, move, scroll or mouse click event is executed by the user on site.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/icons/interaction.svg</icon>
-				<help>Triggered when any of the following event touch,move,scroll or mouse click is executed by the user on site.<help/>
+				<help>Triggered when any of the following event touch,move,scroll or mouse click is executed by the user on site.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
