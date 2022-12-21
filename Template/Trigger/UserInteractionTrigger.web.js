@@ -17,7 +17,7 @@
                 removeListeners();
             };
             
-            var removeListeners = () => {
+            var removeListeners = function () {
                 for (var i = 0, iLen = eventNames.length; i < iLen; i++) {
                     windowAlias.removeEventListener(eventNames[i], init);
                 }
