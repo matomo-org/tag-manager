@@ -2,27 +2,29 @@
     return function (parameters, TagManager) {
         this.setUp = function (triggerEvent) {
 
-            const eventNames = [
+            var eventNames = [
                 "touchstart",
                 "mouseover",
                 "wheel",
                 "scroll",
                 "keydown"
             ];
+
+            var windowAlias = parameters.window;
             
-            const init = () => {
+            var init = () => {
                 triggerEvent({event: 'UserInteraction'});
                 removeListeners();
             }
             
-            const removeListeners = () => {
+            var removeListeners = () => {
                 for (var i = 0, iLen = eventNames.length; i < iLen; i++) {
-                    window.removeEventListener(eventNames[i], init);
+                    windowAlias.removeEventListener(eventNames[i], init);
                 }
             }
          
             for (var i = 0, iLen = eventNames.length; i < iLen; i++) {
-                window.addEventListener(eventNames[i], init, {once : true});
+                windowAlias.addEventListener(eventNames[i], init, {once : true});
             }
 
         };

@@ -889,6 +889,6 @@
         "UrlParameterVariableNameTitle": "URL Parameter Name",
         "UrlParameterVariableNameDescription": "For example when your page has URL parameters such as \"?lang=NZ\" and you want to get the value \"NZ\", then you need to enter \"lang\".",
         "UserInteractionTriggerName": "User Interaction",
-        "UserInteractionTriggerDescription": "Triggered when user interacts with the site."
+        "UserInteractionTriggerDescription": "Triggered when any of the following event touch, move, scroll or mouse click is executed by the user on site."
     }
 }
