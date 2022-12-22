@@ -417,7 +417,7 @@
 				<description>Triggered when user interacts with the site, i. e. touch, move, scroll or mouse click event is executed by the user on site.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/icons/interaction.svg</icon>
-				<help>Triggered when any of the following event touch,move,scroll or mouse click is executed by the user on site.</help>
+				<help>This trigger is triggered when the user interacts with the page (touch, mousemove, scroll, mouse click). Loading and processing JS on a website usually blocks page rendering and impacts performance. Defering JS via this trigger until after the page was rendered and user interacts with the page can be useful to avoid negative impacts on Page Speed and Core Web Vitals scores. Note: User interaction is triggered only once when the user interacts with the page for the first time after page load.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
