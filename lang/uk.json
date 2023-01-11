@@ -2,7 +2,7 @@
     "TagManager": {
         "BingUETTagHelp": "Тег відстежує, що роблять ваші клієнти після того, як вони натиснуть ваше оголошення Bing.",
         "BrowserLanguageVariableName": "Мова браузера",
-        "BugsnagTagDescription": "Додайте моніторинг помилок у свої програми за допомогою Bugsnag.",
+        "BugsnagTagDescription": "Додайте моніторинг помилок у свої застосунки за допомогою Bugsnag.",
         "BugsnagTagHelp": "Цей тег додає усталену інтеграцію javascript до вашого вебсайту.",
         "CapabilityUseCustomTemplates": "Використовувати власні шаблони",
         "CategoryAds": "Реклама",
