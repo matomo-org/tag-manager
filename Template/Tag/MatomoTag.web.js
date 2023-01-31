@@ -16,6 +16,10 @@
     window._paq = window._paq || [];
     // Store the initial state of window._paq so that we can apply it to all of the configs
     var initialPaq = window._paq && window._paq.length ? JSON.parse(JSON.stringify(window._paq)) : initialPaq || [];
+    // Clear window._paq to prevent things from being tracked too early
+    window._paq = [];
+
+    var hasProcessedRemainingTrackings = false;
 
     if ('object' !== typeof window.matomoPluginAsyncInit) {
         window.matomoPluginAsyncInit = [];
@@ -438,6 +442,16 @@
                 for (indexRemove = 0; indexRemove < arrayLength; indexRemove++) {
                     _paq.splice(indexesToRemove[indexRemove], 1);
                 }
+
+                // If the remaining _paq values haven't been processed yet, process them
+                // We wait till now so that all configs are applied first
+                if (!hasProcessedRemainingTrackings && _paq.length) {
+                    hasProcessedRemainingTrackings = true;
+                    for (trackingIndex = 0; trackingIndex < _paq.length; trackingIndex++) {
+                        window._paq.push(_paq[trackingIndex]);
+                    }
+                }
+
                 /*
                 * TODO - process the remaining _paq elements similar to below. Make sure to account
                 * for multiple trackers. AKA only process things once instead of per tracker like
