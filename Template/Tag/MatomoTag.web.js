@@ -430,7 +430,7 @@
                     var dimIndex;
                     for (dimIndex = 0; dimIndex < matomoConfig.customDimensions.length; dimIndex++) {
                         var dimension = matomoConfig.customDimensions[dimIndex];
-                        if (dimension && TagManager.utils.isObject(dimension) && dimension.index && dimension.hasOwnProperty('value')) {
+                        if (dimension && TagManager.utils.isObject(dimension) && dimension.index && (dimension.value || dimension.value === null)) {
                             tracker.setCustomDimension(dimension.index, dimension.value);
                         }
                     }
