@@ -212,7 +212,7 @@ class TagManager extends \Piwik\Plugin
 
     public function endTrackingCodePageTableOfContents(&$out)
     {
-        $out .= '<a href="#tagmanager">' . Piwik::translate('TagManager_TagManager') . '</a>';
+        $out .= '<a href="#/tagmanager">' . Piwik::translate('TagManager_TagManager') . '</a>';
     }
 
     public function addTagManagerCode(&$out)
