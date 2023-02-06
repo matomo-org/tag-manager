@@ -1690,6 +1690,8 @@
                             matomoConfigNames.splice(tagDefinition.parameters.matomoConfig.name, 1);
                         }
                         // If all of the names have been removed, that means all configs are found
+                        // If configs are ready, set tag ready to apply all postponed _paq entries
+                        // This is because we postpone _paq entries to apply them on all trackers
                         if (hasMatomoTag && matomoConfigNames.length === 0) {
                             tagDefinition.parameters.applyRemainingPaqEntries = true;
                         }
