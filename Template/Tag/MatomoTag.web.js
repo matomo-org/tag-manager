@@ -13,7 +13,10 @@
         }
     };
 
-    window._paq = window._paq || [];
+    // Make sure that window._paq always exists
+    if (!window._paq) {
+        window._paq = [];
+    }
     // Store the initial state of window._paq so that we can apply it to all of the configs
     // We use the stringify and parse to make sure that we have a copy and not a reference
     var initialPaq = window._paq && window._paq.length ? JSON.parse(JSON.stringify(window._paq)) : initialPaq || [];
@@ -117,7 +120,7 @@
 
                 var setCustomDimensionIndexes = [];
                 indexesToRemove = [];
-                var _paq = JSON.parse(JSON.stringify(initialPaq));
+                var localPaq = JSON.parse(JSON.stringify(initialPaq));
 
                 // we need to fetch matomoConfig again in case some parameters changed meanwhile that are variables...
                 // eg userId might be a variable and it's value might be different now
@@ -152,12 +155,12 @@
                         = enableHeartBeatTimerIndex = trackAllContentImpressionsIndex
                         = trackVisibleContentImpressionsIndex = disableFormAnalyticsIndex
                         = disableMediaAnalyticsIndex = -1;
-                    for (k = 0; k < _paq.length; k++) {
+                    for (k = 0; k < localPaq.length; k++) {
                         // This should only be an array. Skip if it's not
-                        if (!TagManager.utils.isArray(_paq[k])) {
+                        if (!TagManager.utils.isArray(localPaq[k])) {
                             continue;
                         }
-                        var name = _paq[k][0];
+                        var name = localPaq[k][0];
                         switch (name) {
                             case 'setUserId':
                                 setUserIdIndex = k;
@@ -264,9 +267,9 @@
                         removeIndexIfExists(enableCrossDomainLinkingIndex);
                     }
 
-                    if (matomoConfig.cookieSameSite || (cookieSameSiteIndex !== -1 && _paq[cookieSameSiteIndex].length === 2)) {
-                        if (cookieSameSiteIndex !== -1 && _paq[cookieSameSiteIndex].length === 2) {
-                            tracker.setCookieSameSite(_paq[cookieSameSiteIndex][1]);
+                    if (matomoConfig.cookieSameSite || (cookieSameSiteIndex !== -1 && localPaq[cookieSameSiteIndex].length === 2)) {
+                        if (cookieSameSiteIndex !== -1 && localPaq[cookieSameSiteIndex].length === 2) {
+                            tracker.setCookieSameSite(localPaq[cookieSameSiteIndex][1]);
                             removeIndexIfExists(cookieSameSiteIndex);
                         } else {
                             tracker.setCookieSameSite(matomoConfig.cookieSameSite);
@@ -278,18 +281,18 @@
                         removeIndexIfExists(setSecureCookieIndex);
                     }
 
-                    if (matomoConfig.cookiePath || (cookiePathIndex !== -1 && _paq[cookiePathIndex].length === 2)) {
-                        if (cookiePathIndex !== -1 && _paq[cookiePathIndex].length === 2) {
-                            tracker.setCookiePath(_paq[cookiePathIndex][1]);
+                    if (matomoConfig.cookiePath || (cookiePathIndex !== -1 && localPaq[cookiePathIndex].length === 2)) {
+                        if (cookiePathIndex !== -1 && localPaq[cookiePathIndex].length === 2) {
+                            tracker.setCookiePath(localPaq[cookiePathIndex][1]);
                             removeIndexIfExists(cookiePathIndex);
                         } else {
                             tracker.setCookiePath(matomoConfig.cookiePath);
                         }
                     }
 
-                    if (matomoConfig.cookieDomain || (cookieDomainIndex !== -1 && _paq[cookieDomainIndex].length === 2)) {
-                        if (cookieDomainIndex !== -1 && _paq[cookieDomainIndex].length === 2) {
-                            tracker.setCookieDomain(_paq[cookieDomainIndex][1]);
+                    if (matomoConfig.cookieDomain || (cookieDomainIndex !== -1 && localPaq[cookieDomainIndex].length === 2)) {
+                        if (cookieDomainIndex !== -1 && localPaq[cookieDomainIndex].length === 2) {
+                            tracker.setCookieDomain(localPaq[cookieDomainIndex][1]);
                             removeIndexIfExists(cookieDomainIndex);
                         } else {
                             tracker.setCookieDomain(matomoConfig.cookieDomain);
@@ -297,11 +300,11 @@
                     }
 
                     // If paq.push(['setDomains' has been called, override the Matomo config domains
-                    if (setDomainsIndex !== -1 && _paq[setDomainsIndex].length === 2) {
-                        var domainsArray = _paq[setDomainsIndex][1];
+                    if (setDomainsIndex !== -1 && localPaq[setDomainsIndex].length === 2) {
+                        var domainsArray = localPaq[setDomainsIndex][1];
                         // It's valid to provide a string if there's only one domain
-                        if (typeof _paq[setDomainsIndex][1] === 'string') {
-                            domainsArray = [_paq[setDomainsIndex][1]];
+                        if (typeof localPaq[setDomainsIndex][1] === 'string') {
+                            domainsArray = [localPaq[setDomainsIndex][1]];
                         }
                         if (TagManager.utils.isArray(domainsArray)) {
                             matomoConfig.domains = domainsArray;
@@ -404,7 +407,7 @@
                         matomoConfig.customDimensions = [];
                     }
                     for (indexIndex = 0; indexIndex < setCustomDimensionIndexes.length; indexIndex++) {
-                        var customDim = _paq[setCustomDimensionIndexes[indexIndex]];
+                        var customDim = localPaq[setCustomDimensionIndexes[indexIndex]];
                         if (TagManager.utils.isArray(customDim) && customDim.length === 3) {
                             matomoConfig.customDimensions.push({
                                 index: customDim[1],
@@ -430,12 +433,12 @@
                 indexesToRemove.sort().reverse();
                 var arrayLength = indexesToRemove.length;
                 for (indexRemove = 0; indexRemove < arrayLength; indexRemove++) {
-                    _paq.splice(indexesToRemove[indexRemove], 1);
+                    localPaq.splice(indexesToRemove[indexRemove], 1);
                 }
 
                 // Keep a list of all of the non-config requests to process later
-                if (_paq.length && !remainingPaq.length) {
-                    remainingPaq = _paq;
+                if (localPaq.length && !remainingPaq.length) {
+                    remainingPaq = localPaq;
                 }
 
                 // If the remaining _paq values haven't been processed yet, process them
