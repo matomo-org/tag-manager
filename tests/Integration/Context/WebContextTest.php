@@ -9,6 +9,7 @@
 namespace Piwik\Plugins\TagManager\tests\Integration\Context;
 
 use Piwik\Container\StaticContainer;
+use Piwik\Piwik;
 use Piwik\Plugins\TagManager\API;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
@@ -78,6 +79,15 @@ class WebContextTest extends IntegrationTestCase
             ['matomoUrl' => 'https://matomo.org{{MyVar}}', 'idSite' => $this->idSite]);
 
         return $idContainer;
+    }
+
+    public function test_defaultContainer_flow()
+    {
+        $containers = $this->api->getContainers(1);
+        $this->assertEmpty($this->api->getContainers(1));
+        Piwik::postEvent('PluginManager.pluginActivated', ['TagManager']);
+        $containers = $this->api->getContainers(1);
+        $this->assertNotEmpty($this->api->getContainers(1));
     }
 
     public function test_detectsRecursion_whenPreviewModeEnabled()
