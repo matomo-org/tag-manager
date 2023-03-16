@@ -22,6 +22,12 @@ class GenerateTag extends GeneratePluginBase
         $this->addOption('tagname', null, InputOption::VALUE_REQUIRED, 'The name of the tag you want to create');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $pluginName = $this->getPluginName($input, $output);
@@ -59,7 +65,7 @@ class GenerateTag extends GeneratePluginBase
             'Enjoy!'
         ));
 
-        return 0;
+        return self::SUCCESS;
     }
 
     /**

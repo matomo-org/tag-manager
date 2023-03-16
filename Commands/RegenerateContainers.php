@@ -23,6 +23,12 @@ class RegenerateContainers extends ConsoleCommand
         $this->addOption('only-with-preview-release', null, InputOption::VALUE_NONE, 'Only regenerate containers with a preview release.');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $onlyPreview = $input->getOption('only-with-preview-release');
@@ -31,6 +37,6 @@ class RegenerateContainers extends ConsoleCommand
 
         $output->writeln('<info>Done</info>');
 
-        return 0;
+        return self::SUCCESS;
     }
 }

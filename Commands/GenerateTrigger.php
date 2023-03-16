@@ -24,6 +24,12 @@ class GenerateTrigger extends GeneratePluginBase
         $this->addOption('triggername', null, InputOption::VALUE_REQUIRED, 'The name of the trigger you want to create');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $pluginName = $this->getPluginName($input, $output);
@@ -59,7 +65,7 @@ class GenerateTrigger extends GeneratePluginBase
             'Enjoy!'
         ));
 
-        return 0;
+        return self::SUCCESS;
     }
 
     /**
