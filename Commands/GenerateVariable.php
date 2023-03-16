@@ -23,6 +23,12 @@ class GenerateVariable extends GeneratePluginBase
         $this->addOption('variablename', null, InputOption::VALUE_REQUIRED, 'The name of the variable you want to create');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $pluginName = $this->getPluginName($input, $output);
@@ -58,7 +64,7 @@ class GenerateVariable extends GeneratePluginBase
             'Enjoy!'
         ));
 
-        return 0;
+        return self::SUCCESS;
     }
 
     /**
