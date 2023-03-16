@@ -359,7 +359,7 @@
 				<name>Google Analytics (Universal)</name>
 				<description>Google Analytics is a web analytics service offered by Google.</description>
 				<category>Analytics</category>
-				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
+				<icon>plugins/TagManager/images/icons/google-analytics-icon.svg</icon>
 				<help>This tag lets you track website pageviews into your Google Analytics. To obtain the Property-ID please log in to your Google Analytics account.</help>
 				<order>9999</order>
 				<contexts>
@@ -1434,7 +1434,7 @@
 			<row>
 				<id>Drift</id>
 				<name>Drift</name>
-				<description />
+				<description>Discover more efficient placement of your bots with Drift JavaScript tags.</description>
 				<category>Social</category>
 				<icon>plugins/TagManager/images/icons/drift.svg</icon>
 				<help />

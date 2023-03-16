@@ -315,6 +315,8 @@
         "DomReadyTriggerDescription": "Triggered as soon as all the HTML has been received and parsed.",
         "DomReadyTriggerHelp": "At this stage of loading a web page only the HTML is loaded but not yet all images, StyleSheets, and JavaScript files. If you want to make sure the website is fully loaded, please consider the \"Window Loaded\" trigger.",
         "DomReadyTriggerName": "DOM Ready",
+        "DriftTagName": "Drift",
+        "DriftTagDescription": "Discover more efficient placement of your bots with Drift JavaScript tags.",
         "DriftDescription": "Drift allows you to connect with your customers.",
         "DriftHelp": "This tag allows you to add the Drift contact form to your website.",
         "AllDownloadsClickTriggerDescription": "Triggered when a link is clicked which links to a downloadable file. It will be triggered on left, middle and right click.",

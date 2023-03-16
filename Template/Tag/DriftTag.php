@@ -16,10 +16,6 @@ use Piwik\Validators\NotEmpty;
 
 class DriftTag extends BaseTag
 {
-    public function getName() {
-        return "Drift";
-    }
-    
     public function getCategory() {
         return self::CATEGORY_SOCIAL;
     }
