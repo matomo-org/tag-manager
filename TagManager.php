@@ -35,6 +35,7 @@ use Piwik\Site;
 use Piwik\View;
 use Piwik\Context;
 use Matomo\Dependencies\Psr\Log\LoggerInterface;
+use Matomo\Dependencies\DI;
 use Piwik\SettingsPiwik;
 
 class TagManager extends \Piwik\Plugin
@@ -204,8 +205,8 @@ class TagManager extends \Piwik\Plugin
     {
         if ($pluginName === 'TagManager') {
             //Need to manually set this since values inc config.php is not loaded
-            StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator', \DI\autowire('Piwik\Plugins\TagManager\Model\Container\RandomContainerIdGenerator'));
-            StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Context\Storage\StorageInterface', \DI\autowire('Piwik\Plugins\TagManager\Context\Storage\Filesystem'));
+            StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator', DI\autowire('Piwik\Plugins\TagManager\Model\Container\RandomContainerIdGenerator'));
+            StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Context\Storage\StorageInterface', DI\autowire('Piwik\Plugins\TagManager\Context\Storage\Filesystem'));
             StaticContainer::getContainer()->set('TagManagerContainerStorageDir', '/js');
             StaticContainer::getContainer()->set('TagManagerContainerFilesPrefix', 'container_');
             StaticContainer::getContainer()->set('TagManagerJSMinificationEnabled', true);
