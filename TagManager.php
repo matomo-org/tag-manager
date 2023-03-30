@@ -204,11 +204,21 @@ class TagManager extends \Piwik\Plugin
     {
         if ($pluginName === 'TagManager') {
             //Need to manually set this since values inc config.php is not loaded
-            StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator', \DI\autowire('Piwik\Plugins\TagManager\Model\Container\RandomContainerIdGenerator'));
-            StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Context\Storage\StorageInterface', \DI\autowire('Piwik\Plugins\TagManager\Context\Storage\Filesystem'));
-            StaticContainer::getContainer()->set('TagManagerContainerStorageDir', '/js');
-            StaticContainer::getContainer()->set('TagManagerContainerFilesPrefix', 'container_');
-            StaticContainer::getContainer()->set('TagManagerJSMinificationEnabled', true);
+            if (!StaticContainer::getContainer()->has('Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator')) {
+                StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator', \DI\autowire('Piwik\Plugins\TagManager\Model\Container\RandomContainerIdGenerator'));
+            }
+            if (!StaticContainer::getContainer()->has('Piwik\Plugins\TagManager\Context\Storage\StorageInterface')) {
+                StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Context\Storage\StorageInterface', \DI\autowire('Piwik\Plugins\TagManager\Context\Storage\Filesystem'));
+            }
+            if (!StaticContainer::getContainer()->has('TagManagerContainerStorageDir')) {
+                StaticContainer::getContainer()->set('TagManagerContainerStorageDir', '/js');
+            }
+            if (!StaticContainer::getContainer()->has('TagManagerContainerFilesPrefix')) {
+                StaticContainer::getContainer()->set('TagManagerContainerFilesPrefix', 'container_');
+            }
+            if (!StaticContainer::getContainer()->has('TagManagerJSMinificationEnabled')) {
+                StaticContainer::getContainer()->set('TagManagerJSMinificationEnabled', true);
+            }
             $idSite = 1;
 
             try {
