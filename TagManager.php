@@ -219,6 +219,7 @@ class TagManager extends \Piwik\Plugin
             if (!StaticContainer::getContainer()->has('TagManagerJSMinificationEnabled')) {
                 StaticContainer::getContainer()->set('TagManagerJSMinificationEnabled', true);
             }
+
             $idSite = 1;
 
             try {
