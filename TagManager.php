@@ -211,6 +211,8 @@ class TagManager extends \Piwik\Plugin
                     StaticContainer::getContainer()->set($key, $val);
                 }
             }
+            //had to explicitly set this to make it work for cloud
+            StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Context\Storage\StorageInterface', \DI\autowire('Piwik\Plugins\TagManager\Context\Storage\Filesystem'));
 
             $idSite = 1;
 
