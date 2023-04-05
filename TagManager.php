@@ -206,13 +206,12 @@ class TagManager extends \Piwik\Plugin
             //Need to manually set this since values inc config.php is not loaded
             $pluginDirectory = Plugin\Manager::getPluginDirectory('TagManager');
             $configPhp = include $pluginDirectory . '/config/config.php';
+            StaticContainer::getContainer()->set(\Piwik\Plugins\TagManager\Context\Storage\StorageInterface::class, \DI\autowire('Piwik\Plugins\TagManager\Context\Storage\Filesystem'));
             foreach ($configPhp as $key => $val) {
                 if (!StaticContainer::getContainer()->has($key)) {
                     StaticContainer::getContainer()->set($key, $val);
                 }
             }
-            //had to explicitly set this to make it work for cloud
-            StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Context\Storage\StorageInterface', \DI\autowire('Piwik\Plugins\TagManager\Context\Storage\Filesystem'));
 
             $idSite = 1;
 
