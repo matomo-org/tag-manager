@@ -206,7 +206,6 @@ class TagManager extends \Piwik\Plugin
             //Need to manually set this since values inc config.php is not loaded
             $pluginDirectory = Plugin\Manager::getPluginDirectory('TagManager');
             $configPhp = include $pluginDirectory . '/config/config.php';
-            StaticContainer::getContainer()->set(\Piwik\Plugins\TagManager\Context\Storage\StorageInterface::class, \DI\autowire('Piwik\Plugins\TagManager\Context\Storage\Filesystem'));
             foreach ($configPhp as $key => $val) {
                 if (!StaticContainer::getContainer()->has($key)) {
                     StaticContainer::getContainer()->set($key, $val);
@@ -231,7 +230,12 @@ class TagManager extends \Piwik\Plugin
                 SettingsPiwik::overwritePiwikUrl('https://' . SettingsPiwik::getPiwikInstanceId());
             }
 
-            Request::processRequest('TagManager.createDefaultContainerForSite', ['idSite' => $idSite], []);
+            try {
+                StaticContainer::getContainer()->get('Piwik\Plugins\TagManager\Context\Storage\StorageInterface'); //this will throw an error on cloud, so we need to catch this and avoid the exception stack trace
+                Request::processRequest('TagManager.createDefaultContainerForSite', ['idSite' => $idSite], []);
+            } catch (\Exception $e) {
+                //Do nothing here, it fails on cloud always
+            }
         } else {
             $this->onPluginActivateOrInstall($pluginName);
         }
