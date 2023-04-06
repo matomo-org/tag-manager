@@ -95,8 +95,7 @@ class GenerateTag extends GeneratePluginBase
         };
 
         if (empty($tagName)) {
-            $dialog   = $this->getHelperSet()->get('dialog');
-            $tagName = $dialog->askAndValidate($output, 'Enter the name of the tag (CamelCase): ', $validate);
+            $tagName = $this->askAndValidate($input, $output, 'Enter the name of the tag (CamelCase): ', $validate);
         } else {
             $validate($tagName);
         }

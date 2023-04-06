@@ -95,8 +95,7 @@ class GenerateTrigger extends GeneratePluginBase
         };
 
         if (empty($triggerName)) {
-            $dialog   = $this->getHelperSet()->get('dialog');
-            $triggerName = $dialog->askAndValidate($output, 'Enter the name of the trigger (CamelCase): ', $validate);
+            $triggerName = $this->askAndValidate($input, $output, 'Enter the name of the trigger (CamelCase): ', $validate);
         } else {
             $validate($triggerName);
         }

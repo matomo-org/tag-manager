@@ -94,8 +94,7 @@ class GenerateVariable extends GeneratePluginBase
         };
 
         if (empty($variableName)) {
-            $dialog   = $this->getHelperSet()->get('dialog');
-            $variableName = $dialog->askAndValidate($output, 'Enter the name of the variable (CamelCase): ', $validate);
+            $variableName = $this->askAndValidate($input, $output, 'Enter the name of the variable (CamelCase): ', $validate);
         } else {
             $validate($variableName);
         }
