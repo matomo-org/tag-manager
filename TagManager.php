@@ -204,11 +204,14 @@ class TagManager extends \Piwik\Plugin
     {
         if ($pluginName === 'TagManager') {
             //Need to manually set this since values inc config.php is not loaded
-            StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator', \DI\autowire('Piwik\Plugins\TagManager\Model\Container\RandomContainerIdGenerator'));
-            StaticContainer::getContainer()->set('Piwik\Plugins\TagManager\Context\Storage\StorageInterface', \DI\autowire('Piwik\Plugins\TagManager\Context\Storage\Filesystem'));
-            StaticContainer::getContainer()->set('TagManagerContainerStorageDir', '/js');
-            StaticContainer::getContainer()->set('TagManagerContainerFilesPrefix', 'container_');
-            StaticContainer::getContainer()->set('TagManagerJSMinificationEnabled', true);
+            $pluginDirectory = Plugin\Manager::getPluginDirectory('TagManager');
+            $configPhp = include $pluginDirectory . '/config/config.php';
+            foreach ($configPhp as $key => $val) {
+                if (!StaticContainer::getContainer()->has($key)) {
+                    StaticContainer::getContainer()->set($key, $val);
+                }
+            }
+
             $idSite = 1;
 
             try {
@@ -227,7 +230,12 @@ class TagManager extends \Piwik\Plugin
                 SettingsPiwik::overwritePiwikUrl('https://' . SettingsPiwik::getPiwikInstanceId());
             }
 
-            Request::processRequest('TagManager.createDefaultContainerForSite', ['idSite' => $idSite], []);
+            try {
+                StaticContainer::getContainer()->get('Piwik\Plugins\TagManager\Context\Storage\StorageInterface'); //this will throw an error on cloud, so we need to catch this and avoid the exception stack trace
+                Request::processRequest('TagManager.createDefaultContainerForSite', ['idSite' => $idSite], []);
+            } catch (\Exception $e) {
+                //Do nothing here, it fails on cloud always
+            }
         } else {
             $this->onPluginActivateOrInstall($pluginName);
         }
