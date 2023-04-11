@@ -9,10 +9,7 @@ namespace Piwik\Plugins\TagManager\Commands;
 
 use Piwik\Piwik;
 use Piwik\Plugin\ConsoleCommand;
-use Symfony\Component\Console\Input\InputInterface;
-
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class RegenerateContainers extends ConsoleCommand
 {
@@ -24,13 +21,12 @@ class RegenerateContainers extends ConsoleCommand
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @return int
      */
-
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecute(): int
     {
+        $input = $this->getInput();
+        $output = $this->getOutput();
         $onlyPreview = $input->getOption('only-with-preview-release');
 
         Piwik::postEvent('TagManager.regenerateContainerReleases', [$onlyPreview]);

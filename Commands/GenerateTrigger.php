@@ -7,12 +7,8 @@
  */
 namespace Piwik\Plugins\TagManager\Commands;
 
-
 use Piwik\Plugins\CoreConsole\Commands\GeneratePluginBase;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-
 
 class GenerateTrigger extends GeneratePluginBase
 {
@@ -25,17 +21,14 @@ class GenerateTrigger extends GeneratePluginBase
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @return int
      */
-
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecute(): int
     {
-        $pluginName = $this->getPluginName($input, $output);
-        $this->checkAndUpdateRequiredPiwikVersion($pluginName, $output);
+        $pluginName = $this->getPluginName();
+        $this->checkAndUpdateRequiredPiwikVersion($pluginName);
 
-        $triggerName = $this->getTriggerName($input, $output);
+        $triggerName = $this->getTriggerName();
         $triggerId = str_replace(array('-', ' '), '', $triggerName);
         $triggerClass = $triggerId . 'Trigger';
 
@@ -59,7 +52,7 @@ class GenerateTrigger extends GeneratePluginBase
         $this->makeTranslationIfPossible($pluginName, "This is the description for " . $triggerName, $triggerClass . 'Description');
         $this->makeTranslationIfPossible($pluginName, "", $triggerClass . 'Help');
 
-        $this->writeSuccessMessage($output, array(
+        $this->writeSuccessMessage(array(
             sprintf('Trigger for %s in folder "plugins/%s/Template/Trigger" generated.', $pluginName, $pluginName),
             'You can now start implementing the trigger',
             'Enjoy!'
@@ -69,14 +62,12 @@ class GenerateTrigger extends GeneratePluginBase
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @return string
      * @throws \RuntimeException
      */
-    private function getTriggerName(InputInterface $input, OutputInterface $output)
+    private function getTriggerName()
     {
-        $triggerName = $input->getOption('triggername');
+        $triggerName = $this->getInput()->getOption('triggername');
 
         $validate = function ($testname) {
             if (empty($testname)) {
@@ -95,7 +86,7 @@ class GenerateTrigger extends GeneratePluginBase
         };
 
         if (empty($triggerName)) {
-            $triggerName = $this->askAndValidate($input, $output, 'Enter the name of the trigger (CamelCase): ', $validate);
+            $triggerName = $this->askAndValidate('Enter the name of the trigger (CamelCase): ', $validate);
         } else {
             $validate($triggerName);
         }
@@ -105,11 +96,11 @@ class GenerateTrigger extends GeneratePluginBase
         return $triggerName;
     }
 
-    protected function getPluginName(InputInterface $input, OutputInterface $output)
+    protected function getPluginName()
     {
         $pluginNames = $this->getPluginNames();
         $invalidName = 'You have to enter the name of an existing plugin';
 
-        return $this->askPluginNameAndValidate($input, $output, $pluginNames, $invalidName);
+        return $this->askPluginNameAndValidate($pluginNames, $invalidName);
     }
 }

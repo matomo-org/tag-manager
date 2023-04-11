@@ -8,9 +8,7 @@
 namespace Piwik\Plugins\TagManager\Commands;
 
 use Piwik\Plugins\CoreConsole\Commands\GeneratePluginBase;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateTag extends GeneratePluginBase
 {
@@ -23,17 +21,14 @@ class GenerateTag extends GeneratePluginBase
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @return int
      */
-
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function doExecute(): int
     {
-        $pluginName = $this->getPluginName($input, $output);
-        $this->checkAndUpdateRequiredPiwikVersion($pluginName, $output);
+        $pluginName = $this->getPluginName();
+        $this->checkAndUpdateRequiredPiwikVersion($pluginName);
 
-        $tagName = $this->getTagName($input, $output);
+        $tagName = $this->getTagName();
         $tagId = str_replace(array('-', ' '), '', $tagName);
         $tagClass = $tagId . 'Tag';
 
@@ -59,7 +54,7 @@ class GenerateTag extends GeneratePluginBase
         $this->makeTranslationIfPossible($pluginName, "This is the description for " . $tagName, $tagClass . 'Description');
         $this->makeTranslationIfPossible($pluginName, "", $tagClass . 'Help');
 
-        $this->writeSuccessMessage($output, array(
+        $this->writeSuccessMessage(array(
             sprintf('Tag for %s in folder "plugins/%s/Template/Tag" generated.', $pluginName, $pluginName),
             'You can now start implementing the tag',
             'Enjoy!'
@@ -69,14 +64,12 @@ class GenerateTag extends GeneratePluginBase
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @return string
      * @throws \RuntimeException
      */
-    private function getTagName(InputInterface $input, OutputInterface $output)
+    private function getTagName()
     {
-        $tagName = $input->getOption('tagname');
+        $tagName = $this->getInput()->getOption('tagname');
 
         $validate = function ($testname) {
             if (empty($testname)) {
@@ -95,7 +88,7 @@ class GenerateTag extends GeneratePluginBase
         };
 
         if (empty($tagName)) {
-            $tagName = $this->askAndValidate($input, $output, 'Enter the name of the tag (CamelCase): ', $validate);
+            $tagName = $this->askAndValidate('Enter the name of the tag (CamelCase): ', $validate);
         } else {
             $validate($tagName);
         }
@@ -105,11 +98,11 @@ class GenerateTag extends GeneratePluginBase
         return $tagName;
     }
 
-    protected function getPluginName(InputInterface $input, OutputInterface $output)
+    protected function getPluginName()
     {
         $pluginNames = $this->getPluginNames();
         $invalidName = 'You have to enter the name of an existing plugin';
 
-        return $this->askPluginNameAndValidate($input, $output, $pluginNames, $invalidName);
+        return $this->askPluginNameAndValidate($pluginNames, $invalidName);
     }
 }
