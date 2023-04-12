@@ -8,7 +8,6 @@
 namespace Piwik\Plugins\TagManager\Commands;
 
 use Piwik\Plugins\CoreConsole\Commands\GeneratePluginBase;
-use Symfony\Component\Console\Input\InputOption;
 
 class GenerateTrigger extends GeneratePluginBase
 {
@@ -16,8 +15,8 @@ class GenerateTrigger extends GeneratePluginBase
     {
         $this->setName('generate:tagmanager-trigger');
         $this->setDescription('Generate Trigger');
-        $this->addOption('pluginname', null, InputOption::VALUE_REQUIRED, 'The name of an existing plugin');
-        $this->addOption('triggername', null, InputOption::VALUE_REQUIRED, 'The name of the trigger you want to create');
+        $this->addRequiredValueOption('pluginname', null, 'The name of an existing plugin');
+        $this->addRequiredValueOption('triggername', null, 'The name of the trigger you want to create');
     }
 
     /**

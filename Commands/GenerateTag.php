@@ -8,7 +8,6 @@
 namespace Piwik\Plugins\TagManager\Commands;
 
 use Piwik\Plugins\CoreConsole\Commands\GeneratePluginBase;
-use Symfony\Component\Console\Input\InputOption;
 
 class GenerateTag extends GeneratePluginBase
 {
@@ -16,8 +15,8 @@ class GenerateTag extends GeneratePluginBase
     {
         $this->setName('generate:tagmanager-tag');
         $this->setDescription('Generate Tag');
-        $this->addOption('pluginname', null, InputOption::VALUE_REQUIRED, 'The name of an existing plugin');
-        $this->addOption('tagname', null, InputOption::VALUE_REQUIRED, 'The name of the tag you want to create');
+        $this->addRequiredValueOption('pluginname', null, 'The name of an existing plugin');
+        $this->addRequiredValueOption('tagname', null, 'The name of the tag you want to create');
     }
 
     /**
