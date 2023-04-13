@@ -706,6 +706,7 @@
         "TagEndDateHelp": "If set, this tag will be fired only up to this end date. The specified date will be assumed to be in %1$syour local timezone%2$s.",
         "TagFireTriggerRequirement": "You need to choose at least one fire trigger.",
         "TagManager": "Tag Manager",
+        "TagManagerNew": "Matomo Tag Manager",
         "TagManagerTrackingInfo": "Don't know what a Tag Manager is? Check out our %1$sGetting Started%2$s guide. If you are embedding multiple resources from 3rd party websites into your website, then tracking your website using the %3$sTag Manager%4$s may be a better choice for you compared to using the regular JavaScript tracking.",
         "TagsActionDescription": "Options to edit or delete a tag.",
         "TagsDescriptionDescription": "The optional user-defined label that includes more detail about the tag.",
