@@ -609,6 +609,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_GettingStartedContributeTags';
         $result[] = 'TagManager_CreateNewVersionNow';
         $result[] = 'TagManager_TagManager';
+        $result[] = 'TagManager_TagManagerNew';
         $result[] = 'TagManager_TagManagerTrackingInfo';
         $result[] = 'TagManager_InvalidDebugUrlError';
         $result[] = 'TagManager_TagDescriptionHelp';
