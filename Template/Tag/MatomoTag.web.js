@@ -20,9 +20,7 @@
     var remainingPaq = [];
     var indexesToRemove = [];
     // Clear window._paq to prevent things from being tracked too early
-    while (window._paq.length > 0) {
-        window._paq.pop();
-    }
+    window._paq = [];
 
     var hasProcessedRemainingTrackings = false;
 
