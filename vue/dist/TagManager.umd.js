@@ -4286,18 +4286,18 @@ function TagTriggerArrayvue_type_script_lang_ts_arrayLikeToArray(arr, len) { if 
 TagTriggerArrayvue_type_script_lang_ts.render = TagTriggerArrayvue_type_template_id_c1c05b4a_render
 
 /* harmony default export */ var TagTriggerArray = (TagTriggerArrayvue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Tag/TagDateInput.vue?vue&type=template&id=cd8af1f4
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Tag/TagDateInput.vue?vue&type=template&id=fc05d13c
 
-var TagDateInputvue_type_template_id_cd8af1f4_hoisted_1 = {
+var TagDateInputvue_type_template_id_fc05d13c_hoisted_1 = {
   class: "col s12 m6 input-field"
 };
-var TagDateInputvue_type_template_id_cd8af1f4_hoisted_2 = ["name", "id", "value"];
-var TagDateInputvue_type_template_id_cd8af1f4_hoisted_3 = {
+var TagDateInputvue_type_template_id_fc05d13c_hoisted_2 = ["name", "id", "value"];
+var TagDateInputvue_type_template_id_fc05d13c_hoisted_3 = {
   class: "col s12 m6 input-field"
 };
-var TagDateInputvue_type_template_id_cd8af1f4_hoisted_4 = ["name", "id", "value"];
-function TagDateInputvue_type_template_id_cd8af1f4_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", TagDateInputvue_type_template_id_cd8af1f4_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
+var TagDateInputvue_type_template_id_fc05d13c_hoisted_4 = ["name", "id", "value"];
+function TagDateInputvue_type_template_id_fc05d13c_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", TagDateInputvue_type_template_id_fc05d13c_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
     ref: "dateInput",
     type: "text",
     name: "".concat(_ctx.name, "_date"),
@@ -4310,7 +4310,7 @@ function TagDateInputvue_type_template_id_cd8af1f4_render(_ctx, _cache, $props, 
     onChange: _cache[1] || (_cache[1] = function ($event) {
       return _ctx.onDateKeydown($event);
     })
-  }, null, 40, TagDateInputvue_type_template_id_cd8af1f4_hoisted_2)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", TagDateInputvue_type_template_id_cd8af1f4_hoisted_3, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
+  }, null, 40, TagDateInputvue_type_template_id_fc05d13c_hoisted_2)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", TagDateInputvue_type_template_id_fc05d13c_hoisted_3, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("input", {
     ref: "timeInput",
     type: "text",
     name: "".concat(_ctx.name, "_time"),
@@ -4320,9 +4320,9 @@ function TagDateInputvue_type_template_id_cd8af1f4_render(_ctx, _cache, $props, 
     onKeydown: _cache[2] || (_cache[2] = function ($event) {
       return _ctx.onTimeKeydown($event);
     })
-  }, null, 40, TagDateInputvue_type_template_id_cd8af1f4_hoisted_4)])], 64);
+  }, null, 40, TagDateInputvue_type_template_id_fc05d13c_hoisted_4)])], 64);
 }
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Tag/TagDateInput.vue?vue&type=template&id=cd8af1f4
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/Tag/TagDateInput.vue?vue&type=template&id=fc05d13c
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Tag/TagDateInput.vue?vue&type=script&lang=ts
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -4516,7 +4516,7 @@ var TagDateInputvue_type_script_lang_ts_window = window,
 
 
 
-TagDateInputvue_type_script_lang_ts.render = TagDateInputvue_type_template_id_cd8af1f4_render
+TagDateInputvue_type_script_lang_ts.render = TagDateInputvue_type_template_id_fc05d13c_render
 
 /* harmony default export */ var TagDateInput = (TagDateInputvue_type_script_lang_ts);
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/Tag/Tags.store.ts
@@ -9320,27 +9320,27 @@ function ucfirst(s) {
 TagmanagerTrackingCodevue_type_script_lang_ts.render = TagmanagerTrackingCodevue_type_template_id_2d55f79a_render
 
 /* harmony default export */ var TagmanagerTrackingCode = (TagmanagerTrackingCodevue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=template&id=501407a8
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=template&id=62dec00e
 
-var TrackingCodePagevue_type_template_id_501407a8_hoisted_1 = ["innerHTML"];
-function TrackingCodePagevue_type_template_id_501407a8_render(_ctx, _cache, $props, $setup, $data, $options) {
+var TrackingCodePagevue_type_template_id_62dec00e_hoisted_1 = ["innerHTML"];
+function TrackingCodePagevue_type_template_id_62dec00e_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TagmanagerTrackingCode = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("TagmanagerTrackingCode");
 
   var _component_ContentBlock = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("ContentBlock");
 
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])(_component_ContentBlock, {
     anchor: "tagmanager",
-    "content-title": _ctx.translate('TagManager_TagManager')
+    "content-title": _ctx.translate('TagManager_MatomoTagManager')
   }, {
     default: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withCtx"])(function () {
       return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", {
         innerHTML: _ctx.$sanitize(_ctx.trackingInfoText)
-      }, null, 8, TrackingCodePagevue_type_template_id_501407a8_hoisted_1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_TagmanagerTrackingCode)];
+      }, null, 8, TrackingCodePagevue_type_template_id_62dec00e_hoisted_1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_TagmanagerTrackingCode)];
     }),
     _: 1
   }, 8, ["content-title"]);
 }
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=template&id=501407a8
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=template&id=62dec00e
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=script&lang=ts
 
@@ -9372,7 +9372,7 @@ function TrackingCodePagevue_type_template_id_501407a8_render(_ctx, _cache, $pro
 
 
 
-TrackingCodePagevue_type_script_lang_ts.render = TrackingCodePagevue_type_template_id_501407a8_render
+TrackingCodePagevue_type_script_lang_ts.render = TrackingCodePagevue_type_template_id_62dec00e_render
 
 /* harmony default export */ var TrackingCodePage = (TrackingCodePagevue_type_script_lang_ts);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Debugging/Debugging.vue?vue&type=template&id=6e8e3aea

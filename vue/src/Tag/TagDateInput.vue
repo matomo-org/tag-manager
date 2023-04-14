@@ -166,7 +166,7 @@ export default defineComponent({
       .timepicker({ timeFormat: 'H:i:s' })
       // timepicker triggers a jquery event, not a addEventListener event, so vue doesn't catch
       // it
-      .on('change', (event) => {
+      .on('change', (event: ChangeEvent) => {
         this.onTimeKeydown(event);
       });
   },

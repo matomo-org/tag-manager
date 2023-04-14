@@ -7,7 +7,7 @@
 <template>
   <ContentBlock
     anchor="tagmanager"
-    :content-title="translate('TagManager_TagManager')"
+    :content-title="translate('TagManager_MatomoTagManager')"
   >
     <p v-html="$sanitize(trackingInfoText)"></p>
     <TagmanagerTrackingCode />
