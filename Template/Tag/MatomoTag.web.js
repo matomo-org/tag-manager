@@ -15,10 +15,8 @@
 
     window._paq = window._paq || [];
     // Store the initial state of window._paq so that we can apply it to all of the configs
-    // We use the stringify and parse to make sure that we have a copy and not a reference
     var initialPaq = window._paq && window._paq.length ? JSON.parse(JSON.stringify(window._paq)) : initialPaq || [];
     var remainingPaq = [];
-    var indexesToRemove = [];
     // Clear window._paq to prevent things from being tracked too early
     window._paq = [];
 
@@ -78,15 +76,6 @@
         }
     }
 
-    function removeIndexIfExists(index)
-    {
-        if (index < 0) {
-            return;
-        }
-
-        indexesToRemove.push(index);
-    }
-
     var configuredTrackers = {};
 
     return function (parameters, TagManager) {
@@ -114,7 +103,7 @@
                 var variableName = parameters.matomoConfig.name;
 
                 var setCustomDimensionIndexes = [];
-                indexesToRemove = [];
+                var indexesToRemove = [];
                 var _paq = JSON.parse(JSON.stringify(initialPaq));
 
                 // we need to fetch matomoConfig again in case some parameters changed meanwhile that are variables...
@@ -139,8 +128,6 @@
                     }
                     configuredTrackers[variableName] = tracker;
 
-                    // NOTE: When a new config is created, it should probably be added to this list
-                    // There might already be some configs missing from this list
                     var requireCookieConsentIndex = disableBrowserFeatureDetectionIndex
                         = disableCookiesIndex = enableCrossDomainLinkingIndex = cookieSameSiteIndex
                         = setSecureCookieIndex = cookiePathIndex = cookieDomainIndex
@@ -226,56 +213,68 @@
                         }
                     }
 
-                    if (matomoConfig.requireCookieConsent || requireCookieConsentIndex !== -1) {
+                    if (matomoConfig.requireCookieConsent) {
                       	tracker.requireCookieConsent();
-                      	removeIndexIfExists(requireCookieConsentIndex);
+                    }
+                    if (requireCookieConsentIndex !== -1) {
+                        tracker.requireCookieConsent();
+                        indexesToRemove.push(requireCookieConsentIndex);
                     }
 
-                    if ((matomoConfig.disableBrowserFeatureDetection || disableBrowserFeatureDetectionIndex !== -1) && typeof tracker.disableBrowserFeatureDetection === 'function') {
+                    if (matomoConfig.disableBrowserFeatureDetection && typeof tracker.disableBrowserFeatureDetection === 'function') {
                         tracker.disableBrowserFeatureDetection();
-                        removeIndexIfExists(disableBrowserFeatureDetectionIndex);
+                    }
+                    if (disableBrowserFeatureDetectionIndex !== -1) {
+                        tracker.disableBrowserFeatureDetection();
+                        indexesToRemove.push(disableBrowserFeatureDetectionIndex);
                     }
 
-                    if (matomoConfig.disableCookies || disableCookiesIndex !== -1) {
+                    if (matomoConfig.disableCookies) {
                         tracker.disableCookies();
-                        removeIndexIfExists(disableCookiesIndex);
+                    }
+                    if (disableCookiesIndex !== -1) {
+                        tracker.disableCookies();
+                        indexesToRemove.push(disableCookiesIndex);
                     }
 
-                    if (matomoConfig.enableCrossDomainLinking || enableCrossDomainLinkingIndex !== -1) {
+                    if (matomoConfig.enableCrossDomainLinking) {
                         tracker.enableCrossDomainLinking();
-                        removeIndexIfExists(enableCrossDomainLinkingIndex);
+                    }
+                    if (enableCrossDomainLinkingIndex !== -1) {
+                        tracker.enableCrossDomainLinking();
+                        indexesToRemove.push(enableCrossDomainLinkingIndex);
                     }
 
-                    if (matomoConfig.cookieSameSite || (cookieSameSiteIndex !== -1 && _paq[cookieSameSiteIndex].length === 2)) {
-                        if (cookieSameSiteIndex !== -1 && _paq[cookieSameSiteIndex].length === 2) {
-                            tracker.setCookieSameSite(_paq[cookieSameSiteIndex][1]);
-                            removeIndexIfExists(cookieSameSiteIndex);
-                        } else {
-                            tracker.setCookieSameSite(matomoConfig.cookieSameSite);
-                        }
+                    if (matomoConfig.cookieSameSite) {
+                        tracker.setCookieSameSite(matomoConfig.cookieSameSite);
+                    }
+                    if (cookieSameSiteIndex !== -1 && _paq[cookieSameSiteIndex].length === 2) {
+                        tracker.setCookieSameSite(_paq[cookieSameSiteIndex][1]);
+                        indexesToRemove.push(cookieSameSiteIndex);
                     }
 
-                    if (matomoConfig.setSecureCookie || setSecureCookieIndex !== -1) {
+                    if (matomoConfig.setSecureCookie) {
                         tracker.setSecureCookie(true);
-                        removeIndexIfExists(setSecureCookieIndex);
+                    }
+                    if (setSecureCookieIndex !== -1) {
+                        tracker.setSecureCookie(true);
+                        indexesToRemove.push(setSecureCookieIndex);
                     }
 
-                    if (matomoConfig.cookiePath || (cookiePathIndex !== -1 && _paq[cookiePathIndex].length === 2)) {
-                        if (cookiePathIndex !== -1 && _paq[cookiePathIndex].length === 2) {
-                            tracker.setCookiePath(_paq[cookiePathIndex][1]);
-                            removeIndexIfExists(cookiePathIndex);
-                        } else {
-                            tracker.setCookiePath(matomoConfig.cookiePath);
-                        }
+                    if (matomoConfig.cookiePath) {
+                        tracker.setCookiePath(matomoConfig.cookiePath);
+                    }
+                    if (cookiePathIndex !== -1 && _paq[cookiePathIndex].length === 2) {
+                        tracker.setCookiePath(_paq[cookiePathIndex][1]);
+                        indexesToRemove.push(cookiePathIndex);
                     }
 
-                    if (matomoConfig.cookieDomain || (cookieDomainIndex !== -1 && _paq[cookieDomainIndex].length === 2)) {
-                        if (cookieDomainIndex !== -1 && _paq[cookieDomainIndex].length === 2) {
-                            tracker.setCookieDomain(_paq[cookieDomainIndex][1]);
-                            removeIndexIfExists(cookieDomainIndex);
-                        } else {
-                            tracker.setCookieDomain(matomoConfig.cookieDomain);
-                        }
+                    if (matomoConfig.cookieDomain) {
+                        tracker.setCookieDomain(matomoConfig.cookieDomain);
+                    }
+                    if (cookieDomainIndex !== -1 && _paq[cookieDomainIndex].length === 2) {
+                        tracker.setCookieDomain(_paq[cookieDomainIndex][1]);
+                        indexesToRemove.push(cookieDomainIndex);
                     }
 
                     // If paq.push(['setDomains' has been called, override the Matomo config domains
@@ -288,7 +287,7 @@
                         if (TagManager.utils.isArray(domainsArray)) {
                             matomoConfig.domains = domainsArray;
                         }
-                        removeIndexIfExists(setDomainsIndex);
+                        indexesToRemove.push(setDomainsIndex);
                     }
                     if (matomoConfig.domains
                         && TagManager.utils.isArray(matomoConfig.domains)
@@ -308,54 +307,84 @@
                         tracker.setDomains(domains);
                     }
 
-                    if (matomoConfig.alwaysUseSendBeacon || alwaysUseSendBeaconIndex !== -1) {
+                    if (matomoConfig.alwaysUseSendBeacon) {
                         tracker.alwaysUseSendBeacon();
-                        removeIndexIfExists(alwaysUseSendBeaconIndex);
+                    }
+                    if (alwaysUseSendBeaconIndex !== -1) {
+                        tracker.alwaysUseSendBeacon();
+                        indexesToRemove.push(alwaysUseSendBeaconIndex);
                     }
 
-                    if (matomoConfig.enableLinkTracking || enableLinkTrackingIndex !== -1) {
+                    if (matomoConfig.enableLinkTracking) {
                         tracker.enableLinkTracking();
-                        removeIndexIfExists(enableLinkTrackingIndex);
+                    }
+                    if (enableLinkTrackingIndex !== -1) {
+                        tracker.enableLinkTracking();
+                        indexesToRemove.push(enableLinkTrackingIndex);
                     }
 
-                    if (matomoConfig.requireConsent || requireConsentIndex !== -1) {
+                    if (matomoConfig.requireConsent) {
                         tracker.requireConsent();
-                        removeIndexIfExists(requireConsentIndex);
+                    }
+                    if (requireConsentIndex !== -1) {
+                        tracker.requireConsent();
+                        indexesToRemove.push(requireConsentIndex);
                     }
 
-                    if (matomoConfig.enableDoNotTrack || enableDoNotTrackIndex !== -1) {
+                    if (matomoConfig.enableDoNotTrack) {
                         tracker.setDoNotTrack(1);
-                        removeIndexIfExists(enableDoNotTrackIndex);
+                    }
+                    if (enableDoNotTrackIndex !== -1) {
+                        tracker.setDoNotTrack(1);
+                        indexesToRemove.push(enableDoNotTrackIndex);
                     }
 
-                    if (matomoConfig.enableJSErrorTracking || enableJSErrorTrackingIndex !== -1) {
+                    if (matomoConfig.enableJSErrorTracking) {
                         tracker.enableJSErrorTracking();
-                        removeIndexIfExists(enableJSErrorTrackingIndex);
+                    }
+                    if (enableJSErrorTrackingIndex !== -1) {
+                        tracker.enableJSErrorTracking();
+                        indexesToRemove.push(enableJSErrorTrackingIndex);
                     }
 
-                    if (matomoConfig.enableHeartBeatTimer || enableHeartBeatTimerIndex !== -1) {
+                    if (matomoConfig.enableHeartBeatTimer) {
                         tracker.enableHeartBeatTimer();
-                        removeIndexIfExists(enableHeartBeatTimerIndex);
+                    }
+                    if (enableHeartBeatTimerIndex !== -1) {
+                        tracker.enableHeartBeatTimer();
+                        indexesToRemove.push(enableHeartBeatTimerIndex);
                     }
 
-                    if (matomoConfig.trackAllContentImpressions || trackAllContentImpressionsIndex !== -1) {
+                    if (matomoConfig.trackAllContentImpressions) {
                         tracker.trackAllContentImpressions();
-                        removeIndexIfExists(trackAllContentImpressionsIndex);
+                    }
+                    if (trackAllContentImpressionsIndex !== -1) {
+                        tracker.trackAllContentImpressions();
+                        indexesToRemove.push(trackAllContentImpressionsIndex);
                     }
 
-                    if (matomoConfig.trackVisibleContentImpressions || trackVisibleContentImpressionsIndex !== -1) {
+                    if (matomoConfig.trackVisibleContentImpressions) {
                         tracker.trackVisibleContentImpressions();
-                        removeIndexIfExists(trackVisibleContentImpressionsIndex);
+                    }
+                    if (trackVisibleContentImpressionsIndex !== -1) {
+                        tracker.trackVisibleContentImpressions();
+                        indexesToRemove.push(trackVisibleContentImpressionsIndex);
                     }
 
-                    if (((matomoConfig.hasOwnProperty('enableFormAnalytics') && !matomoConfig.enableFormAnalytics) || disableFormAnalyticsIndex !== -1) && window.Matomo && window.Matomo.FormAnalytics && typeof window.Matomo.FormAnalytics.disableFormAnalytics === 'function') {
+                    if (matomoConfig.hasOwnProperty('enableFormAnalytics') && !matomoConfig.enableFormAnalytics && window.Matomo && window.Matomo.FormAnalytics && typeof window.Matomo.FormAnalytics.disableFormAnalytics === 'function') {
                         window.Matomo.FormAnalytics.disableFormAnalytics();
-                        removeIndexIfExists(disableFormAnalyticsIndex);
+                    }
+                    if (disableFormAnalyticsIndex !== -1 && window.Matomo && window.Matomo.FormAnalytics && typeof window.Matomo.FormAnalytics.disableFormAnalytics === 'function') {
+                        window.Matomo.FormAnalytics.disableFormAnalytics();
+                        indexesToRemove.push(disableFormAnalyticsIndex);
                     }
 
-                    if (((matomoConfig.hasOwnProperty('enableMediaAnalytics') && !matomoConfig.enableMediaAnalytics) || disableMediaAnalyticsIndex !== -1) && window.Matomo && window.Matomo.MediaAnalytics && typeof window.Matomo.MediaAnalytics.disableMediaAnalytics === 'function') {
+                    if (matomoConfig.hasOwnProperty('enableMediaAnalytics') && !matomoConfig.enableMediaAnalytics && window.Matomo && window.Matomo.MediaAnalytics && typeof window.Matomo.MediaAnalytics.disableMediaAnalytics === 'function') {
                         window.Matomo.MediaAnalytics.disableMediaAnalytics();
-                        removeIndexIfExists(disableMediaAnalyticsIndex);
+                    }
+                    if (disableMediaAnalyticsIndex !== -1 && window.Matomo && window.Matomo.MediaAnalytics && typeof window.Matomo.MediaAnalytics.disableMediaAnalytics === 'function') {
+                        window.Matomo.MediaAnalytics.disableMediaAnalytics();
+                        indexesToRemove.push(disableMediaAnalyticsIndex);
                     }
                 }
 
@@ -393,7 +422,7 @@
                                 value: customDim[2],
                             });
                         }
-                        removeIndexIfExists(setCustomDimensionIndexes[indexIndex]);
+                        indexesToRemove.push(setCustomDimensionIndexes[indexIndex]);
                     }
                 }
                 if (matomoConfig.customDimensions
