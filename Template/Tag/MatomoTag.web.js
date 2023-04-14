@@ -56,7 +56,7 @@
         if (checkLoadedAlready()) {
             return;
         }
-        var replaceMeWithTracker=''; // do not modify this line, be replaced with Matomo tracker. Cannot use /*!! comment because of Jshrink bug
+        var replaceMeWithTracker=''; // do not modify this line, be replaced with Matomo tracker. Cannot use !! comment because of Jshrink bug
         libAvailable = typeof window.Piwik !== 'undefined' || typeof window.Matomo !== 'undefined';
         libLoaded = libAvailable;
     }
