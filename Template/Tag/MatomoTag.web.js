@@ -16,7 +16,6 @@
     window._paq = window._paq || [];
     // Store the initial state of window._paq so that we can apply it to all of the configs
     var initialPaq = window._paq && window._paq.length ? JSON.parse(JSON.stringify(window._paq)) : initialPaq || [];
-    var remainingPaq = [];
     // Clear window._paq to prevent things from being tracked too early
     window._paq = [];
 
@@ -444,21 +443,20 @@
                     _paq.splice(indexesToRemove[indexRemove], 1);
                 }
 
-                // Keep a list of all of the non-config requests to process later
-                if (_paq.length && !remainingPaq.length) {
-                    remainingPaq = _paq;
-                }
-
                 // If the remaining _paq values haven't been processed yet, process them
                 // We wait till now so that all configs are applied first
-                var applyRemainingPaqEntries = parameters.get('applyRemainingPaqEntries', false);
-                if (!hasProcessedRemainingTrackings && remainingPaq.length && applyRemainingPaqEntries) {
+                if (!hasProcessedRemainingTrackings && _paq.length) {
                     hasProcessedRemainingTrackings = true;
-                    for (trackingIndex = 0; trackingIndex < remainingPaq.length; trackingIndex++) {
-                        window._paq.push(remainingPaq[trackingIndex]);
+                    for (trackingIndex = 0; trackingIndex < _paq.length; trackingIndex++) {
+                        window._paq.push(_paq[trackingIndex]);
                     }
                 }
 
+                /*
+                * TODO - process the remaining _paq elements similar to below. Make sure to account
+                * for multiple trackers. AKA only process things once instead of per tracker like
+                * the configs above
+                */
                 if (tracker) {
                     var trackingType = parameters.get('trackingType');
 
