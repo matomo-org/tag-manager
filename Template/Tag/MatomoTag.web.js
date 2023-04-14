@@ -141,8 +141,7 @@
 
                     // NOTE: When a new config is created, it should probably be added to this list
                     // There might already be some configs missing from this list
-                    var setUserIdIndex = setSiteIdIndex = setTrackerUrlIndex
-                        = requireCookieConsentIndex = disableBrowserFeatureDetectionIndex
+                    var requireCookieConsentIndex = disableBrowserFeatureDetectionIndex
                         = disableCookiesIndex = enableCrossDomainLinkingIndex = cookieSameSiteIndex
                         = setSecureCookieIndex = cookiePathIndex = cookieDomainIndex
                         = setDomainsIndex = alwaysUseSendBeaconIndex = enableLinkTrackingIndex
@@ -157,21 +156,6 @@
                         }
                         var name = _paq[k][0];
                         switch (name) {
-                            case 'setUserId':
-                                setUserIdIndex = k;
-                                // Mark this one for removal right away since we don't want it to override the container
-                                removeIndexIfExists(k);
-                                break;
-                            case 'setSiteId':
-                                setSiteIdIndex = k;
-                                // Mark this one for removal right away since we don't want it to override the container
-                                removeIndexIfExists(k);
-                                break;
-                            case 'setTrackerUrl':
-                                setTrackerUrlIndex = k;
-                                // Mark this one for removal right away since we don't want it to override the container
-                                removeIndexIfExists(k);
-                                break;
                             case 'requireCookieConsent':
                                 requireCookieConsentIndex = k;
                                 break;
