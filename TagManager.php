@@ -34,7 +34,7 @@ use Piwik\Plugins\TagManager\Model\Salt;
 use Piwik\Site;
 use Piwik\View;
 use Piwik\Context;
-use Psr\Log\LoggerInterface;
+use Piwik\Log\LoggerInterface;
 use Piwik\SettingsPiwik;
 
 class TagManager extends \Piwik\Plugin
