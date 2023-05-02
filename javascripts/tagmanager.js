@@ -1673,28 +1673,8 @@
                 }
 
                 if (container.tags && utils.isArray(container.tags)) {
-                    // Build a collection of the names of all of the Matomo configs
-                    var hasMatomoTag = false;
-                    var matomoConfigNames = [];
                     for (i = 0; i < container.tags.length; i++) {
                         tagDefinition = container.tags[i];
-                        if (tagDefinition.type === 'Matomo' && matomoConfigNames.indexOf(tagDefinition.parameters.matomoConfig.name) === -1) {
-                            hasMatomoTag = true;
-                            matomoConfigNames.push(tagDefinition.parameters.matomoConfig.name);
-                        }
-                    }
-                    for (i = 0; i < container.tags.length; i++) {
-                        tagDefinition = container.tags[i];
-                        // If the Matomo config name is in the list, remove it
-                        if (hasMatomoTag && tagDefinition.parameters.matomoConfig && matomoConfigNames.indexOf(tagDefinition.parameters.matomoConfig.name) !== -1) {
-                            matomoConfigNames.splice(tagDefinition.parameters.matomoConfig.name, 1);
-                        }
-                        // If all of the names have been removed, that means all configs are found
-                        // If configs are ready, set tag ready to apply all postponed _paq entries
-                        // This is because we postpone _paq entries to apply them on all trackers
-                        if (hasMatomoTag && matomoConfigNames.length === 0) {
-                            tagDefinition.parameters.applyRemainingPaqEntries = true;
-                        }
                         tag = new Tag(tagDefinition, this);
                         this.tags.push(tag);
 
