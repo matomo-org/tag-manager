@@ -261,6 +261,7 @@ class TagManager extends \Piwik\Plugin
     {
         Piwik::checkUserHasSomeViewAccess();
         $view = new View("@TagManager/trackingCode");
+        $view->action = Piwik::getAction();
         $out .= $view->render();
     }
 
@@ -799,6 +800,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_TimeSinceLoadVariableUnitDescription';
         $result[] = 'TagManager_UrlParameterVariableNameTitle';
         $result[] = 'TagManager_UrlParameterVariableNameDescription';
+        $result[] = 'TagManager_TagManagerTrackingInfoLine1';
+        $result[] = 'TagManager_TagManagerTrackingInfoLine2';
     }
 
     public function getStylesheetFiles(&$stylesheets)

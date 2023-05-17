@@ -73,7 +73,6 @@
       :key="index"
     >
       <p>{{ installInstruction.description }}
-        <br />
         <a
           target="_blank"
           v-if="installInstruction.helpUrl"
