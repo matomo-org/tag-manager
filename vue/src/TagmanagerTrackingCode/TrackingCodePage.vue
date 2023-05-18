@@ -10,7 +10,7 @@
     <p v-html="$sanitize(trackingInfoTextLine1)"></p>
     <br>
     <p v-html="$sanitize(trackingInfoTextLine2)"></p>
-    <TagmanagerTrackingCode />
+    <TagmanagerTrackingCode :show-container-row="showContainerRow" />
   </div>
   <ContentBlock
     anchor="tagmanager"
@@ -21,7 +21,7 @@
     <p v-html="$sanitize(trackingInfoTextLine1)"></p>
     <br>
     <p v-html="$sanitize(trackingInfoTextLine2)"></p>
-    <TagmanagerTrackingCode />
+    <TagmanagerTrackingCode :show-container-row="showContainerRow" />
   </ContentBlock>
 </template>
 
@@ -33,6 +33,7 @@ import TagmanagerTrackingCode from './TagmanagerTrackingCode.vue';
 export default defineComponent({
   props: {
     currentAction: String,
+    showContainerRow: Boolean,
   },
   components: {
     ContentBlock,
