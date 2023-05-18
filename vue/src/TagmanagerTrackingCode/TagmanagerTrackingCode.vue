@@ -10,7 +10,7 @@
       :style="{opacity: isLoading ? 1 : 0}"
       :loading="true"
     />
-    <div class="row">
+    <div class="row" v-if="showContainerRow">
       <div class="col s12 m4 ">
         <div class="form-group row">
           <div class="col s12 input-field">
@@ -73,7 +73,6 @@
       :key="index"
     >
       <p>{{ installInstruction.description }}
-        <br />
         <a
           target="_blank"
           v-if="installInstruction.helpUrl"
@@ -165,7 +164,9 @@ function ucfirst(s: string): string {
 }
 
 export default defineComponent({
-  props: {},
+  props: {
+    showContainerRow: Boolean,
+  },
   components: {
     ActivityIndicator,
     SiteSelector,
