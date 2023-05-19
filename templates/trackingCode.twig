@@ -1,4 +1,10 @@
+{% if action != 'siteWithoutDataTabs' %}
 <div piwik-content-block anchor="tagmanager" content-title="{{ 'TagManager_MatomoTagManager'|translate }}">
-    <p>{{ 'TagManager_TagManagerTrackingInfo'|translate('<a href="' ~ linkTo({module: 'TagManager', action: 'gettingStarted'})~'">', '</a>', '<a href="' ~ linkTo({module: 'TagManager', action: 'manageContainers'})~'">', '</a>')|raw }}</p>
-    <div matomo-tagmanager-tracking-code></div>
+{% endif %}
+    <p>{{ 'TagManager_TagManagerTrackingInfoLine1'|translate('<a href="' ~ linkTo({module: 'TagManager', action: 'gettingStarted'})~'">', '</a>')|raw }}</p>
+    <br>
+    <p>{{ 'TagManager_TagManagerTrackingInfoLine2'|translate('<a href="' ~ linkTo({module: 'TagManager', action: 'manageContainers'})~'">', '</a>')|raw }}</p>
+    <div matomo-tagmanager-tracking-code show-container-row="{{ showContainerRow|json_encode }}"></div>
+{% if action != 'siteWithoutDataTabs' %}
 </div>
+{% endif %}
