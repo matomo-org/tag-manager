@@ -802,8 +802,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_TimeSinceLoadVariableUnitDescription';
         $result[] = 'TagManager_UrlParameterVariableNameTitle';
         $result[] = 'TagManager_UrlParameterVariableNameDescription';
-        $result[] = 'TagManager_TagManagerTrackingInfoLine1';
-        $result[] = 'TagManager_TagManagerTrackingInfoLine2';
+        $result[] = 'TagManager_MatomoTagManagerTrackingInfoLine1';
+        $result[] = 'TagManager_MatomoTagManagerTrackingInfoLine2';
     }
 
     public function getStylesheetFiles(&$stylesheets)
