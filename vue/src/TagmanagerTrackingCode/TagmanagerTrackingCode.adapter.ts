@@ -15,5 +15,8 @@ export default createAngularJsAdapter({
     showContainerRow: {
       angularJsBind: '=',
     },
+    currentAction: {
+      angularJsBind: '=',
+    },
   },
 });
