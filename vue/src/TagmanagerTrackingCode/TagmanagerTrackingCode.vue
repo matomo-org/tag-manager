@@ -10,7 +10,7 @@
       :style="{opacity: isLoading ? 1 : 0}"
       :loading="true"
     />
-    <div class="row" v-if="showContainerRow">
+    <div class="row" v-if="showContainerRow || environments.length > 1">
       <div class="col s12 m4 ">
         <div class="form-group row">
           <div class="col s12 input-field">
@@ -77,7 +77,7 @@
           target="_blank"
           v-if="installInstruction.helpUrl"
           :href="installInstruction.helpUrl"
-        >{{ translate('TagManager_LearnMore') }}</a>
+        >{{ translate('TagManager_LearnMore') }}</a>.
       </p>
       <pre
         class="codeblock"
@@ -86,7 +86,7 @@
         ref="codeblock"
       />
     </div>
-    <h3 v-if="idContainer">
+    <h3 v-if="idContainer && currentAction !== 'siteWithoutDataTabs'">
       {{ translate('TagManager_CustomizeTracking') }}
     </h3>
     <p v-if="idContainer">{{ translate('TagManager_CustomizeTrackingTeaser') }}</p>
@@ -106,7 +106,6 @@
       </li>
     </ul>
     <p v-if="idContainer">
-      <br />
       <a :href="linkTo('dashboard', idContainer)">
         <span class="icon-show" /> {{ translate('TagManager_ViewContainerDashboard') }}
       </a>
@@ -166,6 +165,7 @@ function ucfirst(s: string): string {
 export default defineComponent({
   props: {
     showContainerRow: Boolean,
+    currentAction: String,
   },
   components: {
     ActivityIndicator,
