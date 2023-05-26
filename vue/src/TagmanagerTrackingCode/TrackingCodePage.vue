@@ -6,11 +6,9 @@
 
 <template>
   <div v-if="currentAction === 'siteWithoutDataTabs'">
-    <p>&nbsp;</p>
     <p v-html="$sanitize(trackingInfoTextLine1)"></p>
-    <br>
     <p v-html="$sanitize(trackingInfoTextLine2)"></p>
-    <TagmanagerTrackingCode :show-container-row="showContainerRow" />
+    <TagmanagerTrackingCode :show-container-row="showContainerRow" :current-action="currentAction"/>
   </div>
   <ContentBlock
     anchor="tagmanager"
@@ -21,7 +19,7 @@
     <p v-html="$sanitize(trackingInfoTextLine1)"></p>
     <br>
     <p v-html="$sanitize(trackingInfoTextLine2)"></p>
-    <TagmanagerTrackingCode :show-container-row="showContainerRow" />
+    <TagmanagerTrackingCode :show-container-row="showContainerRow" :current-action="currentAction"/>
   </ContentBlock>
 </template>
 
@@ -41,19 +39,6 @@ export default defineComponent({
   },
   computed: {
     trackingInfoTextLine1() {
-      const gettingStartedLink = `?${MatomoUrl.stringify({
-        ...MatomoUrl.urlParsed.value,
-        module: 'TagManager',
-        action: 'gettingStarted',
-      })}`;
-
-      return translate(
-        'TagManager_TagManagerTrackingInfoLine1',
-        `<a href="${gettingStartedLink}">`,
-        '</a>',
-      );
-    },
-    trackingInfoTextLine2() {
       const manageContainersLink = `?${MatomoUrl.stringify({
         ...MatomoUrl.urlParsed.value,
         module: 'TagManager',
@@ -61,8 +46,21 @@ export default defineComponent({
       })}`;
 
       return translate(
-        'TagManager_TagManagerTrackingInfoLine2',
+        'TagManager_MatomoTagManagerTrackingInfoLine1',
         `<a href="${manageContainersLink}">`,
+        '</a>',
+      );
+    },
+    trackingInfoTextLine2() {
+      const gettingStartedLink = `?${MatomoUrl.stringify({
+        ...MatomoUrl.urlParsed.value,
+        module: 'TagManager',
+        action: 'gettingStarted',
+      })}`;
+
+      return translate(
+        'TagManager_MatomoTagManagerTrackingInfoLine2',
+        `<a href="${gettingStartedLink}">`,
         '</a>',
       );
     },
