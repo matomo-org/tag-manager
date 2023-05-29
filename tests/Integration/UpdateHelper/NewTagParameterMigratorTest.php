@@ -8,7 +8,6 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration;
 
-use Piwik\Config;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
 use Piwik\Plugins\TagManager\Dao\ContainerVersionsDao;
@@ -16,7 +15,7 @@ use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
-use Piwik\Plugins\TagManager\Updates\NewTagParameterMigrator;
+use Piwik\Plugins\TagManager\UpdateHelper\NewTagParameterMigrator;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
 
 /**
