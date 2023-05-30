@@ -109,6 +109,6 @@ class NewVariableParameterMigrator
         }
 
         // We use the model method to make sure that the parameters are set in the correct order.
-        $this->variablesModel->updateContainerVariable($idSite, $idVersion, $idVariable, $variableInfo['name'], $variableInfo['parameters'], $variableInfo['default_value'], $variableInfo['lookup_table']);
+        $this->variablesModel->updateContainerVariable($idSite, $idVersion, $idVariable, $variableInfo['name'], $variableInfo['parameters'], $variableInfo['default_value'], $variableInfo['lookup_table'], $variableInfo['description']);
     }
 }
