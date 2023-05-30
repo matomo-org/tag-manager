@@ -8,7 +8,6 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration;
 
-use Piwik\Config;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
 use Piwik\Plugins\TagManager\Dao\ContainerVersionsDao;
@@ -16,7 +15,7 @@ use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
-use Piwik\Plugins\TagManager\Updates\NewTagParameterMigrator;
+use Piwik\Plugins\TagManager\UpdateHelper\NewTagParameterMigrator;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
 
 /**
@@ -57,7 +56,7 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
             $parameters[MatomoTag::PARAM_MATOMO_CONFIG] = !empty($parameters[MatomoTag::PARAM_MATOMO_CONFIG]) ? $parameters[MatomoTag::PARAM_MATOMO_CONFIG] : 'someConfig';
         }
 
-        return $this->tagDao->createTag($this->idSite, $idVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate);
+        return $this->tagDao->createTag($this->idSite, $idVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, 'Test Tag Description');
     }
 
     public function test_migratingTagsWithNewField()
@@ -104,12 +103,14 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $this->assertCount(2, $tag['parameters']);
         $this->assertArrayHasKey('goalCustomRevenue', $tag['parameters']);
         $this->assertSame('', $tag['parameters']['goalCustomRevenue']);
+        $this->assertNotEmpty($tag['description']);
 
         $tag = $this->tagDao->getContainerTag($this->idSite, $idVersion, $idCustomHtmlTag);
         $this->assertSame($idCustomHtmlTag, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
         $this->assertCount(0, $tag['parameters']);
+        $this->assertNotEmpty($tag['description']);
 
         $tag = $this->tagDao->getContainerTag($this->idSite, $idVersion, $idTagWithParameters);
         $this->assertSame($idTagWithParameters, $tag['idtag']);
@@ -118,12 +119,14 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $this->assertCount(3, $tag['parameters']);
         $this->assertArrayHasKey('goalCustomRevenue', $tag['parameters']);
         $this->assertSame('', $tag['parameters']['goalCustomRevenue']);
+        $this->assertNotEmpty($tag['description']);
 
         $tag = $this->tagDao->getContainerTagAnyStatus($this->idSite, $idVersion, $idDeletedTag);
         $this->assertSame($idDeletedTag, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
         $this->assertCount(1, $tag['parameters']);
+        $this->assertNotEmpty($tag['description']);
 
         $tag = $this->tagDao->getContainerTag($this->idSite, $idDraftVersion, $idDraftVersionTag);
         $this->assertSame($idDraftVersionTag, $tag['idtag']);
@@ -132,18 +135,21 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $this->assertCount(2, $tag['parameters']);
         $this->assertArrayHasKey('goalCustomRevenue', $tag['parameters']);
         $this->assertSame('', $tag['parameters']['goalCustomRevenue']);
+        $this->assertNotEmpty($tag['description']);
 
         $tag = $this->tagDao->getContainerTag($this->idSite, $idDeletedVersion, $idDeletedVersionTag);
         $this->assertSame($idDeletedVersionTag, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
         $this->assertCount(1, $tag['parameters']);
+        $this->assertNotEmpty($tag['description']);
 
         $tag = $this->tagDao->getContainerTag($this->idSite, $idDeletedContainerVersion, $idDeletedContainerTag);
         $this->assertSame($idDeletedContainerTag, $tag['idtag']);
         $this->assertIsArray($tag);
         $this->assertIsArray($tag['parameters']);
         $this->assertCount(1, $tag['parameters']);
+        $this->assertNotEmpty($tag['description']);
     }
 
     public function test_migratingTagsWithNewFieldAndDefaultValue()
@@ -177,6 +183,7 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $this->assertCount(2, $tag['parameters']);
         $this->assertArrayHasKey('goalCustomRevenue', $tag['parameters']);
         $this->assertSame('mynewvalue', $tag['parameters']['goalCustomRevenue']);
+        $this->assertNotEmpty($tag['description']);
     }
 
     public function test_migratingTagsWithAdditionalField()
@@ -215,6 +222,7 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $this->assertArrayHasKey('documentTitle', $tag['parameters']);
         $this->assertSame('', $tag['parameters']['documentTitle']);
         $this->assertArrayNotHasKey('notValidTemplateProperty', $tag['parameters']);
+        $this->assertNotEmpty($tag['description']);
     }
 
 }
