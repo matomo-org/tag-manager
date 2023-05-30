@@ -10,11 +10,11 @@
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
-use Piwik\Plugins\TagManager\Updates\NewVariableParameterMigrator;
+use Piwik\Plugins\TagManager\UpdateHelper\NewVariableParameterMigrator;
 use Piwik\Updater;
-use Piwik\Updates as PiwikUpdates;
 use Piwik\Updater\Migration;
 use Piwik\Updater\Migration\Factory as MigrationFactory;
+use Piwik\Updates as PiwikUpdates;
 
 /**
  * Update for version 5.0.0-b1.
