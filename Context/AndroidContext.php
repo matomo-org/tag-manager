@@ -61,4 +61,9 @@ class AndroidContext extends BaseContext
         ]];
     }
 
+    public function getInstallInstructionsReact($container, $environment)
+    {
+        return $this->getInstallInstructions($container, $environment);
+    }
+
 }

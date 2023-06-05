@@ -45,4 +45,9 @@ class SimulatorContext extends BaseContext
         return [];
     }
 
+    public function getInstallInstructionsReact($container, $environment)
+    {
+        return [];
+    }
+
 }
