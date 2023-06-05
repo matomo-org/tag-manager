@@ -125,7 +125,7 @@ class Container extends BaseModel
         }
     }
 
-    public function getContainerInstallInstructions($idSite, $idContainer, $environment)
+    public function getContainerInstallInstructions($idSite, $idContainer, $environment, $jsFramework = '')
     {
         $this->checkContainerExists($idSite, $idContainer);
         $this->environment->checkIsValidEnvironment($environment);
@@ -135,6 +135,9 @@ class Container extends BaseModel
         if (!empty($container)) {
             $context = $this->contextProvider->getContext($container['context']);
             if ($context) {
+                if ($jsFramework === 'react') {
+                    return $context->getInstallInstructionsReact($container, $environment);
+                }
                 return $context->getInstallInstructions($container, $environment);
             }
         }

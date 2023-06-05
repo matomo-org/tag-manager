@@ -732,6 +732,15 @@ class APITest extends IntegrationTestCase
         $this->api->getContainerInstallInstructions($this->idSite, $this->idContainer, Environment::ENVIRONMENT_LIVE);
     }
 
+    public function test_getContainerInstallInstructionsReact_shouldFailWhenNotHavingViewPermissions()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
+        $this->setAnonymousUser();
+        $this->api->getContainerInstallInstructions($this->idSite, $this->idContainer, Environment::ENVIRONMENT_LIVE, 'react');
+    }
+
     public function test_getContainerInstallInstructions_containerNotExists()
     {
         $this->expectException(\Exception::class);
@@ -741,11 +750,24 @@ class APITest extends IntegrationTestCase
         $this->api->getContainerInstallInstructions($this->idSite, 'foo01bar', Environment::ENVIRONMENT_LIVE);
     }
 
+    public function test_getContainerInstallInstructionsReact_containerNotExists()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "foo01bar" does not exist');
+
+        $this->setUser();
+        $this->api->getContainerInstallInstructions($this->idSite, 'foo01bar', Environment::ENVIRONMENT_LIVE, 'react');
+    }
+
     public function test_getContainerInstallInstructions_success()
     {
         $this->setUser();
         $this->assertNotEmpty(
             $this->api->getContainerInstallInstructions($this->idSite, $this->idContainer, Environment::ENVIRONMENT_LIVE)
+        );
+
+        $this->assertNotEmpty(
+            $this->api->getContainerInstallInstructions($this->idSite, $this->idContainer, Environment::ENVIRONMENT_LIVE, 'react')
         );
     }
 
