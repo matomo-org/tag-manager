@@ -65,8 +65,9 @@ class ImportTest extends IntegrationTestCase
 
     public function test_checkImportContainerIsPossible_shouldWorkWhenUsingPreviousExport()
     {
+        self::expectNotToPerformAssertions();
+
         $this->import->checkImportContainerIsPossible($this->exported, $this->idSite, $this->idContainer);
-        $this->assertTrue(true);
     }
 
     public function test_checkImportContainerIsPossible_whenMissingTags()

@@ -55,30 +55,34 @@ class AccessValidatorTest extends IntegrationTestCase
 
     public function test_checkWriteCapability_successWrite()
     {
+        self::expectNotToPerformAssertions();
+
         $this->setWrite();
         $this->validator->checkWriteCapability($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_checkWriteCapability_successAdmin()
     {
+        self::expectNotToPerformAssertions();
+
         $this->setAdmin();
         $this->validator->checkWriteCapability($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_checkWriteCapability_successSuperUser()
     {
+        self::expectNotToPerformAssertions();
+
         $this->validator->checkWriteCapability($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_checkWriteCapability_successViewUserWithCapability()
     {
+        self::expectNotToPerformAssertions();
+
         $this->setUser();
         FakeAccess::$idSitesCapabilities = array(TagManagerWrite::ID => array($idSite = 1));
         $this->validator->checkWriteCapability($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_checkPublishLiveEnvironmentCapability()
@@ -92,23 +96,26 @@ class AccessValidatorTest extends IntegrationTestCase
 
     public function test_checkPublishLiveEnvironmentCapability_successAdmin()
     {
+        self::expectNotToPerformAssertions();
+
         $this->setAdmin();
         $this->validator->checkPublishLiveEnvironmentCapability($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_checkPublishLiveEnvironmentCapability_successWriteUserWithCapability()
     {
+        self::expectNotToPerformAssertions();
+
         $this->setUser();
         FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($idSite = 1));
         $this->validator->checkPublishLiveEnvironmentCapability($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_checkPublishLiveEnvironmentCapability_successSuperUser()
     {
+        self::expectNotToPerformAssertions();
+
         $this->validator->checkPublishLiveEnvironmentCapability($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_hasUseCustomTemplatesCapability()
@@ -154,15 +161,17 @@ class AccessValidatorTest extends IntegrationTestCase
 
     public function test_checkUseCustomTemplatesCapability_successAdmin()
     {
+        self::expectNotToPerformAssertions();
+
         $this->setAdmin();
         $this->validator->checkUseCustomTemplatesCapability($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_checkUseCustomTemplatesCapability_successSuperUser()
     {
+        self::expectNotToPerformAssertions();
+
         $this->validator->checkUseCustomTemplatesCapability($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_checkViewPermission()
@@ -176,15 +185,17 @@ class AccessValidatorTest extends IntegrationTestCase
 
     public function test_checkViewPermission_success()
     {
+        self::expectNotToPerformAssertions();
+
         $this->setUser();
         $this->validator->checkViewPermission($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_checkSiteExists_whenSiteExists_noException()
     {
+        self::expectNotToPerformAssertions();
+
         $this->validator->checkSiteExists($idSite = 1);
-        $this->assertTrue(true);
     }
 
     public function test_checkSiteExists_whenSiteNotExists_Exception()

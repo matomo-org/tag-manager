@@ -125,8 +125,9 @@ class VariablesProviderTest extends IntegrationTestCase
 
     public function test_checkIsValidVariable_noExceptionWhenVariableExists()
     {
+        self::expectNotToPerformAssertions();
+
         $this->provider->checkIsValidVariable('DataLayer');
-        $this->assertTrue(true);
     }
 
     public function test_checkIsValidVariable_searchesCaseSensitive()

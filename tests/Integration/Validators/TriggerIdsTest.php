@@ -58,6 +58,8 @@ class TriggerIdsTest extends IntegrationTestCase
 
     public function test_valid_empty()
     {
+        self::expectNotToPerformAssertions();
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, array());
     }
 

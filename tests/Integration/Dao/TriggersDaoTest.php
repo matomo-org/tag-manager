@@ -248,11 +248,11 @@ class TriggersDaoTest extends IntegrationTestCase
 
     public function test_updateTriggerColumns_doesNotFailWhenNoColumsAreToBeUpdated()
     {
+        self::expectNotToPerformAssertions();
+
         $idTrigger = $this->createTrigger($idSite = 3);
 
         $this->dao->updateTriggerColumns($idSite, $idContainerVersion = 5, $idTrigger, array());
-
-        $this->assertTrue(true);
     }
 
     public function test_updateTriggerColumns_updatesASingleColumn()

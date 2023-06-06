@@ -270,11 +270,11 @@ class TagsDaoTest extends IntegrationTestCase
 
     public function test_updateTagColumns_doesNotFailWhenNoColumsAreToBeUpdated()
     {
+        self::expectNotToPerformAssertions();
+
         $idTag = $this->createTag($idSite = 3);
 
         $this->dao->updateTagColumns($idSite, $idContainerVersion = 5, $idTag, array());
-
-        $this->assertTrue(true);
     }
 
     public function test_updateTagColumns_updatesASingleColumn()

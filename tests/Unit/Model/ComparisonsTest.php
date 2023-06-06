@@ -32,11 +32,11 @@ class ComparisonsTest extends UnitTestCase
 
     public function test_checkIsValidComparison_valid()
     {
+        self::expectNotToPerformAssertions();
+
         $this->checkIsValidComparison('equals');
         $this->checkIsValidComparison('not_equals');
         $this->checkIsValidComparison('starts_with');
-
-        self::assertTrue(true);
     }
 
     public function test_checkIsValidComparison_hasToMatchExact()

@@ -44,8 +44,8 @@ class NewVariableParameterMigratorTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->tagFixture = new TagManagerFixture();
-        $this->tagFixture->setUpWebsite();
+        $tagFixture = new TagManagerFixture();
+        $tagFixture->setUpWebsite();
 
         $this->newVariableParameterMigrator = new NewVariableParameterMigrator(MatomoConfigurationVariable::ID, 'cookieDomain');
     }
