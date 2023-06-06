@@ -65,7 +65,8 @@ class ImportTest extends IntegrationTestCase
 
     public function test_checkImportContainerIsPossible_shouldWorkWhenUsingPreviousExport()
     {
-        self::expectNotToPerformAssertions();
+        // This test case actually doesn't have any assertions, but the fixture already performs some when it is set up.
+        // self::expectNotToPerformAssertions();
 
         $this->import->checkImportContainerIsPossible($this->exported, $this->idSite, $this->idContainer);
     }
