@@ -79,7 +79,7 @@
         "ClickDestinationUrlVariableDescription": "Der Wert einer Link URL (href) eines Elements, wenn ein Klick-Trigger ausgelöst wurde.",
         "ClickDestinationUrlVariableName": "Klick Ziel-URL",
         "ClickElementVariableDescription": "Eine Instanz des Elements, das geklickt wurde.",
-        "ClickElementVariableName": "Element-Klick",
+        "ClickElementVariableName": "Klick Element",
         "ClickIdVariableDescription": "Der Wert des ID Attributs eines Elements, wenn ein Klick-Trigger ausgelöst wurde.",
         "ClickIdVariableName": "Klick ID",
         "ClickNodeNameVariableDescription": "Der Name eines Elements, wenn ein Klick-Trigger ausgelöst wurde. Zum Beispiel \"P\" oder \"DIV\"",
