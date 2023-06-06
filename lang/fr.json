@@ -1,6 +1,7 @@
 {
     "TagManager": {
         "AddThisTagDescription": "Ajoutez le bouton de réseaux sociaux \"AddThis\" et plus encore à votre site web.",
+        "AddThisTagPubIdDescription": "Créez un nouveau site dans Shareaholic et collez l'ID du site ici",
         "AllDownloadsClickTriggerDescription": "Déclenché lorsqu'on clique sur un lien qui renvoie à un fichier téléchargeable. Il se déclenchera en cas de clic gauche, moyen et droit.",
         "AllDownloadsClickTriggerHelp": "déclenché lorsqu'un utilisateur clique sur un élément \"A\" ou \"AREA\" et que le lien pointe vers un fichier avec une extension de fichier téléchargeable. Pour activer le suivi d'un bouton de clic spécifique, veuillez ajouter des conditions basées sur une variable \"ClickButton\" dans les paramètres avancés.",
         "AllDownloadsClickTriggerName": "Tous les clics de téléchargement",
