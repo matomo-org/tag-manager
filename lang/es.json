@@ -1,6 +1,7 @@
 {
     "TagManager": {
         "AddThisTagDescription": "Agregue los botones de redes sociales AddThis y más a su sitio web.",
+        "AddThisTagPubIdDescription": "Cree un nuevo sitio en Shareaholic y pegue el ID aquí",
         "AllDownloadsClickTriggerDescription": "Activado cuando se hace clic en un enlace relacionado con un archivo descargable.",
         "AllDownloadsClickTriggerHelp": "Activado cuando un usuario hace clic en elemento \"A\" o \"AREA\" y el enlace redirecciona a un archivo con una extensión de archivo descargable.",
         "AllDownloadsClickTriggerName": "Todos los clic de descargas",
