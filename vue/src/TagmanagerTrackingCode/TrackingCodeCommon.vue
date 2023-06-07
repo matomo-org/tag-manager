@@ -164,7 +164,7 @@ export default defineComponent({
     showContainerRow: Boolean,
     currentAction: String,
     showBottom: Boolean,
-    showDescription: String,
+    showDescription: Boolean,
     additionalStepContent: String,
   },
   components: {
