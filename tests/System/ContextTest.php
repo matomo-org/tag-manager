@@ -489,6 +489,14 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
         self::assertStringContainsString('tests/PHPUnit/proxy/foobar/container_aaacont1.js\';', $instructions[0]['embedCode']);
     }
 
+    public function test_getWebInstallInstructionsReact()
+    {
+        StaticContainer::getContainer()->set('TagManagerContainerWebDir', '/foobar');
+        $container = $this->getContainer();
+        $instructions = $this->makeWebContext()->getInstallInstructionsReact($container, Environment::ENVIRONMENT_LIVE);
+        self::assertStringContainsString("import React from 'react'", $instructions[0]['embedCode']);
+    }
+
     public function test_removeNoLongerExistingEnvironments()
     {
         $context = $this->makeWebContext();

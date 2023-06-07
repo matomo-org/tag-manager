@@ -7,7 +7,7 @@
   <div class="tagManagerTrackingCode">
     <TrackingCodeCommon
       :show-container-row="showContainerRow"
-      :showBottom="true"
+      :showBottom="false"
       @fetchInstallInstructions="fetchInstallInstructions"
       ref="trackingCodeCommon"
     />
@@ -56,6 +56,7 @@ export default defineComponent({
         idContainer: refs?.idContainer,
         environment: refs?.environment,
         idSite: refs?.site?.id,
+        jsFramework: 'react',
       }).then((instructions) => {
         refs.installInstructions = instructions;
         nextTick(() => {

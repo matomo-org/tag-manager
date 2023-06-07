@@ -77,6 +77,7 @@ abstract class BaseContext
     abstract public function getName();
     abstract public function generate($container);
     abstract public function getInstallInstructions($container, $environment);
+    abstract public function getInstallInstructionsReact($container, $environment);
 
     protected function generatePublicContainer($container, $release)
     {
