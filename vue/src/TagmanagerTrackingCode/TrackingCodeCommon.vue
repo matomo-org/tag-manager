@@ -66,13 +66,14 @@
       v-for="(installInstruction, index) in installInstructions"
       :key="index"
     >
-      <p>{{ installInstruction.description }}
+      <p v-if="showDescription">{{ installInstruction.description }}
         <a
           target="_blank"
           v-if="installInstruction.helpUrl"
           :href="installInstruction.helpUrl"
         >{{ translate('TagManager_LearnMore') }}</a>.
       </p>
+      <div v-if="additionalStepContent" v-html="additionalStepContent"></div>
       <pre
         class="codeblock"
         v-text="installInstruction.embedCode"
@@ -163,6 +164,8 @@ export default defineComponent({
     showContainerRow: Boolean,
     currentAction: String,
     showBottom: Boolean,
+    showDescription: String,
+    additionalStepContent: String,
   },
   components: {
     ActivityIndicator,
