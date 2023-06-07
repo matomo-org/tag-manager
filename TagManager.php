@@ -268,12 +268,13 @@ class TagManager extends \Piwik\Plugin
         $out .= $view->render();
     }
 
-    public function embedReactTagManagerTrackingCode(&$out)
+    public function embedReactTagManagerTrackingCode(&$out, $additionalStepContent)
     {
         Piwik::checkUserHasSomeViewAccess();
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCodeReact");
         $view->action = Piwik::getAction();
+        $view->additionalStepContent = $additionalStepContent;
         $view->showContainerRow = $model->getNumContainersTotal() > 1;
         $out .= $view->render();
     }
