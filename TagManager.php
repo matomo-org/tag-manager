@@ -67,7 +67,8 @@ class TagManager extends \Piwik\Plugin
             'Template.bodyClass' => 'addBodyClass',
             'Access.Capability.addCapabilities' => 'addCapabilities',
             'TwoFactorAuth.requiresTwoFactorAuthentication' => 'requiresTwoFactorAuthentication',
-            'Db.getTablesInstalled' => 'getTablesInstalled'
+            'Db.getTablesInstalled' => 'getTablesInstalled',
+            'Template.embedReactTagManagerTrackingCode' => 'embedReactTagManagerTrackingCode',
         );
     }
 
@@ -263,6 +264,18 @@ class TagManager extends \Piwik\Plugin
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCode");
         $view->action = Piwik::getAction();
+        $view->showContainerRow = $model->getNumContainersTotal() > 1;
+        $out .= $view->render();
+    }
+
+    public function embedReactTagManagerTrackingCode(&$out, $step2, $step3)
+    {
+        Piwik::checkUserHasSomeViewAccess();
+        $model = $this->getContainerModel();
+        $view = new View("@TagManager/trackingCodeReact");
+        $view->action = Piwik::getAction();
+        $view->step2 = $step2;
+        $view->step3 = $step3;
         $view->showContainerRow = $model->getNumContainersTotal() > 1;
         $out .= $view->render();
     }

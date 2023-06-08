@@ -7,10 +7,10 @@
   <div class="tagManagerTrackingCode">
     <TrackingCodeCommon
       :show-container-row="showContainerRow"
-      :showBottom="true"
-      :showDescription="true"
-      :step2="''"
-      :step3="''"
+      :showBottom="false"
+      :showDescription="false"
+      :step2="step2"
+      :step3="step3"
       @fetchInstallInstructions="fetchInstallInstructions"
       ref="trackingCodeCommon"
     />
@@ -31,6 +31,8 @@ import {
 export default defineComponent({
   props: {
     showContainerRow: Boolean,
+    step2: String,
+    step3: String,
   },
   components: {
     TrackingCodeCommon,
@@ -59,6 +61,7 @@ export default defineComponent({
         idContainer: refs?.idContainer,
         environment: refs?.environment,
         idSite: refs?.site?.id,
+        jsFramework: 'react',
       }).then((instructions) => {
         refs.installInstructions = instructions;
         nextTick(() => {

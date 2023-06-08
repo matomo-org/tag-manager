@@ -54,4 +54,5 @@ export { default as ContainerDashboard } from './ContainerDashboard/ContainerDas
 export { default as ContainerSelector } from './ContainerSelector/ContainerSelector.vue';
 export { default as ManageInstallTagCode } from './ManageInstallTagCode/ManageInstallTagCode.vue';
 export { default as TagmanagerTrackingCode } from './TagmanagerTrackingCode/TagmanagerTrackingCode.vue';
+export { default as TrackingCodeReactPage } from './TagmanagerTrackingCode/TrackingCodeReactPage.vue';
 export { default as Debugging } from './Debugging/Debugging.vue';

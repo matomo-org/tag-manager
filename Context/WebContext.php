@@ -259,4 +259,34 @@ INST;
         ]];
     }
 
+    public function getInstallInstructionsReact($container, $environment)
+    {
+        $path = $this->getWebPathForRelease($container['idsite'], $container['idcontainer'], $environment, $container['created_date']);
+
+        $embedCode = <<<INST
+import React from 'react';
+
+export default function App () {
+React.useEffect(() => {
+        var _mtm = window._mtm = window._mtm || [];
+        _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src='$path'; s.parentNode.insertBefore(g,s);
+}, [])
+
+ return (
+     <div>
+         <h1>Hello World</h1>
+     </div>
+ )
+}
+INST;
+
+        return [[
+            'description' => Piwik::translate('TagManager_ContextWebInstallInstructions', array('"<head>"')),
+            'embedCode' => $embedCode,
+            'helpUrl' => 'https://developer.matomo.org/guides/tagmanager/embedding'
+        ]];
+    }
+
 }

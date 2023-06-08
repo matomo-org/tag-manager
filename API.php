@@ -339,14 +339,15 @@ class API extends \Piwik\Plugin\API
      * @param int $idSite The id of the site the given container belongs to
      * @param string $idContainer  The id of a container, for example "6OMh6taM"
      * @param string $environment The id of an environment, for example "live"
+     * @param string $jsFramework The jsFramework for which instructions need to be fetched, for example "react"
      * @return array[]
      */
-    public function getContainerInstallInstructions($idSite, $idContainer, $environment)
+    public function getContainerInstallInstructions($idSite, $idContainer, $environment,  $jsFramework = '')
     {
         $this->accessValidator->checkViewPermission($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
-        return $this->containers->getContainerInstallInstructions($idSite, $idContainer, $environment);
+        return $this->containers->getContainerInstallInstructions($idSite, $idContainer, $environment, $jsFramework);
     }
 
     /**
