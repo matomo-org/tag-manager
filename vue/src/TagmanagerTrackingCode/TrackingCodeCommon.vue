@@ -1,5 +1,6 @@
 <template>
-  <div v-if="step2 && (showContainerRow || environments.length > 1)" v-html="step2"></div>
+  <div v-if="step2 && (showContainerRow || environments.length > 1)"
+       v-html="$sanitize(step2)"></div>
   <div class="tagManagerTrackingCode">
     <ActivityIndicator
       :style="{opacity: isLoading ? 1 : 0}"
@@ -75,7 +76,7 @@
           :href="installInstruction.helpUrl"
         >{{ translate('TagManager_LearnMore') }}</a>.
       </p>
-      <div v-if="step3" v-html="step3"></div>
+      <div v-if="step3" v-html="$sanitize(step3)"></div>
       <pre
         class="codeblock"
         v-text="installInstruction.embedCode"
