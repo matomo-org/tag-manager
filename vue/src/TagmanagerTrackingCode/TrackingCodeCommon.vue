@@ -1,8 +1,10 @@
 <template>
+  <div v-if="step2 && (showContainerRow || environments.length > 1)" v-html="step2"></div>
   <div class="tagManagerTrackingCode">
     <ActivityIndicator
       :style="{opacity: isLoading ? 1 : 0}"
       :loading="true"
+      v-if="showContainerRow || environments.length > 1"
     />
     <div class="row" v-if="showContainerRow || environments.length > 1">
       <div class="col s12 m4 ">
@@ -66,13 +68,14 @@
       v-for="(installInstruction, index) in installInstructions"
       :key="index"
     >
-      <p>{{ installInstruction.description }}
+      <p v-if="showDescription">{{ installInstruction.description }}
         <a
           target="_blank"
           v-if="installInstruction.helpUrl"
           :href="installInstruction.helpUrl"
         >{{ translate('TagManager_LearnMore') }}</a>.
       </p>
+      <div v-if="step3" v-html="step3"></div>
       <pre
         class="codeblock"
         v-text="installInstruction.embedCode"
@@ -163,6 +166,9 @@ export default defineComponent({
     showContainerRow: Boolean,
     currentAction: String,
     showBottom: Boolean,
+    showDescription: Boolean,
+    step2: String,
+    step3: String,
   },
   components: {
     ActivityIndicator,

@@ -8,6 +8,9 @@
     <TrackingCodeCommon
       :show-container-row="showContainerRow"
       :showBottom="false"
+      :showDescription="false"
+      :step2="step2"
+      :step3="step3"
       @fetchInstallInstructions="fetchInstallInstructions"
       ref="trackingCodeCommon"
     />
@@ -28,6 +31,8 @@ import {
 export default defineComponent({
   props: {
     showContainerRow: Boolean,
+    step2: String,
+    step3: String,
   },
   components: {
     TrackingCodeCommon,

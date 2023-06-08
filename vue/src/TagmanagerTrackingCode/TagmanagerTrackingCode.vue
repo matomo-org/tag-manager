@@ -8,6 +8,9 @@
     <TrackingCodeCommon
       :show-container-row="showContainerRow"
       :showBottom="true"
+      :showDescription="true"
+      :step2="''"
+      :step3="''"
       @fetchInstallInstructions="fetchInstallInstructions"
       ref="trackingCodeCommon"
     />
