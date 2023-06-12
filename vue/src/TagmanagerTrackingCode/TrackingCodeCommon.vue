@@ -1,6 +1,7 @@
 <template>
-  <div v-if="step2 && (showContainerRow || environments.length > 1)"
-       v-html="$sanitize(step2)"></div>
+  <div v-if="showStep2 && (showContainerRow || environments.length > 1)">
+    <li>{{translate('TagManager_SiteWithoutDataReactFollowStep2')}}</li>
+  </div>
   <div class="tagManagerTrackingCode">
     <ActivityIndicator
       :style="{opacity: isLoading ? 1 : 0}"
@@ -76,7 +77,9 @@
           :href="installInstruction.helpUrl"
         >{{ translate('TagManager_LearnMore') }}</a>.
       </p>
-      <div v-if="step3" v-html="$sanitize(step3)"></div>
+      <div v-if="showStep3">
+        <li v-html="$sanitize(getReactStep3)"></li>
+      </div>
       <pre
         class="codeblock"
         v-text="installInstruction.embedCode"
@@ -122,7 +125,7 @@ import {
   SelectOnFocus,
   SiteRef,
   MatomoUrl,
-  Matomo,
+  Matomo, translate,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
 import {
@@ -168,8 +171,8 @@ export default defineComponent({
     currentAction: String,
     showBottom: Boolean,
     showDescription: Boolean,
-    step2: String,
-    step3: String,
+    showStep2: Boolean,
+    showStep3: Boolean,
   },
   components: {
     ActivityIndicator,
@@ -352,6 +355,14 @@ export default defineComponent({
       }).finally(() => {
         this.isLoading = false;
       });
+    },
+  },
+  computed: {
+    getReactStep3() {
+      return translate(
+        'TagManager_SiteWithoutDataReactFollowStep3',
+        '<strong>App.js</strong>',
+      );
     },
   },
 });
