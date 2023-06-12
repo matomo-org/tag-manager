@@ -9,8 +9,8 @@
       :show-container-row="showContainerRow"
       :showBottom="true"
       :showDescription="true"
-      :step2="''"
-      :step3="''"
+      :showStep2="false"
+      :showStep3="false"
       @fetchInstallInstructions="fetchInstallInstructions"
       ref="trackingCodeCommon"
     />
