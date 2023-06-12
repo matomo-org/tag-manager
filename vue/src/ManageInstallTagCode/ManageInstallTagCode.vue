@@ -34,13 +34,15 @@
           :href="installInstruction.helpUrl"
         >{{ translate('TagManager_LearnMore') }}</a>
       </p>
-      <pre
-        class="codeblock"
-        v-if="installInstruction.embedCode"
-        v-text="installInstruction.embedCode"
-        v-select-on-focus="{}"
-        ref="codeblock"
-      />
+      <div>
+        <pre
+          class="codeblock"
+          v-if="installInstruction.embedCode"
+          v-text="installInstruction.embedCode"
+          v-copy-to-clipboard="{}"
+          ref="codeblock"
+        />
+      </div>
     </div>
     <p>{{ translate('TagManager_InstallCodePublishEnvironmentNote', 'preview') }}
       {{ translate('TagManager_ConfigureEnvironmentsSuperUser') }}</p>
@@ -100,7 +102,7 @@ import {
   AjaxHelper,
   ContentBlock,
   ActivityIndicator,
-  SelectOnFocus,
+  CopyToClipboard,
   ContentTable,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
@@ -140,7 +142,7 @@ export default defineComponent({
     ActivityIndicator,
   },
   directives: {
-    SelectOnFocus,
+    CopyToClipboard,
     ContentTable,
   },
   data(): ManageInstallTagCodeState {
