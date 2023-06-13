@@ -9,7 +9,7 @@
   <p>{{translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro')}}</p>
   <ol class="list-style-decimal">
     <li v-html="$sanitize(fetchSetupStep1)"></li>
-      <ol class="list-style-disc">
+      <ol class="list-style-disc" style="margin-left: 1rem;">
         <li v-if="this.setupStep1_1" v-html="$sanitize(setupStep1_1)"></li>
         <li v-html="$sanitize(fetchSetupStep1_2)"></li>
         <li v-html="$sanitize(fetchSetupStep1_3)"></li>
@@ -122,10 +122,13 @@ export default defineComponent({
       );
     },
     fetchSetupStep1_3() {
+      const historyPageFAQLink = ''; // TODO: Need to update this when FAQ is ready
       return translate(
         'TagManager_SiteWithoutDataReactFollowStep1_3',
         '<strong>',
         '</strong>',
+        `<a href="${historyPageFAQLink}" target="_blank" rel="noreferrer noopener">`,
+        '</a>',
       );
     },
     fetchSetupStep1_4() {

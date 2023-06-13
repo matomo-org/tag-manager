@@ -1,6 +1,6 @@
 <template>
   <div v-if="showStep2 && (showContainerRow || environments.length > 1)">
-    <li>{{translate('TagManager_SiteWithoutDataReactFollowStep2')}}</li>
+    <li v-html="$sanitize(getReactStep2)"></li>
   </div>
   <div class="tagManagerTrackingCode">
     <ActivityIndicator
@@ -358,10 +358,22 @@ export default defineComponent({
     },
   },
   computed: {
+    getReactStep2() {
+      return translate(
+        'TagManager_SiteWithoutDataReactFollowStep2',
+        '<br><strong>',
+        '</strong>',
+      );
+    },
     getReactStep3() {
       return translate(
         'TagManager_SiteWithoutDataReactFollowStep3',
+        '<strong>',
+        '</strong>',
         '<strong>App.js</strong>',
+        '<strong>React.useEffect</strong>',
+        '<strong>Hello World</strong>',
+        '<strong>React.js</strong>',
       );
     },
   },
