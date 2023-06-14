@@ -9182,7 +9182,6 @@ var ManageInstallTagCodevue_type_script_lang_ts_window = window,
 ManageInstallTagCodevue_type_script_lang_ts.render = ManageInstallTagCodevue_type_template_id_7f2f7f11_render
 
 /* harmony default export */ var ManageInstallTagCode = (ManageInstallTagCodevue_type_script_lang_ts);
-<<<<<<< HEAD
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/ManageInstallTagCode/ManageInstallTagCode.adapter.ts
 /*!
  * Matomo - free/libre analytics platform
@@ -9201,10 +9200,7 @@ ManageInstallTagCodevue_type_script_lang_ts.render = ManageInstallTagCodevue_typ
   },
   directiveName: 'piwikManageInstallTagCode'
 }));
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TagmanagerTrackingCode.vue?vue&type=template&id=117990f8
-=======
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TagmanagerTrackingCode.vue?vue&type=template&id=9d2a37f8
->>>>>>> 988b997... React steps updated for history change step, #PG-2779
 
 var TagmanagerTrackingCodevue_type_template_id_9d2a37f8_hoisted_1 = {
   class: "tagManagerTrackingCode"
@@ -9613,9 +9609,11 @@ function ucfirst(s) {
     }
   },
   computed: {
-<<<<<<< HEAD
+    getReactStep2: function getReactStep2() {
+      return Object(external_CoreHome_["translate"])('TagManager_SiteWithoutDataReactFollowStep2', '<br><strong>', '</strong>');
+    },
     getReactStep3: function getReactStep3() {
-      return Object(external_CoreHome_["translate"])('TagManager_SiteWithoutDataReactFollowStep3', '<strong>App.js</strong>');
+      return Object(external_CoreHome_["translate"])('TagManager_SiteWithoutDataReactFollowStep3', '<strong>', '</strong>', '<strong>App.js</strong>', '<strong>React.useEffect</strong>', '<strong>Hello World</strong>', '<strong>React.js</strong>');
     }
   }
 }));
@@ -9625,7 +9623,7 @@ function ucfirst(s) {
 
 
 
-TrackingCodeCommonvue_type_script_lang_ts.render = TrackingCodeCommonvue_type_template_id_4d6672af_render
+TrackingCodeCommonvue_type_script_lang_ts.render = TrackingCodeCommonvue_type_template_id_435e9cc5_render
 
 /* harmony default export */ var TrackingCodeCommon = (TrackingCodeCommonvue_type_script_lang_ts);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TagmanagerTrackingCode.vue?vue&type=script&lang=ts
@@ -9683,7 +9681,7 @@ TrackingCodeCommonvue_type_script_lang_ts.render = TrackingCodeCommonvue_type_te
 
 
 
-TagmanagerTrackingCodevue_type_script_lang_ts.render = TagmanagerTrackingCodevue_type_template_id_117990f8_render
+TagmanagerTrackingCodevue_type_script_lang_ts.render = TagmanagerTrackingCodevue_type_template_id_9d2a37f8_render
 
 /* harmony default export */ var TagmanagerTrackingCode = (TagmanagerTrackingCodevue_type_script_lang_ts);
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/TagmanagerTrackingCode/TagmanagerTrackingCode.adapter.ts
@@ -9794,13 +9792,6 @@ var FieldTextareaVariablevue_type_script_lang_ts_window = window,
         Materialize.textareaAutoResize(_this2.$refs.textarea);
         Materialize.updateTextFields();
       });
-=======
-    getReactStep2: function getReactStep2() {
-      return Object(external_CoreHome_["translate"])('TagManager_SiteWithoutDataReactFollowStep2', '<br><strong>', '</strong>');
-    },
-    getReactStep3: function getReactStep3() {
-      return Object(external_CoreHome_["translate"])('TagManager_SiteWithoutDataReactFollowStep3', '<strong>', '</strong>', '<strong>App.js</strong>', '<strong>React.useEffect</strong>', '<strong>Hello World</strong>', '<strong>React.js</strong>');
->>>>>>> e134ab5... Changes to accomodate new steps
     }
   },
   mounted: function mounted() {
@@ -9820,15 +9811,7 @@ var FieldTextareaVariablevue_type_script_lang_ts_window = window,
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 FieldTextareaVariablevue_type_script_lang_ts.render = FieldTextareaVariablevue_type_template_id_36f615a2_render
-=======
-TrackingCodeCommonvue_type_script_lang_ts.render = TrackingCodeCommonvue_type_template_id_c754ba10_render
->>>>>>> 988b997... React steps updated for history change step, #PG-2779
-=======
-TrackingCodeCommonvue_type_script_lang_ts.render = TrackingCodeCommonvue_type_template_id_435e9cc5_render
->>>>>>> e134ab5... Changes to accomodate new steps
 
 /* harmony default export */ var FieldTextareaVariable = (FieldTextareaVariablevue_type_script_lang_ts);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=template&id=025d3bb8
@@ -9932,24 +9915,7 @@ var FieldVariableTemplatevue_type_script_lang_ts_window = window,
 }));
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue?vue&type=script&lang=ts
  
-<<<<<<< HEAD
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/Field/FieldVariableTemplate.vue
-=======
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/TagmanagerTrackingCode/TagmanagerTrackingCode.vue
-
-
-
-TagmanagerTrackingCodevue_type_script_lang_ts.render = TagmanagerTrackingCodevue_type_template_id_9d2a37f8_render
-
-/* harmony default export */ var TagmanagerTrackingCode = (TagmanagerTrackingCodevue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=template&id=080dd21a
-
-var TrackingCodePagevue_type_template_id_080dd21a_hoisted_1 = {
-  key: 0
-};
-var TrackingCodePagevue_type_template_id_080dd21a_hoisted_2 = ["innerHTML"];
-var TrackingCodePagevue_type_template_id_080dd21a_hoisted_3 = ["innerHTML"];
->>>>>>> 988b997... React steps updated for history change step, #PG-2779
 
 
 
@@ -10007,57 +9973,48 @@ function FieldVariableTypeTemplatevue_type_template_id_74bb398d_render(_ctx, _ca
 
 FieldVariableTypeTemplatevue_type_script_lang_ts.render = FieldVariableTypeTemplatevue_type_template_id_74bb398d_render
 
-<<<<<<< HEAD
 /* harmony default export */ var FieldVariableTypeTemplate = (FieldVariableTypeTemplatevue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodeReactPage.vue?vue&type=template&id=6ca41071
-=======
-/* harmony default export */ var TrackingCodePage = (TrackingCodePagevue_type_script_lang_ts);
-<<<<<<< HEAD
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodeReactPage.vue?vue&type=template&id=c52b5402
->>>>>>> 988b997... React steps updated for history change step, #PG-2779
-=======
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodeReactPage.vue?vue&type=template&id=850a28c2
->>>>>>> e134ab5... Changes to accomodate new steps
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodeReactPage.vue?vue&type=template&id=baa2b9cc
 
 
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_1 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("br", null, null, -1);
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_1 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("br", null, null, -1);
 
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_2 = {
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_2 = {
   class: "list-style-decimal"
 };
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_3 = ["innerHTML"];
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_4 = {
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_3 = ["innerHTML"];
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_4 = {
   class: "list-style-disc",
   style: {
     "margin-left": "1rem"
   }
 };
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_5 = ["innerHTML"];
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_6 = ["innerHTML"];
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_7 = ["innerHTML"];
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_8 = ["innerHTML"];
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_9 = {
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_5 = ["innerHTML"];
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_6 = ["innerHTML"];
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_7 = ["innerHTML"];
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_8 = ["innerHTML"];
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_9 = {
   class: "tagManagerTrackingCode"
 };
 
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_10 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("br", null, null, -1);
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_10 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("br", null, null, -1);
 
-var TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_11 = ["innerHTML"];
-function TrackingCodeReactPagevue_type_template_id_850a28c2_render(_ctx, _cache, $props, $setup, $data, $options) {
+var TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_11 = ["innerHTML"];
+function TrackingCodeReactPagevue_type_template_id_baa2b9cc_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TrackingCodeCommon = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("TrackingCodeCommon");
 
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_SiteWithoutDataReactIntro')), 1), TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_1, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("ol", TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_2, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('TagManager_SiteWithoutDataReactIntro')), 1), TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_1, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro')), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("ol", TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_2, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchSetupStep1)
-  }, null, 8, TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_3), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("ol", TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_4, [this.setupStep1_1 ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("li", {
+  }, null, 8, TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_3), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("ol", TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_4, [this.setupStep1_1 ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("li", {
     key: 0,
     innerHTML: _ctx.$sanitize(_ctx.setupStep1_1)
-  }, null, 8, TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_5)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_5)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchSetupStep1_2)
-  }, null, 8, TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_6), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_6), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchSetupStep1_3)
-  }, null, 8, TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_7), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_7), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchSetupStep1_4)
-  }, null, 8, TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_8)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_9, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_TrackingCodeCommon, {
+  }, null, 8, TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_8)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("div", TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_9, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_TrackingCodeCommon, {
     "show-container-row": _ctx.showContainerRow,
     showBottom: false,
     showDescription: false,
@@ -10065,11 +10022,11 @@ function TrackingCodeReactPagevue_type_template_id_850a28c2_render(_ctx, _cache,
     showStep3: true,
     onFetchInstallInstructions: _ctx.fetchInstallInstructions,
     ref: "trackingCodeCommon"
-  }, null, 8, ["show-container-row", "onFetchInstallInstructions"])])]), TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_10, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", {
+  }, null, 8, ["show-container-row", "onFetchInstallInstructions"])])]), TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_10, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", {
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStepCompleted)
-  }, null, 8, TrackingCodeReactPagevue_type_template_id_850a28c2_hoisted_11)], 64);
+  }, null, 8, TrackingCodeReactPagevue_type_template_id_baa2b9cc_hoisted_11)], 64);
 }
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodeReactPage.vue?vue&type=template&id=850a28c2
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodeReactPage.vue?vue&type=template&id=baa2b9cc
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodeReactPage.vue?vue&type=script&lang=ts
 
@@ -10143,8 +10100,7 @@ function TrackingCodeReactPagevue_type_template_id_850a28c2_render(_ctx, _cache,
       return Object(external_CoreHome_["translate"])('TagManager_SiteWithoutDataReactFollowStep1_2', '<strong>', '</strong>');
     },
     fetchSetupStep1_3: function fetchSetupStep1_3() {
-      var historyPageFAQLink = ''; // TODO: Need to update this when FAQ is ready
-
+      var historyPageFAQLink = 'https://matomo.org/faq/tag-manager/how-do-i-use-the-history-change-trigger-if-my-website-has-multiple-history-change-types/#which-history-source-should-i-use-for-my-single-page-application';
       return Object(external_CoreHome_["translate"])('TagManager_SiteWithoutDataReactFollowStep1_3', '<strong>', '</strong>', "<a href=\"".concat(historyPageFAQLink, "\" target=\"_blank\" rel=\"noreferrer noopener\">"), '</a>');
     },
     fetchSetupStep1_4: function fetchSetupStep1_4() {
@@ -10161,7 +10117,7 @@ function TrackingCodeReactPagevue_type_template_id_850a28c2_render(_ctx, _cache,
 
 
 
-TrackingCodeReactPagevue_type_script_lang_ts.render = TrackingCodeReactPagevue_type_template_id_850a28c2_render
+TrackingCodeReactPagevue_type_script_lang_ts.render = TrackingCodeReactPagevue_type_template_id_baa2b9cc_render
 
 /* harmony default export */ var TrackingCodeReactPage = (TrackingCodeReactPagevue_type_script_lang_ts);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Debugging/Debugging.vue?vue&type=template&id=6e8e3aea
