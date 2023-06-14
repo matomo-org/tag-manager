@@ -122,7 +122,7 @@ export default defineComponent({
       );
     },
     fetchSetupStep1_3() {
-      const historyPageFAQLink = ''; // TODO: Need to update this when FAQ is ready
+      const historyPageFAQLink = 'https://matomo.org/faq/tag-manager/how-do-i-use-the-history-change-trigger-if-my-website-has-multiple-history-change-types/#which-history-source-should-i-use-for-my-single-page-application';
       return translate(
         'TagManager_SiteWithoutDataReactFollowStep1_3',
         '<strong>',
