@@ -268,14 +268,12 @@ class TagManager extends \Piwik\Plugin
         $out .= $view->render();
     }
 
-    public function embedReactTagManagerTrackingCode(&$out, $step2, $step3)
+    public function embedReactTagManagerTrackingCode(&$out)
     {
         Piwik::checkUserHasSomeViewAccess();
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCodeReact");
         $view->action = Piwik::getAction();
-        $view->step2 = $step2;
-        $view->step3 = $step3;
         $view->showContainerRow = $model->getNumContainersTotal() > 1;
         $out .= $view->render();
     }
@@ -817,6 +815,16 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_UrlParameterVariableNameDescription';
         $result[] = 'TagManager_MatomoTagManagerTrackingInfoLine1';
         $result[] = 'TagManager_MatomoTagManagerTrackingInfoLine2';
+        $result[] = 'TagManager_SiteWithoutDataReactIntro';
+        $result[] = 'TagManager_SiteWithoutDataReactFollowStep1';
+        $result[] = 'TagManager_SiteWithoutDataReactFollowStep1_1';
+        $result[] = 'TagManager_SiteWithoutDataReactFollowStep1_2';
+        $result[] = 'TagManager_SiteWithoutDataReactFollowStep1_3';
+        $result[] = 'TagManager_SiteWithoutDataReactFollowStep1_4';
+        $result[] = 'TagManager_SiteWithoutDataReactFollowStep2';
+        $result[] = 'TagManager_SiteWithoutDataReactFollowStep3';
+        $result[] = 'TagManager_SiteWithoutDataReactFollowStepCompleted';
+        $result[] = 'SitesManager_SiteWithoutDataCloudflareFollowStepsIntro';
     }
 
     public function getStylesheetFiles(&$stylesheets)

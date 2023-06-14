@@ -11,6 +11,7 @@ export interface InstallInstructions {
   description: string;
   embedCode: string;
   helpUrl: string;
+  pageViewTriggerEditUrl: string;
 }
 
 // variable types
