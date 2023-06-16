@@ -35,14 +35,14 @@
         >{{ translate('TagManager_LearnMore') }}</a>
       </p>
       <div>
-        <pre
-          class="codeblock"
-          v-if="installInstruction.embedCode"
-          v-text="installInstruction.embedCode"
-          v-copy-to-clipboard="{}"
-          ref="codeblock"
-        />
-      </div>
+          <pre
+            class="codeblock"
+            v-if="installInstruction.embedCode"
+            v-text="installInstruction.embedCode"
+            v-copy-to-clipboard="{}"
+            ref="codeblock"
+          />
+        </div>
     </div>
     <p>{{ translate('TagManager_InstallCodePublishEnvironmentNote', 'preview') }}
       {{ translate('TagManager_ConfigureEnvironmentsSuperUser') }}</p>
