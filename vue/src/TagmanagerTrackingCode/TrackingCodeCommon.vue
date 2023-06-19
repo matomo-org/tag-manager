@@ -81,14 +81,12 @@
         <li v-html="$sanitize(getReactStep3)"></li>
       </div>
       <div>
-      <div>
         <pre
           class="codeblock"
           v-text="installInstruction.embedCode"
           v-copy-to-clipboard="{}"
           ref="codeblock"
         />
-      </div>
       </div>
     </div>
     <div v-if="showBottom">
