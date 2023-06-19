@@ -21,7 +21,6 @@
 import { defineComponent, nextTick } from 'vue';
 import {
   AjaxHelper,
-  SelectOnFocus,
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
 import {
@@ -34,9 +33,6 @@ export default defineComponent({
   },
   components: {
     TrackingCodeCommon,
-  },
-  directives: {
-    SelectOnFocus,
   },
   methods: {
     fetchInstallInstructions() {
