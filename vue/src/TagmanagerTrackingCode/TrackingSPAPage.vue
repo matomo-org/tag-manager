@@ -17,18 +17,21 @@
       ref="trackingCodeCommon"
     />
     <li v-html="$sanitize(setupStep2)"></li>
-    <li v-html="$sanitize(setupStep3)"></li>
+    <li v-html="$sanitize(fetchFollowStep3)"></li>
     <li v-text="translate('TagManager_SPAFollowStep4')"></li>
-    <li v-text="translate('TagManager_SPAFollowStep5')"></li>
     <li v-html="$sanitize(fetchFollowStepCommon(5))"></li>
+    <!-- Since both the buttons has same text we are using the step4's text here   -->
+    <li v-text="translate('TagManager_SPAFollowStep4')"></li>
     <li v-html="$sanitize(setupStep7)"></li>
-    <li v-text="translate('TagManager_SPAFollowStep8')"></li>
+    <li v-html="$sanitize(fetchFollowStep8)"></li>
     <li v-html="$sanitize(fetchFollowStepCommon(9))"></li>
     <li v-html="$sanitize(fetchFollowStepCommon(10))"></li>
     <li v-html="$sanitize(fetchFollowStepCommon(11))"></li>
-    <li v-html="$sanitize(fetchFollowStepCommon(12))"></li>
-    <li v-html="$sanitize(fetchFollowStepCommon(13))"></li>
-    <li v-html="$sanitize(fetchFollowStep14)"></li>
+    <li v-text="translate('TagManager_SPAFollowStep12')"></li>
+    <li v-text="translate('TagManager_SPAFollowStep13')"></li>
+    <li v-html="$sanitize(fetchFollowStepCommon(14))"></li>
+    <li v-text="translate('TagManager_SPAFollowStep15')"></li>
+    <li v-html="$sanitize(fetchFollowStep16)"></li>
     <div
       v-for="(installInstruction, index) in installInstructions"
       :key="index"
@@ -57,7 +60,6 @@ import {
 interface TagmanagerTrackingSPAPageState {
   setupStep1: string,
   setupStep2: string,
-  setupStep3: string,
   setupStep7: string,
   installInstructions: InstallInstructions[];
 }
@@ -77,7 +79,6 @@ export default defineComponent({
     return {
       setupStep1: '',
       setupStep2: '',
-      setupStep3: '',
       setupStep7: '',
       installInstructions: [],
     };
@@ -109,22 +110,12 @@ export default defineComponent({
         'TagManager_SPAFollowStep2',
         `<a href="${triggersUrl}" target="_blank" rel="noreferrer noopener">`,
         '</a>',
-        '<a href="https://matomo.org/faq/tag-manager/manage-triggers-in-matomo-tag-manager/" target="_blank" rel="noreferrer noopener">',
-        '</a>',
-      );
-
-      this.setupStep3 = translate(
-        'TagManager_SPAFollowStep3',
-        `<a href="${triggersUrl}" target="_blank" rel="noreferrer noopener">`,
-        '</a>',
       );
 
       const tagsURL = this.linkTo('manageTags', refs.site.id, refs.idContainer);
       this.setupStep7 = translate(
         'TagManager_SPAFollowStep7',
         `<a href="${tagsURL}" target="_blank" rel="noreferrer noopener">`,
-        '</a>',
-        '<a href="https://matomo.org/faq/tag-manager/manage-tags-in-matomo-tag-manager/" target="_blank" rel="noreferrer noopener">',
         '</a>',
       );
 
@@ -173,10 +164,28 @@ export default defineComponent({
     },
   },
   computed: {
-    fetchFollowStep14() {
+    fetchFollowStep3() {
       return translate(
-        'TagManager_SPAFollowStep14',
-        '<strong>"&lt;head&gt;"</strong>',
+        'TagManager_SPAFollowStep3',
+        '<strong>',
+        '</strong>',
+        '<a href="https://matomo.org/faq/tag-manager/manage-triggers-in-matomo-tag-manager/" target="_blank" rel="noreferrer noopener">',
+        '</a>',
+      );
+    },
+    fetchFollowStep8() {
+      return translate(
+        'TagManager_SPAFollowStep8',
+        '<strong>',
+        '</strong>',
+        '<a href="https://matomo.org/faq/tag-manager/manage-tags-in-matomo-tag-manager/" target="_blank" rel="noreferrer noopener">',
+        '</a>',
+      );
+    },
+    fetchFollowStep16() {
+      return translate(
+        'TagManager_SPAFollowStep16',
+        '&lt;/head&gt;',
         '<a href="https://developer.matomo.org/guides/tagmanager/embedding" target="_blank" rel="noreferrer noopener">',
         '</a>',
       );

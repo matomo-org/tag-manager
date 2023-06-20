@@ -841,7 +841,6 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_SPAFollowStep3';
         $result[] = 'TagManager_SPAFollowStep4';
         $result[] = 'TagManager_SPAFollowStep5';
-        $result[] = 'TagManager_SPAFollowStep6';
         $result[] = 'TagManager_SPAFollowStep7';
         $result[] = 'TagManager_SPAFollowStep8';
         $result[] = 'TagManager_SPAFollowStep9';
@@ -850,6 +849,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_SPAFollowStep12';
         $result[] = 'TagManager_SPAFollowStep13';
         $result[] = 'TagManager_SPAFollowStep14';
+        $result[] = 'TagManager_SPAFollowStep15';
+        $result[] = 'TagManager_SPAFollowStep16';
     }
 
     public function getStylesheetFiles(&$stylesheets)
