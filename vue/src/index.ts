@@ -55,4 +55,5 @@ export { default as ContainerSelector } from './ContainerSelector/ContainerSelec
 export { default as ManageInstallTagCode } from './ManageInstallTagCode/ManageInstallTagCode.vue';
 export { default as TagmanagerTrackingCode } from './TagmanagerTrackingCode/TagmanagerTrackingCode.vue';
 export { default as TrackingCodeReactPage } from './TagmanagerTrackingCode/TrackingCodeReactPage.vue';
+export { default as TrackingSPAPage } from './TagmanagerTrackingCode/TrackingSPAPage.vue';
 export { default as Debugging } from './Debugging/Debugging.vue';
