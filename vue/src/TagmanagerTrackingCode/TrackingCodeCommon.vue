@@ -80,12 +80,14 @@
       <div v-if="showStep3">
         <li v-html="$sanitize(getReactStep3)"></li>
       </div>
-      <pre
-        class="codeblock"
-        v-text="installInstruction.embedCode"
-        v-select-on-focus="{}"
-        ref="codeblock"
-      />
+      <div>
+        <pre
+          class="codeblock"
+          v-text="installInstruction.embedCode"
+          v-copy-to-clipboard="{}"
+          ref="codeblock"
+        />
+      </div>
     </div>
     <div v-if="showBottom">
       <h3 v-if="idContainer && currentAction !== 'siteWithoutDataTabs'">
@@ -122,7 +124,7 @@ import {
   AjaxHelper,
   ActivityIndicator,
   SiteSelector,
-  SelectOnFocus,
+  CopyToClipboard,
   SiteRef,
   MatomoUrl,
   Matomo, translate,
@@ -181,7 +183,7 @@ export default defineComponent({
   },
   emits: ['fetchInstallInstructions'],
   directives: {
-    SelectOnFocus,
+    CopyToClipboard,
   },
   data(): TagmanagerTrackingCodeState {
     return {
