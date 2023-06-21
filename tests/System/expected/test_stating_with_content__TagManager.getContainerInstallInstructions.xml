@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <result>
 	<row>
-		<description>To install this container, copy / paste the following code as high as possible into the &quot;&lt;head&gt;&quot; part of every page of your site.</description>
+		<description>To install this container, copy / paste the following code as high as possible into the &lt;head&gt; part of every page of your site.</description>
 		<embedCode>&lt;!-- Matomo Tag Manager --&gt;
 &lt;script&gt;
 var _mtm = window._mtm = window._mtm || [];
