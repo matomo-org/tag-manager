@@ -5,7 +5,7 @@
 -->
 <template>
   <ol class="list-style-decimal">
-    <li v-html="$sanitize(setupStep1)"></li>
+    <li v-html="$sanitize(setupStep1)" v-if="showContainerRow"></li>
     <TrackingCodeCommon
       :show-container-row="showContainerRow"
       :current-action="currentAction"
@@ -169,7 +169,7 @@ export default defineComponent({
         'TagManager_SPAFollowStep3',
         '<strong>',
         '</strong>',
-        '<a href="https://matomo.org/faq/tag-manager/manage-triggers-in-matomo-tag-manager/" target="_blank" rel="noreferrer noopener">',
+        '<a href="https://matomo.org/?post_type=faq&p=67104#1-create-a-pageview-trigger" target="_blank" rel="noreferrer noopener">',
         '</a>',
       );
     },
@@ -178,7 +178,7 @@ export default defineComponent({
         'TagManager_SPAFollowStep8',
         '<strong>',
         '</strong>',
-        '<a href="https://matomo.org/faq/tag-manager/manage-tags-in-matomo-tag-manager/" target="_blank" rel="noreferrer noopener">',
+        '<a href="https://matomo.org/?post_type=faq&p=67104#2-create-matomo-analytics-tag" target="_blank" rel="noreferrer noopener">',
         '</a>',
       );
     },
