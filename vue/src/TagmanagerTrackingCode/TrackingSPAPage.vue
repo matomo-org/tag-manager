@@ -169,7 +169,7 @@ export default defineComponent({
         'TagManager_SPAFollowStep3',
         '<strong>',
         '</strong>',
-        '<a href="https://matomo.org/?post_type=faq&p=67104#1-create-a-pageview-trigger" target="_blank" rel="noreferrer noopener">',
+        '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-trigger" target="_blank" rel="noreferrer noopener">',
         '</a>',
       );
     },
@@ -178,7 +178,7 @@ export default defineComponent({
         'TagManager_SPAFollowStep8',
         '<strong>',
         '</strong>',
-        '<a href="https://matomo.org/?post_type=faq&p=67104#2-create-matomo-analytics-tag" target="_blank" rel="noreferrer noopener">',
+        '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-tag" target="_blank" rel="noreferrer noopener">',
         '</a>',
       );
     },
