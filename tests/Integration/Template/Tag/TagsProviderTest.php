@@ -65,8 +65,9 @@ class TagsProviderTest extends IntegrationTestCase
 
     public function test_checkIsValidTag_noExceptionWhenTagExists()
     {
+        self::expectNotToPerformAssertions();
+
         $this->provider->checkIsValidTag('Matomo');
-        $this->assertTrue(true);
     }
 
     public function test_checkIsValidTag_searchesCaseSensitive()

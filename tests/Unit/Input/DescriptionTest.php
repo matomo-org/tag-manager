@@ -28,13 +28,14 @@ class DescriptionTest extends UnitTestCase
 
     public function test_check_valid()
     {
+        self::expectNotToPerformAssertions();
+
         $this->checkDescription(false);
         $this->checkDescription('');
         $this->checkDescription('s');
         $this->checkDescription(str_pad('2', Description::MAX_LENGTH - 1, 'f'));
         $this->checkDescription('fooBarBaz4392');
         $this->checkDescription('foo Bar Baz 4392');
-        $this->assertTrue(true);
     }
 
     private function checkDescription($description)

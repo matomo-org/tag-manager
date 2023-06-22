@@ -123,6 +123,8 @@ class TriggerConditionsTest extends IntegrationTestCase
 
     public function test_valid_preconfiguredVariable()
     {
+        self::expectNotToPerformAssertions();
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, array(
             ['actual' => ErrorUrlVariable::ID, 'comparison' => 'equals', 'expected' => 'foo'],
         ));
@@ -130,6 +132,8 @@ class TriggerConditionsTest extends IntegrationTestCase
 
     public function test_valid_customVariable()
     {
+        self::expectNotToPerformAssertions();
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, array(
             ['actual' => 'myVar1', 'comparison' => 'equals', 'expected' => 'foo'],
         ));
@@ -137,6 +141,8 @@ class TriggerConditionsTest extends IntegrationTestCase
 
     public function test_valid_mixed()
     {
+        self::expectNotToPerformAssertions();
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, array(
             ['actual' => 'myVar1', 'comparison' => 'equals', 'expected' => 'foo'],
             ['actual' => ErrorUrlVariable::ID, 'comparison' => 'equals', 'expected' => 'foobar'],
@@ -145,6 +151,8 @@ class TriggerConditionsTest extends IntegrationTestCase
 
     public function test_valid_empty()
     {
+        self::expectNotToPerformAssertions();
+
         $this->validateTriggerIds($this->idSite, $containerVersion = 5, array());
     }
 

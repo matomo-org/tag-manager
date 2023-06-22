@@ -137,13 +137,14 @@ class SystemSettingTest extends IntegrationTestCase
 
     public function test_save_willNotFail()
     {
+        self::expectNotToPerformAssertions();
+
         $this->settings->save();
         $this->settings->environments->setValue(array(
             array('environment' => 'BaZ'),
             array('environment' => 'fOo'),
         ));
         $this->settings->save();
-        $this->assertTrue(true);
     }
 
 }

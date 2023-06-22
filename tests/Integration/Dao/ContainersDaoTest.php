@@ -186,6 +186,8 @@ class ContainersDaoTest extends IntegrationTestCase
 
     public function test_updateContainer_succeedsToSetSameNameThatIsUsedAlreadyByThisContainer()
     {
+        self::expectNotToPerformAssertions();
+
         $idSite = 3;
         $idContainer = 'abcdef';
         $name = 'myname2';
@@ -200,11 +202,11 @@ class ContainersDaoTest extends IntegrationTestCase
 
     public function test_updateContainerColumns_doesNotFailWhenNoColumsAreToBeUpdated()
     {
+        self::expectNotToPerformAssertions();
+
         $idContainer = $this->createContainer($idSite = 3);
 
         $this->dao->updateContainerColumns($idSite, $idContainer, array());
-
-        $this->assertTrue(true);
     }
 
     public function test_updateContainerColumns_updatesASingleColumn()

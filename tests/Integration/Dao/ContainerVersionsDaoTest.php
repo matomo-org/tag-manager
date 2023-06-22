@@ -268,11 +268,11 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
 
     public function test_updateVersionColumns_doesNotFailWhenNoColumsAreToBeUpdated()
     {
+        self::expectNotToPerformAssertions();
+
         $idVersion = $this->createVersion($idSite = 3);
 
         $this->dao->updateContainerColumns($idSite, $idContainerVersion = 5, $idVersion, array());
-
-        $this->assertTrue(true);
     }
 
     public function test_updateVersionColumns_updatesASingleColumn()

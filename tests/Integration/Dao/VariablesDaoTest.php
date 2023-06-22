@@ -252,11 +252,11 @@ class VariablesDaoTest extends IntegrationTestCase
 
     public function test_updateVariableColumns_doesNotFailWhenNoColumsAreToBeUpdated()
     {
+        self::expectNotToPerformAssertions();
+
         $idVariable = $this->createVariable($idSite = 3);
 
         $this->dao->updateVariableColumns($idSite, $idContainerVersion = 5, $idVariable, array());
-
-        $this->assertTrue(true);
     }
 
     public function test_updateVariableColumns_updatesASingleColumn()

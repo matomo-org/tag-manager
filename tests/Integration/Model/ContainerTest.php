@@ -241,8 +241,9 @@ class ContainerTest extends IntegrationTestCase
 
     public function test_checkContainerExists_noExceptionWhenExists()
     {
+        self::expectNotToPerformAssertions();
+
         $this->model->checkContainerExists($this->idSite, $this->idContainer1);
-        $this->assertTrue(true);
     }
 
     public function test_getContainer()
@@ -883,10 +884,11 @@ class ContainerTest extends IntegrationTestCase
 
     public function test_checkContainerReleaseExists_whenReleaseExistsNoException()
     {
+        self::expectNotToPerformAssertions();
+
         $this->publishVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, Environment::ENVIRONMENT_LIVE);
 
         $this->model->checkContainerReleaseExists($this->idSite, $this->idContainer1, Environment::ENVIRONMENT_LIVE);
-        $this->assertTrue(true);
     }
 
     public function test_getContainerInstallInstructions_checksEnvironmentExists()

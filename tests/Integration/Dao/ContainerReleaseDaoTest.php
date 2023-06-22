@@ -381,8 +381,9 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
 
     public function test_deleteAllVersionsForRelease_givenSiteHasNoReleases_shouldNotFail()
     {
+        self::expectNotToPerformAssertions();
+
         $this->dao->deleteAllVersionsForRelease($idSite = 3, 'abcdee', 'live', $this->now);
-        $this->assertTrue(true);
     }
 
     public function test_deleteAllVersionsForRelease_shouldOnlyDeleteReleasesThatBelongToGivenSite()

@@ -257,8 +257,10 @@ class APITest extends IntegrationTestCase
 
     public function test_deleteContainer_success()
     {
+        // This test case actually doesn't have any assertions, but the fixture already performs some when it is set up.
+        // self::expectNotToPerformAssertions();
+
         $this->api->deleteContainer($this->idSite, $this->idContainer);
-        $this->assertTrue(true);
     }
 
     public function test_publishContainerVersion_shouldFailWhenNotHavingViewPermissions()
@@ -297,16 +299,20 @@ class APITest extends IntegrationTestCase
 
     public function test_publishContainerVersion_shouldSucceedForAdmin()
     {
+        // This test case actually doesn't have any assertions, but the fixture already performs some when it is set up.
+        // self::expectNotToPerformAssertions();
+
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
-        $this->assertTrue(true);
     }
 
     public function test_publishContainerVersion_shouldSucceedForPublishLiveCapability()
     {
+        // This test case actually doesn't have any assertions, but the fixture already performs some when it is set up.
+        // self::expectNotToPerformAssertions();
+
         $this->setWriteUser();
         FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
-        $this->assertTrue(true);
     }
 
     public function test_addContainer_shouldFailWhenNotHavingViewPermissions()
@@ -994,7 +1000,6 @@ class APITest extends IntegrationTestCase
         $id = $this->test_addContainerVariable_successRegularTemplateWithWriteUser();
 
         $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('urlPart' => 'href'));
-        $this->assertTrue(true);
     }
 
     public function test_updateContainerVariable_failMissingCustomTemplatePermission()
@@ -1014,6 +1019,9 @@ class APITest extends IntegrationTestCase
 
     public function test_updateContainerVariable_successWithCustomTemplatePermission()
     {
+        // This test case actually doesn't have any assertions, but the fixture already performs some when it is set up.
+        // self::expectNotToPerformAssertions();
+
         $this->setAdminUser();
         $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
 
@@ -1021,7 +1029,6 @@ class APITest extends IntegrationTestCase
         FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
 
         $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2');
-        $this->assertTrue(true);
     }
 
     public function test_addContainerTag_successRegularTemplateWithWriteUser()
@@ -1043,7 +1050,6 @@ class APITest extends IntegrationTestCase
         $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser($name = 'foobar');
         $fireTrigger = array($idTrigger);
         $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customImageSrc' => 'foo'), $fireTrigger);
-        $this->assertTrue(true);
     }
 
     public function test_updateContainerTag_failMissingCustomTemplatePermission()
@@ -1077,7 +1083,6 @@ class APITest extends IntegrationTestCase
         FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
 
         $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customHtml' => 'foo'), $fireTrigger);
-        $this->assertTrue(true);
     }
 
     protected function setSuperUser()
