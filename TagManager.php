@@ -69,6 +69,7 @@ class TagManager extends \Piwik\Plugin
             'TwoFactorAuth.requiresTwoFactorAuthentication' => 'requiresTwoFactorAuthentication',
             'Db.getTablesInstalled' => 'getTablesInstalled',
             'Template.embedReactTagManagerTrackingCode' => 'embedReactTagManagerTrackingCode',
+            'Template.embedSPATagManagerTrackingCode' => 'embedSPATagManagerTrackingCode',
         );
     }
 
@@ -273,6 +274,16 @@ class TagManager extends \Piwik\Plugin
         Piwik::checkUserHasSomeViewAccess();
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCodeReact");
+        $view->action = Piwik::getAction();
+        $view->showContainerRow = $model->getNumContainersTotal() > 1;
+        $out .= $view->render();
+    }
+
+    public function embedSPATagManagerTrackingCode(&$out)
+    {
+        Piwik::checkUserHasSomeViewAccess();
+        $model = $this->getContainerModel();
+        $view = new View("@TagManager/trackingSPA");
         $view->action = Piwik::getAction();
         $view->showContainerRow = $model->getNumContainersTotal() > 1;
         $out .= $view->render();
@@ -794,6 +805,21 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_SiteWithoutDataReactFollowStep3';
         $result[] = 'TagManager_SiteWithoutDataReactFollowStepCompleted';
         $result[] = 'SitesManager_SiteWithoutDataCloudflareFollowStepsIntro';
+        $result[] = 'TagManager_SPAFollowStep1';
+        $result[] = 'TagManager_SPAFollowStep2';
+        $result[] = 'TagManager_SPAFollowStep3';
+        $result[] = 'TagManager_SPAFollowStep4';
+        $result[] = 'TagManager_SPAFollowStep5';
+        $result[] = 'TagManager_SPAFollowStep7';
+        $result[] = 'TagManager_SPAFollowStep8';
+        $result[] = 'TagManager_SPAFollowStep9';
+        $result[] = 'TagManager_SPAFollowStep10';
+        $result[] = 'TagManager_SPAFollowStep11';
+        $result[] = 'TagManager_SPAFollowStep12';
+        $result[] = 'TagManager_SPAFollowStep13';
+        $result[] = 'TagManager_SPAFollowStep14';
+        $result[] = 'TagManager_SPAFollowStep15';
+        $result[] = 'TagManager_SPAFollowStep16';
     }
 
     public function getStylesheetFiles(&$stylesheets)

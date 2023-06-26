@@ -257,7 +257,7 @@ g.async=true; g.src='$path'; s.parentNode.insertBefore(g,s);
 INST;
 
         return [[
-            'description' => Piwik::translate('TagManager_ContextWebInstallInstructions', array('"<head>"')),
+            'description' => Piwik::translate('TagManager_ContextWebInstallInstructions', array('<head>')),
             'embedCode' => $embedCode,
             'helpUrl' => 'https://developer.matomo.org/guides/tagmanager/embedding'
         ]];
@@ -287,7 +287,7 @@ React.useEffect(() => {
 INST;
 
         return [[
-            'description' => Piwik::translate('TagManager_ContextWebInstallInstructions', array('"<head>"')),
+            'description' => Piwik::translate('TagManager_ContextWebInstallInstructions', array('<head>')),
             'embedCode' => $embedCode,
             'helpUrl' => 'https://developer.matomo.org/guides/tagmanager/embedding',
             'pageViewTriggerEditUrl' => $this->getPageViewTriggerEditUrl($container['idsite'], $container['idcontainer'])
