@@ -907,7 +907,7 @@
         "SPAFollowStep8": "For the %1$sPageview%2$s tag with the type %1$sMatomo Analytics%2$s, click on the Edit tag icon. If you don’t see the Pageview tag, follow %3$sthis guide%4$s.",
         "SPAFollowStep9": "In the section \"Configure what this tag should do\", set the Custom Title to %1$s{{PageTitle}}",
         "SPAFollowStep10": "Set the Custom URL to %1$s{{PageOrigin}}/{{PageHash}}%2$s if your SPA or PWA has a %1$s#%2$s in the URL to navigate to different pages. Otherwise, set it as %1$s{{PageUrl}}%2$s",
-        "SPAFollowStep11": "In the section “Configure when the tag should do this”, under \"Execute this tag when any of these triggers are triggered\", directly under the pre-selected %1$sPageview%2$s trigger, add the %1$sHistory Change%2$s trigger.",
+        "SPAFollowStep11": "In the section “Configure when the tag should do this”, under \"Execute this tag when any of these triggers are triggered\", directly under the pre-selected \"%1$sPageview%2$s\" trigger, add the \"%1$sHistory Change%2$s\" trigger.",
         "SPAFollowStep12": "Click \"Update\".",
         "SPAFollowStep13": "In the left menu, click \"Publish\".",
         "SPAFollowStep14": "Add a version name, for example %1$s1.0%2$s",
