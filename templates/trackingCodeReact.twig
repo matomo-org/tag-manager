@@ -1,6 +1,12 @@
+<p>{{'TagManager_SiteWithoutDataReactIntro'|translate}}</p>
+<br>
+<p>{{'SitesManager_SiteWithoutDataCloudflareFollowStepsIntro'|translate}}</p>
 <div
-        vue-entry="TagManager.TrackingCodeReactPage"
+        vue-entry="TagManager.TrackingSPAPage"
         current-action="{{ action|json_encode }}"
         show-container-row="{{ showContainerRow|json_encode }}"
+        js-framework="react"
 >
 </div>
+<br>
+<p>{{ 'TagManager_SiteWithoutDataReactFollowStepCompleted'|translate('<strong>', '</strong>')|raw }}</p>

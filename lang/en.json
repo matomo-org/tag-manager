@@ -896,13 +896,6 @@
         "UserInteractionTriggerDescription": "Triggered when user interacts with the site, i. e. touch, move, scroll or mouse click event is executed by the user on site.",
         "UserInteractionTriggerHelp": "This trigger is triggered when the user interacts with the page (touch, mousemove, scroll, mouse click). Loading and processing JS on a website usually blocks page rendering and impacts performance. Defering JS via this trigger until after the page was rendered and user interacts with the page can be useful to avoid negative impacts on Page Speed and Core Web Vitals scores. Note: User interaction is triggered only once when the user interacts with the page for the first time after page load.",
         "SiteWithoutDataReactIntro": "Tracking your React.js website or app is easy with Matomo, even for Single Page Applications.",
-        "SiteWithoutDataReactFollowStep1": "%1$sSkip this step%2$s if you are not tracking a %1$sSingle Page Application (SPA)%2$s or %1$sProgressive Web Application (PWA)%2$s. For SPA/PWAs, the most common way to accurately track pageviews is by using the %1$sHistory Changes trigger%2$s:",
-        "SiteWithoutDataReactFollowStep1_1": "Navigate to your %1$sPageview trigger%2$s.",
-        "SiteWithoutDataReactFollowStep1_2": "Replace \"%1$sPage URL%2$s\" with \"%1$sHistory Source%2$s\".",
-        "SiteWithoutDataReactFollowStep1_3": "Add \"%1$shashchange%2$s\" as the input value. %3$sLearn more in this guide%4$s.",
-        "SiteWithoutDataReactFollowStep1_4": "Click \"%1$sUPDATE%2$s\" to save your changes.",
-        "SiteWithoutDataReactFollowStep2": "Select the right container for your website. %1$sNote:%2$s Matomo automatically pre-configures a container when you add a site. By default, this container is selected in the fields below. If you are planning to use a single container for multiple websites, make sure to select that specific container.",
-        "SiteWithoutDataReactFollowStep3": "Inject the %1$sMatomo Tag Manager JS%2$s code into your %3$s (or other relevant files), we recommend doing this using the \"%4$s\" method. The example below shows how to add the %1$sMatomo Tag Manager JS%2$s code into a \"%5$s\" app in %6$s.",
         "SiteWithoutDataReactFollowStepCompleted": "%1$sCongratulations!%2$s You have successfully installed the Matomo Analytics tracking code via the Matomo Tag Manager. To verify that hits are being tracked, visit your website and check that this data is visible in your Matomo instance.",
         "SPAFollowStep1": "Select the right container for your website.%1$sNote:%2$s Matomo automatically pre-configures a container when you add a site. By default, this container is selected in the fields below. If you are planning to use a single container for multiple websites, make sure to select that specific container. You can %3$smanage your containers here%4$s.",
         "SPAFollowStep2": "Navigate to %1$sMatomo Tag Manager's Triggers%2$s.",
@@ -918,6 +911,7 @@
         "SPAFollowStep13": "In the left menu, click \"Publish\".",
         "SPAFollowStep14": "Add a version name, for example %1$s1.0%2$s",
         "SPAFollowStep15": "Click the green \"Create New Version And Publish Release\" button.",
-        "SPAFollowStep16": "Copy the code below and paste it in the header of your SPA / PWA. We recommend pasting it immediately before the closing %1$s tag. %2$sLearn more%3$s."
+        "SPAFollowStep16": "Copy the code below and paste it in the header of your SPA / PWA. We recommend pasting it immediately before the closing %1$s tag. %2$sLearn more%3$s.",
+        "ReactFollowStep16": "Inject the %1$sMatomo Tag Manager JS%2$s code into your %3$s (or other relevant files), we recommend doing this using the \"%4$s\" method. The example below shows how to add the %1$sMatomo Tag Manager JS%2$s code into a \"%5$s\" app in %6$s."
     }
 }

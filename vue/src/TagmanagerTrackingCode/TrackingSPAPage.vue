@@ -11,8 +11,6 @@
       :current-action="currentAction"
       :showBottom="false"
       :showDescription="false"
-      :showStep2="false"
-      :showStep3="false"
       @fetchInstallInstructions="fetchInstallInstructionsSPA"
       ref="trackingCodeCommon"
     />
@@ -31,7 +29,8 @@
     <li v-text="translate('TagManager_SPAFollowStep13')"></li>
     <li v-html="$sanitize(fetchFollowStepCommon(14))"></li>
     <li v-text="translate('TagManager_SPAFollowStep15')"></li>
-    <li v-html="$sanitize(fetchFollowStep16)"></li>
+    <li v-if="jsFramework === 'react'" v-html="$sanitize(fetchFollowStep16React)"></li>
+    <li v-else v-html="$sanitize(fetchFollowStep16SPA)"></li>
     <div
       v-for="(installInstruction, index) in installInstructions"
       :key="index"
@@ -67,6 +66,7 @@ export default defineComponent({
   props: {
     showContainerRow: Boolean,
     currentAction: String,
+    jsFramework: String,
   },
   components: {
     TrackingCodeCommon,
@@ -121,6 +121,7 @@ export default defineComponent({
         idContainer: refs?.idContainer,
         environment: refs?.environment,
         idSite: refs?.site?.id,
+        jsFramework: this.jsFramework,
       }).then((instructions) => {
         this.installInstructions = instructions;
         nextTick(() => {
@@ -175,12 +176,23 @@ export default defineComponent({
         '</a>',
       );
     },
-    fetchFollowStep16() {
+    fetchFollowStep16SPA() {
       return translate(
         'TagManager_SPAFollowStep16',
         '&lt;/head&gt;',
         '<a href="https://developer.matomo.org/guides/tagmanager/embedding" target="_blank" rel="noreferrer noopener">',
         '</a>',
+      );
+    },
+    fetchFollowStep16React() {
+      return translate(
+        'TagManager_ReactFollowStep16',
+        '<strong>',
+        '</strong>',
+        '<strong>App.js</strong>',
+        '<strong>React.useEffect</strong>',
+        '<strong>Hello World</strong>',
+        '<strong>React.js</strong>',
       );
     },
   },
