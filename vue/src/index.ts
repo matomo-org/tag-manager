@@ -32,7 +32,6 @@ export { default as ManageInstallTagCode } from './ManageInstallTagCode/ManageIn
 export { default as TagmanagerTrackingCode } from './TagmanagerTrackingCode/TagmanagerTrackingCode.vue';
 export { default as TrackingCodeCommon } from './TagmanagerTrackingCode/TrackingCodeCommon.vue';
 export { default as TrackingCodePage } from './TagmanagerTrackingCode/TrackingCodePage.vue';
-export { default as TrackingCodeReactPage } from './TagmanagerTrackingCode/TrackingCodeReactPage.vue';
 export { default as TrackingSPAPage } from './TagmanagerTrackingCode/TrackingSPAPage.vue';
 export { default as Debugging } from './Debugging/Debugging.vue';
 export { default as GettingStarted } from './GettingStarted/GettingStarted.vue';
