@@ -796,13 +796,6 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_MatomoTagManagerTrackingInfoLine1';
         $result[] = 'TagManager_MatomoTagManagerTrackingInfoLine2';
         $result[] = 'TagManager_SiteWithoutDataReactIntro';
-        $result[] = 'TagManager_SiteWithoutDataReactFollowStep1';
-        $result[] = 'TagManager_SiteWithoutDataReactFollowStep1_1';
-        $result[] = 'TagManager_SiteWithoutDataReactFollowStep1_2';
-        $result[] = 'TagManager_SiteWithoutDataReactFollowStep1_3';
-        $result[] = 'TagManager_SiteWithoutDataReactFollowStep1_4';
-        $result[] = 'TagManager_SiteWithoutDataReactFollowStep2';
-        $result[] = 'TagManager_SiteWithoutDataReactFollowStep3';
         $result[] = 'TagManager_SiteWithoutDataReactFollowStepCompleted';
         $result[] = 'SitesManager_SiteWithoutDataCloudflareFollowStepsIntro';
         $result[] = 'TagManager_SPAFollowStep1';
@@ -820,6 +813,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_SPAFollowStep14';
         $result[] = 'TagManager_SPAFollowStep15';
         $result[] = 'TagManager_SPAFollowStep16';
+        $result[] = 'TagManager_ReactFollowStep16';
     }
 
     public function getStylesheetFiles(&$stylesheets)
