@@ -4,10 +4,12 @@
 		<description>To install this container, copy / paste the following code as high as possible into the &lt;head&gt; part of every page of your site.</description>
 		<embedCode>&lt;!-- Matomo Tag Manager --&gt;
 &lt;script&gt;
-var _mtm = window._mtm = window._mtm || [];
-_mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
-var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-g.async=true; g.src='http://example.com/piwik/tests/PHPUnit/proxy/js/container_aaacont2.js'; s.parentNode.insertBefore(g,s);
+  var _mtm = window._mtm = window._mtm || [];
+  _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+  (function() {
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src='http://example.com/piwik/tests/PHPUnit/proxy/js/container_aaacont2.js'; s.parentNode.insertBefore(g,s);
+  })();
 &lt;/script&gt;
 &lt;!-- End Matomo Tag Manager --&gt;</embedCode>
 		<helpUrl>https://developer.matomo.org/guides/tagmanager/embedding</helpUrl>
