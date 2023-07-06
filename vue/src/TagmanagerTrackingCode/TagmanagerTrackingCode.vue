@@ -20,8 +20,9 @@
 <script lang="ts">
 import { defineComponent, nextTick } from 'vue';
 import {
-  AjaxHelper, MatomoUrl,
-  SelectOnFocus, translate,
+  AjaxHelper,
+  MatomoUrl,
+  translate,
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
 import {
@@ -34,9 +35,6 @@ export default defineComponent({
   },
   components: {
     TrackingCodeCommon,
-  },
-  directives: {
-    SelectOnFocus,
   },
   data() {
     return {

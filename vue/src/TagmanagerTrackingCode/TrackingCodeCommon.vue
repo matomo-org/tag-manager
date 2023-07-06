@@ -83,12 +83,14 @@
         </li>
         <li v-html="$sanitize(getMtmStep3)"></li>
       </div>
-      <pre
-        class="codeblock"
-        v-text="installInstruction.embedCode"
-        v-select-on-focus="{}"
-        ref="codeblock"
-      />
+      <div>
+        <pre
+          class="codeblock"
+          v-text="installInstruction.embedCode"
+          ref="codeblock"
+          v-copy-to-clipboard="{}"
+        />
+      </div>
     </div>
     <div v-if="showBottom">
       <p v-if="idContainer" v-html="$sanitize(getCongratulationsText)"></p>
@@ -102,10 +104,11 @@ import {
   AjaxHelper,
   ActivityIndicator,
   SiteSelector,
-  SelectOnFocus,
   SiteRef,
   MatomoUrl,
-  Matomo, translate,
+  Matomo,
+  translate,
+  CopyToClipboard,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
 import {
@@ -160,7 +163,7 @@ export default defineComponent({
   },
   emits: ['fetchInstallInstructions'],
   directives: {
-    SelectOnFocus,
+    CopyToClipboard,
   },
   data(): TagmanagerTrackingCodeState {
     return {
@@ -338,25 +341,11 @@ export default defineComponent({
     },
   },
   computed: {
-    getMtmStep2() {
-      return translate(
-        'TagManager_SiteWithoutDataReactFollowStep2',
-        '<br><strong>',
-        '</strong>',
-      );
-    },
     getMtmStep3() {
       return translate(
         'TagManager_SiteWithoutDataMtmStep3', '&lt;/head&gt;',
         '<a rel="noreferrer noopener" target="_blank" href="https://developer.matomo.org/guides/tagmanager/embedding">',
         '</a>',
-      );
-    },
-    getIntroText() {
-      return translate(
-        'TagManager_SiteWithoutDataMtmIntro',
-        '<strong>',
-        '</strong>',
       );
     },
     getCongratulationsText() {
