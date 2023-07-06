@@ -4,22 +4,24 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 <template>
-  <div class="tagManagerTrackingCode">
+  <ol class="list-style-decimal">
+    <li v-html="$sanitize(setupStep1)" v-if="showContainerRow"></li>
     <TrackingCodeCommon
       :show-container-row="showContainerRow"
       :showBottom="true"
-      :showDescription="true"
+      :showDescription="false"
+      :showPlainMtmSteps="true"
       @fetchInstallInstructions="fetchInstallInstructions"
       ref="trackingCodeCommon"
     />
-  </div>
+  </ol>
 </template>
 
 <script lang="ts">
 import { defineComponent, nextTick } from 'vue';
 import {
-  AjaxHelper,
-  SelectOnFocus,
+  AjaxHelper, MatomoUrl,
+  SelectOnFocus, translate,
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
 import {
@@ -36,6 +38,11 @@ export default defineComponent({
   directives: {
     SelectOnFocus,
   },
+  data() {
+    return {
+      setupStep1: '',
+    };
+  },
   methods: {
     fetchInstallInstructions() {
       // eslint-disable-next-line
@@ -49,6 +56,15 @@ export default defineComponent({
       ) {
         return;
       }
+
+      const manageContainerURL = this.linkTo('manageContainers', refs.site.id, refs.idContainer);
+      this.setupStep1 = translate(
+        'TagManager_SPAFollowStep1',
+        '<br><strong>',
+        '</strong>',
+        `<a href="${manageContainerURL}" target="_blank" rel="noreferrer noopener">`,
+        '</a>',
+      );
 
       refs.isLoading = true;
       AjaxHelper.fetch<InstallInstructions[]>({
@@ -70,6 +86,19 @@ export default defineComponent({
       }).finally(() => {
         refs.isLoading = false;
       });
+    },
+    linkTo(action: string, idSite: string, idContainer: string, hash?: QueryParameters) {
+      let url = MatomoUrl.stringify({
+        ...MatomoUrl.urlParsed.value,
+        module: 'TagManager',
+        action,
+        idSite,
+        idContainer,
+      });
+      if (hash) {
+        url += `#?${MatomoUrl.stringify(hash)}`;
+      }
+      return `?${url}`;
     },
   },
 });

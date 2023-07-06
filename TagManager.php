@@ -814,6 +814,9 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_SPAFollowStep15';
         $result[] = 'TagManager_SPAFollowStep16';
         $result[] = 'TagManager_ReactFollowStep16';
+        $result[] = 'TagManager_SiteWithoutDataMtmIntro';
+        $result[] = 'TagManager_SiteWithoutDataMtmStep2';
+        $result[] = 'TagManager_SiteWithoutDataMtmStep3';
     }
 
     public function getStylesheetFiles(&$stylesheets)
@@ -827,6 +830,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/vue/src/ContainerSelector/ContainerSelector.less";
         $stylesheets[] = "plugins/TagManager/vue/src/ContainerDashboard/ContainerDashboard.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Version/VersionEdit.less";
+        $stylesheets[] = "plugins/TagManager/vue/src/TagmanagerTrackingCode/TagManagerTrackingCode.less";
     }
 
     public function getJsFiles(&$jsFiles)
