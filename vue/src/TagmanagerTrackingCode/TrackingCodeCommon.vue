@@ -74,38 +74,26 @@
           :href="installInstruction.helpUrl"
         >{{ translate('TagManager_LearnMore') }}</a>.
       </p>
-      <pre
-        class="codeblock"
-        v-text="installInstruction.embedCode"
-        v-select-on-focus="{}"
-        ref="codeblock"
-      />
+      <div v-if="showPlainMtmSteps">
+        <li>
+          {{ translate('TagManager_SiteWithoutDataMtmStep2') }}
+          <a :href="linkTo('dashboard', site.id, idContainer)">
+            {{ translate('TagManager_Container') }} {{ translate('Dashboard_Dashboard') }}
+          </a>.
+        </li>
+        <li v-html="$sanitize(getMtmStep3)"></li>
+      </div>
+      <div>
+        <pre
+          class="codeblock"
+          v-text="installInstruction.embedCode"
+          ref="codeblock"
+          v-copy-to-clipboard="{}"
+        />
+      </div>
     </div>
     <div v-if="showBottom">
-      <h3 v-if="idContainer && currentAction !== 'siteWithoutDataTabs'">
-        {{ translate('TagManager_CustomizeTracking') }}
-      </h3>
-      <p v-if="idContainer">{{ translate('TagManager_CustomizeTrackingTeaser') }}</p>
-      <ul v-if="idContainer">
-        <li v-if="!matomoConfigs.length">
-          {{ translate('TagManager_NoMatomoConfigFoundForContainer') }}
-        </li>
-        <li
-          v-for="matomoConfig in matomoConfigs"
-          :key="matomoConfig.idvariable"
-        >
-          <a :href="linkTo('manageVariables', idContainer,
-          {idVariable: matomoConfig.idvariable})"
-          >
-            <span class="icon-edit"/> {{ matomoConfig.name }}
-          </a>
-        </li>
-      </ul>
-      <p v-if="idContainer">
-        <a :href="linkTo('dashboard', idContainer)">
-          <span class="icon-show" /> {{ translate('TagManager_ViewContainerDashboard') }}
-        </a>
-      </p>
+      <p v-if="idContainer" v-html="$sanitize(getCongratulationsText)"></p>
     </div>
   </div>
 </template>
@@ -116,10 +104,11 @@ import {
   AjaxHelper,
   ActivityIndicator,
   SiteSelector,
-  SelectOnFocus,
   SiteRef,
   MatomoUrl,
   Matomo,
+  translate,
+  CopyToClipboard,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
 import {
@@ -165,6 +154,7 @@ export default defineComponent({
     currentAction: String,
     showBottom: Boolean,
     showDescription: Boolean,
+    showPlainMtmSteps: Boolean,
   },
   components: {
     ActivityIndicator,
@@ -173,7 +163,7 @@ export default defineComponent({
   },
   emits: ['fetchInstallInstructions'],
   directives: {
-    SelectOnFocus,
+    CopyToClipboard,
   },
   data(): TagmanagerTrackingCodeState {
     return {
@@ -315,11 +305,12 @@ export default defineComponent({
       this.$emit('fetchInstallInstructions');
       this.fetchVariables(draftVersion);
     },
-    linkTo(action: string, idContainer: string, hash: QueryParameters) {
+    linkTo(action: string, idSite: string, idContainer: string, hash: QueryParameters) {
       const newQuery = MatomoUrl.stringify({
         ...MatomoUrl.urlParsed.value,
         module: 'TagManager',
         action,
+        idSite,
         idContainer,
       });
 
@@ -347,6 +338,22 @@ export default defineComponent({
       }).finally(() => {
         this.isLoading = false;
       });
+    },
+  },
+  computed: {
+    getMtmStep3() {
+      return translate(
+        'TagManager_SiteWithoutDataMtmStep3', '&lt;/head&gt;',
+        '<a rel="noreferrer noopener" target="_blank" href="https://developer.matomo.org/guides/tagmanager/embedding">',
+        '</a>',
+      );
+    },
+    getCongratulationsText() {
+      return translate(
+        'TagManager_SiteWithoutDataReactFollowStepCompleted',
+        '<strong>',
+        '</strong>',
+      );
     },
   },
 });
