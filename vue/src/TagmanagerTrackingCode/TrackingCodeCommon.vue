@@ -79,7 +79,7 @@
           {{ translate('TagManager_SiteWithoutDataMtmStep2') }}
           <a :href="linkTo('dashboard', site.id, idContainer)">
             {{ translate('TagManager_Container') }} {{ translate('Dashboard_Dashboard') }}
-          </a>.
+          </a>. <span v-html="$sanitize(getLearnMoreLink)"></span>.
         </li>
         <li v-html="$sanitize(getMtmStep3)"></li>
       </div>
@@ -341,6 +341,13 @@ export default defineComponent({
     },
   },
   computed: {
+    getLearnMoreLink() {
+      return translate(
+        'TagManager_CustomHtmlTagHelpText',
+        '<a rel="noreferrer noopener" target="_blank" href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/">',
+        '</a>',
+      );
+    },
     getMtmStep3() {
       return translate(
         'TagManager_SiteWithoutDataMtmStep3', '&lt;/head&gt;',
