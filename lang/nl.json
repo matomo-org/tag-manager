@@ -737,6 +737,11 @@
         "ShareaholicTagSiteIdDescription": "Maak een nieuwe site in Shareaholic en plak hier de site ID",
         "ShareaholicTagSiteIdTitle": "Shareaholic site ID",
         "ShowAdvancedSettings": "Toon geavanceerde instellingen",
+
+        "SiteWithoutDataReactIntro": "Het is eenvoudig om uw React.js-website of -applicatie te volgen met behulp van Matomo, zelfs voor Single Page Applications.",
+        "ReactFollowStep16": "Voeg de %1$sMatomo Tag Manager JS%2$s-code toe aan uw %3$s (of andere relevante bestanden), wij raden aan dit te doen met behulp van de \"%4$s\"-methode. Het onderstaande voorbeeld laat zien hoe de %1$sMatomo Tag Manager JS%2$s-code wordt toegevoegd aan een \"%5$s\"-app in %6$s.",
+        "SiteWithoutDataReactFollowStepCompleted": "%1$sGefeliciteerd!%2$s U heeft de Matomo Analytics-trackingcode succesvol geïnstalleerd via de Matomo Tag Manager. Om te controleren of de hits worden geregistreerd, bezoek uw SPA / PWA en controleer of deze gegevens zichtbaar zijn in uw Matomo-instantie.",
+
         "SPAFollowStep1": "Selecteer de juiste container voor uw website.%1$sOpmerking:%2$s Matomo configureert automatisch een container wanneer u een site toevoegt. Standaard is deze container geselecteerd in de onderstaande velden. Als u van plan bent om een enkele container voor meerdere websites te gebruiken, zorg er dan voor dat u die specifieke container selecteert. U kunt %3$shier uw containers beheren%4$s.",
         "SPAFollowStep2": "Ga naar de %1$sTriggers%2$s van de Matomo Tag Manager.",
         "SPAFollowStep3": "Controleer of er al een trigger met het type %1$sPaginaweergave%2$s bestaat. Als u de Paginaweergave-trigger niet ziet, volg dan %3$sdeze handleiding%4$s.",
