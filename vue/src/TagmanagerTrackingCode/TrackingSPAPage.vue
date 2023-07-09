@@ -16,19 +16,24 @@
     />
     <li v-html="$sanitize(setupStep2)"></li>
     <li v-html="$sanitize(fetchFollowStep3)"></li>
-    <li v-text="translate('TagManager_SPAFollowStep4')"></li>
-    <li v-html="$sanitize(fetchFollowStepCommon(5))"></li>
+    <li v-text="fetchClickX('TagManager_CreateNewTrigger')"></li>
+    <li v-html="$sanitize(fetchFollowStep5)"></li>
     <!-- Since both the buttons has same text we are using the step4's text here   -->
-    <li v-text="translate('TagManager_SPAFollowStep4')"></li>
+    <li v-text="fetchClickX('TagManager_CreateNewTrigger')"></li>
     <li v-html="$sanitize(setupStep7)"></li>
     <li v-html="$sanitize(fetchFollowStep8)"></li>
-    <li v-html="$sanitize(fetchFollowStepCommon(9))"></li>
-    <li v-html="$sanitize(fetchFollowStepCommon(10))"></li>
-    <li v-html="$sanitize(fetchFollowStepCommon(11))"></li>
-    <li v-text="translate('TagManager_SPAFollowStep12')"></li>
-    <li v-text="translate('TagManager_SPAFollowStep13')"></li>
-    <li v-html="$sanitize(fetchFollowStepCommon(14))"></li>
-    <li v-text="translate('TagManager_SPAFollowStep15')"></li>
+    <li v-html="$sanitize(fetchFollowStep9)"></li>
+    <li>
+      <ol style="list-style: lower-alpha; list-style-position: inside; text-indent: 1.2rem;">
+        <li v-html="$sanitize(fetchFollowStep10a)"></li>
+        <li v-html="$sanitize(fetchFollowStep10b)"></li>
+      </ol>
+    </li>
+    <li v-html="$sanitize(fetchFollowStep11)"></li>
+    <li v-text="fetchClickX('General_Update')"></li>
+    <li v-text="fetchFollowStep13"></li>
+    <li v-html="$sanitize(fetchFollowStep14)"></li>
+    <li v-text="fetchFollowStep15"></li>
     <li v-if="jsFramework === 'react'" v-html="$sanitize(fetchFollowStep16React)"></li>
     <li v-else v-html="$sanitize(fetchFollowStep16SPA)"></li>
     <div
@@ -156,31 +161,93 @@ export default defineComponent({
 
       return `?${url}`;
     },
-    fetchFollowStepCommon(stepNo :number) {
+    fetchClickX(clickTarget: string) {
       return translate(
-        `TagManager_SPAFollowStep${stepNo}`,
+        'General_ClickX',
+        translate(clickTarget),
+      );
+    },
+    translateWithStrongTags(
+      translationStringId: string,
+      ...values: (string|string[]|number|number[]|boolean|boolean[])[]
+    ) {
+      return translate(
+        translationStringId,
         '<strong>',
         '</strong>',
+        ...values,
       );
     },
   },
   computed: {
     fetchFollowStep3() {
-      return translate(
+      return this.translateWithStrongTags(
         'TagManager_SPAFollowStep3',
-        '<strong>',
-        '</strong>',
         '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-trigger" target="_blank" rel="noreferrer noopener">',
         '</a>',
+        translate('TagManager_PageViewTriggerName'),
+      );
+    },
+    fetchFollowStep5() {
+      return this.translateWithStrongTags(
+        'TagManager_SPAFollowStep5',
+        translate('TagManager_HistoryChangeTriggerName'),
+        translate('TagManager_CategoryUserEngagement'),
       );
     },
     fetchFollowStep8() {
-      return translate(
+      return this.translateWithStrongTags(
         'TagManager_SPAFollowStep8',
-        '<strong>',
-        '</strong>',
         '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-tag" target="_blank" rel="noreferrer noopener">',
         '</a>',
+        translate('TagManager_PageViewTriggerName'),
+        translate('TagManager_MatomoTagName'),
+      );
+    },
+    fetchFollowStep9() {
+      return this.translateWithStrongTags(
+        'TagManager_SPAFollowStep9',
+        translate('TagManager_ConfigureWhatTagDoes'),
+        translate('TagManager_CustomTitle'),
+      );
+    },
+    fetchFollowStep10a() {
+      return this.translateWithStrongTags(
+        'TagManager_SPAFollowStep10a',
+        translate('TagManager_CustomUrl'),
+      );
+    },
+    fetchFollowStep10b() {
+      return this.translateWithStrongTags(
+        'TagManager_SPAFollowStep10b',
+        translate('TagManager_CustomUrl'),
+      );
+    },
+    fetchFollowStep11() {
+      return this.translateWithStrongTags(
+        'TagManager_SPAFollowStep11',
+        translate('TagManager_ConfigureWhenTagDoes'),
+        translate('TagManager_FireTriggerTitle'),
+        translate('TagManager_HistoryChangeTriggerName'),
+        translate('TagManager_PageViewTriggerName'),
+      );
+    },
+    fetchFollowStep13() {
+      return translate(
+        'TagManager_SPAFollowStep13',
+        translate('TagManager_Publish'),
+      );
+    },
+    fetchFollowStep14() {
+      return this.translateWithStrongTags(
+        'TagManager_SPAFollowStep14',
+        translate('TagManager_VersionName'),
+      );
+    },
+    fetchFollowStep15() {
+      return translate(
+        'TagManager_SPAFollowStep15',
+        translate('TagManager_CreateVersionAndPublishRelease'),
       );
     },
     fetchFollowStep16SPA() {
@@ -192,10 +259,8 @@ export default defineComponent({
       );
     },
     fetchFollowStep16React() {
-      return translate(
+      return this.translateWithStrongTags(
         'TagManager_ReactFollowStep16',
-        '<strong>',
-        '</strong>',
         '<strong>App.js</strong>',
         '<strong>React.useEffect</strong>',
         '<strong>Hello World</strong>',

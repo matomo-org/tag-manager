@@ -414,6 +414,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'General_Or';
         $result[] = 'General_Recommended';
         $result[] = 'General_Website';
+        $result[] = 'General_ClickX';
+        $result[] = 'General_Update';
         $result[] = 'Goals_Optional';
         $result[] = 'SitesManager_Type';
         $result[] = 'UserCountryMap_None';
@@ -832,19 +834,25 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_SPAFollowStep1';
         $result[] = 'TagManager_SPAFollowStep2';
         $result[] = 'TagManager_SPAFollowStep3';
-        $result[] = 'TagManager_SPAFollowStep4';
         $result[] = 'TagManager_SPAFollowStep5';
         $result[] = 'TagManager_SPAFollowStep7';
         $result[] = 'TagManager_SPAFollowStep8';
         $result[] = 'TagManager_SPAFollowStep9';
-        $result[] = 'TagManager_SPAFollowStep10';
+        $result[] = 'TagManager_SPAFollowStep10a';
+        $result[] = 'TagManager_SPAFollowStep10b';
         $result[] = 'TagManager_SPAFollowStep11';
-        $result[] = 'TagManager_SPAFollowStep12';
         $result[] = 'TagManager_SPAFollowStep13';
         $result[] = 'TagManager_SPAFollowStep14';
         $result[] = 'TagManager_SPAFollowStep15';
         $result[] = 'TagManager_SPAFollowStep16';
         $result[] = 'TagManager_ReactFollowStep16';
+        $result[] = 'TagManager_HistoryChangeTriggerName';
+        $result[] = 'TagManager_CategoryUserEngagement';
+        $result[] = 'TagManager_Publish';
+        $result[] = 'TagManager_CustomTitle';
+        $result[] = 'TagManager_CustomUrl';
+        $result[] = 'TagManager_PageViewTriggerName';
+        $result[] = 'TagManager_MatomoTagName';
     }
 
     public function getStylesheetFiles(&$stylesheets)
