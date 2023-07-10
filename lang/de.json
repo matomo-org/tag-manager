@@ -747,10 +747,10 @@
         "ReactFollowStep16": "Fügen Sie den %1$sMatomo Tag Manager JS%2$s-Code in Ihre %3$s (oder andere relevante Dateien) ein. Wir empfehlen, dies mit der Methode \"%4$s\" zu tun. Das folgende Beispiel zeigt, wie Sie den %1$sMatomo Tag Manager JS%2$s-Code in einer \"%5$s\"-App in %6$s hinzufügen.",
 
         "SPAFollowStep1": "Wählen Sie den richtigen Container für Ihre Website aus.%1$sHinweis:%2$s Matomo konfiguriert automatisch einen Container, wenn Sie eine Website hinzufügen. Standardmäßig ist dieser Container in den unten stehenden Feldern ausgewählt. Wenn Sie einen einzelnen Container für mehrere Websites verwenden möchten, stellen Sie sicher, dass Sie diesen spezifischen Container auswählen. Sie können %3$shier Ihre Container verwalten%4$s.",
-        "SPAFollowStep2": "Navigieren Sie zu den %1$sTrigger des Matomo Tag Managers%2$s.",
+        "SPAFollowStep2": "Navigieren Sie zu den %1$sTrigger des Containers%2$s.",
         "SPAFollowStep3": "Überprüfen Sie, ob bereits ein Trigger vom Typ %1$s%5$s%2$s vorhanden ist. Wenn Sie den %5$s-Trigger nicht sehen, folgen Sie %3$sdieser Anleitung%4$s.",
         "SPAFollowStep5": "Klicken Sie auf %1$s%3$s%2$s im Abschnitt %4$s.",
-        "SPAFollowStep7": "Navigieren Sie zu den %1$sMatomo Tag Manager Tags%2$s.",
+        "SPAFollowStep7": "Navigieren Sie zu den %1$sTags des Containers%2$s.",
         "SPAFollowStep8": "Klicken Sie für den %1$s%5$s%2$s-Tag mit dem Typ %1$s%6$s%2$s auf das Bearbeiten-Symbol. Wenn Sie den %5$s-Tag nicht sehen, folgen Sie %3$sdieser Anleitung%4$s.",
         "SPAFollowStep9": "In der Sektion \"%3$s\" setzen Sie das Feld \"%4$s\" auf den folgenden Wert: %1$s{{PageTitle}}%2$s",
         "SPAFollowStep10a": "Wenn Ihre SPA oder PWA ein %1$s#%2$s in der URL verwendet, um zu verschiedenen Seiten zu navigieren, setzen Sie das Feld \"%3$s\" auf diesen Wert: %1$s{{PageOrigin}}/{{PageHash}}%2$s",

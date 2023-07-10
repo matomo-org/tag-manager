@@ -527,10 +527,10 @@
         "ReactFollowStep16": "Inietta il codice %1$sMatomo Tag Manager JS%2$s nel tuo %3$s (o altri file pertinenti), ti consigliamo di farlo utilizzando il metodo \"%4$s\". L'esempio seguente mostra come aggiungere il codice %1$sMatomo Tag Manager JS%2$s in un'app \"%5$s\" in %6$s.",
 
         "SPAFollowStep1": "Seleziona il contenitore corretto per il tuo sito web.%1$sNota:%2$s Matomo configura automaticamente un contenitore quando aggiungi un sito. Per impostazione predefinita, questo contenitore è selezionato nei campi sottostanti. Se prevedi di utilizzare un singolo contenitore per più siti web, assicurati di selezionare quel contenitore specifico. Puoi %3$samministrare i tuoi contenitori qui%4$s.",
-        "SPAFollowStep2": "Vai ai %1$strigger del Matomo Tag Manager%2$s.",
+        "SPAFollowStep2": "Vai ai %1$striggers del contenitore%2$s.",
         "SPAFollowStep3": "Verifica che esista già un trigger del tipo %1$s%5$s%2$s. Se non vedi il trigger %5$s, segui %3$squesta guida%4$s.",
         "SPAFollowStep5": "Clicca su %1$s%3$s%2$s nella sezione %4$s.",
-        "SPAFollowStep7": "Vai ai %1$sTag del Matomo Tag Manager%2$s.",
+        "SPAFollowStep7": "Vai alle %1$tags del contenitore%2$s.",
         "SPAFollowStep8": "Per il tag %1$s%5$s%2$s con tipo %1$s%6$s%2$s, clicca sull'icona Modifica tag. Se non vedi il tag %5$s, segui %3$squesta guida%4$s.",
         "SPAFollowStep9": "Nella sezione \"%3$s\", imposta il campo \"%4$s\" al seguente valore: %1$s{{PageTitle}}%2$s",
         "SPAFollowStep10a": "Se la tua SPA o PWA ha un %1$s#%2$s nell'URL per navigare tra diverse pagine, imposta il campo \"%3$s\" a questo valore: %1$s{{PageOrigin}}/{{PageHash}}%2$s",
