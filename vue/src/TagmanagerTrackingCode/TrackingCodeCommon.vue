@@ -97,13 +97,13 @@
           <a :href="linkTo('manageVariables', idContainer,
           {idVariable: matomoConfig.idvariable})"
           >
-            <span class="icon-edit"/> {{ matomoConfig.name }}
+            <span class="icon-edit">&nbsp;</span>{{ matomoConfig.name }}
           </a>
         </li>
       </ul>
       <p v-if="idContainer">
         <a :href="linkTo('dashboard', idContainer)">
-          <span class="icon-show" /> {{ translate('TagManager_ViewContainerDashboard') }}
+          <span class="icon-show">&nbsp;</span>{{ translate('TagManager_ViewContainerDashboard') }}
         </a>
       </p>
     </div>
