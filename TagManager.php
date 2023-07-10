@@ -838,6 +838,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_SPAFollowStep7';
         $result[] = 'TagManager_SPAFollowStep8';
         $result[] = 'TagManager_SPAFollowStep9';
+        $result[] = 'TagManager_SPAFollowStep10';
         $result[] = 'TagManager_SPAFollowStep10a';
         $result[] = 'TagManager_SPAFollowStep10b';
         $result[] = 'TagManager_SPAFollowStep11';

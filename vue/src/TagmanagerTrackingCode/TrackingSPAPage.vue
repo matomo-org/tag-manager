@@ -24,6 +24,7 @@
     <li v-html="$sanitize(fetchFollowStep8)"></li>
     <li v-html="$sanitize(fetchFollowStep9)"></li>
     <li>
+      <span v-text="fetchFollowStep10"></span>
       <ol style="list-style: lower-alpha; list-style-position: inside; text-indent: 1.2rem;">
         <li v-html="$sanitize(fetchFollowStep10a)"></li>
         <li v-html="$sanitize(fetchFollowStep10b)"></li>
@@ -209,6 +210,12 @@ export default defineComponent({
         'TagManager_SPAFollowStep9',
         translate('TagManager_ConfigureWhatTagDoes'),
         translate('TagManager_CustomTitle'),
+      );
+    },
+    fetchFollowStep10() {
+      return translate(
+        'TagManager_SPAFollowStep10',
+        translate('TagManager_CustomUrl'),
       );
     },
     fetchFollowStep10a() {
