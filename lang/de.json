@@ -753,6 +753,7 @@
         "SPAFollowStep7": "Navigieren Sie zu den %1$sTags des Containers%2$s.",
         "SPAFollowStep8": "Klicken Sie für den %1$s-Tag mit dem Typ %2$s auf das Bearbeiten-Symbol. Wenn Sie den %3$s-Tag nicht sehen, folgen Sie %4$sdieser Anleitung%5$s.",
         "SPAFollowStep9": "In der Sektion \"%1$s\" setzen Sie das Feld \"%2$s\" auf den folgenden Wert: %3$s{{PageTitle}}%4$s",
+        "SPAFollowStep10": "Setzen Sie das Feld \"%1$s\" wie folgt:",
         "SPAFollowStep10a": "Wenn Ihre SPA oder PWA ein %1$s#%2$s in der URL verwendet, um zu verschiedenen Seiten zu navigieren, setzen Sie das Feld \"%3$s\" auf diesen Wert: %1$s{{PageOrigin}}/{{PageHash}}%2$s",
         "SPAFollowStep10b": "Wenn Ihre SPA oder PWA kein # in der URL verwendet, um zu verschiedenen Seiten zu navigieren, setzen Sie das Feld \"%1$s\" auf diesen Wert: %2$s{{PageUrl}}%3$s",
         "SPAFollowStep11": "In der Sektion \"%1$s\", unter \"%2$s\", fügen Sie den \"%3$s\"-Trigger direkt unter den vorausgewählten \"%4$s\"-Trigger hinzu.",

@@ -528,6 +528,7 @@
         "SPAFollowStep7": "Accédez aux %1$balises du conteneur%2$s.",
         "SPAFollowStep8": "Pour le tag %1$s de type %2$s, cliquez sur l'icône Modifier le tag. Si vous ne voyez pas le tag %3$s, suivez %4$sce guide%5$s.",
         "SPAFollowStep9": "Dans la section \"%1$s\", pour le champ \"%2$s\", copiez coller la valeur suivante: %3$s{{PageTitle}}%4$s",
+        "SPAFollowStep10": "Définissez le champ \"%1$s\" comme suit :",
         "SPAFollowStep10a": "Si votre SPA ou PWA utilise un %1$s#%2$s dans l'URL (hash) pour naviguer vers différentes pages, alors dans le champ \"%3$s\" copiez collez la valeur suivante: %1$s{{PageOrigin}}/{{PageHash}}%2$s",
         "SPAFollowStep10b": "Ou bien si votre SPA utilise une URL classique sans le # (hash), alors dans le champ \"%1$s\" copiez collez la valeur suivante: %2$s{{PageUrl}}%3$s",
         "SPAFollowStep11": "Dans la section \"%1$s\", sous \"%2$s\", ajoutez le déclencheur \"%3$s\" directement sous le déclencheur \"%4$s\" pré-sélectionné.",

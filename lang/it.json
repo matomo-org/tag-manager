@@ -533,6 +533,7 @@
         "SPAFollowStep7": "Vai alle %1$tags del contenitore%2$s.",
         "SPAFollowStep8": "Per il tag %1$s con tipo %2$s, clicca sull'icona Modifica tag. Se non vedi il tag %3$s, segui %4$squesta guida%5$s.",
         "SPAFollowStep9": "Nella sezione \"%1$s\", imposta il campo \"%2$s\" al seguente valore: %3$s{{PageTitle}}%4$s",
+        "SPAFollowStep10": "Imposta il campo \"%1$s\" come segue:",
         "SPAFollowStep10a": "Se la tua SPA o PWA ha un %1$s#%2$s nell'URL per navigare tra diverse pagine, imposta il campo \"%3$s\" a questo valore: %1$s{{PageOrigin}}/{{PageHash}}%2$s",
         "SPAFollowStep10b": "Se la tua SPA o PWA non utilizza un # nell'URL per navigare tra diverse pagine, imposta il campo \"%1$s\" a questo valore: %2$s{{PageUrl}}%3$s",
         "SPAFollowStep11": "Nella sezione \"%1$s\", sotto \"%2$s\", aggiungi il trigger \"%3$s\" direttamente sotto il trigger preselezionato \"%4$s\".",
