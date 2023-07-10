@@ -538,7 +538,7 @@
         "SPAFollowStep10b": "Se la tua SPA o PWA non utilizza un # nell'URL per navigare tra diverse pagine, imposta il campo \"%1$s\" a questo valore: %2$s{{PageUrl}}%3$s",
         "SPAFollowStep11": "Nella sezione \"%1$s\", sotto \"%2$s\", aggiungi il trigger \"%3$s\" direttamente sotto il trigger preselezionato \"%4$s\".",
         "SPAFollowStep13": "Nel menu di sinistra, clicca su \"%1$s\".",
-        "SPAFollowStep14": "Nel campo \"%1$s\", imposta la versione, ad esempio, a %2$s{{PageUrl}}%3$s",
+        "SPAFollowStep14": "Nel campo \"%1$s\", imposta la versione, ad esempio, a %2$s1.0%3$s",
         "SPAFollowStep15": "Clicca sul pulsante verde \"%1$s\". Ora che hai completato la configurazione nel Tag Manager, segui l'ultimo passaggio di seguito per completare l'installazione all'interno della tua app.",
         "SPAFollowStep16": "Copia il codice seguente e incollalo nell'intestazione della tua SPA / PWA. Ti consigliamo di incollarlo subito prima della chiusura del tag %1$s. %2$sMaggiori informazioni%3$s.",
 

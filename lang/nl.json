@@ -754,7 +754,7 @@
         "SPAFollowStep10b": "Als uw SPA of PWA geen # in de URL gebruikt om naar verschillende pagina's te navigeren, stel het \"%1$s\"-veld dan in op deze waarde: %2$s{{PageUrl}}%3$s",
         "SPAFollowStep11": "In de sectie \"%1$s\", onder \"%2$s\", voeg de trigger \"%3$s\" direct onder de voorgeselecteerde \"%4$s\"-trigger toe.",
         "SPAFollowStep13": "Klik in het linker menu op \"%1$s\".",
-        "SPAFollowStep14": "In het veld \"%1$s\", stel de versie in op bijvoorbeeld %2$s{{PageUrl}}%3$s",
+        "SPAFollowStep14": "In het veld \"%1$s\", stel de versie in op bijvoorbeeld %2$s1.0%3$s",
         "SPAFollowStep15": "Klik op de groene knop \"%1$s\". Nu u de configuratie in de Tag Manager heeft voltooid, volg de laatste stap hieronder om de installatie in uw app af te ronden.",
         "SPAFollowStep16": "Kopieer de onderstaande code en plak deze in de header van uw SPA / PWA. We raden aan om deze meteen vóór de afsluitende %1$s-tag te plakken. %2$sMeer informatie%3$s.",
         "StartDate": "Startdatum",

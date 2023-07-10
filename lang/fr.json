@@ -533,7 +533,7 @@
         "SPAFollowStep10b": "Ou bien si votre SPA utilise une URL classique sans le # (hash), alors dans le champ \"%1$s\" copiez collez la valeur suivante: %2$s{{PageUrl}}%3$s",
         "SPAFollowStep11": "Dans la section \"%1$s\", sous \"%2$s\", ajoutez le déclencheur \"%3$s\" directement sous le déclencheur \"%4$s\" pré-sélectionné.",
         "SPAFollowStep13": "Dans le menu de gauche, cliquez sur \"%1$s\".",
-        "SPAFollowStep14": "Dans le champ \"%1$s\", définissez une version par exemple %2$s{{PageUrl}}%3$s",
+        "SPAFollowStep14": "Dans le champ \"%1$s\", définissez une version par exemple %2$s1.0%3$s",
         "SPAFollowStep15": "Cliquez sur le bouton vert \"%1$s\". Maintenant que vous avez terminé la configuration dans le gestionnaire de balises, suivez la dernière étape ci-dessous pour compléter l'installation.",
         "SPAFollowStep16": "Copiez le code ci-dessous et collez-le dans l'en-tête de votre SPA / PWA. Nous vous recommandons de le coller immédiatement avant la balise de fermeture %1$s. %2$sEn savoir plus%3$s.",
         "StartDate": "Date de début",

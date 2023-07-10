@@ -910,7 +910,7 @@
         "SPAFollowStep10b": "If your SPA or PWA doesn't use a # in the URL to navigate to different pages, set the \"%1$s\" field to this value: %2$s{{PageUrl}}%3$s",
         "SPAFollowStep11": "In the section \"%1$s\", under \"%2$s\", add the \"%3$s\" trigger directly under the pre-selected \"%4$s\" trigger.",
         "SPAFollowStep13": "In the left menu, click \"%1$s\".",
-        "SPAFollowStep14": "In the field \"%1$s\", set the version to, for example, %2$s{{PageUrl}}%3$s",
+        "SPAFollowStep14": "In the field \"%1$s\", set the version to, for example, %2$s1.0%3$s",
         "SPAFollowStep15": "Click the green \"%1$s\" button. Now that you have completed the configuration in the Tag Manager, follow the last step below to finish the setup within your app.",
         "SPAFollowStep16": "Copy the code below and paste it in the header of your SPA / PWA. We recommend pasting it immediately before the closing %1$s tag. %2$sLearn more%3$s.",
         "ReactFollowStep16": "Inject the %1$sMatomo Tag Manager JS%2$s code into your %3$s (or other relevant files), we recommend doing this using the \"%4$s\" method. The example below shows how to add the %1$sMatomo Tag Manager JS%2$s code into a \"%5$s\" app in %6$s."

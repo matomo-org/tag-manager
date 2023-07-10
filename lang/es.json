@@ -454,7 +454,7 @@
         "SPAFollowStep10b": "Si tu SPA o PWA no usa # en la URL para navegar a diferentes páginas, establece el campo \"%1$s\" con este valor: %2$s{{PageUrl}}%3$s",
         "SPAFollowStep11": "En la sección \"%1$s\", en \"%2$s\", agrega el desencadenador \"%3$s\" directamente debajo del desencadenador preseleccionado \"%4$s\".",
         "SPAFollowStep13": "En el menú izquierdo, haz clic en \"%1$s\".",
-        "SPAFollowStep14": "En el campo \"%1$s\", establece la versión, por ejemplo, %2$s{{PageUrl}}%3$s",
+        "SPAFollowStep14": "En el campo \"%1$s\", establece la versión, por ejemplo, %2$s1.0%3$s",
         "SPAFollowStep15": "Haz clic en el botón verde \"%1$s\". Ahora que has completado la configuración en el Tag Manager, sigue el último paso a continuación para finalizar la configuración dentro de tu aplicación.",
         "SPAFollowStep16": "Copia el siguiente código y pégalo en la cabecera de tu SPA / PWA. Te recomendamos pegarlo inmediatamente antes de la etiqueta de cierre %1$s. %2$sMás información%3$s.",
 
