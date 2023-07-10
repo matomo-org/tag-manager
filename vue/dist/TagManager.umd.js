@@ -9468,47 +9468,47 @@ function TrackingCodePagevue_type_template_id_080dd21a_render(_ctx, _cache, $pro
 TrackingCodePagevue_type_script_lang_ts.render = TrackingCodePagevue_type_template_id_080dd21a_render
 
 /* harmony default export */ var TrackingCodePage = (TrackingCodePagevue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingSPAPage.vue?vue&type=template&id=693a03ee
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingSPAPage.vue?vue&type=template&id=4a0674e4
 
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_1 = {
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_1 = {
   class: "list-style-decimal"
 };
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_2 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_3 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_4 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_5 = ["textContent"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_6 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_7 = ["textContent"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_8 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_9 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_10 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_11 = ["textContent"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_12 = {
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_2 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_3 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_4 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_5 = ["textContent"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_6 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_7 = ["textContent"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_8 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_9 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_10 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_11 = ["textContent"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_12 = {
   style: {
     "list-style": "lower-alpha",
     "list-style-position": "inside",
     "text-indent": "1.2rem"
   }
 };
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_13 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_14 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_15 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_16 = ["textContent"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_17 = ["textContent"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_18 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_19 = ["textContent"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_20 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_21 = ["innerHTML"];
-var TrackingSPAPagevue_type_template_id_693a03ee_hoisted_22 = ["textContent"];
-function TrackingSPAPagevue_type_template_id_693a03ee_render(_ctx, _cache, $props, $setup, $data, $options) {
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_13 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_14 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_15 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_16 = ["textContent"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_17 = ["textContent"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_18 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_19 = ["textContent"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_20 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_21 = ["innerHTML"];
+var TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_22 = ["textContent"];
+function TrackingSPAPagevue_type_template_id_4a0674e4_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TrackingCodeCommon = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("TrackingCodeCommon");
 
   var _directive_select_on_focus = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveDirective"])("select-on-focus");
 
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("ol", TrackingSPAPagevue_type_template_id_693a03ee_hoisted_1, [_ctx.showContainerRow ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("li", {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("ol", TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_1, [_ctx.showContainerRow ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("li", {
     key: 0,
     innerHTML: _ctx.$sanitize(_ctx.setupStep1)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_2)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_TrackingCodeCommon, {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_2)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_TrackingCodeCommon, {
     "show-container-row": _ctx.showContainerRow,
     "current-action": _ctx.currentAction,
     showBottom: false,
@@ -9517,53 +9517,53 @@ function TrackingSPAPagevue_type_template_id_693a03ee_render(_ctx, _cache, $prop
     ref: "trackingCodeCommon"
   }, null, 8, ["show-container-row", "current-action", "onFetchInstallInstructions"]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.setupStep2)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_3), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_3), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStep3)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_4), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_4), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     textContent: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.fetchClickX('TagManager_CreateNewTrigger'))
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_5), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_5), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStep5)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_6), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_6), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     textContent: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.fetchClickX('TagManager_CreateNewTrigger'))
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_7), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_7), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.setupStep7)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_8), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_8), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStep8)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_9), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_9), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStep9)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_10), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_10), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
     textContent: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.fetchFollowStep10)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_11), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("ol", TrackingSPAPagevue_type_template_id_693a03ee_hoisted_12, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_11), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("ol", TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_12, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStep10a)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_13), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_13), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStep10b)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_14)])]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_14)])]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStep11)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_15), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_15), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     textContent: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.fetchClickX('General_Update'))
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_16), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_16), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     textContent: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.fetchFollowStep13)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_17), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_17), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStep14)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_18), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_18), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("li", {
     textContent: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.fetchFollowStep15)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_19), _ctx.jsFramework === 'react' ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_19), _ctx.jsFramework === 'react' ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("li", {
     key: 1,
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStep16React)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_20)) : (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("li", {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_20)) : (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("li", {
     key: 2,
     innerHTML: _ctx.$sanitize(_ctx.fetchFollowStep16SPA)
-  }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_21)), (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(_ctx.installInstructions, function (installInstruction, index) {
+  }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_21)), (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])(external_commonjs_vue_commonjs2_vue_root_Vue_["Fragment"], null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderList"])(_ctx.installInstructions, function (installInstruction, index) {
     return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", {
       key: index
     }, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("pre", {
       class: "codeblock",
       textContent: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(installInstruction.embedCode),
       ref: "codeblock"
-    }, null, 8, TrackingSPAPagevue_type_template_id_693a03ee_hoisted_22), [[_directive_select_on_focus, {}]])]);
+    }, null, 8, TrackingSPAPagevue_type_template_id_4a0674e4_hoisted_22), [[_directive_select_on_focus, {}]])]);
   }), 128))]);
 }
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingSPAPage.vue?vue&type=template&id=693a03ee
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingSPAPage.vue?vue&type=template&id=4a0674e4
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingSPAPage.vue?vue&type=script&lang=ts
 
@@ -9645,45 +9645,38 @@ function TrackingSPAPagevue_type_template_id_693a03ee_render(_ctx, _cache, $prop
     },
     fetchClickX: function fetchClickX(clickTarget) {
       return Object(external_CoreHome_["translate"])('General_ClickX', Object(external_CoreHome_["translate"])(clickTarget));
-    },
-    translateWithStrongTags: function translateWithStrongTags(translationStringId) {
-      for (var _len = arguments.length, values = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        values[_key - 1] = arguments[_key];
-      }
-
-      return external_CoreHome_["translate"].apply(void 0, [translationStringId, '<strong>', '</strong>'].concat(values));
     }
   },
   computed: {
     fetchFollowStep3: function fetchFollowStep3() {
-      return this.translateWithStrongTags('TagManager_SPAFollowStep3', '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-trigger" target="_blank" rel="noreferrer noopener">', '</a>', Object(external_CoreHome_["translate"])('TagManager_PageViewTriggerName'));
+      return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep3', "<strong>".concat(Object(external_CoreHome_["translate"])('TagManager_PageViewTriggerName'), "</strong>"), Object(external_CoreHome_["translate"])('TagManager_PageViewTriggerName'), '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-trigger" target="_blank" rel="noreferrer noopener">', '</a>');
     },
     fetchFollowStep5: function fetchFollowStep5() {
-      return this.translateWithStrongTags('TagManager_SPAFollowStep5', Object(external_CoreHome_["translate"])('TagManager_HistoryChangeTriggerName'), Object(external_CoreHome_["translate"])('TagManager_CategoryUserEngagement'));
+      return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep5', "<strong>".concat(Object(external_CoreHome_["translate"])('TagManager_HistoryChangeTriggerName'), "</strong>"), Object(external_CoreHome_["translate"])('TagManager_CategoryUserEngagement'));
     },
     fetchFollowStep8: function fetchFollowStep8() {
-      return this.translateWithStrongTags('TagManager_SPAFollowStep8', '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-tag" target="_blank" rel="noreferrer noopener">', '</a>', Object(external_CoreHome_["translate"])('TagManager_PageViewTriggerName'), Object(external_CoreHome_["translate"])('TagManager_MatomoTagName'));
+      return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep8', "<strong>".concat(Object(external_CoreHome_["translate"])('TagManager_PageViewTriggerName'), "</strong>"), "<strong>".concat(Object(external_CoreHome_["translate"])('TagManager_MatomoTagName'), "</strong>"), Object(external_CoreHome_["translate"])('TagManager_PageViewTriggerName'), '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-tag" target="_blank" rel="noreferrer noopener">', '</a>');
     },
     fetchFollowStep9: function fetchFollowStep9() {
-      return this.translateWithStrongTags('TagManager_SPAFollowStep9', Object(external_CoreHome_["translate"])('TagManager_ConfigureWhatTagDoes'), Object(external_CoreHome_["translate"])('TagManager_CustomTitle'));
+      return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep9', Object(external_CoreHome_["translate"])('TagManager_ConfigureWhatTagDoes'), Object(external_CoreHome_["translate"])('TagManager_CustomTitle'), '<strong>', '</strong>');
     },
     fetchFollowStep10: function fetchFollowStep10() {
       return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep10', Object(external_CoreHome_["translate"])('TagManager_CustomUrl'));
     },
     fetchFollowStep10a: function fetchFollowStep10a() {
-      return this.translateWithStrongTags('TagManager_SPAFollowStep10a', Object(external_CoreHome_["translate"])('TagManager_CustomUrl'));
+      return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep10a', '<strong>', '</strong>', Object(external_CoreHome_["translate"])('TagManager_CustomUrl'));
     },
     fetchFollowStep10b: function fetchFollowStep10b() {
-      return this.translateWithStrongTags('TagManager_SPAFollowStep10b', Object(external_CoreHome_["translate"])('TagManager_CustomUrl'));
+      return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep10b', Object(external_CoreHome_["translate"])('TagManager_CustomUrl'), '<strong>', '</strong>');
     },
     fetchFollowStep11: function fetchFollowStep11() {
-      return this.translateWithStrongTags('TagManager_SPAFollowStep11', Object(external_CoreHome_["translate"])('TagManager_ConfigureWhenTagDoes'), Object(external_CoreHome_["translate"])('TagManager_FireTriggerTitle'), Object(external_CoreHome_["translate"])('TagManager_HistoryChangeTriggerName'), Object(external_CoreHome_["translate"])('TagManager_PageViewTriggerName'));
+      return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep11', Object(external_CoreHome_["translate"])('TagManager_ConfigureWhenTagDoes'), Object(external_CoreHome_["translate"])('TagManager_FireTriggerTitle'), "<strong>".concat(Object(external_CoreHome_["translate"])('TagManager_HistoryChangeTriggerName'), "</strong>"), "<strong>".concat(Object(external_CoreHome_["translate"])('TagManager_PageViewTriggerName'), "</strong>"));
     },
     fetchFollowStep13: function fetchFollowStep13() {
       return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep13', Object(external_CoreHome_["translate"])('TagManager_Publish'));
     },
     fetchFollowStep14: function fetchFollowStep14() {
-      return this.translateWithStrongTags('TagManager_SPAFollowStep14', Object(external_CoreHome_["translate"])('TagManager_VersionName'));
+      return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep14', Object(external_CoreHome_["translate"])('TagManager_VersionName'), '<strong>', '</strong>');
     },
     fetchFollowStep15: function fetchFollowStep15() {
       return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep15', Object(external_CoreHome_["translate"])('TagManager_CreateVersionAndPublishRelease'));
@@ -9692,7 +9685,7 @@ function TrackingSPAPagevue_type_template_id_693a03ee_render(_ctx, _cache, $prop
       return Object(external_CoreHome_["translate"])('TagManager_SPAFollowStep16', '&lt;/head&gt;', '<a href="https://developer.matomo.org/guides/tagmanager/embedding" target="_blank" rel="noreferrer noopener">', '</a>');
     },
     fetchFollowStep16React: function fetchFollowStep16React() {
-      return this.translateWithStrongTags('TagManager_ReactFollowStep16', '<strong>App.js</strong>', '<strong>React.useEffect</strong>', '<strong>Hello World</strong>', '<strong>React.js</strong>');
+      return Object(external_CoreHome_["translate"])('TagManager_ReactFollowStep16', '<strong>', '</strong>', '<strong>App.js</strong>', '<strong>React.useEffect</strong>', '<strong>Hello World</strong>', '<strong>React.js</strong>');
     }
   }
 }));
@@ -9702,7 +9695,7 @@ function TrackingSPAPagevue_type_template_id_693a03ee_render(_ctx, _cache, $prop
 
 
 
-TrackingSPAPagevue_type_script_lang_ts.render = TrackingSPAPagevue_type_template_id_693a03ee_render
+TrackingSPAPagevue_type_script_lang_ts.render = TrackingSPAPagevue_type_template_id_4a0674e4_render
 
 /* harmony default export */ var TrackingSPAPage = (TrackingSPAPagevue_type_script_lang_ts);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/Debugging/Debugging.vue?vue&type=template&id=6e8e3aea

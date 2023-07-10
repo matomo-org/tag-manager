@@ -168,48 +168,41 @@ export default defineComponent({
         translate(clickTarget),
       );
     },
-    translateWithStrongTags(
-      translationStringId: string,
-      ...values: (string|string[]|number|number[]|boolean|boolean[])[]
-    ) {
-      return translate(
-        translationStringId,
-        '<strong>',
-        '</strong>',
-        ...values,
-      );
-    },
   },
   computed: {
     fetchFollowStep3() {
-      return this.translateWithStrongTags(
+      return translate(
         'TagManager_SPAFollowStep3',
+        `<strong>${translate('TagManager_PageViewTriggerName')}</strong>`,
+        translate('TagManager_PageViewTriggerName'),
         '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-trigger" target="_blank" rel="noreferrer noopener">',
         '</a>',
-        translate('TagManager_PageViewTriggerName'),
       );
     },
     fetchFollowStep5() {
-      return this.translateWithStrongTags(
+      return translate(
         'TagManager_SPAFollowStep5',
-        translate('TagManager_HistoryChangeTriggerName'),
+        `<strong>${translate('TagManager_HistoryChangeTriggerName')}</strong>`,
         translate('TagManager_CategoryUserEngagement'),
       );
     },
     fetchFollowStep8() {
-      return this.translateWithStrongTags(
+      return translate(
         'TagManager_SPAFollowStep8',
+        `<strong>${translate('TagManager_PageViewTriggerName')}</strong>`,
+        `<strong>${translate('TagManager_MatomoTagName')}</strong>`,
+        translate('TagManager_PageViewTriggerName'),
         '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-tag" target="_blank" rel="noreferrer noopener">',
         '</a>',
-        translate('TagManager_PageViewTriggerName'),
-        translate('TagManager_MatomoTagName'),
       );
     },
     fetchFollowStep9() {
-      return this.translateWithStrongTags(
+      return translate(
         'TagManager_SPAFollowStep9',
         translate('TagManager_ConfigureWhatTagDoes'),
         translate('TagManager_CustomTitle'),
+        '<strong>',
+        '</strong>',
       );
     },
     fetchFollowStep10() {
@@ -219,24 +212,28 @@ export default defineComponent({
       );
     },
     fetchFollowStep10a() {
-      return this.translateWithStrongTags(
+      return translate(
         'TagManager_SPAFollowStep10a',
+        '<strong>',
+        '</strong>',
         translate('TagManager_CustomUrl'),
       );
     },
     fetchFollowStep10b() {
-      return this.translateWithStrongTags(
+      return translate(
         'TagManager_SPAFollowStep10b',
         translate('TagManager_CustomUrl'),
+        '<strong>',
+        '</strong>',
       );
     },
     fetchFollowStep11() {
-      return this.translateWithStrongTags(
+      return translate(
         'TagManager_SPAFollowStep11',
         translate('TagManager_ConfigureWhenTagDoes'),
         translate('TagManager_FireTriggerTitle'),
-        translate('TagManager_HistoryChangeTriggerName'),
-        translate('TagManager_PageViewTriggerName'),
+        `<strong>${translate('TagManager_HistoryChangeTriggerName')}</strong>`,
+        `<strong>${translate('TagManager_PageViewTriggerName')}</strong>`,
       );
     },
     fetchFollowStep13() {
@@ -246,9 +243,11 @@ export default defineComponent({
       );
     },
     fetchFollowStep14() {
-      return this.translateWithStrongTags(
+      return translate(
         'TagManager_SPAFollowStep14',
         translate('TagManager_VersionName'),
+        '<strong>',
+        '</strong>',
       );
     },
     fetchFollowStep15() {
@@ -266,8 +265,10 @@ export default defineComponent({
       );
     },
     fetchFollowStep16React() {
-      return this.translateWithStrongTags(
+      return translate(
         'TagManager_ReactFollowStep16',
+        '<strong>',
+        '</strong>',
         '<strong>App.js</strong>',
         '<strong>React.useEffect</strong>',
         '<strong>Hello World</strong>',
