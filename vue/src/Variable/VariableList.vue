@@ -110,7 +110,7 @@
           value
           @click="createVariable()"
         >
-          <span class="icon-add" /> {{ translate('TagManager_CreateNewVariable') }}
+          <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewVariable') }}
         </a>
       </div>
     </ContentBlock>

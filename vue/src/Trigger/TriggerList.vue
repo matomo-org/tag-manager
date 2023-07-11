@@ -107,8 +107,7 @@
           value
           @click="createTrigger()"
         >
-          <span class="icon-add" />
-          {{ translate('TagManager_CreateNewTrigger') }}
+          <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewTrigger') }}
         </a>
       </div>
     </ContentBlock>

@@ -61,13 +61,13 @@
               class="btn-flat"
               :href="linkTo('manageTags')"
             >
-              <span class="icon-edit" /> {{ translate('TagManager_EditTags') }}
+              <span class="icon-edit">&nbsp;</span>{{ translate('TagManager_EditTags') }}
             </a>
             <a
               class="btn-flat"
               :href="linkTo('manageTags', { idTag: 0 })"
             >
-              <span class="icon-add" /> {{ translate('TagManager_CreateNewTag') }}
+              <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewTag') }}
             </a>
           </ContentBlock>
         </div>
@@ -99,13 +99,13 @@
               class="btn-flat"
               :href="linkTo('manageTriggers')"
             >
-              <span class="icon-edit" /> {{ translate('TagManager_EditTriggers') }}
+              <span class="icon-edit">&nbsp;</span>{{ translate('TagManager_EditTriggers') }}
             </a>
             <a
               class="btn-flat"
               :href="linkTo('manageTriggers', { idTrigger: 0 })"
             >
-              <span class="icon-add" /> {{ translate('TagManager_CreateNewTrigger') }}
+              <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewTrigger') }}
             </a>
           </ContentBlock>
         </div>
@@ -142,13 +142,13 @@
               class="btn-flat"
               :href="linkTo('manageVariables')"
             >
-              <span class="icon-edit" /> {{ translate('TagManager_EditVariables') }}
+              <span class="icon-edit">&nbsp;</span>{{ translate('TagManager_EditVariables') }}
             </a>
             <a
               class="btn-flat"
               :href="linkTo('manageVariables', { idVariable: 0 })"
             >
-              <span class="icon-add" /> {{ translate('TagManager_CreateNewVariable') }}
+              <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewVariable') }}
             </a>
           </ContentBlock>
         </div>
@@ -189,13 +189,13 @@
               class="btn-flat"
               :href="linkTo('manageVersions')"
             >
-              <span class="icon-edit" /> {{ translate('TagManager_EditVersions') }}
+              <span class="icon-edit">&nbsp;</span>{{ translate('TagManager_EditVersions') }}
             </a>
             <a
               class="btn-flat"
               :href="linkTo('manageVersions', { idContainerVersion: 0 })"
             >
-              <span class="icon-add" /> {{ translate('TagManager_CreateNewVersion') }}
+              <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewVersion') }}
             </a>
           </ContentBlock>
         </div>

@@ -123,7 +123,7 @@
           v-show="hasWriteAccess"
           @click="createVersion()"
         >
-          <span class="icon-add" /> {{ translate('TagManager_CreateNewVersion') }}
+          <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewVersion') }}
         </a>
         <a
           class="exportDraft"
@@ -131,14 +131,14 @@
           @click="exportVersion(null, 'draft'); $event.preventDefault()"
           :href="getExportDraftUrl()"
         >
-          <span class="icon-export" /> {{ translate('TagManager_ExportDraft') }}
+          <span class="icon-export">&nbsp;</span>{{ translate('TagManager_ExportDraft') }}
         </a>
         <a
           class="importVersion"
           v-show="hasWriteAccess"
           @click="importVersion()"
         >
-          <span class="icon-upload" /> {{ translate('TagManager_Import') }}
+          <span class="icon-upload">&nbsp;</span>{{ translate('TagManager_Import') }}
         </a>
       </div>
     </ContentBlock>
