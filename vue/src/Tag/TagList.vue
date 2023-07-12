@@ -147,7 +147,7 @@
           value
           @click="createTag()"
         >
-          <span class="icon-add" /> {{ translate('TagManager_CreateNewTag') }}
+          <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewTag') }}
         </a>
       </div>
     </ContentBlock>
