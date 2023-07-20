@@ -3,6 +3,7 @@
         "AddThisParentSelectorDescription": "Opcionalmente, insira um seletor de CSS no elemento onde as ferramentas embutidas devem ser adicionadas.",
         "AddThisTagDescription": "Adicione ao seu site os botões AddThis para redes sociais e mais.",
         "AddThisTagPubIdDescription": "Crie um novo site no Shareaholic e cole o ID do site aqui",
+        "AddThisTagPubIdTitle": "AddThis PubId",
         "AllDownloadsClickTriggerDescription": "Acionado quando um link é clicado para um arquivo para baixar. Ele será acionado no clique esquerdo, médio e direito.",
         "AllDownloadsClickTriggerDownloadExtensionsTitle": "Baixar extensões",
         "AllDownloadsClickTriggerHelp": "Acionado quando um usuário clica em um elemento \"A\" ou \"AREA\" e o link aponta para um arquivo com uma extensão de arquivo baixável.",
