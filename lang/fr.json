@@ -408,6 +408,8 @@
         "MatomoConfigurationVariableName": "Configuration Matomo",
         "MatomoTagDescription": "Matomo est la première plateforme open source de statistiques.",
         "MatomoTagHelp": "Cette balise vous permet de suivre les vues de page et évènement dans Matomo. Vous pouvez aussi personnaliser le code de suivi en fonction de vos besoins.",
+        "MatomoTagManagerTrackingInfoLine1": "Si vous intégrez plusieurs ressources provenant de sites Web tiers dans votre site, le suivi de votre site à l'aide du %1$sGestionnaire de balises Matomo%2$s pourrait être un meilleur choix pour vous par rapport à l'utilisation du suivi JavaScript classique.",
+        "MatomoTagManagerTrackingInfoLine2": "Vous ne savez pas ce qu'est un gestionnaire de balises ? Consultez notre %1$sguide de démarrage%2$s.",
         "MatomoTagName": "Statistiques Matomo",
         "MetaContentVariableDescription": "Lit une valeur d'un élément \"meta\".",
         "MetaContentVariableName": "Meta-Contenu de la page",

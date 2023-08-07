@@ -334,6 +334,8 @@
         "MatomoConfigurationVariableName": "Configuración Matomo",
         "MatomoTagDescription": "Matomo, anteriormente conocido como Piwk, es la plataforma líder de analíticas open source.",
         "MatomoTagHelp": "Esta etiqueta le permite rastrear vistas de página y eventos en su Matomo. Puede personalizar el seguimiento acorde a sus necesidades.",
+        "MatomoTagManagerTrackingInfoLine1": "Si está incrustando múltiples recursos de sitios web de terceros en su sitio, el seguimiento de su sitio web utilizando el %1$sGestor de Etiquetas Matomo%2$s podría ser una mejor opción en comparación con el seguimiento regular de JavaScript.",
+        "MatomoTagManagerTrackingInfoLine2": "¿No sabes qué es un Gestor de Etiquetas? Consulta nuestra %1$sguía de inicio%2$s.",
         "MatomoTagName": "Matomo Analytics",
         "MetaContentVariableDescription": "Lee el valor de un elemento \"meta\" HTML.",
         "MetaContentVariableName": "Meta contenido de la página",
