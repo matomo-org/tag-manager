@@ -867,6 +867,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/vue/src/ContainerSelector/ContainerSelector.less";
         $stylesheets[] = "plugins/TagManager/vue/src/ContainerDashboard/ContainerDashboard.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Version/VersionEdit.less";
+        $stylesheets[] = "plugins/TagManager/vue/src/TagmanagerTrackingCode/TagManagerTrackingCode.less";
     }
 
     public function getJsFiles(&$jsFiles)

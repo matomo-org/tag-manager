@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <result>&lt;!-- Matomo Tag Manager --&gt;
 &lt;script&gt;
-var _mtm = window._mtm = window._mtm || [];
-_mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
-var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-g.async=true; g.src='http://example.com/piwik/tests/PHPUnit/proxy/js/container_aaacont2.js'; s.parentNode.insertBefore(g,s);
+  var _mtm = window._mtm = window._mtm || [];
+  _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+  (function() {
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src='http://example.com/piwik/tests/PHPUnit/proxy/js/container_aaacont2.js'; s.parentNode.insertBefore(g,s);
+  })();
 &lt;/script&gt;
 &lt;!-- End Matomo Tag Manager --&gt;</result>
