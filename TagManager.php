@@ -854,6 +854,9 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_CustomUrl';
         $result[] = 'TagManager_PageViewTriggerName';
         $result[] = 'TagManager_MatomoTagName';
+        $result[] = 'TagManager_SiteWithoutDataMtmIntro';
+        $result[] = 'TagManager_SiteWithoutDataMtmStep2';
+        $result[] = 'TagManager_SiteWithoutDataMtmStep3';
     }
 
     public function getStylesheetFiles(&$stylesheets)
