@@ -13,7 +13,7 @@
     :title="translate('TagManager_ChooseContainer')"
   >
     <a class="title">
-      <span class="icon icon-arrow-bottom">&nbsp;</span>{{ actualContainerName }}
+      <span class="icon icon-chevron-down">&nbsp;</span>{{ actualContainerName }}
     </a>
     <div
       class="dropdown positionInViewport"
