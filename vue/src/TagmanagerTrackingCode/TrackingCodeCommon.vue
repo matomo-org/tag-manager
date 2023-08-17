@@ -93,7 +93,8 @@
       </div>
     </div>
     <div v-if="showBottom">
-      <p v-if="idContainer" v-html="$sanitize(getCongratulationsText)"></p>
+      <p v-if="idContainer && !showTestSection" v-html="$sanitize(getCongratulationsText)"></p>
+      <JsTrackerInstallCheck :site="site" v-if="idContainer"/>
     </div>
   </div>
 </template>
@@ -109,6 +110,7 @@ import {
   Matomo,
   translate,
   CopyToClipboard,
+  JsTrackerInstallCheck,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
 import {
@@ -158,6 +160,7 @@ export default defineComponent({
     showTestSection: Boolean,
   },
   components: {
+    JsTrackerInstallCheck,
     ActivityIndicator,
     SiteSelector,
     Field,

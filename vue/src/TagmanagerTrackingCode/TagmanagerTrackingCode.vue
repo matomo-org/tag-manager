@@ -11,7 +11,7 @@
       :showBottom="true"
       :showDescription="false"
       :showPlainMtmSteps="true"
-      :showTestSection="true"
+      :showTestSection="showTestSection"
       @fetchInstallInstructions="fetchInstallInstructions"
       ref="trackingCodeCommon"
     />
@@ -33,6 +33,7 @@ import {
 export default defineComponent({
   props: {
     showContainerRow: Boolean,
+    showTestSection: Boolean,
   },
   components: {
     TrackingCodeCommon,

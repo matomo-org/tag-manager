@@ -11,7 +11,10 @@
     <p>
       <strong>{{ translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro') }}</strong>
     </p>
-    <TagmanagerTrackingCode :show-container-row="showContainerRow" :current-action="currentAction"/>
+    <TagmanagerTrackingCode
+      :show-container-row="showContainerRow"
+      :current-action="currentAction"
+      :showTestSection="true"/>
   </div>
   <ContentBlock
     anchor="tagmanager"
@@ -23,7 +26,10 @@
     <p>
       <strong>{{ translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro') }}</strong>
     </p>
-    <TagmanagerTrackingCode :show-container-row="showContainerRow" :current-action="currentAction"/>
+    <TagmanagerTrackingCode
+      :show-container-row="showContainerRow"
+      :current-action="currentAction"
+      :showTestSection="false"/>
   </ContentBlock>
 </template>
 
