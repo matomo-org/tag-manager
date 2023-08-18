@@ -76,10 +76,8 @@
       </p>
       <div v-if="showPlainMtmSteps">
         <li>
-          {{ translate('TagManager_SiteWithoutDataMtmStep2') }}
-          <a :href="linkTo('dashboard', site.id, idContainer, [])">
-            {{ translate('TagManager_Container') }} {{ translate('Dashboard_Dashboard') }}
-          </a>.&nbsp;<span v-html="$sanitize(getLearnMoreLink)"></span>.
+          <span v-html="$sanitize(getMtmStep2)">
+          </span>.&nbsp;<span v-html="$sanitize(getLearnMoreLink)"></span>.
         </li>
         <li v-html="$sanitize(getMtmStep3)"></li>
       </div>
@@ -349,6 +347,15 @@ export default defineComponent({
       return translate(
         'TagManager_CustomHtmlTagHelpText',
         '<a rel="noreferrer noopener" target="_blank" href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/">',
+        '</a>',
+      );
+    },
+    getMtmStep2() {
+      const idSite = this.site && this.site.id ? this.site.id as string : '';
+      const link = this.linkTo('dashboard', idSite, this.idContainer, []);
+      return translate(
+        'TagManager_SiteWithoutDataMtmStep2',
+        `<a href="${link}">`,
         '</a>',
       );
     },
