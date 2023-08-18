@@ -419,6 +419,8 @@
         "MatomoConfigurationVariableName": "Configurazione di Matomo",
         "MatomoTagDescription": "Matomo, già conosciuto come Piwik, è la piattaforma open source leader per le statistiche web.",
         "MatomoTagHelp": "Questo tag ti consente di tracciare visualizzazioni di pagina ed eventi nel tuo Matomo. Puoi personalizzare il tracking in base alle tue esigenze.",
+        "MatomoTagManagerTrackingInfoLine1": "Se stai incorporando più risorse da siti web di terze parti nel tuo sito, tracciare il tuo sito utilizzando il %1$sGestore Tag Matomo%2$s potrebbe essere una scelta migliore rispetto all'uso del tracciamento JavaScript regolare.",
+        "MatomoTagManagerTrackingInfoLine2": "Non sai cos'è un Gestore di Tag? Dai un'occhiata alla nostra %1$sguida introduttiva%2$s.",
         "MatomoTagName": "Matomo Analytics",
         "MetaContentVariableDescription": "Legge un valore nell'elemento HTML \"meta\".",
         "MetaContentVariableName": "Meta Contenuto Pagina",
