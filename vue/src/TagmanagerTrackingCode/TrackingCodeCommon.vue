@@ -108,9 +108,9 @@ import {
   Matomo,
   translate,
   CopyToClipboard,
-  JsTrackerInstallCheck,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
+import JsTrackerInstallCheck from '../../../../JsTrackerInstallCheck/vue/src/JsTrackerInstallCheck/JsTrackerInstallCheck.vue';
 import {
   Container,
   InstallInstructions,
