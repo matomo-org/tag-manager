@@ -5,7 +5,7 @@
 	<idsite>2</idsite>
 	<type>DataLayer</type>
 	<name>My Var 1</name>
-	<description/>
+	<description />
 	<status>active</status>
 	<parameters>
 		<dataLayerName>fooBarName</dataLayerName>
@@ -48,7 +48,6 @@
 				<availableValues />
 				<description>The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example &quot;object1.myPropertyOfObject1&quot;.</description>
 				<inlineHelp />
-				<templateFile />
 				<introduction />
 				<condition />
 				<fullWidth>0</fullWidth>

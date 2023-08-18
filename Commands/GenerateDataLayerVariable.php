@@ -9,9 +9,6 @@
 namespace Piwik\Plugins\TagManager\Commands;
 
 use Piwik\Plugins\CoreConsole\Commands\GeneratePluginBase;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateDataLayerVariable extends GeneratePluginBase
 {
@@ -19,16 +16,19 @@ class GenerateDataLayerVariable extends GeneratePluginBase
     {
         $this->setName('generate:tagmanager-datalayer-variable');
         $this->setDescription('Generate a preconfigured data layer variable');
-        $this->addOption('pluginname', null, InputOption::VALUE_REQUIRED, 'The name of an existing plugin');
-        $this->addOption('variablename', null, InputOption::VALUE_REQUIRED, 'The name of the variable you want to create');
+        $this->addRequiredValueOption('pluginname', null, 'The name of an existing plugin');
+        $this->addRequiredValueOption('variablename', null, 'The name of the variable you want to create');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    /**
+     * @return int
+     */
+    protected function doExecute(): int
     {
-        $pluginName = $this->getPluginName($input, $output);
-        $this->checkAndUpdateRequiredPiwikVersion($pluginName, $output);
+        $pluginName = $this->getPluginName();
+        $this->checkAndUpdateRequiredPiwikVersion($pluginName);
 
-        $variableName = $this->getVariableName($input, $output);
+        $variableName = $this->getVariableName();
         $variableId = str_replace(array('-', ' '), '', $variableName);
         $variableClass = $variableId . 'Variable';
 
@@ -51,24 +51,22 @@ class GenerateDataLayerVariable extends GeneratePluginBase
         $this->makeTranslationIfPossible($pluginName, "This is the description for " . $variableName, $variableClass . 'Description');
         $this->makeTranslationIfPossible($pluginName, "", $variableClass . 'Help');
 
-        $this->writeSuccessMessage($output, array(
+        $this->writeSuccessMessage(array(
             sprintf('Variable for %s in folder "plugins/%s/Template/Variable/Preconfigured" generated.', $pluginName, $pluginName),
             'You can now start implementing the preconfigured data layer variable',
             'Enjoy!'
         ));
 
-        return 0;
+        return self::SUCCESS;
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @return string
      * @throws \RuntimeException
      */
-    private function getVariableName(InputInterface $input, OutputInterface $output)
+    private function getVariableName()
     {
-        $variableName = $input->getOption('variablename');
+        $variableName = $this->getInput()->getOption('variablename');
 
         $validate = function ($testname) {
             if (empty($testname)) {
@@ -83,8 +81,7 @@ class GenerateDataLayerVariable extends GeneratePluginBase
         };
 
         if (empty($variableName)) {
-            $dialog   = $this->getHelperSet()->get('dialog');
-            $variableName = $dialog->askAndValidate($output, 'Enter the name of the variable (CamelCase): ', $validate);
+            $variableName = $this->askAndValidate('Enter the name of the variable (CamelCase): ', $validate);
         } else {
             $validate($variableName);
         }
@@ -94,12 +91,12 @@ class GenerateDataLayerVariable extends GeneratePluginBase
         return $variableName;
     }
 
-    protected function getPluginName(InputInterface $input, OutputInterface $output)
+    protected function getPluginName()
     {
         $pluginNames = $this->getPluginNames();
         $invalidName = 'You have to enter the name of an existing plugin';
 
-        return $this->askPluginNameAndValidate($input, $output, $pluginNames, $invalidName);
+        return $this->askPluginNameAndValidate($pluginNames, $invalidName);
     }
 
 }

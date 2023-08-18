@@ -45,6 +45,8 @@ class NameTest extends UnitTestCase
 
     public function test_check_valid()
     {
+        self::expectNotToPerformAssertions();
+
         $this->checkName('s');
         $this->checkName(str_pad('2', Name::MAX_LENGTH - 1, 'f'));
         $this->checkName('fooBarBaz4392');
@@ -52,7 +54,6 @@ class NameTest extends UnitTestCase
         $this->checkName('121 212 12f');
         $this->checkName('f1212121212');
         $this->checkName('fooBarBaz4392');
-        $this->assertTrue(true);
     }
 
     private function checkName($name)

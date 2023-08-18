@@ -22,7 +22,7 @@
       v-show="!isLoading"
       @click.prevent="createVariable()"
     >
-      <span class="icon-add" /> {{ translate('TagManager_CreateNewVariable') }}
+      <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewVariable') }}
     </a>
   </div>
 </template>
@@ -110,7 +110,6 @@ export default defineComponent({
       }
 
       tagManagerHelper.editVariable(
-        null,
         MatomoUrl.parsed.value.idContainer as string,
         this.idContainerVersion,
         0,

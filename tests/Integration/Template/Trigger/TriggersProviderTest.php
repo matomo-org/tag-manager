@@ -65,8 +65,9 @@ class TriggersProviderTest extends IntegrationTestCase
 
     public function test_checkIsValidTrigger_noExceptionWhenTriggerExists()
     {
+        self::expectNotToPerformAssertions();
+
         $this->provider->checkIsValidTrigger('DomReady');
-        $this->assertTrue(true);
     }
 
     public function test_checkIsValidTrigger_searchesCaseSensitive()

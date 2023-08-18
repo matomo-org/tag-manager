@@ -3,12 +3,14 @@
 {% set title = 'Dashboard_Dashboard'|translate %}
 
 {% block content %}
-    <div piwik-container-dashboard id-container="{{ container.idcontainer }}"
-        dashboard-help-text="{{ dashboardHelpText }}"
-        tags-help-text="{{ tagsHelpText }}"
-        triggers-help-text="{{ triggersHelpText }}"
-        variables-help-text="{{ variablesHelpText }}"
-        versions-help-text="{{ versionsHelpText }}">
+    <div
+        vue-entry="TagManager.ContainerDashboard"
+        id-container="{{ container.idcontainer|json_encode }}"
+        dashboard-help-text="{{ dashboardHelpText|json_encode }}"
+        tags-help-text="{{ tagsHelpText|json_encode }}"
+        triggers-help-text="{{ triggersHelpText|json_encode }}"
+        variables-help-text="{{ variablesHelpText|json_encode }}"
+        versions-help-text="{{ versionsHelpText|json_encode }}">
     </div>
 
 {% endblock %}

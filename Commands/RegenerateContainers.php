@@ -9,10 +9,6 @@ namespace Piwik\Plugins\TagManager\Commands;
 
 use Piwik\Piwik;
 use Piwik\Plugin\ConsoleCommand;
-use Symfony\Component\Console\Input\InputInterface;
-
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class RegenerateContainers extends ConsoleCommand
 {
@@ -20,17 +16,22 @@ class RegenerateContainers extends ConsoleCommand
     {
         $this->setName('tagmanager:regenerate-released-containers');
         $this->setDescription('Re-generates all released container files');
-        $this->addOption('only-with-preview-release', null, InputOption::VALUE_NONE, 'Only regenerate containers with a preview release.');
+        $this->addNoValueOption('only-with-preview-release', null, 'Only regenerate containers with a preview release.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    /**
+     * @return int
+     */
+    protected function doExecute(): int
     {
+        $input = $this->getInput();
+        $output = $this->getOutput();
         $onlyPreview = $input->getOption('only-with-preview-release');
 
         Piwik::postEvent('TagManager.regenerateContainerReleases', [$onlyPreview]);
 
         $output->writeln('<info>Done</info>');
 
-        return 0;
+        return self::SUCCESS;
     }
 }

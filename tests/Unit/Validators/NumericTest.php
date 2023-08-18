@@ -46,16 +46,16 @@ class NumericTest extends UnitTestCase
 
     public function test_numeric()
     {
-        $this->validateNumeric('2430.00');
+        self::expectNotToPerformAssertions();
 
-        self::assertTrue(true);
+        $this->validateNumeric('2430.00');
     }
 
     public function test_emptyOptional()
     {
-        $this->validateNumeric('', true);
+        self::expectNotToPerformAssertions();
 
-        self::assertTrue(true);
+        $this->validateNumeric('', true);
     }
 
     public function test_emptyNotOptional()
@@ -84,9 +84,9 @@ class NumericTest extends UnitTestCase
 
     public function test_variableAllowed()
     {
-        $this->validateNumeric('{{someVariable}}', true, true);
+        self::expectNotToPerformAssertions();
 
-        self::assertTrue(true);
+        $this->validateNumeric('{{someVariable}}', true, true);
     }
 
     private function validateNumeric($value, $isOptional = null, $isVariableAllowed = null)

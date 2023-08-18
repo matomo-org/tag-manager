@@ -1,10 +1,6 @@
-{% if action != 'siteWithoutDataTabs' %}
-<div piwik-content-block anchor="tagmanager" content-title="{{ 'TagManager_MatomoTagManager'|translate }}">
-{% endif %}
-    <p>{{ 'TagManager_SiteWithoutDataMtmIntro'|translate('<a href="' ~ linkTo({module: 'TagManager', action: 'gettingStarted'})~'">', '</a>')|raw }}</p>
-    <br>
-    <p><strong>{{ 'SitesManager_SiteWithoutDataCloudflareFollowStepsIntro'|translate }}</strong></p>
-    <div matomo-tagmanager-tracking-code show-container-row="{{ showContainerRow|json_encode }}" current-action="{{ action|json_encode }}"></div>
-{% if action != 'siteWithoutDataTabs' %}
+<div
+        vue-entry="TagManager.TrackingCodePage"
+        current-action="{{ action|json_encode }}"
+        show-container-row="{{ showContainerRow|json_encode }}"
+>
 </div>
-{% endif %}

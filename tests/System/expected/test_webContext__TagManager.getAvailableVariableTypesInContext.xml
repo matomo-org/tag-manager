@@ -33,7 +33,6 @@
 						</availableValues>
 						<description>Select in which unit you want to retrieve the time.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -71,7 +70,6 @@
 						<availableValues />
 						<description>The value should start with &quot;function() { &quot; and end with &quot;return yourValue; }&quot;. You have to define a function and return a value. We highly recommend to test the pasted JavaScript function to avoid JavaScript errors on your website.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -107,7 +105,6 @@
 						</availableValues>
 						<description>Select the way you want to identify the element you want to read the value from.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -124,7 +121,6 @@
 						<availableValues />
 						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are &quot;.classname&quot;, &quot;#id&quot; or &quot;li a&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>selectionMethod == &quot;cssSelector&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -141,7 +137,6 @@
 						<availableValues />
 						<description>The id attribute specifies a unique id for an HTML element. Insert here the value of an ID attribute of any element within your website.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>selectionMethod == &quot;elementId&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -158,7 +153,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp>If a value is entered, the value of the attribute will be returned instead of the text content of the element.</inlineHelp>
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -191,7 +185,6 @@
 						<availableValues />
 						<description>The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example &quot;object1.myPropertyOfObject1&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -224,7 +217,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -241,7 +233,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp>If enabled, the value will be decoded</inlineHelp>
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -274,7 +265,6 @@
 						<availableValues />
 						<description>The name of any variable that is available within the global scope. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example &quot;document.referrer&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -316,7 +306,6 @@
 						</availableValues>
 						<description>Select the part of the URL you want to retrieve.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -349,7 +338,6 @@
 						<availableValues />
 						<description>For example when your page has URL parameters such as &quot;?lang=NZ&quot; and you want to get the value &quot;NZ&quot;, then you need to enter &quot;lang&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -392,7 +380,6 @@
 						</availableValues>
 						<description>Select the part of the URL you want to retrieve.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -449,7 +436,6 @@
 						</availableValues>
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -487,7 +473,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -525,7 +510,6 @@
 						<availableValues />
 						<description>The etracker ID you want to track data into. The ID is required. You may  find the ID of your website under &quot;Administration =&gt; Setup/Tracking Code&quot; in etracker.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -546,7 +530,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -563,7 +546,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -580,7 +562,6 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -601,7 +582,6 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -622,7 +602,6 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -643,7 +622,6 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -664,7 +642,6 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -685,7 +662,6 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -706,7 +682,6 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -727,7 +702,6 @@
 						<availableValues />
 						<description>Set variable if you want to overwrite the default value</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -750,7 +724,6 @@
 								<key>index</key>
 								<title>Index</title>
 								<uiControl>text</uiControl>
-								<templateFile />
 								<component>
 									<plugin>TagManager</plugin>
 									<name>FieldVariableTemplate</name>
@@ -761,7 +734,6 @@
 								<key>value</key>
 								<title>Value</title>
 								<uiControl>text</uiControl>
-								<templateFile />
 								<component>
 									<plugin>TagManager</plugin>
 									<name>FieldVariableTemplate</name>
@@ -772,7 +744,6 @@
 						<availableValues />
 						<description>Optionally set one or multiple custom dimensions.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -805,7 +776,6 @@
 						<availableValues />
 						<description>The URL of your Matomo instance. It should not include &quot;/index.php&quot; or &quot;piwik.php&quot;. The URL of your current Matomo URL instance is preconfigured.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -826,7 +796,6 @@
 						<availableValues />
 						<description>The idSite you want to track data into. The idSite of the current website is preconfigured. You may also find the idSite of any other website under &quot;Administration =&gt; Manage Measurables/Websites&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -847,7 +816,6 @@
 						<availableValues />
 						<description>Enables the automatic download and outlink tracking.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -864,7 +832,6 @@
 						<availableValues />
 						<description>Enable this to accurately measure the same visitor across multiple domain names.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -881,7 +848,6 @@
 						<availableValues />
 						<description>Enable this feature to not track users who opt out of tracking using Mozilla's (proposed) Do Not Track setting</description>
 						<inlineHelp>&lt;strong&gt;Note: When enabled it sets _paq.push([&quot;setDoNotTrack&quot;, true]); which will not send any tracking request when a visitor has DNT enabled unlike the &quot;DNT Matomo Setting&quot; which drops the request on the server when a visitor has DNT enabled.&lt;/strong&gt;</inlineHelp>
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -898,7 +864,6 @@
 						<availableValues />
 						<description>Enables the tracking of uncaught JavaScript errors as an event.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -915,7 +880,6 @@
 						<availableValues />
 						<description>Install a Heart beat timer that will regularly send requests to Matomo in order to better measure the time spent on the page.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -932,7 +896,6 @@
 						<availableValues />
 						<description>Enables the content tracking feature by scanning the entire DOM for all content blocks and tracks all impressions once the page has loaded.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -949,7 +912,6 @@
 						<availableValues />
 						<description>Enables the content tracking feature by scanning the entire DOM for all content blocks but only tracks content impressions once the user scrolls to the content and the content is actually visible.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -966,11 +928,10 @@
 						<availableValues />
 						<description>Disables all first party cookies.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>!requireConsent &amp;&amp; !requireCookieConsent</condition>
 						<fullWidth>0</fullWidth>
-					</row>				
+					</row>
 					<row>
 						<name>requireConsent</name>
 						<title>Require tracking consent</title>
@@ -983,7 +944,6 @@
 						<availableValues />
 						<description>Track only when user gave tracking consent. In a consent screen you need to call &quot;window._paq=window._paq||[];window._paq.push(['rememberConsentGiven']);&quot; when the user gives consent.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>!requireCookieConsent &amp;&amp; !disableCookies</condition>
 						<fullWidth>0</fullWidth>
@@ -1000,7 +960,6 @@
 						<availableValues />
 						<description>Use cookies only if the user gave cookie consent, otherwise track the user without cookies. In a consent screen you need to call &quot;window._paq=window._paq||[];window._paq.push(['rememberCookieConsentGiven']);&quot; when the user gives consent for cookies.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>!requireConsent &amp;&amp; !disableCookies</condition>
 						<fullWidth>0</fullWidth>
@@ -1017,7 +976,6 @@
 						<availableValues />
 						<description>Allows you to set a custom time in full days for the _pk_id cookie.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>!disableCookies</condition>
 						<fullWidth>0</fullWidth>
@@ -1034,11 +992,10 @@
 						<availableValues />
 						<description>Timeout in full days. By default, the Matomo tracking cookie expires in 13 months (365 + 28 days) = 393 days.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>customCookieTimeOutEnable == true</condition>
 						<fullWidth>0</fullWidth>
-					</row>	
+					</row>
 					<row>
 						<name>setSecureCookie</name>
 						<title>Enable Secure Cookie</title>
@@ -1051,7 +1008,6 @@
 						<availableValues />
 						<description>Enable the Secure cookie flag on all first party cookies. This should be used when your website is only available under HTTPS so that all tracking cookies are always sent over secure connection.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1068,7 +1024,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp>The default is the current document domain. If your website can be visited for example at both www.example.com and example.com, you would use: &quot;.example.com&quot; or &quot;*.example.com&quot;. &lt;br&gt;&lt;strong&gt;Note: The variable is only evaluated at the time when tracker is being created, make sure you have the variable defined before that.&lt;/strong&gt;</inlineHelp>
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1089,7 +1044,6 @@
 						<availableValues />
 						<description>When tracking many subdirectories in separate websites, the cookie path prevents the number of cookies to quickly increase and prevent browser from deleting some of the cookies. This ensures optimal data accuracy and improves performance for your users (fewer cookies are sent with each request).</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1110,7 +1064,6 @@
 						</availableValues>
 						<description>Set the SameSite attribute for cookies to a custom value. You might want to use this if your site is running in an iframe since then it will only be able to access the cookies if SameSite is set to &quot;None&quot;. Choosing &quot;None&quot; will only work on HTTPS and will automatically also set the secure cookie. If your site is available under http and https, using &quot;None&quot; might lead to duplicate or incomplete visits.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1127,7 +1080,6 @@
 						<availableValues />
 						<description>By default, Matomo accesses some information from the visitor’s browser like the browser resolution. Some privacy regulations may allow access of such information from the visitor’s device only after having a consent. If this applies to you, you can disable this feature.</description>
 						<inlineHelp>&lt;br&gt;&lt;strong&gt;To learn more, check this &lt;a href=&quot;https://matomo.org/faq/how-to/how-do-i-disable-browser-feature-detection-completely/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;FAQ&lt;/a&gt;.&lt;/strong&gt;</inlineHelp>
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1146,7 +1098,6 @@
 								<key>domain</key>
 								<title>Domain</title>
 								<uiControl>text</uiControl>
-								<templateFile />
 								<component>
 									<plugin>TagManager</plugin>
 									<name>FieldVariableTemplate</name>
@@ -1157,7 +1108,6 @@
 						<availableValues />
 						<description>Used to detect outlinks. Add hostnames or domains to be treated as local. For wildcard subdomains, you can use: &quot;.example.com&quot; or &quot;*.example.com&quot;. You can also specify a path along a domain: &quot;*.example.com/subsite1&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1174,7 +1124,6 @@
 						<availableValues />
 						<description>Enables sendBeacon usage instead of a regular ajax request. This means when a user clicks for example on an outlink, the navigation to this page will happen much faster.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1208,7 +1157,6 @@
 						<availableValues />
 						<description>Sets a User ID to this user (such as an email address or a username).</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1231,7 +1179,6 @@
 								<key>index</key>
 								<title>Index</title>
 								<uiControl>text</uiControl>
-								<templateFile />
 								<component>
 									<plugin>TagManager</plugin>
 									<name>FieldVariableTemplate</name>
@@ -1242,7 +1189,6 @@
 								<key>value</key>
 								<title>Value</title>
 								<uiControl>text</uiControl>
-								<templateFile />
 								<component>
 									<plugin>TagManager</plugin>
 									<name>FieldVariableTemplate</name>
@@ -1253,7 +1199,6 @@
 						<availableValues />
 						<description>Optionally set one or multiple custom dimensions.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1270,7 +1215,6 @@
 						<availableValues />
 						<description>By bundling the Matomo JavaScript tracker directly into the container it may improve the performance of your website as it reduces the number of needed requests. It is recommended to bundle the Matomo tracker because in most cases the tracker would otherwise be loaded in a separate request on page view anyway. Note: If you use two different Matomo configurations in one container, the setting of the first configuration used in the first Matomo Tag will be applied to all Matomo tags within one container.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1287,7 +1231,6 @@
 						<availableValues />
 						<description>When enabled, the tracker will be registered as the default one for the website, and will receive all commands that get pushed into the global _paq variable. Useful if you want to use the tracker config from the container with your own _paq.push() JavaScript code.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1309,7 +1252,6 @@
 						</availableValues>
 						<description>Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the &quot;Bundle Tracker&quot; option.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1331,7 +1273,6 @@
 						</availableValues>
 						<description>Here you can configure the target path for tracking requests.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>

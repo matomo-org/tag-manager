@@ -1,6 +1,9 @@
 {
     "TagManager": {
+        "AddThisParentSelectorTitle": "Pemilih Induk Alat Sebaris",
         "AddThisTagDescription": "Tambahkan tombol media sosial AddThis dan lainnya ke situs web Anda.",
+        "AddThisTagPubIdDescription": "Buat situs baru di Shareaholic dan tempel ID situs di sini",
+        "AddThisTagPubIdTitle": "AddThis PubId",
         "AllDownloadsClickTriggerDescription": "Dipicu saat tautan yang menautkan ke berkas yang dapat diunduh diklik. Ini akan dipicu oleh klik kiri, tengah, dan kanan.",
         "AllDownloadsClickTriggerHelp": "Dipicu saat pengguna mengklik elemen \"A\" atau \"AREA\" dan tautan yang mengarah ke berkas dengan ekstensi berkas yang dapat diunduh. Untuk mengaktifkan pelacakan pada tombol klik tertentu, harap tambahkan ketentuan berdasarkan variabel \"TombolKlik\" di setelan lanjutan.",
         "AllDownloadsClickTriggerName": "Klik Semua Unduhan",

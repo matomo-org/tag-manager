@@ -4,25 +4,22 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 <template>
-  <ol class="list-style-decimal">
-    <li v-html="$sanitize(setupStep1)" v-if="showContainerRow"></li>
+  <div class="tagManagerTrackingCode">
     <TrackingCodeCommon
       :show-container-row="showContainerRow"
       :showBottom="true"
-      :showDescription="false"
-      :showPlainMtmSteps="true"
+      :showDescription="true"
       @fetchInstallInstructions="fetchInstallInstructions"
       ref="trackingCodeCommon"
     />
-  </ol>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, nextTick } from 'vue';
 import {
   AjaxHelper,
-  MatomoUrl,
-  translate,
+  SelectOnFocus,
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
 import {
@@ -36,10 +33,8 @@ export default defineComponent({
   components: {
     TrackingCodeCommon,
   },
-  data() {
-    return {
-      setupStep1: '',
-    };
+  directives: {
+    SelectOnFocus,
   },
   methods: {
     fetchInstallInstructions() {
@@ -54,15 +49,6 @@ export default defineComponent({
       ) {
         return;
       }
-
-      const manageContainerURL = this.linkTo('manageContainers', refs.site.id, refs.idContainer);
-      this.setupStep1 = translate(
-        'TagManager_SPAFollowStep1',
-        '<br><strong>',
-        '</strong>',
-        `<a href="${manageContainerURL}" target="_blank" rel="noreferrer noopener">`,
-        '</a>',
-      );
 
       refs.isLoading = true;
       AjaxHelper.fetch<InstallInstructions[]>({
@@ -84,19 +70,6 @@ export default defineComponent({
       }).finally(() => {
         refs.isLoading = false;
       });
-    },
-    linkTo(action: string, idSite: string, idContainer: string, hash?: QueryParameters) {
-      let url = MatomoUrl.stringify({
-        ...MatomoUrl.urlParsed.value,
-        module: 'TagManager',
-        action,
-        idSite,
-        idContainer,
-      });
-      if (hash) {
-        url += `#?${MatomoUrl.stringify(hash)}`;
-      }
-      return `?${url}`;
     },
   },
 });

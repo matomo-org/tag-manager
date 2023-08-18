@@ -29,7 +29,6 @@
 						<availableValues />
 						<description>Comma separated list of file extensions which will be considered as a download.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -155,7 +154,6 @@
 						</availableValues>
 						<description>Select the way you want to identify an element you want to select.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -172,7 +170,6 @@
 						<availableValues />
 						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are &quot;.classname&quot;, &quot;#id&quot; or &quot;li a&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>selectionMethod == &quot;cssSelector&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -189,7 +186,6 @@
 						<availableValues />
 						<description>The id attribute specifies a unique id for an HTML element. Insert here the value of an ID attribute of any element within your website.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>selectionMethod == &quot;elementId&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -210,7 +206,6 @@
 						</availableValues>
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -227,7 +222,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -244,7 +238,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp>Enable if you want to track dynamic DOM elements. &lt;br&gt;&lt;strong&gt;Note: This might slow down the website if there are lot of DOM changes&lt;/strong&gt;</inlineHelp>
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -297,7 +290,6 @@
 						</availableValues>
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -314,7 +306,6 @@
 						<availableValues />
 						<description>Enter &quot;0&quot; to trigger it each time the event occurs</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -368,7 +359,6 @@
 						</availableValues>
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -386,7 +376,6 @@
 						<availableValues />
 						<description>The amount in pixels that needs to be visible of this element depending on the selected scroll match type.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>scrollType == &quot;verticalpixel&quot; || scrollType == &quot;horizontalpixel&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -404,7 +393,6 @@
 						<availableValues />
 						<description>You can specify any number between 1 and 100. If you specify 50, then it means the element needs to be at least 50% visible depending on the scroll match type.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>scrollType == &quot;verticalpercentage&quot; || scrollType == &quot;horizontalpercentage&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -453,7 +441,6 @@
 						<availableValues />
 						<description>Enter &quot;0&quot; to not limit how often the trigger should be triggered</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -507,7 +494,6 @@
 						<availableValues />
 						<description>The name of the event that is pushed to the Data-Layer. For example you can push an event by adding this to your website: _mtm.push({&quot;event&quot;: &quot;my-custom-event&quot;});</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -560,7 +546,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -577,7 +562,6 @@
 						<availableValues />
 						<description>You can optionally change the name of this event. This can be useful if you have for example multiple timers on the page and want to perform different logic based on the name of the timer.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -598,7 +582,6 @@
 						<availableValues />
 						<description>Enter &quot;0&quot; to not limit the trigger.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>

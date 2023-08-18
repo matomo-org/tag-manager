@@ -41,6 +41,7 @@ describe("ContainerVersion", function () {
         } else {
             prefix += ' ';
         }
+        await page.waitForSelector(prefix + '.editVersion [id=name]');
         await form.sendFieldValue(page, prefix + '.editVersion [id=name]', name);
     }
 
@@ -78,6 +79,7 @@ describe("ContainerVersion", function () {
 
     async function cancelVersion()
     {
+        await page.waitForSelector('.editVersion .entityCancel a');
         await page.click('.editVersion .entityCancel a');
     }
 
@@ -217,6 +219,7 @@ describe("ContainerVersion", function () {
 
     it('should be possible to confirm publish version to different environment', async function () {
         await modal.clickButton(page, 'Publish');
+        await page.mouse.move(-10, -10);
         await capture.page(page, 'publish_environment_confirmed');
     });
 

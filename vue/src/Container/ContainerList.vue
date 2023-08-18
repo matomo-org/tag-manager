@@ -108,7 +108,7 @@
           value
           @click="createContainer()"
         >
-          <span class="icon-add" /> {{ translate('TagManager_CreateNewContainer') }}
+          <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewContainer') }}
         </a>
       </div>
     </ContentBlock>

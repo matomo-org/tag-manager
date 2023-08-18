@@ -68,6 +68,7 @@ interface TagmanagerTrackingSPAPageState {
   setupStep7: string,
   installInstructions: InstallInstructions[];
 }
+
 export default defineComponent({
   props: {
     showContainerRow: Boolean,
@@ -93,6 +94,7 @@ export default defineComponent({
       // eslint-disable-next-line
       const refs = (this.$refs.trackingCodeCommon as any);
       this.installInstructions = [];
+
       if (
         !refs?.idContainer
         || !refs?.environment
@@ -100,6 +102,7 @@ export default defineComponent({
       ) {
         return;
       }
+
       const manageContainerURL = this.linkTo('manageContainers', refs.site.id, refs.idContainer);
       this.setupStep1 = translate(
         'TagManager_SPAFollowStep1',
@@ -114,12 +117,14 @@ export default defineComponent({
         `<a href="${triggersUrl}" target="_blank" rel="noreferrer noopener">`,
         '</a>',
       );
+
       const tagsURL = this.linkTo('manageTags', refs.site.id, refs.idContainer);
       this.setupStep7 = translate(
         'TagManager_SPAFollowStep7',
         `<a href="${tagsURL}" target="_blank" rel="noreferrer noopener">`,
         '</a>',
       );
+
       refs.isLoading = true;
       AjaxHelper.fetch<InstallInstructions[]>({
         method: 'TagManager.getContainerInstallInstructions',
@@ -150,9 +155,11 @@ export default defineComponent({
         idSite,
         idContainer,
       });
+
       if (hash) {
         url += `#?${MatomoUrl.stringify(hash)}`;
       }
+
       return `?${url}`;
     },
     fetchClickX(clickTarget: string) {

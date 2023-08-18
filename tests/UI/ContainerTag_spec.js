@@ -294,6 +294,7 @@ describe("ContainerTag", function () {
     it('should be possible to create a tag with conditions filter', async function () {
         await page.click('.notification .close');
         await cancelTag();
+        await page.waitForTimeout(200);
         await capture.page(page, 'create_advanced_verified');
     });
 

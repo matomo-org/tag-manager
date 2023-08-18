@@ -5,7 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-import { IScope } from 'angular';
 import { DeepReadonly } from 'vue';
 
 export interface InstallInstructions {
@@ -269,7 +268,6 @@ export interface Container {
 // temporary, will be converted later
 interface TagManagerHelper {
   editVariable(
-    $scope: IScope|null,
     idContainer: string,
     idContainerVersion: number,
     idVariable: number,
@@ -280,14 +278,13 @@ interface TagManagerHelper {
   insertTextSnippetAtElement(inputField: HTMLTextAreaElement|HTMLInputElement, textToAdd: string): void;
 
   editTrigger(
-    $scope: IScope|null,
     idContainer: string,
     idContainerVersion: number,
     idTag: number,
     callback: (trigger: Trigger) => void,
   ): void;
 
-  importVersion($scope: IScope|null, idContainer: string): void;
+  importVersion(idContainer: string): void;
 
   enablePreviewMode(idContainer: string, idContainerVersion: number): void;
 

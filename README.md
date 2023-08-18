@@ -1,6 +1,6 @@
 # Free Open Source Matomo Tag Manager
 
-[![Build Status](https://github.com/matomo-org/tag-manager/actions/workflows/matomo-tests.yml/badge.svg?branch=4.x-dev)](https://github.com/matomo-org/tag-manager/actions/workflows/matomo-tests.yml)
+[![Build Status](https://github.com/matomo-org/tag-manager/actions/workflows/matomo-tests.yml/badge.svg?branch=5.x-dev)](https://github.com/matomo-org/tag-manager/actions/workflows/matomo-tests.yml)
 
 ## Description
 

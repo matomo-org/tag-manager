@@ -80,6 +80,8 @@ class LookupTableTest extends UnitTestCase
 
     public function test_valid()
     {
+        self::expectNotToPerformAssertions();
+
         $this->validateLookupTable(array(array('match_value' => 'foo', 'comparison' => 'equals', 'out_value' => 'bar')));
         $this->validateLookupTable(array(array('match_value' => '', 'comparison' => 'equals', 'out_value' => 'bar')));
         $this->validateLookupTable(array(array('match_value' => '0', 'comparison' => 'equals', 'out_value' => 'bar')));
@@ -88,15 +90,13 @@ class LookupTableTest extends UnitTestCase
             array('match_value' => 'bar', 'comparison' => 'starts_with', 'out_value' => 'baz'),
             array('match_value' => 'baz', 'comparison' => 'not_equals', 'out_value' => 'bar'),
         ));
-
-        self::assertTrue(true);
     }
 
     public function test_valid_empty()
     {
-        $this->validateLookupTable(array());
+        self::expectNotToPerformAssertions();
 
-        self::assertTrue(true);
+        $this->validateLookupTable(array());
     }
 
     private function validateLookupTable($value)

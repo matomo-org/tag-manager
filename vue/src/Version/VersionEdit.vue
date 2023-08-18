@@ -154,7 +154,6 @@ interface VersionEditState {
   versionChanges: SingleDiff[];
   isLoadingVersionChanges: boolean;
   isUpdatingVersion: boolean;
-  editTitle: string;
   version: Version;
 }
 
@@ -191,7 +190,6 @@ export default defineComponent({
       versionChanges: [],
       isLoadingVersionChanges: false,
       isUpdatingVersion: false,
-      editTitle: '',
       version: {} as unknown as Version,
     };
   },
@@ -288,7 +286,6 @@ export default defineComponent({
       Matomo.helper.lazyScrollToContent();
 
       if (this.edit && this.idContainerVersion) {
-        this.editTitle = translate('TagManager_EditVersion');
         VersionsStore.findVersion(this.idContainer, this.idContainerVersion).then((version) => {
           if (!version) {
             return;
@@ -302,7 +299,6 @@ export default defineComponent({
       }
 
       if (this.create) {
-        this.editTitle = translate('TagManager_CreateNewVersion');
         this.version = {
           idSite: Matomo.idSite,
           idcontainer: this.idContainer,
@@ -506,6 +502,11 @@ export default defineComponent({
     },
     selectTagManagerEnvironmentHelp() {
       return markRaw(SelectTagManagerEnvironmentHelpText);
+    },
+    editTitle() {
+      return this.create
+        ? translate('TagManager_CreateNewVersion')
+        : translate('TagManager_EditVersion');
     },
   },
 });

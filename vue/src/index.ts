@@ -5,30 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-import './ImportVersion/ImportVersion.adapter';
-import './VariableSelect/VariableSelect.adapter';
-import './VariableSelectType/VariableSelectType.adapter';
-import './Variable/VariableEdit.adapter';
-import './Variable/VariableList.adapter';
-import './Variable/VariableManage.adapter';
-import './Trigger/Triggers.store.adapter';
-import './Trigger/TriggerEdit.adapter';
-import './Trigger/TriggerList.adapter';
-import './Trigger/TriggerManage.adapter';
-import './Tag/TagEdit.adapter';
-import './Tag/TagList.adapter';
-import './Tag/TagManage.adapter';
-import './Version/VersionEdit.adapter';
-import './Version/VersionList.adapter';
-import './Version/VersionManage.adapter';
-import './Container/ContainerEdit.adapter';
-import './Container/ContainerList.adapter';
-import './Container/ContainerManage.adapter';
-import './ContainerDashboard/ContainerDashboard.adapter';
-import './ContainerSelector/ContainerSelector.adapter';
-import './ManageInstallTagCode/ManageInstallTagCode.adapter';
-import './TagmanagerTrackingCode/TagmanagerTrackingCode.adapter';
-
 export { default as ImportVersion } from './ImportVersion/ImportVersion.vue';
 export { default as VariableSelect } from './VariableSelect/VariableSelect.vue';
 export { default as VariableSelectType } from './VariableSelectType/VariableSelectType.vue';
@@ -54,5 +30,8 @@ export { default as ContainerDashboard } from './ContainerDashboard/ContainerDas
 export { default as ContainerSelector } from './ContainerSelector/ContainerSelector.vue';
 export { default as ManageInstallTagCode } from './ManageInstallTagCode/ManageInstallTagCode.vue';
 export { default as TagmanagerTrackingCode } from './TagmanagerTrackingCode/TagmanagerTrackingCode.vue';
+export { default as TrackingCodeCommon } from './TagmanagerTrackingCode/TrackingCodeCommon.vue';
+export { default as TrackingCodePage } from './TagmanagerTrackingCode/TrackingCodePage.vue';
 export { default as TrackingSPAPage } from './TagmanagerTrackingCode/TrackingSPAPage.vue';
 export { default as Debugging } from './Debugging/Debugging.vue';
+export { default as GettingStarted } from './GettingStarted/GettingStarted.vue';

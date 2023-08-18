@@ -13,8 +13,7 @@
         v-show="!isLoading"
         @click="createVariable()"
       >
-        <span class="icon-add" />
-        {{ translate('TagManager_CreateNewVariable') }}
+        <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewVariable') }}
       </a>
     </div>
     <ul class="collection with-header">
@@ -73,8 +72,8 @@
         v-show="!isLoading"
         @click="createVariable()"
       >
-        <span class="icon-add" />
-        {{ translate('TagManager_CreateNewVariable', translate('TagManager_Variable')) }}
+        <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewVariable',
+                                                         translate('TagManager_Variable')) }}
       </a>
     </div>
   </div>
@@ -173,7 +172,6 @@ export default defineComponent({
       }
 
       tagManagerHelper.editVariable(
-        null,
         this.idContainer,
         this.actualIdContainerVersion,
         variable.idvariable,
@@ -188,7 +186,6 @@ export default defineComponent({
       }
 
       tagManagerHelper.editVariable(
-        null,
         this.idContainer,
         this.actualIdContainerVersion,
         0,

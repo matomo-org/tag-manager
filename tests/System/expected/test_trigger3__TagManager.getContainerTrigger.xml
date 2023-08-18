@@ -5,7 +5,7 @@
 	<idsite>2</idsite>
 	<type>DomReady</type>
 	<name>Mytrigger3</name>
-	<description/>
+	<description />
 	<status>active</status>
 	<parameters>
 	</parameters>

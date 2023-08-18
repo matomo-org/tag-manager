@@ -29,7 +29,6 @@
 						<availableValues />
 						<description>You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Manager.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -68,7 +67,6 @@
 						<availableValues />
 						<description>Assign a Matomo configuration in order to track data into a specific site.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -94,7 +92,6 @@
 						</availableValues>
 						<description>Choose which action should be executed when this tag is fired.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -111,7 +108,6 @@
 						<availableValues />
 						<description>The ID of the goal you want to track manually.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;goal&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -123,18 +119,17 @@
 					<row>
 						<name>goalCustomRevenue</name>
 						<title>Goal Revenue (optional)</title>
-						<value/>
-						<defaultValue/>
+						<value />
+						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues/>
+						<availableValues />
 						<description>The estimated revenue value to track when the goal is triggered manually. As this value will be used in a calculation, it must either be a numeric value or it must reference a variable that contains a numeric value. If this field is empty or references a variable that doesn't contain a valid numeric value, the value will default to the revenue configured as part of the goal being triggered. A valid numeric value is something like 2430 or 2430.00 (note the absence of commas).</description>
-						<inlineHelp/>
-						<templateFile/>
-						<introduction/>
-						<condition>trackingType == "goal"</condition>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingType == &quot;goal&quot;</condition>
 						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
@@ -153,7 +148,6 @@
 						<availableValues />
 						<description>Optionally, specify a custom document title which should be tracked instead of the default document title.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;pageview&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -174,7 +168,6 @@
 						<availableValues />
 						<description>Optionally, specify a custom URL which should be tracked instead of the current location.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;pageview&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -195,7 +188,6 @@
 						<availableValues />
 						<description>The event's category, for example Videos, Music, Games...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -216,7 +208,6 @@
 						<availableValues />
 						<description>The event's action, for example Play, Pause, Duration, Add Playlist, Downloaded, Clicked...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -237,7 +228,6 @@
 						<availableValues />
 						<description>The event's object Name, for example a particular Movie name, or Song name, or File name...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -258,7 +248,6 @@
 						<availableValues />
 						<description>The event's value, for example &quot;50&quot; as in user has stayed on the website for 50 seconds.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -295,7 +284,6 @@
 						<availableValues />
 						<description>Your Emarsys Merchant ID</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -312,7 +300,6 @@
 						<availableValues />
 						<description>Report the category currently browsed by the visitor.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -329,7 +316,6 @@
 						<availableValues />
 						<description>Report a product view.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -346,7 +332,6 @@
 						<availableValues />
 						<description>Add an arbitrary tag to the current event. The tag is collected and can be accessed later from other Emarsys products.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -363,7 +348,6 @@
 						<availableValues />
 						<description>Execute commands in the queue, that is, send them to the recommender service for processing.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -396,7 +380,6 @@
 						<availableValues />
 						<description>For example &quot;UA-XXXXX-Y&quot;</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -415,7 +398,6 @@
 						</availableValues>
 						<description>Only the tracking type &quot;Pageview&quot; is currently supported.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -448,7 +430,6 @@
 						<availableValues />
 						<description>You can get the Site ID by logging into Pingdom, going to &quot;Monitoring&quot; and clicking on &quot;Real User Monitoring&quot;. Every added site will get its own Site ID.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -481,7 +462,6 @@
 						<availableValues />
 						<description>Your Visual Website Optimizer Account ID</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -521,7 +501,6 @@
 						</availableValues>
 						<description>Choose which action should be executed when this tag is fired.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -539,7 +518,6 @@
 						<availableValues />
 						<description>Assign a etracker configuration in order to track data into a specific site.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;pageview&quot; || trackingType ==&quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -560,7 +538,6 @@
 						<availableValues />
 						<description>The wrappers's pagename</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -581,7 +558,6 @@
 						<availableValues />
 						<description>The area should be separated by Slash</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -602,7 +578,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -623,7 +598,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -644,7 +618,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -665,7 +638,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -686,7 +658,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -707,7 +678,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;wrapper&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -728,7 +698,6 @@
 						<availableValues />
 						<description>The event's category, for example Navigation, Outbound Links, 404 Error...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -749,7 +718,6 @@
 						<availableValues />
 						<description>The event's object Name, for example a particular navigation element, a clicked element, form name,...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -770,7 +738,6 @@
 						<availableValues />
 						<description>The event's action, for example, click, open, close, play, pause...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -791,7 +758,6 @@
 						<availableValues />
 						<description>The event's type Name, for example an value of a send form...</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -817,7 +783,6 @@
 						</availableValues>
 						<description>Sale / Lead / Partial Cancellation / Cancellation</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -834,10 +799,13 @@
 						<availableValues />
 						<description>Order ID, transaction id or similar - max 50 chars</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionValue</name>
@@ -851,10 +819,13 @@
 						<availableValues />
 						<description>Order Value</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionCurrency</name>
@@ -868,10 +839,13 @@
 						<availableValues />
 						<description>Currency of the order according to ISO 4217 e.g.: EUR or USD</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionBasket</name>
@@ -885,10 +859,13 @@
 						<availableValues />
 						<description>dataLayer object of basket - according to etracker reference</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionCustomerGroup</name>
@@ -902,10 +879,13 @@
 						<availableValues />
 						<description>optional, e.g. new customer, existing customer, big buyer, VIP</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionDeliveryConditions</name>
@@ -919,10 +899,13 @@
 						<availableValues />
 						<description>optional, e.g. Delivery to the kerb, Setup on site, Delivery to the pick-up station/parcel shop/branch</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionPaymentConditions</name>
@@ -936,10 +919,13 @@
 						<availableValues />
 						<description>optional, e.g. Special payment targets, Cash discount, Payment in instalments</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerTransactionDebugMode</name>
@@ -953,10 +939,13 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerAddToCartProduct</name>
@@ -970,10 +959,13 @@
 						<availableValues />
 						<description>dataLayer object of the product - according to etracker reference</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;addtocart&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerAddToCartNumber</name>
@@ -987,10 +979,13 @@
 						<availableValues />
 						<description>Number of products added to the cart</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;addtocart&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerFormType</name>
@@ -1010,7 +1005,6 @@
 						</availableValues>
 						<description>Conversion / Form View / Field View / Field Interaction / Field Error</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>trackingType == &quot;form&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -1027,10 +1021,13 @@
 						<availableValues />
 						<description>Form Name titles the report of the form which is tracked</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;form&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 					<row>
 						<name>etrackerFormData</name>
@@ -1044,10 +1041,13 @@
 						<availableValues />
 						<description>eg. form section information. If used, a string is required</description>
 						<inlineHelp />
-						<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
 						<introduction />
 						<condition>trackingType == &quot;form&quot;</condition>
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 				</parameters>
 			</row>
@@ -1082,7 +1082,6 @@
 						<availableValues />
 						<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
 						<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1108,7 +1107,6 @@
 						</availableValues>
 						<description>Define the position of where the HTML should be inserted into your website.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1141,7 +1139,6 @@
 						<availableValues />
 						<description>You can define any image URL. We recommend to define a URL that starts with &quot;//&quot; so it will work on HTTP and HTTPS pages. If your website only supports HTTPS, it should start with &quot;https://&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1162,7 +1159,6 @@
 						<availableValues />
 						<description>Makes sure the image will be fetched again every time it is added to the page by adding a URL parameter to the image URL with a random value, for example &quot;?mtmcb=12345&quot;..</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1200,7 +1196,6 @@
 						<availableValues />
 						<description>You can find your API key in your project settings from your Bugsnag dashboard.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1217,7 +1212,6 @@
 						<availableValues />
 						<description>This should be disable if you don't want to track personal information about your users.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1250,7 +1244,6 @@
 						<availableValues />
 						<description>The apiKey of your honeybadger project</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1267,7 +1260,6 @@
 						<availableValues />
 						<description>The environment where the container is included (production, dev, etc.). Leave empty to default to the environment of this container.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1288,7 +1280,6 @@
 						<availableValues />
 						<description>(optional) the version of your project</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1325,7 +1316,6 @@
 						<availableValues />
 						<description>When you create a new application in your Raygun dashboard, your app API key is displayed at the top of the instructions page. You can also find the API key by clicking the &quot;Application Settings&quot; button in the side bar of the Raygun dashboard.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1342,7 +1332,6 @@
 						<availableValues />
 						<description>Automatically identify front end performance issues causing slow page load speeds. See what your users see in the browser and discover why users had poor quality experiences.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1375,7 +1364,6 @@
 						<availableValues />
 						<description>The DSN (Data Source Name) of your sentry.io project. It should look like 'https://&lt;key&gt;@sentry.io/&lt;project&gt;'</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1413,7 +1401,6 @@
 						<availableValues />
 						<description>Create a new site in Shareaholic and paste the site ID here</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1434,7 +1421,6 @@
 						<availableValues />
 						<description>Optionally enter a CSS selector to the element where the Inline Tools should be added.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1471,7 +1457,6 @@
 						<availableValues />
 						<description>The Drift ID is the text between brackets without quotes at the end of the JS snippet: drift.load('mdp4r5w7rh3y');</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1504,7 +1489,6 @@
 						<availableValues />
 						<description />
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1537,7 +1521,6 @@
 						<availableValues />
 						<description>You can find the partner ID by logging into your LinkedIn Campaign Manager, and clicking on &quot;Account Assets&quot; followed by &quot;Insight Tag&quot;. If &quot;Insight Tag&quot; is not available, please set up the Insight Tag by clicking on &quot;Conversion Tracking&quot;. There you can enter a domain and continue the set up. You will find the partner ID in the line `_linkedin_partner_id = &quot;123456&quot;`. In this example the ID would be &quot;123456&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1570,7 +1553,6 @@
 						<availableValues />
 						<description>Insert the Livezilla ID from your Dynamic Code section.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1587,7 +1569,6 @@
 						<availableValues />
 						<description>Enter the Domain where Livezilla is installed. Example: https://www.example.com</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1604,7 +1585,6 @@
 						<availableValues />
 						<description>In most cases you should let it activated.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1637,7 +1617,6 @@
 						<availableValues />
 						<description>Create a new site in Shareaholic and paste the site ID here</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1664,7 +1643,6 @@
 						</availableValues>
 						<description>Here you can optionally add an In-Page App to your website.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1681,7 +1659,6 @@
 						<availableValues />
 						<description>If you want to add an In-Page App enter the App ID here. It is about eight digits long. The App ID is not required for the Total Share Counter.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>shareaholicInPageApp &amp;&amp; shareaholicInPageApp !== &quot;total_share_count&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -1702,7 +1679,6 @@
 						<availableValues />
 						<description>Enter a CSS selector to the element where the In-Page App should be added.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>shareaholicInPageApp</condition>
 						<fullWidth>0</fullWidth>
@@ -1739,7 +1715,6 @@
 						<availableValues />
 						<description>You can get the Site ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Property Settings&quot;. The Site ID has typically about 25 characters, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1756,7 +1731,6 @@
 						<availableValues />
 						<description>You can get the Widget ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Chat Widget&quot; and selecting an appropriate widget. The widget ID can be retrieved from &quot;Direct Chat Link&quot; as https://tawk.to/chat/{SITE_ID}/{WIDGET_ID}.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1789,7 +1763,6 @@
 						<availableValues />
 						<description>You can get the Site ID by logging into Zendesk Chat, going to &quot;Settings&quot; and clicking on &quot;Widget&quot;. The Site ID has typically about 32 characters and is the text coming directly after &quot;https://v2.zopim.com/?&quot;, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1827,7 +1800,6 @@
 						<availableValues />
 						<description>Please enter a color as a hexadecimal string (e.g. '#11ee33')</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>

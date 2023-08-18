@@ -38,7 +38,7 @@ jobs:
       fail-fast: false
       matrix:
         php: [ '7.2', '8.2' ]
-        target: ['maximum_supported_matomo']
+        target: ['${{ github.base_ref || github.ref_name }}']
     steps:
       - uses: actions/checkout@v3
         with:
@@ -59,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: ['maximum_supported_matomo']
+        target: ['${{ github.base_ref || github.ref_name }}']
     steps:
       - uses: actions/checkout@v3
         with:
@@ -84,7 +84,7 @@ jobs:
         uses: matomo-org/github-action-tests@main
         with:
           plugin-name: 'TagManager'
-          matomo-test-branch: 'maximum_supported_matomo'
+          matomo-test-branch: ${{ github.base_ref || github.ref_name }}
           test-type: 'UI'
           php-version: '7.2'
           node-version: '16'

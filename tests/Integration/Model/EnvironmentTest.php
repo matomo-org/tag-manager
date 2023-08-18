@@ -49,6 +49,8 @@ class EnvironmentTest extends IntegrationTestCase
 
     public function test_checkEnvironmentNameFormat_valid()
     {
+        self::expectNotToPerformAssertions();
+
         Environment::checkEnvironmentNameFormat('fo_f');
         Environment::checkEnvironmentNameFormat('foo_f');
         Environment::checkEnvironmentNameFormat('fo');
@@ -59,7 +61,6 @@ class EnvironmentTest extends IntegrationTestCase
         Environment::checkEnvironmentNameFormat('foo9');
         Environment::checkEnvironmentNameFormat('949101');
         Environment::checkEnvironmentNameFormat('949_101');
-        $this->assertTrue(true);
     }
 
     public function test_checkEnvironmentNameFormat_tooLong()
@@ -112,9 +113,10 @@ class EnvironmentTest extends IntegrationTestCase
 
     public function test_checkIsValidEnvironment_valid()
     {
+        self::expectNotToPerformAssertions();
+
         $this->environment->checkIsValidEnvironment(Environment::ENVIRONMENT_LIVE);
         $this->environment->checkIsValidEnvironment('dev'); // selected by default
-        $this->assertTrue(true);
     }
 
     public function test_getEnvironments()
