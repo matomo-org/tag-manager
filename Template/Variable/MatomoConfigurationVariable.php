@@ -222,6 +222,7 @@ class MatomoConfigurationVariable extends BaseVariable
             $this->makeSetting('disableAlwaysUseSendBeacon', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableAlwaysUseSendBeaconTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableAlwaysUseSendBeaconDescription');
+                $field->condition = '!alwaysUseSendBeacon';
             }),
             $this->makeSetting('userId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoUserIdTitle');
