@@ -1163,6 +1163,23 @@
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
+						<name>disableAlwaysUseSendBeacon</name>
+						<title>Disable always use sendBeacon permanently</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Disable sendBeacon usage instead of a regular ajax request. This means when a user clicks for example on an outlink, the navigation to this page will be slower, but it will not be blocked by an Adblocker.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
 						<name>alwaysUseSendBeacon</name>
 						<title>Always use sendBeacon</title>
 						<value>0</value>
