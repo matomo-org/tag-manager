@@ -92,7 +92,7 @@
     </div>
     <div v-if="showBottom">
       <p v-if="idContainer && !showTestSection" v-html="$sanitize(getCongratulationsText)"></p>
-      <JsTrackerInstallCheck :site="site" v-if="idContainer"/>
+      <JsTrackerInstallCheck :site="site" v-if="idContainer && showTestSection"/>
     </div>
   </div>
 </template>

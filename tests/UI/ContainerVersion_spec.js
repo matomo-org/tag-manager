@@ -193,7 +193,9 @@ describe("ContainerVersion", function () {
 
     it('should be able to create new version through menu', async function () {
         await page.goto(container1Base);
+        await page.waitForNetworkIdle();
         await (await page.jQuery('#secondNavBar .item:contains(Publish)')).click();
+        await page.waitForNetworkIdle();
         await page.evaluate(function () {
             if (window.scrollTo) {
                 window.scrollTo(0,0);
