@@ -1140,7 +1140,6 @@
 						<availableValues />
 						<description>Disable sendBeacon usage instead of a regular ajax request. This means when a user clicks for example on an outlink, the navigation to this page will be slower, but it will not be blocked by an Adblocker.</description>
 						<inlineHelp />
-						<templateFile />
 						<introduction />
 						<condition>!alwaysUseSendBeacon</condition>
 						<fullWidth>0</fullWidth>
