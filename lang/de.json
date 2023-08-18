@@ -610,7 +610,7 @@
         "MatomoTagDescription": "Matomo ist die führende Open Source Analyseplattform.",
         "MatomoTagHelp": "Dieser Tag lässt Sie Seitenansichten und Ereignisse in Matomo aufzeichnen. Sie können das Aufzeichnen auf Ihre Bedürfnisse anpassen.",
         "MatomoTagManager": "Matomo Tag Manager",
-        "MatomoTagManagerTrackingInfoLine1": "Wenn Sie mehrere Ressourcen von Drittanbieter-Webseiten in Ihre Webseite einbetten, kann für Sie die Nachverfolgung Ihrer Webseite mit dem %1$sMatomo Tag Manager%2$s eine bessere Wahl sein als das normale JavaScript-Tracking.",
+        "MatomoTagManagerTrackingInfoLine1": "Wenn Sie mehrere Ressourcen von Drittanbieter-Websites in Ihre Website einbinden, kann das Tracking Ihrer Website mit dem %1$sMatomo Tag Manager%2$s die bessere Wahl für Sie sein, als das reguläre JavaScript-Tracking zu verwenden.",
         "MatomoTagManagerTrackingInfoLine2": "Sie wissen nicht, was ein Tag Manager ist? Erfahren Sie mehr darüber in unserer %1$s Erste Schritte%2$s Anleitung.",
         "MatomoTagName": "Matomo Analytics",
         "MetaContentVariableDescription": "Liest einen Wert aus dem \"meta\" HTML Element.",
