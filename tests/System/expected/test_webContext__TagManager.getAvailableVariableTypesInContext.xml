@@ -1138,7 +1138,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Disable sendBeacon usage instead of a regular ajax request. This means when a user clicks for example on an outlink, the navigation to this page will be slower, but it will not be blocked by an Adblocker.</description>
+						<description>Choose to stop using sendBeacon and use a regular AJAX request instead. This might make clicking on external links a bit slower for users, but it won't be stopped by ad blockers.</description>
 						<inlineHelp />
 						<introduction />
 						<condition>!alwaysUseSendBeacon</condition>
