@@ -1125,7 +1125,23 @@
 						<description>Enables sendBeacon usage instead of a regular ajax request. This means when a user clicks for example on an outlink, the navigation to this page will happen much faster.</description>
 						<inlineHelp />
 						<introduction />
-						<condition />
+						<condition>!disableAlwaysUseSendBeacon</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>disableAlwaysUseSendBeacon</name>
+						<title>Disable always use sendBeacon permanently</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Choose to stop using sendBeacon and use a regular AJAX request instead. This might make clicking on external links a bit slower for users, but it won't be stopped by ad blockers.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>!alwaysUseSendBeacon</condition>
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
