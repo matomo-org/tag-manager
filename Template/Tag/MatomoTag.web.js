@@ -90,6 +90,7 @@
                 if (!parameters.matomoConfig || !parameters.matomoConfig.name) {
                     return;
                 }
+                var trackingEndpoint = matomoConfig.trackingEndpoint == '<custom>' ? matomoConfig.trackingEndpointCustom : matomoConfig.trackingEndpoint;
 
                 // this is the matomoConfig variable name and the only way to differentiate two different tracker
                 // configurations
@@ -109,7 +110,7 @@
                     lastIdSite = matomoConfig.idSite;
                     // but even two or more different configs for the same Matomo URL & idSite
                     lastMatomoUrl = getMatomoUrlFromConfig(matomoConfig);
-                    var trackerUrl = lastMatomoUrl + matomoConfig.trackingEndpoint;
+                    var trackerUrl = lastMatomoUrl + trackingEndpoint;
                     if (matomoConfig.registerAsDefaultTracker) {
                         tracker = Piwik.addTracker(trackerUrl, matomoConfig.idSite);
                     } else {
@@ -131,6 +132,7 @@
 
                     if (matomoConfig.enableCrossDomainLinking) {
                         tracker.enableCrossDomainLinking();
+                        tracker.setCrossDomainLinkingTimeout(matomoConfig.crossDomainLinkingTimeout);
                     }
 
                     if (matomoConfig.cookieSameSite) {
@@ -145,6 +147,9 @@
                         tracker.setCookiePath(matomoConfig.cookiePath);
                     }
 
+                    if (matomoConfig.cookieNamePrefix) {
+                        tracker.setCookieNamePrefix(matomoConfig.cookieNamePrefix);
+                    }
 
                     if (matomoConfig.cookieDomain) {
                         tracker.setCookieDomain(matomoConfig.cookieDomain);
@@ -174,10 +179,20 @@
 
                     if (matomoConfig.disableAlwaysUseSendBeacon) {
                         tracker.disableAlwaysUseSendBeacon();
+
+                    if (matomoConfig.forceRequestMethod) {
+                        tracker.setRequestMethod(matomoConfig.requestMethod);
+                        if(matomoConfig.requestMethod == 'POST'){
+                            tracker.setRequestContentType(matomoConfig.requestContentType);
+                        }
                     }
 
                     if (matomoConfig.enableLinkTracking) {
                         tracker.enableLinkTracking();
+                    }
+
+                    if (matomoConfig.enableFileTracking) {
+                        tracker.enableFileTracking();
                     }
 
                     if (matomoConfig.requireConsent) {
@@ -187,11 +202,25 @@
                     if (matomoConfig.enableDoNotTrack) {
                         tracker.setDoNotTrack(1);
                     }
+
+                    if (matomoConfig.disablePerformanceTracking) {
+                        tracker.disablePerformanceTracking();
+                    }
+                    
+                    if (typeof matomoConfig.appendToTrackingUrl === 'string' && matomoConfig.appendToTrackingUrl.length > 0) {
+                        tracker.appendToTrackingUrl(matomoConfig.appendToTrackingUrlString);
+                    }
+                    
+                    if(typeof matomoConfig.customRequestProcessing === 'function'
+                        && matomoConfig.customRequestProcessing.length >= 1 ) {
+                        tracker.setCustomRequestProcessing(matomoConfig.customRequestProcessing);
+                    }
+
                     if (matomoConfig.enableJSErrorTracking) {
                         tracker.enableJSErrorTracking();
                     }
                     if (matomoConfig.enableHeartBeatTimer) {
-                        tracker.enableHeartBeatTimer();
+                        tracker.enableHeartBeatTimer(matomoConfig.heartBeatTime);
                     }
                     if (matomoConfig.trackAllContentImpressions) {
                         tracker.trackAllContentImpressions();
@@ -223,7 +252,7 @@
                 var possiblyUpdatedMatomoUrl = getMatomoUrlFromConfig(matomoConfig);
                 if (possiblyUpdatedMatomoUrl && lastMatomoUrl !== possiblyUpdatedMatomoUrl) {
                     // might change each time this method is called
-                    tracker.setTrackerUrl(possiblyUpdatedMatomoUrl + matomoConfig.trackingEndpoint);
+                    tracker.setTrackerUrl(possiblyUpdatedMatomoUrl + trackingEndpoint);
                     lastIdSite = possiblyUpdatedMatomoUrl;
                 }
 
@@ -250,10 +279,13 @@
                         var customUrl = parameters.get('customUrl');
                         if (customUrl) {
                             tracker.setCustomUrl(customUrl);
-                        }
+                        }                        
                         if (matomoConfig.customCookieTimeOutEnable) {  
-                            tracker.setVisitorCookieTimeout(matomoConfig.customCookieTimeOut * 86400);
+                            tracker.setVisitorCookieTimeout(matomoConfig.visitorCookieTimeOut * 86400);
+                            tracker.setReferralCookieTimeout(matomoConfig.referralCookieTimeOut * 86400);
+                            tracker.setSessionCookieTimeout(matomoConfig.sessionCookieTimeOut * 60);
                         }
+
                         tracker.trackPageView();
                     } else if (trackingType === 'event') {
                         tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'));
@@ -278,7 +310,8 @@
             }
 
             var matomoUrl = getMatomoUrlFromConfig(matomoConfig);
-            loadTracker(matomoUrl, matomoConfig.jsEndpoint);
+            var jsEndpoint = matomoConfig.jsEndpoint == '<custom>' ? matomoConfig.jsEndpointCustom : matomoConfig.jsEndpoint;
+            loadTracker(matomoUrl, jsEndpoint);
         };
     };
 })();
