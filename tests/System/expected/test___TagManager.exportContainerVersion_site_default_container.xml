@@ -98,6 +98,7 @@
 				<domains>
 				</domains>
 				<alwaysUseSendBeacon>0</alwaysUseSendBeacon>
+				<disableAlwaysUseSendBeacon>0</disableAlwaysUseSendBeacon>
 				<userId />
 				<customDimensions>
 				</customDimensions>

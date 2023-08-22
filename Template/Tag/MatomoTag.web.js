@@ -172,6 +172,10 @@
                         tracker.alwaysUseSendBeacon();
                     }
 
+                    if (matomoConfig.disableAlwaysUseSendBeacon) {
+                        tracker.disableAlwaysUseSendBeacon();
+                    }
+
                     if (matomoConfig.enableLinkTracking) {
                         tracker.enableLinkTracking();
                     }
