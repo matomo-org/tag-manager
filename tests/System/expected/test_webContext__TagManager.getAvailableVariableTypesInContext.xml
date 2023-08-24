@@ -821,6 +821,22 @@
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
+						<name>enableFileTracking</name>
+						<title>Enable File Tracking</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enable tracking of file:// protocol actions. By default, the file:// protocol is not tracked.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
 						<name>enableCrossDomainLinking</name>
 						<title>Enable Cross Domain Linking</title>
 						<value>0</value>
@@ -837,6 +853,22 @@
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
+						<name>crossDomainLinkingTimeout</name>
+						<title>Cross Domain Linking Timeout</title>
+						<value>180</value>
+						<defaultValue>180</defaultValue>
+						<type>integer</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set the cross domain linking timeout (in seconds). By default, the two visits across domains will be linked together when the link is clicked and the page is loaded within a 180 seconds timeout window.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>enableCrossDomainLinking == true</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
 						<name>enableDoNotTrack</name>
 						<title>Enable Do Not Track</title>
 						<value>0</value>
@@ -848,6 +880,22 @@
 						<availableValues />
 						<description>Enable this feature to not track users who opt out of tracking using Mozilla's (proposed) Do Not Track setting</description>
 						<inlineHelp>&lt;strong&gt;Note: When enabled it sets _paq.push([&quot;setDoNotTrack&quot;, true]); which will not send any tracking request when a visitor has DNT enabled unlike the &quot;DNT Matomo Setting&quot; which drops the request on the server when a visitor has DNT enabled.&lt;/strong&gt;</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>disablePerformanceTracking</name>
+						<title>Disable Performance Tracking</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Disables page performance tracking.</description>
+						<inlineHelp />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -882,6 +930,22 @@
 						<inlineHelp />
 						<introduction />
 						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>heartBeatTime</name>
+						<title>HeartBeat Time</title>
+						<value>15</value>
+						<defaultValue>15</defaultValue>
+						<type>integer</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The time interval in seconds in which to send pings. Can not be lower then 5s.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>enableHeartBeatTimer == true</condition>
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
@@ -966,7 +1030,7 @@
 					</row>
 					<row>
 						<name>customCookieTimeOutEnable</name>
-						<title>Enable custom visitor Cookie timeout</title>
+						<title>Enable Custom Cookie Timeouts</title>
 						<value>0</value>
 						<defaultValue>0</defaultValue>
 						<type>boolean</type>
@@ -974,7 +1038,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Allows you to set a custom time in full days for the _pk_id cookie.</description>
+						<description>Allows you to set custom timeouts for various cookies.</description>
 						<inlineHelp />
 						<introduction />
 						<condition>!disableCookies</condition>
@@ -982,7 +1046,7 @@
 					</row>
 					<row>
 						<name>customCookieTimeOut</name>
-						<title>The pk_id expire time in full days</title>
+						<title>Visitor Cookie Timeout</title>
 						<value>393</value>
 						<defaultValue>393</defaultValue>
 						<type>integer</type>
@@ -990,10 +1054,42 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Timeout in full days. By default, the Matomo tracking cookie expires in 13 months (365 + 28 days) = 393 days.</description>
+						<description>Timeout of pk_id in full days. By default, the Matomo tracking cookie expires in 13 months (365 + 28 days) = 393 days.</description>
 						<inlineHelp />
 						<introduction />
-						<condition>customCookieTimeOutEnable == true</condition>
+						<condition>customCookieTimeOutEnable == true && !disableCookies</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>referralCookieTimeOut</name>
+						<title>Referral Cookie Timeout</title>
+						<value>182</value>
+						<defaultValue>182</defaultValue>
+						<type>integer</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Timeout of the referral cookie in full days. By default, the Matomo tracking cookie expires in 6 months = 182 days.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>customCookieTimeOutEnable == true && !disableCookies</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>sessionCookieTimeOut</name>
+						<title>Session Cookie Timeout</title>
+						<value>30</value>
+						<defaultValue>30</defaultValue>
+						<type>integer</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Timeout of the session cookie in minutes.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>customCookieTimeOutEnable == true && !disableCookies</condition>
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
@@ -1031,6 +1127,22 @@
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
 						</component>
+					</row>
+					<row>
+						<name>cookieNamePrefix</name>
+						<title>Cookie Name Prefix</title>
+						<value>pk</value>
+						<defaultValue>pk</defaultValue>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The name prefix of the cookies.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 					<row>
 						<name>cookiePath</name>
@@ -1203,22 +1315,6 @@
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
-						<name>bundleTracker</name>
-						<title>Bundle Tracker</title>
-						<value>1</value>
-						<defaultValue>1</defaultValue>
-						<type>boolean</type>
-						<uiControl>checkbox</uiControl>
-						<uiControlAttributes>
-						</uiControlAttributes>
-						<availableValues />
-						<description>By bundling the Matomo JavaScript tracker directly into the container it may improve the performance of your website as it reduces the number of needed requests. It is recommended to bundle the Matomo tracker because in most cases the tracker would otherwise be loaded in a separate request on page view anyway. Note: If you use two different Matomo configurations in one container, the setting of the first configuration used in the first Matomo Tag will be applied to all Matomo tags within one container.</description>
-						<inlineHelp />
-						<introduction />
-						<condition />
-						<fullWidth>0</fullWidth>
-					</row>
-					<row>
 						<name>registerAsDefaultTracker</name>
 						<title>Register As Default Tracker</title>
 						<value>1</value>
@@ -1229,6 +1325,22 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>When enabled, the tracker will be registered as the default one for the website, and will receive all commands that get pushed into the global _paq variable. Useful if you want to use the tracker config from the container with your own _paq.push() JavaScript code.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>bundleTracker</name>
+						<title>Bundle Tracker</title>
+						<value>1</value>
+						<defaultValue>1</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>By bundling the Matomo JavaScript tracker directly into the container it may improve the performance of your website as it reduces the number of needed requests. It is recommended to bundle the Matomo tracker because in most cases the tracker would otherwise be loaded in a separate request on page view anyway. Note: If you use two different Matomo configurations in one container, the setting of the first configuration used in the first Matomo Tag will be applied to all Matomo tags within one container.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />
@@ -1248,11 +1360,28 @@
 							<piwik.js>piwik.js</piwik.js>
 							<row key="js/">js/</row>
 							<row key="js/tracker.php">js/tracker.php</row>
+							<row key="<custom>">Custom</row>
 						</availableValues>
 						<description>Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the &quot;Bundle Tracker&quot; option.</description>
 						<inlineHelp />
 						<introduction />
-						<condition />
+						<condition>!bundleTracker</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>jsEndpointCustom</name>
+						<title>Custom Tracker Javascript Path</title>
+						<value>custom.js</value>
+						<defaultValue>custom.js</defaultValue>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Here you can configure a non standard path to fetch the tracker from. Will be appended to the Matomo URL. Should not start with '/'. Keep in mind that, since this is non standard, you have to handle the requests there yourself!</description>
+						<inlineHelp />
+						<introduction />
+						<condition>!bundleTracker && jsEndpoint == "&lt;custom&gt;"</condition>
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
@@ -1269,12 +1398,116 @@
 							<piwik.php>piwik.php</piwik.php>
 							<row key="js/">js/</row>
 							<row key="js/tracker.php">js/tracker.php</row>
+							<row key="<custom>">Custom</row>
 						</availableValues>
 						<description>Here you can configure the target path for tracking requests.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>trackingEndpointCustom</name>
+						<title>Custom Tracking Request Target Path</title>
+						<value>custom.php</value>
+						<defaultValue>custom.php</defaultValue>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Here you can configure a non standard path for tracking requests. Will be appended to the Matomo URL. Should not start with '/'. Keep in mind that, since this is non standard, you have to handle the requests there yourself!</description>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingEndpoint == "&lt;custom&gt;"</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>appendToTrackingUrl</name>
+						<title>Append To Tracking Url</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Append a custom string to the end of the HTTP request to matomo.php? (or your selected respective tracking endpoint).</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>forceRequestMethod</name>
+						<title>Force Request Method</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enables forcing the request method to either GET or POST.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>requestMethod</name>
+						<title>Request Method</title>
+						<value>GET</value>
+						<defaultValue>GET</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<GET>GET</GET>
+							<POST>POST</POST>
+						</availableValues>
+						<description>To use the POST request method, either 1) the Matomo host is the same as the tracked website host (Matomo installed in the same domain as your tracked website), or 2) if Matomo is not installed on the same host as your website, you need to enable CORS (Cross domain requests) as explained in this FAQ. Keep in mind that when Matomo uses sendBeacon() for sending tracking requests (which is enabled by default), it will send data via POST. If you want Matomo to never send POST requests, you can use this method to force GET which will automatically disable sendBeacon.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>forceRequestMethod</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>requestContentType</name>
+						<title>Content-Type</title>
+						<value>application/x-www-form-urlencoded; charset=UTF-8</value>
+						<defaultValue>application/x-www-form-urlencoded; charset=UTF-8</defaultValue>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set request Content-Type header value for POST requests.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>forceRequestMethod && requestMethod == "POST"</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>customRequestProcessing</name>
+						<title>Custom Request Processing</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Can be set to a variable of type "Custom Request Processing Function" to augment or override default request sending behaviour.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 				</parameters>
 			</row>
