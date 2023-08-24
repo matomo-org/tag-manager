@@ -325,7 +325,7 @@ class MatomoConfigurationVariable extends BaseVariable
                     'piwik.js' => 'piwik.js',
                     'js/' => 'js/',
                     'js/tracker.php' => 'js/tracker.php',
-                    '<custom>' =>  Piwik::translate('TagManager_MatomoConfigurationMatomoJsEndpointCustom'),
+                    'custom' =>  Piwik::translate('TagManager_MatomoConfigurationMatomoJsEndpointCustom'),
                 );
 
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoJsEndpointDescription');
@@ -334,7 +334,7 @@ class MatomoConfigurationVariable extends BaseVariable
             $matomoUrl = $this->makeSetting('jsEndpointCustom', 'custom.js', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoJsEndpointCustomTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoJsEndpointCustomDescription');
-                $field->condition = '!bundleTracker && jsEndpoint == "<custom>"';
+                $field->condition = '!bundleTracker && jsEndpoint == "custom"';
                 $field->transform = function ($value) {
                     return trim($value);
                 };
@@ -347,16 +347,15 @@ class MatomoConfigurationVariable extends BaseVariable
                     'piwik.php' => 'piwik.php',
                     'js/' => 'js/',
                     'js/tracker.php' => 'js/tracker.php',
-                    '<custom>' =>  Piwik::translate('TagManager_MatomoConfigurationMatomoTrackingEndpointCustom'),
+                    'custom' =>  Piwik::translate('TagManager_MatomoConfigurationMatomoTrackingEndpointCustom'),
                 );
-                // we are using <custom> here, since the <> make the option an invalid url,
-                // thus the JavaScript tracker knows it must check trackingEndpointCustom
+                
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackingEndpointDescription');
             }),
             $matomoUrl = $this->makeSetting('trackingEndpointCustom', 'custom.php', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackingEndpointCustomTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackingEndpointCustomDescription');
-                $field->condition = 'trackingEndpoint == "<custom>"';
+                $field->condition = 'trackingEndpoint == "custom"';
                 $field->transform = function ($value) {
                     return trim($value);
                 };

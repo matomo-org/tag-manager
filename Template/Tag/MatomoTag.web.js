@@ -179,7 +179,8 @@
 
                     if (matomoConfig.disableAlwaysUseSendBeacon) {
                         tracker.disableAlwaysUseSendBeacon();
-
+                    }
+                    
                     if (matomoConfig.forceRequestMethod) {
                         tracker.setRequestMethod(matomoConfig.requestMethod);
                         if(matomoConfig.requestMethod == 'POST'){
