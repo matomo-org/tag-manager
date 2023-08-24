@@ -1360,7 +1360,7 @@
 							<piwik.js>piwik.js</piwik.js>
 							<row key="js/">js/</row>
 							<row key="js/tracker.php">js/tracker.php</row>
-							<row key="<custom>">Custom</row>
+							<row key="&lt;custom&gt;">Custom</row>
 						</availableValues>
 						<description>Here you can configure the source path of the Matomo Tracker JavaScript, if you are not using the &quot;Bundle Tracker&quot; option.</description>
 						<inlineHelp />
@@ -1398,7 +1398,7 @@
 							<piwik.php>piwik.php</piwik.php>
 							<row key="js/">js/</row>
 							<row key="js/tracker.php">js/tracker.php</row>
-							<row key="<custom>">Custom</row>
+							<row key="&lt;custom&gt;">Custom</row>
 						</availableValues>
 						<description>Here you can configure the target path for tracking requests.</description>
 						<inlineHelp />
