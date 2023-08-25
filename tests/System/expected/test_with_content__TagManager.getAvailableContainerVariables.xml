@@ -234,7 +234,7 @@
 				<type>Weekday</type>
 				<name>Weekday</name>
 				<category>Date</category>
-				<description>Returns the local day of the week eg monday, tuesday, wednesday, ...</description>
+				<description>Returns the local day of the week eg monday, tuesday, wednesday,…</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>

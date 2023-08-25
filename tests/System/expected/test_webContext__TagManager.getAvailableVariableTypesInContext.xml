@@ -508,7 +508,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The etracker ID you want to track data into. The ID is required. You may  find the ID of your website under &quot;Administration =&gt; Setup/Tracking Code&quot; in etracker.</description>
+						<description>The etracker ID you want to track data into. The ID is required. You may  find the ID of your website under &quot;Administration &#x2192; Setup/Tracking Code&quot; in etracker.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />
@@ -794,7 +794,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The idSite you want to track data into. The idSite of the current website is preconfigured. You may also find the idSite of any other website under &quot;Administration =&gt; Manage Measurables/Websites&quot;.</description>
+						<description>The idSite you want to track data into. The idSite of the current website is preconfigured. You may also find the idSite of any other website under &quot;Administration &#x2192; Manage Measurables/Websites&quot;.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />
