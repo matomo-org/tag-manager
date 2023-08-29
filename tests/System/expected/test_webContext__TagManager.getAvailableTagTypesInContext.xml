@@ -186,7 +186,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The event's category, for example Videos, Music, Games...</description>
+						<description>The event's category, for example Videos, Music, Games…</description>
 						<inlineHelp />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
@@ -206,7 +206,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The event's action, for example Play, Pause, Duration, Add Playlist, Downloaded, Clicked...</description>
+						<description>The event's action, for example Play, Pause, Duration, Add Playlist, Downloaded, Clicked…</description>
 						<inlineHelp />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
@@ -226,7 +226,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The event's object Name, for example a particular Movie name, or Song name, or File name...</description>
+						<description>The event's object Name, for example a particular Movie name, or Song name, or File name…</description>
 						<inlineHelp />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
@@ -696,7 +696,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The event's category, for example Navigation, Outbound Links, 404 Error...</description>
+						<description>The event's category, for example Navigation, Outbound Links, 404 Error…</description>
 						<inlineHelp />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
@@ -716,7 +716,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The event's object Name, for example a particular navigation element, a clicked element, form name,...</description>
+						<description>The event's object Name, for example a particular navigation element, a clicked element, form name,…</description>
 						<inlineHelp />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
@@ -736,7 +736,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The event's action, for example, click, open, close, play, pause...</description>
+						<description>The event's action, for example, click, open, close, play, pause…</description>
 						<inlineHelp />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
@@ -756,7 +756,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The event's type Name, for example an value of a send form...</description>
+						<description>The event's type Name, for example an value of a send form…</description>
 						<inlineHelp />
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
