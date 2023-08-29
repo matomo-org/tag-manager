@@ -110,7 +110,7 @@ import {
   CopyToClipboard,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
-import JsTrackerInstallCheck from '../../../../JsTrackerInstallCheck/vue/src/JsTrackerInstallCheck/JsTrackerInstallCheck.vue';
+import { JsTrackerInstallCheck } from 'JsTrackerInstallCheck';
 import {
   Container,
   InstallInstructions,
