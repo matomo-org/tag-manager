@@ -14,7 +14,7 @@
     <TagmanagerTrackingCode
       :show-container-row="showContainerRow"
       :current-action="currentAction"
-      :showTestSection="true"/>
+      :showTestSection="isJsTrackerInstallCheckAvailable"/>
   </div>
   <ContentBlock
     anchor="tagmanager"
@@ -42,6 +42,7 @@ export default defineComponent({
   props: {
     currentAction: String,
     showContainerRow: Boolean,
+    isJsTrackerInstallCheckAvailable: Boolean,
   },
   components: {
     ContentBlock,
