@@ -49,22 +49,11 @@ export default defineComponent({
       const refs = (this.$refs.trackingCodeCommon as any);
       refs.installInstructions = [];
 
-      if (
-        !refs?.idContainer
-        || !refs?.environment
-        || !refs?.site?.id
-      ) {
+      this.updateStep1Text();
+
+      if (!refs?.site?.id || !refs?.environment) {
         return;
       }
-
-      const manageContainerURL = this.linkTo('manageContainers', refs.site.id, refs.idContainer);
-      this.setupStep1 = translate(
-        'TagManager_SPAFollowStep1',
-        '<br><strong>',
-        '</strong>',
-        `<a href="${manageContainerURL}" target="_blank" rel="noreferrer noopener">`,
-        '</a>',
-      );
 
       refs.isLoading = true;
       AjaxHelper.fetch<InstallInstructions[]>({
@@ -100,6 +89,28 @@ export default defineComponent({
       }
       return `?${url}`;
     },
+    updateStep1Text() {
+      // eslint-disable-next-line
+      const refs = (this.$refs.trackingCodeCommon as any);
+
+      if (!refs?.site?.id) {
+        return;
+      }
+
+      // Allow an empty container ID, since we only need the site ID for the URL
+      const idContainer = !refs?.idContainer ? '' : refs.idContainer;
+      const manageContainerURL = this.linkTo('manageContainers', refs.site.id, idContainer);
+      this.setupStep1 = translate(
+        'TagManager_SPAFollowStep1',
+        '<br><strong>',
+        '</strong>',
+        `<a href="${manageContainerURL}" target="_blank" rel="noreferrer noopener">`,
+        '</a>',
+      );
+    },
+  },
+  mounted() {
+    this.updateStep1Text();
   },
 });
 </script>

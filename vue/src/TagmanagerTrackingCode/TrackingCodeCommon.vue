@@ -90,7 +90,7 @@
         />
       </div>
     </div>
-    <div v-if="showBottom">
+    <div v-if="showBottom" v-show="!noReleaseFound">
       <p v-if="idContainer && !showTestSection" v-html="$sanitize(getCongratulationsText)"></p>
       <template v-if="idContainer && showTestSection">
         <li><component :is="testComponent" :site="site"></component></li>
