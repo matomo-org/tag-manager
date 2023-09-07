@@ -915,6 +915,9 @@
         "SPAFollowStep14": "In the field \"%1$s\", set the version to, for example, %2$s1.0%3$s",
         "SPAFollowStep15": "Click the green \"%1$s\" button. Now that you have completed the configuration in the Tag Manager, follow the last step below to finish the setup within your app.",
         "SPAFollowStep16": "Copy the code below and paste it in the header of your SPA / PWA. We recommend pasting it immediately before the closing %1$s tag. %2$sLearn more%3$s.",
-        "ReactFollowStep16": "Inject the %1$sMatomo Tag Manager JS%2$s code into your %3$s (or other relevant files), we recommend doing this using the \"%4$s\" method. The example below shows how to add the %1$sMatomo Tag Manager JS%2$s code into a \"%5$s\" app in %6$s."
+        "ReactFollowStep16": "Inject the %1$sMatomo Tag Manager JS%2$s code into your %3$s (or other relevant files), we recommend doing this using the \"%4$s\" method. The example below shows how to add the %1$sMatomo Tag Manager JS%2$s code into a \"%5$s\" app in %6$s.",
+        "SiteWithoutDataMtmIntro": "The Matomo Tag Manager may be a better choice than tracking via the regular JavaScript code. It lets you manage and unify all your tracking and marketing tags (also known as \"pixels\" or \"custom HTML/JS tags\") in one place. Using the Matomo Tag Manager makes your life easier when you want to modify any of these tags, as you will no longer need a developer to make the needed changes for you. %1$sLearn more%2$s.",
+        "SiteWithoutDataMtmStep2": "If you would like to customize this container, visit the %1$sContainer Dashboard%2$s",
+        "SiteWithoutDataMtmStep3": "Copy the code below and paste it on every page of your website. We recommend pasting it immediately before the closing %1$s tag. %2$sLearn more%3$s."
     }
 }

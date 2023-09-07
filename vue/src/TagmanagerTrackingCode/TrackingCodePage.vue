@@ -6,20 +6,30 @@
 
 <template>
   <div v-if="currentAction === 'siteWithoutDataTabs'">
-    <p v-html="$sanitize(trackingInfoTextLine1)"></p>
-    <p v-html="$sanitize(trackingInfoTextLine2)"></p>
-    <TagmanagerTrackingCode :show-container-row="showContainerRow" :current-action="currentAction"/>
+    <p v-html="$sanitize(siteWithoutDataMtmIntro)"></p>
+    <br>
+    <p>
+      <strong>{{ translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro') }}</strong>
+    </p>
+    <TagmanagerTrackingCode
+      :show-container-row="showContainerRow"
+      :current-action="currentAction"
+      :showTestSection="isJsTrackerInstallCheckAvailable"/>
   </div>
   <ContentBlock
     anchor="tagmanager"
     :content-title="translate('TagManager_MatomoTagManager')"
     v-else
   >
-    <p>&nbsp;</p>
-    <p v-html="$sanitize(trackingInfoTextLine1)"></p>
+    <p v-html="$sanitize(siteWithoutDataMtmIntro)"></p>
     <br>
-    <p v-html="$sanitize(trackingInfoTextLine2)"></p>
-    <TagmanagerTrackingCode :show-container-row="showContainerRow" :current-action="currentAction"/>
+    <p>
+      <strong>{{ translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro') }}</strong>
+    </p>
+    <TagmanagerTrackingCode
+      :show-container-row="showContainerRow"
+      :current-action="currentAction"
+      :showTestSection="false"/>
   </ContentBlock>
 </template>
 
@@ -32,6 +42,7 @@ export default defineComponent({
   props: {
     currentAction: String,
     showContainerRow: Boolean,
+    isJsTrackerInstallCheckAvailable: Boolean,
   },
   components: {
     ContentBlock,
@@ -60,6 +71,19 @@ export default defineComponent({
 
       return translate(
         'TagManager_MatomoTagManagerTrackingInfoLine2',
+        `<a href="${gettingStartedLink}">`,
+        '</a>',
+      );
+    },
+    siteWithoutDataMtmIntro() {
+      const gettingStartedLink = `?${MatomoUrl.stringify({
+        ...MatomoUrl.urlParsed.value,
+        module: 'TagManager',
+        action: 'gettingStarted',
+      })}`;
+
+      return translate(
+        'TagManager_SiteWithoutDataMtmIntro',
         `<a href="${gettingStartedLink}">`,
         '</a>',
       );

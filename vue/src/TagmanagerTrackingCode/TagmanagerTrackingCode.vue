@@ -4,22 +4,26 @@
   @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
 -->
 <template>
-  <div class="tagManagerTrackingCode">
+  <ol class="list-style-decimal">
+    <li v-html="$sanitize(setupStep1)" v-if="showContainerRow"></li>
     <TrackingCodeCommon
       :show-container-row="showContainerRow"
       :showBottom="true"
-      :showDescription="true"
+      :showDescription="false"
+      :showPlainMtmSteps="true"
+      :showTestSection="showTestSection"
       @fetchInstallInstructions="fetchInstallInstructions"
       ref="trackingCodeCommon"
     />
-  </div>
+  </ol>
 </template>
 
 <script lang="ts">
 import { defineComponent, nextTick } from 'vue';
 import {
   AjaxHelper,
-  SelectOnFocus,
+  MatomoUrl,
+  translate,
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
 import {
@@ -29,12 +33,15 @@ import {
 export default defineComponent({
   props: {
     showContainerRow: Boolean,
+    showTestSection: Boolean,
   },
   components: {
     TrackingCodeCommon,
   },
-  directives: {
-    SelectOnFocus,
+  data() {
+    return {
+      setupStep1: '',
+    };
   },
   methods: {
     fetchInstallInstructions() {
@@ -42,11 +49,9 @@ export default defineComponent({
       const refs = (this.$refs.trackingCodeCommon as any);
       refs.installInstructions = [];
 
-      if (
-        !refs?.idContainer
-        || !refs?.environment
-        || !refs?.site?.id
-      ) {
+      this.updateStep1Text();
+
+      if (!refs?.site?.id || !refs?.environment) {
         return;
       }
 
@@ -71,6 +76,41 @@ export default defineComponent({
         refs.isLoading = false;
       });
     },
+    linkTo(action: string, idSite: string, idContainer: string, hash?: QueryParameters) {
+      let url = MatomoUrl.stringify({
+        ...MatomoUrl.urlParsed.value,
+        module: 'TagManager',
+        action,
+        idSite,
+        idContainer,
+      });
+      if (hash) {
+        url += `#?${MatomoUrl.stringify(hash)}`;
+      }
+      return `?${url}`;
+    },
+    updateStep1Text() {
+      // eslint-disable-next-line
+      const refs = (this.$refs.trackingCodeCommon as any);
+
+      if (!refs?.site?.id) {
+        return;
+      }
+
+      // Allow an empty container ID, since we only need the site ID for the URL
+      const idContainer = !refs?.idContainer ? '' : refs.idContainer;
+      const manageContainerURL = this.linkTo('manageContainers', refs.site.id, idContainer);
+      this.setupStep1 = translate(
+        'TagManager_SPAFollowStep1',
+        '<br><strong>',
+        '</strong>',
+        `<a href="${manageContainerURL}" target="_blank" rel="noreferrer noopener">`,
+        '</a>',
+      );
+    },
+  },
+  mounted() {
+    this.updateStep1Text();
   },
 });
 </script>

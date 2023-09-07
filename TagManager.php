@@ -16,6 +16,7 @@ use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Log;
 use Piwik\Piwik;
 use Piwik\Plugin;
+use Piwik\Plugin\Manager;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
@@ -266,6 +267,7 @@ class TagManager extends \Piwik\Plugin
         $view = new View("@TagManager/trackingCode");
         $view->action = Piwik::getAction();
         $view->showContainerRow = $model->getNumContainersTotal() > 1;
+        $view->isJsTrackerInstallCheckAvailable = Manager::getInstance()->isPluginActivated('JsTrackerInstallCheck');
         $out .= $view->render();
     }
 
@@ -854,6 +856,9 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_CustomUrl';
         $result[] = 'TagManager_PageViewTriggerName';
         $result[] = 'TagManager_MatomoTagName';
+        $result[] = 'TagManager_SiteWithoutDataMtmIntro';
+        $result[] = 'TagManager_SiteWithoutDataMtmStep2';
+        $result[] = 'TagManager_SiteWithoutDataMtmStep3';
     }
 
     public function getStylesheetFiles(&$stylesheets)
