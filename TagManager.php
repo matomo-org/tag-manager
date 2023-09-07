@@ -71,7 +71,6 @@ class TagManager extends \Piwik\Plugin
             'TwoFactorAuth.requiresTwoFactorAuthentication' => 'requiresTwoFactorAuthentication',
             'Db.getTablesInstalled' => 'getTablesInstalled',
             'Template.siteWithoutDataTab.ReactJs.content' => 'embedReactTagManagerTrackingCode',
-            'Template.siteWithoutDataTab.SpaPwa.content' => 'embedSPATagManagerTrackingCode',
         );
     }
 
@@ -284,16 +283,6 @@ class TagManager extends \Piwik\Plugin
         Piwik::checkUserHasSomeViewAccess();
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCodeReact");
-        $view->action = Piwik::getAction();
-        $view->showContainerRow = $model->getNumContainersTotal() > 1;
-        $out .= $view->render();
-    }
-
-    public function embedSPATagManagerTrackingCode(&$out)
-    {
-        Piwik::checkUserHasSomeViewAccess();
-        $model = $this->getContainerModel();
-        $view = new View("@TagManager/trackingSPA");
         $view->action = Piwik::getAction();
         $view->showContainerRow = $model->getNumContainersTotal() > 1;
         $out .= $view->render();
