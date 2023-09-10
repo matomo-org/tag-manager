@@ -209,7 +209,7 @@
                     }
                     
                     if (typeof matomoConfig.appendToTrackingUrl === 'string' && matomoConfig.appendToTrackingUrl.length > 0) {
-                        tracker.appendToTrackingUrl(matomoConfig.appendToTrackingUrlString);
+                        tracker.appendToTrackingUrl(matomoConfig.appendToTrackingUrl);
                     }
                     
                     if(typeof matomoConfig.customRequestProcessing === 'function'
