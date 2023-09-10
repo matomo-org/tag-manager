@@ -90,8 +90,7 @@
                 if (!parameters.matomoConfig || !parameters.matomoConfig.name) {
                     return;
                 }
-                var trackingEndpoint = matomoConfig.trackingEndpoint == '<custom>' ? matomoConfig.trackingEndpointCustom : matomoConfig.trackingEndpoint;
-
+                
                 // this is the matomoConfig variable name and the only way to differentiate two different tracker
                 // configurations
                 var variableName = parameters.matomoConfig.name;
@@ -99,6 +98,7 @@
                 // we need to fetch matomoConfig again in case some parameters changed meanwhile that are variables...
                 // eg userId might be a variable and it's value might be different now
                 var matomoConfig = parameters.get('matomoConfig', {});
+                var trackingEndpoint = matomoConfig.trackingEndpoint == 'custom' ? matomoConfig.trackingEndpointCustom : matomoConfig.trackingEndpoint;
                 var tracker;
                 // we make sure to not update jsonConfig even when the configured values change... otherwise we would create
                 // randomly too many trackers when eg userId changes meanwhile etc
@@ -311,7 +311,7 @@
             }
 
             var matomoUrl = getMatomoUrlFromConfig(matomoConfig);
-            var jsEndpoint = matomoConfig.jsEndpoint == '<custom>' ? matomoConfig.jsEndpointCustom : matomoConfig.jsEndpoint;
+            var jsEndpoint = matomoConfig.jsEndpoint == 'custom' ? matomoConfig.jsEndpointCustom : matomoConfig.jsEndpoint;
             loadTracker(matomoUrl, jsEndpoint);
         };
     };
