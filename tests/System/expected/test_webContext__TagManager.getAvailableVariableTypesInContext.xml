@@ -1167,8 +1167,8 @@
 					<row>
 						<name>cookieNamePrefix</name>
 						<title>Cookie Name Prefix</title>
-						<value>pk</value>
-						<defaultValue>pk</defaultValue>
+						<value>_pk_</value>
+						<defaultValue>_pk_</defaultValue>
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>

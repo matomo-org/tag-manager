@@ -194,7 +194,7 @@ class MatomoConfigurationVariable extends BaseVariable
                     return trim($value);
                 };
             }),
-            $this->makeSetting('cookieNamePrefix', 'pk', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $this->makeSetting('cookieNamePrefix', '_pk_', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCookieNamePrefixTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCookieNamePrefixDescription');
                 $field->validators[] = new CharacterLength(1, 20);

@@ -66,7 +66,7 @@ class Updates_5_0_0_rc2 extends PiwikUpdates
         $migrator->addField('sessionCookieTimeOut', 30);
         $migrator->addField('enableFileTracking', false);
         $migrator->addField('crossDomainLinkingTimeout', 180);
-        $migrator->addField('cookieNamePrefix', 'pk');
+        $migrator->addField('cookieNamePrefix', '_pk_');
         $migrator->addField('disablePerformanceTracking', false);
         $migrator->addField('trackingEndpointCustom', 'custom.php');
         $migrator->addField('jsEndpointCustom', 'custom.js');

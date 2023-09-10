@@ -98,7 +98,7 @@
 				<sessionCookieTimeOut>30</sessionCookieTimeOut>
 				<setSecureCookie>0</setSecureCookie>
 				<cookieDomain />
-				<cookieNamePrefix>pk</cookieNamePrefix>
+				<cookieNamePrefix>_pk_</cookieNamePrefix>
 				<cookiePath />
 				<cookieSameSite>Lax</cookieSameSite>
 				<disableBrowserFeatureDetection>0</disableBrowserFeatureDetection>
