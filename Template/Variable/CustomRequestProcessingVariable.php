@@ -35,7 +35,7 @@ class CustomRequestProcessingVariable extends BaseVariable
     public function getParameters()
     {
         return array(
-            $this->makeSetting('jsFunction', "function(request){\n\treturn request;\n}", FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $this->makeSetting('jsFunction', "function(request){ return request; }", FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_CustomRequestProcessingVariableJsFunctionTitle');
                 $field->description = Piwik::translate('TagManager_CustomRequestProcessingVariableJsFunctionDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;

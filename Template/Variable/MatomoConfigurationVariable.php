@@ -378,7 +378,7 @@ class MatomoConfigurationVariable extends BaseVariable
                 );
 
                 $field->condition = 'forceRequestMethod';
-                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequestMethodDescription');
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoRequestMethodInlineHelp', array('<a href="https://matomo.org/faq/how-to/faq_18694/" target="_blank" rel="noreferrer noopener">', '</a>', '<br>'));
             }),
             $matomoUrl = $this->makeSetting('requestContentType', 'application/x-www-form-urlencoded; charset=UTF-8', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequestContentTypeTitle');
