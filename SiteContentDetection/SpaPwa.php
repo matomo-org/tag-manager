@@ -33,7 +33,7 @@ class SpaPwa extends SiteContentDetectionAbstract
         return 70;
     }
 
-    public function detectByContent(?string $data = null, ?array $headers = null): bool
+    public function isDetected(?string $data = null, ?array $headers = null): bool
     {
         return false;
     }
@@ -43,7 +43,7 @@ class SpaPwa extends SiteContentDetectionAbstract
         return true;
     }
 
-    public function renderInstructionsTab(SiteContentDetector $detector = null): string
+    public function renderInstructionsTab(SiteContentDetector $detector): string
     {
         $model = StaticContainer::get('Piwik\Plugins\TagManager\Model\Container');
         $view = new View("@TagManager/trackingSPA");
