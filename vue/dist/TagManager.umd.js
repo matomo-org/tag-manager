@@ -9440,27 +9440,27 @@ TrackingCodeCommonvue_type_script_lang_ts.render = TrackingCodeCommonvue_type_te
 TagmanagerTrackingCodevue_type_script_lang_ts.render = TagmanagerTrackingCodevue_type_template_id_6a09ff25_render
 
 /* harmony default export */ var TagmanagerTrackingCode = (TagmanagerTrackingCodevue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=template&id=3b68ce26
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=template&id=5195f22b
 
-var TrackingCodePagevue_type_template_id_3b68ce26_hoisted_1 = {
+var TrackingCodePagevue_type_template_id_5195f22b_hoisted_1 = {
   key: 0
 };
-var TrackingCodePagevue_type_template_id_3b68ce26_hoisted_2 = ["innerHTML"];
+var TrackingCodePagevue_type_template_id_5195f22b_hoisted_2 = ["innerHTML"];
 
-var TrackingCodePagevue_type_template_id_3b68ce26_hoisted_3 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("br", null, null, -1);
+var TrackingCodePagevue_type_template_id_5195f22b_hoisted_3 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("br", null, null, -1);
 
-var TrackingCodePagevue_type_template_id_3b68ce26_hoisted_4 = ["innerHTML"];
+var TrackingCodePagevue_type_template_id_5195f22b_hoisted_4 = ["innerHTML"];
 
-var TrackingCodePagevue_type_template_id_3b68ce26_hoisted_5 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("br", null, null, -1);
+var TrackingCodePagevue_type_template_id_5195f22b_hoisted_5 = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("br", null, null, -1);
 
-function TrackingCodePagevue_type_template_id_3b68ce26_render(_ctx, _cache, $props, $setup, $data, $options) {
+function TrackingCodePagevue_type_template_id_5195f22b_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TagmanagerTrackingCode = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("TagmanagerTrackingCode");
 
   var _component_ContentBlock = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("ContentBlock");
 
-  return _ctx.currentAction === 'siteWithoutDataTabs' ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", TrackingCodePagevue_type_template_id_3b68ce26_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", {
+  return _ctx.currentAction === 'getTrackingMethodsForSite' ? (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", TrackingCodePagevue_type_template_id_5195f22b_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", {
     innerHTML: _ctx.$sanitize(_ctx.siteWithoutDataMtmIntro)
-  }, null, 8, TrackingCodePagevue_type_template_id_3b68ce26_hoisted_2), TrackingCodePagevue_type_template_id_3b68ce26_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("strong", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro')), 1)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_TagmanagerTrackingCode, {
+  }, null, 8, TrackingCodePagevue_type_template_id_5195f22b_hoisted_2), TrackingCodePagevue_type_template_id_5195f22b_hoisted_3, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("strong", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro')), 1)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_TagmanagerTrackingCode, {
     "show-container-row": _ctx.showContainerRow,
     "current-action": _ctx.currentAction,
     showTestSection: _ctx.isJsTrackerInstallCheckAvailable
@@ -9472,7 +9472,7 @@ function TrackingCodePagevue_type_template_id_3b68ce26_render(_ctx, _cache, $pro
     default: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withCtx"])(function () {
       return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", {
         innerHTML: _ctx.$sanitize(_ctx.siteWithoutDataMtmIntro)
-      }, null, 8, TrackingCodePagevue_type_template_id_3b68ce26_hoisted_4), TrackingCodePagevue_type_template_id_3b68ce26_hoisted_5, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("strong", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro')), 1)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_TagmanagerTrackingCode, {
+      }, null, 8, TrackingCodePagevue_type_template_id_5195f22b_hoisted_4), TrackingCodePagevue_type_template_id_5195f22b_hoisted_5, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("strong", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro')), 1)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_TagmanagerTrackingCode, {
         "show-container-row": _ctx.showContainerRow,
         "current-action": _ctx.currentAction,
         showTestSection: false
@@ -9481,7 +9481,7 @@ function TrackingCodePagevue_type_template_id_3b68ce26_render(_ctx, _cache, $pro
     _: 1
   }, 8, ["content-title"]));
 }
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=template&id=3b68ce26
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=template&id=5195f22b
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--14-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingCodePage.vue?vue&type=script&lang=ts
 
@@ -9527,7 +9527,7 @@ function TrackingCodePagevue_type_template_id_3b68ce26_render(_ctx, _cache, $pro
 
 
 
-TrackingCodePagevue_type_script_lang_ts.render = TrackingCodePagevue_type_template_id_3b68ce26_render
+TrackingCodePagevue_type_script_lang_ts.render = TrackingCodePagevue_type_template_id_5195f22b_render
 
 /* harmony default export */ var TrackingCodePage = (TrackingCodePagevue_type_script_lang_ts);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--0-1!./plugins/TagManager/vue/src/TagmanagerTrackingCode/TrackingSPAPage.vue?vue&type=template&id=4a0674e4

@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div v-if="currentAction === 'siteWithoutDataTabs'">
+  <div v-if="currentAction === 'getTrackingMethodsForSite'">
     <p v-html="$sanitize(siteWithoutDataMtmIntro)"></p>
     <br>
     <p>

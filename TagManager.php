@@ -16,6 +16,7 @@ use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Log;
 use Piwik\Piwik;
 use Piwik\Plugin;
+use Piwik\Plugins\SitesManager\SiteContentDetection\ReactJs;
 use Piwik\Plugin\Manager;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
@@ -33,6 +34,7 @@ use Piwik\Plugins\CoreHome\SystemSummary;
 use Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator;
 use Piwik\Plugins\TagManager\Model\Salt;
 use Piwik\Site;
+use Piwik\SiteContentDetector;
 use Piwik\View;
 use Piwik\Context;
 use Piwik\Log\LoggerInterface;
@@ -278,12 +280,13 @@ class TagManager extends \Piwik\Plugin
         $out = $newContent;
     }
 
-    public function embedReactTagManagerTrackingCode(&$out)
+    public function embedReactTagManagerTrackingCode(&$out, SiteContentDetector $detector)
     {
         Piwik::checkUserHasSomeViewAccess();
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCodeReact");
         $view->action = Piwik::getAction();
+        $view->wasDetected = $detector->wasDetected(ReactJs::getId());
         $view->showContainerRow = $model->getNumContainersTotal() > 1;
         $out .= $view->render();
     }
