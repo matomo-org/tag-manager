@@ -275,7 +275,7 @@ class TagManager extends \Piwik\Plugin
 
     public function setTagManagerCode(&$out)
     {
-        $newContent = '';
+        $newContent = '<h2>' . Piwik::translate('SitesManager_StepByStepGuide') . '</h2>';
         $this->addTagManagerCode($newContent);
         $out = $newContent;
     }
