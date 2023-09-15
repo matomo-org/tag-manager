@@ -79,10 +79,14 @@
 				<matomoUrl>//example.com/piwik/tests/PHPUnit/proxy/</matomoUrl>
 				<idSite>6</idSite>
 				<enableLinkTracking>1</enableLinkTracking>
+				<enableFileTracking>0</enableFileTracking>
 				<enableCrossDomainLinking>0</enableCrossDomainLinking>
+				<crossDomainLinkingTimeout>180</crossDomainLinkingTimeout>
 				<enableDoNotTrack>0</enableDoNotTrack>
+				<disablePerformanceTracking>0</disablePerformanceTracking>
 				<enableJSErrorTracking>0</enableJSErrorTracking>
 				<enableHeartBeatTimer>0</enableHeartBeatTimer>
+				<heartBeatTime>15</heartBeatTime>
 				<trackAllContentImpressions>0</trackAllContentImpressions>
 				<trackVisibleContentImpressions>0</trackVisibleContentImpressions>
 				<disableCookies>0</disableCookies>
@@ -90,8 +94,11 @@
 				<requireCookieConsent>0</requireCookieConsent>
 				<customCookieTimeOutEnable>0</customCookieTimeOutEnable>
 				<customCookieTimeOut>393</customCookieTimeOut>
+				<referralCookieTimeOut>182</referralCookieTimeOut>
+				<sessionCookieTimeOut>30</sessionCookieTimeOut>
 				<setSecureCookie>0</setSecureCookie>
 				<cookieDomain />
+				<cookieNamePrefix>_pk_</cookieNamePrefix>
 				<cookiePath />
 				<cookieSameSite>Lax</cookieSameSite>
 				<disableBrowserFeatureDetection>0</disableBrowserFeatureDetection>
@@ -102,10 +109,17 @@
 				<userId />
 				<customDimensions>
 				</customDimensions>
-				<bundleTracker>1</bundleTracker>
 				<registerAsDefaultTracker>1</registerAsDefaultTracker>
+				<bundleTracker>1</bundleTracker>
 				<jsEndpoint>matomo.js</jsEndpoint>
+				<jsEndpointCustom>custom.js</jsEndpointCustom>
 				<trackingEndpoint>matomo.php</trackingEndpoint>
+				<trackingEndpointCustom>custom.php</trackingEndpointCustom>
+				<appendToTrackingUrl />
+				<forceRequestMethod>0</forceRequestMethod>
+				<requestMethod>GET</requestMethod>
+				<requestContentType>application/x-www-form-urlencoded; charset=UTF-8</requestContentType>
+				<customRequestProcessing />
 			</parameters>
 			<lookup_table>
 			</lookup_table>
