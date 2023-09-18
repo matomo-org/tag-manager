@@ -429,10 +429,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_ConfigureEnvironmentsSuperUser';
         $result[] = 'TagManager_WantToDeployThisChangeCreateVersion';
         $result[] = 'TagManager_ConfigureWhenTagDoes';
-        $result[] = 'TagManager_CustomizeTracking';
         $result[] = 'TagManager_ViewContainerDashboard';
         $result[] = 'TagManager_NoMatomoConfigFoundForContainer';
-        $result[] = 'TagManager_CustomizeTrackingTeaser';
         $result[] = 'TagManager_PublishLiveEnvironmentCapabilityRequired';
         $result[] = 'TagManager_CapabilityPublishLiveContainer';
         $result[] = 'TagManager_VersionAlreadyPublishedToAllEnvironments';
