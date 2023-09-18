@@ -24,7 +24,7 @@ describe("EmptySite_React", function () {
     await page.waitForSelector('#start-tracking-details .codeblock', {visible: true});
     await page.evaluate(function () {
       // since containerID will be random and keeps changing
-      var selector = $('#reactjs .codeblock');
+      var selector = $('#start-tracking-details .codeblock');
       selector.text(selector.text().replace(/http(.*)container_(.*).js/g, 'http://localhost/js/container_test123.js'));
     });
 

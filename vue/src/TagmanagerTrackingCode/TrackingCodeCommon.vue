@@ -156,7 +156,6 @@ function ucfirst(s: string): string {
 export default defineComponent({
   props: {
     showContainerRow: Boolean,
-    currentAction: String,
     showBottom: Boolean,
     showDescription: Boolean,
     showPlainMtmSteps: Boolean,

@@ -5,11 +5,10 @@
 -->
 <template>
   <ol class="list-style-decimal">
-    <li>
+    <li ref="step1" v-show="step1HasContent">
       <span v-html="$sanitize(setupStep1)" v-if="showContainerRow"></span>
       <TrackingCodeCommon
         :show-container-row="showContainerRow"
-        :current-action="currentAction"
         :showBottom="false"
         :showDescription="false"
         @fetchInstallInstructions="fetchInstallInstructionsSPA"
@@ -76,7 +75,6 @@ interface TagmanagerTrackingSPAPageState {
 export default defineComponent({
   props: {
     showContainerRow: Boolean,
-    currentAction: String,
     jsFramework: String,
   },
   components: {
@@ -174,6 +172,10 @@ export default defineComponent({
     },
   },
   computed: {
+    step1HasContent() {
+      const elem = this.$refs.step1 as HTMLElement;
+      return elem && elem.textContent !== '';
+    },
     fetchFollowStep3() {
       return translate(
         'TagManager_SPAFollowStep3',
