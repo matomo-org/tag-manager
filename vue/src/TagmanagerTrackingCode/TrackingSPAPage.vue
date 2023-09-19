@@ -46,7 +46,7 @@
         <pre
           class="codeblock"
           v-text="installInstruction.embedCode"
-          v-select-on-focus="{}"
+          v-copy-to-clipboard="{}"
           ref="codeblock"
         />
       </div>
@@ -57,8 +57,7 @@
 <script lang="ts">
 import { defineComponent, nextTick } from 'vue';
 import {
-  AjaxHelper, MatomoUrl,
-  SelectOnFocus, translate,
+  AjaxHelper, CopyToClipboard, MatomoUrl, translate,
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
 import {
@@ -81,7 +80,7 @@ export default defineComponent({
     TrackingCodeCommon,
   },
   directives: {
-    SelectOnFocus,
+    CopyToClipboard,
   },
   data(): TagmanagerTrackingSPAPageState {
     return {
