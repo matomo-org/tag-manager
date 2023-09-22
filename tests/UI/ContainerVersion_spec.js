@@ -118,7 +118,7 @@ describe("ContainerVersion", function () {
         await capture.page(page, 'create_new_shown_in_list');
     });
 
-    it('should be possible to publish new version', async function () {
+    it('should be possible to fill in publish new version form', async function () {
         await page.click('.createNewVersion');
         await setVersionName('v3.0');
         await page.waitForTimeout(500);

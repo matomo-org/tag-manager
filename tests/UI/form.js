@@ -11,14 +11,14 @@ exports.sendFieldValue = async function (page, selector, text)
         $(selector).val('').change();
     }, selector);
 
-    await page.waitForTimeout(100);
+    await page.waitForFunction("$('" + selector + "').val() == ''");
     // page.sendKeys(selector, text);
 
     await page.evaluate((selector, text) => {
         $(selector).val(text).change();
     }, selector, text);
 
-    await page.waitForTimeout(200);
+  await page.waitForFunction("$('" + selector + "').val() != ''");
 };
 exports.selectValue = async function (page, field, title)
 {
