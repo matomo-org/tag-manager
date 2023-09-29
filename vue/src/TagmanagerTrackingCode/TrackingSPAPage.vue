@@ -5,15 +5,16 @@
 -->
 <template>
   <ol class="list-style-decimal">
-    <li v-html="$sanitize(setupStep1)" v-if="showContainerRow"></li>
-    <TrackingCodeCommon
-      :show-container-row="showContainerRow"
-      :current-action="currentAction"
-      :showBottom="false"
-      :showDescription="false"
-      @fetchInstallInstructions="fetchInstallInstructionsSPA"
-      ref="trackingCodeCommon"
-    />
+    <li ref="step1" v-show="step1HasContent">
+      <span v-html="$sanitize(setupStep1)" v-if="showContainerRow"></span>
+      <TrackingCodeCommon
+        :show-container-row="showContainerRow"
+        :showBottom="false"
+        :showDescription="false"
+        @fetchInstallInstructions="fetchInstallInstructionsSPA"
+        ref="trackingCodeCommon"
+      />
+    </li>
     <li v-html="$sanitize(setupStep2)"></li>
     <li v-html="$sanitize(fetchFollowStep3)"></li>
     <li v-text="fetchClickX('TagManager_CreateNewTrigger')"></li>
@@ -25,7 +26,7 @@
     <li v-html="$sanitize(fetchFollowStep9)"></li>
     <li>
       <span v-text="fetchFollowStep10"></span>
-      <ol style="list-style: lower-alpha; list-style-position: inside; text-indent: 1.2rem;">
+      <ol style="list-style: lower-alpha; list-style-position: inside;">
         <li v-html="$sanitize(fetchFollowStep10a)"></li>
         <li v-html="$sanitize(fetchFollowStep10b)"></li>
       </ol>
@@ -35,27 +36,28 @@
     <li v-text="fetchFollowStep13"></li>
     <li v-html="$sanitize(fetchFollowStep14)"></li>
     <li v-text="fetchFollowStep15"></li>
-    <li v-if="jsFramework === 'react'" v-html="$sanitize(fetchFollowStep16React)"></li>
-    <li v-else v-html="$sanitize(fetchFollowStep16SPA)"></li>
-    <div
-      v-for="(installInstruction, index) in installInstructions"
-      :key="index"
-    >
-      <pre
-        class="codeblock"
-        v-text="installInstruction.embedCode"
-        v-select-on-focus="{}"
-        ref="codeblock"
-      />
-    </div>
+    <li>
+      <span v-if="jsFramework === 'react'" v-html="$sanitize(fetchFollowStep16React)"></span>
+      <span v-else v-html="$sanitize(fetchFollowStep16SPA)"></span>
+      <div
+        v-for="(installInstruction, index) in installInstructions"
+        :key="index"
+      >
+        <pre
+          class="codeblock"
+          v-text="installInstruction.embedCode"
+          v-copy-to-clipboard="{}"
+          ref="codeblock"
+        />
+      </div>
+    </li>
   </ol>
 </template>
 
 <script lang="ts">
 import { defineComponent, nextTick } from 'vue';
 import {
-  AjaxHelper, MatomoUrl,
-  SelectOnFocus, translate,
+  AjaxHelper, CopyToClipboard, MatomoUrl, translate,
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
 import {
@@ -72,14 +74,13 @@ interface TagmanagerTrackingSPAPageState {
 export default defineComponent({
   props: {
     showContainerRow: Boolean,
-    currentAction: String,
     jsFramework: String,
   },
   components: {
     TrackingCodeCommon,
   },
   directives: {
-    SelectOnFocus,
+    CopyToClipboard,
   },
   data(): TagmanagerTrackingSPAPageState {
     return {
@@ -170,6 +171,10 @@ export default defineComponent({
     },
   },
   computed: {
+    step1HasContent() {
+      const elem = this.$refs.step1 as HTMLElement;
+      return elem && elem.textContent !== '';
+    },
     fetchFollowStep3() {
       return translate(
         'TagManager_SPAFollowStep3',

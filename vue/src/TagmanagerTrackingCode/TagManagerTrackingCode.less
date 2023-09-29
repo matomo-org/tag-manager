@@ -1,13 +1,24 @@
-div.admin > div[vue-entry='TagManager.TrackingCodePage'] {
-  .list-style-decimal {
-    list-style-type: decimal;
-    list-style-position: inside;
+.tagManagerTrackingCode {
+  padding-top: 1rem;
+
+  > .row, > .row .row {
+    margin-bottom: 0;
+    margin-top: -0.5rem;
   }
 
-  .tagManagerTrackingCode {
-    > .row, > .row .row {
-      margin-bottom: -0.5rem !important;
-      margin-top: -0.5rem !important;
-    }
+  .loadingPiwik {
+    margin: 1.5rem 0;
+  }
+
+  .select-wrapper input.select-dropdown {
+    margin: 8px 0 0 0;
+  }
+
+  label[for="containers"], label[for="environment"] {
+    top: -4px !important;
+  }
+
+  .siteSelector {
+    max-width: 100%;
   }
 }

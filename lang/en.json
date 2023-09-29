@@ -272,8 +272,6 @@
         "CustomRequestProcessingVariableName": "Custom Request Processing Function",
         "CustomRequestProcessingVariableDescription": "A custom function to use with a Matomo Tracker that can transform all tracking requests.",
         "CustomVariables": "Custom variables",
-        "CustomizeTracking": "Customize Tracking",
-        "CustomizeTrackingTeaser": "Want to configure the Matomo tracking for this container? Here is a list of existing Matomo configurations in this container:",
         "DashboardHelp1": "How does the \"Tag Manager → Dashboard\" page help me?",
         "DashboardHelp2": "The Tag Manager Dashboard provides an instant overview of both the names and quantity of tags, triggers, variables and versions of container configurations that have been created in your Matomo Tag Manager.",
         "DashboardHelp3": "Within the Tag Manager Dashboard, you also can edit or create new tags, triggers, variables and versions.",

@@ -16,6 +16,7 @@ use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Log;
 use Piwik\Piwik;
 use Piwik\Plugin;
+use Piwik\Plugins\SitesManager\SiteContentDetection\ReactJs;
 use Piwik\Plugin\Manager;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
@@ -33,6 +34,7 @@ use Piwik\Plugins\CoreHome\SystemSummary;
 use Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator;
 use Piwik\Plugins\TagManager\Model\Salt;
 use Piwik\Site;
+use Piwik\SiteContentDetector;
 use Piwik\View;
 use Piwik\Context;
 use Piwik\Log\LoggerInterface;
@@ -273,17 +275,18 @@ class TagManager extends \Piwik\Plugin
 
     public function setTagManagerCode(&$out)
     {
-        $newContent = '';
+        $newContent = '<h2>' . Piwik::translate('SitesManager_StepByStepGuide') . '</h2>';
         $this->addTagManagerCode($newContent);
         $out = $newContent;
     }
 
-    public function embedReactTagManagerTrackingCode(&$out)
+    public function embedReactTagManagerTrackingCode(&$out, SiteContentDetector $detector)
     {
         Piwik::checkUserHasSomeViewAccess();
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCodeReact");
         $view->action = Piwik::getAction();
+        $view->wasDetected = $detector->wasDetected(ReactJs::getId());
         $view->showContainerRow = $model->getNumContainersTotal() > 1;
         $out .= $view->render();
     }
@@ -426,10 +429,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_ConfigureEnvironmentsSuperUser';
         $result[] = 'TagManager_WantToDeployThisChangeCreateVersion';
         $result[] = 'TagManager_ConfigureWhenTagDoes';
-        $result[] = 'TagManager_CustomizeTracking';
         $result[] = 'TagManager_ViewContainerDashboard';
         $result[] = 'TagManager_NoMatomoConfigFoundForContainer';
-        $result[] = 'TagManager_CustomizeTrackingTeaser';
         $result[] = 'TagManager_PublishLiveEnvironmentCapabilityRequired';
         $result[] = 'TagManager_CapabilityPublishLiveContainer';
         $result[] = 'TagManager_VersionAlreadyPublishedToAllEnvironments';

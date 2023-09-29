@@ -1,11 +1,14 @@
 <template>
   <div class="tagManagerTrackingCode">
     <ActivityIndicator
-      :style="{opacity: isLoading ? 1 : 0}"
+      v-show="isLoading"
       :loading="true"
       v-if="showContainerRow || environments.length > 1"
     />
-    <div class="row" v-if="showContainerRow || environments.length > 1">
+    <div class="row"
+         v-if="showContainerRow || environments.length > 1"
+         v-show="!isLoading"
+    >
       <div class="col s12 m4 ">
         <div class="form-group row">
           <div class="col s12 input-field">
@@ -63,7 +66,7 @@
       {{ translate('TagManager_NoReleasesFoundForContainer') }}
       <a href>{{ translate('TagManager_PublishVersionToEnvironmentToViewEmbedCode') }} </a>
     </div>
-    <div
+    <template
       v-for="(installInstruction, index) in installInstructions"
       :key="index"
     >
@@ -74,13 +77,13 @@
           :href="installInstruction.helpUrl"
         >{{ translate('TagManager_LearnMore') }}</a>.
       </p>
-      <div v-if="showPlainMtmSteps">
+      <template v-if="showPlainMtmSteps">
         <li>
           <span v-html="$sanitize(getMtmStep2)">
           </span>.&nbsp;<span v-html="$sanitize(getLearnMoreLink)"></span>.
         </li>
         <li v-html="$sanitize(getMtmStep3)"></li>
-      </div>
+      </template>
       <div>
         <pre
           class="codeblock"
@@ -89,13 +92,13 @@
           v-copy-to-clipboard="{}"
         />
       </div>
-    </div>
-    <div v-if="showBottom" v-show="!noReleaseFound">
-      <p v-if="idContainer && !showTestSection" v-html="$sanitize(getCongratulationsText)"></p>
-      <template v-if="idContainer && showTestSection">
+    </template>
+    <template v-if="showBottom && !noReleaseFound && idContainer">
+      <p v-if="!showTestSection" v-html="$sanitize(getCongratulationsText)"></p>
+      <template v-else>
         <li><component :is="testComponent" :site="site"></component></li>
       </template>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -153,7 +156,6 @@ function ucfirst(s: string): string {
 export default defineComponent({
   props: {
     showContainerRow: Boolean,
-    currentAction: String,
     showBottom: Boolean,
     showDescription: Boolean,
     showPlainMtmSteps: Boolean,
