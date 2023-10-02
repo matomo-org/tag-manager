@@ -932,6 +932,9 @@
         "ZendeskChatTagChatIdTitle": "Zendesk Chat ID",
         "ZendeskChatTagDescription": "Bereik uw klanten, direct via web, mobiel en berichten.",
         "ZendeskChatTagHelp": "Met deze tag kunt u het Zendesk Chat formulier toevoegen aan uw website.",
-        "ZendeskChatTagName": "Zendesk Chat (voorheen Zopim)"
+        "ZendeskChatTagName": "Zendesk Chat (voorheen Zopim)",
+        "SiteWithoutDataMtmIntro": "De Matomo Tag Manager kan een betere keuze zijn dan tracking via de reguliere JavaScript-code. Het stelt u in staat al uw tracking- en marketingtags (ook bekend als \"pixels\" of \"aangepaste HTML/JS-tags\") op één plek te beheren en te unificeren. Het gebruik van de Matomo Tag Manager vergemakkelijkt uw leven wanneer u een van deze tags wilt wijzigen, aangezien u geen ontwikkelaar meer nodig heeft om de benodigde wijzigingen voor u aan te brengen. %1$sMeer informatie%2$s.",
+        "SiteWithoutDataMtmStep2": "Als u deze container wilt aanpassen, gaat u naar het %1$sContainerdashboard%2$s",
+        "SiteWithoutDataMtmStep3": "Kopieer de onderstaande code en plak deze op elke pagina van uw website. Wij raden aan om dit onmiddellijk vóór de sluitende %1$s-tag te plakken. %2$sMeer informatie%3$s."
     }
 }
