@@ -552,6 +552,10 @@
         "WindowUnloadTriggerName": "Descarga de ventana",
         "ZendeskChatTagDescription": "Llegue a sus clientes, instantáneamente vía internet, móvil o mensajería.",
         "ZendeskChatTagHelp": "Esta identificación le permite agregar el formulario de Zendesk Chat en su sitio web.",
-        "ZendeskChatTagName": "Zendesk Chat (anteriormente Zopim)"
+        "ZendeskChatTagName": "Zendesk Chat (anteriormente Zopim)",
+        "SiteWithoutDataMtmIntro": "El Administrador de etiquetas de Matomo puede ser una mejor opción que el seguimiento a través del código JavaScript estándar. Le permite administrar y unificar todas sus etiquetas de seguimiento y marketing (también conocidas como \"píxeles\" o \"etiquetas HTML/JS personalizadas\") en un solo lugar. El uso del Administrador de etiquetas de Matomo facilita su vida cuando desea modificar una de estas etiquetas, ya que ya no necesitará un desarrollador para realizar los cambios necesarios. %1$sMás información%2$s.",
+        "SiteWithoutDataMtmStep2": "Si desea personalizar este contenedor, visite el %1$sTablero del contenedor%2$s",
+        "SiteWithoutDataMtmStep3": "Copie el código a continuación y péguelo en cada página de su sitio web. Le recomendamos que lo pegue inmediatamente antes del cierre de la etiqueta %1$s. %2$sMás información%3$s.",
+        "CustomHtmlTagHelpText": "%1$sAprender más%2$s"
     }
 }

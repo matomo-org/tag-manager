@@ -159,7 +159,7 @@
         "CustomHtmlTagDescription": "Erlaubt Ihnen jegliches benutzerdefiniertes HTML einzubetten, zum Beispiel JavaScript oder CSS Styles.",
         "CustomHtmlTagDescriptionText": "Dieser Tag ist ideal, wenn Sie zum Beispiel benutzerdefinierte Stile oder eigenes JavaScript hinzufügen müssen oder wenn Sie nach spezifischen noch nicht unterstützten Tags suchen. Mit diesem Tag können Sie beliebiges HTML am Ende Ihrer Seite anfügen, oder JavaScript ausführen. Hinweis: Sie können Inhalte innerhalb HTML mit Variablen ersetzen, in dem Sie einen Variablennamen in geschweiften Klammern einsetzen, wie zum Beispiel {{PageUrl}}.",
         "CustomHtmlTagHelp": "Der Custom HTML Tag erlaubt Ihnen, jeglichen aktuell noch nicht unterstützten Tag einzubetten. Die Möglichkeiten mit diesem Tag sind beinahe unbeschränkt.",
-        "CustomHtmlTagHelpText": "%1$sMehr dazu%2$s",
+        "CustomHtmlTagHelpText": "%1$sMehr erfahren%2$s",
         "CustomHtmlTagName": "Benutzerdefiniertes HTML",
         "CustomHtmlTagTitle": "Benutzerdefiniertes HTML",
         "CustomImageTagCacheBusterEnabledDescription": "Stellen Sie sicher, dass das Bild jedes Mal abgerufen wird wenn es der Seite hinzugefügt wird, in dem Sie der Bild-URL einen URL Parameter mit einem zufälligen Wert mitgeben, zum Beispiel \"?mtmcb=12345\"..",
@@ -915,6 +915,9 @@
         "ZendeskChatTagChatIdTitle": "Zendesk Chat-ID",
         "ZendeskChatTagDescription": "Erreichen Sie Ihre Kunden, direkt übers Web, Mobiltelefon und Messagingdienste.",
         "ZendeskChatTagHelp": "Dieser Tag erlaubt Ihnen das Zendesk Chat Forum auf Ihrer Webseite hinzuzufügen.",
-        "ZendeskChatTagName": "Zendesk Chat (früher Zopim)"
+        "ZendeskChatTagName": "Zendesk Chat (früher Zopim)",
+        "SiteWithoutDataMtmIntro": "Der Matomo Tag Manager könnte eine bessere Wahl sein als das Tracking über den regulären JavaScript-Code. Er ermöglicht es Ihnen, alle Ihre Tracking- und Marketing-Tags (auch bekannt als \"Pixel\" oder \"benutzerdefinierte HTML/JS-Tags\") an einem Ort zu verwalten und zu vereinheitlichen. Die Verwendung des Matomo Tag Manager erleichtert Ihnen das Leben, wenn Sie eine dieser Tags ändern möchten, da Sie keinen Entwickler mehr benötigen, um die erforderlichen Änderungen für Sie vorzunehmen. %1$sMehr erfahren%2$s.",
+        "SiteWithoutDataMtmStep2": "Wenn Sie diesen Container anpassen möchten, besuchen Sie das %1$sContainer-Dashboard%2$s",
+        "SiteWithoutDataMtmStep3": "Kopieren Sie den folgenden Code und fügen Sie ihn auf jeder Seite Ihrer Website ein. Wir empfehlen, ihn unmittelbar vor dem schließenden %1$s-Tag einzufügen. %2$sMehr erfahren%3$s."
     }
 }

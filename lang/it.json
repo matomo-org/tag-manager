@@ -140,6 +140,7 @@
         "CustomEventTriggerName": "Evento Personalizzato",
         "CustomHtmlTagDescription": "Permette di incorporare ogni tipo di HTML personalizzato, per esempio JavaScript o Stili CSS.",
         "CustomHtmlTagHelp": "Il tag HTML Personalizzato permette di incorporare qualunque tag non ancora supportato. Le possibilità con questo tag sono praticamente illimitate.",
+        "CustomHtmlTagHelpText": "%1$sPer saperne di più%2$s",
         "CustomHtmlTagName": "HTML Personalizzato",
         "CustomImageTagDescription": "Ti permette di incorporare qualunque immagine, per esempio un pixel di tracciamento.",
         "CustomImageTagHelp": "Questo tag ti permette di aggiungere al tuo sito web, per esempio, un pixel di tracciamento trasparente.",
@@ -638,6 +639,9 @@
         "WindowUnloadTriggerName": "Abbandono Finestra",
         "ZendeskChatTagDescription": "Raggiungi all'istante i tuoi clienti via web, dispositivi mobili e messaggeria.",
         "ZendeskChatTagHelp": "Questo tag ti consente di aggiungere al tuo sito il form Zendesk Chat.",
-        "ZendeskChatTagName": "Zendesk Chat (precedentemente Zopim)"
+        "ZendeskChatTagName": "Zendesk Chat (precedentemente Zopim)",
+        "SiteWithoutDataMtmIntro": "Il Matomo Tag Manager potrebbe essere una scelta migliore rispetto al tracciamento tramite il normale codice JavaScript. Ti consente di gestire e unificare tutti i tuoi tag di tracciamento e marketing (noti anche come \"pixel\" o \"tag HTML/JS personalizzati\") in un unico luogo. L'uso del Matomo Tag Manager semplifica la tua vita quando desideri modificare uno di questi tag, poiché non avrai più bisogno di un sviluppatore per apportare le modifiche necessarie. %1$sPer saperne di più%2$s.",
+        "SiteWithoutDataMtmStep2": "Se desideri personalizzare questo contenitore, visita il %1$sDashboard del contenitore%2$s",
+        "SiteWithoutDataMtmStep3": "Copia il codice sottostante e incollalo su ogni pagina del tuo sito web. Ti consigliamo di incollarlo immediatamente prima della chiusura del tag %1$s. %2$sPer saperne di più%3$s."
     }
 }

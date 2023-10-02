@@ -141,6 +141,7 @@
         "CustomEventTriggerName": "Évènement personnalisé",
         "CustomHtmlTagDescription": "Vous permet d'incorporer n'importe quel HTML, JavaScript ou CSS personnalisé.",
         "CustomHtmlTagHelp": "La balise HTML personnalisée vous permet d'intégrer n'importe quelle balise qui n'est pas encore supportée. Les possibilité avec cette balise sont plus ou moins illimitées.",
+        "CustomHtmlTagHelpText": "%1$sEn savoir plus%2$s",
         "CustomHtmlTagName": "HTML personnalisé",
         "CustomImageTagDescription": "Vous permet d'incorporer n'importe quelle image, par exemple un pixel de suivi.",
         "CustomImageTagHelp": "Cette balise vous permet par exemple d'ajouter un pixel transparent de suivi sur votre site web.",
@@ -635,6 +636,9 @@
         "WindowUnloadTriggerName": "Fenêtre déchargée",
         "ZendeskChatTagDescription": "Atteignez vos clients de manière instantanée via le web, téléphone et messagerie.",
         "ZendeskChatTagHelp": "Cette balise vous permet d'ajouter le formulaire de discussion instantanée Zendesk à votre site web.",
-        "ZendeskChatTagName": "Discussion instantanée Zendesk (anciennement Zopim)"
+        "ZendeskChatTagName": "Discussion instantanée Zendesk (anciennement Zopim)",
+        "SiteWithoutDataMtmIntro": "Le gestionnaire de balises Matomo peut être un meilleur choix que le suivi via le code JavaScript standard. Il vous permet de gérer et unifier toutes vos balises de suivi et marketing (également appelées \"pixels\" ou \"balises HTML/JS personnalisées\") en un seul endroit. L'utilisation du gestionnaire de balises Matomo simplifie votre vie lorsque vous souhaitez modifier l'une de ces balises, car vous n'aurez plus besoin d'un développeur pour effectuer les modifications nécessaires pour vous. %1$sEn savoir plus%2$s.",
+        "SiteWithoutDataMtmStep2": "Si vous souhaitez personnaliser ce conteneur, rendez-vous sur le %1$sTableau de bord du conteneur%2$s",
+        "SiteWithoutDataMtmStep3": "Copiez le code ci-dessous et collez-le sur chaque page de votre site web. Nous vous recommandons de le coller immédiatement avant la balise de fermeture %1$s. %2$sEn savoir plus%3$s."
     }
 }
