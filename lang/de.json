@@ -916,7 +916,7 @@
         "ZendeskChatTagDescription": "Erreichen Sie Ihre Kunden, direkt übers Web, Mobiltelefon und Messagingdienste.",
         "ZendeskChatTagHelp": "Dieser Tag erlaubt Ihnen das Zendesk Chat Forum auf Ihrer Webseite hinzuzufügen.",
         "ZendeskChatTagName": "Zendesk Chat (früher Zopim)",
-        "SiteWithoutDataMtmIntro": "Der Matomo Tag Manager könnte eine bessere Wahl sein als das Tracking über den regulären JavaScript-Code. Er ermöglicht es Ihnen, alle Ihre Tracking- und Marketing-Tags (auch bekannt als \"Pixel\" oder \"benutzerdefinierte HTML/JS-Tags\") an einem Ort zu verwalten und zu vereinheitlichen. Die Verwendung des Matomo Tag Manager erleichtert Ihnen das Leben, wenn Sie eine dieser Tags ändern möchten, da Sie keinen Entwickler mehr benötigen, um die erforderlichen Änderungen für Sie vorzunehmen. %1$sMehr erfahren%2$s.",
+        "SiteWithoutDataMtmIntro": "Der Matomo Tag Manager könnte eine bessere Wahl sein als das Tracking über den regulären JavaScript-Code. Er ermöglicht es Ihnen, alle Ihre Tracking- und Marketing-Tags (auch bekannt als \"Pixel\" oder \"benutzerdefinierte HTML/JS-Tags\") an einem Ort zu verwalten und zu vereinheitlichen. Die Verwendung des Matomo Tag Manager erleichtert Ihnen das Leben, wenn Sie einen dieser Tags ändern möchten, da Sie keinen Entwickler mehr benötigen, um die erforderlichen Änderungen für Sie vorzunehmen. %1$sMehr erfahren%2$s.",
         "SiteWithoutDataMtmStep2": "Wenn Sie diesen Container anpassen möchten, besuchen Sie das %1$sContainer-Dashboard%2$s",
         "SiteWithoutDataMtmStep3": "Kopieren Sie den folgenden Code und fügen Sie ihn auf jeder Seite Ihrer Website ein. Wir empfehlen, ihn unmittelbar vor dem schließenden %1$s-Tag einzufügen. %2$sMehr erfahren%3$s."
     }
