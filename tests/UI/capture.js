@@ -19,7 +19,6 @@ exports.selector = async function (page, screenshotName, selector)
     await exports.setTableRowHeight(page);
     expect(await page.screenshotSelector(selector)).to.matchImage({
         imageName: screenshotName,
-        comparisonThreshold: 0.05,
     });
 };
 
