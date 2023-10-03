@@ -32,6 +32,9 @@
 				<goalCustomRevenue />
 				<documentTitle />
 				<customUrl />
+				<searchKeyword />
+				<searchCategory>false</searchCategory>
+				<searchCount>false</searchCount>
 				<eventCategory />
 				<eventAction />
 				<eventName />
