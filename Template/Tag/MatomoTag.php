@@ -49,6 +49,11 @@ class MatomoTag extends BaseTag
                 'initialise' => Piwik::translate('TagManager_InitializeTrackerOnly'),
             );
         });
+        $isEcommerceView = $this->makeSetting('isEcommerceView', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+            $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewIsEcommerceView');
+            $field->description = Piwik::translate('TagManager_MatomoTagEcommerceViewIsEcommerceViewHelp');
+            $field->condition = 'trackingType == "pageview"';
+        });
         return array(
             $this->makeSetting(self::PARAM_MATOMO_CONFIG, '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationVariableName');
@@ -100,6 +105,55 @@ class MatomoTag extends BaseTag
                 $field->condition = 'trackingType == "pageview"';
                 if ($trackingType->getValue() === 'pageview') {
                     $field->validators[] = new CharacterLength(0, 500);
+                }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $isEcommerceView,
+            $this->makeSetting('productSKU', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType, $isEcommerceView) {
+                $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewProductSKU');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_MatomoTagEcommerceViewProductSKUHelp');
+                $field->condition = 'trackingType == "pageview" && isEcommerceView';
+                if ($trackingType->getValue() === 'pageview' && $isEcommerceView->getValue()) {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('productName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType, $isEcommerceView) {
+                $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewProductName');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_MatomoTagEcommerceViewProductNameHelp');
+                $field->condition = 'trackingType == "pageview" && isEcommerceView';
+                if ($trackingType->getValue() === 'pageview' && $isEcommerceView->getValue()) {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('categoryName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType, $isEcommerceView) {
+                $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewCategoryName');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_MatomoTagEcommerceViewCategoryNameHelp');
+                $field->condition = 'trackingType == "pageview" && isEcommerceView';
+                if ($trackingType->getValue() === 'pageview' && $isEcommerceView->getValue()) {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('price', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType, $isEcommerceView) {
+                $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewPrice');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_MatomoTagEcommerceViewPriceHelp');
+                $field->condition = 'trackingType == "pageview" && isEcommerceView';
+                if ($trackingType->getValue() === 'pageview' && $isEcommerceView->getValue()) {
+                    $field->validators[] = new Numeric(true, true);
                 }
                 $field->transform = function ($value) {
                     return trim($value);

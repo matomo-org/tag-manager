@@ -32,6 +32,11 @@
 				<goalCustomRevenue />
 				<documentTitle />
 				<customUrl />
+				<isEcommerceView>0</isEcommerceView>
+				<productSKU />
+				<productName />
+				<categoryName />
+				<price />
 				<eventCategory />
 				<eventAction />
 				<eventName />
