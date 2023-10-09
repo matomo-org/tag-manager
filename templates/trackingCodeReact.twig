@@ -3,9 +3,9 @@
 {% if wasDetected %}
 <div class="system notification notification-info">
     {{ 'SitesManager_ReactDetected'|translate(
-        '<a target="_blank" rel="noreferrer noopener" href="https://matomo.org/guide/tag-manager/">',
+        externallink('https://matomo.org/guide/tag-manager/'),
         '</a>',
-        '<a target="_blank" rel="noreferrer noopener" href="https://matomo.org/faq/new-to-piwik/how-do-i-start-tracking-data-with-matomo-on-websites-that-use-react/">',
+        externallink('https://matomo.org/faq/new-to-piwik/how-do-i-start-tracking-data-with-matomo-on-websites-that-use-react/'),
         '</a>'
     )|raw }}
 </div>
