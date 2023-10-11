@@ -53,7 +53,7 @@
       <br />
       <a
         target="_blank"
-        href="https://matomo.org/faq/tag-manager/data-layer-in-matomo-tag-manager/"
+        href="{{ externalRawLink('https://matomo.org/faq/tag-manager/data-layer-in-matomo-tag-manager/') }}"
       >{{ translate('TagManager_LearnMore') }}</a>
     </p>
     <h2>{{ translate('TagManager_ReleasesOverview') }}</h2>
