@@ -18,6 +18,7 @@ use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
+use Piwik\Url;
 
 /**
  * @group TagManager
@@ -274,7 +275,7 @@ class TagTest extends IntegrationTestCase
                                         ],
                                     'availableValues' => null,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
-                                    'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
+                                    'inlineHelp' => '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/faq_26815/'). '">Learn more</a>',
                                     'introduction' => null,
                                     'condition' => null,
                                     'fullWidth' => false,
@@ -369,7 +370,7 @@ class TagTest extends IntegrationTestCase
                                         ],
                                     'availableValues' => null,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
-                                    'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
+                                    'inlineHelp' => '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/faq_26815/') . '">Learn more</a>',
                                     'introduction' => null,
                                     'condition' => null,
                                     'fullWidth' => false,
@@ -560,7 +561,7 @@ class TagTest extends IntegrationTestCase
                                     ],
                                 'availableValues' => null,
                                 'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
-                                'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
+                                'inlineHelp' => '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/faq_26815/') . '">Learn more</a>',
                                 'introduction' => null,
                                 'condition' => null,
                                 'fullWidth' => false,
@@ -811,7 +812,7 @@ class TagTest extends IntegrationTestCase
                                         ],
                                     'availableValues' => null,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
-                                    'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
+                                    'inlineHelp' => '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/faq_26815/') . '">Learn more</a>',
                                     'introduction' => null,
                                     'condition' => null,
                                     'fullWidth' => false,

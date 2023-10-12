@@ -261,7 +261,7 @@ INST;
         return [[
             'description' => Piwik::translate('TagManager_ContextWebInstallInstructions', array('<head>')),
             'embedCode' => $embedCode,
-            'helpUrl' => 'https://developer.matomo.org/guides/tagmanager/embedding'
+            'helpUrl' => Url::addCampaignParametersToMatomoLink('https://developer.matomo.org/guides/tagmanager/embedding')
         ]];
     }
 
@@ -291,7 +291,7 @@ INST;
         return [[
             'description' => Piwik::translate('TagManager_ContextWebInstallInstructions', array('<head>')),
             'embedCode' => $embedCode,
-            'helpUrl' => 'https://developer.matomo.org/guides/tagmanager/embedding',
+            'helpUrl' => Url::addCampaignParametersToMatomoLink('https://developer.matomo.org/guides/tagmanager/embedding'),
             'pageViewTriggerEditUrl' => $this->getPageViewTriggerEditUrl($container['idsite'], $container['idcontainer'])
         ]];
     }
