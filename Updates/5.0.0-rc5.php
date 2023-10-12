@@ -10,16 +10,16 @@
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
-use Piwik\Plugins\TagManager\UpdateHelper\NewVariableParameterMigrator;
+use Piwik\Plugins\TagManager\UpdateHelper\NewTagParameterMigrator;
 use Piwik\Updater;
 use Piwik\Updater\Migration;
 use Piwik\Updater\Migration\Factory as MigrationFactory;
 use Piwik\Updates as PiwikUpdates;
 
 /**
- * Update for version 5.0.0-rc4.
+ * Update for version 5.0.0-rc5.
  */
-class Updates_5_0_0_rc4 extends PiwikUpdates
+class Updates_5_0_0_rc5 extends PiwikUpdates
 {
     /**
      * @var MigrationFactory
@@ -61,7 +61,7 @@ class Updates_5_0_0_rc4 extends PiwikUpdates
         $updater->executeMigrations(__FILE__, $this->getMigrations($updater));
 
         // Migrate the MatomoConfiguration type variables to all include the newly configured fields.
-        $migrator = new NewVariableParameterMigrator(MatomoTag::ID, 'isEcommerceView', false);
+        $migrator = new NewTagParameterMigrator(MatomoTag::ID, 'isEcommerceView', false);
         $migrator->addField('productSKU', '');
         $migrator->addField('productName', '');
         $migrator->addField('categoryName', '');

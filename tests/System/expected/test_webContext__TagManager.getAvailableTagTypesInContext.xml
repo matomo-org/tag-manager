@@ -262,7 +262,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Item's display price, not use in standard Matomo reports, but output in API product reports.</description>
+						<description>Item's display price, not used in standard Matomo reports, but output in API product reports.</description>
 						<inlineHelp />
 						<introduction />
 						<condition>trackingType == &quot;pageview&quot; &amp;&amp; isEcommerceView</condition>

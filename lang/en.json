@@ -630,7 +630,7 @@
         "MatomoTagEcommerceViewIsEcommerceView": "Is Ecommerce View",
         "MatomoTagEcommerceViewIsEcommerceViewHelp": "Used to record that the current page view is an item (product) page view, or a Ecommerce Category page view. On a category page, you can set the parameter category, and set the other parameters to empty strings. Tracking Product/Category page views will allow Matomo to report on Product & Categories conversion rates (Conversion rate = Ecommerce orders containing this product or category / Visits to the product or category). Requires the Ecommerce plugin to be active.",
         "MatomoTagEcommerceViewPrice": "Price",
-        "MatomoTagEcommerceViewPriceHelp": "Item's display price, not use in standard Matomo reports, but output in API product reports.",
+        "MatomoTagEcommerceViewPriceHelp": "Item's display price, not used in standard Matomo reports, but output in API product reports.",
         "MatomoTagEcommerceViewProductName": "Product Name",
         "MatomoTagEcommerceViewProductNameHelp": "Item's Name being viewed. On a category page this should be empty.",
         "MatomoTagEcommerceViewProductSKU": "Product SKU",
