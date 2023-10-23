@@ -177,6 +177,102 @@
 						</component>
 					</row>
 					<row>
+						<name>isEcommerceView</name>
+						<title>Is Ecommerce View</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Used to record that the current page view is an item (product) page view, or a Ecommerce Category page view. On a category page, you can set the parameter category, and set the other parameters to empty strings. Tracking Product/Category page views will allow Matomo to report on Product &amp; Categories conversion rates (Conversion rate = Ecommerce orders containing this product or category / Visits to the product or category). Requires the Ecommerce plugin to be active.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>productSKU</name>
+						<title>Product SKU</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Item's SKU code being viewed. On a category page this should be empty.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot; &amp;&amp; isEcommerceView</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>productName</name>
+						<title>Product Name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Item's Name being viewed. On a category page this should be empty.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot; &amp;&amp; isEcommerceView</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>categoryName</name>
+						<title>Category Name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Category page being viewed. On an item's page, this is the item's category.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot; &amp;&amp; isEcommerceView</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>price</name>
+						<title>Price</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Item's display price, not used in standard Matomo reports, but output in API product reports.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot; &amp;&amp; isEcommerceView</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
 						<name>eventCategory</name>
 						<title>Event Category</title>
 						<value />

@@ -287,6 +287,10 @@
                             tracker.setSessionCookieTimeout(matomoConfig.sessionCookieTimeOut * 60);
                         }
 
+                        if (parameters.get('isEcommerceView')) {
+                            tracker.setEcommerceView(parameters.get('productSKU'), parameters.get('productName'), parameters.get('categoryName'), parameters.get('price'));
+                        }                            
+
                         tracker.trackPageView();
                     } else if (trackingType === 'event') {
                         tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'));
