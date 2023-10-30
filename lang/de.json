@@ -452,7 +452,7 @@
         "GoogleAnalyticsUniversalTagHelp": "Dieser Tag lässt Sie Webseite-Seitenansichten in Google Analytics tracken. Um die Property-ID zu erhalten, loggen Sie sich bitte in Ihren Google Analytics Account ein.",
         "GoogleAnalyticsUniversalTagName": "Google Analytics (Universell)",
         "GoogleAnalyticsUniversalTagPropertyIdDescription": "Zum Beispiel \"UA-XXXXX-Y\"",
-        "GoogleAnalyticsUniversalTagPropertyIdTitle": "Eigenschaft-ID",
+        "GoogleAnalyticsUniversalTagPropertyIdTitle": "Property-ID",
         "GoogleAnalyticsUniversalTagTrackingTypeDescription": "Nur der Tracking-Typ \"Seitenansicht\" wird aktuell unterstützt.",
         "GoogleAnalyticsUniversalTagTrackingTypeTitle": "Tracking-Typ",
         "HideAdvancedSettings": "Erweiterte Einstellungen verbergen",
