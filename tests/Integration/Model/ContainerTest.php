@@ -127,6 +127,45 @@ class ContainerTest extends IntegrationTestCase
             'context' => WebContext::ID,
             'name' => 'My Name',
             'description' => 'My Description',
+            'ignoreGtmDataLayer' => 0,
+            'status' => ContainersDao::STATUS_ACTIVE,
+            'created_date' => $this->now,
+            'updated_date' => $this->now,
+            'created_date_pretty' => 'Jan 1, 2018 02:03:04',
+            'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
+            'versions' => array(),
+            'releases' => array(),
+            'draft' => array (
+                'idcontainerversion' => 2,
+                'idcontainer' => $idContainer,
+                'idsite' => $this->idSite,
+                'status' => ContainersDao::STATUS_ACTIVE,
+                'revision' => 0,
+                'name' => '',
+                'description' => '',
+                'created_date' => '2018-01-01 02:03:04',
+                'updated_date' => '2018-01-01 02:03:04',
+                'created_date_pretty' => 'Jan 1, 2018 02:03:04',
+                'updated_date_pretty' => 'Jan 1, 2018 02:03:04'
+            )
+        );
+        $this->assertSame($expected, $container);
+    }
+
+    public function test_addContainerIgnoreGtmDdataLayer()
+    {
+        $idContainer = $this->addContainer($this->idSite,'My Name', 'My Description', null, 1);
+        $this->assertNotEmpty($idContainer);
+
+        $container = $this->model->getContainer($this->idSite, $idContainer);
+
+        $expected = array(
+            'idcontainer' => $idContainer,
+            'idsite' => $this->idSite,
+            'context' => WebContext::ID,
+            'name' => 'My Name',
+            'description' => 'My Description',
+            'ignoreGtmDataLayer' => 1,
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
             'updated_date' => $this->now,
@@ -199,6 +238,45 @@ class ContainerTest extends IntegrationTestCase
             'context' => WebContext::ID,
             'name' => 'MyUpdated Name',
             'description' => 'My Updated Description',
+            'ignoreGtmDataLayer' => 0,
+            'status' => ContainersDao::STATUS_ACTIVE,
+            'created_date' => $this->now,
+            'updated_date' => '2018-02-01 05:06:07',
+            'created_date_pretty' => 'Jan 1, 2018 02:03:04',
+            'updated_date_pretty' => 'Feb 1, 2018 05:06:07',
+            'versions' => array(),
+            'releases' => array(),
+            'draft' => array (
+                'idcontainerversion' => 1,
+                'idcontainer' => $this->idContainer1,
+                'idsite' => $this->idSite,
+                'status' => ContainersDao::STATUS_ACTIVE,
+                'revision' => 0,
+                'name' => '',
+                'description' => '',
+                'created_date' => '2018-01-01 02:03:04',
+                'updated_date' => '2018-01-01 02:03:04',
+                'created_date_pretty' => 'Jan 1, 2018 02:03:04',
+                'updated_date_pretty' => 'Jan 1, 2018 02:03:04'
+            )
+        );
+        $this->assertSame($expected, $container);
+    }
+
+    public function test_updateContainerIgnoreGtmDataLayer()
+    {
+        $this->model->setCurrentDateTime('2018-02-01 05:06:07');
+        $this->updateContainer($this->idSite, $this->idContainer1, 'MyUpdated Name', 'My Updated Description', 1);
+
+        $container = $this->model->getContainer($this->idSite, $this->idContainer1);
+
+        $expected = array(
+            'idcontainer' => $this->idContainer1,
+            'idsite' => $this->idSite,
+            'context' => WebContext::ID,
+            'name' => 'MyUpdated Name',
+            'description' => 'My Updated Description',
+            'ignoreGtmDataLayer' => 1,
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
             'updated_date' => '2018-02-01 05:06:07',
@@ -265,6 +343,7 @@ class ContainerTest extends IntegrationTestCase
             'context' => 'web',
             'name' => 'Container1',
             'description' => '',
+            'ignoreGtmDataLayer' => 0,
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
             'updated_date' => $this->now,
@@ -1181,18 +1260,18 @@ class ContainerTest extends IntegrationTestCase
         return $this->model->updateContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
     }
 
-    private function addContainer($idSite, $name = 'My Name', $description = '', $context = null)
+    private function addContainer($idSite, $name = 'My Name', $description = '', $context = null, $ignoreGtmDataLayer = 0)
     {
         if (!isset($context)) {
             $context = WebContext::ID;
         }
 
-        return $this->model->addContainer($idSite, $context, $name, $description);
+        return $this->model->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer);
     }
 
-    private function updateContainer($idSite, $idContainer, $name = 'Updated Name', $description = '')
+    private function updateContainer($idSite, $idContainer, $name = 'Updated Name', $description = '', $ignoreGtmDataLayer = 0)
     {
-        return $this->model->updateContainer($idSite, $idContainer, $name, $description);
+        return $this->model->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer);
     }
 
     private function publishVersion($idSite, $idContainer, $idContainerVersion, $environment = null, $login = 'mylogin')

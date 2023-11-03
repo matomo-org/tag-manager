@@ -76,8 +76,8 @@ class NewVariableParameterMigratorTest extends IntegrationTestCase
         $context = WebContext::ID;
         $name = 'My Container';
         $description = 'My container description';
-        $containerDao->createContainer($this->idSite, $idContainer, $context, $name, $description, $this->dateString);
-        $containerDao->createContainer($this->idSite, $idDeletedContainer, $context, uniqid($name), $description, $this->dateString);
+        $containerDao->createContainer($this->idSite, $idContainer, $context, $name, $description, $this->dateString, 0);
+        $containerDao->createContainer($this->idSite, $idDeletedContainer, $context, uniqid($name), $description, $this->dateString, 0);
         $containerDao->deleteContainer($this->idSite, $idDeletedContainer, $this->dateString);
 
         // Create some versions to test with.
@@ -176,7 +176,7 @@ class NewVariableParameterMigratorTest extends IntegrationTestCase
         $context = WebContext::ID;
         $name = 'My Container';
         $description = 'My container description';
-        $containerDao->createContainer($this->idSite, $idContainer, $context, $name, $description, $this->dateString);
+        $containerDao->createContainer($this->idSite, $idContainer, $context, $name, $description, $this->dateString, 0);
 
         // Create some versions to test with.
         $versionDao = new ContainerVersionsDao();
@@ -212,7 +212,7 @@ class NewVariableParameterMigratorTest extends IntegrationTestCase
         $context = WebContext::ID;
         $name = 'My Container';
         $description = 'My container description';
-        $containerDao->createContainer($this->idSite, $idContainer, $context, $name, $description, $this->dateString);
+        $containerDao->createContainer($this->idSite, $idContainer, $context, $name, $description, $this->dateString, 0);
 
         // Create some versions to test with.
         $versionDao = new ContainerVersionsDao();
