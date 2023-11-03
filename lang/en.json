@@ -962,7 +962,7 @@
         "SiteWithoutDataMtmIntro": "The Matomo Tag Manager may be a better choice than tracking via the regular JavaScript code. It lets you manage and unify all your tracking and marketing tags (also known as \"pixels\" or \"custom HTML/JS tags\") in one place. Using the Matomo Tag Manager makes your life easier when you want to modify any of these tags, as you will no longer need a developer to make the needed changes for you. %1$sLearn more%2$s.",
         "SiteWithoutDataMtmStep2": "If you would like to customize this container, visit the %1$sContainer Dashboard%2$s",
         "SiteWithoutDataMtmStep3": "Copy the code below and paste it on every page of your website. We recommend pasting it immediately before the closing %1$s tag. %2$sLearn more%3$s.",
-        "IgnoreGtmDataLaterDescription": "If checked, Matomo Tag Manager excludes data layer values that were already set by Google Tag Manager. For compatibility reasons, the default behavior is to keep data layer values that have already been set by Google Tag Manager.",
+        "IgnoreGtmDataLaterDescription": "If checked, Matomo Tag Manager excludes data layer values that were already set by Google Tag Manager. For compatibility reasons, the default behavior is to keep data layer values set by Google Tag Manager.",
         "IgnoreGtmDataLaterTitle": "Ignore Google Tag Manager data layer"
     }
 }
