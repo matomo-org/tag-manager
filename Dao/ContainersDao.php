@@ -68,7 +68,7 @@ class ContainersDao extends BaseDao implements TagManagerDao
         return !empty($container);
     }
 
-    public function createContainer($idSite, $idContainer, $context, $name, $description, $createdDate)
+    public function createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer)
     {
         if ($this->isContainerInUse($idContainer)) {
             throw new Exception(Piwik::translate('TagManager_ErrorContainerIdDuplicate'));
@@ -85,6 +85,7 @@ class ContainersDao extends BaseDao implements TagManagerDao
             'context' => $context,
             'name' => $name,
             'description' => !empty($description) ? $description : '',
+            'ignoreGtmDataLayer' => !empty($ignoreGtmDataLayer) ? $ignoreGtmDataLayer : 0,
             'status' => $status,
             'created_date' => $createdDate,
             'updated_date' => $createdDate

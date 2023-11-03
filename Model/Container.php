@@ -155,7 +155,7 @@ class Container extends BaseModel
         $description->check();
     }
 
-    public function addContainer($idSite, $context, $name, $description)
+    public function addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer)
     {
         $this->validateContainer($idSite, $name, $description);
         $this->contextProvider->checkIsValidContext($context);
@@ -164,7 +164,7 @@ class Container extends BaseModel
 
         $idContainer = $this->containerIdGenerator->generateId();
 
-        $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate);
+        $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer);
 
         $this->versionsDao->createDraftVersion($idSite, $idContainer, $createdDate);
 
