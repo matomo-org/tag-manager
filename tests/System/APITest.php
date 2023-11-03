@@ -99,6 +99,11 @@ class APITest extends SystemTestCase
                       'idContainer' => self::$fixture->idContainer2,
                       'idContainerVersion' => self::$fixture->idContainer2DraftVersion),
                 'container2_empty_container'),
+            array(
+                array('idSite' => self::$fixture->idSite4,
+                    'idContainer' => self::$fixture->idContainer6,
+                    'idContainerVersion' => self::$fixture->idContainer6DraftVersion),
+                'container6_v1'),
         );
     }
 

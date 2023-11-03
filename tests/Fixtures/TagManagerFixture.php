@@ -47,6 +47,8 @@ class TagManagerFixture extends Fixture
     public $idContainer4DraftVersion = 4;
     public $idContainer5 = 'aaacont5';
     public $idContainer5DraftVersion = 5;
+    public $idContainer6 = 'aaacont6';
+    public $idContainer6DraftVersion = 6;
 
     /**
      * @var API
@@ -103,6 +105,10 @@ class TagManagerFixture extends Fixture
         $idContainer5DraftVersion = $this->getContainerDraftVersion($this->idSite4, $this->idContainer5);
         self::assertSame($this->idContainer5DraftVersion, $idContainer5DraftVersion);
 
+        $this->addContainer($this->idSite4, $this->idContainer6, 'Container6', 'My container 6 description', null, 1);
+        $idContainer6DraftVersion = $this->getContainerDraftVersion($this->idSite4, $this->idContainer6);
+        self::assertSame($this->idContainer6DraftVersion, $idContainer6DraftVersion);
+
         $this->api->createContainerVersion($this->idSite2, $this->idContainer2, 'container2_v1', 'Version from draft without content');
 
         $idTrigger1Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My trigger1', array('eventName' => 'foo'), array(), 'My trigger1 description');
@@ -142,7 +148,7 @@ class TagManagerFixture extends Fixture
         }
     }
 
-    public function addContainer($idSite, $idContainer, $name = 'My Name', $description = '', $context = null)
+    public function addContainer($idSite, $idContainer, $name = 'My Name', $description = '', $context = null, $ignoreGtmDataLayer = 0)
     {
         $this->initIfNeeded();
         if (!isset($context)) {
@@ -154,7 +160,7 @@ class TagManagerFixture extends Fixture
             'containerIdGenerator' => new StaticContainerIdGenerator($idContainer)
         ));
 
-        return $container->addContainer($idSite, $context, $name, $description);
+        return $container->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer);
     }
 
     public function updateContainer($idSite, $idContainer, $name = 'Updated Name', $description = '')
