@@ -167,6 +167,10 @@ class WebContext extends BaseContext
             $js = $this->addPreviewCode($baseJs, $hasPreviewRelease, $isPreviewRelease, $container);
             $js = str_replace(array('/*!! initContainerHook */', '/*!!! initContainerHook */'), $initContainer, $js);
 
+            $ignoreGtmDataLayer = isset($container['ignoreGtmDataLayer']) && $container['ignoreGtmDataLayer'] === 1 ? 'true' : 'false';
+            $windowLevelSettingsJs = "var ignoreGtmDataLayer = {$ignoreGtmDataLayer};";
+            $js = str_replace(array('/*!! windowLevelSettingsHook */', '/*!!! windowLevelSettingsHook */'), $windowLevelSettingsJs, $js);
+
             $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $release['environment'], $container['created_date']);
             $filesCreated[$path] = $js;
             $this->storage->save(PIWIK_DOCUMENT_ROOT . $path, $js);

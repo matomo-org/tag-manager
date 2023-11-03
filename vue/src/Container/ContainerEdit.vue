@@ -67,6 +67,16 @@
             :inline-help="translate('TagManager_ContainerDescriptionHelp')"
           />
         </div>
+        <div>
+          <Field
+            uicontrol="checkbox"
+            name="ignoreGtmDataLayer"
+            :model-value="container.ignoreGtmDataLayer"
+            @update:model-value="container.ignoreGtmDataLayer = $event; setValueHasChanged()"
+            :title="translate('TagManager_IgnoreGtmDataLaterTitle')"
+            :inline-help="translate('TagManager_IgnoreGtmDataLaterDescription')"
+          />
+        </div>
         <SaveButton
           class="createButton"
           @confirm="edit ? updateContainer() : createContainer()"

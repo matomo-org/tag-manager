@@ -983,10 +983,10 @@ class API extends \Piwik\Plugin\API
      * @param string $description Optionally a description for this container
      * @return string The ID of the created container.
      */
-    public function addContainer($idSite, $context, $name, $description = '')
+    public function addContainer($idSite, $context, $name, $description = '', $ignoreGtmDataLayer = false)
     {
         $this->accessValidator->checkWriteCapability($idSite);
-        return $this->containers->addContainer($idSite, $context, $name, $description);
+        return $this->containers->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer);
     }
 
     /**
@@ -998,12 +998,12 @@ class API extends \Piwik\Plugin\API
      * @param string $description Optionally a description for this container.
      * @return string The ID of the created container.
      */
-    public function updateContainer($idSite, $idContainer, $name, $description = '')
+    public function updateContainer($idSite, $idContainer, $name, $description = '', $ignoreGtmDataLayer = false)
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
-        return $this->containers->updateContainer($idSite, $idContainer, $name, $description);
+        return $this->containers->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer);
     }
 
     /**

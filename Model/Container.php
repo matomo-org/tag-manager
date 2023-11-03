@@ -173,13 +173,14 @@ class Container extends BaseModel
         return $idContainer;
     }
 
-    public function updateContainer($idSite, $idContainer, $name, $description)
+    public function updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer)
     {
         $this->validateContainer($idSite, $name, $description);
 
         $columns = array(
             'name' => $name,
-            'description' => $description
+            'description' => $description,
+            'ignoreGtmDataLayer' => $ignoreGtmDataLayer
         );
         $this->updateContainerColumns($idSite, $idContainer, $columns);
         $this->generateContainer($idSite, $idContainer);

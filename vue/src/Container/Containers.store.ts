@@ -118,6 +118,7 @@ class ContainersStore {
       {
         name: container.name,
         description: container.description,
+        ignoreGtmDataLayer: container.ignoreGtmDataLayer,
         context: container.context,
       },
       { withTokenInUrl: true },
