@@ -93,7 +93,7 @@ class ContainersDaoTest extends IntegrationTestCase
             'created_date' => $createdDate,
             'updated_date' => $createdDate,
             'deleted_date' => null,
-            'ignoreGtmDataLayer' => 0
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0'
         ), $container);
     }
 
@@ -248,7 +248,7 @@ class ContainersDaoTest extends IntegrationTestCase
             'created_date' => $this->now,
             'updated_date' => $columns['updated_date'],
             'deleted_date' => null,
-            'ignoreGtmDataLayer' => 0
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0'
         ), $container);
     }
 
@@ -275,7 +275,7 @@ class ContainersDaoTest extends IntegrationTestCase
             'context' => WebContext::ID,
             'name' => 'Test name',
             'description' => 'My description',
-            'ignoreGtmDataLayer' => 1,
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
             'updated_date' => $this->now,
