@@ -144,7 +144,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should load an edit version through URL', async function () {
-        await page.goto(container1Base + '#?idContainerVersion=11');
+        await page.goto(container1Base + '#?idContainerVersion=12');
         await capture.page(page, 'edit_url');
     });
 
