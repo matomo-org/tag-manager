@@ -981,12 +981,13 @@ class API extends \Piwik\Plugin\API
      *                      {@link TagManager.getAvailableContexts}
      * @param string $name   The name this container should have.
      * @param string $description Optionally a description for this container
+     * @param int $ignoreGtmDataLayer Optionally indicate that we should ignore GTM dataLayer values
      * @return string The ID of the created container.
      */
-    public function addContainer($idSite, $context, $name, $description = '')
+    public function addContainer($idSite, $context, $name, $description = '', $ignoreGtmDataLayer = 0)
     {
         $this->accessValidator->checkWriteCapability($idSite);
-        return $this->containers->addContainer($idSite, $context, $name, $description);
+        return $this->containers->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer);
     }
 
     /**
@@ -996,14 +997,15 @@ class API extends \Piwik\Plugin\API
      * @param string $idContainer  The ID of the container you want to update, for example "6OMh6taM".
      * @param string $name   The name this container should have.
      * @param string $description Optionally a description for this container.
+     * @param int $ignoreGtmDataLayer Optionally indicate that we should ignore GTM dataLayer values
      * @return string The ID of the created container.
      */
-    public function updateContainer($idSite, $idContainer, $name, $description = '')
+    public function updateContainer($idSite, $idContainer, $name, $description = '', $ignoreGtmDataLayer = 0)
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
-        return $this->containers->updateContainer($idSite, $idContainer, $name, $description);
+        return $this->containers->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer);
     }
 
     /**

@@ -23,6 +23,8 @@
     var documentAlias = document;
     var windowAlias = window;
 
+    /*!! windowLevelSettingsHook */
+
     /*!! previewModeHook */
 
     if (typeof window.MatomoTagManager !== 'object') {
@@ -1817,7 +1819,7 @@
 
             dataLayer.push({'mtm.mtmScriptLoadedTime': timeScriptLoaded});
 
-            if ('undefined' !== typeof windowAlias.dataLayer && utils.isArray(windowAlias.dataLayer)) {
+            if (('undefined' === typeof ignoreGtmDataLayer || !ignoreGtmDataLayer) && 'undefined' !== typeof windowAlias.dataLayer && utils.isArray(windowAlias.dataLayer)) {
                 // compatibility for GTM
                 for ( i = 0; i < windowAlias.dataLayer.length; i++) {
                     if (utils.isObject(windowAlias.dataLayer[i])) {

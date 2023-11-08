@@ -113,7 +113,7 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
         $description = 'baz';
         $createdDate = $this->now;
 
-        $this->containerDao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate);
+        $this->containerDao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, 0);
         $idRelease = $this->dao->releaseVersion($idSite, $idContainer, $idContainerVersion, $environment, $releaseLogin, $this->now);
         $this->assertSame(1, $idRelease);
 
@@ -167,7 +167,7 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
         $description = 'baz';
         $createdDate = $this->now;
 
-        $this->containerDao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate);
+        $this->containerDao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, 1);
 
         $idRelease = $this->dao->releaseVersion($idSite, $idContainer, $idContainerVersion, $environment, $releaseLogin, $this->now);
         $this->assertSame(1, $idRelease);
@@ -527,7 +527,7 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
     {
         $releaseLogin = 'myuser';
         try {
-            $this->containerDao->createContainer($idSite, $idContainer, $context = 'web', $idContainer, '', $this->now);
+            $this->containerDao->createContainer($idSite, $idContainer, $context = 'web', $idContainer, '', $this->now, 0);
         } catch (\Exception $e) {
             // ignore if that container already exists
         }
