@@ -167,7 +167,7 @@ class WebContext extends BaseContext
             $js = $this->addPreviewCode($baseJs, $hasPreviewRelease, $isPreviewRelease, $container);
             $js = str_replace(array('/*!! initContainerHook */', '/*!!! initContainerHook */'), $initContainer, $js);
 
-            $ignoreGtmDataLayer = isset($container['ignoreGtmDataLayer']) && $container['ignoreGtmDataLayer'] === 1 ? 'true' : 'false';
+            $ignoreGtmDataLayer = isset($container['ignoreGtmDataLayer']) && $container['ignoreGtmDataLayer'] == 1 ? 'true' : 'false';
             $windowLevelSettingsJs = "var ignoreGtmDataLayer = {$ignoreGtmDataLayer};";
             $js = str_replace(array('/*!! windowLevelSettingsHook */', '/*!!! windowLevelSettingsHook */'), $windowLevelSettingsJs, $js);
 
