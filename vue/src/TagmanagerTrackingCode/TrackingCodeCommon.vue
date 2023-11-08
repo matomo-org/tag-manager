@@ -114,6 +114,7 @@ import {
   translate,
   CopyToClipboard,
   useExternalPluginComponent,
+  externalLink,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
 import {
@@ -349,7 +350,7 @@ export default defineComponent({
     getLearnMoreLink() {
       return translate(
         'TagManager_CustomHtmlTagHelpText',
-        '<a rel="noreferrer noopener" target="_blank" href="https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/">',
+        externalLink('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/'),
         '</a>',
       );
     },
@@ -365,7 +366,7 @@ export default defineComponent({
     getMtmStep3() {
       return translate(
         'TagManager_SiteWithoutDataMtmStep3', '&lt;/head&gt;',
-        '<a rel="noreferrer noopener" target="_blank" href="https://developer.matomo.org/guides/tagmanager/embedding">',
+        externalLink('https://developer.matomo.org/guides/tagmanager/embedding'),
         '</a>',
       );
     },

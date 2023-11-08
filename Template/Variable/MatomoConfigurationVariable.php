@@ -14,6 +14,7 @@ use Piwik\Settings\FieldConfig;
 use Piwik\SettingsPiwik;
 use Piwik\Site;
 use Piwik\Tracker\TrackerCodeGenerator;
+use Piwik\Url;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
@@ -223,7 +224,8 @@ class MatomoConfigurationVariable extends BaseVariable
             $this->makeSetting('disableBrowserFeatureDetection', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionDescription');
-                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionInLineHelp', array('<br><strong>', '<a href="https://matomo.org/faq/how-to/how-do-i-disable-browser-feature-detection-completely/" target="_blank" rel="noreferrer noopener">', '</a>', '</strong>'));
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableBrowserFeatureDetectionInLineHelp',
+                    ['<br><strong>', '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/how-to/how-do-i-disable-browser-feature-detection-completely/', null, null, 'App.TagManager.getParameters') . '" target="_blank" rel="noreferrer noopener">', '</a>', '</strong>']);
             }),
             $this->makeSetting('domains', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDomainsTitle');
@@ -378,7 +380,8 @@ class MatomoConfigurationVariable extends BaseVariable
                 );
 
                 $field->condition = 'forceRequestMethod';
-                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoRequestMethodInlineHelp', array('<a href="https://matomo.org/faq/how-to/faq_18694/" target="_blank" rel="noreferrer noopener">', '</a>', '<br>'));
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoRequestMethodInlineHelp',
+                    ['<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/how-to/faq_18694/') . '" target="_blank" rel="noreferrer noopener">', '</a>', '<br>']);
             }),
             $matomoUrl = $this->makeSetting('requestContentType', 'application/x-www-form-urlencoded; charset=UTF-8', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequestContentTypeTitle');

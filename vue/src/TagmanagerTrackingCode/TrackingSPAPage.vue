@@ -57,7 +57,7 @@
 <script lang="ts">
 import { defineComponent, nextTick } from 'vue';
 import {
-  AjaxHelper, CopyToClipboard, MatomoUrl, translate,
+  AjaxHelper, CopyToClipboard, MatomoUrl, translate, externalLink,
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
 import {
@@ -180,7 +180,7 @@ export default defineComponent({
         'TagManager_SPAFollowStep3',
         `<strong>${translate('TagManager_PageViewTriggerName')}</strong>`,
         translate('TagManager_PageViewTriggerName'),
-        '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-trigger" target="_blank" rel="noreferrer noopener">',
+        externalLink('https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-trigger'),
         '</a>',
       );
     },
@@ -197,7 +197,7 @@ export default defineComponent({
         `<strong>${translate('TagManager_PageViewTriggerName')}</strong>`,
         `<strong>${translate('TagManager_MatomoTagName')}</strong>`,
         translate('TagManager_PageViewTriggerName'),
-        '<a href="https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-tag" target="_blank" rel="noreferrer noopener">',
+        externalLink('https://matomo.org/faq/tag-manager/how-do-i-track-pageviews-of-my-website-using-matomo-tag-manager/#create-pageview-tag'),
         '</a>',
       );
     },
@@ -265,7 +265,7 @@ export default defineComponent({
       return translate(
         'TagManager_SPAFollowStep16',
         '&lt;/head&gt;',
-        '<a href="https://developer.matomo.org/guides/tagmanager/embedding" target="_blank" rel="noreferrer noopener">',
+        externalLink('https://developer.matomo.org/guides/tagmanager/embedding'),
         '</a>',
       );
     },

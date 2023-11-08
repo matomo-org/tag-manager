@@ -66,7 +66,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ContentBlock, translate, MatomoUrl } from 'CoreHome';
+import {
+  ContentBlock,
+  translate,
+  MatomoUrl,
+  externalLink,
+} from 'CoreHome';
 
 export default defineComponent({
   props: {
@@ -89,10 +94,9 @@ export default defineComponent({
       );
     },
     gettingStartedContributeTagsText() {
-      const link = 'https://developer.matomo.org/guides/tagmanager/settingup';
       return translate(
         'TagManager_GettingStartedContributeTags',
-        `<a href="${link}" target="_blank" rel="noreferrer noopener">`,
+        externalLink('https://developer.matomo.org/guides/tagmanager/settingup'),
         '</a>',
       );
     },
