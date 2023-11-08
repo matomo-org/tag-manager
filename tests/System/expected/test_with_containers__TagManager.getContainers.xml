@@ -6,6 +6,7 @@
 		<context>web</context>
 		<name>Container1</name>
 		<description />
+		<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
 		<status>active</status>
 		
 		
@@ -13,7 +14,7 @@
 		
 		<versions>
 			<row>
-				<idcontainerversion>11</idcontainerversion>
+				<idcontainerversion>12</idcontainerversion>
 				<idcontainer>aaacont1</idcontainer>
 				<idsite>2</idsite>
 				<status>active</status>
@@ -29,7 +30,7 @@
 				</environments>
 			</row>
 			<row>
-				<idcontainerversion>10</idcontainerversion>
+				<idcontainerversion>11</idcontainerversion>
 				<idcontainer>aaacont1</idcontainer>
 				<idsite>2</idsite>
 				<status>active</status>
@@ -46,7 +47,7 @@
 				</environments>
 			</row>
 			<row>
-				<idcontainerversion>9</idcontainerversion>
+				<idcontainerversion>10</idcontainerversion>
 				<idcontainer>aaacont1</idcontainer>
 				<idsite>2</idsite>
 				<status>active</status>
@@ -61,7 +62,7 @@
 				</environments>
 			</row>
 			<row>
-				<idcontainerversion>8</idcontainerversion>
+				<idcontainerversion>9</idcontainerversion>
 				<idcontainer>aaacont1</idcontainer>
 				<idsite>2</idsite>
 				<status>active</status>
@@ -76,7 +77,7 @@
 				</environments>
 			</row>
 			<row>
-				<idcontainerversion>7</idcontainerversion>
+				<idcontainerversion>8</idcontainerversion>
 				<idcontainer>aaacont1</idcontainer>
 				<idsite>2</idsite>
 				<status>active</status>
@@ -95,7 +96,7 @@
 			<row>
 				<idcontainerrelease>1</idcontainerrelease>
 				<idcontainer>aaacont1</idcontainer>
-				<idcontainerversion>10</idcontainerversion>
+				<idcontainerversion>11</idcontainerversion>
 				<idsite>2</idsite>
 				<status>active</status>
 				<environment>live</environment>
@@ -107,7 +108,7 @@
 			<row>
 				<idcontainerrelease>2</idcontainerrelease>
 				<idcontainer>aaacont1</idcontainer>
-				<idcontainerversion>10</idcontainerversion>
+				<idcontainerversion>11</idcontainerversion>
 				<idsite>2</idsite>
 				<status>active</status>
 				<environment>dev</environment>
@@ -119,7 +120,7 @@
 			<row>
 				<idcontainerrelease>3</idcontainerrelease>
 				<idcontainer>aaacont1</idcontainer>
-				<idcontainerversion>11</idcontainerversion>
+				<idcontainerversion>12</idcontainerversion>
 				<idsite>2</idsite>
 				<status>active</status>
 				<environment>staging</environment>
@@ -161,6 +162,7 @@
 		<context>web</context>
 		<name>Container2</name>
 		<description>My container 2 description</description>
+		<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
 		<status>active</status>
 		
 		
@@ -168,7 +170,7 @@
 		
 		<versions>
 			<row>
-				<idcontainerversion>6</idcontainerversion>
+				<idcontainerversion>7</idcontainerversion>
 				<idcontainer>aaacont2</idcontainer>
 				<idsite>2</idsite>
 				<status>active</status>
@@ -205,6 +207,7 @@
 		<context>web</context>
 		<name>Container3</name>
 		<description>My container 3 description</description>
+		<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
 		<status>active</status>
 		
 		

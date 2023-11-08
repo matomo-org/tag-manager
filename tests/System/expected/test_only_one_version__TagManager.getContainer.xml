@@ -5,6 +5,7 @@
 	<context>web</context>
 	<name>Container2</name>
 	<description>My container 2 description</description>
+	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
 	<status>active</status>
 	
 	
@@ -12,7 +13,7 @@
 	
 	<versions>
 		<row>
-			<idcontainerversion>6</idcontainerversion>
+			<idcontainerversion>7</idcontainerversion>
 			<idcontainer>aaacont2</idcontainer>
 			<idsite>2</idsite>
 			<status>active</status>

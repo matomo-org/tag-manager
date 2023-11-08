@@ -857,6 +857,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_SiteWithoutDataMtmIntro';
         $result[] = 'TagManager_SiteWithoutDataMtmStep2';
         $result[] = 'TagManager_SiteWithoutDataMtmStep3';
+        $result[] = 'TagManager_IgnoreGtmDataLaterDescription';
+        $result[] = 'TagManager_IgnoreGtmDataLaterTitle';
     }
 
     public function getStylesheetFiles(&$stylesheets)

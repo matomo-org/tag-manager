@@ -5,6 +5,7 @@
 	<context>web</context>
 	<name>My Name</name>
 	<description />
+	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
 	<status>active</status>
 	
 	
@@ -15,7 +16,7 @@
 	<releases>
 	</releases>
 	<draft>
-		<idcontainerversion>14</idcontainerversion>
+		<idcontainerversion>15</idcontainerversion>
 		<idcontainer>import02</idcontainer>
 		<idsite>4</idsite>
 		<status>active</status>

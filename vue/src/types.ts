@@ -254,6 +254,7 @@ export interface Container {
   created_date: string;
   created_date_pretty: string;
   description: string;
+  ignoreGtmDataLayer: boolean;
   draft: Draft;
   idcontainer: string;
   idsite: string|number;
