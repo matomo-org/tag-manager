@@ -1223,7 +1223,7 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>By default, Matomo accesses some information from the visitor’s browser like the browser resolution. Some privacy regulations may allow access of such information from the visitor’s device only after having a consent. If this applies to you, you can disable this feature.</description>
-						<inlineHelp>&lt;br&gt;&lt;strong&gt;To learn more, check this &lt;a href="https://matomo.org/faq/how-to/how-do-i-disable-browser-feature-detection-completely/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_Cloud&amp;mtm_medium=App.TagManager.getParameters" target="_blank" rel="noreferrer noopener"&gt;FAQ&lt;/a&gt;.&lt;/strong&gt;</inlineHelp>
+						<inlineHelp>&lt;br&gt;&lt;strong&gt;To learn more, check this &lt;a href="https://matomo.org/faq/how-to/how-do-i-disable-browser-feature-detection-completely/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=App.TagManager.getParameters" target="_blank" rel="noreferrer noopener"&gt;FAQ&lt;/a&gt;.&lt;/strong&gt;</inlineHelp>
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>

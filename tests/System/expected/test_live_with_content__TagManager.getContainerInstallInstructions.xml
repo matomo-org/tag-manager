@@ -12,6 +12,6 @@
   })();
 &lt;/script&gt;
 &lt;!-- End Matomo Tag Manager --&gt;</embedCode>
-        <helpUrl>https://developer.matomo.org/guides/tagmanager/embedding?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_Cloud&amp;mtm_medium=App.TagManager.getInstallInstructions</helpUrl>
+        <helpUrl>https://developer.matomo.org/guides/tagmanager/embedding?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=App.TagManager.getInstallInstructions</helpUrl>
 	</row>
 </result>
