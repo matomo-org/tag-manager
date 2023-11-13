@@ -488,6 +488,8 @@
         "HoneybadgerTagHelp": "Aquesta etiqueta afegeix l'SDK de Javascript oficial de Honeybadger al vostre lloc web.",
         "HoneybadgerTagRevisionDescription": "(opcional) la versió del vostre projecte",
         "HoneybadgerTagRevisionTitle": "Revisió de codi",
+        "IgnoreGtmDataLaterDescription": "Si està marcat, el Gestor d'etiquetes de Matomo exclou els valors de la capa de dades que ja havia establert el Gestor d'etiquetes de Google. Per motius de compatibilitat, el comportament predeterminat és mantenir els valors de la capa de dades establerts per Google Tag Manager.",
+        "IgnoreGtmDataLaterTitle": "Ignoreu la capa de dades de Google Tag Manager",
         "Import": "Importar",
         "ImportVersion": "Importar una versió",
         "InitializeTrackerOnly": "Inicialitzar només el rastrejador. No feu seguiment de res.",
