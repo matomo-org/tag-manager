@@ -31,6 +31,11 @@ class NewVariableParameterMigratorTest extends IntegrationTestCase
      */
     private $newVariableParameterMigrator;
 
+    /**
+     * @var TagManagerFixture
+     */
+    private $tagFixture;
+
     private $idSite;
 
     /**
