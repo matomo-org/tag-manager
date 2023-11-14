@@ -488,6 +488,8 @@
         "HoneybadgerTagHelp": "Bu etiket, siteye resmi Honeybadger JavaScript SDK uygulamasının eklenmesini sağlar.",
         "HoneybadgerTagRevisionDescription": "(isteğe bağlı) projenizin sürümü",
         "HoneybadgerTagRevisionTitle": "Kod sürümü",
+        "IgnoreGtmDataLaterDescription": "Bu seçenek etkinleştirildiğinde, Matomo Etiket Yöneticisi, Google Etiket Yöneticisi tarafından önceden ayarlanmış olan veri katmanı değerlerini katmaz. Uyumluluk nedeniyle varsayılan davranış, Google Etiket Yöneticisi tarafından ayarlanmış veri katmanı değerlerini korumaktır.",
+        "IgnoreGtmDataLaterTitle": "Google Etiket Yöneticisi veri katmanı yok sayılsın",
         "Import": "İçe aktar",
         "ImportVersion": "İçe bir sürüm aktar",
         "InitializeTrackerOnly": "Yalnızca izleyici başlatılsın. Hiçbir şey izlenmesin.",
