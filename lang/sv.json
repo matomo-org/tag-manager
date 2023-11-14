@@ -488,6 +488,8 @@
         "HoneybadgerTagHelp": "Den här taggen lägger till den officiella Honeybadger Javascript SDK till din webbplats.",
         "HoneybadgerTagRevisionDescription": "(valfritt) versionen för ditt projekt",
         "HoneybadgerTagRevisionTitle": "Kodrevision",
+        "IgnoreGtmDataLaterDescription": "När ikryssad kommer Matomo Tag Manager att exkludera datalager-värden som redan satts av Google Tag Manager. På grund av kompatibilitet är standardinställningen att behålla datalager-värden satta av Google Tag Manager.",
+        "IgnoreGtmDataLaterTitle": "Ignorera Google Tag Manager datalager",
         "Import": "Importera",
         "ImportVersion": "Importera en version",
         "InitializeTrackerOnly": "Initialisera endast spårare. Spåra ingenting.",
