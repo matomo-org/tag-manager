@@ -71,6 +71,7 @@ import {
   translate,
   MatomoUrl,
   externalLink,
+  Matomo,
 } from 'CoreHome';
 
 export default defineComponent({
@@ -85,7 +86,8 @@ export default defineComponent({
       const link = `?${MatomoUrl.stringify({
         module: 'TagManager',
         action: 'manageContainers',
-      })}}`;
+        idSite: Matomo.idSite || MatomoUrl.parsed.value.idSite,
+      })}`;
 
       return translate(
         'TagManager_GettingStartedHowCreateContainer',
