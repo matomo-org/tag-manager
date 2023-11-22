@@ -1,0 +1,58 @@
+<html>
+<head>
+    <script type="text/javascript">
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PreMtmLoaded', 1]);
+        _paq.push(['trackGoal', 1, 43.21]);
+    </script>
+    <!-- Matomo Tag Manager  TODO - Replace this with your own MTM container snippet -->
+    <script>
+        var _mtm = window._mtm = window._mtm || [];
+        _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+        (function() {
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src='https://matomo.com/js/container_vVLHATh6.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Tag Manager -->
+    <script type="text/javascript">
+        // Manually track a goal
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['trackGoal', 1, 543.21]);
+        _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PostMtmLoaded', 2]);
+        _paq.push(['setCustomDimension', 1, 'first']);
+        // This is to simulate the matomo.js file loading a while after MTM
+        setTimeout(function () {
+            <!-- Matomo  TODO - Replace this with your own domain and site ID -->
+            var _paq = window._paq = window._paq || [];
+            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            _paq.push(['setCustomDimension', 2, 'second']);
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            _paq.push(['trackGoal', 1, 22.22]);
+            (function() {
+                var u="https://matomo.com/";
+                _paq.push(['setTrackerUrl', u+'matomo.php']);
+                _paq.push(['setSiteId', '20']);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+            })();
+            <!-- End Matomo Code -->
+            _paq.push(['trackGoal', 1, 33.33]);
+            _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PostMatomoJsLoaded', 4]);
+
+            document.getElementById('loadingMessage').textContent = 'Done loading JS!';
+        }, 5000);
+    </script>
+    <script>
+        _paq.push(['trackGoal', 1, 11.11]);
+        _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PreMatomoJsLoaded', 3]);
+    </script>
+</head>
+<body>
+<div class="main-div">
+    <h1 class="site-title">Hello World!</h1>
+</div>
+<h2 id="loadingMessage">Loading JS...</h2>
+</body>
+</html>
