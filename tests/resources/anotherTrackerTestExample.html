@@ -1,5 +1,12 @@
 <html>
 <head>
+    <!-- Google Tag Manager -->
+    <script nonce="2726c7f26c">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TG7HTVR');</script>
+    <!-- End Google Tag Manager -->
     <script type="text/javascript">
         var _paq = window._paq = window._paq || [];
         _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PreMtmLoaded', 1]);
@@ -21,38 +28,53 @@
         _paq.push(['trackGoal', 1, 543.21]);
         _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PostMtmLoaded', 2]);
         _paq.push(['setCustomDimension', 1, 'first']);
-        // This is to simulate the matomo.js file loading a while after MTM
-        setTimeout(function () {
-            <!-- Matomo  TODO - Replace this with your own domain and site ID -->
-            var _paq = window._paq = window._paq || [];
-            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-            _paq.push(['setCustomDimension', 2, 'second']);
-            _paq.push(['trackPageView']);
-            _paq.push(['enableLinkTracking']);
-            _paq.push(['trackGoal', 1, 22.22]);
-            (function() {
-                var u="https://matomo.com/";
-                _paq.push(['setTrackerUrl', u+'matomo.php']);
-                _paq.push(['setSiteId', '20']);
-                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-            })();
-            <!-- End Matomo Code -->
-            _paq.push(['trackGoal', 1, 33.33]);
-            _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PostMatomoJsLoaded', 4]);
-
-            document.getElementById('loadingMessage').textContent = 'Done loading JS!';
-        }, 5000);
     </script>
+    <!-- Hotjar Tracking Code for my site -->
     <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:3745842,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+    <script type="text/javascript">
         _paq.push(['trackGoal', 1, 11.11]);
         _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PreMatomoJsLoaded', 3]);
+    </script>
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['setCustomDimension', 2, 'second']);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        _paq.push(['trackGoal', 1, 22.22]);
+        (function() {
+            var u="https://matomo.com/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '20']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
+    <script type="text/javascript">
+        _paq.push(['trackGoal', 1, 33.33]);
+        _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PostMatomoJsLoaded', 4]);
+        _paq.push(['setCustomDimension', 3, 'third']);
     </script>
 </head>
 <body>
 <div class="main-div">
     <h1 class="site-title">Hello World!</h1>
 </div>
-<h2 id="loadingMessage">Loading JS...</h2>
+<div><button type="button" onclick="_paq.push(['trackEvent', 'MyButtonCategory', 'MyButtonAction', 'Button1', 1]);">Test Button 1</button></div>
+<div><button type="button" onclick="_paq.push(['trackEvent', 'MyButtonCategory', 'MyButtonAction', 'Button2', 2]);">Test Button 2</button></div>
+<div><button type="button" onclick="_paq.push(['trackEvent', 'MyButtonCategory', 'MyButtonAction', 'Button3', 3]);">Test Button 3</button></div>
+<div><button type="button" onclick="_paq.push(['trackEvent', 'MyButtonCategory', 'MyButtonAction', 'Button4', 4]);">Test Button 4</button></div>
+<div><button type="button" onclick="_paq.push(['trackEvent', 'MyButtonCategory', 'MyButtonAction', 'Button5', 5]);">Test Button 5</button></div>
 </body>
 </html>
