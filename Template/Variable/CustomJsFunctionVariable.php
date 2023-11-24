@@ -37,9 +37,12 @@ class CustomJsFunctionVariable extends BaseVariable
                 $field->title = Piwik::translate('TagManager_CustomJsFunctionVariableJsFunctionTitle');
                 $field->description = Piwik::translate('TagManager_CustomJsFunctionVariableJsFunctionDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;
+                $field->customFieldComponent = self::FIELD_TEXTAREA_VARIABLE_COMPONENT;
+                $field->prepare = function ($value) {
+                    return trim($value);
+                };
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
-                    $value = trim($value);
                     if (strpos($value, 'function') !== 0) {
                         throw new \Exception('The value needs to start with "function() { ... }"');
                     }
@@ -47,20 +50,29 @@ class CustomJsFunctionVariable extends BaseVariable
                         throw new \Exception('The function needs to return a value');
                     }
                 };
-                $field->transform = function ($value) {
-                    return trim($value);
-                };
             }),
         );
     }
 
     public function loadTemplate($context, $entity)
     {
-        if (!empty($entity['parameters']['jsFunction'])) {
-            $function = rtrim(trim($entity['parameters']['jsFunction']), ';');
+        if ($js = ($entity['parameters']['jsFunction'] ?? null)) {
+            if (is_array($js)) {
+                if (isset($js['joinedVariable']) && is_array($js['joinedVariable'])) {
+                    $js = array_reduce($js['joinedVariable'], function ($carry, $item) {
+                        if (is_array($item)) {
+                            return $carry . 'TagManager._buildVariable(' . json_encode($item) . ", parameters.get('container')).get()";
+                        }
+                        return $carry . $item;
+                    }, "");
+                } else {
+                    throw new Exception("Expected joined variable");
+                }
+            }
+
+            $function = rtrim(trim($js), ';');
 
             return '(function () { return function (parameters, TagManager) { this.get = ' . $function .'; } })();';
         }
     }
-
 }
