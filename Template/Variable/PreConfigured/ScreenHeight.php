@@ -17,11 +17,11 @@ class ScreenHeight extends BasePreConfiguredVariable
         return self::CATEGORY_DEVICE;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('TagManager.window.getScreenHeight()');
+                return $this->makeReturnTemplateMethod('TagManager.window.getScreenHeight()', $skipTemplate);
         }
     }
 

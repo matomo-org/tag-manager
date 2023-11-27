@@ -17,11 +17,11 @@ class RandomNumberVariable extends BasePreConfiguredVariable
         return self::CATEGORY_UTILITIES;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('Math.floor(Math.random() * 20000000000)');
+                return $this->makeReturnTemplateMethod('Math.floor(Math.random() * 20000000000)', $skipTemplate);
         }
     }
 

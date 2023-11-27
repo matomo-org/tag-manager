@@ -17,11 +17,11 @@ class PagePathVariable extends BasePreConfiguredVariable
         return self::CATEGORY_PAGE_VARIABLES;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('parameters.window.location.pathname');
+                return $this->makeReturnTemplateMethod('parameters.window.location.pathname', $skipTemplate);
         }
     }
 

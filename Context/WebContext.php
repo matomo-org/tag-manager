@@ -89,6 +89,7 @@ class WebContext extends BaseContext
         }
 
         $baseJs = $this->javaScriptTagManagerLoader->getJavaScriptContent();
+        $preconfiguredVariablesResponse = $this->getPreConfiguredVariablesJSCodeResponse(self::ID);
 
         foreach ($environments as $environment) {
             $environmentId = $environment['id'];
@@ -144,6 +145,10 @@ class WebContext extends BaseContext
             foreach ($containerJs['variables'] as &$variable) {
                 $variable['Variable'] = $this->templateLocator->loadVariableTemplate($variable, self::ID);
                 $variable['parameters'] = $this->addVariableTemplateToParameters($variable['parameters']);
+                if (!empty($variable['parameters']['jsFunction']) && strpos($variable['parameters']['jsFunction'], '{{')!==FALSE) {
+                    $variable['parameters']['jsFunction'] = str_replace($preconfiguredVariablesResponse['keys'], $preconfiguredVariablesResponse['values'], $variable['parameters']['jsFunction']);
+                    $this->templateLocator->updateVariableTemplate($variable['Variable'], str_replace($preconfiguredVariablesResponse['keys'], $preconfiguredVariablesResponse['values'], $this->templateLocator->getVariableTemplate($variable['Variable'])));
+                }
 
                 if (!$isPreviewRelease) {
                     $variable['name'] = $variable['type'];

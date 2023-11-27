@@ -17,11 +17,11 @@ class SeoNumH1 extends BasePreConfiguredVariable
         return self::CATEGORY_SEO;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod("TagManager.dom.byTagName('h1').length");
+                return $this->makeReturnTemplateMethod("TagManager.dom.byTagName('h1').length", $skipTemplate);
         }
     }
 
