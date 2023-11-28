@@ -222,6 +222,7 @@ describe("ContainerVersion", function () {
     it('should be possible to confirm publish version to different environment', async function () {
         await modal.clickButton(page, 'Publish');
         await page.mouse.move(-10, -10);
+        await page.waitForNetworkIdle();
         await capture.page(page, 'publish_environment_confirmed');
     });
 
