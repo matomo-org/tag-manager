@@ -19,9 +19,8 @@
     }
     // Store the initial state of window._paq so that we can apply it to all the configs
     // We use the stringify and parse to make sure that we have a copy and not a reference
-    var initialPaq = window._paq && window._paq.length ? JSON.parse(JSON.stringify(window._paq)) : initialPaq || [];
-    var remainingPaq = [];
-    var indexesToRemove = [];
+    var localPaq = window._paq && window._paq.length ? JSON.parse(JSON.stringify(window._paq)) : localPaq || [];
+    var indexesOfConfigs = [];
     // Clear window._paq to prevent things from being tracked too early
     while (window._paq.length > 0) {
         window._paq.pop();
@@ -83,13 +82,13 @@
         }
     }
 
-    function removeIndexIfExists(index)
+    function markIndexAsConfig(index)
     {
         if (index < 0) {
            return;
         }
 
-        indexesToRemove.push(index);
+        indexesOfConfigs.push(index);
     }
 
     var configuredTrackers = {};
@@ -119,8 +118,7 @@
                 var variableName = parameters.matomoConfig.name;
 
                 var setCustomDimensionIndexes = [];
-                indexesToRemove = [];
-                var localPaq = JSON.parse(JSON.stringify(initialPaq));
+                indexesOfConfigs = [];
 
                 // we need to fetch matomoConfig again in case some parameters changed meanwhile that are variables...
                 // eg userId might be a variable and it's value might be different now
@@ -171,17 +169,17 @@
                             case 'setUserId':
                                 setUserIdIndex = k;
                                 // Mark this one for removal right away since we don't want it to override the container
-                                removeIndexIfExists(k);
+                                markIndexAsConfig(k);
                                 break;
                             case 'setSiteId':
                                 setSiteIdIndex = k;
                                 // Mark this one for removal right away since we don't want it to override the container
-                                removeIndexIfExists(k);
+                                markIndexAsConfig(k);
                                 break;
                             case 'setTrackerUrl':
                                 setTrackerUrlIndex = k;
                                 // Mark this one for removal right away since we don't want it to override the container
-                                removeIndexIfExists(k);
+                                markIndexAsConfig(k);
                                 break;
                             case 'requireCookieConsent':
                                 requireCookieConsentIndex = k;
@@ -285,74 +283,74 @@
 
                     if (matomoConfig.requireCookieConsent || requireCookieConsentIndex !== -1) {
                         tracker.requireCookieConsent();
-                        removeIndexIfExists(requireCookieConsentIndex);
+                        markIndexAsConfig(requireCookieConsentIndex);
                     }
 
                     if ((matomoConfig.disableBrowserFeatureDetection || disableBrowserFeatureDetectionIndex !== -1) && typeof tracker.disableBrowserFeatureDetection === 'function') {
                         tracker.disableBrowserFeatureDetection();
-                        removeIndexIfExists(disableBrowserFeatureDetectionIndex);
+                        markIndexAsConfig(disableBrowserFeatureDetectionIndex);
                     }
 
                     if (matomoConfig.disableCookies || disableCookiesIndex !== -1) {
                         tracker.disableCookies();
-                        removeIndexIfExists(disableCookiesIndex);
+                        markIndexAsConfig(disableCookiesIndex);
                     }
 
                     if (matomoConfig.enableCrossDomainLinking || enableCrossDomainLinkingIndex !== -1) {
                         tracker.enableCrossDomainLinking();
-                        removeIndexIfExists(enableCrossDomainLinkingIndex);
+                        markIndexAsConfig(enableCrossDomainLinkingIndex);
                     }
 
                     if (cookieSameSiteIndex !== -1 && localPaq[cookieSameSiteIndex].length === 2) {
                        tracker.setCookieSameSite(localPaq[cookieSameSiteIndex][1]);
-                       removeIndexIfExists(cookieSameSiteIndex);
+                       markIndexAsConfig(cookieSameSiteIndex);
                     } else if (matomoConfig.cookieSameSite) {
                         tracker.setCookieSameSite(matomoConfig.cookieSameSite);
                     }
 
                     if (setVisitorCookieTimeoutIndex !== -1 && localPaq[setVisitorCookieTimeoutIndex].length === 2) {
                         tracker.setVisitorCookieTimeout(localPaq[setVisitorCookieTimeoutIndex][1]);
-                        removeIndexIfExists(setVisitorCookieTimeoutIndex);
+                        markIndexAsConfig(setVisitorCookieTimeoutIndex);
                     } else if (matomoConfig.customCookieTimeOutEnable) {
                         tracker.setVisitorCookieTimeout(matomoConfig.customCookieTimeOut * 86400);
                     }
 
                     if (setReferralCookieTimeoutIndex !== -1 && localPaq[setReferralCookieTimeoutIndex].length === 2) {
                         tracker.setReferralCookieTimeout(localPaq[setReferralCookieTimeoutIndex][1]);
-                        removeIndexIfExists(setReferralCookieTimeoutIndex);
+                        markIndexAsConfig(setReferralCookieTimeoutIndex);
                     } else if (matomoConfig.customCookieTimeOutEnable) {
                         tracker.setReferralCookieTimeout(matomoConfig.referralCookieTimeOut * 86400);
                     }
 
                     if (setSessionCookieTimeoutIndex !== -1 && localPaq[setSessionCookieTimeoutIndex].length === 2) {
                         tracker.setSessionCookieTimeout(localPaq[setSessionCookieTimeoutIndex][1]);
-                        removeIndexIfExists(setSessionCookieTimeoutIndex);
+                        markIndexAsConfig(setSessionCookieTimeoutIndex);
                     } else if (matomoConfig.customCookieTimeOutEnable) {
                         tracker.setSessionCookieTimeout(matomoConfig.sessionCookieTimeOut * 60);
                     }
 
                     if (matomoConfig.setSecureCookie || setSecureCookieIndex !== -1) {
                         tracker.setSecureCookie(true);
-                        removeIndexIfExists(setSecureCookieIndex);
+                        markIndexAsConfig(setSecureCookieIndex);
                     }
 
                     if (cookiePathIndex !== -1 && localPaq[cookiePathIndex].length === 2) {
                         tracker.setCookiePath(localPaq[cookiePathIndex][1]);
-                        removeIndexIfExists(cookiePathIndex);
+                        markIndexAsConfig(cookiePathIndex);
                     } else if (matomoConfig.cookiePath) {
                         tracker.setCookiePath(matomoConfig.cookiePath);
                     }
 
                     if (cookieNamePrefixIndex !== -1 && localPaq[cookieNamePrefixIndex].length === 2) {
                         tracker.setCookiePath(localPaq[cookieNamePrefixIndex][1]);
-                        removeIndexIfExists(cookieNamePrefixIndex);
+                        markIndexAsConfig(cookieNamePrefixIndex);
                     } else if (matomoConfig.cookieNamePrefix) {
                         tracker.setCookiePath(matomoConfig.cookieNamePrefix);
                     }
 
                     if (cookieDomainIndex !== -1 && localPaq[cookieDomainIndex].length === 2) {
                         tracker.setCookieDomain(localPaq[cookieDomainIndex][1]);
-                        removeIndexIfExists(cookieDomainIndex);
+                        markIndexAsConfig(cookieDomainIndex);
                     } else if (matomoConfig.cookieDomain) {
                         tracker.setCookieDomain(matomoConfig.cookieDomain);
                     }
@@ -367,7 +365,7 @@
                         if (TagManager.utils.isArray(domainsArray)) {
                             matomoConfig.domains = domainsArray;
                         }
-                        removeIndexIfExists(setDomainsIndex);
+                        markIndexAsConfig(setDomainsIndex);
                     }
                     if (matomoConfig.domains
                         && TagManager.utils.isArray(matomoConfig.domains)
@@ -389,12 +387,12 @@
 
                     if (matomoConfig.alwaysUseSendBeacon || alwaysUseSendBeaconIndex !== -1) {
                         tracker.alwaysUseSendBeacon();
-                        removeIndexIfExists(alwaysUseSendBeaconIndex);
+                        markIndexAsConfig(alwaysUseSendBeaconIndex);
                     }
 
                     if (matomoConfig.disableAlwaysUseSendBeacon || disableAlwaysUseSendBeaconIndex !== -1) {
                         tracker.disableAlwaysUseSendBeacon();
-                        removeIndexIfExists(disableAlwaysUseSendBeaconIndex);
+                        markIndexAsConfig(disableAlwaysUseSendBeaconIndex);
                     }
 
                     if (appendToTrackingUrlIndex !== -1 && localPaq[appendToTrackingUrlIndex].length === 2
@@ -405,9 +403,9 @@
                             && setRequestContentTypeIndex !== -1 && localPaq[setRequestContentTypeIndex].length === 2
                             && typeof localPaq[setRequestContentTypeIndex][1] === 'string' && localPaq[setRequestContentTypeIndex][1].length > 0) {
                             tracker.setRequestContentType(localPaq[setRequestContentTypeIndex][1]);
-                            removeIndexIfExists(setRequestContentTypeIndex);
+                            markIndexAsConfig(setRequestContentTypeIndex);
                         }
-                        removeIndexIfExists(appendToTrackingUrlIndex);
+                        markIndexAsConfig(appendToTrackingUrlIndex);
                     } else if (matomoConfig.forceRequestMethod && typeof matomoConfig.requestMethod === 'string'
                         && ['POST', 'GET'].includes(matomoConfig.requestMethod.toUpperCase())) {
                         tracker.setRequestMethod(matomoConfig.requestMethod);
@@ -418,33 +416,33 @@
 
                     if (matomoConfig.enableLinkTracking || enableLinkTrackingIndex !== -1) {
                         tracker.enableLinkTracking();
-                        removeIndexIfExists(enableLinkTrackingIndex);
+                        markIndexAsConfig(enableLinkTrackingIndex);
                     }
 
                     if (matomoConfig.enableFileTracking || enableFileTrackingIndex !== -1) {
                         tracker.enableFileTracking();
-                        removeIndexIfExists(enableFileTrackingIndex);
+                        markIndexAsConfig(enableFileTrackingIndex);
                     }
 
                     if (matomoConfig.requireConsent || requireConsentIndex !== -1) {
                         tracker.requireConsent();
-                        removeIndexIfExists(requireConsentIndex);
+                        markIndexAsConfig(requireConsentIndex);
                     }
 
                     if (matomoConfig.enableDoNotTrack || enableDoNotTrackIndex !== -1) {
                         tracker.setDoNotTrack(1);
-                        removeIndexIfExists(enableDoNotTrackIndex);
+                        markIndexAsConfig(enableDoNotTrackIndex);
                     }
 
                     if (matomoConfig.disablePerformanceTracking || disablePerformanceTrackingIndex !== -1) {
                         tracker.disablePerformanceTracking();
-                        removeIndexIfExists(disablePerformanceTrackingIndex);
+                        markIndexAsConfig(disablePerformanceTrackingIndex);
                     }
 
                     if (appendToTrackingUrlIndex !== -1 && localPaq[appendToTrackingUrlIndex].length === 2
                         && typeof localPaq[appendToTrackingUrlIndex][1] === 'string' && localPaq[appendToTrackingUrlIndex][1].length > 0) {
                         tracker.appendToTrackingUrl(localPaq[appendToTrackingUrlIndex][1]);
-                       removeIndexIfExists(appendToTrackingUrlIndex);
+                       markIndexAsConfig(appendToTrackingUrlIndex);
                     } else if (typeof matomoConfig.appendToTrackingUrl === 'string' && matomoConfig.appendToTrackingUrl.length > 0) {
                         tracker.appendToTrackingUrl(matomoConfig.appendToTrackingUrl);
                     }
@@ -452,14 +450,14 @@
                     if (setCustomRequestProcessingIndex !== -1 && localPaq[setCustomRequestProcessingIndex].length === 2
                         && typeof localPaq[setCustomRequestProcessingIndex][1] === 'function' && localPaq[setCustomRequestProcessingIndex][1].length >= 1) {
                         tracker.setCustomRequestProcessing(localPaq[setCustomRequestProcessingIndex][1]);
-                        removeIndexIfExists(setCustomRequestProcessingIndex);
+                        markIndexAsConfig(setCustomRequestProcessingIndex);
                     } else if(typeof matomoConfig.customRequestProcessing === 'function' && matomoConfig.customRequestProcessing.length >= 1) {
                         tracker.setCustomRequestProcessing(matomoConfig.customRequestProcessing);
                     }
 
                     if (matomoConfig.enableJSErrorTracking || enableJSErrorTrackingIndex !== -1) {
                         tracker.enableJSErrorTracking();
-                        removeIndexIfExists(enableJSErrorTrackingIndex);
+                        markIndexAsConfig(enableJSErrorTrackingIndex);
                     }
 
                     if (matomoConfig.enableHeartBeatTimer || enableHeartBeatTimerIndex !== -1) {
@@ -470,27 +468,27 @@
                         } else {
                             tracker.enableHeartBeatTimer();
                         }
-                        removeIndexIfExists(enableHeartBeatTimerIndex);
+                        markIndexAsConfig(enableHeartBeatTimerIndex);
                     }
 
                     if (matomoConfig.trackAllContentImpressions || trackAllContentImpressionsIndex !== -1) {
                         tracker.trackAllContentImpressions();
-                        removeIndexIfExists(trackAllContentImpressionsIndex);
+                        markIndexAsConfig(trackAllContentImpressionsIndex);
                     }
 
                     if (matomoConfig.trackVisibleContentImpressions || trackVisibleContentImpressionsIndex !== -1) {
                         tracker.trackVisibleContentImpressions();
-                        removeIndexIfExists(trackVisibleContentImpressionsIndex);
+                        markIndexAsConfig(trackVisibleContentImpressionsIndex);
                     }
 
                     if (((matomoConfig.hasOwnProperty('enableFormAnalytics') && !matomoConfig.enableFormAnalytics) || disableFormAnalyticsIndex !== -1) && window.Matomo && window.Matomo.FormAnalytics && typeof window.Matomo.FormAnalytics.disableFormAnalytics === 'function') {
                         window.Matomo.FormAnalytics.disableFormAnalytics();
-                        removeIndexIfExists(disableFormAnalyticsIndex);
+                        markIndexAsConfig(disableFormAnalyticsIndex);
                     }
 
                     if (((matomoConfig.hasOwnProperty('enableMediaAnalytics') && !matomoConfig.enableMediaAnalytics) || disableMediaAnalyticsIndex !== -1) && window.Matomo && window.Matomo.MediaAnalytics && typeof window.Matomo.MediaAnalytics.disableMediaAnalytics === 'function') {
                         window.Matomo.MediaAnalytics.disableMediaAnalytics();
-                        removeIndexIfExists(disableMediaAnalyticsIndex);
+                        markIndexAsConfig(disableMediaAnalyticsIndex);
                     }
                 }
 
@@ -528,7 +526,7 @@
                                 value: customDim[2],
                             });
                         }
-                        removeIndexIfExists(setCustomDimensionIndexes[indexIndex]);
+                        markIndexAsConfig(setCustomDimensionIndexes[indexIndex]);
                     }
                 }
                 if (matomoConfig.customDimensions
@@ -543,25 +541,18 @@
                     }
                 }
 
-                // Sort the indexes greatest to least so that removing one won't affect the others
-                indexesToRemove.sort().reverse();
-                var arrayLength = indexesToRemove.length;
-                for (indexRemove = 0; indexRemove < arrayLength; indexRemove++) {
-                    localPaq.splice(indexesToRemove[indexRemove], 1);
-                }
-
-                // Keep a list of all of the non-config requests to process later
-                if (localPaq.length && !remainingPaq.length) {
-                   remainingPaq = localPaq;
-                }
-
                 // If the remaining _paq values haven't been processed yet, process them
                 // We wait till now so that all configs are applied first
                 var applyRemainingPaqEntries = parameters.get('applyRemainingPaqEntries', false);
-                if (!hasProcessedRemainingTrackings && remainingPaq.length && applyRemainingPaqEntries) {
+                if (!hasProcessedRemainingTrackings && localPaq.length > indexesOfConfigs.length && applyRemainingPaqEntries) {
                     hasProcessedRemainingTrackings = true;
-                    for (trackingIndex = 0; trackingIndex < remainingPaq.length; trackingIndex++) {
-                        window._paq.push(remainingPaq[trackingIndex]);
+                    for (trackingIndex = 0; trackingIndex < localPaq.length; trackingIndex++) {
+                        // Skip config items since they've already been processed
+                        if (indexesOfConfigs.indexOf(trackingIndex) >= 0) {
+                            continue;
+                        }
+
+                        window._paq.push(localPaq[trackingIndex]);
                     }
                 }
 
