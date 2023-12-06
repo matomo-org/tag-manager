@@ -147,7 +147,8 @@
                     // There might already be some configs missing from this list
                     var setUserIdIndex = setSiteIdIndex = setTrackerUrlIndex
                         = requireCookieConsentIndex = disableBrowserFeatureDetectionIndex
-                        = disableCookiesIndex = enableCrossDomainLinkingIndex = cookieSameSiteIndex
+                        = disableCookiesIndex = enableCrossDomainLinkingIndex
+                        = setCrossDomainLinkingTimeoutIndex = cookieSameSiteIndex
                         = setVisitorCookieTimeoutIndex = setReferralCookieTimeoutIndex
                         = setSessionCookieTimeoutIndex = setSecureCookieIndex = cookiePathIndex
                         = cookieNamePrefixIndex = cookieDomainIndex = setDomainsIndex
@@ -192,6 +193,9 @@
                                 break;
                             case 'enableCrossDomainLinking':
                                 enableCrossDomainLinkingIndex = k;
+                                break;
+                            case 'setCrossDomainLinkingTimeout':
+                                setCrossDomainLinkingTimeoutIndex = k;
                                 break;
                             case 'cookieSameSite':
                                 cookieSameSiteIndex = k;
@@ -299,6 +303,13 @@
                     if (matomoConfig.enableCrossDomainLinking || enableCrossDomainLinkingIndex !== -1) {
                         tracker.enableCrossDomainLinking();
                         markIndexAsConfig(enableCrossDomainLinkingIndex);
+                    }
+
+                    if (setCrossDomainLinkingTimeoutIndex !== -1 && localPaq[setCrossDomainLinkingTimeoutIndex].length === 2) {
+                        tracker.setCrossDomainLinkingTimeout(localPaq[setCrossDomainLinkingTimeoutIndex][1]);
+                        markIndexAsConfig(setCrossDomainLinkingTimeoutIndex);
+                    } else if (matomoConfig.enableCrossDomainLinking && matomoConfig.crossDomainLinkingTimeout) {
+                        tracker.setCrossDomainLinkingTimeout(matomoConfig.crossDomainLinkingTimeout);
                     }
 
                     if (cookieSameSiteIndex !== -1 && localPaq[cookieSameSiteIndex].length === 2) {
