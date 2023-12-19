@@ -118,7 +118,7 @@ describe("ContainerVersion", function () {
         await capture.page(page, 'create_new_shown_in_list');
     });
 
-    it('should be possible to publish new version', async function () {
+    it('should be possible to fill in publish new version form', async function () {
         await page.click('.createNewVersion');
         await setVersionName('v3.0');
         await page.waitForTimeout(500);
@@ -187,6 +187,7 @@ describe("ContainerVersion", function () {
     it('should open create version page when clicking on create a version now link', async function () {
         await page.click('.createContainerVersionNow');
         await capture.setTableRowHeight(page);
+        await page.waitForTimeout(250); // loading element sometimes needs longer to be fully hidden
         pageWrap = await page.$('#content');
         expect(await pageWrap.screenshot()).to.matchImage('version_none_exist_yet_create_now');
     });
