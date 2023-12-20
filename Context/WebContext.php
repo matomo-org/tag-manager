@@ -89,6 +89,7 @@ class WebContext extends BaseContext
         }
 
         $baseJs = $this->javaScriptTagManagerLoader->getJavaScriptContent();
+        $preconfiguredVariablesResponse = $this->getPreConfiguredVariablesJSCodeResponse(self::ID);
 
         foreach ($environments as $environment) {
             $environmentId = $environment['id'];
@@ -114,6 +115,8 @@ class WebContext extends BaseContext
                 $hasPreviewRelease = true;
             }
             $containerJs = $this->generatePublicContainer($container, $release);
+            $replaceMacros = array();
+            $variableTemplates = ['keys' => [], 'values' => []];
 
             foreach ($containerJs['tags'] as &$tag) {
                 $tag['Tag'] = $this->templateLocator->loadTagTemplate($tag, self::ID);
@@ -141,14 +144,32 @@ class WebContext extends BaseContext
                 }
             }
 
-            foreach ($containerJs['variables'] as &$variable) {
+            foreach ($containerJs['variables'] as $variableKey => &$variable) {
                 $variable['Variable'] = $this->templateLocator->loadVariableTemplate($variable, self::ID);
                 $variable['parameters'] = $this->addVariableTemplateToParameters($variable['parameters']);
+                if (!empty($variable['parameters'])) {
+                    $variableTemplates['keys'][] = '{{'.$variable['name'].'}}';
+                    $variableTemplates['values'][] = 'TagManager._buildVariable(' . json_encode($variable) . ", parameters.get('container')).get()";
+                }
+                if (!empty($variable['parameters']['jsFunction']) && strpos($variable['parameters']['jsFunction'], '{{')!==FALSE) {
+                    $replaceMacros[] = ['key' => $variableKey, 'methodName' => $variable['Variable']];
+                }
 
                 if (!$isPreviewRelease) {
                     $variable['name'] = $variable['type'];
                 } else {
                     $variable['name'] = Common::unsanitizeInputValue($variable['name']);
+                }
+            }
+
+            if (!empty($replaceMacros)) {
+                $mergedKeys = array_merge($preconfiguredVariablesResponse['keys'], $variableTemplates['keys']);
+                $mergedValues = array_merge($preconfiguredVariablesResponse['values'], $variableTemplates['values']);
+                foreach ($replaceMacros as $replaceValues) {
+                    if (!empty($containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction'])) {
+                        $containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction'] = str_replace($mergedKeys, $mergedValues, $containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction']);
+                        $this->templateLocator->updateVariableTemplate($replaceValues['methodName'], str_replace($mergedKeys, $mergedValues, $this->templateLocator->getVariableTemplate($replaceValues['methodName'])));
+                    }
                 }
             }
 

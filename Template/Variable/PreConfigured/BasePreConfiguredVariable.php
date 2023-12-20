@@ -25,7 +25,7 @@ abstract class BasePreConfiguredVariable extends BaseVariable
         return [];
     }
 
-    protected function makeReturnTemplateMethod($js)
+    protected function makeReturnTemplateMethod($js, $skipTemplate = false)
     {
         $js = trim($js);
         if (!Common::stringEndsWith($js, ';')) {
@@ -33,6 +33,10 @@ abstract class BasePreConfiguredVariable extends BaseVariable
         }
         if (strpos($js, 'return ') !== 0) {
             $js = 'return ' . $js;
+        }
+
+        if ($skipTemplate) {
+            return $js;
         }
 
         return '(function () { return function (parameters, TagManager) { this.get = function () { ' . $js . '   }; } })();';

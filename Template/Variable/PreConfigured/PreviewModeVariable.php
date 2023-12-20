@@ -17,11 +17,11 @@ class PreviewModeVariable extends BasePreConfiguredVariable
         return self::CATEGORY_CONTAINER_INFO;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('parameters.container.environment === "preview" ? "1" : "0"');
+                return $this->makeReturnTemplateMethod('parameters.container.environment === "preview" ? "1" : "0"', $skipTemplate);
         }
     }
 

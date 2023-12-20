@@ -160,6 +160,23 @@ abstract class BaseContext
         return $containerJs;
     }
 
+    public function getPreConfiguredVariablesJSCodeResponse($context)
+    {
+        $response = ['keys' => [], 'values' => []];
+        $preConfiguredVariables = $this->variablesProvider->getPreConfiguredVariables();
+        foreach ($preConfiguredVariables as $variable) {
+            if (method_exists($variable, 'getDataLayerVariableJs')) {
+                $response['keys'][] = '{{' . $variable->getId() . '}}';
+                $response['values'][] = $variable->getDataLayerVariableJs();
+            } else if (method_exists($variable, 'loadTemplate')) {
+                $response['keys'][] = '{{' . $variable->getId() . '}}';
+                $response['values'][] = '(function(){' . $variable->loadTemplate($context, $variable, true) . '})()';
+            }
+        }
+
+        return $response;
+    }
+
     private function parametersToVariableJs($container, $entity)
     {
         if (!empty($entity['name'])) {

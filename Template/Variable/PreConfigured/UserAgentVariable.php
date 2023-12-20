@@ -17,11 +17,11 @@ class UserAgentVariable extends BasePreConfiguredVariable
         return self::CATEGORY_DEVICE;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('navigator.userAgent');
+                return $this->makeReturnTemplateMethod('navigator.userAgent', $skipTemplate);
         }
     }
 

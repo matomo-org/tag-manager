@@ -17,11 +17,11 @@ class PageHashVariable extends BasePreConfiguredVariable
         return self::CATEGORY_PAGE_VARIABLES;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('String(parameters.window.location.hash).replace("#", "")');
+                return $this->makeReturnTemplateMethod('String(parameters.window.location.hash).replace("#", "")', $skipTemplate);
         }
     }
 
