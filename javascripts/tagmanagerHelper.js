@@ -41,7 +41,7 @@
 
     tagManagerHelper.createNewVersion = function () {
         var containerId = CoreHome.MatomoUrl.parsed.value.idContainer;
-        this.editVersion(null, containerId, 0, function () { window.location.reload(); });
+        this.editVersion(containerId, 0, function () { window.location.reload(); });
     };
     tagManagerHelper.editVersion = function (idContainer, idContainerVersion, callback) {
       var createVNode = Vue.createVNode;
