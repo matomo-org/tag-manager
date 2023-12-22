@@ -224,7 +224,6 @@ describe("ContainerVariable", function () {
         await page.waitForNetworkIdle();
         await page.click('div.notification-body a.createNewVersionLink');
         await page.waitForNetworkIdle();
-        await page.waitForTimeout(1000);
         await capture.selector(page, 'create_version_after_update', 'div.modal div.modal-content');
     });
 
