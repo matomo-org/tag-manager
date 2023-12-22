@@ -217,6 +217,17 @@ describe("ContainerVariable", function () {
         await captureCustomVariablesList('create_advanced_verified');
     });
 
+    it('should be possible to create a new version after updating a variable', async function () {
+        await page.click('tbody tr:last-of-type td.action a.icon-edit');
+        await page.waitForNetworkIdle();
+        await page.click('div.matomo-save-button');
+        await page.waitForNetworkIdle();
+        await page.click('div.notification-body a.createNewVersionLink');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(1000);
+        await capture.selector(page, 'create_version_after_update', 'div.modal div.modal-content');
+    });
+
     it('should load variables page with some variables as view user', async function () {
         permissions.setViewUser();
         await page.goto(container1Base);
