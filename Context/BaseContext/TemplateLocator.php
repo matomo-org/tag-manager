@@ -93,4 +93,16 @@ class TemplateLocator
         }
     }
 
+    public function updateVariableTemplate($methodName, $template)
+    {
+        $this->templateFunctions[$methodName] = $template;
+    }
+
+    public function getVariableTemplate($methodName)
+    {
+        if ($this->templateFunctions[$methodName]) {
+            return $this->templateFunctions[$methodName];
+        }
+    }
+
 }

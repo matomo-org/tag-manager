@@ -17,11 +17,11 @@ class ContainerIdVariable extends BasePreConfiguredVariable
         return self::CATEGORY_CONTAINER_INFO;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('parameters.container.id');
+                return $this->makeReturnTemplateMethod('parameters.container.id', $skipTemplate);
         }
     }
 

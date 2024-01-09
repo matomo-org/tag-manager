@@ -21,6 +21,14 @@ abstract class BaseDataLayerVariable extends BasePreConfiguredVariable
         }
     }
 
+    public function getDataLayerVariableJs()
+    {
+        $dataLayerVariableName = $this->getDataLayerVariableName();
+        if ($dataLayerVariableName) {
+            return "TagManager.dataLayer.get('$dataLayerVariableName')";
+        }
+    }
+
     protected function makeDataLayerTemplateMethod($dataLayerKey)
     {
         $js = 'return parameters.container.dataLayer.get("' . $dataLayerKey . '")';

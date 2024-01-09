@@ -17,11 +17,11 @@ class BrowserLanguageVariable extends BasePreConfiguredVariable
         return self::CATEGORY_DEVICE;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('navigator.language');
+                return $this->makeReturnTemplateMethod('navigator.language', $skipTemplate);
         }
     }
 

@@ -17,11 +17,11 @@ class LocalDateVariable extends BasePreConfiguredVariable
         return self::CATEGORY_DATE;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('new Date().toDateString()');
+                return $this->makeReturnTemplateMethod('new Date().toDateString()', $skipTemplate);
         }
     }
 

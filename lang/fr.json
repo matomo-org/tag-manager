@@ -1,7 +1,9 @@
 {
     "TagManager": {
+        "AddThisParentSelectorTitle": "Inline Tools Parent Selector",
         "AddThisTagDescription": "Ajoutez le bouton de réseaux sociaux \"AddThis\" et plus encore à votre site web.",
         "AddThisTagPubIdDescription": "Créez un nouveau site dans Shareaholic et collez l'ID du site ici",
+        "AddThisTagPubIdTitle": "AddThis PubId",
         "AllDownloadsClickTriggerDescription": "Déclenché lorsqu'on clique sur un lien qui renvoie à un fichier téléchargeable. Il se déclenchera en cas de clic gauche, moyen et droit.",
         "AllDownloadsClickTriggerHelp": "déclenché lorsqu'un utilisateur clique sur un élément \"A\" ou \"AREA\" et que le lien pointe vers un fichier avec une extension de fichier téléchargeable. Pour activer le suivi d'un bouton de clic spécifique, veuillez ajouter des conditions basées sur une variable \"ClickButton\" dans les paramètres avancés.",
         "AllDownloadsClickTriggerName": "Tous les clics de téléchargement",
@@ -17,11 +19,13 @@
         "BackupVersionNameHelp": "Si vous définissez un nom de version, une nouvelle version avec ce nom sera créée afin de sauvegarder la version actuellement en brouillon.",
         "BingUETTagDescription": "Ajoute la balise universelle de suivi d'évènement Bing Publicité à votre site web afin que vous puissiez suivre la conversion de vos compagnes Bing.",
         "BingUETTagHelp": "La balise suit ce que font vos clients après avoir cliqué sur votre annonce Bing.",
+        "BingUETTagIdTitle": "ID",
         "BingUETTagName": "Balise Publicité UET Bing",
         "BlockTriggerHelp": "Cette balise ne sera pas exécutée tant qu'un de ces déclencheurs n'aura pas été déclenché. De cette manière vous pouvez par exemple vous assurer de ne pas exécuter cette balise sur certaines pages, ou tant qu'un utilisateur n'a pas atteint une certaine position de défilement.",
         "BlockTriggerTitle": "Ne pas exécuter cette balise tant qu'aucun de ces déclencheurs ne s'est déclenché.",
         "BrowserLanguageVariableDescription": "Récupère la langue préférée de l'utilisateur qui est généralement celle définie pour son navigateur. Par exemple \"en\" ou \"en-US\".",
         "BrowserLanguageVariableName": "Langue du navigateur",
+        "BugsnagTagApiKeyTitle": "Clé API",
         "BugsnagTagDescription": "Ajoutez une surveillance des erreurs à vos applications avec Bugsnag.",
         "BugsnagTagHelp": "Cette balise ajoute le JavaScript d'intégration bugsnag par défaut à votre site web.",
         "CapabilityPublishLiveContainer": "Publier le conteneur",
@@ -537,6 +541,9 @@
         "ShareaholicTagDescription": "Outils de marketing de contenu et de trafic de site web",
         "ShareaholicTagHelp": "Cette balise vous permet d'ajouter les boutons de médias sociaux Shareaholic et plus à votre site web.",
         "ShowAdvancedSettings": "Afficher les paramètres avancés",
+        "SiteWithoutDataMtmIntro": "Le gestionnaire de balises Matomo peut être un meilleur choix que le suivi via le code JavaScript standard. Il vous permet de gérer et unifier toutes vos balises de suivi et marketing (également appelées \"pixels\" ou \"balises HTML/JS personnalisées\") en un seul endroit. L'utilisation du gestionnaire de balises Matomo simplifie votre vie lorsque vous souhaitez modifier l'une de ces balises, car vous n'aurez plus besoin d'un développeur pour effectuer les modifications nécessaires pour vous. %1$sEn savoir plus%2$s.",
+        "SiteWithoutDataMtmStep2": "Si vous souhaitez personnaliser ce conteneur, rendez-vous sur le %1$sTableau de bord du conteneur%2$s",
+        "SiteWithoutDataMtmStep3": "Copiez le code ci-dessous et collez-le sur chaque page de votre site web. Nous vous recommandons de le coller immédiatement avant la balise de fermeture %1$s. %2$sEn savoir plus%3$s.",
         "SiteWithoutDataReactFollowStepCompleted": "%1$sFélicitations !%2$s Vous avez installé avec succès le code de suivi Matomo Analytics via le Matomo Tag Manager. Pour vérifier que les visites sont suivies, visitez votre site web et vérifiez que ces données sont visibles dans votre instance Matomo.",
         "SiteWithoutDataReactIntro": "Il est facile de suivre votre site Web ou votre application React.js avec Matomo, même pour les applications à page unique.",
         "StartDate": "Date de début",
@@ -636,9 +643,6 @@
         "WindowUnloadTriggerName": "Fenêtre déchargée",
         "ZendeskChatTagDescription": "Atteignez vos clients de manière instantanée via le web, téléphone et messagerie.",
         "ZendeskChatTagHelp": "Cette balise vous permet d'ajouter le formulaire de discussion instantanée Zendesk à votre site web.",
-        "ZendeskChatTagName": "Discussion instantanée Zendesk (anciennement Zopim)",
-        "SiteWithoutDataMtmIntro": "Le gestionnaire de balises Matomo peut être un meilleur choix que le suivi via le code JavaScript standard. Il vous permet de gérer et unifier toutes vos balises de suivi et marketing (également appelées \"pixels\" ou \"balises HTML/JS personnalisées\") en un seul endroit. L'utilisation du gestionnaire de balises Matomo simplifie votre vie lorsque vous souhaitez modifier l'une de ces balises, car vous n'aurez plus besoin d'un développeur pour effectuer les modifications nécessaires pour vous. %1$sEn savoir plus%2$s.",
-        "SiteWithoutDataMtmStep2": "Si vous souhaitez personnaliser ce conteneur, rendez-vous sur le %1$sTableau de bord du conteneur%2$s",
-        "SiteWithoutDataMtmStep3": "Copiez le code ci-dessous et collez-le sur chaque page de votre site web. Nous vous recommandons de le coller immédiatement avant la balise de fermeture %1$s. %2$sEn savoir plus%3$s."
+        "ZendeskChatTagName": "Discussion instantanée Zendesk (anciennement Zopim)"
     }
 }

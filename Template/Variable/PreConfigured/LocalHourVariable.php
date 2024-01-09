@@ -17,11 +17,11 @@ class LocalHourVariable extends BasePreConfiguredVariable
         return self::CATEGORY_DATE;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('new Date().getHours()');
+                return $this->makeReturnTemplateMethod('new Date().getHours()', $skipTemplate);
         }
     }
 

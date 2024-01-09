@@ -17,11 +17,11 @@ class PageTitleVariable extends BasePreConfiguredVariable
         return self::CATEGORY_PAGE_VARIABLES;
     }
 
-    public function loadTemplate($context, $entity)
+    public function loadTemplate($context, $entity, $skipTemplate = false)
     {
         switch ($context) {
             case WebContext::ID:
-                return $this->makeReturnTemplateMethod('parameters.document.title');
+                return $this->makeReturnTemplateMethod('parameters.document.title', $skipTemplate);
         }
     }
 

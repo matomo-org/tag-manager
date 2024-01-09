@@ -21,6 +21,7 @@ use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\TagManager;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Trigger\CustomEventTrigger;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
 
@@ -1230,10 +1231,14 @@ class ContainerTest extends IntegrationTestCase
     public function test_generateContainer_generatesContent()
     {
         $this->addContainerTrigger($this->idSite, $this->idContainer1draft);
+        $this->addContainerVariable($this->idSite, $this->idContainer1draft, 'Macros Pre Configured', 'Macros Pre Configured Description');
         $this->model->enablePreviewMode($this->idSite, $this->idContainer1, $this->idContainer1draft, 'foo');
         $result = $this->model->generateContainer($this->idSite, $this->idContainer1);
         $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'.js']);
         $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
+        $this->assertStringContainsString("TagManager.dataLayer.get('mtm.clickElement')", $result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
+        $this->assertStringContainsString("return TagManager.dataLayer.get('mtm.clickElement').getAttribute(\"my-attribute\");", $result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
+        $this->assertStringContainsString('return "not found";', $result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
         $this->assertCount(4, $result);
     }
 
@@ -1298,5 +1303,15 @@ class ContainerTest extends IntegrationTestCase
         $parameters = array('customHtml' => '<p></p>');
         $tag = StaticContainer::get('Piwik\Plugins\TagManager\Model\Tag');
         return $tag->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit = Tag::FIRE_LIMIT_UNLIMITED, $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null);
+    }
+
+    private function addContainerVariable($idSite, $idContainerVersion, $name = 'MyName', $description = '')
+    {
+        $type = CustomJsFunctionVariable::ID;
+        $parameters = array('jsFunction' => 'function () { if ({{ClickElement}}) { return {{ClickElement}}.getAttribute("my-attribute"); } else { return "not found"; } };');
+        $conditions = array();
+
+        $variable = StaticContainer::get('Piwik\Plugins\TagManager\Model\Variable');
+        return $variable->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, false, [],$description );
     }
 }

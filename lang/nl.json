@@ -552,6 +552,7 @@
         "MatomoConfigurationMatomoCookiePathTitle": "Cookie pad",
         "MatomoConfigurationMatomoCookieSameSiteDescription": "Stel het SameSite-attribuut voor cookies in op een aangepaste waarde. U zou dit kunnen gebruiken als uw site in een iframe draait, omdat deze dan alleen toegang heeft tot de cookies als SameSite is ingesteld op \"None\". Het kiezen van \"Geen\" werkt alleen op HTTPS en zal automatisch ook de beveiligde cookie instellen. Als uw site beschikbaar is onder http en https, kan het gebruik van \"Geen\" leiden tot dubbele of onvolledige bezoeken.",
         "MatomoConfigurationMatomoCookieSameSiteTitle": "Zelfde site cookie",
+        "MatomoConfigurationMatomoCrossDomainLinkingTimeoutDescription": "Stel de cross domain linking timout in (seconden). Standaard worden de twee bezoeken over domeinen aan elkaar gelinkt wanneer de link aangeklikt wordt en de pagina geladen wordt binnen de 180 seconden timeout.",
         "MatomoConfigurationMatomoCustomCookieTimeOutDescription": "Time-out in volledige dagen. Standaard verloopt de Matomo tracking cookie in 13 maanden (365 + 28 dagen) = 393 dagen.",
         "MatomoConfigurationMatomoCustomCookieTimeOutEnableDescription": "Hiermee kunt u een aangepaste tijd in volledige dagen instellen voor het _pk_id cookie.",
         "MatomoConfigurationMatomoCustomCookieTimeOutEnableTitle": "Aangepaste cookie time-out voor bezoekers inschakelen",
@@ -773,6 +774,9 @@
         "ShareaholicTagSiteIdDescription": "Maak een nieuwe site in Shareaholic en plak hier de site ID",
         "ShareaholicTagSiteIdTitle": "Shareaholic site ID",
         "ShowAdvancedSettings": "Toon geavanceerde instellingen",
+        "SiteWithoutDataMtmIntro": "De Matomo Tag Manager kan een betere keuze zijn dan tracking via de reguliere JavaScript-code. Het stelt u in staat al uw tracking- en marketingtags (ook bekend als \"pixels\" of \"aangepaste HTML/JS-tags\") op één plek te beheren en te unificeren. Het gebruik van de Matomo Tag Manager vergemakkelijkt uw leven wanneer u een van deze tags wilt wijzigen, aangezien u geen ontwikkelaar meer nodig heeft om de benodigde wijzigingen voor u aan te brengen. %1$sMeer informatie%2$s.",
+        "SiteWithoutDataMtmStep2": "Als u deze container wilt aanpassen, gaat u naar het %1$sContainerdashboard%2$s",
+        "SiteWithoutDataMtmStep3": "Kopieer de onderstaande code en plak deze op elke pagina van uw website. Wij raden aan om dit onmiddellijk vóór de sluitende %1$s-tag te plakken. %2$sMeer informatie%3$s.",
         "SiteWithoutDataReactFollowStep1": "%1$sSla deze stap over%2$s als u geen %1$sSingle Page Application (SPA)%2$s of %1$sProgressive Web Application (PWA)%2$s volgt. Voor SPA/PWA's is de meest gebruikelijke manier het gebruik van de %1$sHistory Changes trigger%2$s om nauwkeurig paginaweergaven bij te houden:",
         "SiteWithoutDataReactFollowStep1_1": "Navigeer naar uw %1$sPaginaweergave trigger%2$s.",
         "SiteWithoutDataReactFollowStep1_2": "Vervang \"%1$sPagina URL%2$s\" door \"%1$sGeschiedenisbron%2$s\".",
@@ -932,9 +936,6 @@
         "ZendeskChatTagChatIdTitle": "Zendesk Chat ID",
         "ZendeskChatTagDescription": "Bereik uw klanten, direct via web, mobiel en berichten.",
         "ZendeskChatTagHelp": "Met deze tag kunt u het Zendesk Chat formulier toevoegen aan uw website.",
-        "ZendeskChatTagName": "Zendesk Chat (voorheen Zopim)",
-        "SiteWithoutDataMtmIntro": "De Matomo Tag Manager kan een betere keuze zijn dan tracking via de reguliere JavaScript-code. Het stelt u in staat al uw tracking- en marketingtags (ook bekend als \"pixels\" of \"aangepaste HTML/JS-tags\") op één plek te beheren en te unificeren. Het gebruik van de Matomo Tag Manager vergemakkelijkt uw leven wanneer u een van deze tags wilt wijzigen, aangezien u geen ontwikkelaar meer nodig heeft om de benodigde wijzigingen voor u aan te brengen. %1$sMeer informatie%2$s.",
-        "SiteWithoutDataMtmStep2": "Als u deze container wilt aanpassen, gaat u naar het %1$sContainerdashboard%2$s",
-        "SiteWithoutDataMtmStep3": "Kopieer de onderstaande code en plak deze op elke pagina van uw website. Wij raden aan om dit onmiddellijk vóór de sluitende %1$s-tag te plakken. %2$sMeer informatie%3$s."
+        "ZendeskChatTagName": "Zendesk Chat (voorheen Zopim)"
     }
 }
