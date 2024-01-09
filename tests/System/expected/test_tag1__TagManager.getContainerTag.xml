@@ -50,7 +50,7 @@
 				</uiControlAttributes>
 				<availableValues />
 				<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
-				<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_Cloud&amp;mtm_medium=App.TagManager.getParameters&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
+				<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=App.TagManager.getParameters&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
 				<introduction />
 				<condition />
 				<fullWidth>0</fullWidth>
