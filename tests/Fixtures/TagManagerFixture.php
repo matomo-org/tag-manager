@@ -50,7 +50,7 @@ class TagManagerFixture extends Fixture
     public $idContainer6 = 'aaacont6';
     public $idContainer6DraftVersion = 6;
 
-    public $idContainerQuotes = 'aaacontQuotes';
+    public $idContainerQuotes = 'aaacont7';
     public $idContainerQuotesVersion1;
     public $idContainerQuotesDraftVersion = 7;
 
@@ -113,8 +113,8 @@ class TagManagerFixture extends Fixture
         $idContainer6DraftVersion = $this->getContainerDraftVersion($this->idSite4, $this->idContainer6);
         self::assertSame($this->idContainer6DraftVersion, $idContainer6DraftVersion);
 
-        $this->addContainer($this->idSite4, $this->idContainerQuotes, 'Container with "Quotes"', 'My container with quotes description', null, 1);
-        $idContainerQuotesDraftVersion = $this->getContainerDraftVersion($this->idSite4, $this->idContainerQuotes);
+        $this->addContainer($this->idSite2, $this->idContainerQuotes, 'Container with "Quotes"', 'My container with quotes description', null, 1);
+        $idContainerQuotesDraftVersion = $this->getContainerDraftVersion($this->idSite2, $this->idContainerQuotes);
         self::assertSame($this->idContainerQuotesDraftVersion, $idContainerQuotesDraftVersion);
 
         $this->api->createContainerVersion($this->idSite2, $this->idContainer2, 'container2_v1', 'Version from draft without content');
