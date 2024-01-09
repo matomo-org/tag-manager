@@ -126,7 +126,7 @@
 		</typeMetadata>
 	</row>
 	<row>
-		<idtrigger>16</idtrigger>
+		<idtrigger>18</idtrigger>
 		<idcontainerversion>1</idcontainerversion>
 		<idsite>2</idsite>
 		<type>CustomEvent</type>

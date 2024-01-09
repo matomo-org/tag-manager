@@ -22,7 +22,7 @@
 	</version>
 	<tags>
 		<row>
-			<idtag>16</idtag>
+			<idtag>18</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 2</name>
 			<description>My Tag 2 description</description>
@@ -31,10 +31,10 @@
 				<htmlPosition>bodyEnd</htmlPosition>
 			</parameters>
 			<fire_trigger_ids>
-				<row>21</row>
+				<row>23</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
-				<row>22</row>
+				<row>24</row>
 			</block_trigger_ids>
 			<fire_limit>once_lifetime</fire_limit>
 			<priority>343</priority>
@@ -47,7 +47,7 @@
 			
 		</row>
 		<row>
-			<idtag>17</idtag>
+			<idtag>19</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 1</name>
 			<description />
@@ -56,7 +56,7 @@
 				<htmlPosition>bodyEnd</htmlPosition>
 			</parameters>
 			<fire_trigger_ids>
-				<row>21</row>
+				<row>23</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
 			</block_trigger_ids>
@@ -71,7 +71,7 @@
 			
 		</row>
 		<row>
-			<idtag>18</idtag>
+			<idtag>20</idtag>
 			<type>CustomImage</type>
 			<name>My Tag 3</name>
 			<description />
@@ -80,8 +80,8 @@
 				<cacheBusterEnabled>1</cacheBusterEnabled>
 			</parameters>
 			<fire_trigger_ids>
-				<row>22</row>
-				<row>23</row>
+				<row>24</row>
+				<row>25</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
 			</block_trigger_ids>
@@ -98,7 +98,7 @@
 	</tags>
 	<triggers>
 		<row>
-			<idtrigger>21</idtrigger>
+			<idtrigger>23</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
 			<description>My trigger1 description</description>
@@ -113,7 +113,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>22</idtrigger>
+			<idtrigger>24</idtrigger>
 			<type>WindowLoaded</type>
 			<name>Mytrigger2</name>
 			<description />
@@ -132,7 +132,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>23</idtrigger>
+			<idtrigger>25</idtrigger>
 			<type>DomReady</type>
 			<name>Mytrigger3</name>
 			<description />
@@ -146,7 +146,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>24</idtrigger>
+			<idtrigger>26</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger4</name>
 			<description />
@@ -163,7 +163,7 @@
 	</triggers>
 	<variables>
 		<row>
-			<idvariable>9</idvariable>
+			<idvariable>11</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 1</name>
 			<description />
@@ -184,7 +184,7 @@
 			
 		</row>
 		<row>
-			<idvariable>10</idvariable>
+			<idvariable>12</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 2</name>
 			<description />
@@ -200,7 +200,7 @@
 			
 		</row>
 		<row>
-			<idvariable>11</idvariable>
+			<idvariable>13</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 3</name>
 			<description>My Var 3 description</description>
