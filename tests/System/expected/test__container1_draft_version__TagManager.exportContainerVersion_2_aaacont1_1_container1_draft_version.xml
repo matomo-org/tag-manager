@@ -146,7 +146,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>16</idtrigger>
+			<idtrigger>18</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger4</name>
 			<description />
@@ -200,7 +200,7 @@
 			
 		</row>
 		<row>
-			<idvariable>5</idvariable>
+			<idvariable>7</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 3</name>
 			<description>My Var 3 description</description>

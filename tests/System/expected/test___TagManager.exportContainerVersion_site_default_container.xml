@@ -22,7 +22,7 @@
 	</version>
 	<tags>
 		<row>
-			<idtag>25</idtag>
+			<idtag>27</idtag>
 			<type>Matomo</type>
 			<name>Pageview</name>
 			<description />
@@ -44,7 +44,7 @@
 				<eventValue />
 			</parameters>
 			<fire_trigger_ids>
-				<row>33</row>
+				<row>35</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
 			</block_trigger_ids>
@@ -61,7 +61,7 @@
 	</tags>
 	<triggers>
 		<row>
-			<idtrigger>33</idtrigger>
+			<idtrigger>35</idtrigger>
 			<type>PageView</type>
 			<name>Pageview</name>
 			<description />
@@ -77,7 +77,7 @@
 	</triggers>
 	<variables>
 		<row>
-			<idvariable>18</idvariable>
+			<idvariable>20</idvariable>
 			<type>MatomoConfiguration</type>
 			<name>Matomo Configuration</name>
 			<description />

@@ -50,6 +50,10 @@ class TagManagerFixture extends Fixture
     public $idContainer6 = 'aaacont6';
     public $idContainer6DraftVersion = 6;
 
+    public $idContainerQuotes = 'aaacont7';
+    public $idContainerQuotesVersion1;
+    public $idContainerQuotesDraftVersion = 7;
+
     /**
      * @var API
      */
@@ -109,11 +113,17 @@ class TagManagerFixture extends Fixture
         $idContainer6DraftVersion = $this->getContainerDraftVersion($this->idSite4, $this->idContainer6);
         self::assertSame($this->idContainer6DraftVersion, $idContainer6DraftVersion);
 
+        $this->addContainer($this->idSite2, $this->idContainerQuotes, 'Container with "Quotes"', 'My container with quotes description', null, 1);
+        $idContainerQuotesDraftVersion = $this->getContainerDraftVersion($this->idSite2, $this->idContainerQuotes);
+        self::assertSame($this->idContainerQuotesDraftVersion, $idContainerQuotesDraftVersion);
+
         $this->api->createContainerVersion($this->idSite2, $this->idContainer2, 'container2_v1', 'Version from draft without content');
 
         $idTrigger1Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My trigger1', array('eventName' => 'foo'), array(), 'My trigger1 description');
         $idTrigger2Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, WindowLoadedTrigger::ID, 'Mytrigger2', $params = array(), $conditions = array(array('actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'expected' => 'foo')));
         $idTrigger3Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, 'DomReady', 'Mytrigger3', $params = array());
+
+        $idTrigger1ContainerQuotes = $this->addContainerTrigger($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, 'DomReady', 'Mytrigger3 "Quotes"', $params = array());
 
         $this->idContainer1Version1 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v1', 'Version from draft with only triggers');
 
@@ -121,13 +131,19 @@ class TagManagerFixture extends Fixture
         $this->addContainerTag($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, 'CustomHtml', 'My Tag 2', array($idTrigger1Container1), array($idTrigger2Container1), $params = array('customHtml' => '<script></script>'), Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, $fireDelay = 1350, $priority = 343, $startDate = '2017-01-02 03:04:05', $endDate = '2029-01-02 03:04:05', 'My Tag 2 description');
         $this->addContainerTag($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, 'CustomImage', 'My Tag 3', array($idTrigger2Container1, $idTrigger3Container1), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'));
 
+        $this->addContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, 'CustomImage', 'My Tag "Quotes"', array($idTrigger1ContainerQuotes), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'));
+
         $this->idContainer1Version2 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v2', 'Version from draft with tags and triggers');
 
         $this->addContainerVariable($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My Var 1', $parameters = array('dataLayerName' => 'fooBarName'), $default = 10, $lookUp = array(array('match_value' => 'foo', 'comparison' => Comparison::ID_EQUALS, 'out_value' => 'bar')));
         $this->addContainerVariable($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My Var 2');
 
+        $this->addContainerVariable($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, null, 'My Var "Quotes"');
+
         $this->idContainer1Version3 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v3', 'Version from draft with tags, triggers and variables');
         $this->idContainer1Version4 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v4_reversioned', 'new version from an older version', $this->idContainer1Version2);
+
+        $this->idContainerQuotesVersion1 = $this->api->createContainerVersion($this->idSite2, $this->idContainerQuotes, 'container1_v4_reversioned "Quotes"', 'new version for quotes container');
 
         $this->addContainerVariable($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My Var 3', array('dataLayerName' => 'dataVarName'), false, [], 'My Var 3 description');
 
@@ -139,6 +155,11 @@ class TagManagerFixture extends Fixture
         $this->api->publishContainerVersion($this->idSite2, $this->idContainer1, $this->idContainer1Version4, 'dev');
         $this->api->publishContainerVersion($this->idSite2, $this->idContainer1, $this->idContainer1Version5, 'staging');
         $this->api->enablePreviewMode($this->idSite2, $this->idContainer1);
+
+        $this->api->publishContainerVersion($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesVersion1, Environment::ENVIRONMENT_LIVE);
+        $this->api->publishContainerVersion($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesVersion1, 'dev');
+        $this->api->publishContainerVersion($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesVersion1, 'staging');
+        $this->api->enablePreviewMode($this->idSite2, $this->idContainerQuotes);
 
         $containerDao = new ContainersDao();
         foreach ($containerDao->getAllContainers() as $container) {

@@ -474,6 +474,7 @@ class API extends \Piwik\Plugin\API
      */
     public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '')
     {
+        $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
@@ -510,6 +511,7 @@ class API extends \Piwik\Plugin\API
      */
     public function updateContainerTag($idSite, $idContainer, $idContainerVersion, $idTag, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '')
     {
+        $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
@@ -631,6 +633,7 @@ class API extends \Piwik\Plugin\API
      */
     public function addContainerTrigger($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $conditions = [], $description = '')
     {
+        $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
@@ -664,6 +667,7 @@ class API extends \Piwik\Plugin\API
      */
     public function updateContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger, $name, $parameters = [], $conditions = [], $description= '')
     {
+        $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
@@ -837,6 +841,7 @@ class API extends \Piwik\Plugin\API
      */
     public function addContainerVariable($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $defaultValue = false, $lookupTable = [], $description = '')
     {
+        $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
@@ -888,6 +893,7 @@ class API extends \Piwik\Plugin\API
      */
     public function updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name, $parameters = [], $defaultValue = null, $lookupTable = [], $description = '')
     {
+        $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
@@ -986,6 +992,7 @@ class API extends \Piwik\Plugin\API
      */
     public function addContainer($idSite, $context, $name, $description = '', $ignoreGtmDataLayer = 0)
     {
+        $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         return $this->containers->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer);
     }
@@ -1002,6 +1009,7 @@ class API extends \Piwik\Plugin\API
      */
     public function updateContainer($idSite, $idContainer, $name, $description = '', $ignoreGtmDataLayer = 0)
     {
+        $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
@@ -1021,6 +1029,7 @@ class API extends \Piwik\Plugin\API
      */
     public function createContainerVersion($idSite, $idContainer, $name, $description = '', $idContainerVersion = null)
     {
+        $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
@@ -1047,6 +1056,7 @@ class API extends \Piwik\Plugin\API
      */
     public function updateContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description = '')
     {
+        $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
@@ -1353,5 +1363,10 @@ class API extends \Piwik\Plugin\API
         if (!empty($containerVersion['draft']['idcontainerversion'])) {
             return $containerVersion['draft']['idcontainerversion'];
         }
+    }
+
+    private function decodeQuotes($value)
+    {
+        return htmlspecialchars_decode($value, ENT_QUOTES);
     }
 }
