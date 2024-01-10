@@ -117,12 +117,13 @@ class TriggersDao extends BaseDao implements TagManagerDao
      * @param int $idContainerVersion
      * @return array
      */
-    public function getContainerTriggers($idSite, $idContainerVersion)
+    public function getContainerTriggers($idSite, $idContainerVersion, $orderByUpdatedDate = false)
     {
         $bind = array(self::STATUS_ACTIVE, $idSite, $idContainerVersion);
 
         $table = $this->tablePrefixed;
-        $triggers = Db::fetchAll("SELECT * FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? ORDER BY created_date ASC", $bind);
+        $order = $orderByUpdatedDate ? 'ORDER BY updated_date DESC' : 'ORDER BY created_date ASC';
+        $triggers = Db::fetchAll("SELECT * FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? $order", $bind);
 
         return $this->enrichTriggers($triggers);
     }

@@ -295,9 +295,9 @@ class Variable extends BaseModel
         return '{{' . $variableName . '}}';
     }
 
-    public function getContainerVariables($idSite, $idContainerVersion)
+    public function getContainerVariables($idSite, $idContainerVersion, $orderByUpdatedDate = false)
     {
-        $variables = $this->dao->getContainerVariables($idSite, $idContainerVersion);
+        $variables = $this->dao->getContainerVariables($idSite, $idContainerVersion, $orderByUpdatedDate);
         return $this->enrichVariables($variables);
     }
 

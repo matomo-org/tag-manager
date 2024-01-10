@@ -70,7 +70,7 @@ class Export
 
     public function exportTags($idSite, $idContainerVersion)
     {
-        $tags = $this->tags->getContainerTags($idSite, $idContainerVersion);
+        $tags = $this->tags->getContainerTags($idSite, $idContainerVersion, true);
         foreach ($tags as $index => &$tag) {
             unset($tag['idcontainerversion']);
             unset($tag['status']);
@@ -83,7 +83,7 @@ class Export
 
     public function exportTriggers($idSite, $idContainerVersion)
     {
-        $triggers = $this->triggers->getContainerTriggers($idSite, $idContainerVersion);
+        $triggers = $this->triggers->getContainerTriggers($idSite, $idContainerVersion, true);
         foreach ($triggers as $index => &$trigger) {
             unset($trigger['idcontainerversion']);
             unset($trigger['status']);
@@ -96,7 +96,7 @@ class Export
 
     public function exportVariables($idSite, $idContainerVersion)
     {
-        $variables = $this->variables->getContainerVariables($idSite, $idContainerVersion);
+        $variables = $this->variables->getContainerVariables($idSite, $idContainerVersion, true);
         foreach ($variables as $index => &$variable) {
             unset($variable['idcontainerversion']);
             unset($variable['status']);

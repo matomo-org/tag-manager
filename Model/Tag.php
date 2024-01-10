@@ -153,9 +153,9 @@ class Tag extends BaseModel
         }
     }
 
-    public function getContainerTags($idSite, $idContainerVersion)
+    public function getContainerTags($idSite, $idContainerVersion, $orderByUpdatedDate = false)
     {
-        $tags = $this->dao->getContainerTags($idSite, $idContainerVersion);
+        $tags = $this->dao->getContainerTags($idSite, $idContainerVersion, $orderByUpdatedDate);
         return $this->enrichTags($tags);
     }
 
