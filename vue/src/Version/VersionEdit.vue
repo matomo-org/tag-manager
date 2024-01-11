@@ -12,13 +12,13 @@
     >
       <p v-show="isLoading">
         <span class="loadingPiwik">
-          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          <img src="plugins/Morpheus/images/loading-blue.gif"/>
           {{ translate('General_LoadingData') }}
         </span>
       </p>
       <p v-show="isUpdating">
         <span class="loadingPiwik">
-          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          <img src="plugins/Morpheus/images/loading-blue.gif"/>
           {{ translate('TagManager_UpdatingData') }}
         </span>
       </p>
@@ -85,31 +85,31 @@
             <h3>{{ translate('TagManager_ChangesSinceLastVersion') }}:</h3>
             <table v-content-table>
               <thead>
-                <tr>
-                  <th>{{ translate('SitesManager_Type') }}</th>
-                  <th>{{ translate('General_Name') }}</th>
-                  <th>{{ translate('TagManager_Change') }}</th>
-                  <th>{{ translate('TagManager_LastUpdated') }}</th>
-                </tr>
+              <tr>
+                <th>{{ translate('SitesManager_Type') }}</th>
+                <th>{{ translate('General_Name') }}</th>
+                <th>{{ translate('TagManager_Change') }}</th>
+                <th>{{ translate('TagManager_LastUpdated') }}</th>
+              </tr>
               </thead>
               <tbody>
-                <tr v-if="isLoadingVersionChanges">
-                  <td colspan="4">
-                    <ActivityIndicator
-                      :loading-message="translate('TagManager_DetectingChanges')"
-                      :loading="true"
-                    />
-                  </td>
-                </tr>
-                <tr v-if="!versionChanges.length && !isLoadingVersionChanges">
-                  <td colspan="4">{{ translate('UserCountryMap_None') }}</td>
-                </tr>
-                <tr v-for="(versionChange, index) in versionChanges" :key="index">
-                  <td>{{ translate(versionChange.entityType) }}</td>
-                  <td>{{ versionChange.name }}</td>
-                  <td>{{ translate(versionChange.type) }}</td>
-                  <td class="lastUpdated"><span>{{ versionChange.lastChanged }}</span></td>
-                </tr>
+              <tr v-if="isLoadingVersionChanges">
+                <td colspan="4">
+                  <ActivityIndicator
+                    :loading-message="translate('TagManager_DetectingChanges')"
+                    :loading="true"
+                  />
+                </td>
+              </tr>
+              <tr v-if="!versionChanges.length && !isLoadingVersionChanges">
+                <td colspan="4">{{ translate('UserCountryMap_None') }}</td>
+              </tr>
+              <tr v-for="(versionChange, index) in versionChanges" :key="index">
+                <td>{{ translate(versionChange.entityType) }}</td>
+                <td>{{ versionChange.name }}</td>
+                <td>{{ translate(versionChange.type) }}</td>
+                <td class="lastUpdated"><span>{{ versionChange.lastChanged }}</span></td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -150,7 +150,7 @@ import SelectTagManagerEnvironmentHelpText from './SelectTagManagerEnvironmentHe
 
 interface VersionEditState {
   isDirty: boolean;
-  lastVersion: string|null;
+  lastVersion: string | null;
   versionChanges: SingleDiff[];
   isLoadingVersionChanges: boolean;
   isUpdatingVersion: boolean;
@@ -272,6 +272,8 @@ export default defineComponent({
             this.idContainerVersion,
             lastContainerVersion!,
           ).then((diff) => {
+            diff.sort((a, b) => (
+              new Date(b.lastChanged).valueOf() - new Date(a.lastChanged).valueOf()));
             this.versionChanges = diff;
             this.isLoadingVersionChanges = false;
           });

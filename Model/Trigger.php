@@ -101,9 +101,9 @@ class Trigger extends BaseModel
         return $newParameters;
     }
 
-    public function getContainerTriggers($idSite, $idContainerVersion, $orderByUpdatedDate = false)
+    public function getContainerTriggers($idSite, $idContainerVersion)
     {
-        $triggers = $this->dao->getContainerTriggers($idSite, $idContainerVersion, $orderByUpdatedDate);
+        $triggers = $this->dao->getContainerTriggers($idSite, $idContainerVersion);
         return $this->enrichTriggers($triggers);
     }
 

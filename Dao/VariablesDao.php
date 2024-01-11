@@ -119,13 +119,12 @@ class VariablesDao extends BaseDao implements TagManagerDao
      * @param int $idContainerVersion
      * @return array
      */
-    public function getContainerVariables($idSite, $idContainerVersion, $orderByUpdatedDate = false)
+    public function getContainerVariables($idSite, $idContainerVersion)
     {
         $bind = array(self::STATUS_ACTIVE, $idSite, $idContainerVersion);
 
         $table = $this->tablePrefixed;
-        $order = $orderByUpdatedDate ? 'ORDER BY updated_date DESC' : 'ORDER BY created_date ASC';
-        $variables = Db::fetchAll("SELECT * FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? $order", $bind);
+        $variables = Db::fetchAll("SELECT * FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? ORDER BY created_date ASC", $bind);
 
         return $this->enrichVariables($variables);
     }

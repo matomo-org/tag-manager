@@ -136,13 +136,12 @@ class TagsDao extends BaseDao implements TagManagerDao
      * @param int $idContainerVersion
      * @return array
      */
-    public function getContainerTags($idSite, $idContainerVersion, $orderByUpdatedDate = false)
+    public function getContainerTags($idSite, $idContainerVersion)
     {
         $bind = [self::STATUS_ACTIVE, $idSite, $idContainerVersion];
 
         $table = $this->tablePrefixed;
-        $order = $orderByUpdatedDate ? 'ORDER BY updated_date DESC' : 'ORDER BY priority, created_date ASC';
-        $tags = Db::fetchAll("SELECT * FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? $order", $bind);
+        $tags = Db::fetchAll("SELECT * FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? ORDER BY priority, created_date ASC", $bind);
 
         return $this->enrichTags($tags);
     }
