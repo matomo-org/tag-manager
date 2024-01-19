@@ -165,7 +165,7 @@
 			</row>
 			<row>
 				<id>My Var 3</id>
-				<idvariable>5</idvariable>
+				<idvariable>7</idvariable>
 				<type>DataLayer</type>
 				<name>My Var 3</name>
 				<category>Custom</category>

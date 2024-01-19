@@ -24,7 +24,7 @@
 	</tags>
 	<triggers>
 		<row>
-			<idtrigger>4</idtrigger>
+			<idtrigger>5</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
 			<description>My trigger1 description</description>
@@ -39,7 +39,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>5</idtrigger>
+			<idtrigger>6</idtrigger>
 			<type>WindowLoaded</type>
 			<name>Mytrigger2</name>
 			<description />
@@ -58,7 +58,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>6</idtrigger>
+			<idtrigger>7</idtrigger>
 			<type>DomReady</type>
 			<name>Mytrigger3</name>
 			<description />

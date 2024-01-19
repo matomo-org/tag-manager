@@ -12,13 +12,13 @@
     >
       <p v-show="isLoading">
         <span class="loadingPiwik">
-          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          <img src="plugins/Morpheus/images/loading-blue.gif"/>
           {{ translate('General_LoadingData') }}
         </span>
       </p>
       <p v-show="isUpdating">
         <span class="loadingPiwik">
-          <img src="plugins/Morpheus/images/loading-blue.gif" />
+          <img src="plugins/Morpheus/images/loading-blue.gif"/>
           {{ translate('TagManager_UpdatingData') }}
         </span>
       </p>
@@ -150,7 +150,7 @@ import SelectTagManagerEnvironmentHelpText from './SelectTagManagerEnvironmentHe
 
 interface VersionEditState {
   isDirty: boolean;
-  lastVersion: string|null;
+  lastVersion: string | null;
   versionChanges: SingleDiff[];
   isLoadingVersionChanges: boolean;
   isUpdatingVersion: boolean;
@@ -272,6 +272,8 @@ export default defineComponent({
             this.idContainerVersion,
             lastContainerVersion!,
           ).then((diff) => {
+            diff.sort((a, b) => (
+              new Date(b.lastChanged).valueOf() - new Date(a.lastChanged).valueOf()));
             this.versionChanges = diff;
             this.isLoadingVersionChanges = false;
           });

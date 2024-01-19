@@ -22,7 +22,7 @@
 	</version>
 	<tags>
 		<row>
-			<idtag>10</idtag>
+			<idtag>11</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 2</name>
 			<description>My Tag 2 description</description>
@@ -31,10 +31,10 @@
 				<htmlPosition>bodyEnd</htmlPosition>
 			</parameters>
 			<fire_trigger_ids>
-				<row>13</row>
+				<row>14</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
-				<row>14</row>
+				<row>15</row>
 			</block_trigger_ids>
 			<fire_limit>once_lifetime</fire_limit>
 			<priority>343</priority>
@@ -47,7 +47,7 @@
 			
 		</row>
 		<row>
-			<idtag>11</idtag>
+			<idtag>12</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 1</name>
 			<description />
@@ -56,7 +56,7 @@
 				<htmlPosition>bodyEnd</htmlPosition>
 			</parameters>
 			<fire_trigger_ids>
-				<row>13</row>
+				<row>14</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
 			</block_trigger_ids>
@@ -71,7 +71,7 @@
 			
 		</row>
 		<row>
-			<idtag>12</idtag>
+			<idtag>13</idtag>
 			<type>CustomImage</type>
 			<name>My Tag 3</name>
 			<description />
@@ -80,8 +80,8 @@
 				<cacheBusterEnabled>1</cacheBusterEnabled>
 			</parameters>
 			<fire_trigger_ids>
-				<row>14</row>
 				<row>15</row>
+				<row>16</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
 			</block_trigger_ids>
@@ -98,7 +98,7 @@
 	</tags>
 	<triggers>
 		<row>
-			<idtrigger>13</idtrigger>
+			<idtrigger>14</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
 			<description>My trigger1 description</description>
@@ -113,7 +113,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>14</idtrigger>
+			<idtrigger>15</idtrigger>
 			<type>WindowLoaded</type>
 			<name>Mytrigger2</name>
 			<description />
@@ -132,7 +132,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>15</idtrigger>
+			<idtrigger>16</idtrigger>
 			<type>DomReady</type>
 			<name>Mytrigger3</name>
 			<description />
