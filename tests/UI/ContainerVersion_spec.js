@@ -41,6 +41,7 @@ describe("ContainerVersion", function () {
         } else {
             prefix += ' ';
         }
+        await page.waitForSelector(prefix + '.editVersion [id=name]');
         await form.sendFieldValue(page, prefix + '.editVersion [id=name]', name);
     }
 
