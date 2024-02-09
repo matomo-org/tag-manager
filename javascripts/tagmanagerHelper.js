@@ -266,7 +266,7 @@
         ajaxRequest.send();
     };
     tagManagerHelper.updateDebugSiteFlag = function (url, idContainer, debugFlag) {
-        if (!url || !idContainer || !debugFlag) {
+        if (!url || !idContainer || !debugFlag || url.indexOf('http') !== 0 || url.indexOf('://') < 4) {
             return;
         }
         window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + encodeURIComponent(idContainer) + '&mtmSetDebugFlag=' + encodeURIComponent(debugFlag), '_blank', 'noreferrer');
