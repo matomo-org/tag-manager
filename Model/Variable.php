@@ -200,6 +200,12 @@ class Variable extends BaseModel
             if (!empty($parameter['uiControlAttributes']['field2']) && self::hasFieldConfigVariableParameter($parameter['uiControlAttributes']['field2'])) {
                 return true;
             }
+            if (!empty($parameter['uiControlAttributes']['field3']) && self::hasFieldConfigVariableParameter($parameter['uiControlAttributes']['field3'])) {
+                return true;
+            }
+            if (!empty($parameter['uiControlAttributes']['field4']) && self::hasFieldConfigVariableParameter($parameter['uiControlAttributes']['field4'])) {
+                return true;
+            }
         }
         if (!empty($parameter['uiControlAttributes']['parseVariables'])) {
             // workaround for some variables that don't use above templates but still need to be parsed

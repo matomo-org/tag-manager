@@ -777,6 +777,38 @@
 						<condition />
 						<fullWidth>0</fullWidth>
 					</row>
+					<row>
+						<name>customVariables</name>
+						<title>Custom Variables</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>index</key>
+								<title>Index</title>
+								<uiControl>text</uiControl>
+								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally set one or multiple custom variables.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
+					</row>
 				</parameters>
 			</row>
 			<row>
@@ -1240,6 +1272,38 @@
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>customVariables</name>
+						<title>Custom Variables</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>index</key>
+								<title>Index</title>
+								<uiControl>text</uiControl>
+								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<templateFile>plugins/TagManager/angularjs/form-field/field-variable-template.html</templateFile>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally set one or multiple custom Variables.</description>
+						<inlineHelp />
+						<templateFile />
+						<introduction />
+						<condition />
 					</row>
 					<row>
 						<name>bundleTracker</name>

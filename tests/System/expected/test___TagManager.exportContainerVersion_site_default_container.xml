@@ -36,6 +36,8 @@
 				<eventAction />
 				<eventName />
 				<eventValue />
+				<customDimensions />
+				<customVariables />
 			</parameters>
 			<fire_trigger_ids>
 				<row>33</row>
@@ -101,6 +103,8 @@
 				<userId />
 				<customDimensions>
 				</customDimensions>
+				<customVariables>
+				</customVariables>
 				<bundleTracker>1</bundleTracker>
 				<registerAsDefaultTracker>1</registerAsDefaultTracker>
 				<jsEndpoint>matomo.js</jsEndpoint>

@@ -147,7 +147,84 @@ class MatomoTag extends BaseTag
                     }
                     return $value;
                 };
-            })
+            }),
+            $this->makeSetting('customDimensions', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
+                $field->title = 'Custom Dimensions';
+                $field->description = 'Optionally set one or multiple custom dimensions.';
+                $field->validate = function ($value) {
+                    if (empty($value)) {
+                        return;
+                    }
+                    if (!is_array($value)) {
+                        throw new \Exception('Value needs to be an array');
+                    }
+                };
+
+                $field->transform = function ($value) {
+                    if (empty($value) || !is_array($value)) {
+                        return array();
+                    }
+                    $withValues = array();
+                    foreach ($value as $dim) {
+                        if (!empty($dim['index']) && !empty($dim['value'])) {
+                            $withValues[] = $dim;
+                        }
+                    }
+
+                    return $withValues;
+                };
+
+                $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
+                $field1 = new FieldConfig\MultiPair('Index', 'index', FieldConfig::UI_CONTROL_TEXT);
+                $field1->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field2 = new FieldConfig\MultiPair('Value', 'value', FieldConfig::UI_CONTROL_TEXT);
+                $field2->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field->uiControlAttributes['field1'] = $field1->toArray();
+                $field->uiControlAttributes['field2'] = $field2->toArray();
+            }),
+            $this->makeSetting('customVariables', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
+                $field->title = 'Custom Variables';
+                $field->description = 'Optionally set one or multiple custom variables. Scope "action" will set the scope based on the selected tracking type.';
+                $field->validate = function ($value) {
+                    if (empty($value)) {
+                        return;
+                    }
+                    if (!is_array($value)) {
+                        throw new \Exception('Value needs to be an array');
+                    }
+                };
+
+                $field->transform = function ($value) {
+                    if (empty($value) || !is_array($value)) {
+                        return array();
+                    }
+                    $withValues = array();
+                    foreach ($value as $var) {
+                        if (!empty($var['index']) && !empty($var['name']) && !empty($var['value']) && !empty($var['scope'])) {
+                            $withValues[] = $var;
+                        }
+                    }
+
+                    return $withValues;
+                };
+
+                $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
+                $field1 = new FieldConfig\MultiPair('Index', 'index', FieldConfig::UI_CONTROL_TEXT);
+                $field1->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field2 = new FieldConfig\MultiPair('Name', 'name', FieldConfig::UI_CONTROL_TEXT);
+                $field2->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field3 = new FieldConfig\MultiPair('Value', 'value', FieldConfig::UI_CONTROL_TEXT);
+                $field3->customUiControlTemplateFile = self::FIELD_TEMPLATE_VARIABLE;
+                $field4 = new FieldConfig\MultiPair('Scope', 'scope', FieldConfig::UI_CONTROL_SINGLE_SELECT);
+                $field4->availableValues = array(
+                    'visit' => 'visit',
+                    'action' => 'action',
+                );
+                $field->uiControlAttributes['field1'] = $field1->toArray();
+                $field->uiControlAttributes['field2'] = $field2->toArray();
+                $field->uiControlAttributes['field3'] = $field3->toArray();
+                $field->uiControlAttributes['field4'] = $field4->toArray();
+            }),
         );
     }
 

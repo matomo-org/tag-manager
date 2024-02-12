@@ -235,8 +235,55 @@
                     }
                 }
 
+                if (matomoConfig.customVariables
+                    && TagManager.utils.isArray(matomoConfig.customVariables)
+                    && matomoConfig.customVariables.length) {
+                    var varIndex;
+                    for (varIndex = 0; varIndex < matomoConfig.customVariables.length; varIndex++) {
+                        var variable = matomoConfig.customVariables[varIndex];
+                        if (variable && TagManager.utils.isObject(variable) && variable.index && variable.name && variable.value && variable.scope) {
+                            tracker.setCustomVariable(variable.index, variable.name, variable.value, variable.scope);
+                        }
+                    }
+                }
+
                 if (tracker) {
-                    var trackingType = parameters.get('trackingType');
+                    var trackingType = parameters.get('trackingType'),
+                        customDimensions = parameters.get('customDimensions'),
+                        customVariables = parameters.get('customVariables');
+
+                    if (customDimensions
+                        && TagManager.utils.isArray(customDimensions)
+                        && customDimensions.length) {
+                        var dimIndex;
+                        for (dimIndex = 0; dimIndex < customDimensions.length; dimIndex++) {
+                            var dimension = customDimensions[dimIndex];
+                            if (dimension && TagManager.utils.isObject(dimension) && dimension.index && dimension.value) {
+                                tracker.setCustomDimension(dimension.index, dimension.value);
+                            }
+                        }
+                    }
+    
+                    if (customVariables
+                        && TagManager.utils.isArray(customVariables)
+                        && customVariables.length) {
+                        var varIndex;
+                        for (varIndex = 0; varIndex < customVariables.length; varIndex++) {
+                            var variable = customVariables[varIndex];
+                            if (variable && TagManager.utils.isObject(variable) && variable.index && variable.name && variable.value && variable.scope) {
+
+                                if (variable.scope === 'action') {
+                                    if (trackingType === 'pageview') {
+                                        variable.scope = 'page';
+                                    } else {
+                                        variable.scope = 'event';
+                                    }
+                                }
+
+                                tracker.setCustomVariable(variable.index, variable.name, variable.value, variable.scope);
+                            }
+                        }
+                    }
 
                     if (trackingType === 'pageview') {
                         var customTitle = parameters.get('documentTitle');
