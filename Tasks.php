@@ -47,15 +47,12 @@ class Tasks extends \Piwik\Plugin\Tasks
             return;
         }
         $containerDao = new ContainersDao();
-        $containers = $containerDao->getAllContainers();
+        $containers = $containerDao->getActiveContainersInfo();
         $siteIdsDeleted = [];
         foreach ($containers as $container) {
-            $idsite = $container['idsite'];
-            if ($idsite === 286) {
-                $a=1;
-            }
-            if (!isset($siteIdsDeleted[$idsite]) && !$this->siteExists($idsite)) {
-                $siteIdsDeleted[$idsite] = $idsite;
+            $idSite = $container['idsite'];
+            if (!isset($siteIdsDeleted[$idSite]) && !$this->siteExists($idSite)) {
+                $siteIdsDeleted[$idSite] = $idSite;
             }
         }
 
