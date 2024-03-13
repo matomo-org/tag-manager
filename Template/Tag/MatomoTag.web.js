@@ -126,6 +126,10 @@
                         tracker.disableBrowserFeatureDetection();
                     }
 
+                    if (matomoConfig.disableCampaignParameters) {
+                        tracker.disableCampaignParameters();
+                    }
+
                     if (matomoConfig.disableCookies) {
                         tracker.disableCookies();
                     }
