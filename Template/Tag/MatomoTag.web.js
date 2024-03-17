@@ -126,7 +126,7 @@
                         tracker.disableBrowserFeatureDetection();
                     }
 
-                    if (matomoConfig.disableCampaignParameters) {
+                    if (matomoConfig.requireConsentForCampaignTracking) {
                         tracker.disableCampaignParameters();
                     }
 
