@@ -8,6 +8,9 @@
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\Plugin;
+use Piwik\Plugins\TagManager\Dao\ContainersDao;
+use Piwik\Site;
+use Piwik\Exception\UnexpectedWebsiteFoundException;
 
 class Tasks extends \Piwik\Plugin\Tasks
 {
@@ -24,6 +27,7 @@ class Tasks extends \Piwik\Plugin\Tasks
     public function schedule()
     {
         $this->hourly('regenerateReleasedContainers');
+        $this->daily('deleteContainersForNonExistingSite');
     }
 
     public function regenerateReleasedContainers()
@@ -32,6 +36,41 @@ class Tasks extends \Piwik\Plugin\Tasks
         $tagManager = $this->pluginManager->getLoadedPlugin('TagManager');
         if ($tagManager) {
             $tagManager->regenerateReleasedContainers();
+        }
+    }
+
+    public function deleteContainersForNonExistingSite()
+    {
+        /** @var TagManager $tagManager */
+        $tagManager = $this->pluginManager->getLoadedPlugin('TagManager');
+        if (!$tagManager) {
+            return;
+        }
+        $containerDao = new ContainersDao();
+        $containers = $containerDao->getActiveContainersInfo();
+        $siteIdsDeleted = [];
+        foreach ($containers as $container) {
+            $idSite = $container['idsite'];
+            if (!isset($siteIdsDeleted[$idSite]) && !$this->siteExists($idSite)) {
+                $siteIdsDeleted[$idSite] = $idSite;
+            }
+        }
+
+        if (!empty($siteIdsDeleted)) {
+            $tagManager = new TagManager();
+            foreach ($siteIdsDeleted as $siteId) {
+                $tagManager->onSiteDeleted($siteId);
+            }
+        }
+    }
+
+    private function siteExists($idSite)
+    {
+        try {
+            new Site($idSite);
+            return true;
+        } catch (UnexpectedWebsiteFoundException $ex) {
+            return false;
         }
     }
 }

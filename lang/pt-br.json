@@ -198,6 +198,8 @@
         "Draft": "Rascunho",
         "DriftDescription": "O Drift permite que você se conecte aos seus clientes.",
         "DriftHelp": "Esta tag permite que você adicione o formulário de contato Drift ao seu site.",
+        "DriftTagDriftIdDescription": "O ID do Drift é o texto entre colchetes sem aspas no final do fragmento JS: drift.load('mdp4r5w7rh3y');",
+        "DriftTagDriftIdTitle": "ID do Drift",
         "EditContainer": "Editar contêiner",
         "EditTag": "Editar tag",
         "EditTags": "Editar tags",

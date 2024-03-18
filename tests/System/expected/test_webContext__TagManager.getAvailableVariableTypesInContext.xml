@@ -1229,6 +1229,22 @@
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
+						<name>requireConsentForCampaignTracking</name>
+						<title>Require consent to track campaign parameters</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>By enabling the consent requirement, Matomo will track campaign parameters only for users who have provided their consent. This approach ensures that data collection respects users' preferences while enabling the analysis of traffic segmentation by key metrics like source, medium, and campaign specifics.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
 						<name>domains</name>
 						<title>Domains</title>
 						<value>

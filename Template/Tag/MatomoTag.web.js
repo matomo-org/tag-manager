@@ -159,7 +159,8 @@
                         = setRequestContentTypeIndex = setCustomRequestProcessingIndex
                         = enableJSErrorTrackingIndex = enableHeartBeatTimerIndex
                         = trackAllContentImpressionsIndex = trackVisibleContentImpressionsIndex
-                        = disableFormAnalyticsIndex = disableMediaAnalyticsIndex = -1;
+                        = disableFormAnalyticsIndex = disableMediaAnalyticsIndex
+                        = disableCampaignParametersIndex = -1;
                     for (k = 0; k < localPaq.length; k++) {
                         // This should only be an array. Skip if it's not
                         if (!TagManager.utils.isArray(localPaq[k])) {
@@ -282,6 +283,9 @@
                                 // There could be multiple, so let's push the indexes onto an array
                                 setCustomDimensionIndexes.push(k);
                                 break;
+                            case 'disableCampaignParameters':
+                                disableCampaignParametersIndex = k;
+                                break;
                         }
                     }
 
@@ -293,6 +297,11 @@
                     if ((matomoConfig.disableBrowserFeatureDetection || disableBrowserFeatureDetectionIndex !== -1) && typeof tracker.disableBrowserFeatureDetection === 'function') {
                         tracker.disableBrowserFeatureDetection();
                         markIndexAsConfig(disableBrowserFeatureDetectionIndex);
+                    }
+
+                    if (matomoConfig.requireConsentForCampaignTracking || disableCampaignParametersIndex !== -1) {
+                        tracker.disableCampaignParameters();
+                        markIndexAsConfig(disableCampaignParametersIndex);
                     }
 
                     if (matomoConfig.disableCookies || disableCookiesIndex !== -1) {
