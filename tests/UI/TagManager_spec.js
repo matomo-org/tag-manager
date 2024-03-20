@@ -51,6 +51,13 @@ describe("TagManager", function () {
         await capture.page(page, 'getting_started');
     });
 
+    it('should show websites dropdown without all websites', async function () {
+        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
+        pageWrap = await page.$('.top_bar_sites_selector .dropdown');
+        expect(await pageWrap.screenshot()).to.matchImage('websites_dropdown_without_all_websites');
+        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
+    });
+
     it('should show top bar list when no container exists', async function () {
         await page.goto(generalParamsSite5 + urlBase + 'gettingStarted');
         await capture.topControls(page, 'top_controls_no_container_exists');

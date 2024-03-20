@@ -58,6 +58,13 @@ describe("Container", function () {
         expect(await pageWrap.screenshot()).to.matchImage('site_some_exist');
     });
 
+    it('should show websites dropdown without all websites', async function () {
+        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
+        pageWrap = await page.$('.top_bar_sites_selector .dropdown');
+        expect(await pageWrap.screenshot()).to.matchImage('websites_dropdown_without_all_websites');
+        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
+    });
+
     it('should be able to create a new container', async function () {
         await page.click('.createNewContainer');
         await capture.setTableRowHeight(page);
