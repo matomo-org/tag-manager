@@ -6,19 +6,19 @@
 	<name>Default Container</name>
 	<description>This container was auto generated when the website was created.</description>
 	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
-	
-	
-	
-	
+
+
+
+
 	<revision>0</revision>
 	<version>
 		<name />
 		<description />
 		<revision>0</revision>
-		
-		
-		
-		
+
+
+
+
 	</version>
 	<tags>
 		<row>
@@ -53,10 +53,10 @@
 			<fire_delay>0</fire_delay>
 			<start_date />
 			<end_date />
-			
-			
-			
-			
+
+
+
+
 		</row>
 	</tags>
 	<triggers>
@@ -69,10 +69,10 @@
 			</parameters>
 			<conditions>
 			</conditions>
-			
-			
-			
-			
+
+
+
+
 		</row>
 	</triggers>
 	<variables>
@@ -81,6 +81,7 @@
 			<type>MatomoConfiguration</type>
 			<name>Matomo Configuration</name>
 			<description />
+			
 			<parameters>
 				<matomoUrl>//example.com/piwik/tests/PHPUnit/proxy/</matomoUrl>
 				<idSite>6</idSite>
@@ -131,10 +132,10 @@
 			<lookup_table>
 			</lookup_table>
 			<default_value />
-			
-			
-			
-			
+
+
+
+
 		</row>
 	</variables>
 </result>
