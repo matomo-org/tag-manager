@@ -299,7 +299,7 @@
                         markIndexAsConfig(disableBrowserFeatureDetectionIndex);
                     }
 
-                    if (matomoConfig.requireConsentForCampaignTracking || disableCampaignParametersIndex !== -1) {
+                    if (matomoConfig.disableCampaignParameters || disableCampaignParametersIndex !== -1) {
                         tracker.disableCampaignParameters();
                         markIndexAsConfig(disableCampaignParametersIndex);
                     }
