@@ -59,7 +59,7 @@ class Updates_5_1_0_b1 extends PiwikUpdates
         $updater->executeMigrations(__FILE__, $this->getMigrations($updater));
 
         // Migrate the MatomoConfiguration type variables to all include the newly configured fields.
-        $migrator = new NewVariableParameterMigrator(MatomoConfigurationVariable::ID, 'requireConsentForCampaignTracking', false);
+        $migrator = new NewVariableParameterMigrator(MatomoConfigurationVariable::ID, 'disableCampaignParameters', false);
         $migrator->migrate();
     }
 }
