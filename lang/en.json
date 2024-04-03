@@ -623,7 +623,7 @@
         "MatomoConfigurationMatomoRequestContentTypeTitle": "Content-Type",
         "MatomoConfigurationMatomoRequestContentTypeDescription": "Set request Content-Type header value for POST requests.",
         "MatomoConfigurationMatomoDisableCampaignParametersTitle": "Disable Campaign Parameters Tracking",
-        "MatomoConfigurationMatomoDisableCampaignParametersDescription": "When this option is checked, Matomo will not track campaign parameters and will be removed from the tracked URLs.",
+        "MatomoConfigurationMatomoDisableCampaignParametersDescription": "When this option is checked, Matomo will not track campaign parameters and they will be removed from the tracked URLs.",
         "MatomoConfigurationMatomoCustomRequestProcessingTitle": "Custom Request Processing",
         "MatomoConfigurationMatomoCustomRequestProcessingDescription": "Can be set to a variable of type \"%s\" to augment or override default request sending behaviour.",
         "MatomoTagDescription": "Matomo is the leading open source analytics platform.",

@@ -1238,7 +1238,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>When this option is checked, Matomo will not track campaign parameters and will be removed from the tracked URLs.</description>
+						<description>When this option is checked, Matomo will not track campaign parameters and they will be removed from the tracked URLs.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />
@@ -1518,7 +1518,7 @@
 						<availableValues>
 							<GET>GET</GET>
 							<POST>POST</POST>
-						</availableValues>						
+						</availableValues>
 						<description />
 						<inlineHelp>To use the POST request method, either 1) the Matomo host is the same as the tracked website host (Matomo installed in the same domain as your tracked website), or 2) if Matomo is not installed on the same host as your website, you need to enable CORS (Cross domain requests) as explained in this &lt;a href=&quot;https://matomo.org/faq/how-to/faq_18694/&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;FAQ&lt;/a&gt;. Keep in mind that when Matomo uses sendBeacon() for sending tracking requests (which is enabled by default), it will send data via POST. If you want Matomo to never send POST requests, you can use this method to force GET which will automatically disable sendBeacon.&lt;br&gt;</inlineHelp>
 						<introduction />
