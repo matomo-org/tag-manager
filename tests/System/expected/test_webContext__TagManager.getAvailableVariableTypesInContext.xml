@@ -1515,7 +1515,7 @@
 						<uiControl>select</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues>
+						<availableValues>						
 							<GET>GET</GET>
 							<POST>POST</POST>
 						</availableValues>						
