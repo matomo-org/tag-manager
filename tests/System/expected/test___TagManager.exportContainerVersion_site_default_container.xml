@@ -108,7 +108,7 @@
 				<cookiePath />
 				<cookieSameSite>Lax</cookieSameSite>
 				<disableBrowserFeatureDetection>0</disableBrowserFeatureDetection>
-				<requireConsentForCampaignTracking>0</requireConsentForCampaignTracking>
+				<disableCampaignParameters>0</disableCampaignParameters>
 				<domains>
 				</domains>
 				<alwaysUseSendBeacon>0</alwaysUseSendBeacon>
