@@ -579,6 +579,8 @@
         "MatomoConfigurationMatomoDisableBrowserFeatureDetectionDescription": "Εξ' ορισμού, το Matomo προσπελαύνει ορισμένες πληροφορίες από το πρόγραμμα πλοήγησης του επισκέπτη, όπως η ανάλυση οθόνης. Κάποιες από τις νομοθεσίες γύρω από την ιδιωτικότητα επιτρέπουν την πρόσβαση σε τέτοια πληροφορία στην συσκευή του επισκέπτη μόνο μετά τη συναίνεσή του. Αν αυτό ισχύει και για εσάς, μπορείτε να απενεργοποιήσετε αυτό το χαρακτηριστικό.",
         "MatomoConfigurationMatomoDisableBrowserFeatureDetectionInLineHelp": "%1$sΓια να μάθετε περισσότερα, δείτε το %2$sFAQ%3$s.%4$s",
         "MatomoConfigurationMatomoDisableBrowserFeatureDetectionTitle": "Απενεργοποίηση Εντοπισμού Χαρακτηριστικών στο Πρόγραμμα Πλοήγησης",
+        "MatomoConfigurationMatomoDisableCampaignParametersDescription": "Όταν η επιλογή αυτή είναι ενεργή, το Matomo δε θα ιχνηλατεί τις παραμέτρους καμπάνιας και θα αφαιρεθούν από τις ιχνηλατούμενες διευθύνσεις URL.",
+        "MatomoConfigurationMatomoDisableCampaignParametersTitle": "Απενεργοποίηση Ιχνηλάτησης Παραμέτρων Καμπάνιας",
         "MatomoConfigurationMatomoDisableCookiesDescription": "Απενεργοποιεί όλα τα cookie πρώτου επιπέδου.",
         "MatomoConfigurationMatomoDisableCookiesTitle": "Απενεργοποίηση των cookie",
         "MatomoConfigurationMatomoDisablePerformanceTrackingDescription": "Απενεργοποιεί την απόδοση της ιχνηλάτησης της σελίδας.",
