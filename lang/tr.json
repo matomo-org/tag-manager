@@ -579,6 +579,8 @@
         "MatomoConfigurationMatomoDisableBrowserFeatureDetectionDescription": "Matomo varsayılan olarak, ziyaretçinin tarayıcısından tarayıcı çözünürlüğü gibi bazı bilgilere erişir. Bazı kişisel veri gizliliği düzenlemeleri, ziyaretçinin aygıtından bu tür bilgilere yalnızca rızası alındıktan sonra erişilmesine izin verebilir. Bu durum sizin için geçerliyse, bu özelliği kapatabilirsiniz.",
         "MatomoConfigurationMatomoDisableBrowserFeatureDetectionInLineHelp": "%1$sAyrıntılı bilgi almak için %2$sbu SSS bölümüne%3$s bakabilirsiniz.%4$s",
         "MatomoConfigurationMatomoDisableBrowserFeatureDetectionTitle": "Tarayıcı özelliği algılaması kullanılmasın",
+        "MatomoConfigurationMatomoDisableCampaignParametersDescription": "Bu seçenek işaretlendiğinde, Matomo kampanya parametrelerini izlemeyecek ve bunlar izlenen URL'lerden kaldırılacaktır.",
+        "MatomoConfigurationMatomoDisableCampaignParametersTitle": "Kampanya Parametrelerini İzlemeyi Devre Dışı Bırak",
         "MatomoConfigurationMatomoDisableCookiesDescription": "Bu seçenek açıldığında, birinci taraf çerezlerinin hiç biri kullanılmaz.",
         "MatomoConfigurationMatomoDisableCookiesTitle": "Çerezler kullanılmasın",
         "MatomoConfigurationMatomoDisablePerformanceTrackingDescription": "Sayfa başarımı izlenmesini kapatır.",

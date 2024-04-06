@@ -579,6 +579,8 @@
         "MatomoConfigurationMatomoDisableBrowserFeatureDetectionDescription": "De manera predeterminada, Matomo accedeix a alguna informació des del navegador del visitant com ara la resolució del navegador. Algunes regulacions de privadesa poden permetre l'accés a aquesta informació des del dispositiu del visitant només després de tenir el consentiment. Si és el vostre cas, podeu desactivar aquesta funció.",
         "MatomoConfigurationMatomoDisableBrowserFeatureDetectionInLineHelp": "%1$sPer obtenir més informació, comproveu aquestes %2$sFAQ%3$s.%4$s",
         "MatomoConfigurationMatomoDisableBrowserFeatureDetectionTitle": "Desactiva la detecció de funcions del navegador",
+        "MatomoConfigurationMatomoDisableCampaignParametersDescription": "Quan aquesta opció està marcada, Matomo no farà un seguiment dels paràmetres de la campanya i s'eliminaran de les URL de seguiment.",
+        "MatomoConfigurationMatomoDisableCampaignParametersTitle": "Desactiva el seguiment dels paràmetres de la campanya",
         "MatomoConfigurationMatomoDisableCookiesDescription": "Desactiva totes les galetes pròpies.",
         "MatomoConfigurationMatomoDisableCookiesTitle": "Desactiva les galetes",
         "MatomoConfigurationMatomoDisablePerformanceTrackingDescription": "Desactiva el seguiment del rendiment de la pàgina.",
