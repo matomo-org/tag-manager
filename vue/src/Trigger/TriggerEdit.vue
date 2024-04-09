@@ -95,11 +95,17 @@
           </div>
           <div v-show="trigger.typeMetadata?.hasAdvancedSettings">
             <div class="form-group row multiple">
+              <div class="col s12 input-field m6">
+                <p>
+                  {{ translate('TagManager_TriggerConditionsHelp') }}
+                </p>
+              </div>
+              <div class="col s12 input-field m6 form-help">
+                    <span class="inline-help" v-html="$sanitize(triggerInlineHelpText)">
+                    </span>
+              </div>
               <div class="col s12 m12">
                 <div>
-                  <p>
-                    {{ translate('TagManager_TriggerConditionsHelp') }}
-                  </p>
                   <div
                     v-for="(condition, index) in trigger.conditions"
                     :key="index"
@@ -653,6 +659,14 @@ export default defineComponent({
       return translate(
         'TagManager_UseCustomTemplateCapabilityRequired',
         translate('TagManager_CapabilityUseCustomTemplates'),
+      );
+    },
+    triggerInlineHelpText() {
+      const triggerInlineHelpLink = 'https://matomo.org/?post_type=faq&p=74424';
+      return translate(
+        'TagManager_TriggerConditionsHelpText',
+        `<a href="${triggerInlineHelpLink}" target="_blank" rel="noreferrer noopener">`,
+        '</a>',
       );
     },
     availableComparisons() {
