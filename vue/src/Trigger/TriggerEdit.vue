@@ -100,9 +100,11 @@
                   {{ translate('TagManager_TriggerConditionsHelp') }}
                 </p>
               </div>
-              <div class="col s12 input-field m6 form-help">
-                    <span class="inline-help" v-html="$sanitize(triggerInlineHelpText)">
-                    </span>
+              <div class="col s12 input-field m6">
+                <div class="form-help">
+                  <span class="inline-help" v-html="$sanitize(triggerInlineHelpText)">
+                  </span>
+                </div>
               </div>
               <div class="col s12 m12">
                 <div>
@@ -245,7 +247,7 @@ import {
   NotificationType,
   NotificationsStore,
   clone,
-  MatomoUrl,
+  MatomoUrl, externalLink,
 } from 'CoreHome';
 import { Field, GroupedSettings, SaveButton } from 'CorePluginsAdmin';
 import TriggersStore from './Triggers.store';
@@ -662,10 +664,9 @@ export default defineComponent({
       );
     },
     triggerInlineHelpText() {
-      const triggerInlineHelpLink = 'https://matomo.org/?post_type=faq&p=74424';
       return translate(
         'TagManager_TriggerConditionsHelpText',
-        `<a href="${triggerInlineHelpLink}" target="_blank" rel="noreferrer noopener">`,
+        externalLink('https://matomo.org/faq/tag-manager/create-a-trigger-to-track-interactions-on-all-nested-elements/'),
         '</a>',
       );
     },
