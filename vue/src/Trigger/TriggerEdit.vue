@@ -95,11 +95,19 @@
           </div>
           <div v-show="trigger.typeMetadata?.hasAdvancedSettings">
             <div class="form-group row multiple">
+              <div class="col s12 input-field m6">
+                <p>
+                  {{ translate('TagManager_TriggerConditionsHelp') }}
+                </p>
+              </div>
+              <div class="col s12 input-field m6">
+                <div class="form-help">
+                  <span class="inline-help" v-html="$sanitize(triggerInlineHelpText)">
+                  </span>
+                </div>
+              </div>
               <div class="col s12 m12">
                 <div>
-                  <p>
-                    {{ translate('TagManager_TriggerConditionsHelp') }}
-                  </p>
                   <div
                     v-for="(condition, index) in trigger.conditions"
                     :key="index"
@@ -239,7 +247,7 @@ import {
   NotificationType,
   NotificationsStore,
   clone,
-  MatomoUrl,
+  MatomoUrl, externalLink,
 } from 'CoreHome';
 import { Field, GroupedSettings, SaveButton } from 'CorePluginsAdmin';
 import TriggersStore from './Triggers.store';
@@ -653,6 +661,13 @@ export default defineComponent({
       return translate(
         'TagManager_UseCustomTemplateCapabilityRequired',
         translate('TagManager_CapabilityUseCustomTemplates'),
+      );
+    },
+    triggerInlineHelpText() {
+      return translate(
+        'TagManager_TriggerConditionsHelpText',
+        externalLink('https://matomo.org/faq/tag-manager/create-a-trigger-to-track-interactions-on-all-nested-elements/'),
+        '</a>',
       );
     },
     availableComparisons() {

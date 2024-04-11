@@ -468,6 +468,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_ChooseTriggerToContinue';
         $result[] = 'TagManager_ChooseVariableToContinue';
         $result[] = 'TagManager_TriggerConditionsHelp';
+        $result[] = 'TagManager_TriggerConditionsHelpText';
         $result[] = 'TagManager_EnablingPreviewPleaseWait';
         $result[] = 'TagManager_DisablingPreviewPleaseWait';
         $result[] = 'TagManager_UpdatingDebugSiteUrlPleaseWait';
