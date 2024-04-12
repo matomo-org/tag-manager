@@ -62,6 +62,27 @@ class Import
      */
     private $accessValidator;
 
+    /**
+     * Map by id
+     *
+     * @var array
+     */
+    protected $tagsMap = [];
+
+    /**
+     * Map by id
+     *
+     * @var array
+     */
+    protected $triggersMap = [];
+
+    /**
+     * Map by id
+     *
+     * @var array
+     */
+    protected $variablesMap = [];
+
     public function __construct(Tag $tags, Trigger $triggers, Variable $variables, Container $containers, AccessValidator $accessValidator, TagsProvider $tagsProvider, TriggersProvider $triggersProvider, VariablesProvider $variablesProvider)
     {
         $this->tags = $tags;
@@ -72,6 +93,16 @@ class Import
         $this->tagsProvider = $tagsProvider;
         $this->triggersProvider = $triggersProvider;
         $this->variablesProvider = $variablesProvider;
+
+        foreach ($this->tagsProvider->getAllTags() as $tag) {
+            $this->tagsMap[$tag->getId()] = $tag;
+        }
+        foreach ($this->triggersProvider->getAllTriggers() as $trigger) {
+            $this->triggersMap[$trigger->getId()] = $trigger;
+        }
+        foreach ($this->variablesProvider->getAllVariables() as $variable) {
+            $this->variablesMap[$variable->getId()] = $variable;
+        }
     }
 
     public function checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer)
@@ -91,25 +122,34 @@ class Import
         }
 
         foreach ($exportedContainerVersion['tags'] as $tag) {
-            $this->tagsProvider->checkIsValidTag($tag['type']);
-
-            if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
+            $type = $tag['type'];
+            $mtmTag = $this->tagsMap[$type] ?? null;
+            if (!$mtmTag) {
+                throw new \Exception(sprintf('The tag "%s" is not supported', $type));
+            }
+            if ($mtmTag->isCustomTemplate($type)) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
 
         foreach ($exportedContainerVersion['triggers'] as $trigger) {
-            $this->triggersProvider->checkIsValidTrigger($trigger['type']);
-
-            if ($this->triggersProvider->isCustomTemplate($trigger['type'])) {
+            $type = $trigger['type'];
+            $mtmTrigger = $this->triggersMap[$type] ?? null;
+            if (!$mtmTrigger) {
+                throw new \Exception(sprintf('The trigger "%s" is not supported', $type));
+            }
+            if ($mtmTrigger->isCustomTemplate($type)) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
 
         foreach ($exportedContainerVersion['variables'] as $variable) {
-            $this->variablesProvider->checkIsValidVariable($variable['type']);
-
-            if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
+            $type = $variable['type'];
+            $mtmVariable = $this->variablesMap[$type] ?? null;
+            if (!$mtmVariable) {
+                throw new \Exception(sprintf('The variable "%s" is not supported', $type));
+            }
+            if ($mtmVariable->isCustomTemplate($type)) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
