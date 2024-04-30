@@ -274,10 +274,9 @@ describe("ContainerVersion", function () {
         await capture.page(page, 'import_version_confirmed');
     });
 
-    it('should show notice not possible to publish to live container and preselect alternative environment', async function () {
+    it('should show notice not possible to create new version with no tagmanager_use_custom_templates', async function () {
         permissions.setWriteUser();
         await page.goto(container1Base);
-        await page.click('.createNewVersion');
         await page.waitForNetworkIdle();
         await capture.page(page, 'no_publish_live_container_capability');
     });

@@ -45,7 +45,7 @@
               {{ translate('TagManager_NoVersionsFound') }}
               <a
                 class="createContainerVersionNow"
-                v-show="hasWriteAccess"
+                v-show="hasWriteAccess && hasCustomTemplatesCapability"
                 @click="createVersion()"
               >
                 {{ translate('TagManager_CreateNewVersionNow') }}
@@ -120,7 +120,7 @@
       <div class="tableActionBar">
         <a
           class="createNewVersion"
-          v-show="hasWriteAccess"
+          v-show="hasWriteAccess && hasCustomTemplatesCapability"
           @click="createVersion()"
         >
           <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewVersion') }}
@@ -381,6 +381,9 @@ export default defineComponent({
     },
     hasWriteAccess() {
       return Matomo.hasUserCapability('tagmanager_write');
+    },
+    hasCustomTemplatesCapability() {
+      return Matomo.hasUserCapability('tagmanager_use_custom_templates');
     },
     canPublishToLive() {
       return Matomo.hasUserCapability('tagmanager_publish_live_container');
