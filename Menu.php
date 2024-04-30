@@ -119,7 +119,9 @@ class Menu extends \Piwik\Plugin\Menu
                         $menu->addItem($menuCategory, 'TagManager_EnablePreviewDebug', array(), $orderId = 130, false,'icon-bug', "tagManagerHelper.enablePreviewMode(" . json_encode($container['idcontainer']) . ")");
                     }
 
-                    $menu->addItem($menuCategory, 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, function () { window.location.reload(); })");
+                    if ($this->accessValidator->hasUseCustomTemplatesCapability($idSite)) {
+                        $menu->addItem($menuCategory, 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, function () { window.location.reload(); })");
+                    }
                 }
                 $menu->addItem($menuCategory, 'TagManager_InstallCode', $this->urlForAction('releases', $params), $orderId = 140, false,'icon-embed', "tagManagerHelper.showInstallCode(" . json_encode($container['idcontainer']) . ")");
 
