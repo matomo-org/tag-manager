@@ -714,7 +714,7 @@
         "PreConfiguredInfoTitle": "Önceden hazırlanmış değişkenler, kullanıma hazır değişkenlerdir ve oluşturulamaz, düzenlenemez ya da yapılandırılamazlar. Kutudan çıktığı şekilde çalışırlar ve gerektiğinde etiketler, tetikleyiciler ve değişkenler içinde kullanılabilirler.",
         "PreconfiguredVariables": "Önceden yapılandırılmış değişkenler",
         "PreviewDebugEnabledNotification": "Ön izleme kipi etkinleştirildi %1$s. Kapsayıcı hatalarını ayıklamak için web sitesini açın. Başkalarıyla %2$sön izlemeyi paylaşmak%3$s isterseniz, lütfen web sitesinin adresine %4$s ya da %5$s ekleyin. Bu kip etkinken, bir değişiklik yapıldığında ön izleme kapsayıcısı otomatik olarak güncellenir.%6$s",
-        "PreviewDebugEnabledNotificationLine1": "Ön izleme kipi etkinleştirildi%1$s. Sitenizi açın ya da kapsayıcı hata ayıklama yapılacak bir adres yazın. ",
+        "PreviewDebugEnabledNotificationLine1": "Ön izleme kipi etkinleştirildi%1$s. Sitenizi açın ya da kapsayıcı hata ayıklama yapılacak bir adres yazın.",
         "PreviewDebugEnabledNotificationLine2": "İsterseniz başkaları ile %1$sön izlemeyi paylaşabilirsiniz%2$s. Lütfen sitenizin adresine %3$s ya da %4$s ekleyin.%5$sBu kip etkinken, bir değişiklik yaptığınızda ön izleme kapsayıcısı otomatik olarak güncellenir.",
         "PreviewDebugEnabledNotificationLine3": "Hata ayıklama çalışmıyor mu? Lütfen bu %1$sSSS%2$s ögesine bakın.",
         "PreviewDebugUrlButtonText": "Hata ayıklama",
