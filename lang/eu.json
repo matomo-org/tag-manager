@@ -705,7 +705,7 @@
         "PluginDescription": "Kudeatu eta bateratu zure jarraipen eta marketin kode zatiak leku bakarrean.",
         "PreConfiguredInfoTitle": "Aurrez konfiguratutako aldaketak erabiltzeko prest dauden aldagaiak dira, eta ezin dira sortu, editatu edo konfiguratu. Ezer egin beharrik gabe funtzionatzen dute, eta etiketa, abiarazle eta aldagaietan erabil ditzakezu.",
         "PreconfiguredVariables": "Aurrez konfiguratutako aldagaiak",
-        "PreviewDebugEnabledNotificationLine1": "Aurreikuspen modua gaituta dago%1$s. Atzitu zure webgunea edo sartu URL bat edukiontzia arazteko. ",
+        "PreviewDebugEnabledNotificationLine1": "Aurreikuspen modua gaituta dago%1$s. Atzitu zure webgunea edo sartu URL bat edukiontzia arazteko.",
         "PreviewDebugEnabledNotificationLine2": "%1$sAurrebista partekatu%2$s nahi baduzu norbaitekin, gehitu %3$s edo %4$s zure webgunearen URLari.%5$sModu hau gaituta dagoen bitartean, edukiontziaren aurrebista automatikoki eguneratuko da aldaketa bat egiten duzunean.",
         "PreviewDebugEnabledNotificationLine3": "Arazketa ez dabil? Begiratu %1$sMEG%2$s hau.",
         "PreviewDebugUrlButtonText": "Araztu",
