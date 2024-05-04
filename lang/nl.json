@@ -669,7 +669,7 @@
         "PluginDescription": "Beheer en verenig al uw tracking en marketing snippets op één plaats.",
         "PreConfiguredInfoTitle": "Voorgeconfigureerde variabelen zijn variabelen die meteen gebruikt kunnen worden, ze kunnen niet worden aangemaakt, bewerkt of geconfigureerd. Ze werken out-of-the-box en u kunt ze gebruiken in tags, triggers en variabelen indien nodig.",
         "PreconfiguredVariables": "Voorgeconfigureerde variabelen",
-        "PreviewDebugEnabledNotificationLine1": "Voorbeeldmodus is ingeschakeld %1$s. Ga naar uw website of voer een URL in om de container nu te debuggen. ",
+        "PreviewDebugEnabledNotificationLine1": "Voorbeeldmodus is ingeschakeld %1$s. Ga naar uw website of voer een URL in om de container nu te debuggen.",
         "PreviewDebugEnabledNotificationLine2": "Indien u %1$sde voorbeeldweergave%2$s met iemand anders wilt delen, voeg dan %3$s of %4$s toe aan de URL van uw website.%5$sAls deze modus is ingeschakeld, wordt de voorbeeldcontainer automatisch bijgewerkt wanneer u een wijziging aanbrengt.",
         "PreviewDebugEnabledNotificationLine3": "Debuggen werkt niet? Raadpleeg deze %1$sFAQ%2$s.",
         "PreviewDebugUrlButtonText": "Debuggen",
