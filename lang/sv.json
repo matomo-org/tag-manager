@@ -712,7 +712,7 @@
         "PreConfiguredInfoTitle": "Förkonfigurerade variabler är variabler som är färdiga att använda och som inte kan skapas, redigeras eller konfigureras. De fungerar \"out of the box\" och du kan använda dem i taggar, utlösare och variabler om det behövs.",
         "PreconfiguredVariables": "Förkonfigurerade variabler",
         "PreviewDebugEnabledNotification": "Förhandsgranskningsläge är aktiverat%1$s. Gå till din webbplats för att felsöka behållaren nu. Om du vill %2$sdela förhandsgranskningen%3$s med någon annan, vänligen lägg till %4$s eller %5$s till din webbplats-URL. Medan detta läge är aktiverat uppdateras förhandsgranskningsbehållaren automatiskt när du gör en ändring. %6$s",
-        "PreviewDebugEnabledNotificationLine1": "Förhandsgranskning är aktiverat%1$s. Besök din webbplats eller ange en URL att felsöka din container nu. ",
+        "PreviewDebugEnabledNotificationLine1": "Förhandsgranskning är aktiverat%1$s. Besök din webbplats eller ange en URL att felsöka din container nu.",
         "PreviewDebugEnabledNotificationLine2": "Om du vill %1$sdela förhandsgranskningen%2$s med någon annan lägger du till %3$seller%4$s i URL:en på din webbplats.%5$sMedan denna inställning är aktiv kommer förhandsgranskningscontainern automatiskt uppdateras när du gör en ändring.",
         "PreviewDebugEnabledNotificationLine3": "Fungerar inte felsökaren? Vänligen kolla denna %1$sFAQ%2$s.",
         "PreviewDebugUrlButtonText": "Felsök",
