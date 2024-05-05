@@ -713,7 +713,7 @@
         "PluginDescription": "Gestioneu i unifiqueu tots els vostres fragments de seguiment i màrqueting en un sol lloc.",
         "PreConfiguredInfoTitle": "Les variables preconfigurades són variables que estan llestes per utilitzar i que no es poden crear, editar ni configurar. Funcionen ja d'entrada i podeu utilitzar-les en etiquetes, activadors i variables si cal.",
         "PreconfiguredVariables": "Variables preconfigurades",
-        "PreviewDebugEnabledNotificationLine1": "El mode de vista prèvia està activat%1$s. Accediu al vostre lloc web o introduïu un URL per depurar el contenidor ara. ",
+        "PreviewDebugEnabledNotificationLine1": "El mode de vista prèvia està activat%1$s. Accediu al vostre lloc web o introduïu un URL per depurar el contenidor ara.",
         "PreviewDebugEnabledNotificationLine2": "Si voleu %1$scompartir la previsualització%2$s amb algú altre, afegiu %3$s o %4$s a l'URL del vostre lloc web.%5$sMentre aquest mode estigui habilitat, el contenidor de previsualització s'actualitzarà automàticament quan feu un canvi.",
         "PreviewDebugEnabledNotificationLine3": "La depuració no funciona? Si us plau, comproveu aquesta %1$sFAQ%2$s.",
         "PreviewDebugUrlButtonText": "Depuració",
