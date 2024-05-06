@@ -476,7 +476,7 @@
         "PluginDescription": "Mengelola dan menyatukan semua cuplikan pelacakan dan pemasaran Anda di satu tempat.",
         "PreConfiguredInfoTitle": "Variabel prakonfigurasi adalah variabel yang siap digunakan dan tidak dapat dibuat, diedit, atau dikonfigurasi. Mereka bekerja di luar kotak dan Anda dapat menggunakannya dalam tag, pemicu, dan variabel jika diperlukan.",
         "PreconfiguredVariables": "Variabel prakonfigurasi",
-        "PreviewDebugEnabledNotificationLine1": "Mode pratinjau diaktifkan%1$s. Akses situs web Anda atau masukkan URL untuk mengawakutu kontainer sekarang. ",
+        "PreviewDebugEnabledNotificationLine1": "Mode pratinjau diaktifkan%1$s. Akses situs web Anda atau masukkan URL untuk mengawakutu kontainer sekarang.",
         "PreviewDebugEnabledNotificationLine2": "Jika Anda ingin %1$sberbagi pratinjau%2$s dengan orang lain, harap tambahkan %3$s atau %4$s ke URL situs web Anda.%5$sSaat mode ini diaktifkan, kontainer pratinjau akan diperbarui secara otomatis saat Anda membuat perubahan.",
         "PreviewDebugEnabledNotificationLine3": "Awakutu tidak berfungsi? Silakan periksa %1$sFAQ%2$s ini.",
         "PreviewDebugUrlButtonText": "Awakutu",

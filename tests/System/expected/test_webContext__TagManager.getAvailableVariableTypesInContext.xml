@@ -540,7 +540,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The etracker ID you want to track data into. The ID is required. You may  find the ID of your website under &quot;Administration &#x2192; Setup/Tracking Code&quot; in etracker.</description>
+						<description>The etracker ID you want to track data into. The ID is required. You may find the ID of your website under &quot;Administration &#x2192; Setup/Tracking Code&quot; in etracker.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />
