@@ -103,7 +103,6 @@ class Menu extends \Piwik\Plugin\Menu
                 $menu->addItem($menuCategory, 'TagManager_Tags', $this->urlForAction('manageTags', $params), $orderId = 105);
                 $menu->addItem($menuCategory, 'TagManager_Triggers', $this->urlForAction('manageTriggers', $params), $orderId = 110);
                 $menu->addItem($menuCategory, 'TagManager_Variables', $this->urlForAction('manageVariables', $params), $orderId = 115);
-                $menu->addItem($menuCategory, 'TagManager_Versions', $this->urlForAction('manageVersions', $params), $orderId = 115);
 
                 $previewEnabled = false;
                 foreach ($container['releases'] as $release) {
@@ -120,6 +119,7 @@ class Menu extends \Piwik\Plugin\Menu
                     }
 
                     if ($this->accessValidator->hasUseCustomTemplatesCapability($idSite)) {
+                        $menu->addItem($menuCategory, 'TagManager_Versions', $this->urlForAction('manageVersions', $params), $orderId = 115);
                         $menu->addItem($menuCategory, 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, function () { window.location.reload(); })");
                     }
                 }
