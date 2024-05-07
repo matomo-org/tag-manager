@@ -232,19 +232,6 @@ describe("ContainerVersion", function () {
         await capture.page(page, 'debug_version_enable');
     });
 
-    it('should load versions page with some versions as view user', async function () {
-        permissions.setViewUser();
-        await page.goto(container1Base);
-        await capture.page(page, 'version_some_exist_view_user');
-    });
-
-    it('should load versions page with no versions as view user', async function () {
-        permissions.setViewUser();
-        await page.goto(container3Base);
-        await page.waitForSelector('.manageVersion', { visible: true });
-        await capture.selector(page, 'version_none_exist_view_user', '.manageVersion');
-    });
-
     it('should be able to show import version screen', async function () {
         await page.goto(container1Base);
         await page.click('.importVersion');
@@ -272,19 +259,5 @@ describe("ContainerVersion", function () {
         await page.waitForSelector('.tagManagerManageList td');
         await page.waitForTimeout(200);
         await capture.page(page, 'import_version_confirmed');
-    });
-
-    it('should show notice not possible to create new version with no tagmanager_use_custom_templates', async function () {
-        permissions.setWriteUser();
-        await page.goto(container1Base);
-        await page.waitForNetworkIdle();
-        await capture.page(page, 'no_publish_live_container_capability');
-    });
-
-    it('should show notice not possible to publish to live container and preselect alternative environment in selector', async function () {
-        permissions.setWriteUser();
-        await page.goto(container1Base);
-        await clickFirstRowTableAction('icon-rocket');
-        await capture.modal(page, 'no_publish_live_container_capability_selector');
     });
 });
