@@ -534,7 +534,7 @@
         "PluginDescription": "Håndter og foren alle dine sporings- og markedsføringskodesnutter på ett sted.",
         "PreConfiguredInfoTitle": "Forhåndsoppsatte variabler er variabler som er klar til bruk og ikke kan opprettes, redigeres, eller settes opp. De fungerer som de er, og du kan bruke dem i tagger, utløsere, og variabler hvis det trengs.",
         "PreconfiguredVariables": "Forhåndsdefinerte variabler",
-        "PreviewDebugEnabledNotificationLine1": "Forhåndsvisningsmodus er påskrudd%1$s. Gå til nettsiden din eller skriv inn en nettadresse for å avluse beholderen nå. ",
+        "PreviewDebugEnabledNotificationLine1": "Forhåndsvisningsmodus er påskrudd%1$s. Gå til nettsiden din eller skriv inn en nettadresse for å avluse beholderen nå.",
         "PreviewDebugEnabledNotificationLine2": "Hvis du vil %1$sdele forhåndsvisningen%2$s med noen andre, kan du tilføye %3$s eller %4$s i nettadressen for din nettside. %5$sI et slikt modus vil forhåndsvisningsbeholderen automatisk oppdateres når du utfører en endring.",
         "PreviewDebugEnabledNotificationLine3": "Fungerer ikke avlusning? Sjekk %1$sO-S-S%2$s.",
         "PreviewDebugUrlButtonText": "Avlusing",

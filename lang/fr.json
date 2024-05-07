@@ -457,7 +457,7 @@
         "PreConfiguredInfoTitle": "Les variables préconfigurées sont des variables qui sont prêtes à être utilisées et qui ne peuvent être créées, modifiées ou configurées. Elles fonctionnent directement et vous pouvez les utiliser au sein des balises, déclencheurs et variables si nécessaire.",
         "PreconfiguredVariables": "Variables pré-configurées",
         "PreviewDebugEnabledNotification": "Le mode de prévisualisation est %1$s. Accédez à votre site web pour déboguer le conteneur maintenant. Si vous voulez %2$spartager la prévisualisation%3$s avec quelqu'un d'autre, veuillez ajouter %4$s ou %5$s à l'URL du site web. Tant que ce mode est activé, le conteneur en prévisualisation sera automatiquement mis à jour lorsque vous effectuez un changement. %6$s",
-        "PreviewDebugEnabledNotificationLine1": "Le mode aperçu est activé%1$s. Accédez à votre site web ou entrez une URL pour déboguer le conteneur maintenant. ",
+        "PreviewDebugEnabledNotificationLine1": "Le mode aperçu est activé%1$s. Accédez à votre site web ou entrez une URL pour déboguer le conteneur maintenant.",
         "PreviewDebugEnabledNotificationLine2": "Si vous souhaitez %1$s partager l'aperçu%2$s avec quelqu'un d'autre, veuillez ajouter %3$s ou %4$s à l'URL de votre site Web.%5$sLorsque ce mode est activé, le conteneur d'aperçu est automatiquement mis à jour lorsque vous apportez une modification.",
         "PreviewDebugEnabledNotificationLine3": "Le débogage ne fonctionne pas ? Veuillez consulter cette %1$sFAQ%2$s.",
         "PreviewDebugUrlButtonText": "déboguer",

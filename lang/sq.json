@@ -631,7 +631,7 @@
         "PreConfiguredInfoTitle": "Ndryshoret e formësuara paraprakisht janë ndryshore që janë gati për përdorim dhe s’mund të krijohen, përpunohen apo formësohen. Funksionojnë siç janë dhe mund t’i përdorni në etiketa, shkaktues, dhe në ndryshore, në u dashtë.",
         "PreconfiguredVariables": "Ndryshore të formësuara paraprakisht",
         "PreviewDebugEnabledNotification": "Mënyra paraparje është aktivizuar%1$s. Hyni te sajti juaj që të diagnostikoni kontejnerin tani. Nëse doni %2$sta ndani paraparjen%3$s me dikë tjetër, ju lutemi, shtoni %4$s ose %5$s te URL-ja e sajtit tuaj. Kur kjo mënyrë është aktive, kontejneri i paraparjes do të përditësohet vetvetiu kur të bëni një ndryshim. %6$s",
-        "PreviewDebugEnabledNotificationLine1": "Mënyra paraparje është e aktivizuar%1$s. Që të diagnostikohet kontejneri tani, hyni te sajti juaj, ose jepni një URL. ",
+        "PreviewDebugEnabledNotificationLine1": "Mënyra paraparje është e aktivizuar%1$s. Që të diagnostikohet kontejneri tani, hyni te sajti juaj, ose jepni një URL.",
         "PreviewDebugEnabledNotificationLine2": "Nëse doni të %1$stregoni paraparjen%2$s dikujt tjetër, ju lutemi, shtojini %3$s ose %4$s URL-së së sajtit tuaj.%5$sTeksa kjo mënyrë është e aktivizuar, kontejneri i paraparjes do të përditësohet vetvetiu, kur bëni një ndryshim.",
         "PreviewDebugEnabledNotificationLine3": "S’funksionon diagnostikimi? Ju lutemi, shihni këto %1$sPBR%2$s.",
         "PreviewDebugUrlButtonText": "Diagnostikoje",

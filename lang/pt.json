@@ -657,7 +657,7 @@
         "PreConfiguredInfoTitle": "Variáveis pré-definidas são variáveis prontas a utilizar e não podem ser criadas, editadas ou configuradas. Funcionam nativamente e pode utilizar as mesmas em tags, acionadores e variáveis, se necessário.",
         "PreconfiguredVariables": "Variáveis pré-configuradas",
         "PreviewDebugEnabledNotification": "O modo de pré-visualização está ativo%1$s. Aceda ao seu site agora para depurar o contentor. Se quiser %2$spartilhe a pré-visualização%3$s com outros, adicione %4$s ou %5$s ao endereço do seu site. Enquanto este modo estiver ativo, o contentor de pré-visualização será atualizado automaticamente quando fizer uma alteração. %6$s",
-        "PreviewDebugEnabledNotificationLine1": "O modo de visualização está ativado%1$s. Acesse seu site ou insira um URL para depurar o contêiner agora. ",
+        "PreviewDebugEnabledNotificationLine1": "O modo de visualização está ativado%1$s. Acesse seu site ou insira um URL para depurar o contêiner agora.",
         "PreviewDebugEnabledNotificationLine2": "Se você quiser %1$scompartilhar a visualização%2$s com outra pessoa, anexe %3$s ou %4$s ao URL do seu site.%5$sEnquanto este modo estiver ativado, o contêiner de visualização será atualizado automaticamente quando você faz uma alteração.",
         "PreviewDebugEnabledNotificationLine3": "A depuração não está funcionando? Verifique esta %1$sFAQ%2$s.",
         "PreviewDebugUrlButtonText": "Depurar",
