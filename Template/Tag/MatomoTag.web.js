@@ -22,15 +22,13 @@
     var localPaq = window._paq && window._paq.length ? JSON.parse(JSON.stringify(window._paq)) : localPaq || [];
     var indexesOfConfigs = [];
     var hasTrackPageViewViaPaq = false;
-    var j = -1;
     // Clear window._paq to prevent things from being tracked too early
     while (window._paq.length > 0) {
-        j++;
+        var poppedItem = window._paq.pop();
         // Check if trackPageView is set in _paq variable to ensure tracking works even with no callback
-        if (Array.isArray(window._paq[j]) && window._paq[j].toString() == ['trackPageView'].toString()) {
+        if (Array.isArray(poppedItem) && poppedItem.toString() == ['trackPageView'].toString()) {
             hasTrackPageViewViaPaqIndex = true;
         }
-        window._paq.pop();
     }
 
     var hasProcessedRemainingTrackings = false;
