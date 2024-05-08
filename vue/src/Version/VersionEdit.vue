@@ -361,11 +361,14 @@ export default defineComponent({
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Version'));
-            const wantToRedeploy = translate(
-              'TagManager_WantToDeployThisChangeCreateVersion',
-              '<a class="createNewVersionLink">',
-              '</a>',
-            );
+            let wantToRedeploy = '';
+            if (this.hasPublishCapability()) {
+              wantToRedeploy = translate(
+                'TagManager_WantToDeployThisChangeCreateVersion',
+                '<a class="createNewVersionLink">',
+                '</a>',
+              );
+            }
 
             this.showNotification(`${createdX} ${wantToRedeploy}`, 'success');
           }, 200);
@@ -470,6 +473,9 @@ export default defineComponent({
       }
 
       return true;
+    },
+    hasPublishCapability() {
+      return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
     },
   },
   computed: {

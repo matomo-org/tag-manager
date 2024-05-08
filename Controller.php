@@ -231,6 +231,9 @@ class Controller extends \Piwik\Plugin\Controller
 
     public function manageVersions()
     {
+        $idSite = Common::getRequestVar('idSite', null, 'int');
+        $this->accessValidator->checkWriteCapability($idSite);
+        $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         $path = TagManager::getAbsolutePathToContainerDirectory();
         Filechecks::dieIfDirectoriesNotWritable(array($path));
         $versionsHelpText = $this->renderTemplate('helpContent', [
