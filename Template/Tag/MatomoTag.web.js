@@ -21,8 +21,15 @@
     // We use the stringify and parse to make sure that we have a copy and not a reference
     var localPaq = window._paq && window._paq.length ? JSON.parse(JSON.stringify(window._paq)) : localPaq || [];
     var indexesOfConfigs = [];
+    var hasTrackPageViewViaPaq = false;
+    var j = -1;
     // Clear window._paq to prevent things from being tracked too early
     while (window._paq.length > 0) {
+        j++;
+        // Check if trackPageView is set in _paq variable to ensure tracking works even with no callback
+        if (Array.isArray(window._paq[j]) && window._paq[j].toString() == ['trackPageView'].toString()) {
+            hasTrackPageViewViaPaqIndex = true;
+        }
         window._paq.pop();
     }
 
@@ -37,6 +44,19 @@
         var i;
         for (i = 0; i < callbacks.callbacks.length; i++) {
             callbacks.callbacks[i]();
+        }
+
+        // If there is no callback but has a trackPageView set in _paq variable, we shouuld flush the entire localPaq else no pageview would be tracked #PG-3463
+        if (hasTrackPageViewViaPaq && callbacks.callbacks.length == 0) {
+            for (k = 0; k < localPaq.length; k++) {
+                // This should only be an array. Skip if it's not
+                if (!Array.isArray(localPaq[k])) {
+                    continue;
+                }
+                if (localPaq[k].length && localPaq[k][0]) {
+                    window._paq.push(localPaq[k]);
+                }
+            }
         }
 
         callbacks.callbacks = [];
