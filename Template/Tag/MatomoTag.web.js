@@ -27,7 +27,7 @@
         var poppedItem = window._paq.pop();
         // Check if trackPageView is set in _paq variable to ensure tracking works even with no callback
         if (Array.isArray(poppedItem) && poppedItem.toString() == ['trackPageView'].toString()) {
-            hasTrackPageViewViaPaqIndex = true;
+            hasTrackPageViewViaPaq = true;
         }
     }
 
