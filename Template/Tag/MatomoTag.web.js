@@ -193,7 +193,7 @@
 
                     if (matomoConfig.forceRequestMethod) {
                         tracker.setRequestMethod(matomoConfig.requestMethod);
-                        if(matomoConfig.requestMethod == 'POST'){
+                        if(matomoConfig.requestMethod.toUpperCase() === 'POST'){
                             tracker.setRequestContentType(matomoConfig.requestContentType);
                         }
                     }
