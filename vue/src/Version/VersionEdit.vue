@@ -24,60 +24,67 @@
       </p>
       <form @submit="edit ? updateVersion() : createVersion()">
         <div>
-          <div>
-            <Field
-              uicontrol="text"
-              name="name"
-              :inline-help="versionNameHelpText"
-              :inline-help-bind="{ lastVersion }"
-              :model-value="version.name"
-              @update:model-value="version.name = $event; setValueHasChanged()"
-              :maxlength="30"
-              :title="translate('TagManager_VersionName')"
-            />
-          </div>
-          <div>
-            <Field
-              uicontrol="textarea"
-              name="description"
-              :model-value="version.description"
-              @update:model-value="version.description = $event; setValueHasChanged()"
-              :title="translate('TagManager_VersionDescription')"
-              :inline-help="translate('TagManager_VersionDescriptionHelp')"
-            />
-          </div>
-          <SaveButton
-            class="createButton no-publish"
-            @confirm="edit ? updateVersion() : createVersion()"
-            :disabled="!hasPublishCapability() || isUpdating || !isDirty"
-            :saving="isUpdating"
-            :value="edit
+          <div v-if="hasPublishCapability()">
+            <div>
+              <Field
+                uicontrol="text"
+                name="name"
+                :inline-help="versionNameHelpText"
+                :inline-help-bind="{ lastVersion }"
+                :model-value="version.name"
+                @update:model-value="version.name = $event; setValueHasChanged()"
+                :maxlength="30"
+                :title="translate('TagManager_VersionName')"
+              />
+            </div>
+            <div>
+              <Field
+                uicontrol="textarea"
+                name="description"
+                :model-value="version.description"
+                @update:model-value="version.description = $event; setValueHasChanged()"
+                :title="translate('TagManager_VersionDescription')"
+                :inline-help="translate('TagManager_VersionDescriptionHelp')"
+              />
+            </div>
+            <SaveButton
+              class="createButton no-publish"
+              @confirm="edit ? updateVersion() : createVersion()"
+              :disabled="isUpdating || !isDirty"
+              :saving="isUpdating"
+              :value="edit
               ? translate('CoreUpdater_UpdateTitle') :
               translate('TagManager_CreateVersionWithoutPublishing')"
-          >
-          </SaveButton>
-          <div v-if="create && environments.length">
-            <Field
-              uicontrol="select"
-              name="environment"
-              :inline-help="selectTagManagerEnvironmentHelp"
-              :inline-help-bind="{ canPublishToLive }"
-              :model-value="version.environments?.[0]"
-              @update:model-value="version.environments[0] = $event; setValueHasChanged()"
-              :options="environments"
-              :introduction="translate('TagManager_OrCreateAndPublishVersion')"
-              :title="translate('TagManager_Environment')"
-            />
+            >
+            </SaveButton>
+            <div v-if="create && environments.length">
+              <Field
+                uicontrol="select"
+                name="environment"
+                :inline-help="selectTagManagerEnvironmentHelp"
+                :inline-help-bind="{ canPublishToLive }"
+                :model-value="version.environments?.[0]"
+                @update:model-value="version.environments[0] = $event; setValueHasChanged()"
+                :options="environments"
+                :introduction="translate('TagManager_OrCreateAndPublishVersion')"
+                :title="translate('TagManager_Environment')"
+              />
+            </div>
+            <SaveButton
+              class="publishButton"
+              v-if="create && environments.length"
+              @confirm="createVersionAndPublish()"
+              :disabled="isUpdating || !isDirty"
+              :saving="isUpdating"
+              :value="translate('TagManager_CreateVersionAndPublishRelease')"
+            >
+            </SaveButton>
           </div>
-          <SaveButton
-            class="publishButton"
-            v-if="create && environments.length"
-            @confirm="createVersionAndPublish()"
-            :disabled="isUpdating || !isDirty"
-            :saving="isUpdating"
-            :value="translate('TagManager_CreateVersionAndPublishRelease')"
-          >
-          </SaveButton>
+          <div v-else>
+            <div class="alert alert-warning">
+              {{ translate('TagManager_VersionEditWithNoAccessMessage')}}
+            </div>
+          </div>
           <div
             class="versionChanges"
             v-if="lastVersion"
