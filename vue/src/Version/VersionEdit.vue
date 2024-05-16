@@ -49,7 +49,7 @@
           <SaveButton
             class="createButton no-publish"
             @confirm="edit ? updateVersion() : createVersion()"
-            :disabled="isUpdating || !isDirty"
+            :disabled="!hasPublishCapability() || isUpdating || !isDirty"
             :saving="isUpdating"
             :value="edit
               ? translate('CoreUpdater_UpdateTitle') :

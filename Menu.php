@@ -112,6 +112,7 @@ class Menu extends \Piwik\Plugin\Menu
                 }
 
                 if ($this->accessValidator->hasWriteCapability($idSite)) {
+                    $menu->addItem($menuCategory, 'TagManager_Versions', $this->urlForAction('manageVersions', $params), $orderId = 115);
                     if ($previewEnabled) {
                         $menu->addItem($menuCategory, 'TagManager_DisablePreview', array(), $orderId = 130, false,'icon-bug', "tagManagerHelper.disablePreviewMode(" . json_encode($container['idcontainer']) . ")");
                     } else {
@@ -119,7 +120,6 @@ class Menu extends \Piwik\Plugin\Menu
                     }
 
                     if ($this->accessValidator->hasUseCustomTemplatesCapability($idSite)) {
-                        $menu->addItem($menuCategory, 'TagManager_Versions', $this->urlForAction('manageVersions', $params), $orderId = 115);
                         $menu->addItem($menuCategory, 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, function () { window.location.reload(); })");
                     }
                 }

@@ -232,6 +232,19 @@ describe("ContainerVersion", function () {
         await capture.page(page, 'debug_version_enable');
     });
 
+    it('should load versions page with some versions as view user', async function () {
+        permissions.setViewUser();
+        await page.goto(container1Base);
+        await capture.page(page, 'version_some_exist_view_user');
+    });
+
+    it('should load versions page with no versions as view user', async function () {
+        permissions.setViewUser();
+        await page.goto(container3Base);
+        await page.waitForSelector('.manageVersion', { visible: true });
+        await capture.selector(page, 'version_none_exist_view_user', '.manageVersion');
+    })
+
     it('should be able to show import version screen', async function () {
         await page.goto(container1Base);
         await page.click('.importVersion');
