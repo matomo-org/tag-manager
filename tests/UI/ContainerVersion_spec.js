@@ -235,7 +235,7 @@ describe("ContainerVersion", function () {
     it('should load versions page with some versions as write user', async function () {
         permissions.setWriteUser();
         await page.goto(container1Base);
-        await capture.page(page, 'version_some_exist_view_user');
+        await capture.page(page, 'version_some_exist_write_user');
     });
 
     it('should be possible to edit a version by clicking on edit', async function () {
@@ -248,7 +248,7 @@ describe("ContainerVersion", function () {
         permissions.setWriteUser();
         await page.goto(container3Base);
         await page.waitForSelector('.manageVersion', { visible: true });
-        await capture.selector(page, 'version_none_exist_view_user', '.manageVersion');
+        await capture.selector(page, 'version_none_exist_write_user', '.manageVersion');
     })
 
     it('should be able to show import version screen', async function () {
