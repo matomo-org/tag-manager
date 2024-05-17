@@ -81,8 +81,9 @@
             </SaveButton>
           </div>
           <div v-else>
-            <div class="alert alert-warning">
-              {{ translate('TagManager_VersionEditWithNoAccessMessage')}}
+            <div class="alert alert-warning"
+                 v-html="$sanitize(showNoAccessErrorMessage)"
+            >
             </div>
           </div>
           <div
@@ -143,7 +144,7 @@ import {
   NotificationsStore,
   NotificationType,
   clone,
-  MatomoUrl,
+  MatomoUrl, externalLink,
 } from 'CoreHome';
 import { Field, SaveButton } from 'CorePluginsAdmin';
 import AvailableEnvironmentsStore from '../AvailableEnvironments.store';
@@ -522,6 +523,13 @@ export default defineComponent({
       return this.create
         ? translate('TagManager_CreateNewVersion')
         : translate('TagManager_EditVersion');
+    },
+    showNoAccessErrorMessage() {
+      return translate(
+        'TagManager_VersionEditWithNoAccessMessage',
+        externalLink('https://matomo.org/faq/tag-manager/faq_26547/'),
+        '</a>',
+      );
     },
   },
 });
