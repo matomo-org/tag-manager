@@ -84,13 +84,13 @@
             <td class="action">
               <a
                 class="table-action icon-rocket"
-                v-show="hasWriteAccess"
+                v-show="hasWriteAccess && hasCustomTemplatesCapability"
                 @click="publishVersion(version)"
                 :title="translate('TagManager_PublishVersion', version.name)"
               />
               <a
                 class="table-action icon-bug"
-                v-show="hasWriteAccess"
+                v-show="hasWriteAccess && hasCustomTemplatesCapability"
                 @click="enableDebugMode(version.idcontainerversion)"
                 :title="translate('TagManager_EnablePreviewDebug')"
               />
@@ -109,7 +109,8 @@
               />
               <a
                 class="table-action icon-delete"
-                v-show="version.releases.length === 0 && hasWriteAccess"
+                v-show="version.releases.length === 0 && hasWriteAccess
+                && hasCustomTemplatesCapability"
                 @click="deleteVersion(version)"
                 :title="translate('TagManager_DeleteX', translate('TagManager_Version'))"
               />

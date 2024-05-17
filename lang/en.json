@@ -966,6 +966,7 @@
         "SiteWithoutDataMtmStep2": "If you would like to customize this container, visit the %1$sContainer Dashboard%2$s",
         "SiteWithoutDataMtmStep3": "Copy the code below and paste it on every page of your website. We recommend pasting it immediately before the closing %1$s tag. %2$sLearn more%3$s.",
         "IgnoreGtmDataLaterDescription": "If checked, Matomo Tag Manager excludes data layer values that were already set by Google Tag Manager. For compatibility reasons, the default behavior is to keep data layer values set by Google Tag Manager.",
-        "IgnoreGtmDataLaterTitle": "Ignore Google Tag Manager data layer"
+        "IgnoreGtmDataLaterTitle": "Ignore Google Tag Manager data layer",
+        "VersionEditWithNoAccessMessage": "Adding or editing versions requires the \"Tag Manager: Use Custom Templates\" capability. If you believe you should have this capability, please contact your Matomo administrator. %1$sLearn more%2$s"
     }
 }

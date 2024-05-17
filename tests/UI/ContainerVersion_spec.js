@@ -232,6 +232,25 @@ describe("ContainerVersion", function () {
         await capture.page(page, 'debug_version_enable');
     });
 
+    it('should load versions page with some versions as write user', async function () {
+        permissions.setWriteUser();
+        await page.goto(container1Base);
+        await capture.page(page, 'version_some_exist_write_user');
+    });
+
+    it('should be possible to edit a version by clicking on edit', async function () {
+        permissions.setWriteUser();
+        await clickFirstRowTableAction('icon-edit');
+        await capture.page(page, 'edit_through_list_for_write_user');
+    });
+
+    it('should load versions page with no versions as write user', async function () {
+        permissions.setWriteUser();
+        await page.goto(container3Base);
+        await page.waitForSelector('.manageVersion', { visible: true });
+        await capture.selector(page, 'version_none_exist_write_user', '.manageVersion');
+    })
+
     it('should be able to show import version screen', async function () {
         await page.goto(container1Base);
         await page.click('.importVersion');
