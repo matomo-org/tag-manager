@@ -92,10 +92,10 @@ class WebContext extends BaseContext
         $preconfiguredVariablesResponse = $this->getPreConfiguredVariablesJSCodeResponse(self::ID);
 
         foreach ($environments as $environment) {
-            $environmentId = $environment['id'];
+            $environmentId = $environment['id'] ?? false;
             // we make sure to have files even for containers that don't have a release yet, this way they can embed it
             // already nicely into the page and activate it later through the UI
-            if (!in_array($environmentId, $generatedEnvironments, true)) {
+            if ($environmentId && !in_array($environmentId, $generatedEnvironments, true)) {
                 $isPreviewRelease = $environmentId === Environment::ENVIRONMENT_PREVIEW;
                 if ($isPreviewRelease) {
                     $hasPreviewRelease = true;
