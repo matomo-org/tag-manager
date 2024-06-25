@@ -50,7 +50,7 @@ class ShareaholicTag extends BaseTag
             $this->makeSetting('shareaholicAppId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($InPageApp) {
                 $field->title = Piwik::translate('TagManager_ShareaholicTagAppIdTitle');
                 $field->description = Piwik::translate('TagManager_ShareaholicTagAppIdDescription');
-                $field->condition = 'shareaholicInPageApp && shareaholicInPageApp !== "total_share_count"';
+                $field->condition = 'shareaholicInPageApp=="share_buttons" || shareaholicInPageApp=="follow_buttons" || shareaholicInPageApp=="recommendations"';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validate = function ($value) use ($InPageApp, $field) {
                     if (!empty($InPageApp->getValue()) && $InPageApp->getValue() != 'total_share_count' && empty($value)) {
