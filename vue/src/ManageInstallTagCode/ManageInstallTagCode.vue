@@ -26,6 +26,14 @@
       v-for="(installInstruction, index) in installInstructions"
       :key="index"
     >
+      <p>{{ installInstruction.description }}
+        <br />
+        <a
+          target="_blank"
+          v-if="installInstruction.helpUrl"
+          :href="installInstruction.helpUrl"
+        >{{ translate('TagManager_LearnMore') }}</a>
+      </p>
       <div>
         <pre
           v-copy-to-clipboard="{}"
