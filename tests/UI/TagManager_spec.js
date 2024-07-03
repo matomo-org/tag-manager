@@ -150,6 +150,23 @@ describe("TagManager", function () {
         await capture.modal(page, 'install_code_with_content');
     });
 
+    it('should be able to copy mtm tracking code', async function () {
+        await page.click('.copyToClipboardSpan');
+        const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+        const expectedText = `<!-- Matomo Tag Manager -->
+<script>
+  var _mtm = window._mtm = window._mtm || [];
+  _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+  (function() {
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src='https://localhost/tests/PHPUnit/proxy/js/container_aaacont1.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Tag Manager -->`;
+
+        expect(clipboardText).to.equal(expectedText);
+    });
+
     it('should be able to show publish page for container with content', async function () {
         await modal.close(page);
         await page.evaluate(function(){

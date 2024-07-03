@@ -26,21 +26,13 @@
       v-for="(installInstruction, index) in installInstructions"
       :key="index"
     >
-      <p>{{ installInstruction.description }}
-        <br />
-        <a
-          target="_blank"
-          v-if="installInstruction.helpUrl"
-          :href="installInstruction.helpUrl"
-        >{{ translate('TagManager_LearnMore') }}</a>
-      </p>
-      <pre
-        class="codeblock"
-        v-if="installInstruction.embedCode"
-        v-text="installInstruction.embedCode"
-        v-select-on-focus="{}"
-        ref="codeblock"
-      />
+      <div>
+        <pre
+          v-copy-to-clipboard="{}"
+          v-if="installInstruction.embedCode"
+          v-text="installInstruction.embedCode"
+        ></pre>
+      </div>
     </div>
     <p>{{ translate('TagManager_InstallCodePublishEnvironmentNote', 'preview') }}
       {{ translate('TagManager_ConfigureEnvironmentsSuperUser') }}</p>
@@ -102,6 +94,7 @@ import {
   ActivityIndicator,
   SelectOnFocus,
   ContentTable,
+  CopyToClipboard,
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
 import { Container, Version, InstallInstructions } from '../types';
@@ -142,6 +135,7 @@ export default defineComponent({
   directives: {
     SelectOnFocus,
     ContentTable,
+    CopyToClipboard,
   },
   data(): ManageInstallTagCodeState {
     return {
