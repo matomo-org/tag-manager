@@ -14,7 +14,7 @@
       {{ translate('TagManager_MtmTrackingCodeIntro') }}
     </p>
     <br>
-    <p>
+    <p class="followStepsHeading">
       <strong>{{ translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro') }}</strong>
     </p>
     <ol style="list-style: inside decimal">
