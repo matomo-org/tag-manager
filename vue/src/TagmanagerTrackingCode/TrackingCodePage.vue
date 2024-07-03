@@ -10,18 +10,20 @@
     anchor="tagmanager"
     :content-title="translate('TagManager_MatomoTagManager')"
   >
-    <p v-html="$sanitize(siteWithoutDataMtmIntro)"></p>
+    <p>
+      {{ translate('TagManager_MtmTrackingCodeIntro') }}
+    </p>
     <br>
     <p>
       <strong>{{ translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro') }}</strong>
     </p>
     <ol style="list-style: inside decimal">
-      <li v-html="$sanitize(setupStep1)" v-if="showContainerRow"></li>
       <TrackingCodeCommon
         :show-container-row="showContainerRow"
         :showBottom="true"
         :showDescription="false"
         :showPlainMtmSteps="true"
+        :showAdvancedOptions="currentAction === 'trackingCodeGenerator'"
         :showTestSection="currentAction === 'getTrackingMethodsForSite'
                           && isJsTrackerInstallCheckAvailable"
         @fetchInstallInstructions="fetchInstallInstructions"
@@ -125,21 +127,6 @@ export default defineComponent({
   },
   mounted() {
     this.updateStep1Text();
-  },
-  computed: {
-    siteWithoutDataMtmIntro() {
-      const gettingStartedLink = `?${MatomoUrl.stringify({
-        ...MatomoUrl.urlParsed.value,
-        module: 'TagManager',
-        action: 'gettingStarted',
-      })}`;
-
-      return translate(
-        'TagManager_SiteWithoutDataMtmIntro',
-        `<a href="${gettingStartedLink}">`,
-        '</a>',
-      );
-    },
   },
 });
 </script>
