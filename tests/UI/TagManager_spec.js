@@ -145,7 +145,7 @@ describe("TagManager", function () {
 
     it('should be able to show install code page for container with content', async function () {
         const context = page.webpage.browser().defaultBrowserContext();
-        context.overridePermissions(config.piwikUrl, ['clipboard-read']);
+        context.overridePermissions(containerWithEntries, ['clipboard-read']);
         await page.goto(containerWithEntries);
         await (await page.jQuery('#secondNavBar .item:contains(Install Code)')).click();
         await page.waitForTimeout(250);
