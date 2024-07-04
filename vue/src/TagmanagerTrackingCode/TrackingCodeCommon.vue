@@ -347,7 +347,7 @@ export default defineComponent({
       this.$emit('fetchInstallInstructions');
       this.fetchVariables(draftVersion);
     },
-    linkTo(action: string, idSite: string, idContainer: string, hash: QueryParameters) {
+    linkTo(action: string, idSite: string, idContainer: string, hash?: QueryParameters) {
       const newQuery = MatomoUrl.stringify({
         ...MatomoUrl.urlParsed.value,
         module: 'TagManager',
@@ -409,7 +409,20 @@ export default defineComponent({
       return '';
     },
     getAdvancedStepNote() {
-      return translate('TagManager_NoteAboutContainers', '<strong>', '</strong>');
+      const noteText = translate('TagManager_NoteAboutContainers', '<strong>', '</strong>');
+      if (this.idContainer) {
+        return noteText;
+      }
+
+      // If not container is found, we should include a link to the manage containers area
+      const manageContainerURL = this.linkTo('manageContainers', String(this.site?.id), '');
+      const manageContainersText = translate(
+        'TagManager_ManageContainersLink',
+        `<a href="${manageContainerURL}" target="_blank" rel="noreferrer noopener">`,
+        '</a>',
+      );
+
+      return `${noteText} ${manageContainersText}`;
     },
     getAdvancedStepInfo() {
       const idSite = this.site && this.site.id ? this.site.id as string : '';

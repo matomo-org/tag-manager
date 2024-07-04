@@ -37,8 +37,6 @@
 import { defineComponent, nextTick } from 'vue';
 import {
   ContentBlock,
-  translate,
-  MatomoUrl,
   AjaxHelper,
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
@@ -56,7 +54,7 @@ export default defineComponent({
   },
   data() {
     return {
-      setupStep1: '',
+      manageContainersLink: '',
     };
   },
   methods: {
@@ -64,8 +62,6 @@ export default defineComponent({
       // eslint-disable-next-line
       const refs = (this.$refs.trackingCodeCommon as any);
       refs.installInstructions = [];
-
-      this.updateStep1Text();
 
       if (!refs?.site?.id || !refs?.environment) {
         return;
@@ -92,41 +88,6 @@ export default defineComponent({
         refs.isLoading = false;
       });
     },
-    linkTo(action: string, idSite: string, idContainer: string, hash?: QueryParameters) {
-      let url = MatomoUrl.stringify({
-        ...MatomoUrl.urlParsed.value,
-        module: 'TagManager',
-        action,
-        idSite,
-        idContainer,
-      });
-      if (hash) {
-        url += `#?${MatomoUrl.stringify(hash)}`;
-      }
-      return `?${url}`;
-    },
-    updateStep1Text() {
-      // eslint-disable-next-line
-      const refs = (this.$refs.trackingCodeCommon as any);
-
-      if (!refs?.site?.id) {
-        return;
-      }
-
-      // Allow an empty container ID, since we only need the site ID for the URL
-      const idContainer = !refs?.idContainer ? '' : refs.idContainer;
-      const manageContainerURL = this.linkTo('manageContainers', refs.site.id, idContainer);
-      this.setupStep1 = translate(
-        'TagManager_SPAFollowStep1',
-        '<br><strong>',
-        '</strong>',
-        `<a href="${manageContainerURL}" target="_blank" rel="noreferrer noopener">`,
-        '</a>',
-      );
-    },
-  },
-  mounted() {
-    this.updateStep1Text();
   },
 });
 </script>

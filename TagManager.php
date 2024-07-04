@@ -867,6 +867,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_SelectContainerForWebsite';
         $result[] = 'TagManager_NoteAboutContainers';
         $result[] = 'TagManager_CustomiseContainer';
+        $result[] = 'TagManager_ManageContainersLink';
     }
 
     public function getStylesheetFiles(&$stylesheets)
