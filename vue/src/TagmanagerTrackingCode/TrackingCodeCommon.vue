@@ -271,6 +271,7 @@ export default defineComponent({
 
         if (!containers?.length) {
           this.idContainer = '';
+          this.isAdvancedDisplayed = true;
           this.containerOptions.push({
             key: '',
             value: this.translate('TagManager_NoContainersFound'),
