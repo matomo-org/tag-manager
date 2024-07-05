@@ -52,11 +52,6 @@ export default defineComponent({
     ContentBlock,
     TrackingCodeCommon,
   },
-  data() {
-    return {
-      manageContainersLink: '',
-    };
-  },
   methods: {
     fetchInstallInstructions() {
       // eslint-disable-next-line
