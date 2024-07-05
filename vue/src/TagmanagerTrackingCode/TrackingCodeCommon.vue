@@ -22,8 +22,7 @@
 
         <div id="mtm-advanced-options" v-show="isAdvancedDisplayed">
           <ul  class="browser-default">
-            <li>{{ translate('TagManager_SelectContainerForWebsite') }}</li>
-            <li v-html="$sanitize(getAdvancedStepNote)"></li>
+            <li v-html="$sanitize(getAdvancedStepText)"></li>
             <ActivityIndicator
               v-show="isLoading"
               :loading="true"
@@ -408,10 +407,10 @@ export default defineComponent({
       }
       return '';
     },
-    getAdvancedStepNote() {
-      const noteText = translate('TagManager_NoteAboutContainers', '<strong>', '</strong>');
+    getAdvancedStepText() {
+      const stepText = translate('TagManager_SelectContainerForWebsite', '<strong>', '</strong>');
       if (this.idContainer) {
-        return noteText;
+        return stepText;
       }
 
       // If not container is found, we should include a link to the manage containers area
@@ -422,7 +421,7 @@ export default defineComponent({
         '</a>',
       );
 
-      return `${noteText} ${manageContainersText}`;
+      return `${stepText} ${manageContainersText}`;
     },
     getAdvancedStepInfo() {
       const idSite = this.site && this.site.id ? this.site.id as string : '';

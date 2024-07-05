@@ -971,8 +971,7 @@
         "MtmTrackingCodeIntro": "Installing Matomo Tag Manager is the best way to track data, as it allows you to modify tracking configurations  at any time without needing to alter your website.",
         "OptionallyCustomiseContainer": "Optionally: use the advanced options to customise your Tag Manager configuration.",
         "CopyCodePasteInHeader": "Copy the code snippet and paste it immediately before the closing %1$s tag of your website.",
-        "SelectContainerForWebsite": "Select the container you want to use for your website.",
-        "NoteAboutContainers": "%1$sNote:%2$s Matomo automatically pre-configures a container for each site, and preselects it by default. If you want to reuse an existing container, please select it below.",
+        "SelectContainerForWebsite": "Select the container you want to use for your website. Note: Matomo automatically pre-configures a container for each site, and preselects it by default. If you want to reuse an existing container, please select it below.",
         "ManageContainersLink": "You can %1$smanage your containers here%2$s.",
         "CustomiseContainer": "Customise this container in the %1$sContainer Dashboard%2$s. %3$sLearn more%4$s."
     }
