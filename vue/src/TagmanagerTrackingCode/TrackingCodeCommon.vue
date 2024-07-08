@@ -21,7 +21,7 @@
         </div>
 
         <div id="mtm-advanced-options" v-show="isAdvancedDisplayed">
-          <ul  class="browser-default">
+          <ul>
             <li v-html="$sanitize(getAdvancedStepText)"></li>
             <ActivityIndicator
               v-show="isLoading"
