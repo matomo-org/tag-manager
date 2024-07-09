@@ -1,64 +1,93 @@
 <template>
   <div class="tagManagerTrackingCode">
-    <ActivityIndicator
-      v-show="isLoading"
-      :loading="true"
-      v-if="showContainerRow || environments.length > 1"
-    />
-    <div class="row"
-         v-if="showContainerRow || environments.length > 1"
-         v-show="!isLoading"
-    >
-      <div class="col s12 m4 ">
-        <div class="form-group row">
-          <div class="col s12 input-field">
-            <label
-              for="tagManagerTrackingCodeSite"
-              class="siteSelectorLabel"
-            >{{ translate('General_Website') }}</label>
-            <div class="sites_autocomplete">
-              <SiteSelector
-                id="tagManagerTrackingCodeSite"
-                v-model="site"
-                :show-all-sites-item="false"
-                :switch-site-on-select="false"
-                :show-selected-site="true"
-              />
+    <li v-if="showContainerRow">
+      {{ translate('TagManager_OptionallyCustomiseContainer') }}
+      <div class="trackingCodeAdvancedOptions">
+        <div class="advance-option">
+          <span>
+            <a href="javascript:;"
+               v-if="!isAdvancedDisplayed"
+               @click.prevent="isAdvancedDisplayed = true">
+              {{ translate('CoreAdminHome_ShowAdvancedOptions') }}
+              <span class="icon-chevron-down"></span>
+            </a>
+            <a href="javascript:;"
+               v-if="isAdvancedDisplayed"
+               @click.prevent="isAdvancedDisplayed = false">
+              {{ translate('CoreAdminHome_HideAdvancedOptions') }}
+              <span class="icon-chevron-up"></span>
+            </a>
+          </span>
+        </div>
+
+        <div id="mtm-advanced-options" v-show="isAdvancedDisplayed">
+          <ul>
+            <li v-html="$sanitize(getAdvancedStepText)"></li>
+            <ActivityIndicator
+              v-show="isLoading"
+              :loading="true"
+              v-if="showContainerRow || environments.length > 1"
+            />
+            <div class="row"
+                 v-if="showContainerRow || environments.length > 1"
+                 v-show="!isLoading"
+            >
+              <div class="col s12 m4 ">
+                <div class="form-group row">
+                  <div class="col s12 input-field">
+                    <label
+                      for="tagManagerTrackingCodeSite"
+                      class="siteSelectorLabel"
+                    >{{ translate('General_Website') }}</label>
+                    <div class="sites_autocomplete">
+                      <SiteSelector
+                        id="tagManagerTrackingCodeSite"
+                        v-model="site"
+                        :show-all-sites-item="false"
+                        :switch-site-on-select="false"
+                        :show-selected-site="true"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 m4">
+                <div>
+                  <Field
+                    uicontrol="select"
+                    name="containers"
+                    :model-value="idContainer"
+                    @update:model-value="idContainer = $event; onContainerChange()"
+                    :options="containerOptions"
+                    :disabled="containerOptions.length <= 1"
+                    :full-width="true"
+                    :title="translate('TagManager_Container')"
+                  >
+                  </Field>
+                </div>
+              </div>
+              <div class="col s12 m4">
+                <div>
+                  <Field
+                    uicontrol="select"
+                    name="environment"
+                    :model-value="environment"
+                    @update:model-value="environment = $event;
+                      this.$emit('fetchInstallInstructions')"
+                    :options="environments"
+                    :disabled="environments.length <= 1"
+                    :full-width="true"
+                    :title="translate('TagManager_Environment')"
+                  >
+                  </Field>
+                </div>
+              </div>
             </div>
-          </div>
+            <li v-if="idContainer" v-html="$sanitize(getAdvancedStepInfo)"></li>
+          </ul>
         </div>
       </div>
-      <div class="col s12 m4">
-        <div>
-          <Field
-            uicontrol="select"
-            name="containers"
-            :model-value="idContainer"
-            @update:model-value="idContainer = $event; onContainerChange()"
-            :options="containerOptions"
-            :disabled="containerOptions.length <= 1"
-            :full-width="true"
-            :title="translate('TagManager_Container')"
-          >
-          </Field>
-        </div>
-      </div>
-      <div class="col s12 m4">
-        <div>
-          <Field
-            uicontrol="select"
-            name="environment"
-            :model-value="environment"
-            @update:model-value="environment = $event; this.$emit('fetchInstallInstructions')"
-            :options="environments"
-            :disabled="environments.length <= 1"
-            :full-width="true"
-            :title="translate('TagManager_Environment')"
-          >
-          </Field>
-        </div>
-      </div>
-    </div>
+    </li>
     <div
       class="alert alert-info"
       v-if="idContainer && noReleaseFound"
@@ -78,10 +107,6 @@
         >{{ translate('TagManager_LearnMore') }}</a>.
       </p>
       <template v-if="showPlainMtmSteps">
-        <li>
-          <span v-html="$sanitize(getMtmStep2)">
-          </span>.&nbsp;<span v-html="$sanitize(getLearnMoreLink)"></span>.
-        </li>
         <li v-html="$sanitize(getMtmStep3)"></li>
       </template>
       <div>
@@ -148,6 +173,7 @@ interface TagmanagerTrackingCodeState {
   releases: Release[];
   installInstructions: InstallInstructions[];
   noReleaseFound: boolean;
+  isAdvancedDisplayed: boolean;
 }
 
 function ucfirst(s: string): string {
@@ -161,6 +187,11 @@ export default defineComponent({
     showDescription: Boolean,
     showPlainMtmSteps: Boolean,
     showTestSection: Boolean,
+    showAdvancedOptions: {
+      required: false,
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     ActivityIndicator,
@@ -189,6 +220,7 @@ export default defineComponent({
       releases: [],
       installInstructions: [],
       noReleaseFound: false,
+      isAdvancedDisplayed: false,
     };
   },
   created() {
@@ -207,6 +239,8 @@ export default defineComponent({
     });
 
     this.onSiteChange();
+
+    this.isAdvancedDisplayed = this.showAdvancedOptions;
   },
   watch: {
     site() {
@@ -236,6 +270,7 @@ export default defineComponent({
 
         if (!containers?.length) {
           this.idContainer = '';
+          this.isAdvancedDisplayed = true;
           this.containerOptions.push({
             key: '',
             value: this.translate('TagManager_NoContainersFound'),
@@ -311,7 +346,7 @@ export default defineComponent({
       this.$emit('fetchInstallInstructions');
       this.fetchVariables(draftVersion);
     },
-    linkTo(action: string, idSite: string, idContainer: string, hash: QueryParameters) {
+    linkTo(action: string, idSite: string, idContainer: string, hash?: QueryParameters) {
       const newQuery = MatomoUrl.stringify({
         ...MatomoUrl.urlParsed.value,
         module: 'TagManager',
@@ -354,20 +389,9 @@ export default defineComponent({
         '</a>',
       );
     },
-    getMtmStep2() {
-      const idSite = this.site && this.site.id ? this.site.id as string : '';
-      const link = this.linkTo('dashboard', idSite, this.idContainer, []);
-      return translate(
-        'TagManager_SiteWithoutDataMtmStep2',
-        `<a href="${link}">`,
-        '</a>',
-      );
-    },
     getMtmStep3() {
       return translate(
-        'TagManager_SiteWithoutDataMtmStep3', '&lt;/head&gt;',
-        externalLink('https://developer.matomo.org/guides/tagmanager/embedding'),
-        '</a>',
+        'TagManager_CopyCodePasteInHeader', '&lt;/head&gt;',
       );
     },
     getCongratulationsText() {
@@ -382,6 +406,34 @@ export default defineComponent({
         return useExternalPluginComponent('JsTrackerInstallCheck', 'JsTrackerInstallCheck');
       }
       return '';
+    },
+    getAdvancedStepText() {
+      const stepText = translate('TagManager_SelectContainerForWebsite', '<strong>', '</strong>');
+      if (this.idContainer) {
+        return stepText;
+      }
+
+      // If not container is found, we should include a link to the manage containers area
+      const manageContainerURL = this.linkTo('manageContainers', String(this.site?.id), '');
+      const manageContainersText = translate(
+        'TagManager_ManageContainersLink',
+        `<a href="${manageContainerURL}" target="_blank" rel="noreferrer noopener">`,
+        '</a>',
+      );
+
+      return `${stepText} ${manageContainersText}`;
+    },
+    getAdvancedStepInfo() {
+      const idSite = this.site && this.site.id ? this.site.id as string : '';
+      const link = this.linkTo('dashboard', idSite, this.idContainer, []);
+
+      return translate(
+        'TagManager_CustomiseContainer',
+        `<a href="${link}">`,
+        '</a>',
+        externalLink('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/'),
+        '</a>',
+      );
     },
   },
 });

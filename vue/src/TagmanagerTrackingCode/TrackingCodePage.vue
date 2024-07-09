@@ -10,18 +10,20 @@
     anchor="tagmanager"
     :content-title="translate('TagManager_MatomoTagManager')"
   >
-    <p v-html="$sanitize(siteWithoutDataMtmIntro)"></p>
-    <br>
     <p>
+      {{ translate('TagManager_MtmTrackingCodeIntro') }}
+    </p>
+    <br>
+    <p class="followStepsHeading">
       <strong>{{ translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro') }}</strong>
     </p>
     <ol style="list-style: inside decimal">
-      <li v-html="$sanitize(setupStep1)" v-if="showContainerRow"></li>
       <TrackingCodeCommon
         :show-container-row="showContainerRow"
         :showBottom="true"
         :showDescription="false"
         :showPlainMtmSteps="true"
+        :showAdvancedOptions="currentAction === 'trackingCodeGenerator'"
         :showTestSection="currentAction === 'getTrackingMethodsForSite'
                           && isJsTrackerInstallCheckAvailable"
         @fetchInstallInstructions="fetchInstallInstructions"
@@ -35,8 +37,6 @@
 import { defineComponent, nextTick } from 'vue';
 import {
   ContentBlock,
-  translate,
-  MatomoUrl,
   AjaxHelper,
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
@@ -52,18 +52,11 @@ export default defineComponent({
     ContentBlock,
     TrackingCodeCommon,
   },
-  data() {
-    return {
-      setupStep1: '',
-    };
-  },
   methods: {
     fetchInstallInstructions() {
       // eslint-disable-next-line
       const refs = (this.$refs.trackingCodeCommon as any);
       refs.installInstructions = [];
-
-      this.updateStep1Text();
 
       if (!refs?.site?.id || !refs?.environment) {
         return;
@@ -89,56 +82,6 @@ export default defineComponent({
       }).finally(() => {
         refs.isLoading = false;
       });
-    },
-    linkTo(action: string, idSite: string, idContainer: string, hash?: QueryParameters) {
-      let url = MatomoUrl.stringify({
-        ...MatomoUrl.urlParsed.value,
-        module: 'TagManager',
-        action,
-        idSite,
-        idContainer,
-      });
-      if (hash) {
-        url += `#?${MatomoUrl.stringify(hash)}`;
-      }
-      return `?${url}`;
-    },
-    updateStep1Text() {
-      // eslint-disable-next-line
-      const refs = (this.$refs.trackingCodeCommon as any);
-
-      if (!refs?.site?.id) {
-        return;
-      }
-
-      // Allow an empty container ID, since we only need the site ID for the URL
-      const idContainer = !refs?.idContainer ? '' : refs.idContainer;
-      const manageContainerURL = this.linkTo('manageContainers', refs.site.id, idContainer);
-      this.setupStep1 = translate(
-        'TagManager_SPAFollowStep1',
-        '<br><strong>',
-        '</strong>',
-        `<a href="${manageContainerURL}" target="_blank" rel="noreferrer noopener">`,
-        '</a>',
-      );
-    },
-  },
-  mounted() {
-    this.updateStep1Text();
-  },
-  computed: {
-    siteWithoutDataMtmIntro() {
-      const gettingStartedLink = `?${MatomoUrl.stringify({
-        ...MatomoUrl.urlParsed.value,
-        module: 'TagManager',
-        action: 'gettingStarted',
-      })}`;
-
-      return translate(
-        'TagManager_SiteWithoutDataMtmIntro',
-        `<a href="${gettingStartedLink}">`,
-        '</a>',
-      );
     },
   },
 });

@@ -6,7 +6,6 @@
 <template>
   <ol class="list-style-decimal">
     <li ref="step1" v-show="step1HasContent">
-      <span v-html="$sanitize(setupStep1)" v-if="showContainerRow"></span>
       <TrackingCodeCommon
         :show-container-row="showContainerRow"
         :showBottom="false"
