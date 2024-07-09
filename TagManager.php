@@ -861,6 +861,13 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_IgnoreGtmDataLaterDescription';
         $result[] = 'TagManager_IgnoreGtmDataLaterTitle';
         $result[] = 'TagManager_VersionEditWithNoAccessMessage';
+        $result[] = 'TagManager_MtmTrackingCodeIntro';
+        $result[] = 'TagManager_OptionallyCustomiseContainer';
+        $result[] = 'TagManager_CopyCodePasteInHeader';
+        $result[] = 'TagManager_SelectContainerForWebsite';
+        $result[] = 'TagManager_NoteAboutContainers';
+        $result[] = 'TagManager_CustomiseContainer';
+        $result[] = 'TagManager_ManageContainersLink';
     }
 
     public function getStylesheetFiles(&$stylesheets)
