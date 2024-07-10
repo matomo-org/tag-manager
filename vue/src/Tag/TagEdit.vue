@@ -54,7 +54,7 @@
               @update:model-value="tag.name = $event; setValueHasChanged()"
               :maxlength="50"
               :title="translate('General_Name')"
-              :inline-help="translate('TagManager_TagNameHelp')"
+              :inline-help="translate('TagManager_TagNameHelpNew')"
             />
           </div>
           <div>
@@ -65,7 +65,6 @@
               @update:model-value="tag.description = $event; setValueHasChanged()"
               :maxlength="1000"
               :title="translate('General_Description')"
-              :inline-help="translate('TagManager_TagDescriptionHelp')"
             />
           </div>
           <div
