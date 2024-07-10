@@ -160,7 +160,7 @@ describe("TagManager", function () {
   _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
   (function() {
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.async=true; g.src='https://localhost/tests/PHPUnit/proxy/js/container_aaacont1.js'; s.parentNode.insertBefore(g,s);
+    g.async=true; g.src='http://localhost/tests/PHPUnit/proxy/js/container_aaacont1.js'; s.parentNode.insertBefore(g,s);
   })();
 </script>
 <!-- End Matomo Tag Manager -->`;
