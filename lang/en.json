@@ -759,7 +759,7 @@
         "TagsLastUpdatedDescription": "The timestamp of the tag’s last modified date.",
         "TagsNameDescription": "The unique user-defined tag label for identifying and differentiating tags.",
         "TagNameHelp": "The tag name lets you define a unique name for this tag to quickly identify it. Please note that this name will be publicly visible in the source code of the tag when you preview/debug this container.",
-        "TagNameHelpNew": "Define a unique tag name. Note: This is publicly visible when the container is in preview/debug mode.",
+        "TagNameHelpV2": "Define a unique tag name. Note: This is publicly visible when the container is in preview/debug mode.",
         "TagStartDateHelp": "If set, this tag will be fired only after this start date. The specified date will be assumed to be in %1$syour local timezone%2$s.",
         "TagsTypeDescription": "The pre-defined title given to the templated tag by the third-party provider (unless the tag is custom).",
         "TagsTriggersDescription": "The specified event that executes the tag.",

@@ -449,7 +449,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_TagEndDateHelp';
         $result[] = 'TagManager_CurrentTimeInLocalTimezone';
         $result[] = 'TagManager_TagUsageBenefits';
-        $result[] = 'TagManager_TagNameHelpNew';
+        $result[] = 'TagManager_TagNameHelpV2';
         $result[] = 'TagManager_NoTagsFound';
         $result[] = 'TagManager_DeleteTagConfirm';
         $result[] = 'TagManager_DeleteVersionConfirm';
