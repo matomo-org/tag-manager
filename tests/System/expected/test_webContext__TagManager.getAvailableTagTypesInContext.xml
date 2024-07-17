@@ -655,7 +655,7 @@
 			<row>
 				<id>GoogleAnalytics4Event</id>
 				<name>Google Analytics: GA4 Event</name>
-				<description>Send an event to Google Analytics 4. This tag requires Google analytics GA4 tag to be configured.</description>
+				<description>Send an event to Google Analytics 4. This tag requires Google analytics 4 (GA4) tag to be configured.</description>
 				<category>Analytics</category>
 				<icon>plugins/TagManager/images/icons/google-analytics-4.svg</icon>
 				<help />
