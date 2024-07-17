@@ -642,7 +642,7 @@ export default defineComponent({
         name: TagsStore.suggestNameForType(tagTemplate.name) || '',
         type: tagTemplate.id,
         fire_limit: 'unlimited',
-        priority: (tagTemplate.id === 'GoogleTag' ? 1 : 999), // if both linking and conversion fires on same trigger, this should get the highest priority else the conversion will throw error
+        priority: ((tagTemplate.id === 'GoogleTag' || tagTemplate.id === 'GoogleAnalytics4') ? 1 : 999), // if both linking and conversion for Google Ads Conversion or pageview and events for GA4 fires on same trigger, this should get the highest priority else the conversion will throw error
         fire_delay: 0,
         typeMetadata: tagTemplate,
       } as unknown as Tag;
