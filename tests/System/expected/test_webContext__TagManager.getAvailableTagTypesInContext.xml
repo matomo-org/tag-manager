@@ -38,7 +38,7 @@
 			<row>
 				<id>GoogleAdsConversion</id>
 				<name>Google Ads: Conversion</name>
-				<description>Send an event to track conversions.</description>
+				<description>Send an event to track conversions. This tag requires Google Tag (gtag.js) tag to be configured.</description>
 				<category>Ads</category>
 				<icon>plugins/TagManager/images/icons/google-ads.svg</icon>
 				<help />
