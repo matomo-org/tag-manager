@@ -35,6 +35,122 @@
 					</row>
 				</parameters>
 			</row>
+			<row>
+				<id>GoogleAdsConversion</id>
+				<name>Google Ads: Conversion</name>
+				<description>Send an event to track conversions. This tag requires Google Tag (gtag.js) tag to be configured.</description>
+				<category>Ads</category>
+				<icon>plugins/TagManager/images/icons/google-ads.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>googleAdsConversionId</name>
+						<title>Conversion ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>To find the Conversion ID, &lt;a href=&quot;https://support.google.com/tagmanager/answer/6105160&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;see Google Ads Conversion Tracking&lt;a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>googleAdsConversionLabel</name>
+						<title>Conversion label</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>To find the Conversion Label, &lt;a href=&quot;https://support.google.com/tagmanager/answer/6105160&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;see Google Ads Conversion Tracking&lt;a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>googleAdsConversionValue</name>
+						<title>Conversion value</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>googleAdsConversionTransactionId</name>
+						<title>Transaction ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>Passing a dynamic transaction ID helps avoid double counting conversions. The transaction ID must be unique for each transaction. The transaction IDs must not include any information that could be used to identify individual customers. &lt;a href=&quot;https://support.google.com/google-ads/answer/6386790&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;Learn more&lt;a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>googleAdsConversionCurrency</name>
+						<title>Currency code</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
 		</types>
 	</row>
 	<row>
@@ -497,6 +613,150 @@
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>GoogleAnalytics4</id>
+				<name>Google Analytics 4 (GA4)</name>
+				<description>Analytics tools and solutions for your business.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/google-analytics-4.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>measurementId</name>
+						<title>Measurement Id</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>Input your Measurement ID. &lt;a href=&quot;https://support.google.com/analytics/answer/12270356&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;Learn more&lt;/a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>GoogleAnalytics4Event</id>
+				<name>Google Analytics: GA4 Event</name>
+				<description>Send an event to Google Analytics 4. This tag requires Google analytics 4 (GA4) tag to be configured.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/google-analytics-4.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>eventName</name>
+						<title>Event name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>Specify the name of the event. &lt;a href=&quot;https://support.google.com/analytics/answer/9267735&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;Learn more&lt;/a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventParameters</name>
+						<title />
+						<value />
+						<defaultValue />
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>parameter</key>
+								<title>Parameter</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>GoogleTag</id>
+				<name>Google Tag (gtag.js)</name>
+				<description>The Google tag provides the Google products you use with data to measure the effectiveness of your website and ads.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/google-tag.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>googleTagId</name>
+						<title>Tag ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>A tag ID is an identifier that you put on your page to load a given Google tag. &lt;a href=&quot;https://support.google.com/analytics/answer/9267735&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;Learn more.&lt;/a&gt;</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 				</parameters>
 			</row>
