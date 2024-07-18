@@ -567,56 +567,6 @@
 				</parameters>
 			</row>
 			<row>
-				<id>GoogleAnalyticsUniversal</id>
-				<name>Google Analytics (Universal)</name>
-				<description>Google Analytics is a web analytics service offered by Google.</description>
-				<category>Analytics</category>
-				<icon>plugins/TagManager/images/icons/google-analytics-icon.svg</icon>
-				<help>This tag lets you track website pageviews into your Google Analytics. To obtain the Property-ID please log in to your Google Analytics account.</help>
-				<order>9999</order>
-				<contexts>
-					<row>web</row>
-				</contexts>
-				<hasAdvancedSettings>1</hasAdvancedSettings>
-				<isCustomTemplate>0</isCustomTemplate>
-				<parameters>
-					<row>
-						<name>propertyId</name>
-						<title>Property ID</title>
-						<value />
-						<defaultValue />
-						<type>string</type>
-						<uiControl>text</uiControl>
-						<uiControlAttributes>
-						</uiControlAttributes>
-						<availableValues />
-						<description>For example &quot;UA-XXXXX-Y&quot;</description>
-						<inlineHelp />
-						<introduction />
-						<condition />
-						<fullWidth>0</fullWidth>
-					</row>
-					<row>
-						<name>trackingType</name>
-						<title>Tracking Type</title>
-						<value>pageview</value>
-						<defaultValue>pageview</defaultValue>
-						<type>string</type>
-						<uiControl>select</uiControl>
-						<uiControlAttributes>
-						</uiControlAttributes>
-						<availableValues>
-							<pageview>Pageview</pageview>
-						</availableValues>
-						<description>Only the tracking type &quot;Pageview&quot; is currently supported.</description>
-						<inlineHelp />
-						<introduction />
-						<condition />
-						<fullWidth>0</fullWidth>
-					</row>
-				</parameters>
-			</row>
-			<row>
 				<id>GoogleAnalytics4</id>
 				<name>Google Analytics 4 (GA4)</name>
 				<description>Analytics tools and solutions for your business.</description>
