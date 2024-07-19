@@ -241,6 +241,10 @@ class API extends \Piwik\Plugin\API
 
         $tagsInContext = [];
         foreach ($tags as $tag) {
+            // GA3 tag deprecated
+            if ($tag->getId() === 'GoogleAnalyticsUniversal') {
+                continue;
+            }
             if (in_array($idContext, $tag->getSupportedContexts(), true)) {
                 $tagsInContext[] = $tag;
             }
