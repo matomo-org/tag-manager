@@ -1233,7 +1233,7 @@
                     }
 
                     if ((!utils.isDefined(value) || value === null || value === false) && utils.isDefined(this.defaultValue)) {
-                        value = this.defaultValue;
+                        value = (this.defaultValue === 'null' ? null : this.defaultValue);
                     }
 
                     var i;
