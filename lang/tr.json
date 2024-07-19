@@ -850,6 +850,7 @@
         "TagManagerTrackingInfoLine1": "Etiket yöneticisinin ne olduğunu bilmiyor musunuz? %1$sBaşlarken%2$s rehberimize göz atın.",
         "TagManagerTrackingInfoLine2": "Sitenize 3. taraf sitelerden birden fazla kaynak yerleştiriyorsanız, sitenizi %1$sEtiket Yöneticisi%2$s kullanarak izlemek, normal JavaScript izlemesini kullanmaya kıyasla sizin için daha iyi bir seçim olabilir.",
         "TagNameHelp": "Etiket adı, etiketi kolayca belirleyebilmek için kullanılan tekil bir isimdir. Bu adın, bu kapsayıcı için ön izleme ya da hata ayıklaması yapılırken kaynak kod içinde herkese açık olarak görüntüleneceğini unutmayın.",
+        "TagNameHelpV2": "Benzersiz bir etiket adı tanımlayın. Not: Bu, kapsayıcı ön izleme/ hata ayıklama kipindeyken herkese açık olarak görünür.",
         "TagStartDateHelp": "Bu seçenek açıldığında, bu etiket yalnızca başlangıç tarihinde tetiklenir. Belirtilen tarih %1$syerel saat diliminize%2$s göre değerlendirilir.",
         "TagUsageBenefits": "Bir etiket, sitenizde yürütülebilecek bir kod parçasıdır. Bir etiket çoğunlukla bir üçüncü tarafa veri göndermek (izleme verisi gibi) ya da üçüncü bir taraftan siteye içerik yerleştirmek için (sosyal ağ pano bileşenleri ya da anketler gibi) kullanılabilir. İstediğiniz kadar etiket ekleyebilirsiniz. Etiketler, bağlı tetikleyicinin koşulları karşılanır karşılanmaz yürütülür.",
         "Tags": "Etiketler",
