@@ -524,7 +524,10 @@ export default defineComponent({
             this.onBlockTriggerChange();
 
             this.isDirty = false;
-            this.editTitle = `${translate('TagManager_EditTag')}${this.tag.typeMetadata?.name ? `: ${this.tag.typeMetadata.name}` : ''}`;
+            this.editTitle = translate('TagManager_EditTag');
+            if (this.tag.typeMetadata?.name) {
+              this.editTitle += `: ${this.tag.typeMetadata.name}`;
+            }
           });
 
           return;
@@ -637,7 +640,10 @@ export default defineComponent({
         typeMetadata: tagTemplate,
       } as unknown as Tag;
 
-      this.editTitle = `${translate('TagManager_CreateNewTag')}${this.tag.typeMetadata?.name ? `: ${this.tag.typeMetadata.name}` : ''}`;
+      this.editTitle = translate('TagManager_CreateNewTag');
+      if (this.tag.typeMetadata?.name) {
+        this.editTitle += `: ${this.tag.typeMetadata.name}`;
+      }
 
       this.blockTriggers = [null];
       this.fireTriggers = [null];
