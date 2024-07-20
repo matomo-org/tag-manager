@@ -302,8 +302,8 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Used to record that the current page view is an item (product) page view, or a Ecommerce Category page view. On a category page, you can set the parameter category, and set the other parameters to empty strings. Tracking Product/Category page views will allow Matomo to report on Product &amp; Categories conversion rates (Conversion rate = Ecommerce orders containing this product or category / Visits to the product or category). Requires the Ecommerce plugin to be active.</description>
-						<inlineHelp />
+						<description/>
+						<inlineHelp>Ecommerce plugin required.&lt;br /&gt;&lt;br /&gt;Records the current page view as an item (product) page view or an Ecommerce Category page view.</inlineHelp>
 						<introduction />
 						<condition>trackingType == &quot;pageview&quot;</condition>
 						<fullWidth>0</fullWidth>
