@@ -52,10 +52,8 @@ class MatomoTag extends BaseTag
         });
         $isEcommerceView = $this->makeSetting('isEcommerceView', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
             $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewIsEcommerceView');
-            $field->inlineHelp = '';
-            if (!Manager::getInstance()->isPluginActivated('Cloud')) {
-                $field->inlineHelp .= Piwik::translate('TagManager_MatomoTagEcommerceViewIsEcommerceViewHelpOnPrem') . '<br /><br />';
-            }
+            $inlineHelpLine1 = StaticContainer::get('TagManager.MatomoTagEcommerceViewIsEcommerceViewHelpOnPremise');
+            $field->inlineHelp = $inlineHelpLine1 ? Piwik::translate($inlineHelpLine1) . '<br><br>' : '';
             $field->inlineHelp .= Piwik::translate('TagManager_MatomoTagEcommerceViewIsEcommerceViewHelpV2');
             $field->condition = 'trackingType == "pageview"';
         });
