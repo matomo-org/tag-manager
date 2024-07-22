@@ -313,6 +313,8 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(250);
         await selectTagType('Matomo');
         await page.waitForTimeout(250);
+        await page.click('#isEcommerceView');
+        await page.waitForTimeout(250);
         await capture.page(page, 'create_new_with_ecommerce_checkbox');
     });
 });
