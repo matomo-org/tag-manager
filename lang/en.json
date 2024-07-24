@@ -1002,6 +1002,24 @@
         "GoogleTagTagDescription": "The Google tag provides the Google products you use with data to measure the effectiveness of your website and ads.",
         "GoogleTagTagHelp": "",
         "GoogleTagTagIdTitle": "Tag ID",
-        "GoogleTagTagIdDescription": "A tag ID is an identifier that you put on your page to load a given Google tag. %1$sLearn more.%2$s"
+        "GoogleTagTagIdDescription": "A tag ID is an identifier that you put on your page to load a given Google tag. %1$sLearn more.%2$s",
+        "ConsentManagementPlatform": "Consent Management Platform",
+        "CookiebotTagName": "Cookiebot",
+        "CookiebotTagDescription": "Cookiebot CMP makes the use of cookies and online tracking of your website GDPR compliant.",
+        "CookiebotTagHelp": "",
+        "CookiebotTagIdTitle": "Domain Group ID",
+        "CookiebotTagIdDescription": "Insert the domain group id provided in the \"Your Script\" section on Cookiebot website.",
+        "HotjarTagName": "Hotjar",
+        "HotjarTagDescription": "Website Heatmaps & Behavior Analytics Tools.",
+        "HotjarTagHelp": "",
+        "HotjarHJID": "Hotjar Site ID",
+        "HotjarHJIDDescription": "Your Hotjar Site ID. You can get your Hotjar Site ID from the Sites section in your Hotjar account.",
+        "HotjarHJSV": "Hotjar snipet version",
+        "HotjarHJSVDescription": "Hotjar code snippet version.",
+        "ClickDataAttributeVariableName": "Clicked Data Attribute",
+        "ClickDataAttributeVariableDescription": "Reads a custom value from the clicked data-attribute.",
+        "ClickDataAttributeVariableHelp": "Using this variable you can access any value that is available within the clicked data-attribute.",
+        "ClickDataAttributeDataAttributeTitle": "Clicked Data Attribute Name",
+        "ClickDataAttributeDataAttributeDescription": "Only add suffix, If data attribute is data-demo just set \"demo\""
     }
 }
