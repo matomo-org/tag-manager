@@ -211,10 +211,10 @@ describe("ContainerTag", function () {
     });
 
     it('should show paused status in publish version changes list', async function () {
-        await page.click('.editVersion .publishButton');
+        await page.click('.icon-rocket');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
-        await capture.page(page, 'publish_new_version_list');
+        await capture.page(page, 'paused_publish_new_version_list');
     });
 
     it('should show confirm resume tag dialog', async function () {
@@ -236,10 +236,10 @@ describe("ContainerTag", function () {
   });
 
   it('should show paused status in publish version changes list', async function () {
-      await page.click('.editVersion .publishButton');
+      await page.click('.icon-rocket');
       await page.waitForNetworkIdle();
       await page.waitForTimeout(500);
-      await capture.page(page, 'publish_new_version_list');
+      await capture.page(page, 'resume_publish_new_version_list');
   });
 
     it('should show confirm delete tag dialog', async function () {
