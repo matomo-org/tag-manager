@@ -8,6 +8,7 @@
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Validators\Numeric;
 use Piwik\Settings\FieldConfig;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
 use Piwik\Validators\NotEmpty;
@@ -69,6 +70,7 @@ class HotjarTag extends BaseTag
                 $field->description = Piwik::translate('TagManager_HotjarHJSVDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new NotEmpty();
+                $field->validators[] = new Numeric();
             }),
         );
     }
