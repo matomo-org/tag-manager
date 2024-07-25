@@ -132,6 +132,8 @@ class TagManagerFixture extends Fixture
         $this->addContainerTag($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, 'CustomImage', 'My Tag 3', array($idTrigger2Container1, $idTrigger3Container1), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'));
 
         $this->addContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, 'CustomImage', 'My Tag "Quotes"', array($idTrigger1ContainerQuotes), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'));
+        $idTag = $this->addContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, 'CustomImage', 'My Tag "Quotes Paused"', array($idTrigger1ContainerQuotes), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'));
+        $this->api->pauseContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, $idTag);
 
         $this->idContainer1Version2 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v2', 'Version from draft with tags and triggers');
 

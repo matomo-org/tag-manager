@@ -47,8 +47,8 @@ class TagsDao extends BaseDao implements TagManagerDao
 
     private function isNameInUse($idSite, $idContainerVersion, $name, $exceptIdTag = null)
     {
-        $sql = sprintf("SELECT idtag FROM %s WHERE idsite = ? AND idcontainerversion = ? AND `name` = ? AND status = ?", $this->tablePrefixed);
-        $bind = array($idSite, $idContainerVersion, $name, self::STATUS_ACTIVE);
+        $sql = sprintf("SELECT idtag FROM %s WHERE idsite = ? AND idcontainerversion = ? AND `name` = ? AND status != ?", $this->tablePrefixed);
+        $bind = array($idSite, $idContainerVersion, $name, self::STATUS_DELETED);
 
         if (!empty($exceptIdTag)) {
             $sql .= ' AND idtag != ?';
@@ -138,10 +138,10 @@ class TagsDao extends BaseDao implements TagManagerDao
      */
     public function getContainerTags($idSite, $idContainerVersion)
     {
-        $bind = [self::STATUS_ACTIVE, $idSite, $idContainerVersion];
+        $bind = [self::STATUS_DELETED, $idSite, $idContainerVersion];
 
         $table = $this->tablePrefixed;
-        $tags = Db::fetchAll("SELECT * FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? ORDER BY priority, created_date ASC", $bind);
+        $tags = Db::fetchAll("SELECT * FROM $table WHERE status != ? AND idsite = ? and idcontainerversion = ? ORDER BY priority, created_date ASC", $bind);
 
         return $this->enrichTags($tags);
     }
@@ -154,10 +154,10 @@ class TagsDao extends BaseDao implements TagManagerDao
      */
     public function getContainerTagIdsByType($idSite, $idContainerVersion, $tagType)
     {
-        $bind = [self::STATUS_ACTIVE, $idSite, $idContainerVersion, $tagType];
+        $bind = [self::STATUS_DELETED, $idSite, $idContainerVersion, $tagType];
 
         $table = $this->tablePrefixed;
-        $tags = Db::fetchAll("SELECT idtag FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? and type = ? ORDER BY priority, created_date ASC", $bind);
+        $tags = Db::fetchAll("SELECT idtag FROM $table WHERE status != ? AND idsite = ? and idcontainerversion = ? and type = ? ORDER BY priority, created_date ASC", $bind);
 
         return is_array($tags) && count($tags) ? array_column($tags,'idtag') : [];
     }
@@ -172,8 +172,8 @@ class TagsDao extends BaseDao implements TagManagerDao
     public function getContainerTag($idSite, $idContainerVersion, $idTag)
     {
         $table = $this->tablePrefixed;
-        $bind = array(self::STATUS_ACTIVE, $idTag, $idContainerVersion, $idSite);
-        $tag = Db::fetchRow("SELECT * FROM $table WHERE status = ? and idtag = ? and idcontainerversion = ? and idsite = ?", $bind);
+        $bind = array(self::STATUS_DELETED, $idTag, $idContainerVersion, $idSite);
+        $tag = Db::fetchRow("SELECT * FROM $table WHERE status != ? and idtag = ? and idcontainerversion = ? and idsite = ?", $bind);
 
         return $this->enrichTag($tag);
     }
@@ -220,6 +220,36 @@ class TagsDao extends BaseDao implements TagManagerDao
 
         $query = "UPDATE $table SET status = ?, deleted_date = ? WHERE idsite = ? and idcontainerversion = ? and idtag = ? and status != ?";
         $bind = array(self::STATUS_DELETED, $deletedDate, $idSite, $idContainerVersion, $idTag, self::STATUS_DELETED);
+
+        Db::query($query, $bind);
+    }
+
+    /**
+     * @param int $idSite
+     * @param int $idContainerVersion
+     * @param int $idTag
+     */
+    public function pauseContainerTag($idSite, $idContainerVersion, $idTag)
+    {
+        $table = $this->tablePrefixed;
+
+        $query = "UPDATE $table SET status = ? WHERE idsite = ? and idcontainerversion = ? and idtag = ? and status != ?";
+        $bind = array(self::STATUS_PAUSED, $idSite, $idContainerVersion, $idTag, self::STATUS_PAUSED);
+
+        Db::query($query, $bind);
+    }
+
+    /**
+     * @param int $idSite
+     * @param int $idContainerVersion
+     * @param int $idTag
+     */
+    public function resumeContainerTag($idSite, $idContainerVersion, $idTag)
+    {
+        $table = $this->tablePrefixed;
+
+        $query = "UPDATE $table SET status = ? WHERE idsite = ? and idcontainerversion = ? and idtag = ? and status != ?";
+        $bind = array(self::STATUS_ACTIVE, $idSite, $idContainerVersion, $idTag, self::STATUS_ACTIVE);
 
         Db::query($query, $bind);
     }

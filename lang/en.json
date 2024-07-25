@@ -1020,6 +1020,12 @@
         "ClickDataAttributeVariableDescription": "Reads a custom value from the clicked data-attribute.",
         "ClickDataAttributeVariableHelp": "Using this variable you can access any value that is available within the clicked data-attribute.",
         "ClickDataAttributeDataAttributeTitle": "Clicked Data Attribute Name",
-        "ClickDataAttributeDataAttributeDescription": "Only add suffix, If data attribute is data-demo just set \"demo\""
+        "ClickDataAttributeDataAttributeDescription": "Only add suffix, If data attribute is data-demo just set \"demo\"",
+        "PauseX": "Pause %s",
+        "PauseTagConfirm": "Are you sure you want to pause this tag?",
+        "ResumeX": "Resume %s",
+        "ResumeTagConfirm": "Are you sure you want to activate this tag again?",
+        "DiffPaused": "Paused",
+        "DiffAddedPaused": "Added in paused state"
     }
 }

@@ -476,6 +476,103 @@ class APITest extends IntegrationTestCase
         $this->api->deleteContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
     }
 
+    public function test_pauseContainerTag_shouldFailWhenNotHavingViewPermissions()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
+        $this->setUser();
+        $this->api->pauseContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag = 999);
+    }
+
+    public function test_pauseContainerTag_shouldFailWhenVersionNotExists()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
+        $this->api->pauseContainerTag($this->idSite, $this->idContainer, 9999, $idTag = 999);
+    }
+
+    public function test_pauseContainerTag_shouldFailWhenContainerNotExists()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
+        $this->api->pauseContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
+    }
+
+    public function test_pauseContainerTag_shouldFailWhenContainerExistsButTagNotExists()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+
+        $this->assertFalse($this->api->pauseContainerTag($this->idSite, $idContainer, $container['versions'][0]['idcontainerversion'], $idTag = 999));
+
+    }
+
+    public function test_pauseContainerTag_success()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger);
+
+        $this->assertTrue($this->api->pauseContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag));
+        $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertEquals('paused', $tag['status']);
+    }
+
+    public function test_resumeContainerTag_shouldFailWhenNotHavingViewPermissions()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
+        $this->setUser();
+        $this->api->resumeContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag = 999);
+    }
+
+    public function test_resumeContainerTag_shouldFailWhenVersionNotExists()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
+        $this->api->resumeContainerTag($this->idSite, $this->idContainer, 9999, $idTag = 999);
+    }
+
+    public function test_resumeContainerTag_shouldFailWhenContainerNotExists()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
+        $this->api->resumeContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
+    }
+
+    public function test_resumeContainerTag_shouldFailWhenContainerExistsButTagNotExists()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+
+        $this->assertFalse($this->api->resumeContainerTag($this->idSite, $idContainer, $container['versions'][0]['idcontainerversion'], $idTag = 999));
+
+    }
+
+    public function test_resumeContainerTag_success()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger);
+
+        $this->api->pauseContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertTrue($this->api->resumeContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag));
+        $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertEquals('active', $tag['status']);
+    }
+
     public function test_getContainer_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);

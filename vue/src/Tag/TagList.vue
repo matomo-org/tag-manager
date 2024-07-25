@@ -32,7 +32,7 @@
         </thead>
         <tbody>
           <tr v-show="isLoading || isUpdating">
-            <td colspan="5">
+            <td colspan="6">
               <span class="loadingPiwik">
                 <img src="plugins/Morpheus/images/loading-blue.gif" />
                 {{ translate('General_LoadingData') }}
@@ -40,7 +40,7 @@
             </td>
           </tr>
           <tr v-show="!isLoading && tags.length === 0">
-            <td colspan="5">
+            <td colspan="6">
               {{ translate('TagManager_NoTagsFound') }}
               <a
                 class="createContainerTagNow"
@@ -125,6 +125,18 @@
               v-show="hasWriteAccess"
             >
               <a
+                v-show="tag.status === 'active'"
+                class="table-action icon-pause"
+                @click="pauseTag(tag)"
+                :title="translate('TagManager_PauseX', translate('TagManager_Tag'))"
+              />
+              <a
+                v-show="tag.status === 'paused'"
+                class="table-action icon-play"
+                @click="resumeTag(tag)"
+                :title="translate('TagManager_ResumeX', translate('TagManager_Tag'))"
+              />
+              <a
                 class="table-action icon-edit"
                 @click="editTag(tag.idtag, tag.type)"
                 :title="translate('TagManager_EditTag')"
@@ -157,6 +169,40 @@
       ref="confirmDeleteTag"
     >
       <h2>{{ translate('TagManager_DeleteTagConfirm') }} </h2>
+      <input
+        role="yes"
+        type="button"
+        :value="translate('General_Yes')"
+      />
+      <input
+        role="no"
+        type="button"
+        :value="translate('General_No')"
+      />
+    </div>
+    <div
+      class="ui-confirm"
+      id="confirmPauseTag"
+      ref="confirmPauseTag"
+    >
+      <h2>{{ translate('TagManager_PauseTagConfirm') }} </h2>
+      <input
+        role="yes"
+        type="button"
+        :value="translate('General_Yes')"
+      />
+      <input
+        role="no"
+        type="button"
+        :value="translate('General_No')"
+      />
+    </div>
+    <div
+      class="ui-confirm"
+      id="confirmResumeTag"
+      ref="confirmResumeTag"
+    >
+      <h2>{{ translate('TagManager_ResumeTagConfirm') }} </h2>
       <input
         role="yes"
         type="button"
@@ -242,6 +288,28 @@ export default defineComponent({
       MatomoUrl.updateHash({
         ...MatomoUrl.hashParsed.value,
         idTag,
+      });
+    },
+    pauseTag(tag: Tag) {
+      const doPause = () => {
+        TagsStore.pauseTag(this.idContainer, this.idContainerVersion, tag.idtag).then(() => {
+          TagsStore.reload(this.idContainer, this.idContainerVersion);
+        });
+      };
+
+      Matomo.helper.modalConfirm('#confirmPauseTag', {
+        yes: doPause,
+      });
+    },
+    resumeTag(tag: Tag) {
+      const doResume = () => {
+        TagsStore.resumeTag(this.idContainer, this.idContainerVersion, tag.idtag).then(() => {
+          TagsStore.reload(this.idContainer, this.idContainerVersion);
+        });
+      };
+
+      Matomo.helper.modalConfirm('#confirmResumeTag', {
+        yes: doResume,
       });
     },
     deleteTag(tag: Tag) {

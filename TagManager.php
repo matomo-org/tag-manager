@@ -868,6 +868,12 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_NoteAboutContainers';
         $result[] = 'TagManager_CustomiseContainer';
         $result[] = 'TagManager_ManageContainersLink';
+        $result[] = 'TagManager_PauseX';
+        $result[] = 'TagManager_PauseTagConfirm';
+        $result[] = 'TagManager_ResumeX';
+        $result[] = 'TagManager_ResumeTagConfirm';
+        $result[] = 'TagManager_DiffPaused';
+        $result[] = 'TagManager_DiffAddedPaused';
     }
 
     public function getStylesheetFiles(&$stylesheets)

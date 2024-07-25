@@ -22,10 +22,11 @@
 	</version>
 	<tags>
 		<row>
-			<idtag>24</idtag>
+			<idtag>26</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 2</name>
 			<description>My Tag 2 description</description>
+			<status>active</status>
 			<parameters>
 				<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
 				<htmlPosition>bodyEnd</htmlPosition>
@@ -47,10 +48,11 @@
 			
 		</row>
 		<row>
-			<idtag>25</idtag>
+			<idtag>27</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 1</name>
 			<description />
+			<status>active</status>
 			<parameters>
 				<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
 				<htmlPosition>bodyEnd</htmlPosition>
@@ -71,10 +73,11 @@
 			
 		</row>
 		<row>
-			<idtag>26</idtag>
+			<idtag>28</idtag>
 			<type>CustomImage</type>
 			<name>My Tag 3</name>
 			<description />
+			<status>active</status>
 			<parameters>
 				<customImageSrc>/plugins/tracking.png</customImageSrc>
 				<cacheBusterEnabled>1</cacheBusterEnabled>

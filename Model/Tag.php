@@ -164,6 +164,16 @@ class Tag extends BaseModel
         $this->dao->deleteContainerTag($idSite, $idContainerVersion, $idTag, $this->getCurrentDateTime());
     }
 
+    public function pauseContainerTag($idSite, $idContainerVersion, $idTag)
+    {
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+    }
+
+    public function resumeContainerTag($idSite, $idContainerVersion, $idTag)
+    {
+        $this->dao->resumeContainerTag($idSite, $idContainerVersion, $idTag);
+    }
+
     public function getContainerTag($idSite, $idContainerVersion, $idTag)
     {
         $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
