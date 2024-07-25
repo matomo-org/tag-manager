@@ -711,6 +711,62 @@
 				</parameters>
 			</row>
 			<row>
+				<id>Hotjar</id>
+				<name>Hotjar</name>
+				<description>Website Heatmaps &amp; Behavior Analytics Tools.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/hotjar.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>hjid</name>
+						<title>Hotjar Site ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your Hotjar Site ID. You can get your Hotjar Site ID from the Sites section in your Hotjar account.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>hjsv</name>
+						<title>Hotjar snipet version</title>
+						<value>6</value>
+						<defaultValue>6</defaultValue>
+						<type>integer</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Hotjar code snippet version.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
 				<id>PingdomRUM</id>
 				<name>Pingdom Real User Monitoring (RUM)</name>
 				<description>Pingdom Real User Monitoring (RUM) lets you collect performance data from actual visitors to your site.</description>
@@ -1349,6 +1405,47 @@
 						<inlineHelp />
 						<introduction />
 						<condition>trackingType == &quot;form&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Consent Management Platform</name>
+		<types>
+			<row>
+				<id>Cookiebot</id>
+				<name>Cookiebot</name>
+				<description>Cookiebot CMP makes the use of cookies and online tracking of your website GDPR compliant.</description>
+				<category>Consent Management Platform</category>
+				<icon>plugins/TagManager/images/icons/cookiebot.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>cookiebotId</name>
+						<title>Domain Group ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Insert the domain group id provided in the &quot;Your Script&quot; section on Cookiebot website.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
 						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
