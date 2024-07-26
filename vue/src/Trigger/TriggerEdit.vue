@@ -55,6 +55,7 @@
               :maxlength="50"
               :title="translate('General_Name')"
               :inline-help="translate('TagManager_TriggerNameHelp')"
+              :placeholder="translate('TagManager_TriggerNamePlaceholder')"
             />
           </div>
           <div>
@@ -66,6 +67,7 @@
               :maxlength="1000"
               :title="translate('General_Description')"
               :inline-help="translate('TagManager_TriggerDescriptionHelp')"
+              :placeholder="translate('TagManager_TriggerDescriptionPlaceholder')"
             />
           </div>
           <div

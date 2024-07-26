@@ -868,6 +868,21 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_NoteAboutContainers';
         $result[] = 'TagManager_CustomiseContainer';
         $result[] = 'TagManager_ManageContainersLink';
+        $result[] = 'TagManager_Description';
+        $result[] = 'TagManager_TagDescriptionPlaceholder';
+        $result[] = 'TagManager_TriggerDescriptionPlaceholder';
+        $result[] = 'TagManager_VariableDescriptionPlaceholder';
+        $result[] = 'TagManager_VersionDescriptionPlaceholder';
+        $result[] = 'TagManager_ContainerDescriptionPlaceholder';
+        $result[] = 'TagManager_TagNamePlaceholder';
+        $result[] = 'TagManager_TriggerNamePlaceholder';
+        $result[] = 'TagManager_VariableNamePlaceholder';
+        $result[] = 'TagManager_VersionNamePlaceholder';
+        $result[] = 'TagManager_ContainerNamePlaceholder';
+        $result[] = 'TagManager_FireDelayPlaceholder';
+        $result[] = 'TagManager_PriorityPlaceholder';
+        $result[] = 'TagManager_VersionDescriptionOptional';
+        $result[] = 'TagManager_BingUETTagIdPlaceholder';
     }
 
     public function getStylesheetFiles(&$stylesheets)

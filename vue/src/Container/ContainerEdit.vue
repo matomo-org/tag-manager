@@ -55,6 +55,7 @@
             :maxlength="50"
             :title="translate('General_Name')"
             :inline-help="translate('TagManager_ContainerNameHelp')"
+            :placeholder="translate('TagManager_ContainerNamePlaceholder')"
           />
         </div>
         <div>
@@ -65,6 +66,7 @@
             @update:model-value="container.description = $event; setValueHasChanged()"
             :title="translate('General_Description')"
             :inline-help="translate('TagManager_ContainerDescriptionHelp')"
+            :placeholder="translate('TagManager_ContainerDescriptionPlaceholder')"
           />
         </div>
         <div>

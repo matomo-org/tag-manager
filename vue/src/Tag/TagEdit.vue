@@ -45,6 +45,7 @@
               :maxlength="50"
               :title="translate('General_Name')"
               :inline-help="translate('TagManager_TagNameHelpV2')"
+              :placeholder="translate('TagManager_TagNamePlaceholder')"
             />
           </div>
           <div>
@@ -54,7 +55,8 @@
               :model-value="tag.description"
               @update:model-value="tag.description = $event; setValueHasChanged()"
               :maxlength="1000"
-              :title="translate('General_Description')"
+              :title="translate('TagManager_Description')"
+              :placeholder="translate('TagManager_TagDescriptionPlaceholder')"
             />
           </div>
           <div
@@ -147,6 +149,7 @@
                 :maxlength="8"
                 :title="translate('TagManager_FireDelay')"
                 :inline-help="translate('TagManager_FireDelayHelp')"
+                :placeholder="translate('TagManager_FireDelayPlaceholder')"
               />
             </div>
             <div>
@@ -158,6 +161,7 @@
                 :maxlength="4"
                 :title="translate('TagManager_Priority')"
                 :inline-help="translate('TagManager_PriorityHelp')"
+                :placeholder="translate('TagManager_PriorityPlaceholder')"
               />
             </div>
             <div class="form-group row tagStartDate">

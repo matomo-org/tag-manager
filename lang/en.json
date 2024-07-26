@@ -829,6 +829,7 @@
         "VersionX": "version %s",
         "VersionAlreadyPublishedToAllEnvironments": "This version cannot be published to any further environment",
         "VersionDescription": "Version description",
+        "VersionDescriptionOptional": "Version description (optional)",
         "VersionDescriptionHelp": "Optionally, you can describe this new version in more detail. We recommend to mention what you changed in this version. For example whether you fixed a particular issue or added a new tag. This helps you to better understand each version for example if you have to rollback to a certain version.",
         "VersionEnvironmentHelp": "In order to embed the current version into your site you need to publish it to an environment, typically the \"Live\" environment. If you have a specific review process, or testing environments you may want to first publish a version to a \"staging\" or \"test\" environment before deploying it on to your live production system to make sure everything works as you expect it to. You can also later at any time publish this version to any environment.",
         "VersionImportContentTitle": "Paste the JSON formatted data that you exported previously",
@@ -1021,6 +1022,20 @@
         "ClickDataAttributeVariableDescription": "Reads a custom value from the clicked data-attribute.",
         "ClickDataAttributeVariableHelp": "Using this variable you can access any value that is available within the clicked data-attribute.",
         "ClickDataAttributeDataAttributeTitle": "Clicked Data Attribute Name",
-        "ClickDataAttributeDataAttributeDescription": "Only add suffix, If data attribute is data-demo just set \"demo\""
+        "ClickDataAttributeDataAttributeDescription": "Only add suffix, If data attribute is data-demo just set \"demo\"",
+        "Description": "Description (optional)",
+        "TagDescriptionPlaceholder": "The description of the tag",
+        "TriggerDescriptionPlaceholder": "The description of the trigger",
+        "VariableDescriptionPlaceholder": "The description of the variable",
+        "VersionDescriptionPlaceholder": "The description of the version",
+        "ContainerDescriptionPlaceholder": "The description of the container",
+        "TagNamePlaceholder": "The name of the tag",
+        "TriggerNamePlaceholder": "The name of the trigger",
+        "VariableNamePlaceholder": "The name of the variable",
+        "VersionNamePlaceholder": "The name of the version (e.g. 1.0.0)",
+        "ContainerNamePlaceholder": "The name of the container",
+        "FireDelayPlaceholder": "Fire delay (e.g. 0)",
+        "PriorityPlaceholder": "Priority (e.g. 999)",
+        "BingUETTagIdPlaceholder": "Bing Ad ID (e.g. 1234567890)"
     }
 }
