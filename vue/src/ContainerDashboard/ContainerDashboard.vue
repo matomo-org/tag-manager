@@ -319,7 +319,7 @@ export default defineComponent({
   computed: {
     lastVersions(): Version[] {
       if (this.container?.versions?.length) {
-        return this.container.versions.slice(5);
+        return this.container.versions.slice(0, 5);
       }
       return [];
     },

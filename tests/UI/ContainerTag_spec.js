@@ -90,6 +90,60 @@ describe("ContainerTag", function () {
         await capture.page(page, 'tag_some_exist');
     });
 
+    it('should show confirm pause tag dialog', async function () {
+            await page.goto(container1Base);
+            await clickFirstRowTableAction('icon-pause', 3);
+            await capture.modal(page, 'confirm_pause_tag');
+        });
+
+        it('should do nothing when selecting no for paused tag', async function () {
+            await modal.clickButton(page, 'No');
+            await capture.page(page, 'confirm_paused_tag_declined');
+        });
+
+        it('should pause a tag when confirmed', async function () {
+            await clickFirstRowTableAction('icon-pause', 3);
+            await modal.clickButton(page, 'Yes');
+            await page.waitForNetworkIdle();
+            await capture.page(page, 'confirm_pause_tag_confirmed');
+        });
+
+        it('should show paused status in publish version changes list', async function () {
+            await page.click('.icon-rocket');
+            await page.waitForNetworkIdle();
+            await page.waitForTimeout(500);
+            await page.evaluate(() => $('.modal:visible').scrollTop($('.modal:visible').height()+500));
+            await page.waitForTimeout(100);
+            await capture.page(page, 'paused_publish_new_version_list');
+        });
+
+        it('should show confirm resume tag dialog', async function () {
+          await page.goto(container1Base);
+          await clickFirstRowTableAction('icon-play', 3);
+          await capture.modal(page, 'confirm_resume_tag');
+      });
+
+      it('should do nothing when selecting no for resume tag', async function () {
+          await modal.clickButton(page, 'No');
+          await capture.page(page, 'confirm_resume_tag_declined');
+      });
+
+      it('should resume a tag when confirmed', async function () {
+          await clickFirstRowTableAction('icon-play', 3);
+          await modal.clickButton(page, 'Yes');
+          await page.waitForNetworkIdle();
+          await capture.page(page, 'confirm_resume_tag_confirmed');
+      });
+
+      it('should show resume status in publish version changes list', async function () {
+          await page.click('.icon-rocket');
+          await page.waitForNetworkIdle();
+          await page.waitForTimeout(500);
+          await page.evaluate(() => $('.modal:visible').scrollTop($('.modal:visible').height()+500));
+          await page.waitForTimeout(100);
+          await capture.page(page, 'resume_publish_new_version_list');
+      });
+
     it('should be able to create a new tag and show list of available types', async function () {
         await page.click('.createNewTag');
         await page.waitForNetworkIdle();
@@ -108,7 +162,7 @@ describe("ContainerTag", function () {
         await capture.page(page, 'create_new_error');
     });
 
-    it('should fade out tags that cannot be created', async function () {
+    it('should fade out tags that cannot be created', async function () {f
         permissions.setWriteUser();
         await page.goto(container1Base);
         await page.click('.createNewTag');
@@ -191,60 +245,6 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(250);
         await capture.page(page, 'edit_updated_back_to_list');
     });
-
-    it('should show confirm pause tag dialog', async function () {
-        await page.goto(container1Base);
-        await clickFirstRowTableAction('icon-pause', 3);
-        await capture.modal(page, 'confirm_pause_tag');
-    });
-
-    it('should do nothing when selecting no for paused tag', async function () {
-        await modal.clickButton(page, 'No');
-        await capture.page(page, 'confirm_paused_tag_declined');
-    });
-
-    it('should pause a tag when confirmed', async function () {
-        await clickFirstRowTableAction('icon-pause', 3);
-        await modal.clickButton(page, 'Yes');
-        await page.waitForNetworkIdle();
-        await capture.page(page, 'confirm_pause_tag_confirmed');
-    });
-
-    it('should show paused status in publish version changes list', async function () {
-        await page.click('.icon-rocket');
-        await page.waitForNetworkIdle();
-        await page.waitForTimeout(500);
-        await page.evaluate(() => $('.modal:visible').scrollTop($('.modal:visible').height()+500));
-        await page.waitForTimeout(100);
-        await capture.page(page, 'paused_publish_new_version_list');
-    });
-
-    it('should show confirm resume tag dialog', async function () {
-      await page.goto(container1Base);
-      await clickFirstRowTableAction('icon-play', 3);
-      await capture.modal(page, 'confirm_resume_tag');
-  });
-
-  it('should do nothing when selecting no for resume tag', async function () {
-      await modal.clickButton(page, 'No');
-      await capture.page(page, 'confirm_resume_tag_declined');
-  });
-
-  it('should resume a tag when confirmed', async function () {
-      await clickFirstRowTableAction('icon-play', 3);
-      await modal.clickButton(page, 'Yes');
-      await page.waitForNetworkIdle();
-      await capture.page(page, 'confirm_resume_tag_confirmed');
-  });
-
-  it('should show resume status in publish version changes list', async function () {
-      await page.click('.icon-rocket');
-      await page.waitForNetworkIdle();
-      await page.waitForTimeout(500);
-      await page.evaluate(() => $('.modal:visible').scrollTop($('.modal:visible').height()+500));
-      await page.waitForTimeout(100);
-      await capture.page(page, 'resume_publish_new_version_list');
-  });
 
     it('should show confirm delete tag dialog', async function () {
         await page.goto(container1Base);
