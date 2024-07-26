@@ -216,7 +216,8 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(500);
         await page.evaluate(() => $('.modal:visible').scrollTop($('.modal:visible').height()+500));
         await page.waitForTimeout(100);
-        await capture.page(page, 'paused_publish_new_version_list');
+        const content = await page.$('.modal:visible');
+        await capture.page(content, 'paused_publish_new_version_list');
     });
 
     it('should show confirm resume tag dialog', async function () {
@@ -243,7 +244,8 @@ describe("ContainerTag", function () {
       await page.waitForTimeout(500);
       await page.evaluate(() => $('.modal:visible').scrollTop($('.modal:visible').height()+500));
       await page.waitForTimeout(100);
-      await capture.page(page, 'resume_publish_new_version_list');
+      const content = await page.$('.modal:visible');
+      await capture.page(content, 'resume_publish_new_version_list');
   });
 
     it('should show confirm delete tag dialog', async function () {
