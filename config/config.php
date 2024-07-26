@@ -27,4 +27,5 @@ return array(
     )),
     'Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator' => Piwik\DI::autowire('Piwik\Plugins\TagManager\Model\Container\RandomContainerIdGenerator'),
     'Piwik\Plugins\TagManager\Context\Storage\StorageInterface' => Piwik\DI::create('Piwik\Plugins\TagManager\Context\Storage\Filesystem'),
+    'TagManager.MatomoTagEcommerceViewIsEcommerceViewHelpOnPremise' => Piwik\DI::string('TagManager_MatomoTagEcommerceViewIsEcommerceViewHelpOnPrem'),
 );
