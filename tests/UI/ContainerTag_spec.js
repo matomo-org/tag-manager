@@ -305,4 +305,16 @@ describe("ContainerTag", function () {
         pageWrap = await page.$('.manageTag');
         expect(await pageWrap.screenshot()).to.matchImage('tag_some_exist_view_user');
     });
+
+    it('should be able to select matomo tag with pageview tracking type and ecommerce checkbox', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTag');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+        await selectTagType('Matomo');
+        await page.waitForTimeout(250);
+        await page.click('#isEcommerceView');
+        await page.waitForTimeout(250);
+        await capture.page(page, 'create_new_with_ecommerce_checkbox');
+    });
 });
