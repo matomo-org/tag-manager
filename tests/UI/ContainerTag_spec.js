@@ -214,6 +214,8 @@ describe("ContainerTag", function () {
         await page.click('.icon-rocket');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
+        await (await page.jQuery('.modal:visible').scrollTop($('.modal:visible').height() + 500));
+        await page.waitForTimeout(100);
         await capture.page(page, 'paused_publish_new_version_list');
     });
 
@@ -239,6 +241,8 @@ describe("ContainerTag", function () {
       await page.click('.icon-rocket');
       await page.waitForNetworkIdle();
       await page.waitForTimeout(500);
+      await (await page.jQuery('.modal:visible').scrollTop($('.modal:visible').height() + 500));
+      await page.waitForTimeout(100);
       await capture.page(page, 'resume_publish_new_version_list');
   });
 
