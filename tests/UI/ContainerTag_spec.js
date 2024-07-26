@@ -108,7 +108,7 @@ describe("ContainerTag", function () {
         await capture.page(page, 'create_new_error');
     });
 
-    it('should fade out tags that cannot be created', async function () {f
+    it('should fade out tags that cannot be created', async function () {
         permissions.setWriteUser();
         await page.goto(container1Base);
         await page.click('.createNewTag');
@@ -217,7 +217,7 @@ describe("ContainerTag", function () {
         await page.evaluate(() => $('.modal.open').scrollTop($('.modal.open').height()+500));
         await page.waitForTimeout(100);
         const content = await page.$('.modal.open');
-        await capture.page(content, 'paused_publish_new_version_list');
+        expect(await content.screenshot()).to.matchImage('paused_publish_new_version_list');
     });
 
     it('should show confirm resume tag dialog', async function () {
@@ -245,7 +245,7 @@ describe("ContainerTag", function () {
       await page.evaluate(() => $('.modal.open').scrollTop($('.modal.open').height()+500));
       await page.waitForTimeout(100);
       const content = await page.$('.modal.open');
-      await capture.page(content, 'resume_publish_new_version_list');
+      expect(await content.screenshot()).to.matchImage('resume_publish_new_version_list');
   });
 
     it('should show confirm delete tag dialog', async function () {
