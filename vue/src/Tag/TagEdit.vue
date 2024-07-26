@@ -39,16 +39,6 @@
           <div>
             <Field
               uicontrol="text"
-              name="type"
-              :model-value="tag.typeMetadata?.name"
-              :disabled="true"
-              :inline-help="tag.typeMetadata?.description + ' ' + tag.typeMetadata?.help"
-              :title="translate('TagManager_Type')"
-            />
-          </div>
-          <div>
-            <Field
-              uicontrol="text"
               name="name"
               :model-value="tag.name"
               @update:model-value="tag.name = $event; setValueHasChanged()"
@@ -534,6 +524,10 @@ export default defineComponent({
             this.onBlockTriggerChange();
 
             this.isDirty = false;
+            this.editTitle = translate('TagManager_EditTag');
+            if (this.tag.typeMetadata?.name) {
+              this.editTitle += `: ${this.tag.typeMetadata.name}`;
+            }
           });
 
           return;
@@ -635,7 +629,6 @@ export default defineComponent({
       }
 
       this.chooseTagType = false;
-      this.editTitle = translate('TagManager_CreateNewTag');
 
       this.tag = {
         idsite: parseInt(`${Matomo.idSite}`, 10),
@@ -646,6 +639,11 @@ export default defineComponent({
         fire_delay: 0,
         typeMetadata: tagTemplate,
       } as unknown as Tag;
+
+      this.editTitle = translate('TagManager_CreateNewTag');
+      if (this.tag.typeMetadata?.name) {
+        this.editTitle += `: ${this.tag.typeMetadata.name}`;
+      }
 
       this.blockTriggers = [null];
       this.fireTriggers = [null];

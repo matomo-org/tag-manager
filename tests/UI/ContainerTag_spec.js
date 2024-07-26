@@ -124,7 +124,7 @@ describe("ContainerTag", function () {
       await page.waitForNetworkIdle();
       await page.waitForTimeout(250);
       await selectTagType('Matomo');
-      await form.selectValue(page, 'form > div > div:nth-child(6) > div:nth-child(2) div.select-wrapper', 'Goal');
+      await form.selectValue(page, 'form > div > div:nth-child(5) > div:nth-child(2) div.select-wrapper', 'Goal');
       await capture.page(page, 'create_new_with_goal_tracking_type');
     });
 
