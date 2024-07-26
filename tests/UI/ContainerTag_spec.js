@@ -214,7 +214,7 @@ describe("ContainerTag", function () {
         await page.click('.icon-rocket');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
-        await (await page.jQuery('.modal:visible').scrollTop($('.modal:visible').height() + 500));
+        await page.evaluate(() => $('.modal:visible').scrollTop($('.modal:visible').height()+500));
         await page.waitForTimeout(100);
         await capture.page(page, 'paused_publish_new_version_list');
     });
@@ -237,11 +237,11 @@ describe("ContainerTag", function () {
       await capture.page(page, 'confirm_resume_tag_confirmed');
   });
 
-  it('should show paused status in publish version changes list', async function () {
+  it('should show resume status in publish version changes list', async function () {
       await page.click('.icon-rocket');
       await page.waitForNetworkIdle();
       await page.waitForTimeout(500);
-      await (await page.jQuery('.modal:visible').scrollTop($('.modal:visible').height() + 500));
+      await page.evaluate(() => $('.modal:visible').scrollTop($('.modal:visible').height()+500));
       await page.waitForTimeout(100);
       await capture.page(page, 'resume_publish_new_version_list');
   });
