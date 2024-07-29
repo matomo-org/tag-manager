@@ -476,7 +476,7 @@ class APITest extends IntegrationTestCase
         $this->api->deleteContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
     }
 
-    public function test_pauseContainerTag_shouldFailWhenNotHavingViewPermissions()
+    public function test_pauseContainerTag_shouldFailWhenNotHavingWritePermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
@@ -524,7 +524,7 @@ class APITest extends IntegrationTestCase
         $this->assertEquals('paused', $tag['status']);
     }
 
-    public function test_resumeContainerTag_shouldFailWhenNotHavingViewPermissions()
+    public function test_resumeContainerTag_shouldFailWhenNotHavingWritePermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');

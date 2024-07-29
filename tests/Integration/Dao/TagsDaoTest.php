@@ -419,6 +419,24 @@ class TagsDaoTest extends IntegrationTestCase
         $this->assertEquals('paused', $tag['status']);
     }
 
+    public function test_shouldNotResumeDeletedContainerTag()
+    {
+        $idTag = $this->createTag($idSite = 4, $idContainerVersion = 7, 'Test name');
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertSame('Test name', $tag['name']);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag);
+        $this->assertEquals('paused', $tag['status']);
+
+        $this->dao->deleteContainerTag($idSite, $idContainerVersion, $idTag, $this->now);
+        $this->dao->resumeContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertEmpty($tag);
+    }
+
     public function test_shouldResumeContainerTag()
     {
         $idTag = $this->createTag($idSite = 4, $idContainerVersion = 7, 'Test name');

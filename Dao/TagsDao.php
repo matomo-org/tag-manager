@@ -248,8 +248,8 @@ class TagsDao extends BaseDao implements TagManagerDao
     {
         $table = $this->tablePrefixed;
 
-        $query = "UPDATE $table SET status = ? WHERE idsite = ? and idcontainerversion = ? and idtag = ? and status != ?";
-        $bind = array(self::STATUS_ACTIVE, $idSite, $idContainerVersion, $idTag, self::STATUS_ACTIVE);
+        $query = "UPDATE $table SET status = ? WHERE idsite = ? and idcontainerversion = ? and idtag = ? and status = ?";
+        $bind = array(self::STATUS_ACTIVE, $idSite, $idContainerVersion, $idTag, self::STATUS_PAUSED);
 
         Db::query($query, $bind);
     }
