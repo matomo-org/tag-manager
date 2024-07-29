@@ -521,12 +521,13 @@
 					</row>
 					<row>
 						<name>commandView</name>
-						<title>view</title>
+						<title>View (optional)</title>
 						<value />
 						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>ID of item viewed (e.g. item_3)</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Report a product view.</description>
@@ -537,12 +538,13 @@
 					</row>
 					<row>
 						<name>commandTag</name>
-						<title>tag</title>
+						<title>Tag (optional)</title>
 						<value />
 						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>Name of defined custom data field (e.g. content_pageview)</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Add an arbitrary tag to the current event. The tag is collected and can be accessed later from other Emarsys products.</description>
@@ -791,6 +793,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1234567890abcdef1234567890abcdef</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Site ID by logging into Pingdom, going to &quot;Monitoring&quot; and clicking on &quot;Real User Monitoring&quot;. Every added site will get its own Site ID.</description>
@@ -823,6 +826,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 123456</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Your Visual Website Optimizer Account ID</description>
@@ -1598,6 +1602,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1234567890</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can find your API key in your project settings from your Bugsnag dashboard.</description>
@@ -1718,6 +1723,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1234567890abcdef1234567890abcdef</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>When you create a new application in your Raygun dashboard, your app API key is displayed at the top of the instructions page. You can also find the API key by clicking the &quot;Application Settings&quot; button in the side bar of the Raygun dashboard.</description>
@@ -1766,6 +1772,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. https://12345abc@sentry.io/1234567</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The DSN (Data Source Name) of your sentry.io project. It should look like 'https://&lt;key&gt;@sentry.io/&lt;project&gt;'</description>
@@ -1859,6 +1866,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. mdp4r5w7rh3y</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The Drift ID is the text between brackets without quotes at the end of the JS snippet: drift.load('mdp4r5w7rh3y');</description>
@@ -1891,6 +1899,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 123456789012345</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description />
@@ -1923,6 +1932,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 123456</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can find the partner ID by logging into your LinkedIn Campaign Manager, and clicking on &quot;Account Assets&quot; followed by &quot;Insight Tag&quot;. If &quot;Insight Tag&quot; is not available, please set up the Insight Tag by clicking on &quot;Conversion Tracking&quot;. There you can enter a domain and continue the set up. You will find the partner ID in the line `_linkedin_partner_id = &quot;123456&quot;`. In this example the ID would be &quot;123456&quot;.</description>
@@ -1955,6 +1965,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1234abcd</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Insert the Livezilla ID from your Dynamic Code section.</description>
@@ -1971,6 +1982,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. https://www.example.com</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Enter the Domain where Livezilla is installed. Example: https://www.example.com</description>
@@ -2117,6 +2129,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 123451c27295ad739e46b6b1</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Site ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Property Settings&quot;. The Site ID has typically about 25 characters, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
@@ -2133,6 +2146,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. default</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Widget ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Chat Widget&quot; and selecting an appropriate widget. The widget ID can be retrieved from &quot;Direct Chat Link&quot; as https://tawk.to/chat/{SITE_ID}/{WIDGET_ID}.</description>
@@ -2165,6 +2179,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 123451c27295ad739e46b6b1</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Site ID by logging into Zendesk Chat, going to &quot;Settings&quot; and clicking on &quot;Widget&quot;. The Site ID has typically about 32 characters and is the text coming directly after &quot;https://v2.zopim.com/?&quot;, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
@@ -2202,6 +2217,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>Hexidecimal color (e.g. #11ee33)</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Please enter a color as a hexadecimal string (e.g. '#11ee33')</description>

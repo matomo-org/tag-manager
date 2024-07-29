@@ -65,7 +65,7 @@
               :model-value="variable.description"
               @update:model-value="variable.description = $event; setValueHasChanged()"
               :maxlength="1000"
-              :title="translate('General_Description')"
+              :title="translate('TagManager_Description')"
               :inline-help="translate('TagManager_VariableDescriptionHelp')"
               :placeholder="translate('TagManager_VariableDescriptionPlaceholder')"
             />

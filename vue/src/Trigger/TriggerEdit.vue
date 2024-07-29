@@ -65,7 +65,7 @@
               :model-value="trigger.description"
               @update:model-value="trigger.description = $event; setValueHasChanged()"
               :maxlength="1000"
-              :title="translate('General_Description')"
+              :title="translate('TagManager_Description')"
               :inline-help="translate('TagManager_TriggerDescriptionHelp')"
               :placeholder="translate('TagManager_TriggerDescriptionPlaceholder')"
             />

@@ -64,7 +64,7 @@
             name="description"
             :model-value="container.description"
             @update:model-value="container.description = $event; setValueHasChanged()"
-            :title="translate('General_Description')"
+            :title="translate('TagManager_Description')"
             :inline-help="translate('TagManager_ContainerDescriptionHelp')"
             :placeholder="translate('TagManager_ContainerDescriptionPlaceholder')"
           />
