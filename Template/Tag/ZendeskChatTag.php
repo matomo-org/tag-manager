@@ -30,6 +30,7 @@ class ZendeskChatTag extends BaseTag
             $this->makeSetting('zendeskChatId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_ZendeskChatTagChatIdTitle');
                 $field->description = Piwik::translate('TagManager_ZendeskChatTagChatIdDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_ZendeskChatTagChatIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value, Setting $setting) {
                     $value = trim($value);

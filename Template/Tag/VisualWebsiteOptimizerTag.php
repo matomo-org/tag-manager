@@ -38,6 +38,7 @@ class VisualWebsiteOptimizerTag extends BaseTag
                 $field->title = Piwik::translate('TagManager_VisualWebsiteOptimizerTagAccountIdTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_VisualWebsiteOptimizerTagAccountIdDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_VisualWebsiteOptimizerTagAccountIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);

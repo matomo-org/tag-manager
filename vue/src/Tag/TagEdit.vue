@@ -149,7 +149,7 @@
                 :maxlength="8"
                 :title="translate('TagManager_FireDelay')"
                 :inline-help="translate('TagManager_FireDelayHelp')"
-                :placeholder="translate('TagManager_FireDelayPlaceholder')"
+                :placeholder="translate('TagManager_PlaceholderZero')"
               />
             </div>
             <div>

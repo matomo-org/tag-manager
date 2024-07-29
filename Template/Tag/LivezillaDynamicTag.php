@@ -33,6 +33,7 @@ class LivezillaDynamicTag extends BaseTag
             $this->makeSetting('LivezillaDynamicID', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_LivezillaDynamicTagIdTitle');
                 $field->description = Piwik::translate('TagManager_LivezillaDynamicTagIdDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_LivezillaDynamicTagIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->transform = function ($value) {
                     return trim($value);
@@ -42,6 +43,7 @@ class LivezillaDynamicTag extends BaseTag
             $this->makeSetting('LivezillaDynamicDomain', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_LivezillaDynamicTagDomainTitle');
                 $field->description = Piwik::translate('TagManager_LivezillaDynamicTagDomainDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_LivezillaDynamicTagDomainPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);

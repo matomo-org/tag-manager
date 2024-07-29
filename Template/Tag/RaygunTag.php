@@ -25,6 +25,7 @@ class RaygunTag extends BaseTag
                 $field->title = Piwik::translate('TagManager_RaygunTagApiKeyTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_RaygunTagApiKeyDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_RaygunTagApiKeyPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->transform = function ($value) {
                     return trim($value);
