@@ -922,6 +922,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_MatomoConfigurationMatomoTrackingEndpointCustomPlaceholder';
         $result[] = 'TagManager_MatomoConfigurationMatomoRequestContentTypePlaceholder';
         $result[] = 'TagManager_UrlParameterVariableNamePlaceholder';
+        $result[] = 'TagManager_JavaScriptVariableNamePlaceholder';
     }
 
     public function getStylesheetFiles(&$stylesheets)

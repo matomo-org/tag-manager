@@ -1075,6 +1075,7 @@
         "MatomoConfigurationMatomoJsEndpointCustomPlaceholder": "e.g. custom.js",
         "MatomoConfigurationMatomoTrackingEndpointCustomPlaceholder": "e.g. custom.php",
         "MatomoConfigurationMatomoRequestContentTypePlaceholder": "e.g. application/x-www-form-urlencoded; charset=UTF-8",
-        "UrlParameterVariableNamePlaceholder": "e.g. lang"
+        "UrlParameterVariableNamePlaceholder": "e.g. lang",
+        "JavaScriptVariableNamePlaceholder": "e.g. document.referrer"
     }
 }

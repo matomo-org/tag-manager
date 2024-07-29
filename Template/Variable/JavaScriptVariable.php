@@ -25,7 +25,7 @@ class JavaScriptVariable extends BaseVariable
             $this->makeSetting('variableName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_JavaScriptVariableNameTitle');
                 $field->description = Piwik::translate('TagManager_JavaScriptVariableNameDescription');
-                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_CustomJsFunctionVariableJsFunctionPlaceholder')];
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_JavaScriptVariableNamePlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength(1, 500);
                 $field->transform = function ($value) {
