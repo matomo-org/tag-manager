@@ -25,6 +25,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1234567890</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Manager.</description>
@@ -492,6 +493,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. ABC123456789</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Your Emarsys Merchant ID</description>
@@ -502,12 +504,13 @@
 					</row>
 					<row>
 						<name>commandCategory</name>
-						<title>category</title>
+						<title>Category (optional)</title>
 						<value />
 						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>Category matching the product catalog (e.g. Bikes &gt; Road Bikes)</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Report the category currently browsed by the visitor.</description>
