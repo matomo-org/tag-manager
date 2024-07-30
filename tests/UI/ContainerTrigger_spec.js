@@ -119,12 +119,6 @@ describe("ContainerTrigger", function () {
     it('should be able to create a new trigger and show update afterwards', async function () {
         await createOrUpdateTrigger();
       await page.waitForTimeout(250);
-        await capture.page(page, 'create_new_submitted');
-    });
-
-    it('should be possible to go back to list of triggers and show created trigger', async function () {
-        await cancelTrigger();
-        await page.mouse.move(-10, -10);
         await capture.page(page, 'create_new_shown_in_list');
     });
 
@@ -143,13 +137,11 @@ describe("ContainerTrigger", function () {
 
     it('should enable edit button after changing a field', async function () {
         await setTriggerName('triggerNameNew');
-        await createOrUpdateTrigger();
         await capture.page(page, 'edit_url_updated');
     });
 
     it('should have updated the list of triggers', async function () {
-        await cancelTrigger();
-        await page.mouse.move(-10, -10);
+        await createOrUpdateTrigger();
         await capture.page(page, 'edit_updated_back_to_list');
     });
 
@@ -207,11 +199,6 @@ describe("ContainerTrigger", function () {
 
     it('should be possible to create a trigger with conditions filter', async function () {
         await createOrUpdateTrigger();
-        await capture.page(page, 'create_advanced_submitted');
-    });
-
-    it('should be possible to create a trigger with conditions filter', async function () {
-        await cancelTrigger();
         await capture.page(page, 'create_advanced_verified');
     });
 

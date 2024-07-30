@@ -123,12 +123,6 @@ describe("ContainerVariable", function () {
 
     it('should be able to create a new variable and show update afterwards', async function () {
         await createOrUpdateVariable();
-        await capture.page(page, 'create_new_submitted');
-    });
-
-    it('should be possible to go back to list of variables and show created variable', async function () {
-        await cancelVariable();
-        await page.mouse.move(-10, -10);
         await captureCustomVariablesList('create_new_shown_in_list');
     });
 
@@ -144,12 +138,11 @@ describe("ContainerVariable", function () {
 
     it('should enable edit button after changing a field', async function () {
         await setVariableName('variableNameNew');
-        await createOrUpdateVariable();
         await capture.page(page, 'edit_url_updated');
     });
 
     it('should have updated the list of variables', async function () {
-        await cancelVariable();
+        await createOrUpdateVariable();
         await captureCustomVariablesList('edit_updated_back_to_list');
     });
 
@@ -209,11 +202,6 @@ describe("ContainerVariable", function () {
 
     it('should be possible to create a variable with advanced settings', async function () {
         await createOrUpdateVariable();
-        await capture.page(page, 'create_advanced_submitted');
-    });
-
-    it('should be possible to create a variable with advanced settings', async function () {
-        await cancelVariable();
         await captureCustomVariablesList('create_advanced_verified');
     });
 
