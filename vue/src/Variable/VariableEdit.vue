@@ -103,6 +103,7 @@
                 @update:model-value="variable.default_value = $event; setValueHasChanged()"
                 :title="translate('TagManager_DefaultValue')"
                 :inline-help="translate('TagManager_DefaultValueHelp')"
+                :placeholder="translate('TagManager_DefaultValuePlaceholder')"
               />
             </div>
             <div class="form-group row">

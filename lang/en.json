@@ -1076,6 +1076,7 @@
         "MatomoConfigurationMatomoTrackingEndpointCustomPlaceholder": "e.g. custom.php",
         "MatomoConfigurationMatomoRequestContentTypePlaceholder": "e.g. application/x-www-form-urlencoded; charset=UTF-8",
         "UrlParameterVariableNamePlaceholder": "e.g. lang",
-        "JavaScriptVariableNamePlaceholder": "e.g. document.referrer"
+        "JavaScriptVariableNamePlaceholder": "e.g. document.referrer",
+        "DefaultValuePlaceholder": "Value to use if the variable is empty (e.g. Unknown)"
     }
 }
