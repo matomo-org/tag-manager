@@ -555,10 +555,8 @@ export default defineComponent({
             return;
           }
 
-          MatomoUrl.updateHash({
-            ...MatomoUrl.hashParsed.value,
-            idTrigger,
-          });
+          // Go back to the list of triggers
+          this.cancel();
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Trigger'));
@@ -611,6 +609,9 @@ export default defineComponent({
         TriggersStore.reload(this.idContainer, this.idContainerVersion).then(() => {
           this.initIdTrigger();
         });
+
+        // Go back to the list of triggers
+        this.cancel();
 
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Trigger'));
         let wantToDeploy = '';

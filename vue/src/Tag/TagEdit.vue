@@ -697,13 +697,9 @@ export default defineComponent({
 
         this.isDirty = false;
 
-        const idTag = response.value;
-
         TagsStore.reload(this.idContainer, this.idContainerVersion).then(() => {
-          MatomoUrl.updateHash({
-            ...MatomoUrl.hashParsed.value,
-            idTag,
-          });
+          // Go back to the list of tags
+          this.cancel();
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Tag'));
@@ -752,6 +748,9 @@ export default defineComponent({
         TagsStore.reload(this.idContainer, this.idContainerVersion).then(() => {
           this.initIdTag();
         });
+
+        // Go back to the list of tags
+        this.cancel();
 
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Tag'));
         let wantToDeploy = '';

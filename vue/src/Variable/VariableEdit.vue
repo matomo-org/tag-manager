@@ -557,10 +557,8 @@ export default defineComponent({
             return;
           }
 
-          MatomoUrl.updateHash({
-            ...MatomoUrl.hashParsed.value,
-            idVariable,
-          });
+          // Go back to the list of variables
+          this.cancel();
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Variable'));
@@ -614,6 +612,9 @@ export default defineComponent({
         VariablesStore.reload(this.idContainer, this.idContainerVersion).then(() => {
           this.initIdVariable();
         });
+
+        // Go back to the list of variables
+        this.cancel();
 
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Variable'));
         let wantToDeploy = '';
