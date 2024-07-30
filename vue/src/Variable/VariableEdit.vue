@@ -39,16 +39,6 @@
           <div>
             <Field
               uicontrol="text"
-              name="type"
-              :model-value="variable.typeMetadata?.name"
-              :disabled="true"
-              :inline-help="typeInlineHelp"
-              :title="translate('TagManager_Type')"
-            />
-          </div>
-          <div>
-            <Field
-              uicontrol="text"
               name="name"
               :model-value="variable.name"
               @update:model-value="variable.name = $event; setValueHasChanged()"
@@ -420,6 +410,9 @@ export default defineComponent({
 
             this.addLookUpEntryIfNoneExists();
             this.isDirty = false;
+            if (this.variable.typeMetadata?.name) {
+              this.editTitle += `: ${this.variable.typeMetadata.name}`;
+            }
           });
 
           return;
@@ -496,6 +489,10 @@ export default defineComponent({
         lookup_table: [],
         typeMetadata: variableTemplate,
       };
+
+      if (this.variable.typeMetadata?.name) {
+        this.editTitle += `: ${this.variable.typeMetadata.name}`;
+      }
 
       this.parameterValues = Object.fromEntries(variableTemplate.parameters.map(
         (s) => [s.name, s.value],

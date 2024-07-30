@@ -39,16 +39,6 @@
           <div>
             <Field
               uicontrol="text"
-              name="type"
-              :model-value="trigger.typeMetadata?.name"
-              :disabled="true"
-              :inline-help="`${trigger.typeMetadata?.description} ${trigger.typeMetadata?.help}`"
-              :title="translate('TagManager_Type')"
-            />
-          </div>
-          <div>
-            <Field
-              uicontrol="text"
               name="name"
               :model-value="trigger.name"
               @update:model-value="trigger.name = $event; setValueHasChanged()"
@@ -440,6 +430,9 @@ export default defineComponent({
             this.addConditionEntryIfNoneExists();
             this.onConditionChange();
             this.isDirty = false;
+            if (this.trigger.typeMetadata?.name) {
+              this.editTitle += `: ${this.trigger.typeMetadata.name}`;
+            }
           });
           return;
         }
@@ -500,6 +493,10 @@ export default defineComponent({
         conditions: [],
         typeMetadata: triggerTemplate,
       };
+
+      if (this.trigger.typeMetadata?.name) {
+        this.editTitle += `: ${this.trigger.typeMetadata.name}`;
+      }
 
       this.parameterValues = Object.fromEntries(triggerTemplate.parameters.map(
         (s) => [s.name, s.value],
