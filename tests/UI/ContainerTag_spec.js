@@ -141,18 +141,11 @@ describe("ContainerTag", function () {
 
     it('should be able to create a new tag and show update afterwards', async function () {
         await createOrUpdateTag();
-        await capture.page(page, 'create_new_submitted');
-    });
-
-    it('should be possible to go back to list of tags and show created tag', async function () {
-        await page.click('.notification .close');
-        await cancelTag();
-        await page.mouse.move(-10, -10);
-        await page.waitForTimeout(250);
         await capture.page(page, 'create_new_shown_in_list');
     });
 
     it('should be possible to edit a tag by clicking on edit', async function () {
+        await page.click('.notification .close');
         await clickFirstRowTableAction('icon-edit');
         await capture.page(page, 'edit_through_list');
     });
@@ -180,15 +173,12 @@ describe("ContainerTag", function () {
 
     it('should enable edit button after changing a field', async function () {
         await setTagName('tagNameNew');
-        await createOrUpdateTag();
         await capture.page(page, 'edit_url_updated');
     });
 
     it('should have updated the list of tags', async function () {
-        await page.click('.notification .close');
-        await cancelTag();
-        await page.mouse.move(-10, -10);
-        await page.waitForTimeout(250);
+        await createOrUpdateTag();
+        await page.waitForNetworkIdle();
         await capture.page(page, 'edit_updated_back_to_list');
     });
 
@@ -288,13 +278,6 @@ describe("ContainerTag", function () {
         await page.evaluate(function () {
             $('.showAdvancedSettings').click();
         });
-        await capture.page(page, 'create_advanced_submitted');
-    });
-
-    it('should be possible to create a tag with conditions filter', async function () {
-        await page.click('.notification .close');
-        await cancelTag();
-        await page.waitForTimeout(200);
         await capture.page(page, 'create_advanced_verified');
     });
 

@@ -25,6 +25,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. attribute-suffix</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Only add suffix, If data attribute is data-demo just set &quot;demo&quot;</description>
@@ -103,6 +104,7 @@
 						<type>string</type>
 						<uiControl>textarea</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. function () { return ""; }</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The value should start with &quot;function() { &quot; and end with &quot;return yourValue; }&quot;. You have to define a function and return a value. We highly recommend to test the pasted JavaScript function to avoid JavaScript errors on your website.</description>
@@ -154,6 +156,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. #submitOrderBtnId</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are &quot;.classname&quot;, &quot;#id&quot; or &quot;li a&quot;.</description>
@@ -170,6 +173,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. submitOrderBtnId</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The id attribute specifies a unique id for an HTML element. Insert here the value of an ID attribute of any element within your website.</description>
@@ -186,6 +190,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. class</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description />
@@ -218,6 +223,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. object1.myPropertyOfObject1</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example &quot;object1.myPropertyOfObject1&quot;.</description>
@@ -250,6 +256,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. cookieName</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description />
@@ -298,6 +305,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. document.referrer</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The name of any variable that is available within the global scope. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example &quot;document.referrer&quot;.</description>
@@ -371,6 +379,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. lang</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>For example when your page has URL parameters such as &quot;?lang=NZ&quot; and you want to get the value &quot;NZ&quot;, then you need to enter &quot;lang&quot;.</description>
@@ -506,6 +515,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>A constant value (e.g. Books)</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description />
@@ -929,6 +939,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 180</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Set the cross domain linking timeout (in seconds). By default, the two visits across domains will be linked together when the link is clicked and the page is loaded within a 180 seconds timeout window.</description>
@@ -1009,6 +1020,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 15</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The time interval in seconds in which to send pings. Can not be lower then 5s.</description>
@@ -1121,6 +1133,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 393</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Timeout of pk_id in full days. By default, the Matomo tracking cookie expires in 13 months (365 + 28 days) = 393 days.</description>
@@ -1137,6 +1150,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 182</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Timeout of the referral cookie in full days. By default, the Matomo tracking cookie expires in 6 months = 182 days.</description>
@@ -1153,6 +1167,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 30</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Timeout of the session cookie in minutes.</description>
@@ -1205,6 +1220,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. _pk_</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The name prefix of the cookies.</description>
@@ -1221,6 +1237,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. /</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>When tracking many subdirectories in separate websites, the cookie path prevents the number of cookies to quickly increase and prevent browser from deleting some of the cookies. This ensures optimal data accuracy and improves performance for your users (fewer cookies are sent with each request).</description>
@@ -1461,6 +1478,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. custom.js</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Here you can configure a non standard path to fetch the tracker from. Will be appended to the Matomo URL. Should not start with '/'. Keep in mind that, since this is non standard, you have to handle the requests there yourself!</description>
@@ -1499,6 +1517,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. custom.php</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Here you can configure a non standard path for tracking requests. Will be appended to the Matomo URL. Should not start with '/'. Keep in mind that, since this is non standard, you have to handle the requests there yourself!</description>
@@ -1570,6 +1589,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. application/x-www-form-urlencoded; charset=UTF-8</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Set request Content-Type header value for POST requests.</description>

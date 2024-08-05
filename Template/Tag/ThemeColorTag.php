@@ -26,6 +26,7 @@ class ThemeColorTag extends BaseTag
                 $field->title = Piwik::translate('TagManager_ThemeColorTagName');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_ThemeColorTagThemeColorDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_ThemeColorPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value, Setting $setting) {
                     $value = trim($value);

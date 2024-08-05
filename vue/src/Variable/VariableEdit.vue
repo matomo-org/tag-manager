@@ -39,22 +39,13 @@
           <div>
             <Field
               uicontrol="text"
-              name="type"
-              :model-value="variable.typeMetadata?.name"
-              :disabled="true"
-              :inline-help="typeInlineHelp"
-              :title="translate('TagManager_Type')"
-            />
-          </div>
-          <div>
-            <Field
-              uicontrol="text"
               name="name"
               :model-value="variable.name"
               @update:model-value="variable.name = $event; setValueHasChanged()"
               :maxlength="50"
               :title="translate('General_Name')"
               :inline-help="translate('TagManager_VariableNameHelp')"
+              :placeholder="translate('TagManager_VariableNamePlaceholder')"
             />
           </div>
           <div>
@@ -64,8 +55,9 @@
               :model-value="variable.description"
               @update:model-value="variable.description = $event; setValueHasChanged()"
               :maxlength="1000"
-              :title="translate('General_Description')"
+              :title="translate('TagManager_Description')"
               :inline-help="translate('TagManager_VariableDescriptionHelp')"
+              :placeholder="translate('TagManager_VariableDescriptionPlaceholder')"
             />
           </div>
           <div
@@ -111,6 +103,7 @@
                 @update:model-value="variable.default_value = $event; setValueHasChanged()"
                 :title="translate('TagManager_DefaultValue')"
                 :inline-help="translate('TagManager_DefaultValueHelp')"
+                :placeholder="translate('TagManager_DefaultValuePlaceholder')"
               />
             </div>
             <div class="form-group row">
@@ -418,6 +411,9 @@ export default defineComponent({
 
             this.addLookUpEntryIfNoneExists();
             this.isDirty = false;
+            if (this.variable.typeMetadata?.name) {
+              this.editTitle += `: ${this.variable.typeMetadata.name}`;
+            }
           });
 
           return;
@@ -495,6 +491,10 @@ export default defineComponent({
         typeMetadata: variableTemplate,
       };
 
+      if (this.variable.typeMetadata?.name) {
+        this.editTitle += `: ${this.variable.typeMetadata.name}`;
+      }
+
       this.parameterValues = Object.fromEntries(variableTemplate.parameters.map(
         (s) => [s.name, s.value],
       ));
@@ -558,10 +558,8 @@ export default defineComponent({
             return;
           }
 
-          MatomoUrl.updateHash({
-            ...MatomoUrl.hashParsed.value,
-            idVariable,
-          });
+          // Go back to the list of variables
+          this.cancel();
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Variable'));
@@ -615,6 +613,9 @@ export default defineComponent({
         VariablesStore.reload(this.idContainer, this.idContainerVersion).then(() => {
           this.initIdVariable();
         });
+
+        // Go back to the list of variables
+        this.cancel();
 
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Variable'));
         let wantToDeploy = '';

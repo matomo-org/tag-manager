@@ -33,6 +33,7 @@ class BugsnagTag extends BaseTag
                 $field->title = Piwik::translate('TagManager_BugsnagTagApiKeyTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_BugsnagTagApiKeyDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_BingUETTagIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->transform = function ($value) {
                     return trim($value);

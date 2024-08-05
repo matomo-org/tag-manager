@@ -33,6 +33,7 @@ class AllDownloadsClickTrigger extends BaseTrigger
             $this->makeSetting('downloadExtensions', $downloadFileExtensions, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_AllDownloadsClickTriggerDownloadExtensionsTitle');
                 $field->description = Piwik::translate('TagManager_AllDownloadsClickTriggerDownloadExtensionsDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_AllDownloadsClickTriggerDownloadExtensionsPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength($min = 1, $max = 700);
                 $field->transform = function ($value) {

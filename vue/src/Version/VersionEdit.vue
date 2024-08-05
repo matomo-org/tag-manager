@@ -35,6 +35,7 @@
                 @update:model-value="version.name = $event; setValueHasChanged()"
                 :maxlength="30"
                 :title="translate('TagManager_VersionName')"
+                :placeholder="translate('TagManager_VersionNamePlaceholder')"
               />
             </div>
             <div>
@@ -43,8 +44,9 @@
                 name="description"
                 :model-value="version.description"
                 @update:model-value="version.description = $event; setValueHasChanged()"
-                :title="translate('TagManager_VersionDescription')"
+                :title="translate('TagManager_VersionDescriptionOptional')"
                 :inline-help="translate('TagManager_VersionDescriptionHelp')"
+                :placeholder="translate('TagManager_VersionDescriptionPlaceholder')"
               />
             </div>
             <SaveButton

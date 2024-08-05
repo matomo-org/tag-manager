@@ -31,6 +31,7 @@ class SentryRavenTag extends BaseTag
                 $field->title = Piwik::translate('TagManager_SentryRavenTagDSNTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_SentryRavenTagDSNDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_SentryRavenTagDSNPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->transform = function ($value) {
                     return trim($value);

@@ -39,22 +39,13 @@
           <div>
             <Field
               uicontrol="text"
-              name="type"
-              :model-value="trigger.typeMetadata?.name"
-              :disabled="true"
-              :inline-help="`${trigger.typeMetadata?.description} ${trigger.typeMetadata?.help}`"
-              :title="translate('TagManager_Type')"
-            />
-          </div>
-          <div>
-            <Field
-              uicontrol="text"
               name="name"
               :model-value="trigger.name"
               @update:model-value="trigger.name = $event; setValueHasChanged()"
               :maxlength="50"
               :title="translate('General_Name')"
               :inline-help="translate('TagManager_TriggerNameHelp')"
+              :placeholder="translate('TagManager_TriggerNamePlaceholder')"
             />
           </div>
           <div>
@@ -64,8 +55,9 @@
               :model-value="trigger.description"
               @update:model-value="trigger.description = $event; setValueHasChanged()"
               :maxlength="1000"
-              :title="translate('General_Description')"
+              :title="translate('TagManager_Description')"
               :inline-help="translate('TagManager_TriggerDescriptionHelp')"
+              :placeholder="translate('TagManager_TriggerDescriptionPlaceholder')"
             />
           </div>
           <div
@@ -438,6 +430,9 @@ export default defineComponent({
             this.addConditionEntryIfNoneExists();
             this.onConditionChange();
             this.isDirty = false;
+            if (this.trigger.typeMetadata?.name) {
+              this.editTitle += `: ${this.trigger.typeMetadata.name}`;
+            }
           });
           return;
         }
@@ -499,6 +494,10 @@ export default defineComponent({
         typeMetadata: triggerTemplate,
       };
 
+      if (this.trigger.typeMetadata?.name) {
+        this.editTitle += `: ${this.trigger.typeMetadata.name}`;
+      }
+
       this.parameterValues = Object.fromEntries(triggerTemplate.parameters.map(
         (s) => [s.name, s.value],
       ));
@@ -556,10 +555,8 @@ export default defineComponent({
             return;
           }
 
-          MatomoUrl.updateHash({
-            ...MatomoUrl.hashParsed.value,
-            idTrigger,
-          });
+          // Go back to the list of triggers
+          this.cancel();
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Trigger'));
@@ -612,6 +609,9 @@ export default defineComponent({
         TriggersStore.reload(this.idContainer, this.idContainerVersion).then(() => {
           this.initIdTrigger();
         });
+
+        // Go back to the list of triggers
+        this.cancel();
 
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Trigger'));
         let wantToDeploy = '';
