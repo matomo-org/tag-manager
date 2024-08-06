@@ -26,6 +26,7 @@ class LinkedinInsightTag extends BaseTag
                 $field->title =  Piwik::translate('TagManager_LinkedinInsightTagPartnerIdTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_LinkedinInsightTagPartnerIdDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_LinkedinInsightTagPartnerIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);

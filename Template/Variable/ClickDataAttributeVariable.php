@@ -57,6 +57,7 @@ class ClickDataAttributeVariable extends BaseVariable
             $this->makeSetting('dataAttribute', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_ClickDataAttributeDataAttributeTitle');
                 $field->description = Piwik::translate('TagManager_ClickDataAttributeDataAttributeDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_ClickDataAttributeDataAttributePlaceholder')];
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->validators[] = new NotEmpty();
             }),

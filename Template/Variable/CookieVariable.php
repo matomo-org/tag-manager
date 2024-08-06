@@ -24,6 +24,7 @@ class CookieVariable extends BaseVariable
         return array(
             $this->makeSetting('cookieName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_CookieVariableCookieNameTitle');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_CookieVariableCookieNamePlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new CharacterLength(1, 500);
                 $field->transform = function ($value) {

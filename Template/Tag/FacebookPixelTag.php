@@ -23,6 +23,7 @@ class FacebookPixelTag extends BaseTag
         return array(
             $this->makeSetting('pixelId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_FacebookPixelTagPixelIdTitle');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_FacebookPixelTagPixelIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->transform = function ($value) {
                     return trim($value);

@@ -25,6 +25,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 7z,aac,apk,arc,arj,asf,asx,avi,azw3,bin,csv,deb,dm</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Comma separated list of file extensions which will be considered as a download.</description>
@@ -166,6 +167,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. #submitOrderBtnId</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are &quot;.classname&quot;, &quot;#id&quot; or &quot;li a&quot;.</description>
@@ -182,6 +184,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. submitOrderBtnId</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The id attribute specifies a unique id for an HTML element. Insert here the value of an ID attribute of any element within your website.</description>
@@ -218,6 +221,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 50</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description />
@@ -302,6 +306,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 0</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Enter &quot;0&quot; to trigger it each time the event occurs</description>
@@ -437,6 +442,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Enter &quot;0&quot; to not limit how often the trigger should be triggered</description>
@@ -542,6 +548,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 3000</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description />
@@ -578,6 +585,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 0</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Enter &quot;0&quot; to not limit the trigger.</description>

@@ -40,6 +40,7 @@ class FullscreenTrigger extends BaseTrigger
             $this->makeSetting('triggerLimit', 0, FieldConfig::TYPE_INT, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_FullscreenTriggerTriggerLimitTitle');
                 $field->description = Piwik::translate('TagManager_FullscreenTriggerTriggerLimitDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_PlaceholderZero')];
                 $field->validators[] = new NumberRange($min = 0);
             }),
         );
