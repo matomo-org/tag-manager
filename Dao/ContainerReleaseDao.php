@@ -71,7 +71,8 @@ class ContainerReleaseDao extends BaseDao implements TagManagerDao
         $sql = "SELECT crd.idcontainer, crd.idsite 
                 FROM $table crd 
                 LEFT JOIN $containerTable conr ON crd.idcontainer = conr.idcontainer 
-                WHERE conr.`status` = ? and crd.`status` = ? group by crd.idsite, crd.idcontainer";
+                WHERE conr.`status` = ? and crd.`status` = ? group by crd.idsite, crd.idcontainer
+                                                             order by crd.idsite, crd.idcontainer";
 
         $containers = Db::fetchAll($sql, array(self::STATUS_ACTIVE, self::STATUS_ACTIVE));
 
