@@ -22,10 +22,11 @@
 	</version>
 	<tags>
 		<row>
-			<idtag>27</idtag>
+			<idtag>29</idtag>
 			<type>Matomo</type>
 			<name>Pageview</name>
 			<description />
+			<status>active</status>
 			<parameters>
 				<matomoConfig>{{Matomo Configuration}}</matomoConfig>
 				<trackingType>pageview</trackingType>

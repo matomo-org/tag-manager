@@ -1077,6 +1077,12 @@
         "MatomoConfigurationMatomoRequestContentTypePlaceholder": "e.g. application/x-www-form-urlencoded; charset=UTF-8",
         "UrlParameterVariableNamePlaceholder": "e.g. lang",
         "JavaScriptVariableNamePlaceholder": "e.g. document.referrer",
-        "DefaultValuePlaceholder": "Value to use if the variable is empty (e.g. Unknown)"
+        "DefaultValuePlaceholder": "Value to use if the variable is empty (e.g. Unknown)",
+        "PauseX": "Pause %s",
+        "PauseTagConfirm": "Are you sure you want to pause this tag?",
+        "ResumeX": "Resume %s",
+        "ResumeTagConfirm": "Are you sure you want to activate this tag again?",
+        "DiffPaused": "Paused",
+        "DiffAddedPaused": "Added in paused state"
     }
 }

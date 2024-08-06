@@ -73,7 +73,6 @@ class Export
         $tags = $this->tags->getContainerTags($idSite, $idContainerVersion);
         foreach ($tags as $index => &$tag) {
             unset($tag['idcontainerversion']);
-            unset($tag['status']);
             unset($tag['idsite']);
             unset($tag['typeMetadata']);
             unset($tag['deleted_date']);

@@ -10,6 +10,7 @@ namespace Piwik\Plugins\TagManager\Context;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Context\Storage\StorageInterface;
+use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Environment;
@@ -105,6 +106,9 @@ abstract class BaseContext
         ];
 
         foreach ($this->tagModel->getContainerTags($idSite, $idContainerVersion) as $tag) {
+            if ($tag['status'] !== TagsDao::STATUS_ACTIVE) {
+                continue;
+            }
             $containerJs['tags'][] = [
                 'id' => $tag['idtag'],
                 'type' => $tag['type'],

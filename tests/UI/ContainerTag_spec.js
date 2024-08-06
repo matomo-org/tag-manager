@@ -182,6 +182,62 @@ describe("ContainerTag", function () {
         await capture.page(page, 'edit_updated_back_to_list');
     });
 
+    it('should show confirm pause tag dialog', async function () {
+        await page.goto(container1Base);
+        await clickFirstRowTableAction('icon-pause', 3);
+        await capture.modal(page, 'confirm_pause_tag');
+    });
+
+    it('should do nothing when selecting no for paused tag', async function () {
+        await modal.clickButton(page, 'No');
+        await capture.page(page, 'confirm_paused_tag_declined');
+    });
+
+    it('should pause a tag when confirmed', async function () {
+        await clickFirstRowTableAction('icon-pause', 3);
+        await modal.clickButton(page, 'Yes');
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'confirm_pause_tag_confirmed');
+    });
+
+    it('should show paused status in publish version changes list', async function () {
+        await page.evaluate(() => $('.icon-rocket').parent().click());
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(500);
+        await page.evaluate(() => $('.modal.open').scrollTop($('.modal.open').height()+500));
+        await page.waitForTimeout(100);
+        const content = await page.$('.modal.open');
+        expect(await content.screenshot()).to.matchImage('paused_publish_new_version_list');
+    });
+
+    it('should show confirm resume tag dialog', async function () {
+      await page.goto(container1Base);
+      await clickFirstRowTableAction('icon-play', 3);
+      await capture.modal(page, 'confirm_resume_tag');
+  });
+
+  it('should do nothing when selecting no for resume tag', async function () {
+      await modal.clickButton(page, 'No');
+      await capture.page(page, 'confirm_resume_tag_declined');
+  });
+
+  it('should resume a tag when confirmed', async function () {
+      await clickFirstRowTableAction('icon-play', 3);
+      await modal.clickButton(page, 'Yes');
+      await page.waitForNetworkIdle();
+      await capture.page(page, 'confirm_resume_tag_confirmed');
+  });
+
+  it('should show resume status in publish version changes list', async function () {
+      await page.evaluate(() => $('.icon-rocket').parent().click());
+      await page.waitForNetworkIdle();
+      await page.waitForTimeout(500);
+      await page.evaluate(() => $('.modal.open').scrollTop($('.modal.open').height()+500));
+      await page.waitForTimeout(100);
+      const content = await page.$('.modal.open');
+      expect(await content.screenshot()).to.matchImage('resume_publish_new_version_list');
+  });
+
     it('should show confirm delete tag dialog', async function () {
         await page.goto(container1Base);
         await clickFirstRowTableAction('icon-delete', 3);

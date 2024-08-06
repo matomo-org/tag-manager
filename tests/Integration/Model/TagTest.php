@@ -748,6 +748,116 @@ class TagTest extends IntegrationTestCase
         $this->assertSame(1, $count);
     }
 
+    public function testPauseContainerTag()
+    {
+        $params = ['customHtml' => '<div>foo</div>'];
+        $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v1', $params);
+        $idTag3 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v2', $params);
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v2', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v3', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite, $this->containerVersion2, null, 'v4', $params, [$this->idTrigger2]);
+
+        $this->model->setCurrentDateTime('2019-03-04 03:03:03');
+
+        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        // deletes nothing when no match
+        $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, 9999);
+        $this->model->pauseContainerTag($this->idSite, 9999, $idTag3);
+        $this->model->pauseContainerTag(9999, $this->containerVersion1, $idTag3);
+
+        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, $idTag3);
+
+        // removes correct one
+        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        // sets updated date etc
+        $tags = $this->dao->getAllTags();
+        $count = 0;
+        foreach ($tags as $tag) {
+            if ($tag['idtag'] === $idTag3) {
+                $count++;
+                $this->assertSame(TagsDao::STATUS_PAUSED, $tag['status']);
+                $this->assertEmpty($tag['deleted_date']);
+            } else {
+                $this->assertSame(TagsDao::STATUS_ACTIVE, $tag['status']);
+                $this->assertEmpty($tag['deleted_date']);
+            }
+        }
+        // make sure above assertion was executed
+        $this->assertSame(1, $count);
+    }
+
+    public function testResumeContainerTag()
+    {
+        $params = ['customHtml' => '<div>foo</div>'];
+        $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v1', $params);
+        $idTag3 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v2', $params);
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v2', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v3', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite, $this->containerVersion2, null, 'v4', $params, [$this->idTrigger2]);
+
+        $this->model->setCurrentDateTime('2019-03-04 03:03:03');
+
+        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        // deletes nothing when no match
+        $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, 9999);
+        $this->model->resumeContainerTag($this->idSite, $this->containerVersion1, 9999);
+        $this->model->pauseContainerTag($this->idSite, 9999, $idTag3);
+        $this->model->resumeContainerTag($this->idSite, 9999, $idTag3);
+        $this->model->pauseContainerTag(9999, $this->containerVersion1, $idTag3);
+        $this->model->resumeContainerTag(9999, $this->containerVersion1, $idTag3);
+
+        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, $idTag3);
+
+        // removes correct one
+        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        // sets updated date etc
+        $tags = $this->dao->getAllTags();
+        $count = 0;
+        foreach ($tags as $tag) {
+            if ($tag['idtag'] === $idTag3) {
+                $count++;
+                $this->assertSame(TagsDao::STATUS_PAUSED, $tag['status']);
+                $this->assertEmpty($tag['deleted_date']);
+            } else {
+                $this->assertSame(TagsDao::STATUS_ACTIVE, $tag['status']);
+                $this->assertEmpty($tag['deleted_date']);
+            }
+        }
+        // make sure above assertion was executed
+        $this->assertSame(1, $count);
+
+        $this->model->resumeContainerTag($this->idSite, $this->containerVersion1, $idTag3);
+        $tags = $this->dao->getAllTags();
+        $count = 0;
+        foreach ($tags as $tag) {
+            $count++;
+            $this->assertSame(TagsDao::STATUS_ACTIVE, $tag['status']);
+            $this->assertEmpty($tag['deleted_date']);
+        }
+        // make sure above assertion was executed
+        $this->assertSame(6, $count);
+    }
+
     public function testUpdateParametersSuccess()
     {
         $this->model->setCurrentDateTime('2018-02-01 05:06:07');

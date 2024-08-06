@@ -47,7 +47,7 @@ export default function diffDraftVersion(
             // matching, check if different
             diff.push({
               entityType,
-              type: 'TagManager_DiffModified',
+              type: (key === 'status' ? 'TagManager_DiffPaused' : 'TagManager_DiffModified'),
               name: array1Item.name as string,
               lastChanged: array1Item.updated_date_pretty as string,
             });
@@ -61,12 +61,21 @@ export default function diffDraftVersion(
         return;
       }
 
-      diff.push({
-        entityType,
-        type: 'TagManager_DiffAdded',
-        name: array1Item.name as string,
-        lastChanged: array1Item.updated_date_pretty as string,
-      });
+      if (array1Item.status === 'paused') {
+        diff.push({
+          entityType,
+          type: 'TagManager_DiffAddedPaused',
+          name: array1Item.name as string,
+          lastChanged: array1Item.updated_date_pretty as string,
+        });
+      } else {
+        diff.push({
+          entityType,
+          type: 'TagManager_DiffAdded',
+          name: array1Item.name as string,
+          lastChanged: array1Item.updated_date_pretty as string,
+        });
+      }
     });
 
     array2.forEach((array2Item) => {
@@ -143,6 +152,7 @@ export default function diffDraftVersion(
         'fire_triggers',
         'block_triggers',
         'parameters',
+        'status',
       ],
     );
 

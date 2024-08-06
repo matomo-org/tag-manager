@@ -15,6 +15,7 @@ abstract class BaseDao
 {
     const STATUS_ACTIVE = 'active';
     const STATUS_DELETED = 'deleted';
+    const STATUS_PAUSED = 'paused';
 
     protected $table = '';
     protected $tablePrefixed = '';

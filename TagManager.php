@@ -924,6 +924,12 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_UrlParameterVariableNamePlaceholder';
         $result[] = 'TagManager_JavaScriptVariableNamePlaceholder';
         $result[] = 'TagManager_DefaultValuePlaceholder';
+	$result[] = 'TagManager_PauseX';
+        $result[] = 'TagManager_PauseTagConfirm';
+        $result[] = 'TagManager_ResumeX';
+        $result[] = 'TagManager_ResumeTagConfirm';
+        $result[] = 'TagManager_DiffPaused';
+        $result[] = 'TagManager_DiffAddedPaused';
     }
 
     public function getStylesheetFiles(&$stylesheets)

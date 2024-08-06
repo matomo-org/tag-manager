@@ -559,6 +559,68 @@ class API extends \Piwik\Plugin\API
     }
 
     /**
+     * Pause the given tag from the given container version.
+     *
+     * @param int $idSite The id of the site the given container belongs to
+     * @param string $idContainer The id of a container, for example "6OMh6taM"
+     * @param int $idContainerVersion The ID of the container version, a container may have multiple versions and
+     *                                the list of tags will be different per container. Therefore you need to provide
+     *                                the ID of the version.
+     * @param int $idTag The id of the tag you want to pause
+     */
+    public function pauseContainerTag($idSite, $idContainer, $idContainerVersion, $idTag)
+    {
+        $this->accessValidator->checkWriteCapability($idSite);
+        $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        if ($this->getContainerTag($idSite, $idContainer, $idContainerVersion, $idTag)) {
+            $this->tags->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            Piwik::postEvent('TagManager.pauseContainerTag.end', array(array(
+                'idSite' => $idSite,
+                'idContainer' => $idContainer,
+                'idContainerVersion' => $idContainerVersion,
+                'idTag' => $idTag
+            )));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Re-acivate the given tag from the given container version.
+     *
+     * @param int $idSite The id of the site the given container belongs to
+     * @param string $idContainer The id of a container, for example "6OMh6taM"
+     * @param int $idContainerVersion The ID of the container version, a container may have multiple versions and
+     *                                the list of tags will be different per container. Therefore you need to provide
+     *                                the ID of the version.
+     * @param int $idTag The id of the tag you want to re-activate
+     */
+    public function resumeContainerTag($idSite, $idContainer, $idContainerVersion, $idTag)
+    {
+        $this->accessValidator->checkWriteCapability($idSite);
+        $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
+
+        if ($this->getContainerTag($idSite, $idContainer, $idContainerVersion, $idTag)) {
+            $this->tags->resumeContainerTag($idSite, $idContainerVersion, $idTag);
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            Piwik::postEvent('TagManager.resumeContainerTag.end', array(array(
+                'idSite' => $idSite,
+                'idContainer' => $idContainer,
+                'idContainerVersion' => $idContainerVersion,
+                'idTag' => $idTag
+            )));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Get a specific tag configuration.
      *
      * @param int $idSite The id of the site the given container belongs to

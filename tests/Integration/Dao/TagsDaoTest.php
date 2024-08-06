@@ -112,6 +112,10 @@ class TagsDaoTest extends IntegrationTestCase
             'status' => TagsDao::STATUS_ACTIVE,
             'description' => $description
         ), $tag);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertEquals('paused', $tag['status']);
     }
 
     public function test_createTag_Full()
@@ -155,6 +159,10 @@ class TagsDaoTest extends IntegrationTestCase
             'status' => TagsDao::STATUS_ACTIVE,
             'description' => $description
         ), $tag);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertEquals('paused', $tag['status']);
     }
 
     public function test_createTag_increasedIdTag()
@@ -172,6 +180,18 @@ class TagsDaoTest extends IntegrationTestCase
         $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
 
         $idTag = $this->createTag($idSite = 3);
+        $this->assertEquals(1, $idTag);
+
+        $this->createTag($idSite = 3);
+    }
+
+    public function test_createTag_failsToInsertSameNameTwiceEvenIfTagPaused()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
+        $idTag = $this->createTag($idSite = 3, $idContainerVersion = 5);
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
         $this->assertEquals(1, $idTag);
 
         $this->createTag($idSite = 3);
@@ -386,6 +406,55 @@ class TagsDaoTest extends IntegrationTestCase
         $this->assertEmpty($tag);
     }
 
+    public function test_shouldPauseContainerTag()
+    {
+        $idTag = $this->createTag($idSite = 4, $idContainerVersion = 7, 'Test name');
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertSame('Test name', $tag['name']);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag);
+        $this->assertEquals('paused', $tag['status']);
+    }
+
+    public function test_shouldNotResumeDeletedContainerTag()
+    {
+        $idTag = $this->createTag($idSite = 4, $idContainerVersion = 7, 'Test name');
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertSame('Test name', $tag['name']);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag);
+        $this->assertEquals('paused', $tag['status']);
+
+        $this->dao->deleteContainerTag($idSite, $idContainerVersion, $idTag, $this->now);
+        $this->dao->resumeContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertEmpty($tag);
+    }
+
+    public function test_shouldResumeContainerTag()
+    {
+        $idTag = $this->createTag($idSite = 4, $idContainerVersion = 7, 'Test name');
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertSame('Test name', $tag['name']);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag);
+        $this->assertEquals('paused', $tag['status']);
+
+        $this->dao->resumeContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag);
+        $this->assertEquals('active', $tag['status']);
+    }
+
     public function test_getAllTags_shouldReturnEmptyArray_WhenThereAreNoTags()
     {
         $tags = $this->dao->getAllTags();
@@ -421,6 +490,8 @@ class TagsDaoTest extends IntegrationTestCase
         $idTag1 = $this->createTag($idSite = 3, $idContainerVersion = 5, 'First Tag');
         $idTag2 = $this->createTag($idSite = 3, $idContainerVersion = 5, 'MySecondTag');
         $idTag3 = $this->createTag($idSite = 4, $idContainerVersion = 5, 'My Third Tag');
+        $idTag4 = $this->createTag($idSite = 4, $idContainerVersion = 5, 'My Fourth Tag');
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag4);
 
         $tags3_4 = $this->dao->getContainerTags($idSite = 3, $idContainerVersion = 4);
         $this->assertEquals(array(), $tags3_4);
@@ -429,7 +500,7 @@ class TagsDaoTest extends IntegrationTestCase
         $tags4_5 = $this->dao->getContainerTags($idSite = 4, $idContainerVersion = 5);
 
         $this->assertCount(2, $tags3_5);
-        $this->assertCount(1, $tags4_5);
+        $this->assertCount(2, $tags4_5);
         $this->assertSame(array(), $this->dao->getContainerTags($idSite = 99, $idContainerVersion = 9));
 
         $this->assertSame($idTag1, $tags3_5[0]['idtag']);
@@ -440,6 +511,8 @@ class TagsDaoTest extends IntegrationTestCase
 
         $this->assertSame($idTag3, $tags4_5[0]['idtag']);
         $this->assertSame(4, $tags4_5[0]['idsite']);
+        $this->assertSame('active', $tags4_5[0]['status']);
+        $this->assertSame('paused', $tags4_5[1]['status']);
 
         // ignores deleted status, was before 2 tags
         $this->dao->deleteContainerTag($idSite = 3, $idContainerVersion = 5, $idTag1, $this->now);
