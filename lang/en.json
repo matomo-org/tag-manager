@@ -1083,6 +1083,9 @@
         "ResumeX": "Resume %s",
         "ResumeTagConfirm": "Are you sure you want to activate this tag again?",
         "DiffPaused": "Paused",
-        "DiffAddedPaused": "Added in paused state"
+        "DiffAddedPaused": "Added in paused state",
+        "DeleteWebsiteExplanationLine1": "Deleting this website will result in the removal of all log data and the configuration of all Matomo Tag Manager containers. This action is permanent and cannot be undone.",
+        "DeleteWebsiteExplanationLine2": "To save a copy of container configurations, click on the container name below and export the desired version:",
+        "DeleteWebsiteExplanationLine3": "Click Confirm when you are ready to delete this website."
     }
 }
