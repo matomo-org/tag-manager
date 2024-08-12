@@ -220,7 +220,7 @@
         "ContainerNameHelp": "The container name lets you define a unique name for this container. Please note that this name will be also available as a variable and therefore publicly visible in the source code of the tag.",
         "ContainerRevisionVariableDescription": "Returns the revision of this container, for example \"5\".",
         "ContainerRevisionVariableName": "Container Revision",
-        "ContainerUsageBenefits": "Each container holds a set of tags that will be added to your site. Once you have created a container, you will receive an HTML snippet that you can embed into your website. Typically, you would have only one container per site. However, you can configure several containers per site for example if one site in Matomo represents multiple sites or if different teams are responsible for different parts of a site.",
+        "ManageContainersIntro": "With Matomo Tag Manager (MTM), you can change your tracking configurations without making changes to your website. These configurations are stored in containers. It is common to have only one container per site, although multiple containers can be added for a complex multi-domain or multi-team setup. Matomo automatically pre-configures the first container for your website. %1$sLearn more%2$s.",
         "ContainerVersionVariableDescription": "Returns the version of this container.",
         "ContainerVersionVariableName": "Container Version Name",
         "ContainerX": "Container \"%s\"",

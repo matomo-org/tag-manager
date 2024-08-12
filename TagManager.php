@@ -441,7 +441,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_CreateNewX';
         $result[] = 'TagManager_EditX';
         $result[] = 'TagManager_Context';
-        $result[] = 'TagManager_ContainerUsageBenefits';
+        $result[] = 'TagManager_ManageContainersIntro';
         $result[] = 'TagManager_ContainerNameHelp';
         $result[] = 'TagManager_ContainerContextHelp';
         $result[] = 'TagManager_ContainerDescriptionHelp';
@@ -936,7 +936,6 @@ class TagManager extends \Piwik\Plugin
     {
         $stylesheets[] = "plugins/TagManager/stylesheets/manageList.less";
         $stylesheets[] = "plugins/TagManager/stylesheets/manageEdit.less";
-        $stylesheets[] = "plugins/TagManager/stylesheets/gettingStarted.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Tag/TagEdit.less";
         $stylesheets[] = "plugins/TagManager/vue/src/VariableSelectType/VariableSelectType.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Field/FieldVariableTemplate.less";
