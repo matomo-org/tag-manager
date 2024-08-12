@@ -51,9 +51,7 @@ class Menu extends \Piwik\Plugin\Menu
             // makes initial pageview slower otherwise
             $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($idSite);
 
-            if (empty($containers)) {
-                $defaultAction = 'manageContainers';
-            } elseif (count($containers) == 1) {
+            if (count($containers) == 1) {
                 $firstContainer = array_shift($containers);
 
                 $accessValidator = StaticContainer::get('Piwik\Plugins\TagManager\Input\AccessValidator');
