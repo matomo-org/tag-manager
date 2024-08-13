@@ -1083,6 +1083,8 @@
         "ResumeX": "Resume %s",
         "ResumeTagConfirm": "Are you sure you want to activate this tag again?",
         "DiffPaused": "Paused",
-        "DiffAddedPaused": "Added in paused state"
+        "DiffAddedPaused": "Added in paused state",
+        "TagFireLimitAllowedInPreviewModeTitle": "Allow tag fire limits to work in preview mode",
+        "TagFireLimitAllowedInPreviewModeDescription": "Description"
     }
 }

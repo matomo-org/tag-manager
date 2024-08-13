@@ -29,6 +29,7 @@ class ContainersDao extends BaseDao implements TagManagerDao
                   `name` VARCHAR(" . Name::MAX_LENGTH . ") NOT NULL,
                   `description` VARCHAR(" . Description::MAX_LENGTH . ") NOT NULL DEFAULT '',
                   `ignoreGtmDataLayer` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+                  `isTagFireLimitAllowedInPreviewMode` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
                   `status` VARCHAR(10) NOT NULL,
                   `created_date` DATETIME NOT NULL,
                   `updated_date` DATETIME NOT NULL,
@@ -69,7 +70,7 @@ class ContainersDao extends BaseDao implements TagManagerDao
         return !empty($container);
     }
 
-    public function createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer)
+    public function createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode)
     {
         if ($this->isContainerInUse($idContainer)) {
             throw new Exception(Piwik::translate('TagManager_ErrorContainerIdDuplicate'));
@@ -87,6 +88,7 @@ class ContainersDao extends BaseDao implements TagManagerDao
             'name' => $name,
             'description' => !empty($description) ? $description : '',
             'ignoreGtmDataLayer' => !empty($ignoreGtmDataLayer) ? $ignoreGtmDataLayer : 0,
+            'isTagFireLimitAllowedInPreviewMode' => !empty($isTagFireLimitAllowedInPreviewMode) ? $isTagFireLimitAllowedInPreviewMode : 0,
             'status' => $status,
             'created_date' => $createdDate,
             'updated_date' => $createdDate

@@ -79,6 +79,17 @@
             :inline-help="translate('TagManager_IgnoreGtmDataLaterDescription')"
           />
         </div>
+        <div>
+          <Field
+            uicontrol="checkbox"
+            name="isTagFireLimitAllowedInPreviewMode"
+            :model-value="container.isTagFireLimitAllowedInPreviewMode"
+            @update:model-value="container.isTagFireLimitAllowedInPreviewMode = $event;
+            setValueHasChanged()"
+            :title="translate('TagManager_TagFireLimitAllowedInPreviewModeTitle')"
+            :inline-help="translate('TagManager_TagFireLimitAllowedInPreviewModeDescription')"
+          />
+        </div>
         <SaveButton
           class="createButton"
           @confirm="edit ? updateContainer() : createContainer()"

@@ -144,7 +144,7 @@ class Container extends BaseModel
         }
     }
 
-    private function validateContainer($idSite, $name, $description, $ignoreGtmDataLayer)
+    private function validateContainer($idSite, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode)
     {
         $site = new IdSite($idSite);
         $site->check();
@@ -157,18 +157,20 @@ class Container extends BaseModel
 
         $numberRange = new NumberRange(0, 1);
         $numberRange->validate($ignoreGtmDataLayer);
+
+        $numberRange->validate($isTagFireLimitAllowedInPreviewMode);
     }
 
-    public function addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer)
+    public function addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode)
     {
-        $this->validateContainer($idSite, $name, $description, $ignoreGtmDataLayer);
+        $this->validateContainer($idSite, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode);
         $this->contextProvider->checkIsValidContext($context);
 
         $createdDate = $this->getCurrentDateTime();
 
         $idContainer = $this->containerIdGenerator->generateId();
 
-        $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer);
+        $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode);
 
         $this->versionsDao->createDraftVersion($idSite, $idContainer, $createdDate);
 
@@ -177,14 +179,15 @@ class Container extends BaseModel
         return $idContainer;
     }
 
-    public function updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer)
+    public function updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode)
     {
-        $this->validateContainer($idSite, $name, $description, $ignoreGtmDataLayer);
+        $this->validateContainer($idSite, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode);
 
         $columns = array(
             'name' => $name,
             'description' => $description,
-            'ignoreGtmDataLayer' => $ignoreGtmDataLayer
+            'ignoreGtmDataLayer' => $ignoreGtmDataLayer,
+            'isTagFireLimitAllowedInPreviewMode' => $isTagFireLimitAllowedInPreviewMode,
         );
         $this->updateContainerColumns($idSite, $idContainer, $columns);
         $this->generateContainer($idSite, $idContainer);

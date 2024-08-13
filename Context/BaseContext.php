@@ -86,6 +86,7 @@ abstract class BaseContext
 
         $idSite = $container['idsite'];
         $idContainer = $container['idcontainer'];
+        $isTagFireLimitAllowedInPreviewMode = $container['isTagFireLimitAllowedInPreviewMode'];
         $idContainerVersion = $release['idcontainerversion'];
         $container['idcontainerversion'] = $idContainerVersion;
         $environment = $release['environment'];
@@ -96,6 +97,7 @@ abstract class BaseContext
 
         $containerJs = [
             'id' => $idContainer,
+            'isTagFireLimitAllowedInPreviewMode' => $isTagFireLimitAllowedInPreviewMode,
             'idsite' => $idSite,
             'versionName' => $version['name'],
             'revision' => $version['revision'],
