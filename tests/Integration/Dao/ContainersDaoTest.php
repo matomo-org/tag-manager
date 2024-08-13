@@ -79,7 +79,7 @@ class ContainersDaoTest extends IntegrationTestCase
         $description = 'My description';
         $createdDate = $this->now;
 
-        $idContainerReturned = $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, 0);
+        $idContainerReturned = $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, 0, 0);
         $this->assertSame($idContainer, $idContainerReturned);
 
         $container = $this->dao->getContainer($idSite, $idContainer);

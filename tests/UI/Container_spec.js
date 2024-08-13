@@ -95,7 +95,22 @@ describe("Container", function () {
         await capture.page(page, 'edit_url');
     });
 
+    it('should set isTagFireLimitAllowedInPreviewMode as active when set and save', async function(){
+        await page.evaluate(() => $('#isTagFireLimitAllowedInPreviewMode').click());
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'edit_url_with_isTagFireLimitAllowedInPreviewMode');
+    });
+
+    it('should set isTagFireLimitAllowedInPreviewMode as active when set and save', async function(){
+        await page.evaluate(() => $('#isTagFireLimitAllowedInPreviewMode').click());
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'edit_url_without_isTagFireLimitAllowedInPreviewMode');
+    });
+
     it('should enable edit button after changing a field', async function () {
+        await page.goto(generalParamsSite1 + urlBase + '#?idContainer=aaacont2');
         await form.sendFieldValue(page, '.editContainer #name', 'My Updated Name');
         await createOrUpdateContainer();
         await capture.page(page, 'edit_url_updated');
