@@ -6,7 +6,8 @@
 	<name>Container2</name>
 	<description>My container 2 description</description>
 	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
-	
+	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
+
 	
 	
 	
