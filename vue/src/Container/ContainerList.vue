@@ -13,7 +13,7 @@
         translate('TagManager_Containers'),
       )"
     >
-      <p>{{ translate('TagManager_ContainerUsageBenefits') }}</p>
+      <p v-html="$sanitize(getManageContainersIntro)"></p>
       <table v-content-table>
         <thead>
           <tr>
@@ -139,6 +139,8 @@ import {
   ContentBlock,
   ContentTable,
   MatomoUrl,
+  translate,
+  externalLink,
 } from 'CoreHome';
 import AvailableContextsStore from '../AvailableContexts.store';
 import ContainersStore from './Containers.store';
@@ -190,6 +192,10 @@ export default defineComponent({
         return lhs.created_date > rhs.created_date ? -1 : 0;
       });
       return sorted;
+    },
+    getManageContainersIntro(): string {
+      const linkString = externalLink('https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/');
+      return translate('TagManager_ManageContainersIntro', linkString, '</a>');
     },
   },
   methods: {
