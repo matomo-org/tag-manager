@@ -589,6 +589,7 @@
         "LookupTableMatchValue": "an luach seo",
         "LookupTableOutValue": "ansin thiontú go dtí an luach seo",
         "LookupTableTitle": "Tiontaigh luach athróige go huathoibríoch go luach eile nuair a bhíonn luach na hathróige seo…",
+        "ManageContainersIntro": "Le Bainisteoir Clibeanna Matomo (MTM), is féidir leat do chuid cumraíochtaí rianaithe a athrú gan athruithe a dhéanamh ar do láithreán gréasáin. Stóráiltear na cumraíochtaí seo i gcoimeádáin. Is gnách nach mbeadh ach coimeádán amháin in aghaidh an tsuímh, cé gur féidir coimeádáin iolracha a chur leis le haghaidh socrú casta ilfhearainn nó ilfhoirne. Déanann Matomo an chéad choimeádán le do láithreán gréasáin a réamhchumrú go huathoibríoch. %1$sFoghlaim tuilleadh %2$s.",
         "ManageContainersLink": "Is féidir leat %1$s do choimeádáin a bhainistiú anseo %2$s.",
         "ManageTagsHelp1": "Conas a chuidíonn an leathanach \"Bainisteoir Clib → Bainistigh Clibeanna\" liom?",
         "ManageTagsHelp2": "Éascaíonn an leathanach Bainistigh Clibeanna clibeanna a bhainistiú trí fhorbhreathnú láithreach a sholáthar ar na clibeanna i do Bhainisteoir Clibeanna Matomo. Laistigh den leathanach Bainistigh Clibeanna, is féidir leat clib a chur in eagar nó a scriosadh (faoi Gníomhartha).",
