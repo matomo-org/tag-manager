@@ -113,7 +113,7 @@ class TagManagerFixture extends Fixture
         $idContainer6DraftVersion = $this->getContainerDraftVersion($this->idSite4, $this->idContainer6);
         self::assertSame($this->idContainer6DraftVersion, $idContainer6DraftVersion);
 
-        $this->addContainer($this->idSite2, $this->idContainerQuotes, 'Container with "Quotes"', 'My container with quotes description', null, 1);
+        $this->addContainer($this->idSite2, $this->idContainerQuotes, 'Container with "Quotes"', 'My container with quotes description', null, 1, 1);
         $idContainerQuotesDraftVersion = $this->getContainerDraftVersion($this->idSite2, $this->idContainerQuotes);
         self::assertSame($this->idContainerQuotesDraftVersion, $idContainerQuotesDraftVersion);
 
