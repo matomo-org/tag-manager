@@ -102,7 +102,7 @@ describe("Container", function () {
         await capture.page(page, 'edit_url_with_isTagFireLimitAllowedInPreviewMode');
     });
 
-    it('should set isTagFireLimitAllowedInPreviewMode as active when set and save', async function(){
+    it('should set isTagFireLimitAllowedInPreviewMode as inactive when set and save', async function(){
         await page.evaluate(() => $('#isTagFireLimitAllowedInPreviewMode').click());
         await page.waitForTimeout(250);
         await page.waitForNetworkIdle();
