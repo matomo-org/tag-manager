@@ -23,7 +23,7 @@
 	</version>
 	<tags>
 		<row>
-			<idtag>20</idtag>
+			<idtag>23</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 2</name>
 			<description>My Tag 2 description</description>
@@ -33,10 +33,10 @@
 				<htmlPosition>bodyEnd</htmlPosition>
 			</parameters>
 			<fire_trigger_ids>
-				<row>23</row>
+				<row>27</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
-				<row>24</row>
+				<row>28</row>
 			</block_trigger_ids>
 			<fire_limit>once_lifetime</fire_limit>
 			<priority>343</priority>
@@ -49,7 +49,7 @@
 			
 		</row>
 		<row>
-			<idtag>21</idtag>
+			<idtag>24</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 1</name>
 			<description />
@@ -59,7 +59,7 @@
 				<htmlPosition>bodyEnd</htmlPosition>
 			</parameters>
 			<fire_trigger_ids>
-				<row>23</row>
+				<row>27</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
 			</block_trigger_ids>
@@ -74,7 +74,7 @@
 			
 		</row>
 		<row>
-			<idtag>22</idtag>
+			<idtag>25</idtag>
 			<type>CustomImage</type>
 			<name>My Tag 3</name>
 			<description />
@@ -84,8 +84,8 @@
 				<cacheBusterEnabled>1</cacheBusterEnabled>
 			</parameters>
 			<fire_trigger_ids>
-				<row>24</row>
-				<row>25</row>
+				<row>28</row>
+				<row>29</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
 			</block_trigger_ids>
@@ -102,7 +102,7 @@
 	</tags>
 	<triggers>
 		<row>
-			<idtrigger>23</idtrigger>
+			<idtrigger>27</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
 			<description>My trigger1 description</description>
@@ -117,7 +117,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>24</idtrigger>
+			<idtrigger>28</idtrigger>
 			<type>WindowLoaded</type>
 			<name>Mytrigger2</name>
 			<description />
@@ -136,7 +136,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>25</idtrigger>
+			<idtrigger>29</idtrigger>
 			<type>DomReady</type>
 			<name>Mytrigger3</name>
 			<description />
@@ -150,7 +150,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>26</idtrigger>
+			<idtrigger>30</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger4</name>
 			<description />
@@ -167,7 +167,7 @@
 	</triggers>
 	<variables>
 		<row>
-			<idvariable>11</idvariable>
+			<idvariable>14</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 1</name>
 			<description />
@@ -188,7 +188,7 @@
 			
 		</row>
 		<row>
-			<idvariable>12</idvariable>
+			<idvariable>15</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 2</name>
 			<description />
@@ -204,7 +204,7 @@
 			
 		</row>
 		<row>
-			<idvariable>13</idvariable>
+			<idvariable>16</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 3</name>
 			<description>My Var 3 description</description>
