@@ -1421,6 +1421,7 @@
                 this.numExecuted = 0;
                 this.blocked = false;
                 this.parameters = tag.parameters || {};
+                this.isTagFireLimitAllowedInPreviewMode = container.isTagFireLimitAllowedInPreviewMode || false;
                 var self = this;
 
                 this.addDebugValues = function (tags, action) {
@@ -1449,7 +1450,7 @@
                         storageKey += '_' + container.id;
                     }
 
-                    if (this.fireLimit === Tag.FIRE_LIMIT_ONCE_24HOURS && !window.mtmPreviewWindow) {
+                    if (this.fireLimit === Tag.FIRE_LIMIT_ONCE_24HOURS && (!window.mtmPreviewWindow || this.isTagFireLimitAllowedInPreviewMode)) {
                         // in preview/debug mode we make sure to execute it
                         if (localStorage.get(storageKey, this.name)) {
                             Debug.log('not firing as this tag has 24hours limit reached', this);
@@ -1457,7 +1458,7 @@
                         }
                     }
 
-                    if (this.fireLimit === Tag.FIRE_LIMIT_ONCE_LIFETIME && !window.mtmPreviewWindow) {
+                    if (this.fireLimit === Tag.FIRE_LIMIT_ONCE_LIFETIME && (!window.mtmPreviewWindow || this.isTagFireLimitAllowedInPreviewMode)) {
                         // in preview/debug mode we make sure to execute it
                         if (localStorage.get(storageKey, this.name)) {
                             Debug.log('not firing as this tag has limit reached', this);
@@ -1565,6 +1566,7 @@
 
                 this.id = container.id;
                 this.idsite = container.idsite || null;
+                this.isTagFireLimitAllowedInPreviewMode = container.isTagFireLimitAllowedInPreviewMode || false;
                 this.versionName = container.versionName || null;
                 this.revision = container.revision || null;
                 this.environment = container.environment || null;
