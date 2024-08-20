@@ -905,6 +905,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_DiffAddedPaused';
         $result[] = 'TagManager_TagFireLimitAllowedInPreviewModeTitle';
         $result[] = 'TagManager_TagFireLimitAllowedInPreviewModeDescription';
+        $result[] = 'TagManager_DisablePreview';
     }
 
     public function getStylesheetFiles(&$stylesheets)
