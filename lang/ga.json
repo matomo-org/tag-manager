@@ -903,6 +903,8 @@
         "TagDescriptionHelp": "Ligeann cur síos ar an gclib duit míniú gairid a thabhairt ar cad chuige atá an chlib.",
         "TagDescriptionPlaceholder": "Cur síos ar an gclib",
         "TagEndDateHelp": "Má tá sé socraithe, ní scaoilfear an chlib seo ach go dtí an dáta deiridh seo. Glacfar leis go bhfuil an dáta sonraithe i %1$sdo chrios ama áitiúil%2$s.",
+        "TagFireLimitAllowedInPreviewModeDescription": "Cumasaigh an rogha seo chun a sheiceáil an n-oibríonn teorainneacha dóiteáin, ar nós aon uair amháin sa saol, mar a bheifí ag súil leis nuair atá an modh réamhamhairc cumasaithe.",
+        "TagFireLimitAllowedInPreviewModeTitle": "Cumasaigh teorainneacha tine clibeanna chun oibriú i mód réamhamhairc",
         "TagFireTriggerRequirement": "Ní mór duit truicear dóiteáin amháin ar a laghad a roghnú.",
         "TagManager": "Bainisteoir Clibeanna",
         "TagNameHelp": "Ligeann an t-ainm clibe duit ainm uathúil a shainiú don chlib seo chun é a aithint go tapa. Tabhair faoi deara le do thoil go mbeidh an t-ainm seo le feiceáil go poiblí i gcód foinse na clib nuair a bheidh réamhamharc/dífhabhtú agat ar an gcoimeádán seo.",
