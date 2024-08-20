@@ -6,6 +6,7 @@
 	<name>Default Container</name>
 	<description>This container was auto generated when the website was created.</description>
 	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	
 	
 	

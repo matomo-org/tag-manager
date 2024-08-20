@@ -51,9 +51,7 @@ class Menu extends \Piwik\Plugin\Menu
             // makes initial pageview slower otherwise
             $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($idSite);
 
-            if (empty($containers)) {
-                $defaultAction = 'gettingStarted';
-            } elseif (count($containers) == 1) {
+            if (count($containers) == 1) {
                 $firstContainer = array_shift($containers);
 
                 $accessValidator = StaticContainer::get('Piwik\Plugins\TagManager\Input\AccessValidator');
@@ -79,7 +77,6 @@ class Menu extends \Piwik\Plugin\Menu
         $manageContainers = Piwik::translate('TagManager_ManageX', Piwik::translate('TagManager_Containers'));
 
         $paramsNoContainerId = array('idContainer' => null);// prevents eg error after deleting a container if idContainer is still set
-        $menu->addItem('TagManager_TagManager', 'TagManager_GettingStarted', $this->urlForAction('gettingStarted', $paramsNoContainerId), $orderId = 5);
         $menu->addItem('TagManager_TagManager', $manageContainers, $this->urlForAction('manageContainers', $paramsNoContainerId), $orderId = 99);
 
         $idContainer = Common::getRequestVar('idContainer', '', 'string');

@@ -119,6 +119,7 @@ class ContainersStore {
         name: container.name,
         description: container.description,
         ignoreGtmDataLayer: container.ignoreGtmDataLayer,
+        isTagFireLimitAllowedInPreviewMode: container.isTagFireLimitAllowedInPreviewMode,
         context: container.context,
       },
       { withTokenInUrl: true },

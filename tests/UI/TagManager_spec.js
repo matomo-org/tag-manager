@@ -46,9 +46,9 @@ describe("TagManager", function () {
 
     var selectorContainerOpen = '.top_controls .tagContainerSelector .dropdown';
 
-    it('should load a getting started page', async function () {
-        await page.goto(generalParamsSite1 + urlBase + 'gettingStarted');
-        await capture.page(page, 'getting_started');
+    it('should load the manage containers page', async function () {
+        await page.goto(generalParamsSite1 + urlBase + 'manageContainers');
+        await capture.page(page, 'manage_containers');
     });
 
     it('should show websites dropdown without all websites', async function () {
@@ -59,7 +59,7 @@ describe("TagManager", function () {
     });
 
     it('should show top bar list when no container exists', async function () {
-        await page.goto(generalParamsSite5 + urlBase + 'gettingStarted');
+        await page.goto(generalParamsSite5 + urlBase + 'manageContainers');
         await capture.topControls(page, 'top_controls_no_container_exists');
     });
 

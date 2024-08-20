@@ -154,17 +154,6 @@ class Controller extends \Piwik\Plugin\Controller
         ]);
     }
 
-    public function gettingStarted()
-    {
-        Piwik::checkUserHasSomeViewAccess();
-
-        $canEdit = $this->accessValidator->hasWriteCapability($this->idSite);
-
-        return $this->renderTemplate('gettingStarted', array(
-            'canEdit' => $canEdit
-        ));
-    }
-
     public function manageTags()
     {
         $tagsHelpText = $this->renderTemplate('helpContent', [
