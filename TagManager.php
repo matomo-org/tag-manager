@@ -908,7 +908,6 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_DisablePreview';
         $result[] = 'TagManager_MatomoConfigurationMatomoTrackBotsTitle';
         $result[] = 'TagManager_MatomoConfigurationMatomoTrackBotsDescription';
-        $result[] = 'TagManager_MatomoConfigurationMatomoTrackBotsInlineHelp';
     }
 
     public function getStylesheetFiles(&$stylesheets)
