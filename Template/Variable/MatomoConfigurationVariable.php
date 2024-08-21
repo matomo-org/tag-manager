@@ -146,6 +146,11 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackVisibleContentImpressionsTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackVisibleContentImpressionsDescription');
             }),
+            $this->makeSetting('trackBots', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackBotsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackBotsDescription');
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackBotsInlineHelp', array('<strong>', '</strong>'));
+            }),
             $this->makeSetting('disableCookies', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableCookiesTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableCookiesDescription');

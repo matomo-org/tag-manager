@@ -239,6 +239,9 @@
                     if (matomoConfig.trackVisibleContentImpressions) {
                         tracker.trackVisibleContentImpressions();
                     }
+                    if (matomoConfig.trackBots) {
+                        tracker.appendToTrackingUrl('bots=1');
+                    }
                     if (matomoConfig.hasOwnProperty('enableFormAnalytics') && !matomoConfig.enableFormAnalytics && window.Matomo && window.Matomo.FormAnalytics && typeof window.Matomo.FormAnalytics.disableFormAnalytics === 'function') {
                         window.Matomo.FormAnalytics.disableFormAnalytics();
                     }
