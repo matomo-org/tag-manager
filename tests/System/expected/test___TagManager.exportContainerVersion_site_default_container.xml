@@ -97,6 +97,7 @@
 				<heartBeatTime>15</heartBeatTime>
 				<trackAllContentImpressions>0</trackAllContentImpressions>
 				<trackVisibleContentImpressions>0</trackVisibleContentImpressions>
+				<trackBots>0</trackBots>
 				<disableCookies>0</disableCookies>
 				<requireConsent>0</requireConsent>
 				<requireCookieConsent>0</requireCookieConsent>
