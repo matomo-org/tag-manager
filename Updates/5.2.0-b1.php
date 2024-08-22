@@ -10,7 +10,9 @@
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
+use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
 use Piwik\Plugins\TagManager\UpdateHelper\NewTagParameterMigrator;
+use Piwik\Plugins\TagManager\UpdateHelper\NewVariableParameterMigrator;
 use Piwik\Updater;
 use Piwik\Updater\Migration;
 use Piwik\Updater\Migration\Factory as MigrationFactory;
@@ -60,5 +62,8 @@ class Updates_5_2_0_b1 extends PiwikUpdates
     public function doUpdate(Updater $updater)
     {
         $updater->executeMigrations(__FILE__, $this->getMigrations($updater));
+
+        $migrator = new NewVariableParameterMigrator(MatomoConfigurationVariable::ID, 'trackBots', false);
+        $migrator->migrate();
     }
 }
