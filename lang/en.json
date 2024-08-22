@@ -1060,7 +1060,7 @@
         "TagFireLimitAllowedInPreviewModeTitle": "Enable tag fire limits to work in preview mode",
         "TagFireLimitAllowedInPreviewModeDescription": "Enable this option to check if fire limits, such as once-per-lifetime, work as expected when preview mode is enabled.",
         "MatomoConfigurationMatomoTrackBotsTitle": "Track Bots",
-        "MatomoConfigurationMatomoTrackBotsDescription": "By default, Matomo doesn't track visits by bots in order to show accurate visitor metrics. Enable this feature to add tracking for bot visits.", such as once-per-lifetime, work as expected when preview mode is enabled.",
+        "MatomoConfigurationMatomoTrackBotsDescription": "By default, Matomo doesn't track visits by bots in order to show accurate visitor metrics. Enable this feature to add tracking for bot visits.",
         "DeleteWebsiteExplanationLine1": "Deleting this website will result in the removal of all log data and the configuration of all Matomo Tag Manager containers. This action is permanent and cannot be undone.",
         "DeleteWebsiteExplanationLine2": "To save a copy of container configurations, click on the container name below and export the desired version:",
         "DeleteWebsiteExplanationLine3": "Click Confirm when you are ready to delete this website."
