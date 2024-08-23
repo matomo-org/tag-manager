@@ -44,6 +44,7 @@ class TagTest extends IntegrationTestCase
     private $containerVersion2 = 6;
 
     private $idTag1;
+    private $idTag2;
 
     /**
      * @var TagsDao;
@@ -73,6 +74,7 @@ class TagTest extends IntegrationTestCase
         $this->idTrigger4 = $trigger->addContainerTrigger($this->idSite2, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger3', [], []);
 
         $this->idTag1 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'InitialTag1', ['customHtml' => '<script></script>']);
+        $this->idTag2 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'InitialTag2', ['customHtml' => '<script></script>'], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '', $status = 'paused');
     }
 
     public function tearDown(): void
@@ -220,12 +222,12 @@ class TagTest extends IntegrationTestCase
     public function testAddContainerTagSuccessMinimal()
     {
         $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 0, '0', false, false);
-        $this->assertSame(2, $idTag);
+        $this->assertSame(3, $idTag);
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
 
         $expected =  [
-            'idtag' => 2,
+            'idtag' => 3,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => 'CustomHtml',
@@ -316,7 +318,7 @@ class TagTest extends IntegrationTestCase
     {
         $description = 'Test description of MyName tag';
         $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [$this->idTrigger3], Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, 9, '99', '2017-03-01 01:01:01', '2018-03-01 01:01:01', $description);
-        $this->assertSame(2, $idTag);
+        $this->assertSame(3, $idTag);
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
 
@@ -668,8 +670,12 @@ class TagTest extends IntegrationTestCase
 
     public function testGetContainerTagsDoesNotReturnDeleted()
     {
-        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $tags = $this->model->getContainerTags($this->idSite, $this->containerVersion1);
+        $this->assertCount(2, $tags);
+        $this->assertSame('active', $tags[0]['status']);
+        $this->assertSame('paused', $tags[1]['status']);
         $this->model->deleteContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
+        $this->model->deleteContainerTag($this->idSite, $this->containerVersion1, $this->idTag2);
         $this->assertSame([], $this->model->getContainerTags($this->idSite, $this->containerVersion1));
     }
 
@@ -682,7 +688,7 @@ class TagTest extends IntegrationTestCase
         $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v3', $params, [$this->idTrigger4]);
         $this->addContainerTag($this->idSite, $this->containerVersion2, null, 'v4', $params, [$this->idTrigger2]);
 
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
         $this->assertCount(0, $this->model->getContainerTags($this->idSite2, $this->containerVersion2));
@@ -694,7 +700,7 @@ class TagTest extends IntegrationTestCase
         $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v1', ['customHtml' => '<div>foo</div>']);
         $tags = $this->model->getContainerTags($this->idSite, $this->containerVersion1);
 
-        $this->assertCount(2, $tags);
+        $this->assertCount(3, $tags);
         foreach ($tags as $tag) {
             $this->assertNotEmpty($tag['typeMetadata']);
         }
@@ -711,7 +717,7 @@ class TagTest extends IntegrationTestCase
 
         $this->model->setCurrentDateTime('2019-03-04 03:03:03');
 
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
@@ -720,14 +726,14 @@ class TagTest extends IntegrationTestCase
         $this->model->deleteContainerTag($this->idSite, 9999, $idTag3);
         $this->model->deleteContainerTag(9999, $this->containerVersion1, $idTag3);
 
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
         $this->model->deleteContainerTag($this->idSite, $this->containerVersion1, $idTag3);
 
         // removes correct one
-        $this->assertCount(2, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
@@ -759,7 +765,7 @@ class TagTest extends IntegrationTestCase
 
         $this->model->setCurrentDateTime('2019-03-04 03:03:03');
 
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
@@ -768,14 +774,14 @@ class TagTest extends IntegrationTestCase
         $this->model->pauseContainerTag($this->idSite, 9999, $idTag3);
         $this->model->pauseContainerTag(9999, $this->containerVersion1, $idTag3);
 
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
         $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, $idTag3);
 
         // removes correct one
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
@@ -783,7 +789,7 @@ class TagTest extends IntegrationTestCase
         $tags = $this->dao->getAllTags();
         $count = 0;
         foreach ($tags as $tag) {
-            if ($tag['idtag'] === $idTag3) {
+            if ($tag['idtag'] === $idTag3 || $tag['idtag'] === $this->idTag2) {
                 $count++;
                 $this->assertSame(TagsDao::STATUS_PAUSED, $tag['status']);
                 $this->assertEmpty($tag['deleted_date']);
@@ -793,7 +799,7 @@ class TagTest extends IntegrationTestCase
             }
         }
         // make sure above assertion was executed
-        $this->assertSame(1, $count);
+        $this->assertSame(2, $count);
     }
 
     public function testResumeContainerTag()
@@ -807,7 +813,7 @@ class TagTest extends IntegrationTestCase
 
         $this->model->setCurrentDateTime('2019-03-04 03:03:03');
 
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
@@ -819,14 +825,14 @@ class TagTest extends IntegrationTestCase
         $this->model->pauseContainerTag(9999, $this->containerVersion1, $idTag3);
         $this->model->resumeContainerTag(9999, $this->containerVersion1, $idTag3);
 
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
         $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, $idTag3);
 
         // removes correct one
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
@@ -834,7 +840,7 @@ class TagTest extends IntegrationTestCase
         $tags = $this->dao->getAllTags();
         $count = 0;
         foreach ($tags as $tag) {
-            if ($tag['idtag'] === $idTag3) {
+            if ($tag['idtag'] === $idTag3 || $tag['idtag'] === $this->idTag2) {
                 $count++;
                 $this->assertSame(TagsDao::STATUS_PAUSED, $tag['status']);
                 $this->assertEmpty($tag['deleted_date']);
@@ -844,8 +850,9 @@ class TagTest extends IntegrationTestCase
             }
         }
         // make sure above assertion was executed
-        $this->assertSame(1, $count);
+        $this->assertSame(2, $count);
 
+        $this->model->resumeContainerTag($this->idSite, $this->containerVersion1, $this->idTag2);
         $this->model->resumeContainerTag($this->idSite, $this->containerVersion1, $idTag3);
         $tags = $this->dao->getAllTags();
         $count = 0;
@@ -855,7 +862,7 @@ class TagTest extends IntegrationTestCase
             $this->assertEmpty($tag['deleted_date']);
         }
         // make sure above assertion was executed
-        $this->assertSame(6, $count);
+        $this->assertSame(7, $count);
     }
 
     public function testUpdateParametersSuccess()
@@ -968,7 +975,7 @@ class TagTest extends IntegrationTestCase
         $this->model->updateParameters($this->idSite, $this->containerVersion1, $this->idTag1, $parameters = ['customHtml' => '']);
     }
 
-    private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '')
+    private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '', $status = '')
     {
         if (!isset($type)) {
             $type = CustomHtmlTag::ID;
@@ -985,7 +992,7 @@ class TagTest extends IntegrationTestCase
             $endDate = $this->now;
         }
 
-        return $this->model->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
+        return $this->model->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description, $status);
     }
 
     private function updateContainerTag($idSite, $idContainerVersion, $idTag, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '')

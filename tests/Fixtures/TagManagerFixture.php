@@ -135,6 +135,8 @@ class TagManagerFixture extends Fixture
         $idTag = $this->addContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, 'CustomImage', 'My Tag "Quotes Paused"', array($idTrigger1ContainerQuotes), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'));
         $this->api->pauseContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, $idTag);
 
+        $this->addContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, 'CustomImage', 'My Tag "Quotes Paused on add"', array($idTrigger1ContainerQuotes), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'), $fireLimit = null, $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '', $status = 'paused');
+
         $this->idContainer1Version2 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v2', 'Version from draft with tags and triggers');
 
         $this->addContainerVariable($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My Var 1', $parameters = array('dataLayerName' => 'fooBarName'), $default = 10, $lookUp = array(array('match_value' => 'foo', 'comparison' => Comparison::ID_EQUALS, 'out_value' => 'bar')));
@@ -225,7 +227,7 @@ class TagManagerFixture extends Fixture
         return $this->api->updateContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description);
     }
 
-    public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type = null, $name = 'TagName', $fireTriggerIds = array(), $blockTriggerIds = array(), $parameters = array('customHtml' => '<p></p>'), $fireLimit = null, $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '')
+    public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type = null, $name = 'TagName', $fireTriggerIds = array(), $blockTriggerIds = array(), $parameters = array('customHtml' => '<p></p>'), $fireLimit = null, $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '', $status = '')
     {
         $this->initIfNeeded();
 
@@ -236,7 +238,7 @@ class TagManagerFixture extends Fixture
             $fireLimit = Tag::FIRE_LIMIT_UNLIMITED;
         }
 
-        return $this->api->addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
+        return $this->api->addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description, $status);
     }
 
     protected function initIfNeeded()

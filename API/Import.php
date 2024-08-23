@@ -199,6 +199,7 @@ class Import
                 'fireDelay' => $tag['fire_delay'],
                 'priority' => $tag['priority'],
                 'startDate' => $tag['start_date'],
+                'status' => $tag['status'] ?? '',
                 'endDate' => $tag['end_date'],
             ));
         }
