@@ -12,6 +12,7 @@ use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\API;
 use Piwik\Plugins\TagManager\Context\WebContext;
+use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
@@ -34,6 +35,7 @@ class APITest extends IntegrationTestCase
     private $idSite;
 
     private $idContainer;
+    private $idContainerQuotes;
     private $idContainerDraftVersion;
 
     /**
@@ -573,6 +575,42 @@ class APITest extends IntegrationTestCase
         $this->assertEquals('active', $tag['status']);
     }
 
+    public function test_addContainerTagsWithoutStatusShouldReturnActiveWhenNotSet()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger);
+        $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertEquals('active', $tag['status']);
+    }
+
+    public function test_addContainerTagsWithStatusShouldReturnActiveWhenInvalidStatusPassed()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger, $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '', $status = 'act');
+        $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertEquals('active', $tag['status']);
+    }
+
+    public function test_addContainerTagsWithStatusShouldReturnPausedStatusWhenPassed()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger, $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '', $status = 'paused');
+        $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertEquals('paused', $tag['status']);
+    }
+
     public function test_getContainer_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
@@ -784,6 +822,31 @@ class APITest extends IntegrationTestCase
     {
         $this->setUser();
         $this->assertNotEmpty($this->api->exportContainerVersion($this->idSite, $this->idContainer));
+    }
+
+    public function test_exportContainerQuoteVersion_success()
+    {
+        $this->setUser();
+        $container = $this->api->exportContainerVersion($this->idSite, $this->idContainerQuotes);
+        $this->assertNotEmpty($container);
+
+        $tags = $container['tags'];
+        $pausedCount = 0;
+        $invalidCount = 0;
+        $activeCount = 0;
+        foreach ($tags as $tag) {
+            if ($tag['status'] === TagsDao::STATUS_ACTIVE) {
+                $activeCount++;
+            } elseif ($tag['status'] === TagsDao::STATUS_PAUSED) {
+                $pausedCount++;
+            } else {
+                $invalidCount++;
+            }
+        }
+
+        $this->assertSame(0, $invalidCount);
+        $this->assertSame(1, $activeCount);
+        $this->assertSame(2, $pausedCount);
     }
 
     public function test_importContainerVersion_shouldFailWhenNotHavingViewPermissions()
@@ -1069,6 +1132,7 @@ class APITest extends IntegrationTestCase
         // we do not want to use idSite = 1, instead as we will sometimes also have idTag = 1... better tests this way
         $this->idSite = $this->tagFixture->idSite2;
         $this->idContainer = $this->tagFixture->idContainer1;
+        $this->idContainerQuotes = $this->tagFixture->idContainerQuotes;
         $this->idContainerDraftVersion = $this->tagFixture->idContainer1DraftVersion;
 
         $this->api = API::getInstance();

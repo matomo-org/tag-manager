@@ -6142,7 +6142,7 @@ function diffDraftVersion(idContainer, idContainerVersionNew, idContainerVersion
             // matching, check if different
             diff.push({
               entityType: entityType,
-              type: key === 'status' ? 'TagManager_DiffPaused' : 'TagManager_DiffModified',
+              type: key === 'status' && array1Item[key] === 'paused' ? 'TagManager_DiffPaused' : 'TagManager_DiffModified',
               name: array1Item.name,
               lastChanged: array1Item.updated_date_pretty
             });
