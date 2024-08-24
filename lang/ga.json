@@ -699,6 +699,8 @@
         "MatomoConfigurationMatomoSetSecureCookieTitle": "Cumasaigh Fianán Slán",
         "MatomoConfigurationMatomoTrackAllContentImpressionsDescription": "Cumasaíonn sé an ghné rianaithe ábhair tríd an DOM iomlán a scanadh le haghaidh gach bloc inneachair agus rianaíonn sé gach imprisean nuair a bheidh an leathanach lódáilte.",
         "MatomoConfigurationMatomoTrackAllContentImpressionsTitle": "Rianaigh Gach Inneachar Imprisean",
+        "MatomoConfigurationMatomoTrackBotsDescription": "De réir réamhshocraithe, ní rianaíonn Matomo cuairteanna ó róbónna chun méadracht chuairteoirí cruinn a thaispeáint. Cumasaigh an ghné seo chun rianú a chur leis le haghaidh cuairteanna bot.",
+        "MatomoConfigurationMatomoTrackBotsTitle": "Rian Róbónna",
         "MatomoConfigurationMatomoTrackVisibleContentImpressionsDescription": "Cumasaíonn sé an ghné rianaithe inneachair tríd an DOM iomlán a scanadh le haghaidh gach bloc inneachair ach ní rianaíonn sé ach imprisean inneachair a luaithe a scrollaíonn an t-úsáideoir chuig an ábhar agus go bhfuil an t-ábhar le feiceáil i ndáiríre.",
         "MatomoConfigurationMatomoTrackVisibleContentImpressionsTitle": "Rianaigh Léirmheasanna Ábhar Infheicthe",
         "MatomoConfigurationMatomoTrackingEndpointCustom": "Saincheaptha",
