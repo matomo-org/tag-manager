@@ -1060,6 +1060,8 @@
         "TagFireLimitAllowedInPreviewModeTitle": "Enable tag fire limits to work in preview mode",
         "TagFireLimitAllowedInPreviewModeDescription": "Enable this option to check if fire limits, such as once-per-lifetime, work as expected when preview mode is enabled.",
         "MatomoConfigurationMatomoTrackBotsTitle": "Track Bots",
-        "MatomoConfigurationMatomoTrackBotsDescription": "By default, Matomo doesn't track visits by bots in order to show accurate visitor metrics. Enable this feature to add tracking for bot visits."
+        "MatomoConfigurationMatomoTrackBotsDescription": "By default, Matomo doesn't track visits by bots in order to show accurate visitor metrics. Enable this feature to add tracking for bot visits.",
+        "PausedTag": "Fantastic! The tag has been paused successfully.",
+        "ResumedTag": "Fantastic! The tag has been resumed successfully."
     }
 }
