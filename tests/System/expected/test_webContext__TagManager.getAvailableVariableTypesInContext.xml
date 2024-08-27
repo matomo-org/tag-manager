@@ -36,6 +36,39 @@
 					</row>
 				</parameters>
 			</row>
+			<row>
+				<id>ClickHtmlAttribute</id>
+				<name>Clicked HTML Attribute</name>
+				<description>Reads a custom value from the clicked HTML attribute.</description>
+				<category>Clicks</category>
+				<icon>plugins/TagManager/images/icons/click-data-attribute-variable.svg</icon>
+				<help>Using this variable you can access any value that is available within the clicked HTML attribute.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>htmlAttribute</name>
+						<title>Clicked HTML Attribute Name</title>
+						<value/>
+						<defaultValue/>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. title</placeholder>
+						</uiControlAttributes>
+						<availableValues/>
+						<description>The name of the attribute, such as title, alt, or any other HTML attribute.</description>
+						<inlineHelp/>
+						<introduction/>
+						<condition/>
+						<fullWidth>0</fullWidth>
+					</row>
+				</parameters>
+			</row>
 		</types>
 	</row>
 	<row>

@@ -1065,7 +1065,7 @@
         "ClickHtmlAttributeVariableDescription": "Reads a custom value from the clicked HTML attribute.",
         "ClickHtmlAttributeVariableHelp": "Using this variable you can access any value that is available within the clicked HTML attribute.",
         "ClickHtmlAttributeAttributeTitle": "Clicked HTML Attribute Name",
-        "ClickHtmlAttributeAttributeDescription": "The name of the attribute, such as title, alt, or any other HTML attribute.",
-        "ClickHtmlAttributeAttributePlaceholder": "e.g. title"
+        "ClickHtmlAttributeAttributeDescription": "The name of the attribute, such as title, value, alt, or any other HTML attribute.",
+        "ClickHtmlAttributeAttributePlaceholder": "e.g. value"
     }
 }
