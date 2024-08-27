@@ -58,10 +58,10 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
-							<placeholder>e.g. title</placeholder>
+							<placeholder>e.g. value</placeholder>
 						</uiControlAttributes>
 						<availableValues/>
-						<description>The name of the attribute, such as title, alt, or any other HTML attribute.</description>
+						<description>The name of the attribute, such as title, value, alt, or any other HTML attribute.</description>
 						<inlineHelp/>
 						<introduction/>
 						<condition/>
