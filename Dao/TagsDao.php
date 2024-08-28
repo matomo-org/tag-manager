@@ -59,16 +59,20 @@ class TagsDao extends BaseDao implements TagManagerDao
         return !empty($idSite);
     }
 
-    public function createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description = '')
+    public function createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description = '', $status = '')
     {
         if ($this->isNameInUse($idSite, $idContainerVersion, $name)) {
             throw new Exception(Piwik::translate('TagManager_ErrorNameDuplicate'));
         }
 
+        if (!in_array($status, [self::STATUS_ACTIVE, self::STATUS_PAUSED, self::STATUS_DELETED])) {
+            $status = self::STATUS_ACTIVE;
+        }
+
         $values = array(
             'idsite' => $idSite,
             'idcontainerversion' => $idContainerVersion,
-            'status' => self::STATUS_ACTIVE,
+            'status' => $status,
             'type' => $type,
             'name' => $name,
             'description' => $description,

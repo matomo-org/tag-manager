@@ -47,7 +47,7 @@ export default function diffDraftVersion(
             // matching, check if different
             diff.push({
               entityType,
-              type: (key === 'status' ? 'TagManager_DiffPaused' : 'TagManager_DiffModified'),
+              type: (key === 'status' && array1Item[key] === 'paused' ? 'TagManager_DiffPaused' : 'TagManager_DiffModified'),
               name: array1Item.name as string,
               lastChanged: array1Item.updated_date_pretty as string,
             });
