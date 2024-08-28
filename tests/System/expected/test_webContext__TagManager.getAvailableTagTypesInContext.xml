@@ -1941,6 +1941,27 @@
 						<condition />
 						<fullWidth>0</fullWidth>
 					</row>
+					<row>
+						<name>conversionId</name>
+						<title>LinkedIn Conversion ID (optional)</title>
+						<value/>
+						<defaultValue/>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. 1234567890</placeholder>
+						</uiControlAttributes>
+						<availableValues/>
+						<description>An optional conversion ID if you would like a specific conversion recorded when this tag executes.</description>
+						<inlineHelp>If you are not sure where to find the conversion ID, see the &lt;a href="https://www.linkedin.com/help/lms/answer/a1437736" target="_blank" rel="noreferrer noopener"&gt;LinkedIn documentation&lt;/a&gt; for more information.</inlineHelp>
+						<introduction/>
+						<condition/>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldTextareaVariable</name>
+						</component>
+					</row>
 				</parameters>
 			</row>
 			<row>
