@@ -41,6 +41,7 @@ class LinkedinInsightTag extends BaseTag
                 $field->title =  Piwik::translate('TagManager_LinkedinInsightTagConversionIdTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_LinkedinInsightTagConversionIdDescription');
+                $field->inlineHelp = Piwik::translate('TagManager_LinkedinInsightTagConversionIdHelpText', ['<a href="https://www.linkedin.com/help/lms/answer/a1437736" target="_blank" rel="noreferrer noopener">', '</a>']);
                 $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_BingUETTagIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
