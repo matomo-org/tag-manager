@@ -37,6 +37,21 @@ class LinkedinInsightTag extends BaseTag
                     return trim($value);
                 };
             }),
+            $this->makeSetting('conversionId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title =  Piwik::translate('TagManager_LinkedinInsightTagConversionIdTitle');
+                $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
+                $field->description = Piwik::translate('TagManager_LinkedinInsightTagConversionIdDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_BingUETTagIdPlaceholder')];
+                $field->validators[] = new NotEmpty();
+                $field->validate = function ($value) {
+                    $value = trim($value);
+                    $numberRange =  new NumberRange();
+                    $numberRange->validate($value);
+                };
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
         );
     }
 
