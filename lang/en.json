@@ -1069,6 +1069,8 @@
         "ClickHtmlAttributeVariableHelp": "Using this variable you can access any value that is available within the clicked HTML attribute.",
         "ClickHtmlAttributeAttributeTitle": "Clicked HTML Attribute Name",
         "ClickHtmlAttributeAttributeDescription": "The name of the attribute, such as title, value, alt, or any other HTML attribute.",
-        "ClickHtmlAttributeAttributePlaceholder": "e.g. value"
+        "ClickHtmlAttributeAttributePlaceholder": "e.g. value",
+        "PausedTag": "Fantastic! The tag has been paused successfully.",
+        "ResumedTag": "Fantastic! The tag has been resumed successfully."
     }
 }

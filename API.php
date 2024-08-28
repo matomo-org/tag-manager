@@ -476,7 +476,7 @@ class API extends \Piwik\Plugin\API
      *
      * @return int The ID of the created tag.
      */
-    public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '')
+    public function addContainerTag($idSite, $idContainer, $idContainerVersion, $type, $name, $parameters = [], $fireTriggerIds = [], $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '', $status = '')
     {
         $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
@@ -488,7 +488,7 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
-        $idTag = $this->tags->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
+        $idTag = $this->tags->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description, $status);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
         return $idTag;
     }

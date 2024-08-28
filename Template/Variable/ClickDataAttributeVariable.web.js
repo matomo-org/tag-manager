@@ -2,12 +2,12 @@
   return function (parameters, TagManager) {
 
     this.get = function () {
-      var dataAttribute = parameters.get("dataAttribute");
+      var dataAttributeName = parameters.get("dataAttribute");
 
       var event = TagManager.dataLayer.events.at(-1);
 
-      if (event["mtm.clickElement"] && event["mtm.clickElement"].dataset) {
-        return event["mtm.clickElement"].dataset[dataAttribute];
+      if (event["mtm.clickElement"] && event["mtm.clickElement"].hasAttribute('data-' + dataAttributeName)) {
+        return event["mtm.clickElement"].getAttribute('data-' + dataAttributeName);
       }
 
     };
