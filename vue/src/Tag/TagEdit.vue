@@ -42,7 +42,7 @@
               name="name"
               :model-value="tag.name"
               @update:model-value="tag.name = $event; setValueHasChanged()"
-              :maxlength="50"
+              :maxlength="255"
               :title="translate('General_Name')"
               :inline-help="translate('TagManager_TagNameHelpV2')"
               :placeholder="translate('TagManager_TagNamePlaceholder')"
