@@ -59,7 +59,7 @@
             :key="version.revision"
           >
             <td class="index">{{ version.revision }}</td>
-            <td class="name">{{ version.name }}</td>
+            <td class="name" :title="version.name">{{ truncateText(version.name, 50) }}</td>
             <td
               class="description"
               :title="version.description"

@@ -55,7 +55,7 @@
               :title="`${translate('TagManager_Context')}: ` +
                 contexts[container.context]"
             >{{ container.idcontainer }}</td>
-            <td class="name">{{ container.name }}</td>
+            <td class="name" :title="container.name">{{ truncateText(container.name, 50) }}</td>
             <td
               class="description"
               :title="container.description"

@@ -55,7 +55,7 @@
             :key="tag.idtag"
             :id="`tag${ tag.idtag }`"
           >
-            <td class="name">{{ tag.name }}</td>
+            <td class="name" :title="tag.name">{{ truncateText(tag.name, 50) }}</td>
             <td
               class="description"
               :title="tag.description"
@@ -80,14 +80,16 @@
                   v-if="hasWriteAccess"
                   href=""
                   @click.prevent="editTrigger(fireTriggerId)"
+                  :title="this.triggers[fireTriggerId]"
                 >
-                  {{ this.triggers[fireTriggerId] }}
+                  {{ truncateText(this.triggers[fireTriggerId], triggerTruncateLength) }}
                 </a>
                 <span
                   class="chip"
                   v-if="!hasWriteAccess"
+                  :title="this.triggers[fireTriggerId]"
                 >
-                  {{ this.triggers[fireTriggerId] }}
+                  {{ truncateText(this.triggers[fireTriggerId], triggerTruncateLength) }}
                 </span>
               </span>
               <span v-show="tag.block_trigger_ids.length">
@@ -102,14 +104,16 @@
                     v-show="hasWriteAccess"
                     href=""
                     @click.prevent="editTrigger(blockTriggerId)"
+                    :title="this.triggers[blockTriggerId]"
                   >
-                    {{ this.triggers[blockTriggerId] }}
+                    {{ truncateText(this.triggers[blockTriggerId], triggerTruncateLength) }}
                   </a>
                   <span
                     class="chip"
                     v-show="!hasWriteAccess"
+                    :title="this.triggers[blockTriggerId]"
                   >
-                    {{ this.triggers[blockTriggerId] }}
+                    {{ truncateText(this.triggers[blockTriggerId], triggerTruncateLength) }}
                   </span>
                 </span>
               </span>
@@ -231,6 +235,7 @@ import { Tag } from '../types';
 
 interface TagListState {
   hasWriteAccess: boolean;
+  triggerTruncateLength: number;
 }
 
 const { tagManagerHelper } = window;
@@ -258,6 +263,7 @@ export default defineComponent({
   data(): TagListState {
     return {
       hasWriteAccess: Matomo.hasUserCapability('tagmanager_write'),
+      triggerTruncateLength: 40,
     };
   },
   created() {
