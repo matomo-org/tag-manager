@@ -983,7 +983,6 @@ class TagManager extends \Piwik\Plugin
         $dao = new ContainersDao();
         $containers = $dao->getContainersForSite($idSite);
         if (!empty($containers)) {
-            $messages[0] = Piwik::translate('TagManager_DeleteWebsiteExplanationLine1');
             $view = new View('@TagManager/deleteWebsite');
             $view->containers = $containers;
             $view->link = Url::getCurrentUrlWithoutFileName() . 'index.php?' . Url::getQueryStringFromParameters([
