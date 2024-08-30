@@ -223,7 +223,7 @@ import {
   ContentBlock,
   ContentTable,
   Matomo,
-  MatomoUrl,
+  MatomoUrl, NotificationsStore, NotificationType, translate,
 } from 'CoreHome';
 import TagsStore from './Tags.store';
 import TriggersStore from '../Trigger/Triggers.store';
@@ -234,6 +234,8 @@ interface TagListState {
 }
 
 const { tagManagerHelper } = window;
+
+const notificationId = 'tagtagmanagementlist';
 
 export default defineComponent({
   props: {
@@ -293,7 +295,11 @@ export default defineComponent({
     pauseTag(tag: Tag) {
       const doPause = () => {
         TagsStore.pauseTag(this.idContainer, this.idContainerVersion, tag.idtag).then(() => {
-          TagsStore.reload(this.idContainer, this.idContainerVersion);
+          TagsStore.reload(this.idContainer, this.idContainerVersion).then(() => {
+            setTimeout(() => {
+              this.showDeployNotification('pause');
+            }, 200);
+          });
         });
       };
 
@@ -304,7 +310,11 @@ export default defineComponent({
     resumeTag(tag: Tag) {
       const doResume = () => {
         TagsStore.resumeTag(this.idContainer, this.idContainerVersion, tag.idtag).then(() => {
-          TagsStore.reload(this.idContainer, this.idContainerVersion);
+          TagsStore.reload(this.idContainer, this.idContainerVersion).then(() => {
+            setTimeout(() => {
+              this.showDeployNotification('resume');
+            }, 200);
+          });
         });
       };
 
@@ -325,6 +335,35 @@ export default defineComponent({
     },
     truncateText(text: string, length: number) {
       return tagManagerHelper.truncateText(text, length);
+    },
+    hasPublishCapability() {
+      return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
+    showDeployNotification(type: string) {
+      const translatedString = type === 'pause' ? 'TagManager_PausedTag' : 'TagManager_ResumedTag';
+      const createdX = translate(translatedString, translate('TagManager_Tag'));
+      let wantToRedeploy = '';
+      if (this.hasPublishCapability()) {
+        wantToRedeploy = translate(
+          'TagManager_WantToDeployThisChangeCreateVersion',
+          '<a class="createNewVersionLink">',
+          '</a>',
+        );
+      }
+
+      this.showNotification(`${createdX} ${wantToRedeploy}`, 'success');
+    },
+    showNotification(message: string, context: NotificationType['context']) {
+      const instanceId = NotificationsStore.show({
+        message,
+        context,
+        id: notificationId,
+        type: 'transient',
+      });
+
+      setTimeout(() => {
+        NotificationsStore.scrollToNotification(instanceId);
+      }, 200);
     },
   },
   computed: {

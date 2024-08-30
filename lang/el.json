@@ -719,6 +719,8 @@
         "MatomoConfigurationMatomoSetSecureCookieTitle": "Ενεργοποίηση Ασφαλών Cookie",
         "MatomoConfigurationMatomoTrackAllContentImpressionsDescription": "Ενεργοποιεί το χαρακτηριστικό ιχνηλάτησης περιεχομένου σαρώνοντας ολόκληρο το DOM για μπλοκ περιεχομένου και ιχνηλατεί όλες τις αναγνώσεις από τη στιγμή που θα φορτωθεί η σελίδα.",
         "MatomoConfigurationMatomoTrackAllContentImpressionsTitle": "Να Ιχνηλατούνται Όλες οι Αναγνώσεις Περιεχομένου",
+        "MatomoConfigurationMatomoTrackBotsDescription": "Εξ΄ορισμού, το Matomo δεν ιχνηλατεί επισκέψεις από μποτ, προκειμένου να δείχνει πραγματικές επισκέψεις επισκεπτών. Ενεργοποιήστε το χαρακτηριστικό για την ιχνηλάτηση των επισκέψεων των μποτ.",
+        "MatomoConfigurationMatomoTrackBotsTitle": "Ιχνηλάτηση μποτ",
         "MatomoConfigurationMatomoTrackVisibleContentImpressionsDescription": "Ενεργοποιεί το χαρακτηριστικό ιχνηλάτησης περιεχομένου με σάρωση ολόκληρου του DOM για όλα τα μπλοκ περιεχομένου αλλά ιχνηλατεί τις προβολές περιεχομένου μόνο όταν ο χρήστης σκρολάρει στο περιεχόμενο και το περιεχόμενο είναι πραγματικά ορατό.",
         "MatomoConfigurationMatomoTrackVisibleContentImpressionsTitle": "Ιχνηλάτηση των Προβολών Ορατού Περιεχομένου",
         "MatomoConfigurationMatomoTrackingEndpointCustom": "Προσαρμοσμένο",

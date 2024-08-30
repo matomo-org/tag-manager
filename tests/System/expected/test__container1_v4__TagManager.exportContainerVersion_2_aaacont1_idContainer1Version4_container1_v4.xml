@@ -23,7 +23,7 @@
 	</version>
 	<tags>
 		<row>
-			<idtag>12</idtag>
+			<idtag>13</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 2</name>
 			<description>My Tag 2 description</description>
@@ -49,7 +49,7 @@
 			
 		</row>
 		<row>
-			<idtag>13</idtag>
+			<idtag>14</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 1</name>
 			<description />
@@ -74,7 +74,7 @@
 			
 		</row>
 		<row>
-			<idtag>14</idtag>
+			<idtag>15</idtag>
 			<type>CustomImage</type>
 			<name>My Tag 3</name>
 			<description />

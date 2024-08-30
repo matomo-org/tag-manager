@@ -37,6 +37,17 @@ class LinkedinInsightTag extends BaseTag
                     return trim($value);
                 };
             }),
+            $this->makeSetting('conversionId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title =  Piwik::translate('TagManager_LinkedinInsightTagConversionIdTitle');
+                $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
+                $field->customFieldComponent = self::FIELD_TEXTAREA_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_LinkedinInsightTagConversionIdDescription');
+                $field->inlineHelp = Piwik::translate('TagManager_LinkedinInsightTagConversionIdHelpText', ['<a href="https://www.linkedin.com/help/lms/answer/a1437736" target="_blank" rel="noreferrer noopener">', '</a>']);
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_BingUETTagIdPlaceholder')];
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
         );
     }
 
