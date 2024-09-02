@@ -63,7 +63,7 @@
               class="description"
               :title="variable.description"
             >
-              {{ truncateText(variable.description, 30) }}
+              {{ truncateText(variable.description, 75) }}
             </td>
             <td
               class="type"

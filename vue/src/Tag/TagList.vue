@@ -60,7 +60,7 @@
               class="description"
               :title="tag.description"
             >
-              {{ truncateText(tag.description, 30) }}
+              {{ truncateText(tag.description, 75) }}
             </td>
             <td
               class="type"

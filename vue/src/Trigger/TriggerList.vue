@@ -62,7 +62,7 @@
               class="description"
               :title="trigger.description"
             >
-              {{ truncateText(trigger.description, 30) }}
+              {{ truncateText(trigger.description, 75) }}
             </td>
             <td
               class="type"
