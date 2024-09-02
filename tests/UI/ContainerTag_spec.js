@@ -356,4 +356,17 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(250);
         await capture.page(page, 'create_new_with_ecommerce_checkbox');
     });
+
+    it('should be able to create tag with really long name', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTag');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+        await selectTagType('CustomHtml');
+        await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'updatedTrigger');
+        await setParameterValue('customHtml', '<script></script>');
+        await setParameterValue('name', 'Test tag with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcde');
+        await createOrUpdateTag();
+        await capture.page(page, 'create_new_long_name');
+    });
 });
