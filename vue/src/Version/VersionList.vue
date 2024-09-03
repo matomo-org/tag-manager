@@ -64,7 +64,7 @@
               class="description"
               :title="version.description"
             >
-              {{ truncateText(version.description, 30) }}
+              {{ truncateText(version.description, 75) }}
             </td>
             <td class="environments">
               <span

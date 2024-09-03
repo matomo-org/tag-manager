@@ -59,7 +59,7 @@
             <td
               class="description"
               :title="container.description"
-            >{{ truncateText(container.description, 50) }}</td>
+            >{{ truncateText(container.description, 75) }}</td>
             <td class="created"><span>{{ container.created_date_pretty }}</span></td>
             <td class="action">
               <a

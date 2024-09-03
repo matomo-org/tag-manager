@@ -119,7 +119,7 @@ class TagManagerFixture extends Fixture
 
         $this->api->createContainerVersion($this->idSite2, $this->idContainer2, 'container2_v1', 'Version from draft without content');
 
-        $idTrigger1Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My trigger1', array('eventName' => 'foo'), array(), 'My trigger1 description');
+        $idTrigger1Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My trigger1', array('eventName' => 'foo'), array(), 'My trigger1 description setting it to a very long description to show up in the UI clipped');
         $idTrigger2Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, WindowLoadedTrigger::ID, 'Mytrigger2', $params = array(), $conditions = array(array('actual' => ErrorUrlVariable::ID, 'comparison' => Comparison::ID_CONTAINS, 'expected' => 'foo')));
         $idTrigger3Container1 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, 'DomReady', 'Mytrigger3', $params = array());
 
@@ -135,9 +135,9 @@ class TagManagerFixture extends Fixture
         $idTag = $this->addContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, 'CustomImage', 'My Tag "Quotes Paused"', array($idTrigger1ContainerQuotes), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'));
         $this->api->pauseContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, $idTag);
 
-        $this->addContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, 'CustomImage', 'My Tag "Quotes Paused on add"', array($idTrigger1ContainerQuotes), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'), $fireLimit = null, $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '', $status = 'paused');
+        $this->addContainerTag($this->idSite2, $this->idContainerQuotes, $this->idContainerQuotesDraftVersion, 'CustomImage', 'My Tag "Quotes Paused on add"', array($idTrigger1ContainerQuotes), $blockTriggers = array(), $params = array('customImageSrc' => '/plugins/tracking.png'), $fireLimit = null, $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = 'Tag description setting it to a very long description to show up in the UI clipped!!!', $status = 'paused');
 
-        $this->idContainer1Version2 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v2', 'Version from draft with tags and triggers');
+        $this->idContainer1Version2 = $this->api->createContainerVersion($this->idSite2, $this->idContainer1, 'container1_v2', 'Version from draft with tags and triggers setting it to a very long description to show up in the UI clipped!!!');
 
         $this->addContainerVariable($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My Var 1', $parameters = array('dataLayerName' => 'fooBarName'), $default = 10, $lookUp = array(array('match_value' => 'foo', 'comparison' => Comparison::ID_EQUALS, 'out_value' => 'bar')));
         $this->addContainerVariable($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My Var 2');
