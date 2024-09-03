@@ -91,7 +91,8 @@ class Menu extends \Piwik\Plugin\Menu
             if (!empty($container)) {
 
                 $params = array('idContainer' => $idContainer); // not needed as it is already present in url but we make sure the id is set
-                $menuCategory = $container['name'];
+                $menuCategory = strlen($container['name']) > 50 ? substr($container['name'], 0, 50) . '…' : $container['name'];
+
 
                 if ($this->accessValidator->hasWriteCapability($idSite)) {
                     $menu->addItem($menuCategory, 'Dashboard', $this->urlForAction('dashboard', $params), $orderId = 104);

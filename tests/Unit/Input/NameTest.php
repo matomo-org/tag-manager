@@ -38,7 +38,7 @@ class NameTest extends UnitTestCase
     public function test_check_shouldThrowException_IfNameIsTooLong()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Name: The value contains "51" characters but should contain at most 50 characters.');
+        $this->expectExceptionMessage('Name: The value contains "256" characters but should contain at most 255 characters.');
 
         $this->checkName(str_pad('4', Name::MAX_LENGTH + 1));
     }

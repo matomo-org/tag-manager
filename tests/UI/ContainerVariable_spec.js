@@ -222,5 +222,14 @@ describe("ContainerVariable", function () {
         await capture.page(page, 'variable_some_exist_view_user');
     });
 
-
+    it('should be able to prefill variable', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewVariable');
+        await page.waitForNetworkIdle();
+        await selectVariableType('DataLayer');
+        await setParameterValue('dataLayerName', 'My DataLayerVariable Name');
+        await setParameterValue('name', 'Test variable with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890');
+        await createOrUpdateVariable();
+        await captureCustomVariablesList('create_new_long_name');
+    });
 });

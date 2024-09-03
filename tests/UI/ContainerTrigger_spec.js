@@ -209,5 +209,15 @@ describe("ContainerTrigger", function () {
         await capture.page(page, 'trigger_some_exist_view_user');
     });
 
-
+    it('should be able to create new trigger with really long name', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTrigger');
+        await page.waitForNetworkIdle();
+        await selectTriggerType('ElementVisibility');
+        await setParameterValue('elementId', 'myElementId');
+        await setParameterValue('name', 'Test trigger with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890A');
+        await createOrUpdateTrigger();
+        await page.waitForTimeout(250);
+        await capture.page(page, 'create_new_long_name');
+    });
 });

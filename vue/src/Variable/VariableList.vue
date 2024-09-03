@@ -58,7 +58,7 @@
             v-for="variable in sortedVariables"
             :key="variable.idvariable"
           >
-            <td class="name">{{ variable.name }}</td>
+            <td class="name" :title="variable.name">{{ truncateText(variable.name, 50) }}</td>
             <td
               class="description"
               :title="variable.description"

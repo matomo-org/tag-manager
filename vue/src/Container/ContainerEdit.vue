@@ -52,7 +52,7 @@
             name="name"
             :model-value="container.name"
             @update:model-value="container.name = $event; setValueHasChanged()"
-            :maxlength="50"
+            :maxlength="255"
             :title="translate('General_Name')"
             :inline-help="translate('TagManager_ContainerNameHelp')"
             :placeholder="translate('TagManager_ContainerNamePlaceholder')"
