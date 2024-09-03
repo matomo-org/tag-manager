@@ -6,7 +6,7 @@
 		<idsite>2</idsite>
 		<type>CustomEvent</type>
 		<name>My trigger1</name>
-		<description>My trigger1 description</description>
+		<description>My trigger1 description setting it to a very long description to show up in the UI clipped</description>
 		<status>active</status>
 		<parameters>
 			<eventName>foo</eventName>

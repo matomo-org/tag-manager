@@ -19,6 +19,7 @@ use Piwik\Plugins\TagManager\TagManager;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
 use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ClickButtonVariable;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ErrorUrlVariable;
@@ -421,6 +422,25 @@ class VariableTest extends IntegrationTestCase
         $this->assertSame("{{{$newVariableName}}}", $tag1['parameters']['matomoConfig']);
         $tag2 = $this->tagModel->getContainerTag($this->idSite, $this->containerVersion1, $idTag2);
         $this->assertSame("{{{$newVariableName}}}", $tag2['parameters']['matomoConfig']);
+    }
+
+    public function testUpdateContainerVariableNameReferencesInCustomJsVariable()
+    {
+        $variableParams = ['jsFunction' => 'function () { return 12345; }'];
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'TestVariable', $variableParams);
+        $this->assertSame(2, $idVariable);
+
+        $idReferencingVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'ReferencingTestVariable', $parameters = ['jsFunction' => 'function () { return {{TestVariable}}; }']);
+        $this->assertSame(3, $idReferencingVariable);
+
+        $newVariableName = 'NewVariableName';
+        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $idVariable, $newVariableName, $variableParams);
+
+        $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
+        $this->assertNotEmpty($variable['parameters']['jsFunction']);
+        $this->assertSame($variableParams['jsFunction'], $variable['parameters']['jsFunction']);
+        $referencingVariable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idReferencingVariable);
+        $this->assertSame('function () { return {{NewVariableName}}; }', $referencingVariable['parameters']['jsFunction']);
     }
 
     public function testGetContainer()

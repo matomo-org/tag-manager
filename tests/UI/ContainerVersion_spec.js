@@ -102,7 +102,7 @@ describe("ContainerVersion", function () {
 
     it('should be able to prefill version', async function () {
         await setVersionName('My Version Name');
-        await setVersionDescription('My Description');
+        await setVersionDescription('My Description setting it to a very long description to show up in the UI clipped!!!');
         await capture.page(page, 'create_new_prefilled');
     });
 
