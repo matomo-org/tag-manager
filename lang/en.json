@@ -1072,7 +1072,6 @@
         "ClickHtmlAttributeAttributePlaceholder": "e.g. value",
         "PausedTag": "Fantastic! The tag has been paused successfully.",
         "ResumedTag": "Fantastic! The tag has been resumed successfully.",
-        "MatomoConfigurationMatomoTrackBotsDescription": "By default, Matomo doesn't track visits by bots in order to show accurate visitor metrics. Enable this feature to add tracking for bot visits.",
         "DeleteWebsiteExplanationLine1": "This action will also result in deletion of all the Matomo Tag Manager containers associated with this site.",
         "DeleteWebsiteExplanationLine2": "To save a copy of container configurations, click on the container name below and export the desired version:",
         "DeleteWebsiteExplanationLine3": "Click Confirm when you are ready to delete this website."
