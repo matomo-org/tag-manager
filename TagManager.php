@@ -979,9 +979,9 @@ class TagManager extends \Piwik\Plugin
         $dao->deleteContainersForSite($idSite, $deletedDate);
     }
 
-    public function getMessagesToWarnOnSiteRemoval($idSite, &$messages)
+    public function getMessagesToWarnOnSiteRemoval(&$messages, $idSite)
     {
-        Piwik::checkUserHasAdminAccess($idSite);
+        Piwik::checkUserHasSuperUserAccess();
         $dao = new ContainersDao();
         $containers = $dao->getContainersForSite($idSite);
         if (!empty($containers)) {
