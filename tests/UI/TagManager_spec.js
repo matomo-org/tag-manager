@@ -187,7 +187,7 @@ describe("TagManager", function () {
   it('should show the container detail when delete button is pressed', async function () {
       const pageElement = await page.$('.page');
       await page.evaluate(function(){
-        $('.card-content:eq(0) .icon-delete').click()
+        $('.card-content:eq(1) .icon-delete').click()
       });
       await page.waitForTimeout(250);
       await capture.modal(page, 'manageWebsitesDeleteAction');
