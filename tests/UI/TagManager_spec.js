@@ -177,5 +177,21 @@ describe("TagManager", function () {
         await capture.modal(page, 'publish_with_content');
     });
 
+  it('should show the manage website screen', async function () {
+      const urlToTest = "?module=SitesManager&action=index&idSite=2&period=day&date=yesterday&showaddsite=false";
+      await page.goto(urlToTest);
+      const pageElement = await page.$('.page');
+      expect(await pageElement.screenshot()).to.matchImage('manageWebsites');
+  });
+
+  it('should show the container detail when delete button is pressed', async function () {
+      const pageElement = await page.$('.page');
+      await page.evaluate(function(){
+        $('.card-content:eq(1) .icon-delete').click()
+      });
+      await page.waitForTimeout(250);
+      await capture.modal(page, 'manageWebsitesDeleteAction');
+  });
+
 
 });

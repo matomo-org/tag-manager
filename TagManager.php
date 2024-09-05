@@ -35,6 +35,7 @@ use Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator;
 use Piwik\Plugins\TagManager\Model\Salt;
 use Piwik\Site;
 use Piwik\SiteContentDetector;
+use Piwik\Url;
 use Piwik\View;
 use Piwik\Context;
 use Piwik\Log\LoggerInterface;
@@ -73,6 +74,7 @@ class TagManager extends \Piwik\Plugin
             'TwoFactorAuth.requiresTwoFactorAuthentication' => 'requiresTwoFactorAuthentication',
             'Db.getTablesInstalled' => 'getTablesInstalled',
             'Template.siteWithoutDataTab.ReactJs.content' => 'embedReactTagManagerTrackingCode',
+            'SitesManager.getMessagesToWarnOnSiteRemoval' => 'getMessagesToWarnOnSiteRemoval'
         );
     }
 
@@ -975,6 +977,23 @@ class TagManager extends \Piwik\Plugin
             BaseContext::removeAllContainerFiles($container['idcontainer']);
         }
         $dao->deleteContainersForSite($idSite, $deletedDate);
+    }
+
+    public function getMessagesToWarnOnSiteRemoval(&$messages, $idSite)
+    {
+        Piwik::checkUserHasSuperUserAccess();
+        $dao = new ContainersDao();
+        $containers = $dao->getContainersForSite($idSite);
+        if (!empty($containers)) {
+            $view = new View('@TagManager/deleteWebsite');
+            $view->containers = $containers;
+            $view->link = Url::getCurrentUrlWithoutFileName() . 'index.php?' . Url::getQueryStringFromParameters([
+                    'idSite' => $idSite,
+                    'module' => 'TagManager',
+                    'action' => 'manageVersions',
+                ]);
+            $messages[] = $view->render();
+        }
     }
 
 }
