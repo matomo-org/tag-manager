@@ -218,6 +218,7 @@ export default defineComponent({
           name: '',
           context: 'web',
           description: '',
+          activelySyncGtmDataLayer: true,
         } as unknown as Container;
         this.isDirty = false;
       }

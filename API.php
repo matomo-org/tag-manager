@@ -1074,6 +1074,7 @@ class API extends \Piwik\Plugin\API
      * @param string $description Optionally a description for this container.
      * @param int $ignoreGtmDataLayer Optionally indicate that we should ignore GTM dataLayer values
      * @param int $isTagFireLimitAllowedInPreviewMode Optionally indicate that we should respect fire tag limits when in preview mode
+     * @param int $activelySyncGtmDataLayer Optionally indicate that we should actively sync new events from the GTM dataLayer to MTM
      * @return string The ID of the created container.
      */
     public function updateContainer($idSite, $idContainer, $name, $description = '', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
