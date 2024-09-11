@@ -912,6 +912,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_MatomoConfigurationMatomoTrackBotsDescription';
         $result[] = 'TagManager_PausedTag';
         $result[] = 'TagManager_ResumedTag';
+        $result[] = 'TagManager_ActivelySyncGtmDataLayerTitle';
+        $result[] = 'TagManager_ActivelySyncGtmDataLayerDescription';
     }
 
     public function getStylesheetFiles(&$stylesheets)

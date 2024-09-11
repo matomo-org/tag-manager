@@ -1813,6 +1813,13 @@
                 }
             }
 
+            const syncDataLayer = function(array, callback) {
+                array.push = function(e) {
+                    Array.prototype.push.call(array, e);
+                    callback(array);
+                };
+            }
+
             utils.setMethodWrapIfNeeded(windowAlias._mtm, 'push', processMtmPush);
             var i;
             for (i = 0; i < windowAlias._mtm.length; i++) {
@@ -1828,6 +1835,13 @@
                         dataLayer.push(windowAlias.dataLayer[i]);
                     }
                 }
+            }
+
+            // Only sync the dataLayer changes from GTM if the config has been set
+            if (!('undefined' === typeof activelySyncGtmDataLayer) && activelySyncGtmDataLayer && 'undefined' !== typeof windowAlias.dataLayer && utils.isArray(windowAlias.dataLayer)) {
+                syncDataLayer(windowAlias.dataLayer, function (e) {
+                    dataLayer.push(windowAlias.dataLayer[windowAlias.dataLayer.length - 1]);
+                });
             }
 
             return TagManager;

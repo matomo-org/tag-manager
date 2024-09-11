@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\TagManager;
 
+use Piwik\Common;
 use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
 use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
 use Piwik\Plugins\TagManager\UpdateHelper\NewTagParameterMigrator;
@@ -53,6 +54,9 @@ class Updates_5_2_0_b1 extends PiwikUpdates
             $this->migration->db->changeColumn('tagmanager_tag', 'name', 'name', 'VARCHAR(255) NOT NULL'),
             $this->migration->db->changeColumn('tagmanager_trigger', 'name', 'name', 'VARCHAR(255) NOT NULL'),
             $this->migration->db->changeColumn('tagmanager_variable', 'name', 'name', 'VARCHAR(255) NOT NULL'),
+            // Create activelySyncGtmDataLayer with default 0 so that any existing containers are disabled, but then change the column so that new containers default with it enabled
+            $this->migration->db->addColumn('tagmanager_container', 'activelySyncGtmDataLayer', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 0', 'ignoreGtmDataLayer'),
+            $this->migration->db->changeColumn('tagmanager_container', 'activelySyncGtmDataLayer', 'activelySyncGtmDataLayer', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 1'),
         );
     }
 

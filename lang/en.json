@@ -1074,6 +1074,8 @@
         "ResumedTag": "Fantastic! The tag has been resumed successfully.",
         "DeleteWebsiteExplanationLine1": "This action will also result in deletion of all the Matomo Tag Manager containers associated with this site.",
         "DeleteWebsiteExplanationLine2": "To save a copy of container configurations, click on the container name below and export the desired version:",
-        "DeleteWebsiteExplanationLine3": "Click Confirm when you are ready to delete this website."
+        "DeleteWebsiteExplanationLine3": "Click Confirm when you are ready to delete this website.",
+        "ActivelySyncGtmDataLayerTitle": "Actively sync from the Google Tag Manager data layer",
+        "ActivelySyncGtmDataLayerDescription": "When enabled, any new values pushed to the Google Tag Manager data layer will be synced to the Matomo Tag Manager data layer."
     }
 }

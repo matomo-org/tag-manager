@@ -82,6 +82,16 @@
         <div>
           <Field
             uicontrol="checkbox"
+            name="activelySyncGtmDataLayer"
+            :model-value="container.activelySyncGtmDataLayer"
+            @update:model-value="container.activelySyncGtmDataLayer = $event; setValueHasChanged()"
+            :title="translate('TagManager_ActivelySyncGtmDataLayerTitle')"
+            :inline-help="translate('TagManager_ActivelySyncGtmDataLayerDescription')"
+          />
+        </div>
+        <div>
+          <Field
+            uicontrol="checkbox"
             name="isTagFireLimitAllowedInPreviewMode"
             :model-value="container.isTagFireLimitAllowedInPreviewMode"
             @update:model-value="container.isTagFireLimitAllowedInPreviewMode = $event;

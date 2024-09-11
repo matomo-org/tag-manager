@@ -29,6 +29,7 @@ class ContainersDao extends BaseDao implements TagManagerDao
                   `name` VARCHAR(" . Name::MAX_LENGTH . ") NOT NULL,
                   `description` VARCHAR(" . Description::MAX_LENGTH . ") NOT NULL DEFAULT '',
                   `ignoreGtmDataLayer` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+                  `activelySyncGtmDataLayer` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1,
                   `isTagFireLimitAllowedInPreviewMode` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
                   `status` VARCHAR(10) NOT NULL,
                   `created_date` DATETIME NOT NULL,
