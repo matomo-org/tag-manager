@@ -9,20 +9,15 @@
 
 namespace Piwik\Plugins\TagManager;
 
-use Piwik\Common;
-use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
-use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
-use Piwik\Plugins\TagManager\UpdateHelper\NewTagParameterMigrator;
-use Piwik\Plugins\TagManager\UpdateHelper\NewVariableParameterMigrator;
 use Piwik\Updater;
 use Piwik\Updater\Migration;
 use Piwik\Updater\Migration\Factory as MigrationFactory;
 use Piwik\Updates as PiwikUpdates;
 
 /**
- * Update for version 5.2.0-b1.
+ * Update for version 5.2.0-b2.
  */
-class Updates_5_2_0_b1 extends PiwikUpdates
+class Updates_5_2_0_b2 extends PiwikUpdates
 {
     /**
      * @var MigrationFactory
@@ -48,12 +43,9 @@ class Updates_5_2_0_b1 extends PiwikUpdates
     public function getMigrations(Updater $updater)
     {
         return array(
-            $this->migration->db->addColumn('tagmanager_container', 'isTagFireLimitAllowedInPreviewMode', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 0', 'ignoreGtmDataLayer'),
-            $this->migration->db->changeColumn('tagmanager_container_version', 'name', 'name', "VARCHAR(255) NOT NULL DEFAULT ''"),
-            $this->migration->db->changeColumn('tagmanager_container', 'name', 'name', 'VARCHAR(255) NOT NULL'),
-            $this->migration->db->changeColumn('tagmanager_tag', 'name', 'name', 'VARCHAR(255) NOT NULL'),
-            $this->migration->db->changeColumn('tagmanager_trigger', 'name', 'name', 'VARCHAR(255) NOT NULL'),
-            $this->migration->db->changeColumn('tagmanager_variable', 'name', 'name', 'VARCHAR(255) NOT NULL'),
+            // Create activelySyncGtmDataLayer with default 0 so that any existing containers are disabled, but then change the column so that new containers default with it enabled
+            $this->migration->db->addColumn('tagmanager_container', 'activelySyncGtmDataLayer', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 0', 'ignoreGtmDataLayer'),
+            $this->migration->db->changeColumn('tagmanager_container', 'activelySyncGtmDataLayer', 'activelySyncGtmDataLayer', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 1'),
         );
     }
 
@@ -68,8 +60,5 @@ class Updates_5_2_0_b1 extends PiwikUpdates
     public function doUpdate(Updater $updater)
     {
         $updater->executeMigrations(__FILE__, $this->getMigrations($updater));
-
-        $migrator = new NewVariableParameterMigrator(MatomoConfigurationVariable::ID, 'trackBots', false);
-        $migrator->migrate();
     }
 }
