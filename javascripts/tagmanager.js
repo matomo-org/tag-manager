@@ -1831,7 +1831,9 @@
             }
 
             // Only sync the dataLayer changes from GTM if the config has been set
-            if (!('undefined' === typeof activelySyncGtmDataLayer) && activelySyncGtmDataLayer && 'undefined' !== typeof windowAlias.dataLayer && utils.isArray(windowAlias.dataLayer)) {
+            if (!('undefined' === typeof activelySyncGtmDataLayer) && activelySyncGtmDataLayer) {
+                windowAlias.dataLayer = windowAlias.dataLayer || [];
+
                 const syncDataLayer = function(array, callback) {
                     array.push = function(e) {
                         Array.prototype.push.call(array, e);
