@@ -9,7 +9,6 @@
 
 namespace Piwik\Plugins\TagManager;
 
-use Piwik\Common;
 use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
 use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
 use Piwik\Plugins\TagManager\UpdateHelper\NewTagParameterMigrator;
