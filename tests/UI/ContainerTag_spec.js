@@ -153,32 +153,37 @@ describe("ContainerTag", function () {
     it('should be possible to edit a trigger directly', async function () {
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
-        await page.waitForTimeout(400);
+        await page.waitForTimeout(500);
         await capture.modal(page, 'edit_trigger_directly_popup');
     });
 
     it('should be possible to edit a trigger directly', async function () {
         await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
-        await page.waitForTimeout(100);
+        await page.waitForTimeout(500);
         await page.click('.modal.open .createButton');
         await page.waitForNetworkIdle();
-        await page.waitForTimeout(250);
+        await page.waitForTimeout(500);
         await capture.page(page, 'edit_trigger_directly_updated');
     });
 
     it('should load an edit tag through URL', async function () {
         await page.goto(container1Base + '#?idTag=2');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(750);
         await capture.page(page, 'edit_url');
     });
 
     it('should enable edit button after changing a field', async function () {
         await setTagName('tagNameNew');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(750);
         await capture.page(page, 'edit_url_updated');
     });
 
     it('should have updated the list of tags', async function () {
         await createOrUpdateTag();
         await page.waitForNetworkIdle();
+        await page.waitForTimeout(750);
         await capture.page(page, 'edit_updated_back_to_list');
     });
 

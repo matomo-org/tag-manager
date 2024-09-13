@@ -7,6 +7,7 @@
 		<name>Container with &quot;Quotes&quot;</name>
 		<description>My container with quotes description</description>
 		<ignoreGtmDataLayer>1</ignoreGtmDataLayer>
+		<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
 		<isTagFireLimitAllowedInPreviewMode>1</isTagFireLimitAllowedInPreviewMode>
 		<status>active</status>
 
@@ -104,6 +105,7 @@
 		<name>Container1</name>
 		<description />
 		<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+		<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
 		<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 		<status>active</status>
 		
@@ -261,6 +263,7 @@
 		<name>Container2</name>
 		<description>My container 2 description</description>
 		<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+		<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
 		<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 		<status>active</status>
 		
@@ -307,6 +310,7 @@
 		<name>Container3</name>
 		<description>My container 3 description</description>
 		<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+		<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
 		<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 		<status>active</status>
 		

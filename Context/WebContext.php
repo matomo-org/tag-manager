@@ -189,7 +189,8 @@ class WebContext extends BaseContext
             $js = str_replace(array('/*!! initContainerHook */', '/*!!! initContainerHook */'), $initContainer, $js);
 
             $ignoreGtmDataLayer = isset($container['ignoreGtmDataLayer']) && $container['ignoreGtmDataLayer'] == 1 ? 'true' : 'false';
-            $windowLevelSettingsJs = "var ignoreGtmDataLayer = {$ignoreGtmDataLayer};";
+            $activelySyncGtmDataLayer = isset($container['activelySyncGtmDataLayer']) && $container['activelySyncGtmDataLayer'] == 1 ? 'true' : 'false';
+            $windowLevelSettingsJs = "var ignoreGtmDataLayer = {$ignoreGtmDataLayer}; var activelySyncGtmDataLayer = {$activelySyncGtmDataLayer};";
             $js = str_replace(array('/*!! windowLevelSettingsHook */', '/*!!! windowLevelSettingsHook */'), $windowLevelSettingsJs, $js);
 
             $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $release['environment'], $container['created_date']);

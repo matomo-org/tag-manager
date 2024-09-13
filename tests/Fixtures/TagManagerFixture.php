@@ -173,7 +173,7 @@ class TagManagerFixture extends Fixture
         }
     }
 
-    public function addContainer($idSite, $idContainer, $name = 'My Name', $description = '', $context = null, $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0)
+    public function addContainer($idSite, $idContainer, $name = 'My Name', $description = '', $context = null, $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
     {
         $this->initIfNeeded();
         if (!isset($context)) {
@@ -185,7 +185,7 @@ class TagManagerFixture extends Fixture
             'containerIdGenerator' => new StaticContainerIdGenerator($idContainer)
         ));
 
-        return $container->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode);
+        return $container->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
     }
 
     public function updateContainer($idSite, $idContainer, $name = 'Updated Name', $description = '')

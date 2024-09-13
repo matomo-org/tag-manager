@@ -109,6 +109,20 @@ describe("Container", function () {
         await capture.page(page, 'edit_url_without_isTagFireLimitAllowedInPreviewMode');
     });
 
+    it('should set activelySyncGtmDataLayer as active when set and save', async function(){
+        await page.evaluate(() => $('#activelySyncGtmDataLayer').click());
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'edit_url_with_activelySyncGtmDataLayer');
+    });
+
+    it('should set activelySyncGtmDataLayer as inactive when set and save', async function(){
+        await page.evaluate(() => $('#activelySyncGtmDataLayer').click());
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'edit_url_without_activelySyncGtmDataLayer');
+    });
+
     it('should enable edit button after changing a field', async function () {
         await page.goto(generalParamsSite1 + urlBase + '#?idContainer=aaacont2');
         await form.sendFieldValue(page, '.editContainer #name', 'My Updated Name');
