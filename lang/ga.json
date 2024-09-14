@@ -1,5 +1,7 @@
 {
     "TagManager": {
+        "ActivelySyncGtmDataLayerDescription": "Nuair a bheidh sé cumasaithe, déanfar aon luachanna nua a bhrúitear chuig ciseal sonraí Google Tag Manager a shioncronú le ciseal sonraí Matomo Tag Manager.",
+        "ActivelySyncGtmDataLayerTitle": "Sioncrónaigh go gníomhach ó chiseal sonraí Google Tag Manager",
         "AddThisParentSelectorDescription": "Cuir isteach roghnóir CSS go roghnach leis an eilimint inar cheart na hUirlisí Inlíne a chur leis.",
         "AddThisParentSelectorTitle": "Roghnóir Tuismitheoir Uirlisí Inlíne",
         "AddThisTagDescription": "Cuir na cnaipí meán sóisialta AddThis agus níos mó le do láithreán gréasáin.",
