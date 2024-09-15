@@ -1,5 +1,7 @@
 {
     "TagManager": {
+        "ActivelySyncGtmDataLayerDescription": "Όταν είναι ενεργό, οποιεσδήποτε νέες τιμές που θα στέλνονται στο επίπεδο δεδομένων του Διαχειριστή Σημάνσεων Google, θα συγχρονίζονται με το επίπεδο δεδομένων του Διαχειριστή Σημάνσεων του Matomo.",
+        "ActivelySyncGtmDataLayerTitle": "Να γίνεται ενεργός συγχρονισμός από το επίπεδο δεδομένων του Διαχειριστή Σημάνσεων Google",
         "AddThisParentSelectorDescription": "Προαιρετικά εισάγετε ένα επιλογέα CSS για το στοιχείο που θα προστεθεί το Inline Tools.",
         "AddThisParentSelectorTitle": "Inline Tools Parent Selector",
         "AddThisTagDescription": "Προσθήκη του πλήκτρου κοινωνικής δικτύωσης AddThis και περισσότερων στον ιστοτόπο σας.",
