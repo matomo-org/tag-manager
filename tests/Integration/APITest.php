@@ -19,6 +19,7 @@ use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
 use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
+use Piwik\Plugins\TagManager\tests\Framework\Mock\FakeAccessTagManager;
 use Piwik\Tests\Framework\Mock\FakeAccess;
 
 /**
@@ -1293,7 +1294,7 @@ class APITest extends IntegrationTestCase
     public function provideContainerConfig()
     {
         return array(
-            'Piwik\Access' => new FakeAccess()
+            'Piwik\Access' => new FakeAccessTagManager()
         );
     }
 }
