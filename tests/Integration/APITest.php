@@ -274,6 +274,15 @@ class APITest extends IntegrationTestCase
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
     }
 
+    public function test_publishContainerVersion_shouldFailWhenHavingOnlyAdminAccess()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setAdminUser();
+        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_PREVIEW);
+    }
+
     public function test_publishContainerVersion_shouldFailWhenContainerVersionDoesNotExist()
     {
         $this->expectException(\Exception::class);
@@ -299,12 +308,13 @@ class APITest extends IntegrationTestCase
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
     }
 
-    public function test_publishContainerVersion_shouldSucceedForAdmin()
+    public function test_publishContainerVersion_shouldFailForAdmin()
     {
-        // This test case actually doesn't have any assertions, but the fixture already performs some when it is set up.
-        // self::expectNotToPerformAssertions();
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
 
-        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
+        $this->setWriteUser();
+        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_PREVIEW);
     }
 
     public function test_publishContainerVersion_shouldSucceedForPublishLiveCapability()
@@ -313,7 +323,10 @@ class APITest extends IntegrationTestCase
         // self::expectNotToPerformAssertions();
 
         $this->setWriteUser();
-        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+        FakeAccess::$idSitesCapabilities = array(
+            UseCustomTemplates::ID => array($this->idSite),
+            PublishLiveContainer::ID => array($this->idSite),
+        );
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
     }
 
@@ -392,6 +405,15 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
 
         $this->setUser();
+        $this->api->deleteContainerVersion($this->idSite, 'foo', $this->idContainerDraftVersion);
+    }
+
+    public function test_deleteContainerVersion_shouldFailWhenHavingOnlyWritePermissions()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setAdminUser();
         $this->api->deleteContainerVersion($this->idSite, 'foo', $this->idContainerDraftVersion);
     }
 
@@ -723,7 +745,7 @@ class APITest extends IntegrationTestCase
 
     public function test_createDefaultContainerForSite_success()
     {
-        $this->setAdminUser();
+        $this->setSuperUser();
         $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
         $this->assertNotEmpty($idContainer);
     }
@@ -1165,17 +1187,10 @@ class APITest extends IntegrationTestCase
 
     public function test_updateContainerVariable_failMissingCustomTemplatePermission()
     {
-        $this->setAdminUser();
-        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
-
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
         $this->setWriteUser();
-
-        try {
-            $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2');
-            $this->fail('Expected exception has not been thrown');
-        } catch (\Exception $e) {
-            self::assertStringContainsString('checkUserHasCapability tagmanager_use_custom_templates', $e->getMessage());
-        }
+        $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
     }
 
     public function test_updateContainerVariable_successWithCustomTemplatePermission()
@@ -1184,6 +1199,7 @@ class APITest extends IntegrationTestCase
         // self::expectNotToPerformAssertions();
 
         $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
         $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
 
         $this->setWriteUser();
@@ -1215,33 +1231,25 @@ class APITest extends IntegrationTestCase
 
     public function test_updateContainerTag_failMissingCustomTemplatePermission()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
         $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser($name = 'foobar');
         $this->setAdminUser();
 
         $fireTrigger = array($idTrigger);
 
-        $id = $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
-
-        $this->setWriteUser();
-
-        try {
-            $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customHtml' => 'foo'), $fireTrigger);
-            $this->fail('Expected exception has not been thrown');
-        } catch (\Exception $e) {
-            self::assertStringContainsString('checkUserHasCapability tagmanager_use_custom_templates', $e->getMessage());
-        }
+        $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
     }
 
     public function test_updateContainerTag_successWithCustomTemplatePermission()
     {
-        $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser();
-        $this->setAdminUser();
-
-        $fireTrigger = array($idTrigger);
-        $id = $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
-
         $this->setWriteUser();
         FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser();
+
+        $fireTrigger = array($idTrigger);
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $id = $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
 
         $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customHtml' => 'foo'), $fireTrigger);
     }
