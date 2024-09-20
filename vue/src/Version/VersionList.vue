@@ -90,7 +90,7 @@
               />
               <a
                 class="table-action icon-bug"
-                v-show="hasWriteAccess && hasCustomTemplatesCapability"
+                v-show="hasWriteAccess"
                 @click="enableDebugMode(version.idcontainerversion)"
                 :title="translate('TagManager_EnablePreviewDebug')"
               />
@@ -136,7 +136,7 @@
         </a>
         <a
           class="importVersion"
-          v-show="hasWriteAccess"
+          v-show="hasWriteAccess && hasCustomTemplatesCapability"
           @click="importVersion()"
         >
           <span class="icon-upload">&nbsp;</span>{{ translate('TagManager_Import') }}
