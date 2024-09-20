@@ -459,8 +459,8 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The event's value, for example &quot;50&quot; as in user has stayed on the website for 50 seconds.</description>
-						<inlineHelp />
+						<description>Specify a value or choose a variable.</description>
+						<inlineHelp>&lt;br&gt;&lt;strong&gt;Note:&lt;/strong&gt; The value must be &lt;strong&gt;numeric&lt;/strong&gt;. Negative values are allowed but non-numeric values will automatically be replaced with 0.</inlineHelp>
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
