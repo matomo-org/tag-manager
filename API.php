@@ -434,7 +434,7 @@ class API extends \Piwik\Plugin\API
             'idContainer' => $idContainer,
             'idContainerVersion' => $draftVersion,
             'type' => MatomoTag::ID,
-            'name' => Piwik::translate('TagManager_PageViewTriggerName'),
+            'name' => Piwik::translate('TagManager_MatomoTagName'),
             'fireTriggerIds' => array($idTrigger),
             'parameters' => array(
                 MatomoTag::PARAM_MATOMO_CONFIG => '{{'. Piwik::translate('TagManager_MatomoConfigurationVariableName').'}}'
