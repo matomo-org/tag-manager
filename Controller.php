@@ -9,6 +9,7 @@ namespace Piwik\Plugins\TagManager;
 
 use Piwik\API\Request;
 use Piwik\Common;
+use Piwik\Container\StaticContainer;
 use Piwik\DataTable\Filter\SafeDecodeLabel;
 use Piwik\Filechecks;
 use Piwik\Menu\MenuTop;
@@ -156,6 +157,8 @@ class Controller extends \Piwik\Plugin\Controller
 
     public function manageTags()
     {
+        $this->accessValidator->checkUserHasTagManagerAccess($this->idSite);
+
         $tagsHelpText = $this->renderTemplate('helpContent', [
             'subHeading' => Piwik::translate('TagManager_ManageTagsHelp1'),
             'paragraphs' => [
@@ -176,6 +179,8 @@ class Controller extends \Piwik\Plugin\Controller
 
     public function manageTriggers()
     {
+        $this->accessValidator->checkUserHasTagManagerAccess($this->idSite);
+
         $triggersHelpText = $this->renderTemplate('helpContent', [
             'subHeading' => Piwik::translate('TagManager_ManageTriggersHelp1'),
             'paragraphs' => [
@@ -198,6 +203,8 @@ class Controller extends \Piwik\Plugin\Controller
 
     public function manageVariables()
     {
+        $this->accessValidator->checkUserHasTagManagerAccess($this->idSite);
+
         $variablesHelpText = $this->renderTemplate('helpContent', [
             'subHeading' => Piwik::translate('TagManager_ManageVariablesHelp1'),
             'paragraphs' => [
@@ -220,6 +227,8 @@ class Controller extends \Piwik\Plugin\Controller
 
     public function manageVersions()
     {
+        $this->accessValidator->checkUserHasTagManagerAccess($this->idSite);
+
         $idSite = Common::getRequestVar('idSite', null, 'int');
         $this->accessValidator->checkWriteCapability($idSite);
         $path = TagManager::getAbsolutePathToContainerDirectory();
@@ -316,6 +325,7 @@ class Controller extends \Piwik\Plugin\Controller
     public function exportContainerVersion()
     {
         $this->checkSitePermission();
+        $this->accessValidator->checkUserHasTagManagerAccess($this->idSite);
 
         $jsonCallback = Common::getRequestVar('callback', false);
 
