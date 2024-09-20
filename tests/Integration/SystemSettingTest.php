@@ -8,9 +8,12 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration;
 
+use Piwik\Access;
+use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Plugins\TagManager\SystemSettings;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
+use Piwik\Tests\Framework\Mock\FakeAccess;
 
 /**
  * @group TagManager
@@ -147,4 +150,94 @@ class SystemSettingTest extends IntegrationTestCase
         $this->settings->save();
     }
 
+    public function testSaveRestrictTagManagerAccess()
+    {
+        $settingValue = SystemSettings::USER_PERMISSON_LIST[2];
+        $this->settings->restrictTagManagerAccess->setValue($settingValue);
+        $this->settings->save();
+
+        $this->assertSame($settingValue, $this->settings->restrictTagManagerAccess->getValue());
+    }
+
+    /**
+     * @dataProvider getDoesCurrentUserHaveTagManagerAccessData
+     */
+    public function testDoesCurrentUserHaveTagManagerAccess(?int $roleIndex, ?int $settingRoleIndex, bool $isSuperUser, bool $expected)
+    {
+        if ($settingRoleIndex !== null) {
+            $this->settings->restrictTagManagerAccess->setValue(SystemSettings::USER_PERMISSON_LIST[$settingRoleIndex]);
+        }
+
+        if ($roleIndex !== null) {
+            $fakeAccess = new FakeAccess();
+            switch ($roleIndex) {
+                case 0:
+                    $fakeAccess->setIdSitesView([1, 2, 3]);
+                    break;
+                case 1:
+                    $fakeAccess->setIdSitesWrite([1, 2, 3]);
+                    break;
+                case 2:
+                    $fakeAccess->setIdSitesAdmin([1, 2, 3]);
+                    break;
+            }
+
+            StaticContainer::getContainer()->set('Piwik\Access', $fakeAccess);
+        }
+
+        Access::getInstance()->setSuperUserAccess($isSuperUser);
+
+        $this->assertSame($isSuperUser, Access::getInstance()->hasSuperUserAccess());
+
+        $roleName = $roleIndex === null ? 'None' : SystemSettings::USER_PERMISSON_LIST[$roleIndex];
+        $settingMinRole = $settingRoleIndex === null ? 'None' : SystemSettings::USER_PERMISSON_LIST[$settingRoleIndex];
+        $message = "Expected '{$expected}' for user role '{$roleName}', setting min role '{$settingMinRole}', and is superuser? '{$isSuperUser}'.";
+        $this->assertSame($expected, $this->settings->doesCurrentUserHaveTagManagerAccess(), $message);
+    }
+
+    public function getDoesCurrentUserHaveTagManagerAccessData(): array
+    {
+        return [
+            [null, null, false, false],
+            [null, null, true, true],
+            [0, null, true, true],
+            [0, null, true, true],
+            [1, null, true, true],
+            [1, null, true, true],
+            [2, null, true, true],
+            [2, null, true, true],
+            [null, 0, false, false],
+            [null, 0, true, true],
+            [0, 0, true, true],
+            [0, 0, true, true],
+            [1, 0, true, true],
+            [1, 0, true, true],
+            [2, 0, true, true],
+            [2, 0, true, true],
+            [null, 1, false, false],
+            [null, 1, true, true],
+            [0, 1, false, false],
+            [0, 1, true, true],
+            [1, 1, true, true],
+            [1, 1, true, true],
+            [2, 1, true, true],
+            [2, 1, true, true],
+            [null, 2, false, false],
+            [null, 2, true, true],
+            [0, 2, false, false],
+            [0, 2, true, true],
+            [1, 2, false, false],
+            [1, 2, true, true],
+            [2, 2, true, true],
+            [2, 2, true, true],
+            [null, 3, false, false],
+            [null, 3, true, true],
+            [0, 3, false, false],
+            [0, 3, true, true],
+            [1, 3, false, false],
+            [1, 3, true, true],
+            [2, 3, false, false],
+            [2, 3, true, true],
+        ];
+    }
 }

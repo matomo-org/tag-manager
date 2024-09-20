@@ -7,11 +7,13 @@
  */
 namespace Piwik\Plugins\TagManager;
 
+use Piwik\Access;
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\BaseContext;
 use Piwik\Plugins\TagManager\Model\Environment;
+use Piwik\Settings\Plugin\SystemSetting;
 use Piwik\Settings\Setting;
 use Piwik\Settings\FieldConfig;
 
@@ -20,6 +22,16 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     const CUSTOM_TEMPLATES_DISABLED = 'disabled';
     const CUSTOM_TEMPLATES_ADMIN = 'admin';
     const CUSTOM_TEMPLATES_SUPERUSER = 'superuser';
+
+    const USER_PERMISSON_LIST = [
+        \Piwik\Access\Role\View::ID,
+        \Piwik\Access\Role\Write::ID,
+        \Piwik\Access\Role\Admin::ID,
+        self::CUSTOM_TEMPLATES_SUPERUSER
+    ];
+
+    /** @var Setting */
+    public $restrictTagManagerAccess;
 
     /** @var Setting */
     public $restrictCustomTemplates;
@@ -31,8 +43,66 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 
     protected function init()
     {
+        $this->restrictTagManagerAccess = $this->createRestrictAccessSetting();
         $this->restrictCustomTemplates = $this->createCustomTemplatesSetting();
         $this->environments = $this->createEnvironmentsSetting();
+    }
+
+    private function createRestrictAccessSetting(): SystemSetting
+    {
+        return $this->makeSetting('restrictTagManagerAccess', \Piwik\Access\Role\View::ID, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+            $field->title = Piwik::translate('TagManager_SettingRestrictAccessTitle');
+            $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
+            $field->description = Piwik::translate('TagManager_SettingRestrictAccessDescription');
+            $field->availableValues = [
+                self::USER_PERMISSON_LIST[0] => Piwik::translate('TagManager_SettingRestrictAccessView'),
+                self::USER_PERMISSON_LIST[1] => Piwik::translate('TagManager_SettingRestrictAccessWrite'),
+                self::USER_PERMISSON_LIST[2] => Piwik::translate('TagManager_SettingRestrictAccessAdmin'),
+                self::USER_PERMISSON_LIST[3] => Piwik::translate('TagManager_SettingRestrictAccessSuperUser')
+            ];
+        });
+    }
+
+    /**
+     * Check whether the currently logged-in user has access to MTM. This expects the site ID, but allows 0 for the
+     * Administration area, where there isn't necessarily a specific site selected.
+     *
+     * @param int $idSite ID of the site currently being viewed. 0 or nothing should be passed if in Administration area
+     * @return bool Whether the user has access to MTM
+     */
+    public function doesCurrentUserHaveTagManagerAccess(int $idSite = 0): bool
+    {
+        // First check for superuser access, since the setting won't matter at that point
+        $access = StaticContainer::get(Access::class);
+        if ($access->hasSuperUserAccess()) {
+            return true;
+        }
+
+        $settingValue = $this->restrictTagManagerAccess->getValue();
+
+        // We need to allow checks with no site ID since we might be in the Administration section
+        if ($idSite === 0) {
+            switch ($settingValue) {
+                // View
+                case self::USER_PERMISSON_LIST[0]:
+                    return !empty($access->getSitesIdWithAtLeastViewAccess());
+                // Write
+                case self::USER_PERMISSON_LIST[1]:
+                    return $access->isUserHasSomeWriteAccess();
+                // Admin
+                case self::USER_PERMISSON_LIST[2]:
+                    return $access->isUserHasSomeAdminAccess();
+                // Those should be the only available options, since we already checked for superuser
+                default:
+                    return false;
+            }
+        }
+
+        $role = $access->getRoleForSite($idSite);
+        $roleIndex = in_array($role, self::USER_PERMISSON_LIST) ? array_search($role, self::USER_PERMISSON_LIST) : 0;
+        $settingIndex = in_array($settingValue, self::USER_PERMISSON_LIST) ? array_search($settingValue, self::USER_PERMISSON_LIST) : 0;
+
+        return $roleIndex >= $settingIndex;
     }
 
     private function createCustomTemplatesSetting()
