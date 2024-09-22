@@ -26,7 +26,7 @@
 		<row>
 			<idtag>31</idtag>
 			<type>Matomo</type>
-			<name>Pageview</name>
+			<name>Matomo Analytics</name>
 			<description />
 			<status>active</status>
 			<parameters>

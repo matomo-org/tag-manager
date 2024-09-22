@@ -192,7 +192,8 @@ class MatomoTag extends BaseTag
             $this->makeSetting('eventValue', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_EventValue');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = Piwik::translate('TagManager_EventValueHelp');
+                $field->description = Piwik::translate('TagManager_EventValueDescription');
+                $field->inlineHelp = '<br>' . Piwik::translate('TagManager_EventValueInlineHelp', array('<strong>', '</strong>'));
                 $field->condition = 'trackingType == "event"';
                 $field->validators[] = new CharacterLength(0, 500);
                 $field->validators[] = new Numeric(true, true);

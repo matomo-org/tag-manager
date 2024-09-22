@@ -442,7 +442,7 @@ class API extends \Piwik\Plugin\API
             'idContainer' => $idContainer,
             'idContainerVersion' => $draftVersion,
             'type' => MatomoTag::ID,
-            'name' => Piwik::translate('TagManager_PageViewTriggerName'),
+            'name' => Piwik::translate('TagManager_MatomoTagName'),
             'fireTriggerIds' => array($idTrigger),
             'parameters' => array(
                 MatomoTag::PARAM_MATOMO_CONFIG => '{{'. Piwik::translate('TagManager_MatomoConfigurationVariableName').'}}'
@@ -1190,6 +1190,7 @@ class API extends \Piwik\Plugin\API
     public function deleteContainerVersion($idSite, $idContainer, $idContainerVersion)
     {
         $this->accessValidator->checkWriteCapability($idSite);
+        $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
         if ($this->getContainerVersion($idSite, $idContainer, $idContainerVersion)) {
@@ -1218,6 +1219,8 @@ class API extends \Piwik\Plugin\API
         $this->accessValidator->checkWriteCapability($idSite);
         if ($environment === Environment::ENVIRONMENT_LIVE) {
             $this->accessValidator->checkPublishLiveEnvironmentCapability($idSite);
+        } else {
+            $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         }
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
         $this->environment->checkIsValidEnvironment($environment);
@@ -1388,6 +1391,7 @@ class API extends \Piwik\Plugin\API
     public function importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $backupName = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
+        $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
         $idContainerVersion = $this->getContainerDraftVersion($idSite, $idContainer);

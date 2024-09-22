@@ -394,6 +394,8 @@
         "EventNameHelp": "The event's object Name, for example a particular Movie name, or Song name, or File name…",
         "EventValue": "Event Value",
         "EventValueHelp": "The event's value, for example \"50\" as in user has stayed on the website for 50 seconds.",
+        "EventValueDescription": "Specify a value or choose a variable.",
+        "EventValueInlineHelp": "%1$sNote:%2$s The value must be %1$snumeric%2$s. Negative values are allowed but non-numeric values will automatically be replaced with 0.",
         "EventValueException": "The event value can only include numeric values and variables.",
         "Except": "Except",
         "ExportDraft": "Export draft",
