@@ -159,18 +159,26 @@ describe("ContainerTag", function () {
 
     it('should show the popup list level 1 completely visible', async function () {
         await page.click('.modal.open .expandableSelector .select-wrapper');
+        await page.waitForTimeout(100);
         await page.waitForNetworkIdle();
-        await page.evaluate(() => $($('.modal.open')[0]).scrollTop('1000'));
+        await page.evaluate(() => function() {
+          var elem = $($('.modal.open')[0]);
+          elem.scrollTop(elem.height())
+        });
         await page.waitForTimeout(500);
-        await capture.modal(page, 'edit_trigger_directly_popup_list_level1');
+        const content = await page.$('.modal.open');
+        expect(await content.screenshot()).to.matchImage('edit_trigger_directly_popup_list_level2');
     });
 
     it('should show the popup list level 2 completely visible', async function () {
         await page.evaluate(() => $('.modal.open .expandableList .collection.firstLevel li.collection-item:eq(0) h4').click());
+        await page.waitForTimeout(100);
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
-        await capture.modal(page, 'edit_trigger_directly_popup_list_level2');
+        const content = await page.$('.modal.open');
+        expect(await content.screenshot()).to.matchImage('edit_trigger_directly_popup_list_level2');
         await page.evaluate(() => $('.modal.open .expandableSelector .select-wrapper').click());
+        await page.waitForTimeout(100);
     });
 
     it('should be possible to edit a trigger directly', async function () {
