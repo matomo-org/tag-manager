@@ -181,6 +181,10 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to edit a trigger directly', async function () {
+        await page.reload();
+        await page.click('.fireTrigger .icon-edit');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(500);
         await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
         await page.waitForTimeout(500);
         await page.click('.modal.open .createButton');
