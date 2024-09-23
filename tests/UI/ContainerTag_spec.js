@@ -159,7 +159,7 @@ describe("ContainerTag", function () {
           elem.scrollTop(elem.height())
         });
         await page.waitForTimeout(500);
-        const content = await page.$('.modal.open');
+        const content = await page.evaluate(() => $('.modal.open'));
         expect(await content.screenshot()).to.matchImage('edit_trigger_directly_popup_list_level1');
     });
 
@@ -168,7 +168,7 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(100);
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
-        const content = await page.$('.modal.open');
+        const content = await page.evaluate(() => $('.modal.open'));
         expect(await content.screenshot()).to.matchImage('edit_trigger_directly_popup_list_level2');
         await page.evaluate(() => function() {
           $('.modal.open .modal-close')[0].click();
