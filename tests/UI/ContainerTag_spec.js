@@ -162,12 +162,12 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(100);
         await page.waitForNetworkIdle();
         await page.evaluate(() => function() {
-          var elem = $($('.modal.open')[0]);
+          var elem = $($('.modal.open'));
           elem.scrollTop(elem.height())
         });
         await page.waitForTimeout(500);
         const content = await page.$('.modal.open');
-        expect(await content.screenshot()).to.matchImage('edit_trigger_directly_popup_list_level2');
+        expect(await content.screenshot()).to.matchImage('edit_trigger_directly_popup_list_level1');
     });
 
     it('should show the popup list level 2 completely visible', async function () {
@@ -184,7 +184,7 @@ describe("ContainerTag", function () {
     it('should be possible to edit a trigger directly', async function () {
         await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
         await page.waitForTimeout(500);
-        await page.click('.modal.open .createButton');
+        await page.click('.modal.open .createButton input');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
         await capture.page(page, 'edit_trigger_directly_updated');
