@@ -160,16 +160,17 @@ describe("ContainerTag", function () {
     it('should show the popup list level 1 completely visible', async function () {
         await page.click('.modal.open .expandableSelector .select-wrapper');
         await page.waitForNetworkIdle();
+        await page.evaluate(() => $($('.modal.open')[0]).scrollTop('1000'));
         await page.waitForTimeout(500);
         await capture.modal(page, 'edit_trigger_directly_popup_list_level1');
     });
 
     it('should show the popup list level 2 completely visible', async function () {
-        await page.click('.modal.open .expandableList .collection.firstLevel li.collection-item:eq(0) h4');
+        await page.evaluate(() => $('.modal.open .expandableList .collection.firstLevel li.collection-item:eq(0) h4').click());
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
         await capture.modal(page, 'edit_trigger_directly_popup_list_level2');
-        await page.click('.modal.open .expandableSelector .select-wrapper');
+        await page.evaluate(() => $('.modal.open .expandableSelector .select-wrapper').click());
     });
 
     it('should be possible to edit a trigger directly', async function () {
