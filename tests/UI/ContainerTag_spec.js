@@ -157,6 +157,21 @@ describe("ContainerTag", function () {
         await capture.modal(page, 'edit_trigger_directly_popup');
     });
 
+    it('should show the popup list level 1 completely visible', async function () {
+        await page.click('.modal.open .expandableSelector .select-wrapper');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(500);
+        await capture.modal(page, 'edit_trigger_directly_popup_list_level1');
+    });
+
+    it('should show the popup list level 2 completely visible', async function () {
+        await page.click('.modal.open .expandableList .collection.firstLevel li.collection-item:eq(0) h4');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(500);
+        await capture.modal(page, 'edit_trigger_directly_popup_list_level2');
+        await page.click('.modal.open .expandableSelector .select-wrapper');
+    });
+
     it('should be possible to edit a trigger directly', async function () {
         await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
         await page.waitForTimeout(500);
