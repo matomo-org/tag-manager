@@ -150,10 +150,14 @@ describe("ContainerTag", function () {
         await capture.page(page, 'edit_through_list');
     });
 
-    it('should show the popup list level 1 completely visible', async function () {
+    it('should be possible to edit a trigger directly', async function () {
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
+        await capture.modal(page, 'edit_trigger_directly_popup');
+    });
+
+    it('should show the popup list level 1 completely visible', async function () {
         await page.evaluate(() => $('.modal.open .expandableSelector .select-wrapper').click());
         await page.waitForTimeout(100);
         await page.waitForNetworkIdle();
@@ -174,13 +178,6 @@ describe("ContainerTag", function () {
         await page.evaluate(() => function() {
           $('.modal.open .modal-close')[0].click();
         });
-    });
-
-    it('should be possible to edit a trigger directly', async function () {
-        await page.click('.fireTrigger .icon-edit');
-        await page.waitForNetworkIdle();
-        await page.waitForTimeout(500);
-        await capture.modal(page, 'edit_trigger_directly_popup');
     });
 
     it('should be possible to edit a trigger directly', async function () {
