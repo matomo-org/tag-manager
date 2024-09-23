@@ -151,6 +151,9 @@ describe("ContainerTag", function () {
     });
 
     it('should show the popup list level 1 completely visible', async function () {
+        await page.click('.fireTrigger .icon-edit');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(500);
         await page.evaluate(() => $('.modal.open .expandableSelector .select-wrapper').click());
         await page.waitForTimeout(100);
         await page.waitForNetworkIdle();
