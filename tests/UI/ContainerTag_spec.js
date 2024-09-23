@@ -150,15 +150,8 @@ describe("ContainerTag", function () {
         await capture.page(page, 'edit_through_list');
     });
 
-    it('should be possible to edit a trigger directly', async function () {
-        await page.click('.fireTrigger .icon-edit');
-        await page.waitForNetworkIdle();
-        await page.waitForTimeout(500);
-        await capture.modal(page, 'edit_trigger_directly_popup');
-    });
-
     it('should show the popup list level 1 completely visible', async function () {
-        await page.click('.modal.open .expandableSelector .select-wrapper');
+        await page.evaluate(() => $('.modal.open .expandableSelector .select-wrapper').click());
         await page.waitForTimeout(100);
         await page.waitForNetworkIdle();
         await page.evaluate(() => function() {
@@ -177,14 +170,25 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(500);
         const content = await page.$('.modal.open');
         expect(await content.screenshot()).to.matchImage('edit_trigger_directly_popup_list_level2');
-        await page.evaluate(() => $('.modal.open .expandableSelector .select-wrapper').click());
-        await page.waitForTimeout(100);
+        await page.evaluate(() => function() {
+          $('.modal.open .expandableList .collection.firstLevel li.collection-item:eq(0) h4').click();
+          $('.modal.open .expandableSelector .select-wrapper').click();
+        });
+        await page.reload();
+        await page.waitForNetworkIdle();
+    });
+
+    it('should be possible to edit a trigger directly', async function () {
+        await page.click('.fireTrigger .icon-edit');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(500);
+        await capture.modal(page, 'edit_trigger_directly_popup');
     });
 
     it('should be possible to edit a trigger directly', async function () {
         await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
         await page.waitForTimeout(500);
-        await page.click('.modal.open .createButton input');
+        await page.click('.modal.open .createButton button');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
         await capture.page(page, 'edit_trigger_directly_updated');
