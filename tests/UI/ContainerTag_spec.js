@@ -157,7 +157,34 @@ describe("ContainerTag", function () {
         await capture.modal(page, 'edit_trigger_directly_popup');
     });
 
+    it('should show the popup list level 1 completely visible', async function () {
+        await page.evaluate(() => $('.modal.open .expandableSelector .select-wrapper').click());
+        await page.waitForTimeout(100);
+        await page.waitForNetworkIdle();
+        await page.evaluate(() => function() {
+          var elem = $($('.modal.open'));
+          elem.scrollTop(elem.height())
+        });
+        await page.waitForTimeout(500);
+        await capture.modal(page, 'edit_trigger_directly_popup_list_level1');
+    });
+
+    it('should show the popup list level 2 completely visible', async function () {
+        await page.evaluate(() => $('.modal.open .expandableList .collection.firstLevel li.collection-item:eq(0) h4').click());
+        await page.waitForTimeout(100);
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(500);
+        await capture.modal(page, 'edit_trigger_directly_popup_list_level2');
+        await page.evaluate(() => function() {
+          $('.modal.open .modal-close')[0].click();
+        });
+    });
+
     it('should be possible to edit a trigger directly', async function () {
+        await page.reload();
+        await page.click('.fireTrigger .icon-edit');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(500);
         await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
         await page.waitForTimeout(500);
         await page.click('.modal.open .createButton');
