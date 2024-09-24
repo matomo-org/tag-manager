@@ -215,4 +215,19 @@ describe("TagManager", function () {
         const bodyElement = await page.$('body');
       expect(await bodyElement.screenshot()).to.matchImage('view_access_restricted');
     });
+
+    it('should show MTM on tracking code page when user access is not restricted', async function () {
+        await page.goto("?idSite=1&module=CoreAdminHome&action=trackingCodeGenerator");
+        await page.waitForNetworkIdle();
+
+        expect(await page.screenshotSelector('div.pageWrap')).to.matchImage('tracking_code_normal');
+    });
+
+    it('should hide MTM from tracking code page when user access is restricted', async function () {
+        permissions.setViewUser();
+        await page.goto("?idSite=1&module=CoreAdminHome&action=trackingCodeGenerator");
+        await page.waitForNetworkIdle();
+
+        expect(await page.screenshotSelector('div.pageWrap')).to.matchImage('tracking_code_hidden');
+    });
 });
