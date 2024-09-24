@@ -1078,6 +1078,12 @@
         "DeleteWebsiteExplanationLine2": "To save a copy of container configurations, click on the container name below and export the desired version:",
         "DeleteWebsiteExplanationLine3": "Click Confirm when you are ready to delete this website.",
         "ActivelySyncGtmDataLayerTitle": "Actively synchronise from the Google Tag Manager data layer",
-        "ActivelySyncGtmDataLayerDescription": "When enabled, any new values pushed to the Google Tag Manager data layer will be synchronised to the Matomo Tag Manager data layer."
+        "ActivelySyncGtmDataLayerDescription": "When enabled, any new values pushed to the Google Tag Manager data layer will be synchronised to the Matomo Tag Manager data layer.",
+        "SettingRestrictAccessTitle": "Restrict access to Matomo Tag Manager",
+        "SettingRestrictAccessDescription": "Define who can see the Matomo Tag Manager section. This can be helpful when you have many users with the View permission, or if your Tag Manager configuration is very complex.",
+        "SettingRestrictAccessView": "Users with at least view permission",
+        "SettingRestrictAccessWrite": "Users with at least write permission",
+        "SettingRestrictAccessAdmin": "Users with at least admin permission",
+        "SettingRestrictAccessSuperUser": "Users with at least superuser permission"
     }
 }

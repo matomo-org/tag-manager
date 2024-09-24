@@ -30,6 +30,12 @@ class Menu extends \Piwik\Plugin\Menu
 
     public function configureTopMenu(MenuTop $menu)
     {
+        // Check whether to show the MTM top menu. If not, simply return early
+        $idSite = \Piwik\Request::fromRequest()->getIntegerParameter('idSite', 0);
+        if (!StaticContainer::get(SystemSettings::class)->doesCurrentUserHaveTagManagerAccess($idSite)) {
+            return;
+        }
+
         list($defaultAction, $defaultParams) = self::getDefaultAction();
         if ($defaultAction) {
             $menu->addItem('TagManager_TagManager', null, $this->urlForAction($defaultAction, $defaultParams), $orderId = 30);
