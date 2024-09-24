@@ -55,12 +55,22 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
             $field->description = Piwik::translate('TagManager_SettingRestrictAccessDescription');
             $field->availableValues = [
-                self::USER_PERMISSON_LIST[0] => Piwik::translate('TagManager_SettingRestrictAccessView'),
-                self::USER_PERMISSON_LIST[1] => Piwik::translate('TagManager_SettingRestrictAccessWrite'),
-                self::USER_PERMISSON_LIST[2] => Piwik::translate('TagManager_SettingRestrictAccessAdmin'),
-                self::USER_PERMISSON_LIST[3] => Piwik::translate('TagManager_SettingRestrictAccessSuperUser')
+                self::USER_PERMISSON_LIST[$this->getPermissionIndex('view')] => Piwik::translate('TagManager_SettingRestrictAccessView'),
+                self::USER_PERMISSON_LIST[$this->getPermissionIndex('write')] => Piwik::translate('TagManager_SettingRestrictAccessWrite'),
+                self::USER_PERMISSON_LIST[$this->getPermissionIndex('admin')] => Piwik::translate('TagManager_SettingRestrictAccessAdmin'),
+                self::USER_PERMISSON_LIST[$this->getPermissionIndex('superuser')] => Piwik::translate('TagManager_SettingRestrictAccessSuperUser')
             ];
         });
+    }
+
+    private function getPermissionIndex(string $permission): int
+    {
+        $index = array_search($permission, self::USER_PERMISSON_LIST);
+        if ($index !== false) {
+            return $index;
+        }
+
+        throw new \Exception('Permission \'' . $permission . '\' not found');
     }
 
     /**
@@ -83,14 +93,11 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
         // We need to allow checks with no site ID since we might be in the Administration section
         if ($idSite === 0) {
             switch ($settingValue) {
-                // View
-                case self::USER_PERMISSON_LIST[0]:
+                case self::USER_PERMISSON_LIST[$this->getPermissionIndex('view')]:
                     return !empty($access->getSitesIdWithAtLeastViewAccess());
-                // Write
-                case self::USER_PERMISSON_LIST[1]:
+                case self::USER_PERMISSON_LIST[$this->getPermissionIndex('write')]:
                     return $access->isUserHasSomeWriteAccess();
-                // Admin
-                case self::USER_PERMISSON_LIST[2]:
+                case self::USER_PERMISSON_LIST[$this->getPermissionIndex('admin')]:
                     return $access->isUserHasSomeAdminAccess();
                 // Those should be the only available options, since we already checked for superuser
                 default:

@@ -150,6 +150,14 @@ class SystemSettingTest extends IntegrationTestCase
         $this->settings->save();
     }
 
+    public function testPermissionListValues()
+    {
+        $this->assertSame('view', SystemSettings::USER_PERMISSON_LIST[0]);
+        $this->assertSame('write', SystemSettings::USER_PERMISSON_LIST[1]);
+        $this->assertSame('admin', SystemSettings::USER_PERMISSON_LIST[2]);
+        $this->assertSame('superuser', SystemSettings::USER_PERMISSON_LIST[3]);
+    }
+
     public function testSaveRestrictTagManagerAccess()
     {
         $settingValue = SystemSettings::USER_PERMISSON_LIST[2];
