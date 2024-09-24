@@ -261,12 +261,23 @@ class TagManager extends \Piwik\Plugin
 
     public function endTrackingCodePageTableOfContents(&$out)
     {
+        // Check whether to show the MTM code. If not, simply return early
+        if ($this->isAccessRestrictedForUser()) {
+            return;
+        }
+
         $out .= '<a href="#/tagmanager">' . Piwik::translate('TagManager_TagManager') . '</a>';
     }
 
     public function addTagManagerCode(&$out)
     {
         Piwik::checkUserHasSomeViewAccess();
+
+        // Check whether to show the MTM code. If not, simply return early
+        if ($this->isAccessRestrictedForUser()) {
+            return;
+        }
+
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCode");
         $view->action = Piwik::getAction();
@@ -277,6 +288,11 @@ class TagManager extends \Piwik\Plugin
 
     public function setTagManagerCode(&$out)
     {
+        // Check whether to show the MTM code. If not, simply return early
+        if ($this->isAccessRestrictedForUser()) {
+            return;
+        }
+
         $newContent = '<h2>' . Piwik::translate('SitesManager_StepByStepGuide') . '</h2>';
         $this->addTagManagerCode($newContent);
         $out = $newContent;
@@ -285,6 +301,12 @@ class TagManager extends \Piwik\Plugin
     public function embedReactTagManagerTrackingCode(&$out, SiteContentDetector $detector)
     {
         Piwik::checkUserHasSomeViewAccess();
+
+        // Check whether to show the MTM code. If not, simply return early
+        if ($this->isAccessRestrictedForUser()) {
+            return;
+        }
+
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCodeReact");
         $view->action = Piwik::getAction();
@@ -998,4 +1020,9 @@ class TagManager extends \Piwik\Plugin
         }
     }
 
+    private function isAccessRestrictedForUser(): bool
+    {
+        $idSite = \Piwik\Request::fromRequest()->getIntegerParameter('idSite', 0);
+        return !StaticContainer::get(SystemSettings::class)->doesCurrentUserHaveTagManagerAccess($idSite);
+    }
 }

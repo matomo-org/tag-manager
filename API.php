@@ -156,6 +156,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableContexts()
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         $contexts = $this->contextProvider->getAllContexts();
 
@@ -177,6 +178,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableEnvironments()
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         return $this->environment->getEnvironments();
     }
@@ -190,6 +192,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableEnvironmentsWithPublishCapability($idSite)
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess($idSite);
 
         $environments = $this->environment->getEnvironments();
 
@@ -210,6 +213,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableTagFireLimits()
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         return $this->tags->getFireLimits();
     }
@@ -222,6 +226,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableComparisons()
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         return $this->comparisons->getSupportedComparisons();
     }
@@ -234,6 +239,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableTagTypesInContext($idContext)
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         $this->contextProvider->checkIsValidContext($idContext);
 
@@ -262,6 +268,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableTriggerTypesInContext($idContext)
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         $this->contextProvider->checkIsValidContext($idContext);
 
@@ -286,6 +293,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableVariableTypesInContext($idContext)
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         $this->contextProvider->checkIsValidContext($idContext);
 
@@ -1447,5 +1455,20 @@ class API extends \Piwik\Plugin\API
     private function decodeQuotes($value)
     {
         return htmlspecialchars_decode($value, ENT_QUOTES);
+    }
+
+    /**
+     * Check whether the current user has MTM access. If the site ID isn't provided, try looking it up on the request
+     *
+     * @param $idSite
+     * @return void
+     * @throws \Piwik\NoAccessException
+     */
+    private function checkUserHasTagManagerAccess($idSite = null)
+    {
+        if (empty($idSite)) {
+            $idSite = \Piwik\Request::fromRequest()->getIntegerParameter('idSite', 0);
+        }
+        $this->accessValidator->checkUserHasTagManagerAccess($idSite);
     }
 }
