@@ -85,6 +85,29 @@
             return matomoUrl;
         }
 
+        function setCustomDimensions(tracker, customDimensions)
+        {
+            if (!tracker) {
+                return;
+            }
+
+            if (!customDimensions || !TagManager.utils.isArray(customDimensions) || customDimensions.length === 0) {
+                return;
+            }
+
+            var dimIndex;
+            for (dimIndex = 0; dimIndex < customDimensions.length; dimIndex++) {
+                var dimension = customDimensions[dimIndex];
+                if (!dimension || !TagManager.utils.isObject(dimension) || !dimension.index) {
+                    continue;
+                }
+
+                if (dimension.value || dimension.value === null) {
+                    tracker.setCustomDimension(dimension.index, dimension.value);
+                }
+            }
+        }
+
         this.fire = function () {
             callbacks.push(function () {
                 if (!parameters.matomoConfig || !parameters.matomoConfig.name) {
@@ -270,17 +293,10 @@
                     lastIdSite = possiblyUpdatedMatomoUrl;
                 }
 
-                if (matomoConfig.customDimensions
-                    && TagManager.utils.isArray(matomoConfig.customDimensions)
-                    && matomoConfig.customDimensions.length) {
-                    var dimIndex;
-                    for (dimIndex = 0; dimIndex < matomoConfig.customDimensions.length; dimIndex++) {
-                        var dimension = matomoConfig.customDimensions[dimIndex];
-                        if (dimension && TagManager.utils.isObject(dimension) && dimension.index && (dimension.value || dimension.value === null)) {
-                            tracker.setCustomDimension(dimension.index, dimension.value);
-                        }
-                    }
-                }
+                const tagCustomDimensions = parameters.get('customDimensions');
+                setCustomDimensions(tracker, matomoConfig.customDimensions);
+                // Override the config custom dimensions with the event specific ones
+                setCustomDimensions(tracker, tagCustomDimensions);
 
                 if (tracker) {
                     var trackingType = parameters.get('trackingType');

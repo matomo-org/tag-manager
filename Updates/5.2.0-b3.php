@@ -9,6 +9,8 @@
 
 namespace Piwik\Plugins\TagManager;
 
+use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
+use Piwik\Plugins\TagManager\UpdateHelper\NewTagParameterMigrator;
 use Piwik\Updater;
 use Piwik\Updater\Migration;
 use Piwik\Updater\Migration\Factory as MigrationFactory;
@@ -67,5 +69,9 @@ class Updates_5_2_0_b3 extends PiwikUpdates
     public function doUpdate(Updater $updater)
     {
         $updater->executeMigrations(__FILE__, $this->getMigrations($updater));
+
+        // Migrate the Matomo type tags to all include the newly configured field.
+        $migrator = new NewTagParameterMigrator(MatomoTag::ID, 'customDimensions', []);
+        $migrator->migrate();
     }
 }
