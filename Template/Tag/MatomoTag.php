@@ -208,7 +208,7 @@ class MatomoTag extends BaseTag
             }),
             $this->makeSetting('customDimensions', [], FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsTitle');
-                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsDescription');
+                $field->description = Piwik::translate('TagManager_MatomoTagCustomDimensionsDescription');
                 $field->validate = function ($value) {
                     if (empty($value)) {
                         return;
