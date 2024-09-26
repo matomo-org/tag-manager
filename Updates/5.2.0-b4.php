@@ -9,15 +9,17 @@
 
 namespace Piwik\Plugins\TagManager;
 
+use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
+use Piwik\Plugins\TagManager\UpdateHelper\NewTagParameterMigrator;
 use Piwik\Updater;
 use Piwik\Updater\Migration;
 use Piwik\Updater\Migration\Factory as MigrationFactory;
 use Piwik\Updates as PiwikUpdates;
 
 /**
- * Update for version 5.2.0-b3.
+ * Update for version 5.2.0-b4.
  */
-class Updates_5_2_0_b3 extends PiwikUpdates
+class Updates_5_2_0_b4 extends PiwikUpdates
 {
     /**
      * @var MigrationFactory
@@ -42,18 +44,7 @@ class Updates_5_2_0_b3 extends PiwikUpdates
      */
     public function getMigrations(Updater $updater)
     {
-        return array(
-            // Create activelySyncGtmDataLayer with default 0 so that any existing containers are disabled, but then change the column so that new containers default with it enabled
-            $this->migration->db->addColumn('tagmanager_container', 'activelySyncGtmDataLayer', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 0', 'ignoreGtmDataLayer'),
-            $this->migration->db->changeColumn('tagmanager_container', 'activelySyncGtmDataLayer', 'activelySyncGtmDataLayer', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 1'),
-
-            // Running these again in case they didn't run as part of the 5.2.0-b1 migration for some reason
-            $this->migration->db->changeColumn('tagmanager_container_version', 'name', 'name', "VARCHAR(255) NOT NULL DEFAULT ''"),
-            $this->migration->db->changeColumn('tagmanager_container', 'name', 'name', 'VARCHAR(255) NOT NULL'),
-            $this->migration->db->changeColumn('tagmanager_tag', 'name', 'name', 'VARCHAR(255) NOT NULL'),
-            $this->migration->db->changeColumn('tagmanager_trigger', 'name', 'name', 'VARCHAR(255) NOT NULL'),
-            $this->migration->db->changeColumn('tagmanager_variable', 'name', 'name', 'VARCHAR(255) NOT NULL'),
-        );
+        return [];
     }
 
     /**
@@ -67,5 +58,10 @@ class Updates_5_2_0_b3 extends PiwikUpdates
     public function doUpdate(Updater $updater)
     {
         $updater->executeMigrations(__FILE__, $this->getMigrations($updater));
+
+        // Migrate the Matomo type tags to all include the newly configured field.
+        $migrator = new NewTagParameterMigrator(MatomoTag::ID, 'customDimensions', []);
+        $migrator->addField(MatomoTag::ID, 'areCustomDimensionsSticky', false);
+        $migrator->migrate();
     }
 }
