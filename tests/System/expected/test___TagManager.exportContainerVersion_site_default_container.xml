@@ -45,6 +45,9 @@
 				<eventAction />
 				<eventName />
 				<eventValue />
+				<customDimensions>
+				</customDimensions>
+				<areCustomDimensionsSticky>0</areCustomDimensionsSticky>
 			</parameters>
 			<fire_trigger_ids>
 				<row>35</row>

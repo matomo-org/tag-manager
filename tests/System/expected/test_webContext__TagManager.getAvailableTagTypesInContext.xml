@@ -469,6 +469,60 @@
 							<name>FieldVariableTemplate</name>
 						</component>
 					</row>
+					<row>
+						<name>customDimensions</name>
+						<title>Custom Dimensions</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>index</key>
+								<title>Index</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues/>
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues/>
+							</field2>
+						</uiControlAttributes>
+						<availableValues/>
+						<description>Optionally, set a value for one or more custom dimensions.</description>
+						<inlineHelp/>
+						<introduction/>
+						<condition/>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>areCustomDimensionsSticky</name>
+						<title>Persist custom dimensions</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues/>
+						<description/>
+						<inlineHelp>This indicates that the custom dimensions should be used for any subsequent requests while the page is active.&lt;br /&gt;&lt;br /&gt;By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag.</inlineHelp>
+						<introduction/>
+						<condition/>
+						<fullWidth>0</fullWidth>
+					</row>
 				</parameters>
 			</row>
 			<row>
