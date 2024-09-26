@@ -72,7 +72,7 @@ class Updates_5_2_0_b3 extends PiwikUpdates
 
         // Migrate the Matomo type tags to all include the newly configured field.
         $migrator = new NewTagParameterMigrator(MatomoTag::ID, 'customDimensions', []);
-        $migrator = new NewTagParameterMigrator(MatomoTag::ID, 'areCustomDimensionsSticky', false);
+        $migrator->addField(MatomoTag::ID, 'areCustomDimensionsSticky', false);
         $migrator->migrate();
     }
 }
