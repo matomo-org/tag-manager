@@ -401,4 +401,41 @@ describe("ContainerTag", function () {
         await createOrUpdateTag();
         await capture.page(page, 'create_new_long_name');
     });
+
+    it('should be able to select matomo tag with pageview tracking type and add custom dimensions', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTag');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+        await selectTagType('Matomo');
+        await page.waitForTimeout(250);
+        await setParameterValue('customDimensions-p1-0', 1);
+        await setParameterValue('customDimensions-p2-0', 'someValue1');
+        await setParameterValue('customDimensions-p1-1', 2);
+        await setParameterValue('customDimensions-p2-1', 'someValue2');
+        await setParameterValue('customDimensions-p1-2', 3);
+        await setParameterValue('customDimensions-p2-2', 'someValue3');
+        await page.click('#areCustomDimensionsSticky');
+        await page.waitForTimeout(250);
+        await capture.page(page, 'create_new_with_custom_dimensions');
+    });
+
+    it('should show custom dimensions when tracking type is event', async function () {
+        await form.selectValue(page, 'form > div > div:nth-child(5) > div:nth-child(2) div.select-wrapper', 'Event');
+        await page.waitForTimeout(250);
+        await capture.page(page, 'create_new_with_custom_dimensions_event');
+    });
+
+    it('should show custom dimensions when tracking type is goal', async function () {
+        await form.selectValue(page, 'form > div > div:nth-child(5) > div:nth-child(2) div.select-wrapper', 'Goal');
+        await page.waitForTimeout(250);
+        await capture.page(page, 'create_new_with_custom_dimensions_goal');
+    });
+
+    it('should be able to delete some custom dimensions', async function () {
+        await page.click('div.multiPairFieldTable2 span.icon-minus');
+        await page.click('div.multiPairFieldTable1 span.icon-minus');
+        await page.waitForTimeout(250);
+        await capture.page(page, 'create_new_delete_custom_dimensions');
+    });
 });
