@@ -1085,6 +1085,9 @@
         "SettingRestrictAccessView": "Users with at least view permission",
         "SettingRestrictAccessWrite": "Users with at least write permission",
         "SettingRestrictAccessAdmin": "Users with at least admin permission",
-        "SettingRestrictAccessSuperUser": "Users with at least superuser permission"
+        "SettingRestrictAccessSuperUser": "Users with at least superuser permission",
+        "MatomoTagCustomDimensionsSticky": "Should custom dimensions persist",
+        "MatomoTagCustomDimensionsStickyHelpText1": "This indicates that the custom dimensions should be used for any subsequent requests while the page is active.",
+        "MatomoTagCustomDimensionsStickyHelpText2": "By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag."
     }
 }

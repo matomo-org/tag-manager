@@ -240,6 +240,11 @@ class MatomoTag extends BaseTag
                 $field->uiControlAttributes['field1'] = $field1->toArray();
                 $field->uiControlAttributes['field2'] = $field2->toArray();
             }),
+            $this->makeSetting('areCustomDimensionsSticky', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoTagCustomDimensionsSticky');
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoTagCustomDimensionsStickyHelpText1') . '<br /><br />';
+                $field->inlineHelp .= Piwik::translate('TagManager_MatomoTagCustomDimensionsStickyHelpText2');
+            }),
         );
     }
 

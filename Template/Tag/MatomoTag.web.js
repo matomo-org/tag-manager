@@ -85,7 +85,7 @@
             return matomoUrl;
         }
 
-        function setCustomDimensions(tracker, customDimensions)
+        function setCustomDimensions(tracker, customDimensions, isBuildObject = false)
         {
             if (!tracker) {
                 return;
@@ -95,17 +95,29 @@
                 return;
             }
 
+            const dimensionsObject = {};
+
             var dimIndex;
             for (dimIndex = 0; dimIndex < customDimensions.length; dimIndex++) {
-                var dimension = customDimensions[dimIndex];
+                const dimension = customDimensions[dimIndex];
                 if (!dimension || !TagManager.utils.isObject(dimension) || !dimension.index) {
                     continue;
                 }
 
-                if (dimension.value || dimension.value === null) {
-                    tracker.setCustomDimension(dimension.index, dimension.value);
+                if (!(dimension.value || dimension.value === null)) {
+                    continue;
                 }
+
+                if (isBuildObject) {
+                    const dimensionIndex = 'dimension' + dimension.index;
+                    dimensionsObject[dimensionIndex] = dimension.value;
+                    continue;
+                }
+
+                tracker.setCustomDimension(dimension.index, dimension.value);
             }
+
+            return dimensionsObject;
         }
 
         this.fire = function () {
@@ -296,7 +308,8 @@
                 const tagCustomDimensions = parameters.get('customDimensions');
                 setCustomDimensions(tracker, matomoConfig.customDimensions);
                 // Override the config custom dimensions with the event specific ones
-                setCustomDimensions(tracker, tagCustomDimensions);
+                const areCustomDimensionsSticky = parameters.get('areCustomDimensionsSticky');
+                const dimensionsObject = setCustomDimensions(tracker, tagCustomDimensions, !areCustomDimensionsSticky);
 
                 if (tracker) {
                     var trackingType = parameters.get('trackingType');
@@ -315,11 +328,11 @@
                             tracker.setEcommerceView(parameters.get('productSKU'), parameters.get('productName'), parameters.get('categoryName'), parameters.get('price'));
                         }
 
-                        tracker.trackPageView();
+                        tracker.trackPageView(customTitle, dimensionsObject);
                     } else if (trackingType === 'event') {
-                        tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'));
+                        tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'), dimensionsObject);
                     } else if (trackingType === 'goal') {
-                        tracker.trackGoal(parameters.get('idGoal'), parameters.get('goalCustomRevenue'));
+                        tracker.trackGoal(parameters.get('idGoal'), parameters.get('goalCustomRevenue'), dimensionsObject);
                     }
                 }
             });
