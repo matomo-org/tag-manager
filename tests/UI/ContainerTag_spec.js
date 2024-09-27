@@ -93,6 +93,7 @@ describe("ContainerTag", function () {
           var event = new Event('change');
           search.dispatchEvent(event);
         }, searchTerm);
+        await page.waitForTimeout(200);
     }
 
     it('should load tags page with some tags', async function () {
