@@ -133,9 +133,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be able to search tags by value not present', async function () {
-        await page.evaluate(() => function() {
-          $('#tagSearch').val('shjdkfk').change()
-        });
+        await searchTag('shjdkfk');
         await capture.page(page, 'tag_search_empty_result');
     });
 
