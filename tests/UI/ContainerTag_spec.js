@@ -7,7 +7,7 @@
 describe("ContainerTag", function () {
     this.timeout(0);
 
-    this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
+    this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerTagUiFixture";
     this.optionsOverride = {
         'persist-fixture-data': false
     };
