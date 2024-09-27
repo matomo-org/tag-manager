@@ -12,6 +12,16 @@
       :help-text="tagsHelpText"
     >
       <p>{{ translate('TagManager_TagUsageBenefits') }}</p>
+      <div class="tagSearchFilter">
+        <Field
+          uicontrol="text"
+          name="tagSearch"
+          :title="translate('General_Search')"
+          v-show="tags.length > 0"
+          v-model="tagSearch"
+        >
+        </Field>
+      </div>
       <table v-content-table>
         <thead>
           <tr>
@@ -229,13 +239,15 @@ import {
   Matomo,
   MatomoUrl, NotificationsStore, NotificationType, translate,
 } from 'CoreHome';
+import { Field } from 'CorePluginsAdmin';
 import TagsStore from './Tags.store';
 import TriggersStore from '../Trigger/Triggers.store';
-import { Tag } from '../types';
+import { Tag, TagType } from '../types';
 
 interface TagListState {
   hasWriteAccess: boolean;
   triggerTruncateLength: number;
+  tagSearch: string;
 }
 
 const { tagManagerHelper } = window;
@@ -256,6 +268,7 @@ export default defineComponent({
   },
   components: {
     ContentBlock,
+    Field,
   },
   directives: {
     ContentTable,
@@ -264,6 +277,7 @@ export default defineComponent({
     return {
       hasWriteAccess: Matomo.hasUserCapability('tagmanager_write'),
       triggerTruncateLength: 40,
+      tagSearch: '',
     };
   },
   created() {
@@ -390,14 +404,31 @@ export default defineComponent({
       return TagsStore.tags.value;
     },
     sortedTags() {
-      const sorted = [...this.tags];
-      sorted.sort((lhs, rhs) => {
+      const searchFilter = this.tagSearch.toLowerCase();
+
+      // look through string properties of custom reports for values that have searchFilter in them
+      // (mimics angularjs filter() filter)
+      const result = [...this.tags].filter((h) => Object.keys(h).some((propName) => {
+        const entity = h as unknown as Record<string, unknown>;
+        let propValue = '';
+        if (typeof entity[propName] === 'string') {
+          propValue = (entity[propName] as string);
+        } else if (propName === 'typeMetadata') {
+          const propTypeMeta = (entity.typeMetadata as TagType);
+          propValue = (propTypeMeta.name as string);
+        } else if (propName === 'parameters' && entity.type === 'CustomHtml') {
+          const propTypeParameters = (entity.parameters as Record<string, unknown>);
+          propValue = (propTypeParameters.customHtml as string);
+        }
+        return propValue.toLowerCase().indexOf(searchFilter) !== -1;
+      }));
+      result.sort((lhs, rhs) => {
         if (lhs.name < rhs.name) {
           return -1;
         }
         return lhs.name > rhs.name ? 1 : 0;
       });
-      return sorted;
+      return result;
     },
     nameTranslatedText(): string {
       return this.translate('TagManager_TagsNameDescription');

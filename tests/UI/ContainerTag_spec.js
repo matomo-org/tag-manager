@@ -90,6 +90,55 @@ describe("ContainerTag", function () {
         await capture.page(page, 'tag_some_exist');
     });
 
+    it('should be able to search tags by name', async function () {
+        await page.evaluate(() => function() {
+          $('#tagSearch').val('My Tag 2').change();
+        });
+        await capture.page(page, 'tag_search_name');
+    });
+
+    it('should be able to search tags by description', async function () {
+        await page.evaluate(() => function() {
+          $('#tagSearch').val('My Tag 2 description').change()
+        });
+        await capture.page(page, 'tag_search_description');
+    });
+
+    it('should be able to search tags by type', async function () {
+        await page.evaluate(() => function() {
+          $('#tagSearch').val('custom html').change()
+        });
+        await capture.page(page, 'tag_search_type');
+    });
+
+    it('should be able to search customHTML tags content', async function () {
+        await page.evaluate(() => function() {
+          $('#tagSearch').val('<p></p>').change()
+        });
+        await capture.page(page, 'tag_search_custom_html_content');
+    });
+
+    it('should be able to search tags by status', async function () {
+        await page.evaluate(() => function() {
+          $('#tagSearch').val('active').change()
+        });
+        await capture.page(page, 'tag_search_by_status_active');
+    });
+
+    it('should be able to search tags by status', async function () {
+        await page.evaluate(() => function() {
+          $('#tagSearch').val('pause').change()
+        });
+        await capture.page(page, 'tag_search_by_status_pause_empty_result');
+    });
+
+    it('should be able to search tags by value not present', async function () {
+        await page.evaluate(() => function() {
+          $('#tagSearch').val('shjdkfk').change()
+        });
+        await capture.page(page, 'tag_search_empty_result');
+    });
+
     it('should be able to create a new tag and show list of available types', async function () {
         await page.click('.createNewTag');
         await page.waitForNetworkIdle();
