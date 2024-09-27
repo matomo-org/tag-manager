@@ -20,6 +20,7 @@ use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Trigger\CustomEventTrigger;
 use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
+use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ErrorUrlVariable;
 use Piwik\Tests\Framework\Fixture;
 
@@ -150,6 +151,9 @@ class TagManagerFixture extends Fixture
         $this->idContainerQuotesVersion1 = $this->api->createContainerVersion($this->idSite2, $this->idContainerQuotes, 'container1_v4_reversioned "Quotes"', 'new version for quotes container');
 
         $this->addContainerVariable($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My Var 3', array('dataLayerName' => 'dataVarName'), false, [], 'My Var 3 description');
+
+        $this->addContainerVariable($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, MatomoConfigurationVariable::ID, 'MyMatomoConfigVar',
+            ['matomoUrl' => 'https://matomo.org', 'idSite' => $this->idSite2]);
 
         $idTrigger1Container4 = $this->addContainerTrigger($this->idSite2, $this->idContainer1, $this->idContainer1DraftVersion, null, 'My trigger4', array('eventName' => 'foo{{My Var 3}}bar{{My Var 2}}baz{{PageUrl}}yeah'));
 

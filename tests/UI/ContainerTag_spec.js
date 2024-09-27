@@ -409,18 +409,24 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(250);
         await selectTagType('Matomo');
         await page.waitForTimeout(250);
+        await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'updatedTrigger');
         await setParameterValue('customDimensions-p1-0', 1);
         await setParameterValue('customDimensions-p2-0', 'someValue1');
         await setParameterValue('customDimensions-p1-1', 2);
         await setParameterValue('customDimensions-p2-1', 'someValue2');
         await setParameterValue('customDimensions-p1-2', 3);
         await setParameterValue('customDimensions-p2-2', 'someValue3');
-        await page.click('#areCustomDimensionsSticky');
-        await page.waitForTimeout(250);
         await capture.page(page, 'create_new_with_custom_dimensions');
     });
 
+    it('should save new tag with custom dimensions', async function () {
+        await createOrUpdateTag();
+        await capture.page(page, 'save_new_with_custom_dimensions');
+    });
+
     it('should show custom dimensions when tracking type is event', async function () {
+        await clickFirstRowTableAction('icon-edit', 3);
+        await page.waitForNetworkIdle();
         await form.selectValue(page, 'form > div > div:nth-child(5) > div:nth-child(2) div.select-wrapper', 'Event');
         await page.waitForTimeout(250);
         await capture.page(page, 'create_new_with_custom_dimensions_event');
@@ -429,6 +435,7 @@ describe("ContainerTag", function () {
     it('should show custom dimensions when tracking type is goal', async function () {
         await form.selectValue(page, 'form > div > div:nth-child(5) > div:nth-child(2) div.select-wrapper', 'Goal');
         await page.waitForTimeout(250);
+        await setParameterValue('idGoal', 1);
         await capture.page(page, 'create_new_with_custom_dimensions_goal');
     });
 
@@ -436,6 +443,16 @@ describe("ContainerTag", function () {
         await page.click('div.multiPairFieldTable2 span.icon-minus');
         await page.click('div.multiPairFieldTable1 span.icon-minus');
         await page.waitForTimeout(250);
+        await page.click('#areCustomDimensionsSticky');
+        await page.waitForTimeout(250);
         await capture.page(page, 'create_new_delete_custom_dimensions');
+    });
+
+    it('should save updated tag with custom dimensions', async function () {
+        await createOrUpdateTag();
+        await page.waitForNetworkIdle();
+        await clickFirstRowTableAction('icon-edit', 3);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'save_updated_with_custom_dimensions');
     });
 });
