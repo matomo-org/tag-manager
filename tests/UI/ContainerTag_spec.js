@@ -84,6 +84,17 @@ describe("ContainerTag", function () {
         await page.click('.editTag .entityCancel a');
     }
 
+    async function searchTag(searchTerm)
+    {
+        await page.focus('#tagSearch');
+        await page.evaluate((searchTerm) => {
+          var search = document.getElementById('tagSearch');
+          search.value = searchTerm;
+          var event = new Event('change');
+          search.dispatchEvent(event);
+        }, searchTerm);
+    }
+
     it('should load tags page with some tags', async function () {
         await page.goto(container1Base);
         await page.waitForTimeout(1000);
@@ -91,44 +102,32 @@ describe("ContainerTag", function () {
     });
 
     it('should be able to search tags by name', async function () {
-        await page.evaluate(() => function() {
-          $('#tagSearch').val('My Tag 2').change();
-        });
+        await searchTag('My Tag 2');
         await capture.page(page, 'tag_search_name');
     });
 
     it('should be able to search tags by description', async function () {
-        await page.evaluate(() => function() {
-          $('#tagSearch').val('My Tag 2 description').change()
-        });
+        await searchTag('My Tag 2 description');
         await capture.page(page, 'tag_search_description');
     });
 
     it('should be able to search tags by type', async function () {
-        await page.evaluate(() => function() {
-          $('#tagSearch').val('custom html').change()
-        });
+        await searchTag('custom html');
         await capture.page(page, 'tag_search_type');
     });
 
     it('should be able to search customHTML tags content', async function () {
-        await page.evaluate(() => function() {
-          $('#tagSearch').val('<p></p>').change()
-        });
+        await searchTag('<p></p>');
         await capture.page(page, 'tag_search_custom_html_content');
     });
 
     it('should be able to search tags by status', async function () {
-        await page.evaluate(() => function() {
-          $('#tagSearch').val('active').change()
-        });
+        await searchTag('active');
         await capture.page(page, 'tag_search_by_status_active');
     });
 
     it('should be able to search tags by status', async function () {
-        await page.evaluate(() => function() {
-          $('#tagSearch').val('pause').change()
-        });
+        await searchTag('pause');
         await capture.page(page, 'tag_search_by_status_pause_empty_result');
     });
 
