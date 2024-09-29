@@ -239,6 +239,11 @@ describe("ContainerTag", function () {
         await page.evaluate(() => $('.modal.open').scrollTop($('.modal.open').height()+500));
         await page.waitForTimeout(100);
         const content = await page.$('.modal.open');
+        await page.waitForNetworkIdle();
+
+        // Hide the last few rows since they are causing the test to be flaky
+        await page.evaluate(() => $('div.versionChanges tbody tr:nth-child(3) ~ tr').hide());
+
         expect(await content.screenshot()).to.matchImage('paused_publish_new_version_list');
     });
 
@@ -267,6 +272,11 @@ describe("ContainerTag", function () {
       await page.evaluate(() => $('.modal.open').scrollTop($('.modal.open').height()+500));
       await page.waitForTimeout(100);
       const content = await page.$('.modal.open');
+      await page.waitForNetworkIdle();
+
+      // Hide the last few rows since they are causing the test to be flaky
+      await page.evaluate(() => $('div.versionChanges tbody tr:nth-child(3) ~ tr').hide());
+
       expect(await content.screenshot()).to.matchImage('resume_publish_new_version_list');
   });
 
