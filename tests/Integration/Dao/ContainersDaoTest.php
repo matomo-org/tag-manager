@@ -47,7 +47,7 @@ class ContainersDaoTest extends IntegrationTestCase
     {
         $columns = DbHelper::getTableColumns($this->tableName);
         $columns = array_keys($columns);
-        $columnsToCheck = array('idcontainer', 'idsite', 'context', 'name', 'description', 'ignoreGtmDataLayer', 'isTagFireLimitAllowedInPreviewMode', 'status', 'created_date', 'updated_date', 'deleted_date');
+        $columnsToCheck = array('idcontainer', 'idsite', 'context', 'name', 'description', 'ignoreGtmDataLayer', 'activelySyncGtmDataLayer', 'isTagFireLimitAllowedInPreviewMode', 'status', 'created_date', 'updated_date', 'deleted_date');
 
         $this->assertSame($columnsToCheck, $columns);
     }
@@ -79,7 +79,7 @@ class ContainersDaoTest extends IntegrationTestCase
         $description = 'My description';
         $createdDate = $this->now;
 
-        $idContainerReturned = $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, 0, 0);
+        $idContainerReturned = $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, 0, 0, 0);
         $this->assertSame($idContainer, $idContainerReturned);
 
         $container = $this->dao->getContainer($idSite, $idContainer);
@@ -94,6 +94,7 @@ class ContainersDaoTest extends IntegrationTestCase
             'updated_date' => $createdDate,
             'deleted_date' => null,
             'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
             'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0'
         ), $container);
     }
@@ -250,6 +251,7 @@ class ContainersDaoTest extends IntegrationTestCase
             'updated_date' => $columns['updated_date'],
             'deleted_date' => null,
             'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
             'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
         ), $container);
     }
@@ -268,7 +270,7 @@ class ContainersDaoTest extends IntegrationTestCase
 
     public function test_getContainer_shouldReturnContainerWhenItExists_andEncodeFields()
     {
-        $idContainer = $this->createContainer($idSite = 4, $idContainer = 'fedcba', 'Test name', 1, 1);
+        $idContainer = $this->createContainer($idSite = 4, $idContainer = 'fedcba', 'Test name', 1, 1, 1);
 
         $container = $this->dao->getContainer($idSite, $idContainer);
         $this->assertSame(array(
@@ -278,6 +280,7 @@ class ContainersDaoTest extends IntegrationTestCase
             'name' => 'Test name',
             'description' => 'My description',
             'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
             'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
@@ -529,13 +532,13 @@ class ContainersDaoTest extends IntegrationTestCase
         $this->assertSame(null, $containers[2]['deleted_date']);
     }
 
-    private function createContainer($idSite = 1, $idContainer = 'abcdef', $name = 'FooContainer', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0)
+    private function createContainer($idSite = 1, $idContainer = 'abcdef', $name = 'FooContainer', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
     {
         $context = WebContext::ID;
         $description = 'My description';
         $createdDate = $this->now;
 
-        $idContainer = $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode);
+        $idContainer = $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
 
         return $idContainer;
     }

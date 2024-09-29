@@ -459,8 +459,8 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The event's value, for example &quot;50&quot; as in user has stayed on the website for 50 seconds.</description>
-						<inlineHelp />
+						<description>Specify a value or choose a variable.</description>
+						<inlineHelp>&lt;br&gt;&lt;strong&gt;Note:&lt;/strong&gt; The value must be &lt;strong&gt;numeric&lt;/strong&gt;. Negative values are allowed but non-numeric values will automatically be replaced with 0.</inlineHelp>
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -468,6 +468,60 @@
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
 						</component>
+					</row>
+					<row>
+						<name>customDimensions</name>
+						<title>Custom Dimensions</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>index</key>
+								<title>Index</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues/>
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues/>
+							</field2>
+						</uiControlAttributes>
+						<availableValues/>
+						<description>Optionally, set a value for one or more custom dimensions.</description>
+						<inlineHelp/>
+						<introduction/>
+						<condition/>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>areCustomDimensionsSticky</name>
+						<title>Persist custom dimensions</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues/>
+						<description/>
+						<inlineHelp>When this feature is enabled, the custom dimensions will be used for all subsequent requests while the page is active.&lt;br /&gt;&lt;br /&gt;By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag.</inlineHelp>
+						<introduction/>
+						<condition/>
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -1940,6 +1994,27 @@
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>conversionId</name>
+						<title>LinkedIn Conversion ID (optional)</title>
+						<value/>
+						<defaultValue/>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. 1234567890</placeholder>
+						</uiControlAttributes>
+						<availableValues/>
+						<description>An optional conversion ID if you would like a specific conversion recorded when this tag executes.</description>
+						<inlineHelp>If you are not sure where to find the conversion ID, see the &lt;a href="https://www.linkedin.com/help/lms/answer/a1437736" target="_blank" rel="noreferrer noopener"&gt;LinkedIn documentation&lt;/a&gt; for more information.</inlineHelp>
+						<introduction/>
+						<condition/>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldTextareaVariable</name>
+						</component>
 					</row>
 				</parameters>
 			</row>

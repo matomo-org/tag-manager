@@ -42,7 +42,7 @@
               name="name"
               :model-value="trigger.name"
               @update:model-value="trigger.name = $event; setValueHasChanged()"
-              :maxlength="50"
+              :maxlength="255"
               :title="translate('General_Name')"
               :inline-help="translate('TagManager_TriggerNameHelp')"
               :placeholder="translate('TagManager_TriggerNamePlaceholder')"

@@ -7,7 +7,7 @@
 describe("ContainerTag", function () {
     this.timeout(0);
 
-    this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
+    this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerTagUiFixture";
     this.optionsOverride = {
         'persist-fixture-data': false
     };
@@ -153,32 +153,64 @@ describe("ContainerTag", function () {
     it('should be possible to edit a trigger directly', async function () {
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
-        await page.waitForTimeout(400);
+        await page.waitForTimeout(500);
         await capture.modal(page, 'edit_trigger_directly_popup');
     });
 
-    it('should be possible to edit a trigger directly', async function () {
-        await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
+    it('should show the popup list level 1 completely visible', async function () {
+        await page.evaluate(() => $('.modal.open .expandableSelector .select-wrapper').click());
         await page.waitForTimeout(100);
+        await page.waitForNetworkIdle();
+        await page.evaluate(() => function() {
+          var elem = $($('.modal.open'));
+          elem.scrollTop(elem.height())
+        });
+        await page.waitForTimeout(500);
+        await capture.modal(page, 'edit_trigger_directly_popup_list_level1');
+    });
+
+    it('should show the popup list level 2 completely visible', async function () {
+        await page.evaluate(() => $('.modal.open .expandableList .collection.firstLevel li.collection-item:eq(0) h4').click());
+        await page.waitForTimeout(100);
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(500);
+        await capture.modal(page, 'edit_trigger_directly_popup_list_level2');
+        await page.evaluate(() => function() {
+          $('.modal.open .modal-close')[0].click();
+        });
+    });
+
+    it('should be possible to edit a trigger directly', async function () {
+        await page.reload();
+        await page.click('.fireTrigger .icon-edit');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(500);
+        await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
+        await page.waitForTimeout(500);
         await page.click('.modal.open .createButton');
         await page.waitForNetworkIdle();
-        await page.waitForTimeout(250);
+        await page.waitForTimeout(500);
         await capture.page(page, 'edit_trigger_directly_updated');
     });
 
     it('should load an edit tag through URL', async function () {
         await page.goto(container1Base + '#?idTag=2');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(750);
         await capture.page(page, 'edit_url');
     });
 
     it('should enable edit button after changing a field', async function () {
         await setTagName('tagNameNew');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(750);
         await capture.page(page, 'edit_url_updated');
     });
 
     it('should have updated the list of tags', async function () {
         await createOrUpdateTag();
         await page.waitForNetworkIdle();
+        await page.waitForTimeout(750);
         await capture.page(page, 'edit_updated_back_to_list');
     });
 
@@ -207,6 +239,11 @@ describe("ContainerTag", function () {
         await page.evaluate(() => $('.modal.open').scrollTop($('.modal.open').height()+500));
         await page.waitForTimeout(100);
         const content = await page.$('.modal.open');
+        await page.waitForNetworkIdle();
+
+        // Hide the last few rows since they are causing the test to be flaky
+        await page.evaluate(() => $('div.versionChanges tbody tr:nth-child(3) ~ tr').hide());
+
         expect(await content.screenshot()).to.matchImage('paused_publish_new_version_list');
     });
 
@@ -235,6 +272,11 @@ describe("ContainerTag", function () {
       await page.evaluate(() => $('.modal.open').scrollTop($('.modal.open').height()+500));
       await page.waitForTimeout(100);
       const content = await page.$('.modal.open');
+      await page.waitForNetworkIdle();
+
+      // Hide the last few rows since they are causing the test to be flaky
+      await page.evaluate(() => $('div.versionChanges tbody tr:nth-child(3) ~ tr').hide());
+
       expect(await content.screenshot()).to.matchImage('resume_publish_new_version_list');
   });
 
@@ -355,5 +397,72 @@ describe("ContainerTag", function () {
         await page.click('#isEcommerceView');
         await page.waitForTimeout(250);
         await capture.page(page, 'create_new_with_ecommerce_checkbox');
+    });
+
+    it('should be able to create tag with really long name', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTag');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+        await selectTagType('CustomHtml');
+        await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'updatedTrigger');
+        await setParameterValue('customHtml', '<script></script>');
+        await setParameterValue('name', 'Test tag with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcde');
+        await createOrUpdateTag();
+        await capture.page(page, 'create_new_long_name');
+    });
+
+    it('should be able to select matomo tag with pageview tracking type and add custom dimensions', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewTag');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+        await selectTagType('Matomo');
+        await page.waitForTimeout(250);
+        await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'updatedTrigger');
+        await setParameterValue('customDimensions-p1-0', 1);
+        await setParameterValue('customDimensions-p2-0', 'someValue1');
+        await setParameterValue('customDimensions-p1-1', 2);
+        await setParameterValue('customDimensions-p2-1', 'someValue2');
+        await setParameterValue('customDimensions-p1-2', 3);
+        await setParameterValue('customDimensions-p2-2', 'someValue3');
+        await capture.page(page, 'create_new_with_custom_dimensions');
+    });
+
+    it('should save new tag with custom dimensions', async function () {
+        await createOrUpdateTag();
+        await capture.page(page, 'save_new_with_custom_dimensions');
+    });
+
+    it('should show custom dimensions when tracking type is event', async function () {
+        await clickFirstRowTableAction('icon-edit', 3);
+        await page.waitForNetworkIdle();
+        await form.selectValue(page, 'form > div > div:nth-child(5) > div:nth-child(2) div.select-wrapper', 'Event');
+        await page.waitForTimeout(250);
+        await capture.page(page, 'create_new_with_custom_dimensions_event');
+    });
+
+    it('should show custom dimensions when tracking type is goal', async function () {
+        await form.selectValue(page, 'form > div > div:nth-child(5) > div:nth-child(2) div.select-wrapper', 'Goal');
+        await page.waitForTimeout(250);
+        await setParameterValue('idGoal', 1);
+        await capture.page(page, 'create_new_with_custom_dimensions_goal');
+    });
+
+    it('should be able to delete some custom dimensions', async function () {
+        await page.click('div.multiPairFieldTable2 span.icon-minus');
+        await page.click('div.multiPairFieldTable1 span.icon-minus');
+        await page.waitForTimeout(250);
+        await page.click('#areCustomDimensionsSticky');
+        await page.waitForTimeout(250);
+        await capture.page(page, 'create_new_delete_custom_dimensions');
+    });
+
+    it('should save updated tag with custom dimensions', async function () {
+        await createOrUpdateTag();
+        await page.waitForNetworkIdle();
+        await clickFirstRowTableAction('icon-edit', 3);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'save_updated_with_custom_dimensions');
     });
 });

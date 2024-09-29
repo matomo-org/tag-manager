@@ -30,6 +30,12 @@ class Menu extends \Piwik\Plugin\Menu
 
     public function configureTopMenu(MenuTop $menu)
     {
+        // Check whether to show the MTM top menu. If not, simply return early
+        $idSite = \Piwik\Request::fromRequest()->getIntegerParameter('idSite', 0);
+        if (!StaticContainer::get(SystemSettings::class)->doesCurrentUserHaveTagManagerAccess($idSite)) {
+            return;
+        }
+
         list($defaultAction, $defaultParams) = self::getDefaultAction();
         if ($defaultAction) {
             $menu->addItem('TagManager_TagManager', null, $this->urlForAction($defaultAction, $defaultParams), $orderId = 30);
@@ -91,7 +97,8 @@ class Menu extends \Piwik\Plugin\Menu
             if (!empty($container)) {
 
                 $params = array('idContainer' => $idContainer); // not needed as it is already present in url but we make sure the id is set
-                $menuCategory = $container['name'];
+                $menuCategory = strlen($container['name']) > 50 ? substr($container['name'], 0, 50) . '…' : $container['name'];
+
 
                 if ($this->accessValidator->hasWriteCapability($idSite)) {
                     $menu->addItem($menuCategory, 'Dashboard', $this->urlForAction('dashboard', $params), $orderId = 104);

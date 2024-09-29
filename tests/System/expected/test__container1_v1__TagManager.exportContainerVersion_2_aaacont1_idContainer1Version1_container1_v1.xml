@@ -6,6 +6,7 @@
 	<name>Container1</name>
 	<description />
 	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
 	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	
 	
@@ -28,7 +29,7 @@
 			<idtrigger>5</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
-			<description>My trigger1 description</description>
+			<description>My trigger1 description setting it to a very long description to show up in the UI clipped</description>
 			<parameters>
 				<eventName>foo</eventName>
 			</parameters>

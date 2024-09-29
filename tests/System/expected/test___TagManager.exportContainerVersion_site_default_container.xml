@@ -6,6 +6,7 @@
 	<name>Default Container</name>
 	<description>This container was auto generated when the website was created.</description>
 	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
 	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	
 	
@@ -25,7 +26,7 @@
 		<row>
 			<idtag>31</idtag>
 			<type>Matomo</type>
-			<name>Pageview</name>
+			<name>Matomo Analytics</name>
 			<description />
 			<status>active</status>
 			<parameters>
@@ -44,6 +45,9 @@
 				<eventAction />
 				<eventName />
 				<eventValue />
+				<customDimensions>
+				</customDimensions>
+				<areCustomDimensionsSticky>0</areCustomDimensionsSticky>
 			</parameters>
 			<fire_trigger_ids>
 				<row>35</row>

@@ -156,6 +156,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableContexts()
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         $contexts = $this->contextProvider->getAllContexts();
 
@@ -177,6 +178,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableEnvironments()
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         return $this->environment->getEnvironments();
     }
@@ -190,6 +192,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableEnvironmentsWithPublishCapability($idSite)
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess($idSite);
 
         $environments = $this->environment->getEnvironments();
 
@@ -210,6 +213,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableTagFireLimits()
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         return $this->tags->getFireLimits();
     }
@@ -222,6 +226,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableComparisons()
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         return $this->comparisons->getSupportedComparisons();
     }
@@ -234,6 +239,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableTagTypesInContext($idContext)
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         $this->contextProvider->checkIsValidContext($idContext);
 
@@ -262,6 +268,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableTriggerTypesInContext($idContext)
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         $this->contextProvider->checkIsValidContext($idContext);
 
@@ -286,6 +293,7 @@ class API extends \Piwik\Plugin\API
     public function getAvailableVariableTypesInContext($idContext)
     {
         Piwik::checkUserHasSomeViewAccess();
+        $this->checkUserHasTagManagerAccess();
 
         $this->contextProvider->checkIsValidContext($idContext);
 
@@ -434,7 +442,7 @@ class API extends \Piwik\Plugin\API
             'idContainer' => $idContainer,
             'idContainerVersion' => $draftVersion,
             'type' => MatomoTag::ID,
-            'name' => Piwik::translate('TagManager_PageViewTriggerName'),
+            'name' => Piwik::translate('TagManager_MatomoTagName'),
             'fireTriggerIds' => array($idTrigger),
             'parameters' => array(
                 MatomoTag::PARAM_MATOMO_CONFIG => '{{'. Piwik::translate('TagManager_MatomoConfigurationVariableName').'}}'
@@ -1055,13 +1063,14 @@ class API extends \Piwik\Plugin\API
      * @param string $description Optionally a description for this container
      * @param int $ignoreGtmDataLayer Optionally indicate that we should ignore GTM dataLayer values
      * @param int $isTagFireLimitAllowedInPreviewMode Optionally indicate that we should respect fire tag limits when in preview mode
+     * @param int $activelySyncGtmDataLayer Optionally indicate that we should actively sync new events from the GTM dataLayer to MTM
      * @return string The ID of the created container.
      */
-    public function addContainer($idSite, $context, $name, $description = '', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0)
+    public function addContainer($idSite, $context, $name, $description = '', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
     {
         $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
-        return $this->containers->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode);
+        return $this->containers->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
     }
 
     /**
@@ -1073,15 +1082,16 @@ class API extends \Piwik\Plugin\API
      * @param string $description Optionally a description for this container.
      * @param int $ignoreGtmDataLayer Optionally indicate that we should ignore GTM dataLayer values
      * @param int $isTagFireLimitAllowedInPreviewMode Optionally indicate that we should respect fire tag limits when in preview mode
+     * @param int $activelySyncGtmDataLayer Optionally indicate that we should actively sync new events from the GTM dataLayer to MTM
      * @return string The ID of the created container.
      */
-    public function updateContainer($idSite, $idContainer, $name, $description = '', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0)
+    public function updateContainer($idSite, $idContainer, $name, $description = '', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
     {
         $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
-        $this->containers->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode);
+        $this->containers->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
 
         return $idContainer;
@@ -1180,6 +1190,7 @@ class API extends \Piwik\Plugin\API
     public function deleteContainerVersion($idSite, $idContainer, $idContainerVersion)
     {
         $this->accessValidator->checkWriteCapability($idSite);
+        $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
         if ($this->getContainerVersion($idSite, $idContainer, $idContainerVersion)) {
@@ -1208,6 +1219,8 @@ class API extends \Piwik\Plugin\API
         $this->accessValidator->checkWriteCapability($idSite);
         if ($environment === Environment::ENVIRONMENT_LIVE) {
             $this->accessValidator->checkPublishLiveEnvironmentCapability($idSite);
+        } else {
+            $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         }
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
         $this->environment->checkIsValidEnvironment($environment);
@@ -1378,6 +1391,7 @@ class API extends \Piwik\Plugin\API
     public function importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $backupName = '')
     {
         $this->accessValidator->checkWriteCapability($idSite);
+        $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
         $idContainerVersion = $this->getContainerDraftVersion($idSite, $idContainer);
@@ -1441,5 +1455,20 @@ class API extends \Piwik\Plugin\API
     private function decodeQuotes($value)
     {
         return htmlspecialchars_decode($value, ENT_QUOTES);
+    }
+
+    /**
+     * Check whether the current user has MTM access. If the site ID isn't provided, try looking it up on the request
+     *
+     * @param $idSite
+     * @return void
+     * @throws \Piwik\NoAccessException
+     */
+    private function checkUserHasTagManagerAccess($idSite = null)
+    {
+        if (empty($idSite)) {
+            $idSite = \Piwik\Request::fromRequest()->getIntegerParameter('idSite', 0);
+        }
+        $this->accessValidator->checkUserHasTagManagerAccess($idSite);
     }
 }

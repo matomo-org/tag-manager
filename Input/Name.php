@@ -15,7 +15,7 @@ use Piwik\Validators\NotEmpty;
 
 class Name
 {
-    const MAX_LENGTH = 50;
+    const MAX_LENGTH = 255;
 
     /**
      * @var string

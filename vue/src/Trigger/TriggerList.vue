@@ -57,12 +57,12 @@
             v-for="trigger in sortedTriggers"
             :key="trigger.idtrigger"
           >
-            <td class="name">{{ trigger.name }}</td>
+            <td class="name" :title="trigger.name">{{ truncateText(trigger.name, 50) }}</td>
             <td
               class="description"
               :title="trigger.description"
             >
-              {{ truncateText(trigger.description, 30) }}
+              {{ truncateText(trigger.description, 75) }}
             </td>
             <td
               class="type"

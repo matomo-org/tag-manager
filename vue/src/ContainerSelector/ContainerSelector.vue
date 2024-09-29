@@ -13,7 +13,7 @@
     :title="translate('TagManager_ChooseContainer')"
   >
     <a class="title">
-      <span class="icon icon-chevron-down">&nbsp;</span>{{ actualContainerName }}
+      <span class="icon icon-chevron-down">&nbsp;</span>{{ truncateText(actualContainerName, 50) }}
     </a>
     <div
       class="dropdown positionInViewport"
@@ -62,6 +62,8 @@ interface ContainerSelectorState {
   isLoading: boolean;
   showContainerList: boolean;
 }
+
+const { tagManagerHelper } = window;
 
 export default defineComponent({
   props: {
@@ -113,6 +115,9 @@ export default defineComponent({
     },
     onBlur() {
       this.showContainerList = false;
+    },
+    truncateText(text: string, length: number) {
+      return tagManagerHelper.truncateText(text, length);
     },
   },
   computed: {

@@ -6,6 +6,7 @@
 	<name>My Name</name>
 	<description />
 	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
 	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	
 	

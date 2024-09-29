@@ -59,12 +59,12 @@
             :key="version.revision"
           >
             <td class="index">{{ version.revision }}</td>
-            <td class="name">{{ version.name }}</td>
+            <td class="name" :title="version.name">{{ truncateText(version.name, 50) }}</td>
             <td
               class="description"
               :title="version.description"
             >
-              {{ truncateText(version.description, 30) }}
+              {{ truncateText(version.description, 75) }}
             </td>
             <td class="environments">
               <span
@@ -90,7 +90,7 @@
               />
               <a
                 class="table-action icon-bug"
-                v-show="hasWriteAccess && hasCustomTemplatesCapability"
+                v-show="hasWriteAccess"
                 @click="enableDebugMode(version.idcontainerversion)"
                 :title="translate('TagManager_EnablePreviewDebug')"
               />
@@ -136,7 +136,7 @@
         </a>
         <a
           class="importVersion"
-          v-show="hasWriteAccess"
+          v-show="hasWriteAccess && hasCustomTemplatesCapability"
           @click="importVersion()"
         >
           <span class="icon-upload">&nbsp;</span>{{ translate('TagManager_Import') }}

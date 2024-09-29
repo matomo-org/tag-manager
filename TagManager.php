@@ -35,6 +35,7 @@ use Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator;
 use Piwik\Plugins\TagManager\Model\Salt;
 use Piwik\Site;
 use Piwik\SiteContentDetector;
+use Piwik\Url;
 use Piwik\View;
 use Piwik\Context;
 use Piwik\Log\LoggerInterface;
@@ -73,6 +74,7 @@ class TagManager extends \Piwik\Plugin
             'TwoFactorAuth.requiresTwoFactorAuthentication' => 'requiresTwoFactorAuthentication',
             'Db.getTablesInstalled' => 'getTablesInstalled',
             'Template.siteWithoutDataTab.ReactJs.content' => 'embedReactTagManagerTrackingCode',
+            'SitesManager.getMessagesToWarnOnSiteRemoval' => 'getMessagesToWarnOnSiteRemoval'
         );
     }
 
@@ -259,12 +261,23 @@ class TagManager extends \Piwik\Plugin
 
     public function endTrackingCodePageTableOfContents(&$out)
     {
+        // Check whether to show the MTM code. If not, simply return early
+        if ($this->isAccessRestrictedForUser()) {
+            return;
+        }
+
         $out .= '<a href="#/tagmanager">' . Piwik::translate('TagManager_TagManager') . '</a>';
     }
 
     public function addTagManagerCode(&$out)
     {
         Piwik::checkUserHasSomeViewAccess();
+
+        // Check whether to show the MTM code. If not, simply return early
+        if ($this->isAccessRestrictedForUser()) {
+            return;
+        }
+
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCode");
         $view->action = Piwik::getAction();
@@ -275,6 +288,11 @@ class TagManager extends \Piwik\Plugin
 
     public function setTagManagerCode(&$out)
     {
+        // Check whether to show the MTM code. If not, simply return early
+        if ($this->isAccessRestrictedForUser()) {
+            return;
+        }
+
         $newContent = '<h2>' . Piwik::translate('SitesManager_StepByStepGuide') . '</h2>';
         $this->addTagManagerCode($newContent);
         $out = $newContent;
@@ -283,6 +301,12 @@ class TagManager extends \Piwik\Plugin
     public function embedReactTagManagerTrackingCode(&$out, SiteContentDetector $detector)
     {
         Piwik::checkUserHasSomeViewAccess();
+
+        // Check whether to show the MTM code. If not, simply return early
+        if ($this->isAccessRestrictedForUser()) {
+            return;
+        }
+
         $model = $this->getContainerModel();
         $view = new View("@TagManager/trackingCodeReact");
         $view->action = Piwik::getAction();
@@ -910,6 +934,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_MatomoConfigurationMatomoTrackBotsDescription';
         $result[] = 'TagManager_PausedTag';
         $result[] = 'TagManager_ResumedTag';
+        $result[] = 'TagManager_ActivelySyncGtmDataLayerTitle';
+        $result[] = 'TagManager_ActivelySyncGtmDataLayerDescription';
     }
 
     public function getStylesheetFiles(&$stylesheets)
@@ -977,4 +1003,26 @@ class TagManager extends \Piwik\Plugin
         $dao->deleteContainersForSite($idSite, $deletedDate);
     }
 
+    public function getMessagesToWarnOnSiteRemoval(&$messages, $idSite)
+    {
+        Piwik::checkUserHasSuperUserAccess();
+        $dao = new ContainersDao();
+        $containers = $dao->getContainersForSite($idSite);
+        if (!empty($containers)) {
+            $view = new View('@TagManager/deleteWebsite');
+            $view->containers = $containers;
+            $view->link = Url::getCurrentUrlWithoutFileName() . 'index.php?' . Url::getQueryStringFromParameters([
+                    'idSite' => $idSite,
+                    'module' => 'TagManager',
+                    'action' => 'manageVersions',
+                ]);
+            $messages[] = $view->render();
+        }
+    }
+
+    private function isAccessRestrictedForUser(): bool
+    {
+        $idSite = \Piwik\Request::fromRequest()->getIntegerParameter('idSite', 0);
+        return !StaticContainer::get(SystemSettings::class)->doesCurrentUserHaveTagManagerAccess($idSite);
+    }
 }

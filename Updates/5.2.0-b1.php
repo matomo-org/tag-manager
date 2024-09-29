@@ -48,6 +48,11 @@ class Updates_5_2_0_b1 extends PiwikUpdates
     {
         return array(
             $this->migration->db->addColumn('tagmanager_container', 'isTagFireLimitAllowedInPreviewMode', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 0', 'ignoreGtmDataLayer'),
+            $this->migration->db->changeColumn('tagmanager_container_version', 'name', 'name', "VARCHAR(255) NOT NULL DEFAULT ''"),
+            $this->migration->db->changeColumn('tagmanager_container', 'name', 'name', 'VARCHAR(255) NOT NULL'),
+            $this->migration->db->changeColumn('tagmanager_tag', 'name', 'name', 'VARCHAR(255) NOT NULL'),
+            $this->migration->db->changeColumn('tagmanager_trigger', 'name', 'name', 'VARCHAR(255) NOT NULL'),
+            $this->migration->db->changeColumn('tagmanager_variable', 'name', 'name', 'VARCHAR(255) NOT NULL'),
         );
     }
 

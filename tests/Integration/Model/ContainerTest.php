@@ -129,6 +129,7 @@ class ContainerTest extends IntegrationTestCase
             'name' => 'My Name',
             'description' => 'My Description',
             'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
             'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
@@ -156,7 +157,7 @@ class ContainerTest extends IntegrationTestCase
 
     public function test_addContainerIgnoreGtmDdataLayer()
     {
-        $idContainer = $this->addContainer($this->idSite,'My Name', 'My Description', null, 1, 1);
+        $idContainer = $this->addContainer($this->idSite,'My Name', 'My Description', null, 1, 1, 1);
         $this->assertNotEmpty($idContainer);
 
         $container = $this->model->getContainer($this->idSite, $idContainer);
@@ -168,6 +169,7 @@ class ContainerTest extends IntegrationTestCase
             'name' => 'My Name',
             'description' => 'My Description',
             'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
             'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
@@ -242,6 +244,7 @@ class ContainerTest extends IntegrationTestCase
             'name' => 'MyUpdated Name',
             'description' => 'My Updated Description',
             'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
             'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
@@ -281,6 +284,7 @@ class ContainerTest extends IntegrationTestCase
             'name' => 'MyUpdated Name',
             'description' => 'My Updated Description',
             'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
             'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
@@ -349,6 +353,7 @@ class ContainerTest extends IntegrationTestCase
             'name' => 'Container1',
             'description' => '',
             'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
             'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
@@ -1270,18 +1275,18 @@ class ContainerTest extends IntegrationTestCase
         return $this->model->updateContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
     }
 
-    private function addContainer($idSite, $name = 'My Name', $description = '', $context = null, $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0)
+    private function addContainer($idSite, $name = 'My Name', $description = '', $context = null, $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
     {
         if (!isset($context)) {
             $context = WebContext::ID;
         }
 
-        return $this->model->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode);
+        return $this->model->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
     }
 
-    private function updateContainer($idSite, $idContainer, $name = 'Updated Name', $description = '', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0)
+    private function updateContainer($idSite, $idContainer, $name = 'Updated Name', $description = '', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
     {
-        return $this->model->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode);
+        return $this->model->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
     }
 
     private function publishVersion($idSite, $idContainer, $idContainerVersion, $environment = null, $login = 'mylogin')

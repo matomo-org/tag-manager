@@ -177,5 +177,57 @@ describe("TagManager", function () {
         await capture.modal(page, 'publish_with_content');
     });
 
+    it('should show the manage website screen', async function () {
+        const urlToTest = "?module=SitesManager&action=index&idSite=2&period=day&date=yesterday&showaddsite=false";
+        await page.goto(urlToTest);
+        const pageElement = await page.$('.page');
+        expect(await pageElement.screenshot()).to.matchImage('manageWebsites');
+    });
 
+    it('should show the container detail when delete button is pressed', async function () {
+        const pageElement = await page.$('.page');
+        await page.evaluate(function(){
+          $('.card-content:eq(1) .icon-delete').click()
+        });
+        await page.waitForTimeout(250);
+        await capture.modal(page, 'manageWebsitesDeleteAction');
+    });
+
+    it("should display the MTM settings page", async function () {
+        await page.goto('?module=CoreAdminHome&action=generalSettings&idSite=1&period=day&date=yesterday#/TagManager');
+        expect(await page.screenshotSelector('#TagManagerPluginSettings')).to.matchImage('settings_page');
+    });
+
+    it("should be able to update restrict MTM access setting", async function () {
+        await page.evaluate(() => $('select[name="restrictTagManagerAccess"]').click());
+        await page.evaluate(() => $('li:nth-child(2)').click());
+        await page.evaluate(() => $('#TagManagerPluginSettings .pluginsSettingsSubmit').click());
+        await page.type('.confirm-password-modal input[type=password]', superUserPassword);
+        await page.click('.confirm-password-modal .modal-close.btn');
+        await page.waitForNetworkIdle();
+        await page.mouse.move(-10, -10);
+        expect(await page.screenshotSelector('#TagManagerPluginSettings')).to.matchImage('update_restrict_setting');
+    });
+
+    it('should fail to load MTM for view user', async function () {
+        permissions.setViewUser();
+        await page.goto(generalParamsSite1 + urlBase + 'manageContainers');
+        const bodyElement = await page.$('body');
+      expect(await bodyElement.screenshot()).to.matchImage('view_access_restricted');
+    });
+
+    it('should show MTM on tracking code page when user access is not restricted', async function () {
+        await page.goto("?idSite=1&module=CoreAdminHome&action=trackingCodeGenerator");
+        await page.waitForNetworkIdle();
+
+        expect(await page.screenshotSelector('div.pageWrap')).to.matchImage('tracking_code_normal');
+    });
+
+    it('should hide MTM from tracking code page when user access is restricted', async function () {
+        permissions.setViewUser();
+        await page.goto("?idSite=1&module=CoreAdminHome&action=trackingCodeGenerator");
+        await page.waitForNetworkIdle();
+
+        expect(await page.screenshotSelector('div.pageWrap')).to.matchImage('tracking_code_hidden');
+    });
 });
