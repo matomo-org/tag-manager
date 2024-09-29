@@ -518,7 +518,7 @@
 						</uiControlAttributes>
 						<availableValues/>
 						<description/>
-						<inlineHelp>This indicates that the custom dimensions should be used for any subsequent requests while the page is active.&lt;br /&gt;&lt;br /&gt;By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag.</inlineHelp>
+						<inlineHelp>When this feature is enabled, the custom dimensions will be used for all subsequent requests while the page is active.&lt;br /&gt;&lt;br /&gt;By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag.</inlineHelp>
 						<introduction/>
 						<condition/>
 						<fullWidth>0</fullWidth>
