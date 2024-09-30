@@ -406,7 +406,7 @@ export default defineComponent({
     sortedTags() {
       const searchFilter = this.tagSearch.toLowerCase();
 
-      // look through string properties of custom reports for values that have searchFilter in them
+      // look through string properties of tags for values that have searchFilter in them
       // (mimics angularjs filter() filter)
       const result = [...this.tags].filter((h) => Object.keys(h).some((propName) => {
         const entity = h as unknown as Record<string, unknown>;
