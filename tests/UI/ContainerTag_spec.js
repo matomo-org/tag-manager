@@ -84,10 +84,57 @@ describe("ContainerTag", function () {
         await page.click('.editTag .entityCancel a');
     }
 
+    async function searchTag(searchTerm)
+    {
+        await page.focus('#tagSearch');
+        await page.evaluate((searchTerm) => {
+          var search = document.getElementById('tagSearch');
+          search.value = searchTerm;
+          var event = new Event('change');
+          search.dispatchEvent(event);
+        }, searchTerm);
+        await page.waitForTimeout(200);
+    }
+
     it('should load tags page with some tags', async function () {
         await page.goto(container1Base);
         await page.waitForTimeout(1000);
         await capture.page(page, 'tag_some_exist');
+    });
+
+    it('should be able to search tags by name', async function () {
+        await searchTag('My Tag 2');
+        await capture.page(page, 'tag_search_name');
+    });
+
+    it('should be able to search tags by description', async function () {
+        await searchTag('My Tag 2 description');
+        await capture.page(page, 'tag_search_description');
+    });
+
+    it('should be able to search tags by type', async function () {
+        await searchTag('custom html');
+        await capture.page(page, 'tag_search_type');
+    });
+
+    it('should be able to search customHTML tags content', async function () {
+        await searchTag('<p></p>');
+        await capture.page(page, 'tag_search_custom_html_content');
+    });
+
+    it('should be able to search tags by status', async function () {
+        await searchTag('active');
+        await capture.page(page, 'tag_search_by_status_active');
+    });
+
+    it('should be able to search tags by status', async function () {
+        await searchTag('pause');
+        await capture.page(page, 'tag_search_by_status_pause_empty_result');
+    });
+
+    it('should be able to search tags by value not present', async function () {
+        await searchTag('shjdkfk');
+        await capture.page(page, 'tag_search_empty_result');
     });
 
     it('should be able to create a new tag and show list of available types', async function () {
