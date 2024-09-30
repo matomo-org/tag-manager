@@ -510,6 +510,7 @@ describe("ContainerTag", function () {
         await page.waitForNetworkIdle();
         await clickFirstRowTableAction('icon-edit', 3);
         await page.waitForNetworkIdle();
+        await page.mouse.move(-10, -10);
         await capture.page(page, 'save_updated_with_custom_dimensions');
     });
 });
