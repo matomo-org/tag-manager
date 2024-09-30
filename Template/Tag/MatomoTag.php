@@ -205,7 +205,46 @@ class MatomoTag extends BaseTag
                     }
                     return $value;
                 };
-            })
+            }),
+            $this->makeSetting('customDimensions', [], FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoTagCustomDimensionsDescription');
+                $field->validate = function ($value) {
+                    if (empty($value)) {
+                        return;
+                    }
+                    if (!is_array($value)) {
+                        throw new \Exception(Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsException'));
+                    }
+                };
+
+                $field->transform = function ($value) {
+                    if (empty($value) || !is_array($value)) {
+                        return [];
+                    }
+                    $withValues = [];
+                    foreach ($value as $dim) {
+                        if (!empty($dim['index']) && !empty($dim['value'])) {
+                            $withValues[] = $dim;
+                        }
+                    }
+
+                    return $withValues;
+                };
+
+                $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
+                $field1 = new FieldConfig\MultiPair('Index', 'index', FieldConfig::UI_CONTROL_TEXT);
+                $field1->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field2 = new FieldConfig\MultiPair('Value', 'value', FieldConfig::UI_CONTROL_TEXT);
+                $field2->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['field1'] = $field1->toArray();
+                $field->uiControlAttributes['field2'] = $field2->toArray();
+            }),
+            $this->makeSetting('areCustomDimensionsSticky', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoTagCustomDimensionsSticky');
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoTagCustomDimensionsStickyHelpText1') . '<br /><br />';
+                $field->inlineHelp .= Piwik::translate('TagManager_MatomoTagCustomDimensionsStickyHelpText2');
+            }),
         );
     }
 

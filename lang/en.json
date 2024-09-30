@@ -577,6 +577,7 @@
         "MatomoConfigurationMatomoUserIdDescription": "Sets a User ID to this user (such as an email address or a username).",
         "MatomoConfigurationMatomoCustomDimensionsTitle": "Custom Dimensions",
         "MatomoConfigurationMatomoCustomDimensionsDescription": "Optionally set one or multiple custom dimensions.",
+        "MatomoTagCustomDimensionsDescription": "Optionally, set a value for one or more custom dimensions.",
         "MatomoConfigurationMatomoCustomDimensionsException": "Value needs to be an array",
         "MatomoConfigurationMatomoBundleTrackerTitle": "Bundle Tracker",
         "MatomoConfigurationMatomoBundleTrackerDescription": "By bundling the Matomo JavaScript tracker directly into the container it may improve the performance of your website as it reduces the number of needed requests. It is recommended to bundle the Matomo tracker because in most cases the tracker would otherwise be loaded in a separate request on page view anyway. Note: If you use two different Matomo configurations in one container, the setting of the first configuration used in the first Matomo Tag will be applied to all Matomo tags within one container.",
@@ -1084,6 +1085,9 @@
         "SettingRestrictAccessView": "Users with at least view permission",
         "SettingRestrictAccessWrite": "Users with at least write permission",
         "SettingRestrictAccessAdmin": "Users with at least admin permission",
-        "SettingRestrictAccessSuperUser": "Users with at least superuser permission"
+        "SettingRestrictAccessSuperUser": "Users with at least superuser permission",
+        "MatomoTagCustomDimensionsSticky": "Persist custom dimensions",
+        "MatomoTagCustomDimensionsStickyHelpText1": "When this feature is enabled, the custom dimensions will be used for all subsequent requests while the page is active.",
+        "MatomoTagCustomDimensionsStickyHelpText2": "By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag."
     }
 }
