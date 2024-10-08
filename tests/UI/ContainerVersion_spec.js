@@ -251,6 +251,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to edit a version by clicking on edit', async function () {
+        permissions.resetUser();
         permissions.setWriteUser();
         await clickFirstRowTableAction('icon-edit');
         await capture.page(page, 'edit_through_list_for_write_user');

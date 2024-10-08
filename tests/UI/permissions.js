@@ -55,12 +55,9 @@ function setSuperUser()
 
 function setWritePublishUser()
 {
-    delete testEnvironment.idSitesViewAccess;
-    delete testEnvironment.idSitesWriteAccess;
-    delete testEnvironment.idSitesAdminAccess;
-    delete testEnvironment.idSitesCapabilities;
+    resetUser();
     setWriteUser();
-    setCapabilities('tagmanager_publish_live_container');
+    setCapabilities({"tagmanager_publish_live_container": [1,2,5]});
     testEnvironment.save();
 }
 
