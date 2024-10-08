@@ -60,13 +60,14 @@ function setWritePublishUser()
     delete testEnvironment.idSitesAdminAccess;
     delete testEnvironment.idSitesCapabilities;
     setWriteUser();
-    setCapabilities('tagmanager_publish_live_container')
+    setCapabilities('tagmanager_publish_live_container');
     testEnvironment.save();
 }
 
 exports.setCapabilities = setCapabilities;
 exports.setAdminUser = setAdminUser;
 exports.setSuperUser = setSuperUser;
+exports.setWritePublishUser = setWritePublishUser;
 exports.setWriteUser = setWriteUser;
 exports.setViewUser = setViewUser;
 exports.resetUser = resetUser;
