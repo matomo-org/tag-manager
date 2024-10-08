@@ -24,7 +24,7 @@
       </p>
       <form @submit="edit ? updateVersion() : createVersion()">
         <div>
-          <div v-if="hasPublishCapability()">
+          <div v-if="hasPublishCapability() || (hasWriteCapability() || canPublishToLive())">
             <div>
               <Field
                 uicontrol="text"
@@ -485,7 +485,10 @@ export default defineComponent({
       return true;
     },
     hasPublishCapability() {
-      return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+      return this.hasWriteCapability() && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
+    hasWriteCapability() {
+      return Matomo.hasUserCapability('tagmanager_write');
     },
   },
   computed: {

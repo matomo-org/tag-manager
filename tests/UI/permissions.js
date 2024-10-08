@@ -53,6 +53,17 @@ function setSuperUser()
     testEnvironment.save();
 }
 
+function setWritePublishUser()
+{
+    delete testEnvironment.idSitesViewAccess;
+    delete testEnvironment.idSitesWriteAccess;
+    delete testEnvironment.idSitesAdminAccess;
+    delete testEnvironment.idSitesCapabilities;
+    setWriteUser();
+    setCapabilities('tagmanager_publish_live_container')
+    testEnvironment.save();
+}
+
 exports.setCapabilities = setCapabilities;
 exports.setAdminUser = setAdminUser;
 exports.setSuperUser = setSuperUser;

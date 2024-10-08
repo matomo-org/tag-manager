@@ -84,7 +84,7 @@
             <td class="action">
               <a
                 class="table-action icon-rocket"
-                v-show="hasWriteAccess && hasCustomTemplatesCapability"
+                v-show="hasWriteAccess && (hasCustomTemplatesCapability || canPublishToLive)"
                 @click="publishVersion(version)"
                 :title="translate('TagManager_PublishVersion', version.name)"
               />
