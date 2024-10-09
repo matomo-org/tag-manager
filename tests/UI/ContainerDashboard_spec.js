@@ -57,7 +57,7 @@ describe("ContainerDashboard", function () {
     it('should load container page with some containers as write user with publish_live_container capability', async function () {
         await page.evaluate(() => $('li .icon-rocket').click());
         await page.waitForTimeout(200);
-        await capture.page(page, 'publish_action_write_publish_live_container_user');
+        await capture.modal(page, 'publish_action_write_publish_live_container_user');
     });
 
 });
