@@ -94,7 +94,7 @@ class Import
         foreach ($exportedContainerVersion['tags'] as $tag) {
             $this->tagsProvider->checkIsValidTag($tag['type']);
 
-            if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
+            if ($this->tagsProvider->isCustomTemplate($tag['type']) && !Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
@@ -102,7 +102,7 @@ class Import
         foreach ($exportedContainerVersion['triggers'] as $trigger) {
             $this->triggersProvider->checkIsValidTrigger($trigger['type']);
 
-            if ($this->triggersProvider->isCustomTemplate($trigger['type'])) {
+            if ($this->triggersProvider->isCustomTemplate($trigger['type']) && !Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
