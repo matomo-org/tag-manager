@@ -109,7 +109,7 @@ describe("ContainerVariable", function () {
     });
 
     it('should be able to search variables by type', async function () {
-        await searchVariable('custom event');
+        await searchVariable('data-layer');
         await capture.page(page, 'variable_search_type');
     });
 
