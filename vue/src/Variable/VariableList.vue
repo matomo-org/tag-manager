@@ -13,6 +13,16 @@
       :help-text="variablesHelpText"
     >
       <p>{{ translate('TagManager_VariableUsageBenefits') }}</p>
+      <div class="variableSearchFilter">
+        <Field
+          uicontrol="text"
+          name="variableSearch"
+          :title="translate('General_Search')"
+          v-show="variables.length > 0"
+          v-model="variableSearch"
+        >
+        </Field>
+      </div>
       <table v-content-table>
         <thead>
           <tr>
@@ -205,17 +215,19 @@ import {
   Matomo,
   MatomoUrl,
 } from 'CoreHome';
+import { Field } from 'CorePluginsAdmin';
 import VariablesStore from './Variables.store';
 import {
   VariableReference,
   ContainerVariableCategory,
-  Variable,
+  Variable, VariableType,
 } from '../types';
 
 interface VariableListState {
   hasWriteAccess: boolean;
   variableReferences: VariableReference[];
   containerVariables: ContainerVariableCategory[];
+  variableSearch: string;
 }
 
 const { tagManagerHelper } = window;
@@ -233,6 +245,7 @@ export default defineComponent({
     variablesHelpText: String,
   },
   components: {
+    Field,
     ContentBlock,
   },
   directives: {
@@ -243,6 +256,7 @@ export default defineComponent({
       hasWriteAccess: Matomo.hasUserCapability('tagmanager_write'),
       variableReferences: [],
       containerVariables: [],
+      variableSearch: '',
     };
   },
   created() {
@@ -312,14 +326,31 @@ export default defineComponent({
       return VariablesStore.variables.value;
     },
     sortedVariables() {
-      const sorted = [...this.variables];
-      sorted.sort((lhs, rhs) => {
+      const searchFilter = this.variableSearch.toLowerCase();
+
+      // look through string properties of variables for values that have searchFilter in them
+      // (mimics angularjs filter() filter)
+      const result = [...this.variables].filter((h) => Object.keys(h).some((propName) => {
+        const entity = h as unknown as Record<string, unknown>;
+        let propValue = '';
+        if (typeof entity[propName] === 'string') {
+          propValue = (entity[propName] as string);
+        } else if (propName === 'typeMetadata') {
+          const propTypeMeta = (entity.typeMetadata as VariableType);
+          propValue = (propTypeMeta.name as string);
+        } else if (propName === 'parameters' && entity.type === 'CustomJsFunction') {
+          const propTypeParameters = (entity.parameters as Record<string, unknown>);
+          propValue = (propTypeParameters.jsFunction as string);
+        }
+        return propValue.toLowerCase().indexOf(searchFilter) !== -1;
+      }));
+      result.sort((lhs, rhs) => {
         if (lhs.name < rhs.name) {
           return -1;
         }
         return lhs.name > rhs.name ? 1 : 0;
       });
-      return sorted;
+      return result;
     },
     nameTranslatedText(): string {
       return this.translate('TagManager_VariablesNameDescription');

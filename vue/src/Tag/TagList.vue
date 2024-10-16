@@ -416,6 +416,14 @@ export default defineComponent({
         } else if (propName === 'typeMetadata') {
           const propTypeMeta = (entity.typeMetadata as TagType);
           propValue = (propTypeMeta.name as string);
+        } else if (propName === 'fire_trigger_ids') {
+          if (this.triggers && entity.fire_trigger_ids) {
+            Object.values((entity.fire_trigger_ids) as number[]).forEach((value) => {
+              if (this.triggers[value]) {
+                propValue += `${this.triggers[value]} `;
+              }
+            });
+          }
         } else if (propName === 'parameters' && entity.type === 'CustomHtml') {
           const propTypeParameters = (entity.parameters as Record<string, unknown>);
           propValue = (propTypeParameters.customHtml as string);

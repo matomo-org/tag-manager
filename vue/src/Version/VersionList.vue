@@ -15,6 +15,16 @@
         {{ translate('TagManager_VersionUsageBenefits') }}
         {{ translate('TagManager_ConfigureEnvironmentsSuperUser') }}
       </p>
+      <div class="versionSearchFilter">
+        <Field
+          uicontrol="text"
+          name="versionSearch"
+          :title="translate('General_Search')"
+          v-show="versions.length > 0"
+          v-model="versionSearch"
+        >
+        </Field>
+      </div>
       <table v-content-table>
         <thead>
           <tr>
@@ -219,11 +229,12 @@ import {
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
 import VersionsStore from './Versions.store';
-import { Version } from '../types';
+import { Release, Version } from '../types';
 import AvailableEnvironmentsStore from '../AvailableEnvironments.store';
 
 interface VersionListState {
   versionToBePublished: Version|null;
+  versionSearch: string;
 }
 
 const { tagManagerHelper } = window;
@@ -246,6 +257,7 @@ export default defineComponent({
   data(): VersionListState {
     return {
       versionToBePublished: null,
+      versionSearch: '',
     };
   },
   created() {
@@ -371,14 +383,31 @@ export default defineComponent({
       return VersionsStore.versions.value;
     },
     sortedVersions() {
-      const sorted = [...this.versions];
-      sorted.sort((lhs, rhs) => {
+      const searchFilter = this.versionSearch.toLowerCase();
+
+      // look through string properties of versions for values that have searchFilter in them
+      // (mimics angularjs filter() filter)
+      const result = [...this.versions].filter((h) => Object.keys(h).some((propName) => {
+        const entity = h as unknown as Record<string, unknown>;
+        let propValue = '';
+        if (typeof entity[propName] === 'string') {
+          propValue = (entity[propName] as string);
+        } else if (propName === 'releases') {
+          Object.values((entity.releases) as Release[]).forEach((value) => {
+            if (value.environment) {
+              propValue += `${value.environment} `;
+            }
+          });
+        }
+        return propValue.toLowerCase().indexOf(searchFilter) !== -1;
+      }));
+      result.sort((lhs, rhs) => {
         if (lhs.revision < rhs.revision) {
           return 1;
         }
         return lhs.revision > rhs.revision ? 0 : 1;
       });
-      return sorted;
+      return result;
     },
     hasWriteAccess() {
       return Matomo.hasUserCapability('tagmanager_write');

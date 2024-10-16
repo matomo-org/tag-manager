@@ -80,10 +80,42 @@ describe("ContainerVariable", function () {
         await capture.selector(page, screenshotName, '.tagManagerCustomVariablesList')
     }
 
+    async function searchVariable(searchTerm)
+    {
+        await page.focus('#variableSearch');
+        await page.evaluate((searchTerm) => {
+          var search = document.getElementById('variableSearch');
+          search.value = searchTerm;
+          var event = new Event('change');
+          search.dispatchEvent(event);
+        }, searchTerm);
+        await page.waitForTimeout(200);
+    }
+
     it('should load variables page with some variables', async function () {
         await page.goto(container1Base);
         await page.waitForTimeout(1000);
         await capture.page(page, 'variable_some_exist');
+    });
+
+    it('should be able to search variables by name', async function () {
+        await searchVariable('My var 1');
+        await capture.page(page, 'variable_search_name');
+    });
+
+    it('should be able to search variables by description', async function () {
+        await searchVariable('My var 3 description');
+        await capture.page(page, 'variable_search_description');
+    });
+
+    it('should be able to search variables by type', async function () {
+        await searchVariable('custom event');
+        await capture.page(page, 'variable_search_type');
+    });
+
+    it('should be able to search variables by value not present', async function () {
+        await searchVariable('shjdkfk');
+        await capture.page(page, 'variable_search_empty_result');
     });
 
     it('should be able to create a new variable and show list of available types', async function () {
