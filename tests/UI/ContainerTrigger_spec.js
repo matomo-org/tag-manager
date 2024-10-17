@@ -75,10 +75,47 @@ describe("ContainerTrigger", function () {
         await page.click('.editTrigger .entityCancel a');
     }
 
+    async function searchTrigger(searchTerm)
+    {
+        await page.focus('#triggerSearch');
+        await page.evaluate((searchTerm) => {
+          var search = document.getElementById('triggerSearch');
+          search.value = searchTerm;
+          var event = new Event('change');
+          search.dispatchEvent(event);
+        }, searchTerm);
+        await page.waitForTimeout(200);
+    }
+
     it('should load triggers page with some triggers', async function () {
         await page.goto(container1Base);
         await page.waitForTimeout(1000);
         await capture.page(page, 'trigger_some_exist');
+    });
+
+    it('should be able to search triggers by name', async function () {
+        await searchTrigger('My Trigger1');
+        await capture.page(page, 'trigger_search_name');
+    });
+
+    it('should be able to search triggers by description', async function () {
+        await searchTrigger('My Trigger1 description setting');
+        await capture.page(page, 'trigger_search_description');
+    });
+
+    it('should be able to search triggers by type', async function () {
+        await searchTrigger('custom event');
+        await capture.page(page, 'trigger_search_type');
+    });
+
+    it('should be able to search by custom event name', async function () {
+        await searchTrigger('foo');
+        await capture.page(page, 'trigger_search_custom_event_name');
+    });
+
+    it('should be able to search triggers by value not present', async function () {
+        await searchTrigger('shjdkfk');
+        await capture.page(page, 'trigger_search_empty_result');
     });
 
     it('should be able to create a new trigger and show list of available types', async function () {

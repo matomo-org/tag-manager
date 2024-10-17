@@ -137,6 +137,16 @@ describe("ContainerTag", function () {
         await capture.page(page, 'tag_search_empty_result');
     });
 
+    it('should be able to search tags by triggers', async function () {
+        await searchTag('My trigger1');
+        await capture.page(page, 'tag_search_trigger_result');
+    });
+
+    it('should be able to search tags by triggers multiple', async function () {
+        await searchTag('Mytrigger2 Mytrigger3');
+        await capture.page(page, 'tag_search_trigger_result_multiple');
+    });
+
     it('should be able to create a new tag and show list of available types', async function () {
         await page.click('.createNewTag');
         await page.waitForNetworkIdle();

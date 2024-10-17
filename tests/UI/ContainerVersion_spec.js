@@ -83,9 +83,46 @@ describe("ContainerVersion", function () {
         await page.click('.editVersion .entityCancel a');
     }
 
+    async function searchVersion(searchTerm)
+    {
+        await page.focus('#versionSearch');
+        await page.evaluate((searchTerm) => {
+          var search = document.getElementById('versionSearch');
+          search.value = searchTerm;
+          var event = new Event('change');
+          search.dispatchEvent(event);
+        }, searchTerm);
+        await page.waitForTimeout(200);
+    }
+
     it('should load versions page with some versions', async function () {
         await page.goto(container1Base);
         await capture.page(page, 'version_some_exist');
+    });
+
+    it('should be able to search versions by name', async function () {
+        await searchVersion('container1_v5');
+        await capture.page(page, 'version_search_name');
+    });
+
+    it('should be able to search versions by description', async function () {
+        await searchVersion('Version with linked variables');
+        await capture.page(page, 'version_search_description');
+    });
+
+    it('should be able to search versions by environment', async function () {
+        await searchVersion('staging');
+        await capture.page(page, 'version_search_env');
+    });
+
+    it('should be able to search versions by environment multiple', async function () {
+        await searchVersion('live dev');
+        await capture.page(page, 'version_search_env_multiple');
+    });
+
+    it('should be able to search versions by value not present', async function () {
+        await searchVersion('shjdkfk');
+        await capture.page(page, 'version_search_empty_result');
     });
 
     it('should be able to create a new version', async function () {

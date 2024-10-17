@@ -12,6 +12,16 @@
       :help-text="triggersHelpText"
     >
       <p>{{ translate('TagManager_TriggerUsageBenefits') }}</p>
+      <div class="triggerSearchFilter">
+        <Field
+          uicontrol="text"
+          name="triggerSearch"
+          :title="translate('General_Search')"
+          v-show="triggers.length > 0"
+          v-model="triggerSearch"
+        >
+        </Field>
+      </div>
       <table v-content-table>
         <thead>
           <tr>
@@ -162,12 +172,14 @@ import {
   ContentBlock,
   ContentTable, MatomoUrl,
 } from 'CoreHome';
+import { Field } from 'CorePluginsAdmin';
 import TriggersStore from './Triggers.store';
-import { TriggerReference, Trigger } from '../types';
+import { TriggerReference, Trigger, TriggerType } from '../types';
 
 interface TriggerListState {
   hasWriteAccess: boolean;
   triggerReferences: TriggerReference[];
+  triggerSearch: string;
 }
 
 const { tagManagerHelper } = window;
@@ -185,6 +197,7 @@ export default defineComponent({
     triggersHelpText: String,
   },
   components: {
+    Field,
     ContentBlock,
   },
   directives: {
@@ -194,6 +207,7 @@ export default defineComponent({
     return {
       hasWriteAccess: Matomo.hasUserCapability('tagmanager_write'),
       triggerReferences: [],
+      triggerSearch: '',
     };
   },
   created() {
@@ -253,14 +267,30 @@ export default defineComponent({
       return TriggersStore.triggers.value;
     },
     sortedTriggers() {
-      const sorted = [...this.triggers];
-      sorted.sort((lhs, rhs) => {
+      const searchFilter = this.triggerSearch.toLowerCase();
+      // look through string properties of triggers for values that have searchFilter in them
+      // (mimics angularjs filter() filter)
+      const result = [...this.triggers].filter((h) => Object.keys(h).some((propName) => {
+        const entity = h as unknown as Record<string, unknown>;
+        let propValue = '';
+        if (typeof entity[propName] === 'string') {
+          propValue = (entity[propName] as string);
+        } else if (propName === 'typeMetadata') {
+          const propTypeMeta = (entity.typeMetadata as TriggerType);
+          propValue = (propTypeMeta.name as string);
+        } else if (propName === 'parameters' && entity.type === 'CustomEvent') {
+          const propTypeParameters = (entity.parameters as Record<string, unknown>);
+          propValue = (propTypeParameters.eventName as string);
+        }
+        return propValue.toLowerCase().indexOf(searchFilter) !== -1;
+      }));
+      result.sort((lhs, rhs) => {
         if (lhs.name < rhs.name) {
           return -1;
         }
         return lhs.name > rhs.name ? 1 : 0;
       });
-      return sorted;
+      return result;
     },
     nameTranslatedText(): string {
       return this.translate('TagManager_TriggersNameDescription');
