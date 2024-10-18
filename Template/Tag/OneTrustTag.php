@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -65,5 +66,4 @@ class OneTrustTag extends BaseTag
             })
         );
     }
-
 }
