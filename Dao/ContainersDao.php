@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Dao;
 
 use Piwik\Db;
@@ -16,7 +18,7 @@ use Exception;
 
 class ContainersDao extends BaseDao implements TagManagerDao
 {
-    const ERROR_NAME_IN_USE = 2919;
+    public const ERROR_NAME_IN_USE = 2919;
 
     protected $table = 'tagmanager_container';
 
@@ -227,4 +229,3 @@ class ContainersDao extends BaseDao implements TagManagerDao
         return $container;
     }
 }
-

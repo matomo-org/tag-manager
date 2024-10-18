@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -117,7 +118,7 @@ class ContainerTest extends IntegrationTestCase
 
     public function test_addContainer()
     {
-        $idContainer = $this->addContainer($this->idSite,'My Name', 'My Description');
+        $idContainer = $this->addContainer($this->idSite, 'My Name', 'My Description');
         $this->assertNotEmpty($idContainer);
 
         $container = $this->model->getContainer($this->idSite, $idContainer);
@@ -157,7 +158,7 @@ class ContainerTest extends IntegrationTestCase
 
     public function test_addContainerIgnoreGtmDdataLayer()
     {
-        $idContainer = $this->addContainer($this->idSite,'My Name', 'My Description', null, 1, 1, 1);
+        $idContainer = $this->addContainer($this->idSite, 'My Name', 'My Description', null, 1, 1, 1);
         $this->assertNotEmpty($idContainer);
 
         $container = $this->model->getContainer($this->idSite, $idContainer);
@@ -197,7 +198,7 @@ class ContainerTest extends IntegrationTestCase
 
     public function test_addContainer_generatesRandomContainerIds()
     {
-        $idContainer1 = $this->addContainer($this->idSite,'My Name', 'My Description');
+        $idContainer1 = $this->addContainer($this->idSite, 'My Name', 'My Description');
         $idContainer2 = $this->addContainer($this->idSite, 'foobar', 'my desc');
         $this->assertNotSame($idContainer1, $idContainer2);
         $this->assertSame(8, strlen($idContainer1));
@@ -523,7 +524,7 @@ class ContainerTest extends IntegrationTestCase
         $idContainer3 = $this->addContainer($this->idSite, 'name3');
         $this->addContainer($this->idSite2, 'name4');
         $this->addContainer($this->idSite2, 'name5');
-        $this->addContainer($this->idSite,'name6');
+        $this->addContainer($this->idSite, 'name6');
         $this->model->setCurrentDateTime('2019-03-04 03:03:03');
 
         $this->assertCount(4, $this->model->getContainers($this->idSite));
@@ -580,7 +581,7 @@ class ContainerTest extends IntegrationTestCase
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Description: The value contains');
 
-        $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'name',  str_pad('4', Description::MAX_LENGTH + 1));
+        $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'name', str_pad('4', Description::MAX_LENGTH + 1));
     }
 
     public function test_createContainerVersion_invalidContainer()
@@ -997,7 +998,7 @@ class ContainerTest extends IntegrationTestCase
         $this->assertNotEmpty($instructions[0]['description']);
         $this->assertNotEmpty($instructions[0]['helpUrl']);
         $this->assertNotEmpty($instructions[0]['embedCode']);
-        self::assertStringContainsString(StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1. '.js', $instructions[0]['embedCode']);
+        self::assertStringContainsString(StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '.js', $instructions[0]['embedCode']);
     }
 
     public function test_getAllReleasedContainers_noReleases()
@@ -1244,11 +1245,11 @@ class ContainerTest extends IntegrationTestCase
         $this->addContainerVariable($this->idSite, $this->idContainer1draft, 'Macros Pre Configured', 'Macros Pre Configured Description');
         $this->model->enablePreviewMode($this->idSite, $this->idContainer1, $this->idContainer1draft, 'foo');
         $result = $this->model->generateContainer($this->idSite, $this->idContainer1);
-        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'.js']);
-        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
-        $this->assertStringContainsString("TagManager.dataLayer.get('mtm.clickElement')", $result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
-        $this->assertStringContainsString("return TagManager.dataLayer.get('mtm.clickElement').getAttribute(\"my-attribute\");", $result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
-        $this->assertStringContainsString('return "not found";', $result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
+        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '.js']);
+        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '_preview.js']);
+        $this->assertStringContainsString("TagManager.dataLayer.get('mtm.clickElement')", $result[StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '_preview.js']);
+        $this->assertStringContainsString("return TagManager.dataLayer.get('mtm.clickElement').getAttribute(\"my-attribute\");", $result[StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '_preview.js']);
+        $this->assertStringContainsString('return "not found";', $result[StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '_preview.js']);
         $this->assertCount(4, $result);
     }
 
@@ -1294,7 +1295,7 @@ class ContainerTest extends IntegrationTestCase
         if (!isset($environment)) {
             $environment = Environment::ENVIRONMENT_LIVE;
         }
-        $this->model->publishVersion($idSite, $idContainer, $idContainerVersion,  $environment, $login);
+        $this->model->publishVersion($idSite, $idContainer, $idContainerVersion, $environment, $login);
     }
 
     private function addContainerTrigger($idSite, $idContainerVersion, $name = 'MyName')
@@ -1322,6 +1323,6 @@ class ContainerTest extends IntegrationTestCase
         $conditions = array();
 
         $variable = StaticContainer::get('Piwik\Plugins\TagManager\Model\Variable');
-        return $variable->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, false, [],$description );
+        return $variable->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, false, [], $description);
     }
 }

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Piwik;
@@ -15,7 +17,7 @@ use Piwik\Validators\NumberRange;
 
 class EtrackerTag extends BaseTag
 {
-    const PARAM_ETRACKER_CONFIG = 'etrackerConfig';
+    public const PARAM_ETRACKER_CONFIG = 'etrackerConfig';
 
     public function getIcon()
     {
@@ -167,7 +169,7 @@ class EtrackerTag extends BaseTag
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "transaction"';
                 if ($trackingType->getValue() === 'transaction') {
-                    $field->validators[] = new CharacterLength(3,3);
+                    $field->validators[] = new CharacterLength(3, 3);
                 }
             }),
             $this->makeSetting('etrackerTransactionBasket', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {

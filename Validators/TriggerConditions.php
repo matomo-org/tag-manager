@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -53,7 +54,6 @@ class TriggerConditions extends BaseValidator
         }
 
         foreach ($value as $index => $condition) {
-
             if (!is_array($condition)) {
                 $titleSingular = Piwik::translate('TagManager_Condition');
                 throw new Exception(Piwik::translate('TagManager_ErrorInnerIsNotAnArray', array($titleSingular, $titlePlural)));
@@ -71,8 +71,10 @@ class TriggerConditions extends BaseValidator
                 throw new Exception(Piwik::translate('TagManager_ErrorArrayMissingValue', array('expected', $titlePlural, $index)));
             }
 
-            if (!$this->variablesProvider->getPreConfiguredVariable($condition['actual'])
-                && !$this->variable->findVariableByName($this->idSite, $this->idContainerVersion, $condition['actual'])) {
+            if (
+                !$this->variablesProvider->getPreConfiguredVariable($condition['actual'])
+                && !$this->variable->findVariableByName($this->idSite, $this->idContainerVersion, $condition['actual'])
+            ) {
                 throw new Exception(Piwik::translate('TagManager_ErrorVariableInConditionAtPositionNotFound', array($condition['actual'], $index)));
             }
 
@@ -81,8 +83,6 @@ class TriggerConditions extends BaseValidator
             } catch (\Exception $e) {
                 throw new Exception($e->getMessage(), $e->getCode(), $e);
             }
-
         }
     }
-
 }

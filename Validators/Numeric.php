@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -14,7 +15,6 @@ use Piwik\Validators\Exception;
 
 class Numeric extends BaseValidator
 {
-
     /**
      * @var bool
      */
@@ -56,5 +56,4 @@ class Numeric extends BaseValidator
             throw new Exception(Piwik::translate('TagManager_ValidatorErrorNotNumericOrVariable'));
         }
     }
-
 }

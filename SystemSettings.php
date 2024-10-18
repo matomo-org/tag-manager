@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\Access;
@@ -19,11 +21,11 @@ use Piwik\Settings\FieldConfig;
 
 class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
 {
-    const CUSTOM_TEMPLATES_DISABLED = 'disabled';
-    const CUSTOM_TEMPLATES_ADMIN = 'admin';
-    const CUSTOM_TEMPLATES_SUPERUSER = 'superuser';
+    public const CUSTOM_TEMPLATES_DISABLED = 'disabled';
+    public const CUSTOM_TEMPLATES_ADMIN = 'admin';
+    public const CUSTOM_TEMPLATES_SUPERUSER = 'superuser';
 
-    const USER_PERMISSON_LIST = [
+    public const USER_PERMISSON_LIST = [
         \Piwik\Access\Role\View::ID,
         \Piwik\Access\Role\Write::ID,
         \Piwik\Access\Role\Admin::ID,

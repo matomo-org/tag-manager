@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -36,7 +37,7 @@ class GeneratePreconfiguredVariable extends GeneratePluginBase
         $replace        = array(
             'TagManager' => $pluginName,
             'Weekday' => $variableId,
-            'use Piwik\Plugins\\' .$pluginName => 'use Piwik\Plugins\TagManager'
+            'use Piwik\Plugins\\' . $pluginName => 'use Piwik\Plugins\TagManager'
         );
         $whitelistFiles = array(
             '/Template',

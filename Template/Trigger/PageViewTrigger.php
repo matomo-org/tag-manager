@@ -1,16 +1,17 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
-namespace Piwik\Plugins\TagManager\Template\Trigger;
 
+namespace Piwik\Plugins\TagManager\Template\Trigger;
 
 class PageViewTrigger extends BaseTrigger
 {
-    const ID = 'PageView';
+    public const ID = 'PageView';
 
     public function getId()
     {
@@ -31,5 +32,4 @@ class PageViewTrigger extends BaseTrigger
     {
         return array();
     }
-
 }

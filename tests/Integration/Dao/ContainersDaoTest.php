@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -22,7 +23,6 @@ use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
  */
 class ContainersDaoTest extends IntegrationTestCase
 {
-
     /**
      * @var ContainersDao
      */
@@ -427,7 +427,6 @@ class ContainersDaoTest extends IntegrationTestCase
 
         $this->assertTrue($this->dao->hasContainer($idContainer1));
         $this->assertTrue($this->dao->hasContainer($idContainer2));
-
     }
 
     public function test_getContainers()
@@ -510,7 +509,7 @@ class ContainersDaoTest extends IntegrationTestCase
         // should not delete anything when no container matches
         $this->dao->deleteContainer($idSite = 99, $idContainer2, $this->now);
         $this->dao->deleteContainer($idSite = 4, $idContainer2, $this->now);
-        $this->dao->deleteContainer($idSite = 3,999, $this->now);
+        $this->dao->deleteContainer($idSite = 3, 999, $this->now);
 
         // verify nothing deleted
         $this->assertCount(3, $this->dao->getAllContainers());
@@ -542,6 +541,4 @@ class ContainersDaoTest extends IntegrationTestCase
 
         return $idContainer;
     }
-
-
 }

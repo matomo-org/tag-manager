@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -94,6 +95,4 @@ class TriggerIdsTest extends IntegrationTestCase
         $validator = new TriggerIds($idSite, $idContainerVersion);
         $validator->validate($value);
     }
-
-
 }

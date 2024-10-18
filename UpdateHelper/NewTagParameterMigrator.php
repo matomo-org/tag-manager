@@ -66,7 +66,6 @@ class NewTagParameterMigrator
         foreach ($activeContainersInfo as $container) {
             $this->processContainer($container['idsite'], $container['idcontainer']);
         }
-
     }
 
     private function processContainer($idSite, $idContainer)
@@ -100,7 +99,7 @@ class NewTagParameterMigrator
         $tagInfo = $this->tagsDao->getContainerTag($idSite, $idVersion, $idTag);
         foreach ($this->fieldMap as $key => $value) {
             // It shouldn't ever already exist, but let's be sure we don't overwrite existing values.
-            if(empty($tagInfo['parameters'][$key])) {
+            if (empty($tagInfo['parameters'][$key])) {
                 $tagInfo['parameters'][$key] = $value;
             }
         }

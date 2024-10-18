@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Container\StaticContainer;
@@ -13,8 +15,8 @@ use Piwik\Plugin\Manager;
 use Piwik\Plugins\TagManager\Configuration;
 use Piwik\Plugins\TagManager\SystemSettings;
 
-class VariablesProvider {
-
+class VariablesProvider
+{
     /**
      * @var Manager
      */
@@ -87,7 +89,7 @@ class VariablesProvider {
             $blockedVariables = array_map('strtolower', $blockedVariables);
 
             $variableClasses = $this->pluginManager->findMultipleComponents('Template/Variable', 'Piwik\\Plugins\\TagManager\\Template\\Variable\\BaseVariable');
-            
+
             $variables = array();
 
             /**
@@ -181,5 +183,4 @@ class VariablesProvider {
         }
         return false;
     }
-
 }

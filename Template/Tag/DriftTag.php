@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -16,15 +17,18 @@ use Piwik\Validators\NotEmpty;
 
 class DriftTag extends BaseTag
 {
-    public function getCategory() {
+    public function getCategory()
+    {
         return self::CATEGORY_SOCIAL;
     }
 
-    public function getIcon() {
+    public function getIcon()
+    {
         return 'plugins/TagManager/images/icons/drift.svg';
     }
 
-    public function getParameters() {
+    public function getParameters()
+    {
         return array(
             $this->makeSetting('driftId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_DriftTagDriftIdTitle');
@@ -42,5 +46,4 @@ class DriftTag extends BaseTag
             }),
         );
     }
-
 }

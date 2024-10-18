@@ -1,14 +1,15 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Variable\PreConfigured;
 
 use Piwik\Plugins\TagManager\Context\WebContext;
-
 
 class IsoDateVariable extends BasePreConfiguredVariable
 {
@@ -24,5 +25,4 @@ class IsoDateVariable extends BasePreConfiguredVariable
                 return $this->makeReturnTemplateMethod('new Date().toISOString()', $skipTemplate);
         }
     }
-
 }

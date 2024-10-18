@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -104,6 +105,4 @@ class LookupTableTest extends UnitTestCase
         $validator = new LookupTable();
         $validator->validate($value);
     }
-
-
 }

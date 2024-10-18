@@ -1,18 +1,19 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Context;
 
 use Piwik\Container\StaticContainer;
-
 use Piwik\Plugin\Manager;
 
-class ContextProvider {
-
+class ContextProvider
+{
     /**
      * @var BaseContext[]
      */
@@ -70,5 +71,4 @@ class ContextProvider {
 
         return $this->cached;
     }
-
 }

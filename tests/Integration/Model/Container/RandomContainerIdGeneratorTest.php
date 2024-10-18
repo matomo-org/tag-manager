@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -41,5 +42,4 @@ class RandomContainerIdGeneratorTest extends IntegrationTestCase
         $this->assertSame(8, strlen($id1));
         $this->assertTrue(ctype_alnum($id1));
     }
-
 }

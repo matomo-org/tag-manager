@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Variable\PreConfigured;
 
 class HistoryHashOldSearchVariable extends BaseDataLayerVariable
@@ -18,5 +20,4 @@ class HistoryHashOldSearchVariable extends BaseDataLayerVariable
     {
         return 'mtm.oldUrlSearch';
     }
-
 }

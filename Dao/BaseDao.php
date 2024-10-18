@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Dao;
 
 use Piwik\Common;
@@ -13,9 +15,9 @@ use Piwik\Db;
 
 abstract class BaseDao
 {
-    const STATUS_ACTIVE = 'active';
-    const STATUS_DELETED = 'deleted';
-    const STATUS_PAUSED = 'paused';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_DELETED = 'deleted';
+    public const STATUS_PAUSED = 'paused';
 
     protected $table = '';
     protected $tablePrefixed = '';
@@ -57,7 +59,7 @@ abstract class BaseDao
             $fields = implode(',', $fields);
             $where = [];
             foreach ($whereColumns as $col => $val) {
-                $where[] = '`' . $col .'` = ?';
+                $where[] = '`' . $col . '` = ?';
                 $bind[] = $val;
             }
             $where = implode(' AND ', $where);
@@ -76,4 +78,3 @@ abstract class BaseDao
         return Date::now()->getDatetime();
     }
 }
-

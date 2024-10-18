@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Model;
 
 use Piwik\Piwik;
@@ -113,8 +115,10 @@ class Trigger extends BaseModel
 
         $references = [];
         foreach ($this->tag->getContainerTags($idSite, $idContainerVersion) as $tag) {
-            if (in_array($idTrigger, $tag['block_trigger_ids'])
-                || in_array($idTrigger, $tag['fire_trigger_ids'])) {
+            if (
+                in_array($idTrigger, $tag['block_trigger_ids'])
+                || in_array($idTrigger, $tag['fire_trigger_ids'])
+            ) {
                 $tagRef = new TagReference($tag['idtag'], $tag['name']);
                 $references[] = $tagRef->toArray();
             }
@@ -188,6 +192,4 @@ class Trigger extends BaseModel
 
         return $trigger;
     }
-
 }
-

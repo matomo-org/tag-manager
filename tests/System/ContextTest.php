@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\tests\System;
 
 use Piwik\API\Request;
@@ -18,8 +20,8 @@ use Piwik\Plugins\TagManager\Model\Salt;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Tests\Framework\TestCase\SystemTestCase;
 
-class TestJavaScriptTagManagerLoader extends WebContext\JavaScriptTagManagerLoader {
-
+class TestJavaScriptTagManagerLoader extends WebContext\JavaScriptTagManagerLoader
+{
     public function getJavaScriptContent()
     {
         return <<<CONTENT
@@ -30,8 +32,8 @@ CONTENT;
     }
 }
 
-class TestTemplateLocator extends TemplateLocator {
-
+class TestTemplateLocator extends TemplateLocator
+{
     public function getLoadedTemplates()
     {
         $templates = parent::getLoadedTemplates();
@@ -48,10 +50,10 @@ class TestTemplateLocator extends TemplateLocator {
 
         return $return;
     }
-
 }
 
-class TestContext extends WebContext{
+class TestContext extends WebContext
+{
     public function parameterToVariableJs($value, $container)
     {
         return parent::parameterToVariableJs($value, $container);
@@ -122,7 +124,7 @@ var seoMetaDescriptionIsTooShort = "',
                             'lookUpTable' =>
                                 array (
                                 ),
-                            'defaultValue' => NULL,
+                            'defaultValue' => null,
                             'parameters' =>
                                 array (
                                 ),
@@ -136,7 +138,7 @@ var seoMetaDescriptionIsMissing = "',
                             'lookUpTable' =>
                                 array (
                                 ),
-                            'defaultValue' => NULL,
+                            'defaultValue' => null,
                             'parameters' =>
                                 array (
                                 ),
@@ -148,7 +150,7 @@ var seoMetaDescriptionIsMissing = "',
                             'lookUpTable' =>
                                 array (
                                 ),
-                            'defaultValue' => NULL,
+                            'defaultValue' => null,
                             'parameters' =>
                                 array (
                                 ),
@@ -162,7 +164,7 @@ var seoMetaDescriptionHelloWorld = "',
                             'lookUpTable' =>
                                 array (
                                 ),
-                            'defaultValue' => NULL,
+                            'defaultValue' => null,
                             'parameters' =>
                                 array (
                                 ),
@@ -181,7 +183,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
             'lookUpTable' =>
                 array (
                 ),
-            'defaultValue' => NULL,
+            'defaultValue' => null,
             'parameters' =>
                 array (
                 ),
@@ -196,7 +198,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
                             'lookUpTable' =>
                                 array (
                                 ),
-                            'defaultValue' => NULL,
+                            'defaultValue' => null,
                             'parameters' =>
                                 array (
                                 ),
@@ -214,7 +216,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
                             'lookUpTable' =>
                                 array (
                                 ),
-                            'defaultValue' => NULL,
+                            'defaultValue' => null,
                             'parameters' =>
                                 array (
                                 ),
@@ -233,7 +235,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
                             'lookUpTable' =>
                                 array (
                                 ),
-                            'defaultValue' => NULL,
+                            'defaultValue' => null,
                             'parameters' =>
                                 array (
                                 ),
@@ -258,7 +260,7 @@ var seoMetaDescriptionIsMissing = "',
                             'lookUpTable' =>
                                 array (
                                 ),
-                            'defaultValue' => NULL,
+                            'defaultValue' => null,
                             'parameters' =>
                                 array (
                                 ),
@@ -272,7 +274,7 @@ var seoMetaDescriptionHelloWorld = "',
                             'lookUpTable' =>
                                 array (
                                 ),
-                            'defaultValue' => NULL,
+                            'defaultValue' => null,
                             'parameters' =>
                                 array (
                                 ),
@@ -303,7 +305,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
             'lookUpTable' =>
                 array (
                 ),
-            'defaultValue' => NULL,
+            'defaultValue' => null,
             'parameters' =>
                 array (
                 ),
@@ -314,7 +316,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
             'lookUpTable' =>
                 array (
                 ),
-            'defaultValue' => NULL,
+            'defaultValue' => null,
             'parameters' =>
                 array (
                 ),
@@ -325,7 +327,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
             'lookUpTable' =>
                 array (
                 ),
-            'defaultValue' => NULL,
+            'defaultValue' => null,
             'parameters' =>
                 array (
                 ),
@@ -340,7 +342,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
                             'lookUpTable' =>
                                 array (
                                 ),
-                            'defaultValue' => NULL,
+                            'defaultValue' => null,
                             'parameters' =>
                                 array (
                                 ),
@@ -501,7 +503,7 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
         $path[] = $context->getJsTargetPath(1, 'abcDefGh', Environment::ENVIRONMENT_PREVIEW, '2014-01-02 03:04:05');
         $path[] = $context->getJsTargetPath(1, 'abcDefGh', 'staging', '2014-01-02 03:04:05');
         $path[] = $context->getJsTargetPath(1, 'abcDefGh', 'baz', '2014-01-02 03:04:05');
-        
+
         foreach ($path as $file) {
             $this->writeFile(PIWIK_DOCUMENT_ROOT . $file, ' ');
         }

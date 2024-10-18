@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -22,7 +23,6 @@ use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
  */
 class ContainerReleaseDaoTest extends IntegrationTestCase
 {
-
     /**
      * @var ContainerReleaseDao
      */
@@ -141,7 +141,7 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
             'release_date' => $this->now,
             'deleted_date' => $releaseDate,
             'status' => ContainerReleaseDao::STATUS_DELETED,
-        ),   array(
+            ),   array(
                 'idcontainerrelease' => 2,
                 'idcontainer' => $idContainer,
                 'idcontainerversion' => 4,
@@ -152,7 +152,9 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
                 'deleted_date' => null,
                 'status' => ContainerReleaseDao::STATUS_ACTIVE,
             )
-        ), $release);
+            ),
+            $release
+        );
     }
 
     public function test_releaseVersion_createsTwoDifferentReleasesForDifferentEnvironment()
@@ -196,7 +198,7 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
             'release_date' => $this->now,
             'deleted_date' => null,
             'status' => ContainerReleaseDao::STATUS_ACTIVE,
-        ),   array(
+            ),   array(
                 'idcontainerrelease' => 2,
                 'idcontainer' => $idContainer,
                 'idcontainerversion' => $idContainerVersion,
@@ -207,7 +209,9 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
                 'deleted_date' => null,
                 'status' => ContainerReleaseDao::STATUS_ACTIVE,
             )
-        ), $release);
+            ),
+            $release
+        );
     }
 
     public function test_createRelease_increasedIdRelease()
@@ -489,7 +493,6 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
             array('idsite' => '4', 'idcontainer' => 'abcde'),
             array('idsite' => '4', 'idcontainer' => 'foobar'),
         ), $this->dao->getAllReleasedContainers());
-
     }
 
     public function test_deleteNoLongerExistingEnvironmentReleases()
@@ -536,6 +539,4 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
 
         return $idRelease;
     }
-
-
 }

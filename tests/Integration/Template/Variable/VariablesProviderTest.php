@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -176,5 +177,4 @@ class VariablesProviderTest extends IntegrationTestCase
         $this->assertFalse($this->provider->isCustomTemplate('foo'));
         $this->assertTrue($this->provider->isCustomTemplate(CustomJsFunctionVariable::ID));
     }
-
 }

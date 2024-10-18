@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -114,5 +115,4 @@ class TriggersProviderTest extends IntegrationTestCase
         $this->assertFalse($this->provider->isCustomTemplate(false));
         $this->assertFalse($this->provider->isCustomTemplate('foo'));
     }
-
 }

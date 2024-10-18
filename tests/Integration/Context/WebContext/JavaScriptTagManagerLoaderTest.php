@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -59,5 +60,4 @@ class JavaScriptTagManagerLoaderTest extends IntegrationTestCase
         self::assertStringContainsString('<body ng-app=', $result);
         $this->assertGreaterThanOrEqual(5000, strlen($result));
     }
-
 }

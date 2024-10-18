@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Piwik;
@@ -14,8 +16,8 @@ use Piwik\Validators\NotEmpty;
 
 class EmarsysTag extends BaseTag
 {
-    const ID = 'Emarsys';
-    
+    public const ID = 'Emarsys';
+
     public function getId()
     {
         return self::ID;

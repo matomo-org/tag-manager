@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Model;
 
 use Piwik\Piwik;
@@ -178,7 +180,8 @@ class Variable extends BaseModel
 
     public static function hasFieldConfigVariableParameter($parameter)
     {
-        if (!empty($parameter['component'])
+        if (
+            !empty($parameter['component'])
             && ($parameter['component'] === BaseTemplate::FIELD_TEXTAREA_VARIABLE_COMPONENT
                 || $parameter['component'] === BaseTemplate::FIELD_VARIABLE_COMPONENT
                 || $parameter['component'] === BaseTemplate::FIELD_VARIABLE_TYPE_COMPONENT)
@@ -276,12 +279,14 @@ class Variable extends BaseModel
         $parameters = $entity['parameters'];
         foreach ($entity['typeMetadata']['parameters'] as $parameter) {
             $paramName = $parameter['name'];
-            if (((isset($parameter['component'])
+            if (
+                ((isset($parameter['component'])
                         && in_array($parameter['component'], [BaseTemplate::FIELD_VARIABLE_COMPONENT, BaseTemplate::FIELD_VARIABLE_TYPE_COMPONENT])
                     ) || ($entity['type'] === 'CustomJsFunction' && $paramName === 'jsFunction'))
                 && isset($parameters[$paramName])
                 && is_string($parameters[$paramName])
-                && strpos($parameters[$paramName], $oldVarNameTemplate) !== false) {
+                && strpos($parameters[$paramName], $oldVarNameTemplate) !== false
+            ) {
                 $found = true;
                 $parameters[$paramName] = str_replace($oldVarNameTemplate, $newVarNameTemplate, $parameters[$paramName]);
             }
@@ -374,6 +379,4 @@ class Variable extends BaseModel
 
         return $variable;
     }
-
 }
-

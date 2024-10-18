@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Context;
 
 use Piwik\API\Request;
@@ -28,10 +30,9 @@ use Piwik\Plugins\TagManager\Template\Trigger\PageViewTrigger;
 use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
 use Piwik\SettingsPiwik;
 
-
 class WebContext extends BaseContext
 {
-    const ID = 'web';
+    public const ID = 'web';
 
     /**
      * @var JavaScriptTagManagerLoader
@@ -43,8 +44,16 @@ class WebContext extends BaseContext
      */
     private $templateLocator;
 
-    public function __construct(VariablesProvider $variablesProvider, Variable $variableModel, Trigger $triggerModel, Tag $tagModel, Container $containerModel, StorageInterface $storage, JavaScriptTagManagerLoader $javaScriptTagManagerLoader, Salt $salt)
-    {
+    public function __construct(
+        VariablesProvider $variablesProvider,
+        Variable $variableModel,
+        Trigger $triggerModel,
+        Tag $tagModel,
+        Container $containerModel,
+        StorageInterface $storage,
+        JavaScriptTagManagerLoader $javaScriptTagManagerLoader,
+        Salt $salt
+    ) {
         parent::__construct($variablesProvider, $variableModel, $triggerModel, $tagModel, $containerModel, $storage, $salt);
         $this->javaScriptTagManagerLoader = $javaScriptTagManagerLoader;
     }
@@ -104,7 +113,7 @@ class WebContext extends BaseContext
 
                 $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $environmentId, $container['created_date']);
                 $filesCreated[$path] = $js;
-                $this->storage->save(PIWIK_DOCUMENT_ROOT. $path, $js);
+                $this->storage->save(PIWIK_DOCUMENT_ROOT . $path, $js);
             }
         }
 
@@ -148,10 +157,10 @@ class WebContext extends BaseContext
                 $variable['Variable'] = $this->templateLocator->loadVariableTemplate($variable, self::ID);
                 $variable['parameters'] = $this->addVariableTemplateToParameters($variable['parameters']);
                 if (!empty($variable['parameters'])) {
-                    $variableTemplates['keys'][] = '{{'.$variable['name'].'}}';
+                    $variableTemplates['keys'][] = '{{' . $variable['name'] . '}}';
                     $variableTemplates['values'][] = 'TagManager._buildVariable(' . json_encode($variable) . ", parameters.get('container')).get()";
                 }
-                if (!empty($variable['parameters']['jsFunction']) && strpos($variable['parameters']['jsFunction'], '{{')!==FALSE) {
+                if (!empty($variable['parameters']['jsFunction']) && strpos($variable['parameters']['jsFunction'], '{{') !== false) {
                     $replaceMacros[] = ['key' => $variableKey, 'methodName' => $variable['Variable']];
                 }
 
@@ -241,7 +250,6 @@ class WebContext extends BaseContext
             foreach ($part as $subkey => $subvalue) {
                 $part[$subkey] = $this->addVariableTemplateIfNeeded($subvalue);
             }
-
         }
         return $part;
     }
@@ -349,5 +357,4 @@ INST;
         }
         return $url;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -104,5 +105,4 @@ class TemplateMetadataTest extends UnitTestCase
         );
         $this->assertSame($expected, $this->template->formatTemplates($templates));
     }
-
 }

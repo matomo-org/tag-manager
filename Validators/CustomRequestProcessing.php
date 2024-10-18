@@ -54,5 +54,4 @@ class CustomRequestProcessing extends BaseValidator
             throw new Exception(Piwik::translate('TagManager_ErrorNotAnVariableOfTypeException', $customRequestProcessingVariableName));
         }
     }
-
 }

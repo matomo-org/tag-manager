@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -86,7 +87,7 @@ class ConfigurationTest extends IntegrationTestCase
         );
         $this->assertSame(array(), $this->configuration->getDisabledVariables());
     }
-    
+
     public function test_getDisabledTriggers_byDefault()
     {
         $this->assertSame(array(), $this->configuration->getDisabledTriggers());
@@ -107,5 +108,4 @@ class ConfigurationTest extends IntegrationTestCase
         );
         $this->assertSame(array(), $this->configuration->getDisabledTriggers());
     }
-
 }

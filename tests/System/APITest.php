@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\tests\System;
 
 use Piwik\API\Request;
@@ -137,7 +139,7 @@ class APITest extends SystemTestCase
             throw $exception;
         }
     }
-    
+
     public function test_getContainerTrigger()
     {
         $api = API::getInstance();

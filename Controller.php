@@ -1,15 +1,16 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\API\Request;
 use Piwik\Common;
-use Piwik\Container\StaticContainer;
 use Piwik\DataTable\Filter\SafeDecodeLabel;
 use Piwik\Filechecks;
 use Piwik\Menu\MenuTop;
@@ -288,19 +289,18 @@ class Controller extends \Piwik\Plugin\Controller
 
         foreach ($variables['container']['releases'] as $release) {
             if ($release['environment'] === Environment::ENVIRONMENT_PREVIEW) {
-
                 $version = '';
                 if (!empty($release['version_name'])) {
                     $version = ' (' . Piwik::translate('TagManager_VersionX', $release['version_name']) . ')';
                 }
 
-                $mtmPreviewId = PreviewCookie::COOKIE_NAME . '=' .$idContainer;
+                $mtmPreviewId = PreviewCookie::COOKIE_NAME . '=' . $idContainer;
                 $mtmPreviewId = SafeDecodeLabel::decodeLabelSafe($mtmPreviewId);
                 $previewCookie = new PreviewCookie();
                 $debugSiteUrl = $previewCookie->getDebugSiteUrl();
                 $previewUrl = '';
                 if (!empty($debugSiteUrl)) {
-                    $previewUrl = $debugSiteUrl . (stripos($debugSiteUrl, '?') !== False ? '&' : '?') . $mtmPreviewId;
+                    $previewUrl = $debugSiteUrl . (stripos($debugSiteUrl, '?') !== false ? '&' : '?') . $mtmPreviewId;
                 }
 
                 $notificationMessage = $this->renderTemplate('previewDebugNotification.twig', array(
@@ -309,8 +309,7 @@ class Controller extends \Piwik\Plugin\Controller
                         'version' => $version,
                         'mtmPreviewId' => $mtmPreviewId,
                         'previewUrl' => $previewUrl
-                    )
-                );
+                    ));
 
                 $notification = new Notification($notificationMessage);
                 $notification->context = Notification::CONTEXT_INFO;

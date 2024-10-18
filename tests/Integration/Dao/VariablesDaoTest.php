@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\tests\Integration\Dao;
 
 use Piwik\Common;
@@ -20,7 +22,6 @@ use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
  */
 class VariablesDaoTest extends IntegrationTestCase
 {
-
     /**
      * @var VariablesDao
      */
@@ -502,7 +503,7 @@ class VariablesDaoTest extends IntegrationTestCase
         // should not delete anything when no variable matches
         $this->dao->deleteContainerVariable($idSite = 99, $idContainerVersion = 6, $idVariable2, $this->now);
         $this->dao->deleteContainerVariable($idSite = 4, $idContainerVersion = 6, $idVariable2, $this->now);
-        $this->dao->deleteContainerVariable($idSite = 3, $idContainerVersion = 5,999, $this->now);
+        $this->dao->deleteContainerVariable($idSite = 3, $idContainerVersion = 5, 999, $this->now);
 
         // verify nothing deleted
         $this->assertCount(3, $this->dao->getAllVariables());
@@ -540,6 +541,4 @@ class VariablesDaoTest extends IntegrationTestCase
 
         return $idVariable;
     }
-
-
 }

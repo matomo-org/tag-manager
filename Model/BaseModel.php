@@ -1,16 +1,16 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
-namespace Piwik\Plugins\TagManager\Model;
 
+namespace Piwik\Plugins\TagManager\Model;
 
 use Piwik\Date;
 use Piwik\Site;
-
 
 class BaseModel
 {
@@ -39,4 +39,3 @@ class BaseModel
         return Date::factory($date, $timezone)->getLocalized(Date::DATETIME_FORMAT_SHORT);
     }
 }
-
