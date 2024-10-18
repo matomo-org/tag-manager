@@ -1088,6 +1088,16 @@
         "SettingRestrictAccessSuperUser": "Users with at least superuser permission",
         "MatomoTagCustomDimensionsSticky": "Persist custom dimensions",
         "MatomoTagCustomDimensionsStickyHelpText1": "When this feature is enabled, the custom dimensions will be used for all subsequent requests while the page is active.",
-        "MatomoTagCustomDimensionsStickyHelpText2": "By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag."
+        "MatomoTagCustomDimensionsStickyHelpText2": "By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag.",
+        "ConsentManagementPlatform": "Consent Management Platform",
+        "AxeptioClientIdTitle": "Client Id",
+        "AxeptioClientIdDescription": "Find in Settings > Installation > Project Id.",
+        "AxeptioTagDescription": "Description",
+        "CookieYesTagDescription": "Description",
+        "CookieYesTagWebsiteKeyTitle": "Website key",
+        "CookieYesTagWebsiteKeyDescription": "Get your website key from CookieYes.",
+        "OneTrustTagDescription": "Description",
+        "OneTrustTagDomainTitle": "Domain",
+        "OneTrustTagDomainDescription": "Enter your domain id to data-domain-script part of the script."
     }
 }
