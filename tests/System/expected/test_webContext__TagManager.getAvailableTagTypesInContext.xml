@@ -1515,6 +1515,42 @@
 					</row>
 				</parameters>
 			</row>
+			<row>
+				<id>OneTrust</id>
+				<name>OneTrust</name>
+				<description>Description</description>
+				<category>Consent Management Platform</category>
+				<icon>plugins/TagManager/images/icons/one-trust.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>domain</name>
+						<title>Domain</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enter your domain id to data-domain-script part of the script.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
 		</types>
 	</row>
 	<row>
