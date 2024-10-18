@@ -1480,6 +1480,78 @@
 		<name>Consent Management Platform</name>
 		<types>
 			<row>
+				<id>Axeptio</id>
+				<name>Axeptio</name>
+				<description>Description</description>
+				<category>Consent Management Platform</category>
+				<icon>plugins/TagManager/images/icons/axeptio.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>clientId</name>
+						<title>Client Id</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Find in Settings &gt; Installation &gt; Project Id.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>CookieYes</id>
+				<name>CookieYes</name>
+				<description>Description</description>
+				<category>Consent Management Platform</category>
+				<icon>plugins/TagManager/images/icons/cookieyes.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>cookiebotWebsiteKey</name>
+						<title>Website key</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Get your website key from CookieYes.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
 				<id>Cookiebot</id>
 				<name>Cookiebot</name>
 				<description>Cookiebot CMP makes the use of cookies and online tracking of your website GDPR compliant.</description>
