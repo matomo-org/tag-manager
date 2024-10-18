@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Commands;
 
 use Piwik\Plugins\CoreConsole\Commands\GeneratePluginBase;
@@ -37,7 +39,7 @@ class GenerateTag extends GeneratePluginBase
             'CustomImage' => $tagId,
             'customImage' => lcfirst($tagId),
             'Custom Image' => $tagName,
-            'Piwik\Plugins\\' .$pluginName. '\Template\Tag\BaseTag' => 'Piwik\Plugins\TagManager\Template\Tag\BaseTag',
+            'Piwik\Plugins\\' . $pluginName . '\Template\Tag\BaseTag' => 'Piwik\Plugins\TagManager\Template\Tag\BaseTag',
             'parameters, ' . $pluginName => 'parameters, TagManager'
         );
         $whitelistFiles = array(

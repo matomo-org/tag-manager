@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Piwik;
@@ -60,7 +62,6 @@ class ShareaholicTag extends BaseTag
                         throw new \Exception("The Total Share Counter doesn't need an App ID");
                     }
                 };
-
             }),
             $this->makeSetting('shareaholicParentSelector', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($InPageApp) {
                 $field->title = Piwik::translate('TagManager_ShareaholicTagParentSelectorTitle');

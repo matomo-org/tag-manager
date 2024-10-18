@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -20,7 +21,7 @@ use Piwik\Site;
 class AccessValidator
 {
     /**
-     * @var SystemSettings 
+     * @var SystemSettings
      */
     private $settings;
 
@@ -109,7 +110,4 @@ class AccessValidator
     {
         new Site($idSite);
     }
-
-
 }
-

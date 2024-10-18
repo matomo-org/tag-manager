@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Piwik;
@@ -64,10 +66,11 @@ class CustomImageTag extends BaseTag
                 $field->validators[] = new NotEmpty();
             }),
             $this->makeSetting('cacheBusterEnabled', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_CustomImageTagCacheBusterEnabledTitle');;
-                $field->description = Piwik::translate('TagManager_CustomImageTagCacheBusterEnabledDescription');;
+                $field->title = Piwik::translate('TagManager_CustomImageTagCacheBusterEnabledTitle');
+                ;
+                $field->description = Piwik::translate('TagManager_CustomImageTagCacheBusterEnabledDescription');
+                ;
             }),
         );
     }
-
 }

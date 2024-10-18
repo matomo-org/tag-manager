@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -224,5 +225,4 @@ class NewTagParameterMigratorTest extends IntegrationTestCase
         $this->assertArrayNotHasKey('notValidTemplateProperty', $tag['parameters']);
         $this->assertNotEmpty($tag['description']);
     }
-
 }

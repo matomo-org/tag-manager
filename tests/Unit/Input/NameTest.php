@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\tests\Unit\Input;
 
 use Piwik\Plugins\TagManager\Input\Name;
@@ -61,5 +63,4 @@ class NameTest extends UnitTestCase
         $name = new Name($name);
         $name->check();
     }
-
 }

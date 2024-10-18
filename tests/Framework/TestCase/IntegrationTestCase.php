@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -7,6 +8,7 @@
  */
 
 namespace Piwik\Plugins\TagManager\tests\Framework\TestCase;
+
 use Piwik\Tests\Framework\Fixture;
 
 /**
@@ -25,5 +27,4 @@ class IntegrationTestCase extends \Piwik\Tests\Framework\TestCase\IntegrationTes
         Fixture::resetTranslations();
         parent::tearDown();
     }
-
 }

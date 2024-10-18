@@ -1,15 +1,16 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
-use Piwik\Plugin\Manager;
 use Piwik\Plugins\TagManager\Validators\Numeric;
 use Piwik\Settings\FieldConfig;
 use Piwik\Validators\CharacterLength;
@@ -17,9 +18,9 @@ use Piwik\Validators\NotEmpty;
 
 class MatomoTag extends BaseTag
 {
-    const ID = 'Matomo';
-    const PARAM_MATOMO_CONFIG = 'matomoConfig';
-    const REPLACE_TRACKER_KEY = "var replaceMeWithTracker='';";
+    public const ID = 'Matomo';
+    public const PARAM_MATOMO_CONFIG = 'matomoConfig';
+    public const REPLACE_TRACKER_KEY = "var replaceMeWithTracker='';";
 
     public function getId()
     {
@@ -198,7 +199,7 @@ class MatomoTag extends BaseTag
                 $field->validators[] = new CharacterLength(0, 500);
                 $field->validators[] = new Numeric(true, true);
                 $field->transform = function ($value) {
-                    if ($value === null || $value === false || $value === ''){
+                    if ($value === null || $value === false || $value === '') {
                         // we make sure in those cases we do not case the value to float automatically by Setting class because
                         // the value is optional and we do not want to have "0" in this case
                         return null;
@@ -274,5 +275,4 @@ class MatomoTag extends BaseTag
     {
         return 1;
     }
-
 }

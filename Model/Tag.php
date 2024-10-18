@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Model;
 
 use Piwik\Date;
@@ -22,10 +24,10 @@ use Piwik\Validators\WhitelistedValue;
 
 class Tag extends BaseModel
 {
-    const FIRE_LIMIT_UNLIMITED = 'unlimited';
-    const FIRE_LIMIT_ONCE_IN_LIFETIME = 'once_lifetime';
-    const FIRE_LIMIT_ONCE_24_HOURS = 'once_24hours';
-    const FIRE_LIMIT_ONCE_PER_PAGE = 'once_page';
+    public const FIRE_LIMIT_UNLIMITED = 'unlimited';
+    public const FIRE_LIMIT_ONCE_IN_LIFETIME = 'once_lifetime';
+    public const FIRE_LIMIT_ONCE_24_HOURS = 'once_24hours';
+    public const FIRE_LIMIT_ONCE_PER_PAGE = 'once_page';
 
     /**
      * @var TagsDao
@@ -233,6 +235,4 @@ class Tag extends BaseModel
 
         return $tag;
     }
-
 }
-

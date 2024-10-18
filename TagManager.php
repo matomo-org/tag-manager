@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\Access;
@@ -185,7 +187,7 @@ class TagManager extends \Piwik\Plugin
                 $items['entries'][] = array(
                     'name' => $preConfiguredVariable->getName() . ' Variable',
                     'documentation' => $preConfiguredVariable->getDescription(),
-                    'id' => '{{' . $preConfiguredVariable->getId() .'}}'
+                    'id' => '{{' . $preConfiguredVariable->getId() . '}}'
                 );
             }
         }
@@ -349,7 +351,7 @@ class TagManager extends \Piwik\Plugin
 
         try {
             StaticContainer::get(ContainerIdGenerator::class);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             // tag manager was likely activated in this request because the DI config could not be resolved.
             // this happens eg when calling "plugin:activate TagManager AnotherPluginName".
             // in this case tag manager gets installed and activated, and then during the same request, when
@@ -921,7 +923,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_UrlParameterVariableNamePlaceholder';
         $result[] = 'TagManager_JavaScriptVariableNamePlaceholder';
         $result[] = 'TagManager_DefaultValuePlaceholder';
-	    $result[] = 'TagManager_PauseX';
+        $result[] = 'TagManager_PauseX';
         $result[] = 'TagManager_PauseTagConfirm';
         $result[] = 'TagManager_ResumeX';
         $result[] = 'TagManager_ResumeTagConfirm';

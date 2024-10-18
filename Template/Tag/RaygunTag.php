@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -15,11 +16,13 @@ use Piwik\Validators\NotEmpty;
 
 class RaygunTag extends BaseTag
 {
-    public function getIcon() {
+    public function getIcon()
+    {
         return 'plugins/TagManager/images/icons/raygun.svg';
     }
 
-    public function getParameters() {
+    public function getParameters()
+    {
         return array(
             $this->makeSetting('raygunApiKey', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_RaygunTagApiKeyTitle');
@@ -39,7 +42,8 @@ class RaygunTag extends BaseTag
         );
     }
 
-    public function getCategory() {
+    public function getCategory()
+    {
         return self::CATEGORY_DEVELOPERS;
     }
 }

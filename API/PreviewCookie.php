@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -12,8 +13,8 @@ use Piwik\Cookie;
 
 class PreviewCookie extends Cookie
 {
-    const COOKIE_NAME = 'mtmPreviewMode';
-    const DEBUG_SITE_URL_COOKIE_NAME = 'mtmPreviewSiteURL';
+    public const COOKIE_NAME = 'mtmPreviewMode';
+    public const DEBUG_SITE_URL_COOKIE_NAME = 'mtmPreviewSiteURL';
 
     public function __construct()
     {
@@ -55,5 +56,4 @@ class PreviewCookie extends Cookie
     {
         return $this->get(self::DEBUG_SITE_URL_COOKIE_NAME);
     }
-
 }

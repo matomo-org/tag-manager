@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
-namespace Piwik\Plugins\TagManager\Dao;
 
+namespace Piwik\Plugins\TagManager\Dao;
 
 use Piwik\Db;
 use Piwik\DbHelper;
@@ -17,7 +18,7 @@ use Piwik\Plugins\TagManager\Input\Name;
 
 class ContainerVersionsDao extends BaseDao implements TagManagerDao
 {
-    const REVISION_DRAFT = 0;
+    public const REVISION_DRAFT = 0;
 
     protected $table = 'tagmanager_container_version';
 
@@ -232,4 +233,3 @@ class ContainerVersionsDao extends BaseDao implements TagManagerDao
         return $container;
     }
 }
-

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -133,5 +134,4 @@ class EnvironmentTest extends IntegrationTestCase
         );
         $this->assertSame($expected, $environments);
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -115,5 +116,4 @@ class TagsProviderTest extends IntegrationTestCase
         $this->assertFalse($this->provider->isCustomTemplate('foo'));
         $this->assertTrue($this->provider->isCustomTemplate(CustomHtmlTag::ID));
     }
-
 }

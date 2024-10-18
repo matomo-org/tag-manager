@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -9,8 +10,6 @@
 
 namespace Piwik\Plugins\TagManager;
 
-use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
-use Piwik\Plugins\TagManager\UpdateHelper\NewTagParameterMigrator;
 use Piwik\Updater;
 use Piwik\Updater\Migration;
 use Piwik\Updater\Migration\Factory as MigrationFactory;

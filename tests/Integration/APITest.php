@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -363,7 +364,7 @@ class APITest extends IntegrationTestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
 
-        $this->api->updateContainer($this->idSite, '9999',  'TheName');
+        $this->api->updateContainer($this->idSite, '9999', 'TheName');
     }
 
     public function test_updateContainerVersion_shouldFailWhenNotHavingViewPermissions()
@@ -533,7 +534,6 @@ class APITest extends IntegrationTestCase
         $container = $this->api->getContainer($this->idSite, $idContainer);
 
         $this->assertFalse($this->api->pauseContainerTag($this->idSite, $idContainer, $container['versions'][0]['idcontainerversion'], $idTag = 999));
-
     }
 
     public function test_pauseContainerTag_success()
@@ -581,7 +581,6 @@ class APITest extends IntegrationTestCase
         $container = $this->api->getContainer($this->idSite, $idContainer);
 
         $this->assertFalse($this->api->resumeContainerTag($this->idSite, $idContainer, $container['versions'][0]['idcontainerversion'], $idTag = 999));
-
     }
 
     public function test_resumeContainerTag_success()

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Model;
 
 use Piwik\Container\StaticContainer;
@@ -21,10 +23,8 @@ use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator;
 use Piwik\Validators\NumberRange;
 
-
 class Container extends BaseModel
 {
-
     /**
      * @var ContainersDao
      */
@@ -55,8 +55,14 @@ class Container extends BaseModel
      */
     private $environment;
 
-    public function __construct(ContainersDao $containersDao, ContainerVersionsDao $containerVersionsDao, ContainerReleaseDao $containerPublishesDao, ContextProvider $contextProvider, ContainerIdGenerator $containerIdGenerator, Environment $environment)
-    {
+    public function __construct(
+        ContainersDao $containersDao,
+        ContainerVersionsDao $containerVersionsDao,
+        ContainerReleaseDao $containerPublishesDao,
+        ContextProvider $contextProvider,
+        ContainerIdGenerator $containerIdGenerator,
+        Environment $environment
+    ) {
         $this->dao = $containersDao;
         $this->versionsDao = $containerVersionsDao;
         $this->releasesDao = $containerPublishesDao;
@@ -96,7 +102,6 @@ class Container extends BaseModel
         if (!empty($container['releases'])) {
             foreach ($container['releases'] as $release) {
                 if ($release['environment'] === Environment::ENVIRONMENT_PREVIEW) {
-
                     // we only want to regenerate the containers if it has a preview enabled
                     $context = $this->contextProvider->getContext($container['context']);
                     if ($context) {
@@ -477,4 +482,3 @@ class Container extends BaseModel
         return $containerRelease;
     }
 }
-

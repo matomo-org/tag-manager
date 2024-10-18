@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template;
 
 use JShrink\Minifier;
@@ -27,9 +29,9 @@ abstract class BaseTemplate
 
     protected $templateType = '';
 
-    const FIELD_TEXTAREA_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldTextareaVariable'];
-    const FIELD_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTemplate'];
-    const FIELD_VARIABLE_TYPE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTypeTemplate'];
+    public const FIELD_TEXTAREA_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldTextareaVariable'];
+    public const FIELD_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTemplate'];
+    public const FIELD_VARIABLE_TYPE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTypeTemplate'];
 
     public static $RESERVED_SETTING_NAMES = [
         'container', 'tag', 'variable', 'trigger', 'length', 'window', 'document', 'get', 'fire', 'setUp', 'set', 'reset', 'type', 'part',
@@ -204,7 +206,7 @@ abstract class BaseTemplate
                 $fileName = $autoloader_reflector->getFileName();
 
                 $lenPhpExtension = 3;
-                $base = substr($fileName, 0 , -1 * $lenPhpExtension);
+                $base = substr($fileName, 0, -1 * $lenPhpExtension);
                 $file = $base . 'web.js';
                 $minFile = $base . 'web.min.js';
 
@@ -324,6 +326,4 @@ abstract class BaseTemplate
             'parameters' => $params,
         );
     }
-
-
 }

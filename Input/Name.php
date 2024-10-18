@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -15,7 +16,7 @@ use Piwik\Validators\NotEmpty;
 
 class Name
 {
-    const MAX_LENGTH = 255;
+    public const MAX_LENGTH = 255;
 
     /**
      * @var string
@@ -33,5 +34,4 @@ class Name
 
         BaseValidator::check($title, $this->name, [new NotEmpty(), new CharacterLength(1, self::MAX_LENGTH)]);
     }
-
 }

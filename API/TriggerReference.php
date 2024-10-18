@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\API;
 
 use Piwik\Piwik;
@@ -16,6 +18,4 @@ class TriggerReference extends BaseReference
         $referenceTypeName = Piwik::translate('TagManager_Trigger');
         parent::__construct($referenceId, $referenceName, 'trigger', $referenceTypeName);
     }
-
-
 }

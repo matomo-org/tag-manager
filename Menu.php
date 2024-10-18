@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\API\Request;
@@ -17,7 +19,6 @@ use Piwik\Plugins\TagManager\Model\Environment;
 
 class Menu extends \Piwik\Plugin\Menu
 {
-
     /**
      * @var AccessValidator
      */
@@ -79,7 +80,7 @@ class Menu extends \Piwik\Plugin\Menu
         if (!$idSite || !Piwik::isUserHasViewAccess($idSite)) {
             return;
         }
-        
+
         $manageContainers = Piwik::translate('TagManager_ManageX', Piwik::translate('TagManager_Containers'));
 
         $paramsNoContainerId = array('idContainer' => null);// prevents eg error after deleting a container if idContainer is still set
@@ -95,7 +96,6 @@ class Menu extends \Piwik\Plugin\Menu
                 $container = null; // the container might be deleted by now
             }
             if (!empty($container)) {
-
                 $params = array('idContainer' => $idContainer); // not needed as it is already present in url but we make sure the id is set
                 $menuCategory = strlen($container['name']) > 50 ? substr($container['name'], 0, 50) . '…' : $container['name'];
 
@@ -118,9 +118,9 @@ class Menu extends \Piwik\Plugin\Menu
                 if ($this->accessValidator->hasWriteCapability($idSite)) {
                     $menu->addItem($menuCategory, 'TagManager_Versions', $this->urlForAction('manageVersions', $params), $orderId = 115);
                     if ($previewEnabled) {
-                        $menu->addItem($menuCategory, 'TagManager_DisablePreview', array(), $orderId = 130, false,'icon-bug', "tagManagerHelper.disablePreviewMode(" . json_encode($container['idcontainer']) . ")");
+                        $menu->addItem($menuCategory, 'TagManager_DisablePreview', array(), $orderId = 130, false, 'icon-bug', "tagManagerHelper.disablePreviewMode(" . json_encode($container['idcontainer']) . ")");
                     } else {
-                        $menu->addItem($menuCategory, 'TagManager_EnablePreviewDebug', array(), $orderId = 130, false,'icon-bug', "tagManagerHelper.enablePreviewMode(" . json_encode($container['idcontainer']) . ")");
+                        $menu->addItem($menuCategory, 'TagManager_EnablePreviewDebug', array(), $orderId = 130, false, 'icon-bug', "tagManagerHelper.enablePreviewMode(" . json_encode($container['idcontainer']) . ")");
                     }
 
                     if (
@@ -132,10 +132,8 @@ class Menu extends \Piwik\Plugin\Menu
                         $menu->addItem($menuCategory, 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, function () { window.location.reload(); })");
                     }
                 }
-                $menu->addItem($menuCategory, 'TagManager_InstallCode', $this->urlForAction('releases', $params), $orderId = 140, false,'icon-embed', "tagManagerHelper.showInstallCode(" . json_encode($container['idcontainer']) . ")");
-
+                $menu->addItem($menuCategory, 'TagManager_InstallCode', $this->urlForAction('releases', $params), $orderId = 140, false, 'icon-embed', "tagManagerHelper.showInstallCode(" . json_encode($container['idcontainer']) . ")");
             }
         }
-
     }
 }

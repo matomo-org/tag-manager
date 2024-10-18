@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Piwik;
@@ -13,7 +15,7 @@ use Piwik\Validators\NotEmpty;
 
 class CustomJsFunctionVariable extends BaseVariable
 {
-    const ID = 'CustomJsFunction';
+    public const ID = 'CustomJsFunction';
 
     public function getId()
     {
@@ -60,8 +62,7 @@ class CustomJsFunctionVariable extends BaseVariable
         if (!empty($entity['parameters']['jsFunction'])) {
             $function = rtrim(trim($entity['parameters']['jsFunction']), ';');
 
-            return '(function () { return function (parameters, TagManager) { this.get = ' . $function .'; } })();';
+            return '(function () { return function (parameters, TagManager) { this.get = ' . $function . '; } })();';
         }
     }
-
 }

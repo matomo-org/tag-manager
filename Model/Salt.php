@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Model;
 
 use Piwik\Common;
@@ -12,8 +14,8 @@ use Piwik\Option;
 
 class Salt
 {
-    const OPTION_TAGMANAGER_SALT = 'tagmanager_salt';
-    const SALT_LENGTH = 40;
+    public const OPTION_TAGMANAGER_SALT = 'tagmanager_salt';
+    public const SALT_LENGTH = 40;
 
     public function __construct($salt = '')
     {
@@ -62,4 +64,3 @@ class Salt
         Option::delete(self::OPTION_TAGMANAGER_SALT);
     }
 }
-

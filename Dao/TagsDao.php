@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
-namespace Piwik\Plugins\TagManager\Dao;
 
+namespace Piwik\Plugins\TagManager\Dao;
 
 use Piwik\Db;
 use Piwik\DbHelper;
@@ -163,7 +164,7 @@ class TagsDao extends BaseDao implements TagManagerDao
         $table = $this->tablePrefixed;
         $tags = Db::fetchAll("SELECT idtag FROM $table WHERE status != ? AND idsite = ? and idcontainerversion = ? and type = ? ORDER BY priority, created_date ASC", $bind);
 
-        return is_array($tags) && count($tags) ? array_column($tags,'idtag') : [];
+        return is_array($tags) && count($tags) ? array_column($tags, 'idtag') : [];
     }
 
     /**
@@ -286,7 +287,7 @@ class TagsDao extends BaseDao implements TagManagerDao
         $tag['idcontainerversion'] = (int) $tag['idcontainerversion'];
         $tag['fire_delay'] = (int)$tag['fire_delay'];
         $tag['priority'] = (int)$tag['priority'];
-        
+
         if ($tag['start_date'] === '0000-00-00 00:00:00') {
             $tag['start_date'] = null;
         }
@@ -322,4 +323,3 @@ class TagsDao extends BaseDao implements TagManagerDao
         return $tag;
     }
 }
-

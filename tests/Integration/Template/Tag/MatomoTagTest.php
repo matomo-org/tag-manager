@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -104,7 +105,7 @@ class MatomoTagTest extends IntegrationTestCase
             'name' => 'myTag',
             'fireTriggerIds' => array($idTrigger),
             'parameters' => array(
-                MatomoTag::PARAM_MATOMO_CONFIG => '{{'.$variableName.'}}'
+                MatomoTag::PARAM_MATOMO_CONFIG => '{{' . $variableName . '}}'
             )
         ));
         Request::processRequest('TagManager.enablePreviewMode', array(
@@ -127,5 +128,4 @@ class MatomoTagTest extends IntegrationTestCase
             }
         }
     }
-
 }
