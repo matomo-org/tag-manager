@@ -58,9 +58,9 @@ class AxeptioTag extends BaseTag
     public function getParameters()
     {
         return array(
-            $this->makeSetting('clientId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_AxeptioClientIdTitle');
-                $field->description = Piwik::translate('TagManager_AxeptioClientIdDescription');
+            $this->makeSetting('projectId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_AxeptioProjectIdTitle');
+                $field->description = Piwik::translate('TagManager_AxeptioProjectIdDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new NotEmpty();
             }),

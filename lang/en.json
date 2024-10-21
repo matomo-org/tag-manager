@@ -1090,14 +1090,14 @@
         "MatomoTagCustomDimensionsStickyHelpText1": "When this feature is enabled, the custom dimensions will be used for all subsequent requests while the page is active.",
         "MatomoTagCustomDimensionsStickyHelpText2": "By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag.",
         "ConsentManagementPlatform": "Consent Management Platform",
-        "AxeptioClientIdTitle": "Client Id",
-        "AxeptioClientIdDescription": "Find in Settings > Installation > Project Id.",
-        "AxeptioTagDescription": "Description",
-        "CookieYesTagDescription": "Description",
+        "AxeptioProjectIdTitle": "Project Id",
+        "AxeptioProjectIdDescription": "Enter your Project ID. You can find it in the settings menu of your Axeptio project.",
+        "AxeptioTagDescription": "Axeptio is a low-code Consent Management Platform.",
+        "CookieYesTagDescription": "CookieYes is a cookie consent solution that helps your website achieve GDPR and CCPA compliance.",
         "CookieYesTagWebsiteKeyTitle": "Website key",
-        "CookieYesTagWebsiteKeyDescription": "Get your website key from CookieYes.",
-        "OneTrustTagDescription": "Description",
-        "OneTrustTagDomainTitle": "Domain",
-        "OneTrustTagDomainDescription": "Enter your domain id to data-domain-script part of the script."
+        "CookieYesTagWebsiteKeyDescription": "Enter your website key from CookieYes. To find your CookieYes website key, log in to your CookieYes account > Select your website from the dropdown on the header > Navigate to Advanced Settings > Click Get installation code > Copy your %1$swebsite key%2$s from the src attribute (e.g. src= \"https://cdn-cookieyes.com/client_data/%1$syour_website_key%2$s/script.js\").",
+        "OneTrustTagDescription": "The OneTrust Consent Management Platform orchestrates the collection of consent across web, mobile, and CTV.",
+        "OneTrustTagDomainTitle": "Data-domain-script",
+        "OneTrustTagDomainDescription": "To find your OneTrust data-domain-script, log into OneTrust, navigate to Scripts, select your desired domain, select the Production Scripts tab, and  find your data-domain-script in the Production CDN Script."
     }
 }

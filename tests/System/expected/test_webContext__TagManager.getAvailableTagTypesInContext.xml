@@ -1482,7 +1482,7 @@
 			<row>
 				<id>Axeptio</id>
 				<name>Axeptio</name>
-				<description>Description</description>
+				<description>Axeptio is a low-code Consent Management Platform.</description>
 				<category>Consent Management Platform</category>
 				<icon>plugins/TagManager/images/icons/axeptio.svg</icon>
 				<help />
@@ -1494,8 +1494,8 @@
 				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
-						<name>clientId</name>
-						<title>Client Id</title>
+						<name>projectId</name>
+						<title>Project Id</title>
 						<value />
 						<defaultValue />
 						<type>string</type>
@@ -1503,7 +1503,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Find in Settings &gt; Installation &gt; Project Id.</description>
+						<description>Enter your Project ID. You can find it in the settings menu of your Axeptio project.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />
@@ -1518,7 +1518,7 @@
 			<row>
 				<id>CookieYes</id>
 				<name>CookieYes</name>
-				<description>Description</description>
+				<description>CookieYes is a cookie consent solution that helps your website achieve GDPR and CCPA compliance.</description>
 				<category>Consent Management Platform</category>
 				<icon>plugins/TagManager/images/icons/cookieyes.svg</icon>
 				<help />
@@ -1539,8 +1539,8 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Get your website key from CookieYes.</description>
-						<inlineHelp />
+						<description />
+						<inlineHelp>Enter your website key from CookieYes. To find your CookieYes website key, log in to your CookieYes account &gt; Select your website from the dropdown on the header &gt; Navigate to Advanced Settings &gt; Click Get installation code &gt; Copy your &lt;strong&gt;website key&lt;/strong&gt; from the src attribute (e.g. src= &quot;https://cdn-cookieyes.com/client_data/&lt;strong&gt;your_website_key&lt;/strong&gt;/script.js&quot;).</inlineHelp>
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1590,7 +1590,7 @@
 			<row>
 				<id>OneTrust</id>
 				<name>OneTrust</name>
-				<description>Description</description>
+				<description>The OneTrust Consent Management Platform orchestrates the collection of consent across web, mobile, and CTV.</description>
 				<category>Consent Management Platform</category>
 				<icon>plugins/TagManager/images/icons/one-trust.svg</icon>
 				<help />
@@ -1603,7 +1603,7 @@
 				<parameters>
 					<row>
 						<name>domain</name>
-						<title>Domain</title>
+						<title>Data-domain-script</title>
 						<value />
 						<defaultValue />
 						<type>string</type>
@@ -1611,7 +1611,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Enter your domain id to data-domain-script part of the script.</description>
+						<description>To find your OneTrust data-domain-script, log into OneTrust, navigate to Scripts, select your desired domain, select the Production Scripts tab, and  find your data-domain-script in the Production CDN Script.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />

@@ -1,7 +1,7 @@
 (function () {
   return function (parameters, TagManager) {
     this.fire = function () {
-      const clientId = parameters.get('clientId');
+      const clientId = parameters.get('projectId');
 
       window.axeptioSettings = {
         clientId,
