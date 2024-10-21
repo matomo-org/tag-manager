@@ -60,7 +60,8 @@ class CookieYesTag extends BaseTag
         return array(
             $this->makeSetting('cookiebotWebsiteKey', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_CookieYesTagWebsiteKeyTitle');
-                $field->inlineHelp = Piwik::translate('TagManager_CookieYesTagWebsiteKeyDescription',
+                $field->inlineHelp = Piwik::translate(
+                    'TagManager_CookieYesTagWebsiteKeyDescription',
                     ['<strong>', '</strong>']
                 );
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
