@@ -897,7 +897,7 @@
 				<description>etracker is a web analytics system, you can choose to send a pageview or an event.</description>
 				<category>Analytics</category>
 				<icon>plugins/TagManager/images/icons/etracker.svg</icon>
-				<help />
+				<help>The etracker tag tracks and sends data on user interactions for pageviews or specific events.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
