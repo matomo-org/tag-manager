@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\tests\Fixtures;
 
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
+use Piwik\Plugin\Manager;
 use Piwik\Plugins\TagManager\API;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
@@ -63,6 +64,9 @@ class TagManagerFixture extends Fixture
 
     public function setUp(): void
     {
+        // Ensure plugin is activated, otherwise adding a site with this type will fail
+        Manager::getInstance()->activatePlugin('MobileAppMeasurable');
+
         $this->setUpWebsite();
         $this->setUpContainers();
         $this->trackFirstVisit();
