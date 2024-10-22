@@ -15,7 +15,6 @@ use Piwik\Validators\NotEmpty;
 
 class OneTrustTag extends BaseTag
 {
-
     public function getDescription()
     {
         // By default, the description will be automatically fetched from the TagManager_CustomHtmlTagDescription

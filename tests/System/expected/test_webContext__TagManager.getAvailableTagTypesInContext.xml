@@ -1530,7 +1530,7 @@
 				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
-						<name>cookiebotWebsiteKey</name>
+						<name>cookieYesWebsiteKey</name>
 						<title>Website key</title>
 						<value />
 						<defaultValue />
