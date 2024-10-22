@@ -15,26 +15,12 @@ use Piwik\Validators\NotEmpty;
 
 class AxeptioTag extends BaseTag
 {
-    public function getName()
-    {
-        // By default, the name will be automatically fetched from the TagManager_CustomHtmlTagName translation key.
-        // you can either adjust/create/remove this translation key, or return a different value here directly.
-        return parent::getName();
-    }
-
     public function getDescription()
     {
         // By default, the description will be automatically fetched from the TagManager_CustomHtmlTagDescription
         // translation key. you can either adjust/create/remove this translation key, or return a different value
         // here directly.
         return Piwik::translate('TagManager_AxeptioTagDescription');
-    }
-
-    public function getHelp()
-    {
-        // By default, the help will be automatically fetched from the TagManager_CustomHtmlTagHelp translation key.
-        // you can either adjust/create/remove this translation key, or return a different value here directly.
-        return parent::getHelp();
     }
 
     public function getCategory()

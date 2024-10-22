@@ -1,7 +1,7 @@
 (function () {
   return function (parameters, TagManager) {
     this.fire = function () {
-      const websiteKey = parameters.get('cookiebotWebsiteKey');
+      const websiteKey = parameters.get('cookieYesWebsiteKey');
 
       let src = 'https://cdn-cookieyes.com/client_data/';
       src += websiteKey;
