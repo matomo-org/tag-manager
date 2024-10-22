@@ -24,6 +24,8 @@
             {{ translate('General_Description') }}: {{ containerVersion?.description }}
           </span>
         </p>
+        <p v-html="containerDashboardDescription">
+        </p>
       </div>
       <div
         class="row"
@@ -332,10 +334,15 @@ export default defineComponent({
     },
     containerMetaInformation() {
       return translate(
-        'TagManager_ContainerMetaInformation',
+        'TagManager_ContainerIdInformation',
         this.containerVersion?.idcontainer || '',
-        this.contexts[this.container?.context || ''] || '',
-        this.containerVersion?.created_date_pretty || '',
+      );
+    },
+    containerDashboardDescription() {
+      return translate(
+        'TagManager_ContainerDashboardDescription',
+        '<a href="https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/" target="_blank" rel="noreferrer noopener">',
+        '</a>',
       );
     },
     sortedContainerVersionTags() {
