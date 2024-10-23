@@ -938,6 +938,8 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_ResumedTag';
         $result[] = 'TagManager_ActivelySyncGtmDataLayerTitle';
         $result[] = 'TagManager_ActivelySyncGtmDataLayerDescription';
+        $result[] = 'TagManager_ContainerIdInformation';
+        $result[] = 'TagManager_ContainerDashboardDescription';
     }
 
     public function getStylesheetFiles(&$stylesheets)

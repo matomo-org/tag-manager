@@ -220,6 +220,7 @@
         "ContainerIdVariableDescription": "Returns the ID of this container, for example \"ab2Dk432\".",
         "ContainerIdVariableName": "Container ID",
         "ContainerMetaInformation": "ID \"%1$s\" in context \"%2$s\" created on %3$s.",
+        "ContainerIdInformation": "Container ID: \"%1$s\"",
         "ContainerNameHelp": "The container name lets you define a unique name for this container. Please note that this name will be also available as a variable and therefore publicly visible in the source code of the tag.",
         "ContainerRevisionVariableDescription": "Returns the revision of this container, for example \"5\".",
         "ContainerRevisionVariableName": "Container Revision",
@@ -1098,6 +1099,7 @@
         "CookieYesTagWebsiteKeyDescription": "Enter your website key from CookieYes. To find your CookieYes website key, log in to your CookieYes account > Select your website from the dropdown on the header > Navigate to Advanced Settings > Click Get installation code > Copy your %1$swebsite key%2$s from the src attribute (e.g. src= \"https://cdn-cookieyes.com/client_data/%1$syour_website_key%2$s/script.js\").",
         "OneTrustTagDescription": "The OneTrust Consent Management Platform orchestrates the collection of consent across web, mobile, and CTV.",
         "OneTrustTagDomainTitle": "Data-domain-script",
-        "OneTrustTagDomainDescription": "To find your OneTrust data-domain-script, log into OneTrust, navigate to Scripts, select your desired domain, select the Production Scripts tab, and  find your data-domain-script in the Production CDN Script."
+        "OneTrustTagDomainDescription": "To find your OneTrust data-domain-script, log into OneTrust, navigate to Scripts, select your desired domain, select the Production Scripts tab, and  find your data-domain-script in the Production CDN Script.",
+        "ContainerDashboardDescription": "With Matomo Tag Manager (MTM), you can adjust your tracking configurations without making changes to your website. The container dashboard provides an overview of tags, triggers, and variables created in the container, and a list of the most recent saved versions of the container. %1$sLearn more%2$s."
     }
 }
