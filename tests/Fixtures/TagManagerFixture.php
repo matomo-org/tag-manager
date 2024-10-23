@@ -64,9 +64,6 @@ class TagManagerFixture extends Fixture
 
     public function setUp(): void
     {
-        // Ensure plugin is activated, otherwise adding a site with this type will fail
-        Manager::getInstance()->activatePlugin('MobileAppMeasurable');
-
         $this->setUpWebsite();
         $this->setUpContainers();
         $this->trackFirstVisit();
@@ -79,6 +76,9 @@ class TagManagerFixture extends Fixture
 
     public function setUpWebsite()
     {
+        // Ensure plugin is activated, otherwise adding a site with this type will fail
+        Manager::getInstance()->activatePlugin('MobileAppMeasurable');
+
         for ($i = 1; $i <= 5; $i++) {
             if (!self::siteCreated($i)) {
                 $idSite = self::createWebsite(
