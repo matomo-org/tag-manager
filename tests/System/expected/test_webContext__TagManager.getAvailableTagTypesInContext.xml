@@ -897,7 +897,7 @@
 				<description>etracker is a web analytics system, you can choose to send a pageview or an event.</description>
 				<category>Analytics</category>
 				<icon>plugins/TagManager/images/icons/etracker.svg</icon>
-				<help />
+				<help>The etracker tag tracks and sends data on user interactions for pageviews or specific events.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -1480,6 +1480,78 @@
 		<name>Consent Management Platform</name>
 		<types>
 			<row>
+				<id>Axeptio</id>
+				<name>Axeptio</name>
+				<description>Axeptio is a low-code Consent Management Platform.</description>
+				<category>Consent Management Platform</category>
+				<icon>plugins/TagManager/images/icons/axeptio.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>projectId</name>
+						<title>Project Id</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enter your Project ID. You can find it in the settings menu of your Axeptio project.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>CookieYes</id>
+				<name>CookieYes</name>
+				<description>CookieYes is a cookie consent solution that helps your website achieve GDPR and CCPA compliance.</description>
+				<category>Consent Management Platform</category>
+				<icon>plugins/TagManager/images/icons/cookieyes.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>cookieYesWebsiteKey</name>
+						<title>Website key</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>Enter your website key from CookieYes. To find your CookieYes website key, log in to your CookieYes account &gt; Select your website from the dropdown on the header &gt; Navigate to Advanced Settings &gt; Click Get installation code &gt; Copy your &lt;strong&gt;website key&lt;/strong&gt; from the src attribute (e.g. src= &quot;https://cdn-cookieyes.com/client_data/&lt;strong&gt;your_website_key&lt;/strong&gt;/script.js&quot;).</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
 				<id>Cookiebot</id>
 				<name>Cookiebot</name>
 				<description>Cookiebot CMP makes the use of cookies and online tracking of your website GDPR compliant.</description>
@@ -1504,6 +1576,42 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>Insert the domain group id provided in the &quot;Your Script&quot; section on Cookiebot website.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>OneTrust</id>
+				<name>OneTrust</name>
+				<description>The OneTrust Consent Management Platform orchestrates the collection of consent across web, mobile, and CTV.</description>
+				<category>Consent Management Platform</category>
+				<icon>plugins/TagManager/images/icons/one-trust.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>domain</name>
+						<title>Data-domain-script</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>To find your OneTrust data-domain-script, log into OneTrust, navigate to Scripts, select your desired domain, select the Production Scripts tab, and  find your data-domain-script in the Production CDN Script.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />

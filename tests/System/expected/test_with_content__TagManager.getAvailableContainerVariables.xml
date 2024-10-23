@@ -394,7 +394,7 @@
 				<type>HistoryHashNew</type>
 				<name>History New Hash</name>
 				<category>History</category>
-				<description />
+				<description>The new fragment identifier after the history change, for example #newsection.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
@@ -404,7 +404,7 @@
 				<type>HistoryHashNewPath</type>
 				<name>History New Path</name>
 				<category>History</category>
-				<description />
+				<description>The new portion of the URL path after the history change, for example /page/childpage.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
@@ -414,7 +414,7 @@
 				<type>HistoryHashNewSearch</type>
 				<name>History New Search</name>
 				<category>History</category>
-				<description />
+				<description>The new query string portion of the URL after the history change, for example ?query=result.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
@@ -424,7 +424,7 @@
 				<type>HistoryHashNewUrl</type>
 				<name>History New URL</name>
 				<category>History</category>
-				<description />
+				<description>The new full URL after the history change.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
@@ -434,7 +434,7 @@
 				<type>HistoryHashOld</type>
 				<name>History Old Hash</name>
 				<category>History</category>
-				<description />
+				<description>The previous fragment identifier before the history change.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
@@ -444,7 +444,7 @@
 				<type>HistoryHashOldPath</type>
 				<name>History Old Path</name>
 				<category>History</category>
-				<description />
+				<description>The previous portion of the URL path before the history change.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
@@ -454,7 +454,7 @@
 				<type>HistoryHashOldSearch</type>
 				<name>History Old Search</name>
 				<category>History</category>
-				<description />
+				<description>The previous query string portion of the URL before the history change.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
@@ -464,7 +464,7 @@
 				<type>HistoryHashOldUrl</type>
 				<name>History Old URL</name>
 				<category>History</category>
-				<description />
+				<description>The old full URL before the history change.</description>
 				<order>9999</order>
 				<is_pre_configured>1</is_pre_configured>
 			</row>
