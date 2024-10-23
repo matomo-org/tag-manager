@@ -1090,6 +1090,6 @@
         "MatomoTagCustomDimensionsSticky": "Persist custom dimensions",
         "MatomoTagCustomDimensionsStickyHelpText1": "When this feature is enabled, the custom dimensions will be used for all subsequent requests while the page is active.",
         "MatomoTagCustomDimensionsStickyHelpText2": "By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag.",
-        "ContainerDashboardDescription": "With Matomo Tag Manager (MTM), you can adjust your tracking configurations without making changes to your website. The Container Dashboard provides an overview of tags, triggers, and variables created in the container, and a list of the most recent saved versions of the container. %1$sLearn more%2$s."
+        "ContainerDashboardDescription": "With Matomo Tag Manager (MTM), you can adjust your tracking configurations without making changes to your website. The container dashboard provides an overview of tags, triggers, and variables created in the container, and a list of the most recent saved versions of the container. %1$sLearn more%2$s."
     }
 }
