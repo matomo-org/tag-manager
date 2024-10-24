@@ -24,7 +24,7 @@
             {{ translate('General_Description') }}: {{ containerVersion?.description }}
           </span>
         </p>
-        <p v-html="containerDashboardDescription">
+        <p v-html="$sanitize(containerDashboardDescription)">
         </p>
       </div>
       <div
