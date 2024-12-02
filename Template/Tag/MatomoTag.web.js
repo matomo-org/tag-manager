@@ -334,6 +334,18 @@
                     } else if (trackingType === 'goal') {
                         tracker.trackGoal(parameters.get('idGoal'), parameters.get('goalCustomRevenue'), dimensionsObject);
                     }
+
+                    if (matomoConfig.customData && matomoConfig.customData.length && matomoConfig.customData[0].name && matomoConfig.customData[0].value) {
+                        tracker.setCustomData(matomoConfig.customData[0].name, matomoConfig.customData[0].value);
+                    }
+
+                    if (matomoConfig.setDownloadExtensions) {
+                        tracker.setDownloadExtensions(matomoConfig.setDownloadExtensions.split(','));
+                    }
+
+                    if (matomoConfig.addDownloadExtensions) {
+                        tracker.addDownloadExtensions(matomoConfig.addDownloadExtensions.split(','));
+                    }
                 }
             });
 

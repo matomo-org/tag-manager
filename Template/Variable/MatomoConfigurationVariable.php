@@ -452,7 +452,54 @@ class MatomoConfigurationVariable extends BaseVariable
 
         $parameters = $this->insertPluginParameters($pluginParameters, $parameters, $insertAfter = 'enableLinkTracking');
 
-        return $parameters;
+        $advancedSettings = [
+            $this->makeSetting('showAdvancedSettings', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_ShowAdvancedSettings');
+                $field->uiControl = FieldConfig::UI_CONTROL_CHECKBOX;
+            }),
+            $this->makeSetting('customData', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDataTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDataDescription');
+                $field->validate = function ($value) {
+                    if (empty($value)) {
+                        return;
+                    }
+                    if (!is_array($value)) {
+                        throw new \Exception(Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsException'));
+                    }
+                };
+
+                $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
+                $field->uiControlAttributes['rows'] = 1;
+                $field->condition = 'showAdvancedSettings';
+                $field1 = new FieldConfig\MultiPair('Name', 'name', FieldConfig::UI_CONTROL_TEXT);
+                $field1->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field2 = new FieldConfig\MultiPair('Value', 'value', FieldConfig::UI_CONTROL_TEXT);
+                $field2->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['field1'] = $field1->toArray();
+                $field->uiControlAttributes['field2'] = $field2->toArray();
+            }),
+            $this->makeSetting('setDownloadExtensions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetDownloadExtensionsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetDownloadExtensionsDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->condition = 'showAdvancedSettings';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('addDownloadExtensions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoAddDownloadExtensionsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoAddDownloadExtensionsDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->condition = 'showAdvancedSettings';
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+        ];
+
+        return array_merge($parameters, $advancedSettings);
     }
 
     private function insertPluginParameters($pluginParameters, $parameters, $insertAfter)
