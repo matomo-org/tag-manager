@@ -94,7 +94,19 @@
               </h3>
             </div>
           </div>
-          <div v-show="showAdvanced && variable.typeMetadata?.hasAdvancedSettings">
+          <div
+              v-if="variable && variable.typeMetadata
+              && variable.typeMetadata.id === 'MatomoConfiguration'"
+              v-show="showAdvanced && variable.typeMetadata?.hasAdvancedSettings"
+          >
+            <GroupedSettings
+                :settings="variable.typeMetadata?.advancedParameters || []"
+                :all-setting-values="parameterValues"
+                @change="parameterValues[$event.name] = $event.value"
+            />
+          </div>
+          <div v-show="showAdvanced && variable.typeMetadata?.hasAdvancedSettings &&
+          variable && variable.typeMetadata && variable.typeMetadata.id !== 'MatomoConfiguration'">
             <div class="innerFormField">
               <Field
                 uicontrol="text"
@@ -240,7 +252,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, DeepReadonly } from 'vue';
+import { defineComponent, nextTick } from 'vue';
 import {
   translate,
   AjaxHelper,
@@ -269,11 +281,12 @@ interface VariableEditState {
   isDirty: boolean;
   showAdvanced: boolean;
   canUseCustomTemplates: boolean;
-  availableVariables: DeepReadonly<VariableCategory[]>;
+  availableVariables: VariableCategory[];
   editTitle: string;
   variable: Variable;
   chooseVariableType: boolean;
   parameterValues: Record<string, unknown>;
+  advancedParameters: Record<string, unknown>;
   isUpdatingVar: boolean;
 }
 
@@ -312,6 +325,7 @@ export default defineComponent({
       editTitle: '',
       variable: {} as unknown as Variable,
       parameterValues: {},
+      advancedParameters: {},
       isUpdatingVar: false,
     };
   },
@@ -399,6 +413,12 @@ export default defineComponent({
             }
 
             this.variable = clone(variable) as unknown as Variable;
+            this.variable.typeMetadata.parameters = variable.typeMetadata.parameters.filter(
+              (item) => !Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') || !Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
+            );
+            this.variable.typeMetadata.advancedParameters = variable.typeMetadata.parameters.filter(
+              (item) => Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') && Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
+            );
             this.parameterValues = Object.fromEntries(variable.typeMetadata.parameters.map(
               (s) => [s.name, s.value],
             ));
@@ -471,7 +491,7 @@ export default defineComponent({
         this.isDirty = true;
       }
     },
-    createVariableType(variableTemplate: DeepReadonly<VariableType>) {
+    createVariableType(variableTemplate: VariableType) {
       if (variableTemplate && this.isVariableTemplateDisabled[variableTemplate.id]) {
         return;
       }
@@ -491,13 +511,22 @@ export default defineComponent({
         typeMetadata: variableTemplate,
       };
 
-      if (this.variable.typeMetadata?.name) {
-        this.editTitle += `: ${this.variable.typeMetadata.name}`;
-      }
-
+      this.variable.typeMetadata.advancedParameters = [];
+      const advancedOptions = variableTemplate.parameters.filter(
+        (item) => Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') && Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
+      );
+      const nonAdvancedOptions = variableTemplate.parameters.filter(
+        (item) => !Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') || !Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
+      );
       this.parameterValues = Object.fromEntries(variableTemplate.parameters.map(
         (s) => [s.name, s.value],
       ));
+      this.variable.typeMetadata.advancedParameters = advancedOptions;
+      this.variable.typeMetadata.parameters = nonAdvancedOptions;
+
+      if (this.variable.typeMetadata?.name) {
+        this.editTitle += `: ${this.variable.typeMetadata.name}`;
+      }
 
       this.addLookUpEntry();
 
