@@ -346,6 +346,46 @@
                     if (matomoConfig.addDownloadExtensions) {
                         tracker.addDownloadExtensions(matomoConfig.addDownloadExtensions.split(','));
                     }
+
+                    if (matomoConfig.removeDownloadExtensions) {
+                        tracker.removeDownloadExtensions(matomoConfig.removeDownloadExtensions.split(','));
+                    }
+
+                    if (matomoConfig.setIgnoreClasses) {
+                        tracker.setIgnoreClasses(matomoConfig.setIgnoreClasses.split(','));
+                    }
+
+                    if (matomoConfig.setReferrerUrl) {
+                        tracker.setReferrerUrl(matomoConfig.setReferrerUrl);
+                    }
+
+                    if (matomoConfig.setAPIUrl) {
+                        tracker.setAPIUrl(matomoConfig.setAPIUrl);
+                    }
+
+                    if (matomoConfig.setPageViewId) {
+                        tracker.setPageViewId(matomoConfig.setPageViewId);
+                    }
+
+                    if (matomoConfig.setExcludedReferrers) {
+                        tracker.setExcludedReferrers(matomoConfig.setExcludedReferrers.split(','));
+                    }
+
+                    if (matomoConfig.setDownloadClasses) {
+                        tracker.setDownloadClasses(matomoConfig.setDownloadClasses.split(','));
+                    }
+
+                    if (matomoConfig.setLinkClasses) {
+                        tracker.setLinkClasses(matomoConfig.setLinkClasses.split(','));
+                    }
+
+                    if (matomoConfig.setCampaignNameKey) {
+                        tracker.setCampaignNameKey(matomoConfig.setCampaignNameKey);
+                    }
+
+                    if (matomoConfig.setCampaignKeywordKey) {
+                        tracker.setCampaignKeywordKey(matomoConfig.setCampaignKeywordKey);
+                    }
                 }
             });
 

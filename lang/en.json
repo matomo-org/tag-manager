@@ -1118,6 +1118,26 @@
         "MatomoConfigurationMatomoSetDownloadExtensionsTitle": "Set Download Extensions",
         "MatomoConfigurationMatomoSetDownloadExtensionsDescription": "Set a list of file extensions to be recognized as downloads. Example: doc or doc,xls",
         "MatomoConfigurationMatomoAddDownloadExtensionsTitle": "Add Download Extensions",
-        "MatomoConfigurationMatomoAddDownloadExtensionsDescription": "Specify additional file extensions to be recognized as downloads. Example: doc or doc,xls"
+        "MatomoConfigurationMatomoAddDownloadExtensionsDescription": "Specify additional file extensions to be recognized as downloads. Example: doc or doc,xls",
+        "MatomoConfigurationMatomoRemoveDownloadExtensionsTitle": "Remove Download Extensions",
+        "MatomoConfigurationMatomoRemoveDownloadExtensionsDescription": "Specify file extensions to be removed from the list of download file extensions. Example: doc or doc,xls",
+        "MatomoConfigurationMatomoSetIgnoreClassesTitle": "Set Ignore Classes",
+        "MatomoConfigurationMatomoSetIgnoreClassesDescription": "Set classes to be ignored if present in link (in addition to matomo_ignore and piwik_ignore). Example classA or classA,classB",
+        "MatomoConfigurationMatomoSetReferrerUrlTitle": "Set Referrer URL",
+        "MatomoConfigurationMatomoSetReferrerUrlDescription": "Override the detected Http-Referer. We recommend you call this method early in your tracking code before you call trackPageView if it should be applied to all tracking requests.",
+        "MatomoConfigurationMatomoSetApiUrlTitle": "Set API URL",
+        "MatomoConfigurationMatomoSetApiUrlDescription": "Specify the Matomo HTTP API URL endpoint. Points to the root directory of piwik, e.g. https://matomo.example.org/ or https://example.org/matomo/. This function is only useful when the 'Overlay' report is not working. By default, you do not need to use this function.",
+        "MatomoConfigurationMatomoSetPageViewIdTitle": "Set Pageview ID",
+        "MatomoConfigurationMatomoSetPageViewIdDescription": "Override PageView id for every use of logPageView(). Do not use this if you call trackPageView() multiple times during tracking (e.g. when tracking a single page application).",
+        "MatomoConfigurationMatomoSetExcludedReferrersTitle": "Set Excluded Referrer",
+        "MatomoConfigurationMatomoSetExcludedReferrersDescription": "Set array of hostnames or domains that should be ignored as referrers. For wildcard subdomains, you can use .example.com or *.example.com",
+        "MatomoConfigurationMatomoSetDownloadClassesTitle": "Set Download Classes",
+        "MatomoConfigurationMatomoSetDownloadClassesDescription": "Set classes to be treated as downloads (in addition to matomo_download)",
+        "MatomoConfigurationMatomoSetLinkClassesTitle": "Set Link Classes",
+        "MatomoConfigurationMatomoSetLinkClassesDescription": "Set classes to be treated as outlinks (in addition to piwik_link). Example class1 or class1,class2",
+        "MatomoConfigurationMatomoSetCampaignNameKeyTitle": "Set campaign name key",
+        "MatomoConfigurationMatomoSetCampaignNameKeyDescription": "Set campaign name parameter(s).",
+        "MatomoConfigurationMatomoSetCampaignKeywordKeyTitle": "Set campaign keyword name key",
+        "MatomoConfigurationMatomoSetCampaignKeywordKeyDescription": "Set campaign keyword parameter(s)."
     }
 }
