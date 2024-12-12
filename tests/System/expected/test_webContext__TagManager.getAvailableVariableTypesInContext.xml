@@ -873,7 +873,7 @@
 				<contexts>
 					<row>web</row>
 				</contexts>
-				<hasAdvancedSettings>0</hasAdvancedSettings>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
 				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
