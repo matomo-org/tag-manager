@@ -1657,7 +1657,299 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Can be set to a variable of type "Custom Request Processing Function" to augment or override default request sending behaviour.</description>
+						<description>Can be set to a variable of type &quot;Custom Request Processing Function&quot; to augment or override default request sending behaviour.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>customData</name>
+						<title>Custom Data</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<rows>1</rows>
+							<showAdvancedSettings>1</showAdvancedSettings>
+							<field1>
+								<key>name</key>
+								<title>Name</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally set custom data in your tracking request.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setDownloadExtensions</name>
+						<title>Set Download Extensions</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set a list of file extensions to be recognized as downloads. Example: doc or doc,xls</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>addDownloadExtensions</name>
+						<title>Add Download Extensions</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Specify additional file extensions to be recognized as downloads. Example: doc or doc,xls</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>removeDownloadExtensions</name>
+						<title>Remove Download Extensions</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Specify file extensions to be removed from the list of download file extensions. Example: doc or doc,xls</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setIgnoreClasses</name>
+						<title>Set Ignore Classes</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set classes to be ignored if present in link (in addition to matomo_ignore and piwik_ignore). Example classA or classA,classB</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setReferrerUrl</name>
+						<title>Set Referrer URL</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Override the detected Http-Referer. We recommend you call this method early in your tracking code before you call trackPageView if it should be applied to all tracking requests.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setApiUrl</name>
+						<title>Set API URL</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Specify the Matomo HTTP API URL endpoint. Points to the root directory of piwik, e.g. https://matomo.example.org/ or https://example.org/matomo/. This function is only useful when the 'Overlay' report is not working. By default, you do not need to use this function.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setPageViewId</name>
+						<title>Set Pageview ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Override PageView id for every use of logPageView(). Do not use this if you call trackPageView() multiple times during tracking (e.g. when tracking a single page application).</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setExcludedReferrers</name>
+						<title>Set Excluded Referrer</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set array of hostnames or domains that should be ignored as referrers. For wildcard subdomains, you can use .example.com or *.example.com</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setDownloadClasses</name>
+						<title>Set Download Classes</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set classes to be treated as downloads (in addition to matomo_download)</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setLinkClasses</name>
+						<title>Set Link Classes</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set classes to be treated as outlinks (in addition to piwik_link). Example class1 or class1,class2</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setCampaignNameKey</name>
+						<title>Set campaign name key</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set campaign name parameter(s).</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setCampaignKeywordKey</name>
+						<title>Set campaign keyword name key</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set campaign keyword parameter(s).</description>
 						<inlineHelp />
 						<introduction />
 						<condition />

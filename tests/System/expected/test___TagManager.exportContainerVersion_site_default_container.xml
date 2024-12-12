@@ -134,6 +134,20 @@
 				<requestMethod>GET</requestMethod>
 				<requestContentType>application/x-www-form-urlencoded; charset=UTF-8</requestContentType>
 				<customRequestProcessing />
+				<customData>
+				</customData>
+				<setDownloadExtensions />
+				<addDownloadExtensions />
+				<removeDownloadExtensions />
+				<setIgnoreClasses />
+				<setReferrerUrl />
+				<setApiUrl />
+				<setPageViewId />
+				<setExcludedReferrers />
+				<setDownloadClasses />
+				<setLinkClasses />
+				<setCampaignNameKey />
+				<setCampaignKeywordKey />
 			</parameters>
 			<lookup_table>
 			</lookup_table>
