@@ -34,7 +34,7 @@
                 :inline-help-bind="{ lastVersion }"
                 :model-value="version.name"
                 @update:model-value="version.name = $event; setValueHasChanged()"
-                :maxlength="30"
+                :maxlength="50"
                 :title="translate('TagManager_VersionName')"
                 :placeholder="translate('TagManager_VersionNamePlaceholder')"
               />

@@ -508,6 +508,7 @@
         "LastUpdated": "Zuletzt aktualisiert",
         "LastVersions": "Letzte Versionen",
         "LearnMore": "Mehr dazu",
+        "LearnMoreFullStop": "%1$sErfahren Sie mehr%2$s.",
         "LinkedinInsightTagDescription": "Fügt den LinkedIn Insight Tag hinzu, damit Sie Konversions-Tracking für Ihre LinkedIn Werbekampagne einsetzen können.",
         "LinkedinInsightTagHelp": "Der Tag wird detaillierte Kampagnenberichte und -informationen über Ihre Webseitenbesucher in LinkedIn aktivieren. Es erlaubt Ihnen Konversionen und umgeleitete Webseitenbesuche zu tracken, und zusätzliche interne Informationen über LinkedIn Mitglieder zu gewinnen, welche mit Ihrer LinkedIn Werbung interagieren.",
         "LinkedinInsightTagName": "LinkedIn Insight-Tag",

@@ -138,7 +138,7 @@
         "Created": "Créé(e)",
         "CreatedDate": "Date de création",
         "CreatedOnX": "Créée le \"%s\"",
-        "CreatedX": "Fantastique ! %sa été créée avec succès.",
+        "CreatedX": "Fantastique ! %s a été créé avec succès.",
         "CurrentTimeInLocalTimezone": "Votre temps local est %1$s%2$s%3$s.",
         "CustomEventTriggerDescription": "Déclenché lorsqu'un évènement personnalisé est envoyé à la couche de données.",
         "CustomEventTriggerHelp": "Permet aux développeurs de définir manuellement quand ce déclencheur devrait être déclenché en envoyant un évènement à la couche de données. De cette manière vous pouvez par exemple exécuter certaines actions quand un produit est ajouté au panier ou lorsqu'un utilisateur s'identifie.",
