@@ -87,7 +87,10 @@ abstract class BaseContext
 
         $idSite = $container['idsite'];
         $idContainer = $container['idcontainer'];
-        $isTagFireLimitAllowedInPreviewMode = $container['isTagFireLimitAllowedInPreviewMode'] ? 1 : 0;
+        $isTagFireLimitAllowedInPreviewMode = 0;
+        if (isset($container['isTagFireLimitAllowedInPreviewMode'])) {
+          $isTagFireLimitAllowedInPreviewMode = $container['isTagFireLimitAllowedInPreviewMode'] ? 1 : 0;
+        }
         $idContainerVersion = $release['idcontainerversion'];
         $container['idcontainerversion'] = $idContainerVersion;
         $environment = $release['environment'];
