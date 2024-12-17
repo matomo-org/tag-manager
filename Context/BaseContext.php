@@ -89,7 +89,7 @@ abstract class BaseContext
         $idContainer = $container['idcontainer'];
         $isTagFireLimitAllowedInPreviewMode = 0;
         if (isset($container['isTagFireLimitAllowedInPreviewMode'])) {
-          $isTagFireLimitAllowedInPreviewMode = $container['isTagFireLimitAllowedInPreviewMode'] ? 1 : 0;
+            $isTagFireLimitAllowedInPreviewMode = $container['isTagFireLimitAllowedInPreviewMode'] ? 1 : 0;
         }
         $idContainerVersion = $release['idcontainerversion'];
         $container['idcontainerversion'] = $idContainerVersion;
