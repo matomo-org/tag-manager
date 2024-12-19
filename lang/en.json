@@ -1113,6 +1113,7 @@
         "CopyContainerNote": "%1$sNote:%2$s The copied container may need adjustments if it includes custom code or references specific to the original website. Review settings to ensure compatibility.",
         "CopyXDescription": "To duplicate this %1$s, select the website and container you’d like to add the %1$s to. This will create an exact copy of all settings of the %1$s.",
         "CopyXSuccess": "A copy was successfully created. %1$sNavigate to the new %2$s now%3$s.",
-        "LearnMoreFullStop": "%1$sLearn more%2$s."
+        "LearnMoreFullStop": "%1$sLearn more%2$s.",
+        "CustomHTMLTagNameInlineHelpText": "%1$sNote:%2$s If you are targeting users in Europe, be aware that triggering retargeting tags like Google Ads Remarketing requires user consent under GDPR. %3$sLearn more%4$s."
     }
 }

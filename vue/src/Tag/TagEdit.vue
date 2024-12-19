@@ -44,7 +44,7 @@
               @update:model-value="tag.name = $event; setValueHasChanged()"
               :maxlength="255"
               :title="translate('General_Name')"
-              :inline-help="translate('TagManager_TagNameHelpV2')"
+              :inline-help="tagNameHelpText"
               :placeholder="translate('TagManager_TagNamePlaceholder')"
             />
           </div>
@@ -336,7 +336,7 @@ import {
   NotificationsStore,
   NotificationType,
   clone,
-  MatomoUrl,
+  MatomoUrl, externalLink,
 } from 'CoreHome';
 import { Field, SaveButton, GroupedSettings } from 'CorePluginsAdmin';
 import AvailableFireLimitsStore from '../AvailableFireLimit.store';
@@ -830,6 +830,18 @@ export default defineComponent({
         translate('TagManager_Once24Hours'),
         translate('TagManager_OnceLifetime'),
       );
+    },
+    tagNameHelpText() {
+      let additionalHelpText = '';
+      console.log(this.tag);
+      if (this.tag.type === 'CustomHtml') {
+        additionalHelpText = translate('TagManager_CustomHTMLTagNameInlineHelpText',
+          '<br><br><strong>',
+          '</strong>',
+          externalLink('https://matomo.org/faq/tag-manager/how-to-add-google-ads-remarketing-tags-in-matomo-tag-manager/'),
+          '</a>');
+      }
+      return translate('TagManager_TagNameHelpV2') + additionalHelpText;
     },
   },
 });
