@@ -71,6 +71,10 @@ class Updates_5_2_1_b1 extends PiwikUpdates
         $migrator->addField('setLinkClasses', '');
         $migrator->addField('setCampaignNameKey', '');
         $migrator->addField('setCampaignKeywordKey', '');
+        $migrator->addField('setConsentGiven', '');
+        $migrator->addField('rememberConsentGiven', '');
+        $migrator->addField('rememberConsentGivenForHours', '');
+        $migrator->addField('forgetConsentGiven', '');
         $migrator->migrate();
     }
 }

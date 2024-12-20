@@ -386,6 +386,22 @@
                     if (matomoConfig.setCampaignKeywordKey) {
                         tracker.setCampaignKeywordKey(matomoConfig.setCampaignKeywordKey);
                     }
+
+                    if (matomoConfig.setConsentGiven) {
+                        tracker.setConsentGiven();
+                    }
+
+                    if (matomoConfig.rememberConsentGiven) {
+                        if (matomoConfig.rememberConsentGivenForHours) {
+                            tracker.rememberConsentGiven(matomoConfig.rememberConsentGivenForHours);
+                        } else {
+                            tracker.rememberConsentGiven();
+                        }
+                    }
+
+                    if (matomoConfig.forgetConsentGiven) {
+                        tracker.forgetConsentGiven();
+                    }
                 }
             });
 

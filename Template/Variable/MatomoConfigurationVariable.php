@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Common;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Validators\Numeric;
 use Piwik\Settings\FieldConfig;
 use Piwik\SettingsPiwik;
 use Piwik\Site;
@@ -556,6 +557,46 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetCampaignKeywordKeyTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetCampaignKeywordKeyDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setConsentGiven', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetConsentGiveTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetConsentGiveDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('rememberConsentGiven', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRememberConsentGivenTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRememberConsentGivenDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('rememberConsentGivenForHours', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRememberConsentGivenForHoursTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRememberConsentGivenForHoursDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+                $field->validate = function ($value) {
+                    if ($value && !is_numeric($value)) {
+                        throw new \Exception(
+                            rtrim(Piwik::translate('TagManager_MatomoConfigurationMatomoRememberConsentGivenForHoursTitle'), '.') . ': ' .
+                            Piwik::translate('TagManager_MatomoConfigurationNonNumericValueException')
+                        );
+                    }
+                };
+            }),
+            $this->makeSetting('forgetConsentGiven', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoForgetConsentGivenTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoForgetConsentGivenDescription');
                 $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
                 $field->transform = function ($value) {
                     return trim($value);
