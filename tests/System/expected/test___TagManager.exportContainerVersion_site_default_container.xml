@@ -148,6 +148,10 @@
 				<setLinkClasses />
 				<setCampaignNameKey />
 				<setCampaignKeywordKey />
+				<setConsentGiven>0</setConsentGiven>
+				<rememberConsentGiven>0</rememberConsentGiven>
+				<rememberConsentGivenForHours />
+				<forgetConsentGiven>0</forgetConsentGiven>
 			</parameters>
 			<lookup_table>
 			</lookup_table>

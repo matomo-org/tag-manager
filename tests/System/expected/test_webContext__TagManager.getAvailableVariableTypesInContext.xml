@@ -1959,6 +1959,74 @@
 							<name>FieldVariableTemplate</name>
 						</component>
 					</row>
+					<row>
+						<name>setConsentGiven</name>
+						<title>Set consent given.</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Mark that the current user has consented. The consent is one-time only, so in a subsequent browser session, the user will have to consent again. To remember consent, see the Remember consent given option below.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>rememberConsentGiven</name>
+						<title>Remember consent given.</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Mark that the current user has consented, and remembers this consent through a browser cookie. The next time the user visits the site, Matomo will remember that they consented, and track them. If you enable this option, you do not need to enable Set consent given option.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>rememberConsentGivenForHours</name>
+						<title>Expire consent.</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally set after how many hours the consent should expire. By default the consent is valid for 30 years unless cookies are deleted by the user or the browser prior to this.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>forgetConsentGiven</name>
+						<title>Forget consent given.</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Remove a user's consent, both if the consent was one-time only and if the consent was remembered. After calling this method, the user will have to consent again in order to be tracked.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
 				</parameters>
 			</row>
 		</types>

@@ -11,7 +11,6 @@ namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Common;
 use Piwik\Piwik;
-use Piwik\Plugins\TagManager\Validators\Numeric;
 use Piwik\Settings\FieldConfig;
 use Piwik\SettingsPiwik;
 use Piwik\Site;
