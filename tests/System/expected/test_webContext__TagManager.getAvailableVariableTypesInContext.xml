@@ -599,7 +599,7 @@
 			<row>
 				<id>EtrackerConfiguration</id>
 				<name>EtrackerConfiguration</name>
-				<description />
+				<description>Defines the configuration for eTracker Analytics to optimise data collection.</description>
 				<category>Others</category>
 				<icon>plugins/TagManager/images/icons/etracker.svg</icon>
 				<help />

@@ -400,6 +400,7 @@
         "EtrackerConfigurationVariableTValTitle": "Μεταβλητή et_tval",
         "EtrackerConfigurationVariableTargetTitle": "Μεταβλητή et_target",
         "EtrackerConfigurationVariableTonrTitle": "Μεταβλητή et_tonr",
+        "EtrackerMainVariableDescription": "Καθορίζει την παραμετροποίηση για το eTracker Analytics για την βελτιστοποίηση της συλλογής δεδομένων.",
         "EtrackerTagAddToCartNumberDescription": "Αριθμός προϊόντων που προστέθηκαν στο καλάθι",
         "EtrackerTagAddToCartNumberTitle": "Αριθμός",
         "EtrackerTagAddToCartProductDescription": "αντικείμενο dataLayer του προϊόντος - σύμφωνα με την παραπομπή etracker",

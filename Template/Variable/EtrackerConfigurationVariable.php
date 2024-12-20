@@ -22,6 +22,11 @@ class EtrackerConfigurationVariable extends BaseVariable
         return self::ID;
     }
 
+    public function getDescription()
+    {
+        return Piwik::translate('TagManager_EtrackerMainVariableDescription');
+    }
+
     public function getCategory()
     {
         return self::CATEGORY_OTHERS;

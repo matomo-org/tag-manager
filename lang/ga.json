@@ -396,6 +396,7 @@
         "EtrackerConfigurationVariableTValTitle": "Athróg et_tval",
         "EtrackerConfigurationVariableTargetTitle": "Athróg et_target",
         "EtrackerConfigurationVariableTonrTitle": "Athróg et_tonr",
+        "EtrackerMainVariableDescription": "Sainmhíníonn sé an chumraíocht le haghaidh eTracker Analytics chun bailiú sonraí a bharrfheabhsú.",
         "EtrackerTagAddToCartNumberDescription": "Líon na dtáirgí a cuireadh leis an tralaí",
         "EtrackerTagAddToCartNumberTitle": "Uimhir",
         "EtrackerTagAddToCartProductDescription": "réad dataLayer an táirge - de réir tagartha etracker",

@@ -894,7 +894,7 @@
 			<row>
 				<id>Etracker</id>
 				<name>etracker web analysis</name>
-				<description>Defines the configuration for eTracker Analytics to optimise data collection.</description>
+				<description>etracker is a web analytics system, you can choose to send a pageview or an event.</description>
 				<category>Analytics</category>
 				<icon>plugins/TagManager/images/icons/etracker.svg</icon>
 				<help>The etracker tag tracks and sends data on user interactions for pageviews or specific events.</help>

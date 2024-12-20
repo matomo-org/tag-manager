@@ -13,7 +13,7 @@ class FormElement extends BaseDataLayerVariable
 {
     public function getCategory()
     {
-        return self::CATEGORY_CLICKS;
+        return self::CATEGORY_FORMS;
     }
 
     protected function getDataLayerVariableName()

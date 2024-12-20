@@ -395,6 +395,7 @@
         "EtrackerConfigurationVariableTValTitle": "Ndryshore et_tval",
         "EtrackerConfigurationVariableTargetTitle": "Ndryshore et_target",
         "EtrackerConfigurationVariableTonrTitle": "Ndryshore et_tonr",
+        "EtrackerMainVariableDescription": "Përcakton formësimin për eTracker Analytics, për të ta bërë optimal grumbullimin e të dhënave.",
         "EtrackerTagAddToCartNumberDescription": "Numër produktesh të shtuar te shporta",
         "EtrackerTagAddToCartNumberTitle": "Numër",
         "EtrackerTagAddToCartProductDescription": "Objekt dataLayer i produktit - sipas referencës etracker",
