@@ -198,6 +198,7 @@
         "CustomEventTriggerEventNameDescription": "Ainm an imeachta a bhrúitear chuig an gCiseal Sonraí. Mar shampla is féidir leat imeacht a bhrú trí é seo a chur le do shuíomh Gréasáin: _mtm.push({\"imeacht\": \"my-custom-event\"});",
         "CustomEventTriggerHelp": "Ligeann sé d’fhorbróirí a shainiú de láimh cén uair ba cheart an truicear seo a chur i ngníomh trí imeacht a bhrú chuig an gCiseal Sonraí. Ar an mbealach seo is féidir leat, mar shampla, gníomhartha áirithe a dhéanamh nuair a chuirtear táirge leis an tralaí, nó nuair a logálann úsáideoir isteach.",
         "CustomEventTriggerName": "Ócáid Chustaim",
+        "CustomHTMLTagNameInlineHelpText": "%1$sNóta:%2$s Má tá tú ag díriú ar úsáideoirí san Eoraip, tabhair faoi deara go dteastaíonn toiliú faoin GDPR chun athspriocdhíriú a dhéanamh ar chlibeanna ar nós Google Ads Remarketing. %3$sFoghlaim tuilleadh %4$s.",
         "CustomHtmlHtmlPositionDescription": "Sainmhínigh an áit ar cheart an HTML a chur isteach i do shuíomh Gréasáin.",
         "CustomHtmlHtmlPositionTitle": "Post",
         "CustomHtmlTagDescription": "Ligeann sé duit aon HTML saincheaptha a leabú, mar shampla JavaScript nó Stíleanna CSS.",
