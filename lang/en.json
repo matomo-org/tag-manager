@@ -1141,14 +1141,18 @@
         "MatomoConfigurationMatomoSetCampaignNameKeyDescription": "Set campaign name parameter(s).",
         "MatomoConfigurationMatomoSetCampaignKeywordKeyTitle": "Set campaign keyword name key",
         "MatomoConfigurationMatomoSetCampaignKeywordKeyDescription": "Set campaign keyword parameter(s).",
-        "MatomoConfigurationMatomoSetConsentGiveTitle": "Set consent given.",
+        "MatomoConfigurationMatomoSetConsentGiveTitle": "Set consent given",
         "MatomoConfigurationMatomoSetConsentGiveDescription": "Mark that the current user has consented. The consent is one-time only, so in a subsequent browser session, the user will have to consent again. To remember consent, see the Remember consent given option below.",
-        "MatomoConfigurationMatomoRememberConsentGivenTitle": "Remember consent given.",
+        "MatomoConfigurationMatomoRememberConsentGivenTitle": "Remember consent given",
         "MatomoConfigurationMatomoRememberConsentGivenDescription": "Mark that the current user has consented, and remembers this consent through a browser cookie. The next time the user visits the site, Matomo will remember that they consented, and track them. If you enable this option, you do not need to enable Set consent given option.",
-        "MatomoConfigurationMatomoRememberConsentGivenForHoursTitle": "Expire consent.",
+        "MatomoConfigurationMatomoRememberConsentGivenForHoursTitle": "Expire consent",
         "MatomoConfigurationMatomoRememberConsentGivenForHoursDescription": "Optionally set after how many hours the consent should expire. By default the consent is valid for 30 years unless cookies are deleted by the user or the browser prior to this.",
         "MatomoConfigurationNonNumericValueException": "Invalid value, only numeric values are allowed.",
-        "MatomoConfigurationMatomoForgetConsentGivenTitle": "Forget consent given.",
-        "MatomoConfigurationMatomoForgetConsentGivenDescription": "Remove a user's consent, both if the consent was one-time only and if the consent was remembered. After calling this method, the user will have to consent again in order to be tracked."
+        "MatomoConfigurationMatomoForgetConsentGivenTitle": "Forget consent given",
+        "MatomoConfigurationMatomoForgetConsentGivenDescription": "Remove a user's consent, both if the consent was one-time only and if the consent was remembered. After calling this method, the user will have to consent again in order to be tracked.",
+        "MatomoConfigurationMatomoDiscardHashTagTitle": "Discard HashTag",
+        "MatomoConfigurationMatomoDiscardHashTagDescription": "If enabled, it will not record the hash tag (anchor) portion of URLs.",
+        "MatomoConfigurationMatomoSetExcludedQueryParamsTitle": "Set query params to exclude from URL.",
+        "MatomoConfigurationMatomoSetExcludedQueryParamsDescription": "Set query params to exclude from URL. Example uuid or uuid1,uuid2"
     }
 }

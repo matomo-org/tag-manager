@@ -1961,7 +1961,7 @@
 					</row>
 					<row>
 						<name>setConsentGiven</name>
-						<title>Set consent given.</title>
+						<title>Set consent given</title>
 						<value>0</value>
 						<defaultValue>0</defaultValue>
 						<type>boolean</type>
@@ -1978,7 +1978,7 @@
 					</row>
 					<row>
 						<name>rememberConsentGiven</name>
-						<title>Remember consent given.</title>
+						<title>Remember consent given</title>
 						<value>0</value>
 						<defaultValue>0</defaultValue>
 						<type>boolean</type>
@@ -1995,7 +1995,7 @@
 					</row>
 					<row>
 						<name>rememberConsentGivenForHours</name>
-						<title>Expire consent.</title>
+						<title>Expire consent</title>
 						<value />
 						<defaultValue />
 						<type>string</type>
@@ -2012,7 +2012,7 @@
 					</row>
 					<row>
 						<name>forgetConsentGiven</name>
-						<title>Forget consent given.</title>
+						<title>Forget consent given</title>
 						<value>0</value>
 						<defaultValue>0</defaultValue>
 						<type>boolean</type>
@@ -2026,6 +2026,44 @@
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>discardHashTag</name>
+						<title>Discard HashTag</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>If enabled, it will not record the hash tag (anchor) portion of URLs.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setExcludedQueryParams</name>
+						<title>Set query params to exclude from URL.</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set query params to exclude from URL. Example uuid or uuid1,uuid2</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 				</parameters>
 			</row>

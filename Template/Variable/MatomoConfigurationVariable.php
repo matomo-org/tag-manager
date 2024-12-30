@@ -601,6 +601,23 @@ class MatomoConfigurationVariable extends BaseVariable
                     return trim($value);
                 };
             }),
+            $this->makeSetting('discardHashTag', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDiscardHashTagTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDiscardHashTagDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setExcludedQueryParams', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetExcludedQueryParamsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetExcludedQueryParamsDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
         );
 
         $pluginParameters = [];

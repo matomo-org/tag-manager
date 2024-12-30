@@ -152,6 +152,8 @@
 				<rememberConsentGiven>0</rememberConsentGiven>
 				<rememberConsentGivenForHours />
 				<forgetConsentGiven>0</forgetConsentGiven>
+				<discardHashTag>0</discardHashTag>
+				<setExcludedQueryParams />
 			</parameters>
 			<lookup_table>
 			</lookup_table>

@@ -402,6 +402,14 @@
                     if (matomoConfig.forgetConsentGiven) {
                         tracker.forgetConsentGiven();
                     }
+
+                    if (matomoConfig.discardHashTag) {
+                        tracker.discardHashTag(true);
+                    }
+
+                    if (matomoConfig.setExcludedQueryParams) {
+                        tracker.setExcludedQueryParams(matomoConfig.setExcludedQueryParams.split(','));
+                    }
                 }
             });
 
