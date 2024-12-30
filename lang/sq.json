@@ -193,6 +193,7 @@
         "CustomEventTriggerEventNameDescription": "Emër akti që është kaluar te Data-Layer. Për shembull, mund të kaloni një akt duke shtuar këtë te sajti juaj: _mtm.push({\"event\": \"my-custom-event\"});",
         "CustomEventTriggerHelp": "U lejon zhvilluesve të përkufizojnë dorazi kur duhet vënë në punë një shkaktues duke e kaluar një akt te Data-Layer. Në këtë mënyrë mundeni, për shembull, të kryeni disa veprime kur shtohet një produkt në shportë, ose kur një përdorues hyn në llogarinë e vet.",
         "CustomEventTriggerName": "Akt Vetjak",
+        "CustomHTMLTagNameInlineHelpText": "%1$sShënim:%2$s Nëse synoni përdorues në Evropë, kini parasysh se shkaktimi i vënies në punë të etiketave retargeting, të tilla si Google Ads Remarketing lyp pranim nga përdoruesi, sipas GDPR-së. %3$sMësoni më tepër%4$s.",
         "CustomHtmlHtmlPositionDescription": "Përcaktoni pozicionin se ku duhet futur HTML-ja te sajti juaj.",
         "CustomHtmlHtmlPositionTitle": "Pozicion",
         "CustomHtmlTagDescription": "Ju lejon të trupëzoni çfarëdo HTML-je vetjake, për shembull JavaScript ose Stile CSS.",
