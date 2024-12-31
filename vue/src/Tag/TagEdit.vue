@@ -293,6 +293,7 @@
             :key="index"
             class="collection-item avatar"
             @click="createTagType(tagTemplate)"
+            v-show="isTagHidden(tagTemplate.id)"
             :class="{
             disabledTemplate: isTagTemplateDisabled[tagTemplate.id],
             [`templateType${ tagTemplate.id}`]: true,
@@ -783,6 +784,13 @@ export default defineComponent({
     },
     hasPublishCapability() {
       return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
+    isTagHidden(id: string) {
+      if (this.create && id === 'GoogleAnalytics4') {
+        return false;
+      }
+
+      return true;
     },
   },
   computed: {
