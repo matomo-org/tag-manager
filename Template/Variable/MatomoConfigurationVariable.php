@@ -618,6 +618,56 @@ class MatomoConfigurationVariable extends BaseVariable
                     return trim($value);
                 };
             }),
+            $this->makeSetting('setConversionAttributionFirstReferrer', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetConversionAttributionTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetConversionAttributionDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setDoNotTrack', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetDoNotTrackTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetDoNotTrackDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setLinkTrackingTimer', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetLinkTrackingTimerTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetLinkTrackingTimerDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('killFrame', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoKillFrameTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoKillFrameDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setCountPreRendered', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetCountPreRenderedTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetCountPreRenderedDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setRequestQueueInterval', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetRequestQueueIntervalTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetRequestQueueIntervalDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
         );
 
         $pluginParameters = [];

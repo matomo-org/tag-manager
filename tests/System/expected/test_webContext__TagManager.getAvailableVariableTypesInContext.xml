@@ -2065,6 +2065,116 @@
 							<name>FieldVariableTemplate</name>
 						</component>
 					</row>
+					<row>
+						<name>setConversionAttributionFirstReferrer</name>
+						<title>Set conversion attribution to first referrer</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>If enabled, conversion will be attributed to first referred. By default, conversion is attributed to the most recent referrer.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setDoNotTrack</name>
+						<title>Set do not track</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>If enabled, it will not track users who opt out of tracking using Mozilla's (proposed) Do Not Track setting.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setLinkTrackingTimer</name>
+						<title>Set link tracking timer</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set delay for link tracking in milliseconds.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>killFrame</name>
+						<title>Enable kill frame</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enable a frame-buster to prevent the tracked web page from being framed/iframed.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setCountPreRendered</name>
+						<title>Enable count sites in pre-rendered state</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>If enabled, it will count sites in pre-rendered state.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setRequestQueueInterval</name>
+						<title>Set Request Queue Interval</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Defines after how many ms a queued requests will be executed after the request was queued initially. The higher the value the more tracking requests can be sent together at once. interval has to be at least 1000 (1000ms = 1s) and defaults to 2.5 seconds.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
 				</parameters>
 			</row>
 		</types>

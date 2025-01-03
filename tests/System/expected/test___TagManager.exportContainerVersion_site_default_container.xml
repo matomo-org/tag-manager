@@ -154,6 +154,12 @@
 				<forgetConsentGiven>0</forgetConsentGiven>
 				<discardHashTag>0</discardHashTag>
 				<setExcludedQueryParams />
+				<setConversionAttributionFirstReferrer>0</setConversionAttributionFirstReferrer>
+				<setDoNotTrack>0</setDoNotTrack>
+				<setLinkTrackingTimer />
+				<killFrame>0</killFrame>
+				<setCountPreRendered>0</setCountPreRendered>
+				<setRequestQueueInterval />
 			</parameters>
 			<lookup_table>
 			</lookup_table>

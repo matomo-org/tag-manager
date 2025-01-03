@@ -410,6 +410,30 @@
                     if (matomoConfig.setExcludedQueryParams) {
                         tracker.setExcludedQueryParams(matomoConfig.setExcludedQueryParams.split(','));
                     }
+
+                    if (matomoConfig.setConversionAttributionFirstReferrer) {
+                        tracker.setConversionAttributionFirstReferrer(true);
+                    }
+
+                    if (matomoConfig.setDoNotTrack) {
+                        tracker.setDoNotTrack(true);
+                    }
+
+                    if (matomoConfig.setLinkTrackingTimer) {
+                        tracker.setLinkTrackingTimer(matomoConfig.setLinkTrackingTimer);
+                    }
+
+                    if (matomoConfig.killFrame) {
+                        tracker.killFrame();
+                    }
+
+                    if (matomoConfig.setCountPreRendered) {
+                        tracker.setCountPreRendered(true);
+                    }
+
+                    if (matomoConfig.setRequestQueueInterval) {
+                        tracker.setRequestQueueInterval(matomoConfig.setRequestQueueInterval);
+                    }
                 }
             });
 

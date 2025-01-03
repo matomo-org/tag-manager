@@ -1153,6 +1153,18 @@
         "MatomoConfigurationMatomoDiscardHashTagTitle": "Discard HashTag",
         "MatomoConfigurationMatomoDiscardHashTagDescription": "If enabled, it will not record the hash tag (anchor) portion of URLs.",
         "MatomoConfigurationMatomoSetExcludedQueryParamsTitle": "Set query params to exclude from URL.",
-        "MatomoConfigurationMatomoSetExcludedQueryParamsDescription": "Set query params to exclude from URL. Example uuid or uuid1,uuid2"
+        "MatomoConfigurationMatomoSetExcludedQueryParamsDescription": "Set query params to exclude from URL. Example uuid or uuid1,uuid2",
+        "MatomoConfigurationMatomoSetConversionAttributionTitle": "Set conversion attribution to first referrer",
+        "MatomoConfigurationMatomoSetConversionAttributionDescription": "If enabled, conversion will be attributed to first referred. By default, conversion is attributed to the most recent referrer.",
+        "MatomoConfigurationMatomoSetDoNotTrackTitle": "Set do not track",
+        "MatomoConfigurationMatomoSetDoNotTrackDescription": "If enabled, it will not track users who opt out of tracking using Mozilla's (proposed) Do Not Track setting.",
+        "MatomoConfigurationMatomoSetLinkTrackingTimerTitle": "Set link tracking timer",
+        "MatomoConfigurationMatomoSetLinkTrackingTimerDescription": "Set delay for link tracking in milliseconds.",
+        "MatomoConfigurationMatomoKillFrameTitle": "Enable kill frame",
+        "MatomoConfigurationMatomoKillFrameDescription" : "Enable a frame-buster to prevent the tracked web page from being framed/iframed.",
+        "MatomoConfigurationMatomoSetCountPreRenderedTitle": "Enable count sites in pre-rendered state",
+        "MatomoConfigurationMatomoSetCountPreRenderedDescription": "If enabled, it will count sites in pre-rendered state.",
+        "MatomoConfigurationMatomoSetRequestQueueIntervalTitle": "Set Request Queue Interval",
+        "MatomoConfigurationMatomoSetRequestQueueIntervalDescription": "Defines after how many ms a queued requests will be executed after the request was queued initially. The higher the value the more tracking requests can be sent together at once. interval has to be at least 1000 (1000ms = 1s) and defaults to 2.5 seconds."
     }
 }
