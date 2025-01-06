@@ -134,6 +134,32 @@
 				<requestMethod>GET</requestMethod>
 				<requestContentType>application/x-www-form-urlencoded; charset=UTF-8</requestContentType>
 				<customRequestProcessing />
+				<customData>
+				</customData>
+				<setDownloadExtensions />
+				<addDownloadExtensions />
+				<removeDownloadExtensions />
+				<setIgnoreClasses />
+				<setReferrerUrl />
+				<setApiUrl />
+				<setPageViewId />
+				<setExcludedReferrers />
+				<setDownloadClasses />
+				<setLinkClasses />
+				<setCampaignNameKey />
+				<setCampaignKeywordKey />
+				<setConsentGiven>0</setConsentGiven>
+				<rememberConsentGiven>0</rememberConsentGiven>
+				<rememberConsentGivenForHours />
+				<forgetConsentGiven>0</forgetConsentGiven>
+				<discardHashTag>0</discardHashTag>
+				<setExcludedQueryParams />
+				<setConversionAttributionFirstReferrer>0</setConversionAttributionFirstReferrer>
+				<setDoNotTrack>0</setDoNotTrack>
+				<setLinkTrackingTimer />
+				<killFrame>0</killFrame>
+				<setCountPreRendered>0</setCountPreRendered>
+				<setRequestQueueInterval />
 			</parameters>
 			<lookup_table>
 			</lookup_table>

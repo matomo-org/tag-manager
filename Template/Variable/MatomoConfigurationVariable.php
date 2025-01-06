@@ -42,7 +42,7 @@ class MatomoConfigurationVariable extends BaseVariable
 
     public function hasAdvancedSettings()
     {
-        return false;
+        return true;
     }
 
     public function getParameters()
@@ -431,6 +431,243 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validators[] = new CustomRequestProcessing($idSite, $idContainer);
             }),
+            $this->makeSetting('customData', array(), FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDataTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDataDescription');
+                $field->validate = function ($value) {
+                    if (empty($value)) {
+                        return;
+                    }
+                    if (!is_array($value)) {
+                        throw new \Exception(Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsException'));
+                    }
+                };
+
+                $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
+                $field->uiControlAttributes['rows'] = 1;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field1 = new FieldConfig\MultiPair('Name', 'name', FieldConfig::UI_CONTROL_TEXT);
+                $field1->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field2 = new FieldConfig\MultiPair('Value', 'value', FieldConfig::UI_CONTROL_TEXT);
+                $field2->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['field1'] = $field1->toArray();
+                $field->uiControlAttributes['field2'] = $field2->toArray();
+            }),
+            $this->makeSetting('setDownloadExtensions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetDownloadExtensionsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetDownloadExtensionsDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('addDownloadExtensions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoAddDownloadExtensionsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoAddDownloadExtensionsDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('removeDownloadExtensions', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRemoveDownloadExtensionsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRemoveDownloadExtensionsDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setIgnoreClasses', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetIgnoreClassesTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetIgnoreClassesDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setReferrerUrl', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetReferrerUrlTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetReferrerUrlDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setApiUrl', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetApiUrlTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetApiUrlDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setPageViewId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetPageViewIdTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetPageViewIdDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setExcludedReferrers', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetExcludedReferrersTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetExcludedReferrersDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setDownloadClasses', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetDownloadClassesTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetDownloadClassesDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setLinkClasses', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetLinkClassesTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetLinkClassesDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setCampaignNameKey', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetCampaignNameKeyTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetCampaignNameKeyDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setCampaignKeywordKey', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetCampaignKeywordKeyTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetCampaignKeywordKeyDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setConsentGiven', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetConsentGiveTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetConsentGiveDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('rememberConsentGiven', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRememberConsentGivenTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRememberConsentGivenDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('rememberConsentGivenForHours', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRememberConsentGivenForHoursTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRememberConsentGivenForHoursDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+                $field->validate = function ($value) {
+                    if ($value && !is_numeric($value)) {
+                        throw new \Exception(
+                            rtrim(Piwik::translate('TagManager_MatomoConfigurationMatomoRememberConsentGivenForHoursTitle'), '.') . ': ' .
+                            Piwik::translate('TagManager_MatomoConfigurationNonNumericValueException')
+                        );
+                    }
+                };
+            }),
+            $this->makeSetting('forgetConsentGiven', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoForgetConsentGivenTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoForgetConsentGivenDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('discardHashTag', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDiscardHashTagTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDiscardHashTagDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setExcludedQueryParams', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetExcludedQueryParamsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetExcludedQueryParamsDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setConversionAttributionFirstReferrer', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetConversionAttributionTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetConversionAttributionDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setDoNotTrack', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetDoNotTrackTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetDoNotTrackDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setLinkTrackingTimer', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetLinkTrackingTimerTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetLinkTrackingTimerDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('killFrame', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoKillFrameTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoKillFrameDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setCountPreRendered', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetCountPreRenderedTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetCountPreRenderedDescription');
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('setRequestQueueInterval', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoSetRequestQueueIntervalTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoSetRequestQueueIntervalDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['showAdvancedSettings'] = 1; // This is used to hide/show this option under Advanced settings
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
         );
 
         $pluginParameters = [];
@@ -450,9 +687,7 @@ class MatomoConfigurationVariable extends BaseVariable
             });
         }
 
-        $parameters = $this->insertPluginParameters($pluginParameters, $parameters, $insertAfter = 'enableLinkTracking');
-
-        return $parameters;
+        return $this->insertPluginParameters($pluginParameters, $parameters, $insertAfter = 'enableLinkTracking');
     }
 
     private function insertPluginParameters($pluginParameters, $parameters, $insertAfter)
