@@ -28,7 +28,7 @@ class GoogleAnalytics4EventTag extends BaseTag
         // By default, the description will be automatically fetched from the TagManager_CustomHtmlTagDescription
         // translation key. you can either adjust/create/remove this translation key, or return a different value
         // here directly.
-        return parent::getDescription();
+        return Piwik::translate('TagManager_GoogleAnalytics4EventTagDescriptionNew');
     }
 
     public function getHelp()
