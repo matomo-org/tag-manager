@@ -8,8 +8,6 @@
 import {
   reactive,
   computed,
-  readonly,
-  DeepReadonly,
 } from 'vue';
 import { AjaxHelper } from 'CoreHome';
 import { Variable, VariableCategory } from '../types';
@@ -21,7 +19,7 @@ interface VariablesStoreState {
   isUpdating: boolean;
 }
 
-type AvailableVariablePromises = Record<string, Promise<DeepReadonly<VariableCategory[]>>>;
+type AvailableVariablePromises = Record<string, Promise<VariableCategory[]>>;
 
 class VariablesStore {
   private privateState = reactive<VariablesStoreState>({
@@ -31,7 +29,7 @@ class VariablesStore {
     isUpdating: false,
   });
 
-  private state = computed(() => readonly(this.privateState));
+  private state = computed(() => this.privateState);
 
   readonly isLoading = computed(() => {
     const state = this.state.value;
@@ -40,7 +38,7 @@ class VariablesStore {
 
   readonly isUpdating = computed(() => this.state.value.isUpdating);
 
-  readonly variables = computed(() => this.state.value.variables);
+  public variables = computed(() => this.state.value.variables);
 
   private fetchPromise: Promise<Variable[]>|null = null;
 
@@ -58,7 +56,7 @@ class VariablesStore {
     idContainerVersion: number,
     idVariable: number,
     ignoreCache: boolean,
-  ): Promise<DeepReadonly<Variable>> {
+  ): Promise<Variable> {
     // before going through an API request we first try to find it in loaded variables
     const found = this.variables.value.find((v) => v.idvariable === idVariable);
     if (found && !ignoreCache) {
@@ -75,7 +73,7 @@ class VariablesStore {
       filter_limit: '-1',
     }).then((record) => {
       this.privateState.variables = [...this.privateState.variables, record];
-      return readonly(record);
+      return record;
     }).finally(() => {
       this.privateState.isLoadingSingle = false;
     });
@@ -112,7 +110,7 @@ class VariablesStore {
         method: 'TagManager.getAvailableVariableTypesInContext',
         idContext,
         filter_limit: '-1',
-      }).then((variables) => readonly(variables));
+      }).then((variables) => variables);
     }
 
     return Promise.resolve(this.availableVariablesPromises[idContext]);
@@ -134,7 +132,7 @@ class VariablesStore {
   }
 
   createOrUpdateVariable(
-    variable: DeepReadonly<Variable>|Variable,
+    variable: Variable,
     method: string,
     idContainer: string,
     idContainerVersion: number,

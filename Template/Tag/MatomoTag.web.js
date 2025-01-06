@@ -334,6 +334,106 @@
                     } else if (trackingType === 'goal') {
                         tracker.trackGoal(parameters.get('idGoal'), parameters.get('goalCustomRevenue'), dimensionsObject);
                     }
+
+                    if (matomoConfig.customData && matomoConfig.customData.length && matomoConfig.customData[0].name && matomoConfig.customData[0].value) {
+                        tracker.setCustomData(matomoConfig.customData[0].name, matomoConfig.customData[0].value);
+                    }
+
+                    if (matomoConfig.setDownloadExtensions) {
+                        tracker.setDownloadExtensions(matomoConfig.setDownloadExtensions.split(','));
+                    }
+
+                    if (matomoConfig.addDownloadExtensions) {
+                        tracker.addDownloadExtensions(matomoConfig.addDownloadExtensions.split(','));
+                    }
+
+                    if (matomoConfig.removeDownloadExtensions) {
+                        tracker.removeDownloadExtensions(matomoConfig.removeDownloadExtensions.split(','));
+                    }
+
+                    if (matomoConfig.setIgnoreClasses) {
+                        tracker.setIgnoreClasses(matomoConfig.setIgnoreClasses.split(','));
+                    }
+
+                    if (matomoConfig.setReferrerUrl) {
+                        tracker.setReferrerUrl(matomoConfig.setReferrerUrl);
+                    }
+
+                    if (matomoConfig.setAPIUrl) {
+                        tracker.setAPIUrl(matomoConfig.setAPIUrl);
+                    }
+
+                    if (matomoConfig.setPageViewId) {
+                        tracker.setPageViewId(matomoConfig.setPageViewId);
+                    }
+
+                    if (matomoConfig.setExcludedReferrers) {
+                        tracker.setExcludedReferrers(matomoConfig.setExcludedReferrers.split(','));
+                    }
+
+                    if (matomoConfig.setDownloadClasses) {
+                        tracker.setDownloadClasses(matomoConfig.setDownloadClasses.split(','));
+                    }
+
+                    if (matomoConfig.setLinkClasses) {
+                        tracker.setLinkClasses(matomoConfig.setLinkClasses.split(','));
+                    }
+
+                    if (matomoConfig.setCampaignNameKey) {
+                        tracker.setCampaignNameKey(matomoConfig.setCampaignNameKey);
+                    }
+
+                    if (matomoConfig.setCampaignKeywordKey) {
+                        tracker.setCampaignKeywordKey(matomoConfig.setCampaignKeywordKey);
+                    }
+
+                    if (matomoConfig.setConsentGiven) {
+                        tracker.setConsentGiven();
+                    }
+
+                    if (matomoConfig.rememberConsentGiven) {
+                        if (matomoConfig.rememberConsentGivenForHours) {
+                            tracker.rememberConsentGiven(matomoConfig.rememberConsentGivenForHours);
+                        } else {
+                            tracker.rememberConsentGiven();
+                        }
+                    }
+
+                    if (matomoConfig.forgetConsentGiven) {
+                        tracker.forgetConsentGiven();
+                    }
+
+                    if (matomoConfig.discardHashTag) {
+                        tracker.discardHashTag(true);
+                    }
+
+                    if (matomoConfig.setExcludedQueryParams) {
+                        tracker.setExcludedQueryParams(matomoConfig.setExcludedQueryParams.split(','));
+                    }
+
+                    if (matomoConfig.setConversionAttributionFirstReferrer) {
+                        tracker.setConversionAttributionFirstReferrer(true);
+                    }
+
+                    if (matomoConfig.setDoNotTrack) {
+                        tracker.setDoNotTrack(true);
+                    }
+
+                    if (matomoConfig.setLinkTrackingTimer) {
+                        tracker.setLinkTrackingTimer(matomoConfig.setLinkTrackingTimer);
+                    }
+
+                    if (matomoConfig.killFrame) {
+                        tracker.killFrame();
+                    }
+
+                    if (matomoConfig.setCountPreRendered) {
+                        tracker.setCountPreRendered(true);
+                    }
+
+                    if (matomoConfig.setRequestQueueInterval) {
+                        tracker.setRequestQueueInterval(matomoConfig.setRequestQueueInterval);
+                    }
                 }
             });
 

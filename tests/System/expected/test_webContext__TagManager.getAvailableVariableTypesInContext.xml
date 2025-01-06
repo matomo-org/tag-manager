@@ -873,7 +873,7 @@
 				<contexts>
 					<row>web</row>
 				</contexts>
-				<hasAdvancedSettings>0</hasAdvancedSettings>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
 				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
@@ -1657,7 +1657,515 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>Can be set to a variable of type "Custom Request Processing Function" to augment or override default request sending behaviour.</description>
+						<description>Can be set to a variable of type &quot;Custom Request Processing Function&quot; to augment or override default request sending behaviour.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>customData</name>
+						<title>Custom Data</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<rows>1</rows>
+							<showAdvancedSettings>1</showAdvancedSettings>
+							<field1>
+								<key>name</key>
+								<title>Name</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally set custom data in your tracking request.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setDownloadExtensions</name>
+						<title>Set Download Extensions</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set a list of file extensions to be recognized as downloads. Example: doc or doc,xls</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>addDownloadExtensions</name>
+						<title>Add Download Extensions</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Specify additional file extensions to be recognized as downloads. Example: doc or doc,xls</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>removeDownloadExtensions</name>
+						<title>Remove Download Extensions</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Specify file extensions to be removed from the list of download file extensions. Example: doc or doc,xls</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setIgnoreClasses</name>
+						<title>Set Ignore Classes</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set classes to be ignored if present in link (in addition to matomo_ignore and piwik_ignore). Example classA or classA,classB</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setReferrerUrl</name>
+						<title>Set Referrer URL</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Override the detected Http-Referer. We recommend you call this method early in your tracking code before you call trackPageView if it should be applied to all tracking requests.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setApiUrl</name>
+						<title>Set API URL</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Specify the Matomo HTTP API URL endpoint. Points to the root directory of piwik, e.g. https://matomo.example.org/ or https://example.org/matomo/. This function is only useful when the 'Overlay' report is not working. By default, you do not need to use this function.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setPageViewId</name>
+						<title>Set Pageview ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Override PageView id for every use of logPageView(). Do not use this if you call trackPageView() multiple times during tracking (e.g. when tracking a single page application).</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setExcludedReferrers</name>
+						<title>Set Excluded Referrer</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set array of hostnames or domains that should be ignored as referrers. For wildcard subdomains, you can use .example.com or *.example.com</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setDownloadClasses</name>
+						<title>Set Download Classes</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set classes to be treated as downloads (in addition to matomo_download)</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setLinkClasses</name>
+						<title>Set Link Classes</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set classes to be treated as outlinks (in addition to piwik_link). Example class1 or class1,class2</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setCampaignNameKey</name>
+						<title>Set campaign name key</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set campaign name parameter(s).</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setCampaignKeywordKey</name>
+						<title>Set campaign keyword name key</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set campaign keyword parameter(s).</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setConsentGiven</name>
+						<title>Set consent given</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Mark that the current user has consented. The consent is one-time only, so in a subsequent browser session, the user will have to consent again. To remember consent, see the Remember consent given option below.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>rememberConsentGiven</name>
+						<title>Remember consent given</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Mark that the current user has consented, and remembers this consent through a browser cookie. The next time the user visits the site, Matomo will remember that they consented, and track them. If you enable this option, you do not need to enable Set consent given option.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>rememberConsentGivenForHours</name>
+						<title>Expire consent</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Optionally set after how many hours the consent should expire. By default the consent is valid for 30 years unless cookies are deleted by the user or the browser prior to this.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>forgetConsentGiven</name>
+						<title>Forget consent given</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Remove a user's consent, both if the consent was one-time only and if the consent was remembered. After calling this method, the user will have to consent again in order to be tracked.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>discardHashTag</name>
+						<title>Discard HashTag</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>If enabled, it will not record the hash tag (anchor) portion of URLs.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setExcludedQueryParams</name>
+						<title>Set query params to exclude from URL.</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set query params to exclude from URL. Example uuid or uuid1,uuid2</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>setConversionAttributionFirstReferrer</name>
+						<title>Set conversion attribution to first referrer</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>If enabled, conversion will be attributed to first referred. By default, conversion is attributed to the most recent referrer.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setDoNotTrack</name>
+						<title>Set do not track</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>If enabled, it will not track users who opt out of tracking using Mozilla's (proposed) Do Not Track setting.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setLinkTrackingTimer</name>
+						<title>Set link tracking timer</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Set delay for link tracking in milliseconds.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>killFrame</name>
+						<title>Enable kill frame</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enable a frame-buster to prevent the tracked web page from being framed/iframed.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setCountPreRendered</name>
+						<title>Enable count sites in pre-rendered state</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>If enabled, it will count sites in pre-rendered state.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>setRequestQueueInterval</name>
+						<title>Set Request Queue Interval</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<showAdvancedSettings>1</showAdvancedSettings>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Defines after how many ms a queued requests will be executed after the request was queued initially. The higher the value the more tracking requests can be sent together at once. interval has to be at least 1000 (1000ms = 1s) and defaults to 2.5 seconds.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />
