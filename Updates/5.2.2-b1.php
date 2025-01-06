@@ -16,7 +16,7 @@ use Piwik\Updater;
 use Piwik\Updater\Migration\Factory as MigrationFactory;
 use Piwik\Updates as PiwikUpdates;
 
-class Updates_5_2_1_b1 extends PiwikUpdates
+class Updates_5_2_2_b1 extends PiwikUpdates
 {
     /**
      * @var MigrationFactory
@@ -71,10 +71,18 @@ class Updates_5_2_1_b1 extends PiwikUpdates
         $migrator->addField('setLinkClasses', '');
         $migrator->addField('setCampaignNameKey', '');
         $migrator->addField('setCampaignKeywordKey', '');
-        $migrator->addField('setConsentGiven', '');
-        $migrator->addField('rememberConsentGiven', '');
+        $migrator->addField('setConsentGiven', false);
+        $migrator->addField('rememberConsentGiven', false);
         $migrator->addField('rememberConsentGivenForHours', '');
-        $migrator->addField('forgetConsentGiven', '');
+        $migrator->addField('forgetConsentGiven', false);
+        $migrator->addField('discardHashTag', false);
+        $migrator->addField('setExcludedQueryParams', '');
+        $migrator->addField('setConversionAttributionFirstReferrer', false);
+        $migrator->addField('setDoNotTrack', false);
+        $migrator->addField('setLinkTrackingTimer', '');
+        $migrator->addField('killFrame', false);
+        $migrator->addField('setCountPreRendered', false);
+        $migrator->addField('setRequestQueueInterval', '');
         $migrator->migrate();
     }
 }
