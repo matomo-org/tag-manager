@@ -763,6 +763,7 @@ export default defineComponent({
             '</a>',
           );
           this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success', 'transient');
+          return;
         }
 
         this.showNotification(updatedAt, 'success');
