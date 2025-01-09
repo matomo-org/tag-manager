@@ -1477,13 +1477,13 @@
 		</types>
 	</row>
 	<row>
-		<name>Consent Management Platform</name>
+		<name>Consent Management</name>
 		<types>
 			<row>
 				<id>Axeptio</id>
 				<name>Axeptio</name>
 				<description>Axeptio is a low-code Consent Management Platform.</description>
-				<category>Consent Management Platform</category>
+				<category>Consent Management</category>
 				<icon>plugins/TagManager/images/icons/axeptio.svg</icon>
 				<help />
 				<order>9999</order>
@@ -1519,7 +1519,7 @@
 				<id>CookieYes</id>
 				<name>CookieYes</name>
 				<description>CookieYes is a cookie consent solution that helps your website achieve GDPR and CCPA compliance.</description>
-				<category>Consent Management Platform</category>
+				<category>Consent Management</category>
 				<icon>plugins/TagManager/images/icons/cookieyes.svg</icon>
 				<help />
 				<order>9999</order>
@@ -1555,7 +1555,7 @@
 				<id>Cookiebot</id>
 				<name>Cookiebot</name>
 				<description>Cookiebot CMP makes the use of cookies and online tracking of your website GDPR compliant.</description>
-				<category>Consent Management Platform</category>
+				<category>Consent Management</category>
 				<icon>plugins/TagManager/images/icons/cookiebot.svg</icon>
 				<help />
 				<order>9999</order>
@@ -1588,10 +1588,139 @@
 				</parameters>
 			</row>
 			<row>
+				<id>GoogleConsentModeV2</id>
+				<name>Google Consent Mode</name>
+				<description>Consent mode v2 allows you to communicate to Google the consent status of your users regarding cookies or application IDs.</description>
+				<category>Consent Management</category>
+				<icon>plugins/TagManager/images/icons/google-consent-mode.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>consentAction</name>
+						<title>Consent mode action</title>
+						<value>update</value>
+						<defaultValue>update</defaultValue>
+						<type>array</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<default>default</default>
+							<update>update</update>
+						</availableValues>
+						<description>Select 'default' to set default values, and 'update' to handle users consent.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>consentTypes</name>
+						<title>Consent type</title>
+						<value>
+							<row>
+								<consent_type>ad_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>ad_user_data</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>ad_personalization</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>analytics_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>functionality_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>personalization_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>security_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+						</value>
+						<defaultValue>
+							<row>
+								<consent_type>ad_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>ad_user_data</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>ad_personalization</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>analytics_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>functionality_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>personalization_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>security_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>consent_type</key>
+								<title>Consent type</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>consent_state</key>
+								<title>Consent state</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The consent state must be 'denied' before the user gives consent. Once consent is received, you can trigger this tag with the action mode set to 'update' and all consents state set to 'granted' for all consent types. (All consent types are available in the Google documentation). Consent state must be 'denied' or 'granted', no other values are allowed.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+				</parameters>
+			</row>
+			<row>
 				<id>OneTrust</id>
 				<name>OneTrust</name>
 				<description>The OneTrust Consent Management Platform orchestrates the collection of consent across web, mobile, and CTV.</description>
-				<category>Consent Management Platform</category>
+				<category>Consent Management</category>
 				<icon>plugins/TagManager/images/icons/one-trust.svg</icon>
 				<help />
 				<order>9999</order>

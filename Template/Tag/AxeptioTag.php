@@ -25,7 +25,7 @@ class AxeptioTag extends BaseTag
 
     public function getCategory()
     {
-        return Piwik::translate('TagManager_ConsentManagementPlatform');
+        return Piwik::translate('TagManager_ConsentManagement');
     }
 
     public function getIcon()
