@@ -712,6 +712,7 @@ export default defineComponent({
                 '</a>',
               );
               this.showNotification(`${createdX} ${wantToRedeploy}`, 'success', 'transient');
+              return;
             }
 
             this.showNotification(createdX, 'success');
