@@ -167,11 +167,10 @@ class Variable extends BaseModel
         }
 
         foreach ($variables as $var) {
-            foreach ($var['typeMetadata']['parameters'] as $parameter) {
-                if ($this->isUsingParameterTheVariable($parameter, $varName)) {
-                    $variableRef = new VariableReference($var['idvariable'], $var['name']);
-                    $references[] = $variableRef->toArray();
-                }
+            $tempReferences = $this->listVariableNamesInParameters($var);
+            if (in_array($varName, $tempReferences)) {
+                $variableRef = new VariableReference($var['idvariable'], $var['name']);
+                $references[] = $variableRef->toArray();
             }
         }
 
