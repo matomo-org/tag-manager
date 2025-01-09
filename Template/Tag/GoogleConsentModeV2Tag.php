@@ -85,21 +85,10 @@ class GoogleConsentModeV2Tag extends BaseTag
                 $field->description = Piwik::translate('TagManager_GoogleConsentModeV2TagConsentTypesDescription');
 
                 $field1 = new FieldConfig\MultiPair(Piwik::translate('TagManager_GoogleConsentModeV2TagConsentTypeTitle'), 'consent_type', FieldConfig::UI_CONTROL_TEXT);
-//                $field1->availableValues = [
-//                    'ad_storage' => 'Ad Storage',
-//                    'ad_user_data' => 'Ad User Data',
-//                    'ad_personalization' => 'Ad Personalization',
-//                    'analytics_storage' => 'Analytics Storage',
-//                    'functionality_storage' => 'Functionality Storage',
-//                    'personalization_storage' => 'Personalization Storage',
-//                    'security_storage' => 'Security Storage',
-//                ];
-//                $field1->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
                 $field1->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
 
                 $field2 = new FieldConfig\MultiPair(Piwik::translate('TagManager_GoogleConsentModeV2TagConsentStateTitle'), 'consent_state', FieldConfig::UI_CONTROL_TEXT);
                 $field2->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-//                $field2->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
 
                 $field->uiControlAttributes['field1'] = $field1->toArray();
                 $field->uiControlAttributes['field2'] = $field2->toArray();
