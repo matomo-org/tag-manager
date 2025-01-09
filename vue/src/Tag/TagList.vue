@@ -372,23 +372,25 @@ export default defineComponent({
     showDeployNotification(type: string) {
       const translatedString = type === 'pause' ? 'TagManager_PausedTag' : 'TagManager_ResumedTag';
       const createdX = translate(translatedString, translate('TagManager_Tag'));
-      let wantToRedeploy = '';
       if (this.hasPublishCapability()) {
-        wantToRedeploy = translate(
+        const wantToRedeploy = translate(
           'TagManager_WantToDeployThisChangeCreateVersion',
           '<a class="createNewVersionLink">',
           '</a>',
         );
+        this.showNotification(`${createdX} ${wantToRedeploy}`, 'success', 'transient');
+        return;
       }
 
-      this.showNotification(`${createdX} ${wantToRedeploy}`, 'success');
+      this.showNotification(createdX, 'success');
     },
-    showNotification(message: string, context: NotificationType['context']) {
+    showNotification(message: string, context: NotificationType['context'],
+      type: null|NotificationType['type'] = null) {
       const instanceId = NotificationsStore.show({
         message,
         context,
         id: notificationId,
-        type: 'transient',
+        type: type !== null ? type : 'toast',
       });
 
       setTimeout(() => {
