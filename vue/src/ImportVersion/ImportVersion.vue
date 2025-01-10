@@ -114,7 +114,7 @@ export default defineComponent({
       const instanceId = NotificationsStore.show({
         message,
         context,
-        type: 'transient',
+        type: 'toast',
         id: NOTIFICATION_ID,
       });
 
