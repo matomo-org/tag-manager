@@ -10,6 +10,7 @@
 namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
 use Piwik\Container\StaticContainer;
+use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\TagManager\Input\Name;
@@ -629,6 +630,42 @@ class VariableTest extends IntegrationTestCase
         }
         // make sure above assertion was executed
         $this->assertSame(1, $count);
+    }
+
+    public function testDeleteContainerVariableReferencedByVariable()
+    {
+        $variableParams = ['jsFunction' => 'function () { return 12345; }'];
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'TestVariable', $variableParams);
+        $this->assertSame(2, $idVariable);
+
+        $idReferencingVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'ReferencingTestVariable', $parameters = ['jsFunction' => 'function () { return {{TestVariable}}; }']);
+        $this->assertSame(3, $idReferencingVariable);
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(Piwik::translate('TagManager_ErrorDeleteReferencedVariable'));
+        $this->model->deleteContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
+    }
+
+    public function testGetVariableReferencesFromVariable()
+    {
+        $variableParams = ['jsFunction' => 'function () { return 12345; }'];
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'TestVariable', $variableParams);
+        $this->assertSame(2, $idVariable);
+
+        $idReferencingVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'ReferencingTestVariable', $parameters = ['jsFunction' => 'function () { return {{TestVariable}}; }']);
+        $this->assertSame(3, $idReferencingVariable);
+
+        $result = $this->model->getContainerVariableReferences($this->idSite, $this->containerVersion1, $idVariable);
+        $this->assertIsArray($result);
+        $this->assertCount(1, $result);
+        $this->assertSame([
+            [
+                'referenceId' => $idReferencingVariable,
+                'referenceType' => 'variable',
+                'referenceTypeName' => 'Variable',
+                'referenceName' => 'ReferencingTestVariable',
+            ]
+        ], $result);
     }
 
     public function testGetVariableReferencesWhenNoReferences()

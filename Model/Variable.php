@@ -167,11 +167,10 @@ class Variable extends BaseModel
         }
 
         foreach ($variables as $var) {
-            foreach ($var['typeMetadata']['parameters'] as $parameter) {
-                if ($this->isUsingParameterTheVariable($parameter, $varName)) {
-                    $variableRef = new VariableReference($var['idvariable'], $var['name']);
-                    $references[] = $variableRef->toArray();
-                }
+            $tempReferences = $this->listVariableNamesInParameters($var);
+            if (in_array($varName, $tempReferences)) {
+                $variableRef = new VariableReference($var['idvariable'], $var['name']);
+                $references[] = $variableRef->toArray();
             }
         }
 
@@ -355,7 +354,7 @@ class Variable extends BaseModel
     public function deleteContainerVariable($idSite, $idContainerVersion, $idVariable)
     {
         if ($this->getContainerVariableReferences($idSite, $idContainerVersion, $idVariable)) {
-            throw new \Exception('This variable cannot be deleted as it is used in other places. To remove this variable, first remove all places where this variable is used');
+            throw new \Exception(Piwik::translate('TagManager_ErrorDeleteReferencedVariable'));
         }
         $this->dao->deleteContainerVariable($idSite, $idContainerVersion, $idVariable, $this->getCurrentDateTime());
     }
