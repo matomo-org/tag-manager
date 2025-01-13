@@ -1173,7 +1173,7 @@
         "GoogleConsentModeV2TagConsentActionTitle": "Consent mode action",
         "GoogleConsentModeV2TagConsentActionDescription": "Select 'default' to set default values, and 'update' to handle users consent.",
         "GoogleConsentModeV2TagConsentTypesTitle": "Consent type",
-        "GoogleConsentModeV2TagConsentTypesDescription": "The consent state must be 'denied' before the user gives consent. Once consent is received, you can trigger this tag with the action mode set to 'update' and all consents state set to 'granted' for all consent types. (All consent types are available in the Google documentation). Consent state must be 'denied' or 'granted', no other values are allowed.",
+        "GoogleConsentModeV2TagConsentTypesDescription": "The consent state must be 'denied' before the user gives consent. Once consent is received, you can trigger this tag with the action mode set to 'update' and all consents state set to 'granted' for all consent types. (All consent types are available in the Google documentation). Consent state must be 'denied' or 'granted', no other values are allowed. %1$sLearn more%2$s.",
         "GoogleConsentModeV2TagConsentTypeTitle": "Consent type",
         "GoogleConsentModeV2TagConsentStateTitle": "Consent state"
     }

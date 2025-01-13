@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
+use Piwik\Url;
 use Piwik\Validators\NotEmpty;
 
 class GoogleConsentModeV2Tag extends BaseTag
@@ -82,7 +83,8 @@ class GoogleConsentModeV2Tag extends BaseTag
             $this->makeSetting('consentTypes', $default, FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
                 $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
                 $field->title = Piwik::translate('TagManager_GoogleConsentModeV2TagConsentTypesTitle');
-                $field->description = Piwik::translate('TagManager_GoogleConsentModeV2TagConsentTypesDescription');
+                $faqURL = Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/google-consent-tag-in-matomo-tag-manager/', null, null, 'Tag.TagManager.GoogleConsentMode');
+                $field->inlineHelp = Piwik::translate('TagManager_GoogleConsentModeV2TagConsentTypesDescription', ['<a href="' . $faqURL . '" target="_blank" rel="noreferrer noopener">', '</a>']);
 
                 $field1 = new FieldConfig\MultiPair(Piwik::translate('TagManager_GoogleConsentModeV2TagConsentTypeTitle'), 'consent_type', FieldConfig::UI_CONTROL_TEXT);
                 $field1->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
