@@ -1709,7 +1709,7 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description />
-						<inlineHelp>The consent state must be 'denied' before the user gives consent. Once consent is received, you can trigger this tag with the action mode set to 'update' and all consents state set to 'granted' for all consent types. (All consent types are available in the Google documentation). Consent state must be 'denied' or 'granted', no other values are allowed. &lt;a href=&quot;https://matomo.org/faq/tag-manager/google-consent-tag-in-matomo-tag-manager/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_Cloud&amp;mtm_medium=Tag.TagManager.GoogleConsentMode&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;Learn more&lt;/a&gt;.</inlineHelp>
+						<inlineHelp>The consent state must be 'denied' before the user gives consent. Once consent is received, you can trigger this tag with the action mode set to 'update' and all consents state set to 'granted' for all consent types. (All consent types are available in the Google documentation). Consent state must be 'denied' or 'granted', no other values are allowed. &lt;a href="https://matomo.org/faq/tag-manager/google-consent-tag-in-matomo-tag-manager/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=Tag.TagManager.GoogleConsentMode" target="_blank" rel="noreferrer noopener"&gt;Learn more&lt;/a&gt;.</inlineHelp>
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
