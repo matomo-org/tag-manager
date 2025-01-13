@@ -186,7 +186,7 @@ export default defineComponent({
         message,
         context,
         id: notificationId,
-        type: 'transient',
+        type: 'toast',
       });
       setTimeout(() => {
         NotificationsStore.scrollToNotification(notificationInstanceId);

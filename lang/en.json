@@ -1168,6 +1168,7 @@
         "MatomoConfigurationMatomoSetCountPreRenderedDescription": "If enabled, it will count sites in pre-rendered state.",
         "MatomoConfigurationMatomoSetRequestQueueIntervalTitle": "Set Request Queue Interval",
         "MatomoConfigurationMatomoSetRequestQueueIntervalDescription": "Defines after how many ms a queued requests will be executed after the request was queued initially. The higher the value the more tracking requests can be sent together at once. interval has to be at least 1000 (1000ms = 1s) and defaults to 2.5 seconds.",
+        "ErrorDeleteReferencedVariable": "This variable is in use elsewhere and cannot be deleted. Please remove all references to it and try again.",
         "GoogleConsentModeV2TagName": "Google Consent Mode",
         "GoogleConsentModeV2TagDescription": "Consent mode v2 allows you to communicate to Google the consent status of your users regarding cookies or application IDs.",
         "GoogleConsentModeV2TagConsentActionTitle": "Consent mode action",

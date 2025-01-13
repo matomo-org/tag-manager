@@ -371,12 +371,13 @@ export default defineComponent({
       NotificationsStore.remove(notificationId);
       NotificationsStore.remove('ajaxHelper');
     },
-    showNotification(message: string, context: NotificationType['context']) {
+    showNotification(message: string, context: NotificationType['context'],
+      type: null|NotificationType['type'] = null) {
       const notificationInstanceId = NotificationsStore.show({
         message,
         context,
         id: notificationId,
-        type: 'transient',
+        type: type !== null ? type : 'toast',
       });
       setTimeout(() => {
         NotificationsStore.scrollToNotification(notificationInstanceId);
@@ -592,16 +593,17 @@ export default defineComponent({
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Variable'));
-            let wantToRedeploy = '';
             if (this.hasPublishCapability()) {
-              wantToRedeploy = translate(
+              const wantToRedeploy = translate(
                 'TagManager_WantToDeployThisChangeCreateVersion',
                 '<a class="createNewVersionLink">',
                 '</a>',
               );
+              this.showNotification(`${createdX} ${wantToRedeploy}`, 'success', 'transient');
+              return;
             }
 
-            this.showNotification(`${createdX} ${wantToRedeploy}`, 'success');
+            this.showNotification(createdX, 'success');
           }, 200);
         });
       }).finally(() => {
@@ -647,16 +649,17 @@ export default defineComponent({
         this.cancel();
 
         const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Variable'));
-        let wantToDeploy = '';
         if (this.hasPublishCapability()) {
-          wantToDeploy = translate(
+          const wantToDeploy = translate(
             'TagManager_WantToDeployThisChangeCreateVersion',
             '<a class="createNewVersionLink">',
             '</a>',
           );
+          this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success', 'transient');
+          return;
         }
 
-        this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success');
+        this.showNotification(updatedAt, 'success');
       }).finally(() => {
         this.isUpdatingVar = false;
       });
