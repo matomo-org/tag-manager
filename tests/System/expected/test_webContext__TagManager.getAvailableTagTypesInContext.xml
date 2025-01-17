@@ -1365,10 +1365,6 @@
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
-						<component>
-							<plugin>TagManager</plugin>
-							<name>FieldVariableTemplate</name>
-						</component>
 					</row>
 					<row>
 						<name>etrackerAddToCartProduct</name>
