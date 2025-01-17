@@ -204,7 +204,6 @@ class EtrackerTag extends BaseTag
             $this->makeSetting('etrackerTransactionDebugMode', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) use ($trackingType) {
                 $field->title = Piwik::translate('TagManager_EtrackerTagTransactionDebugModeTitle');
                 $field->title = 'etracker Ecommerce Debug Mode';
-                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->condition = 'trackingType == "transaction"';
             }),
             $this->makeSetting('etrackerAddToCartProduct', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
