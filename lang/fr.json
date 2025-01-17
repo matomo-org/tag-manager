@@ -907,7 +907,7 @@
         "ScrollReachTriggerDescription": "Déclenché dès lors que l'utilisateur fait défiler la page jusqu'à une certaine position.",
         "ScrollReachTriggerHelp": "Ce déclencheur est déclenché lorsqu'un utilisateur fait défiler ou redimensionne la fenêtre actuelle du navigateur. Le déclencheur ne se déclenche pas lorsque l'utilisateur fait défiler un élément donné. Il ne se déclenche pas chaque fois qu'une certaine position de défilement est atteinte, mais seulement la toute première fois que la position configurée est atteinte.",
         "ScrollReachTriggerName": "Portée du défilement",
-        "ScrollReachTriggerPercentageDescription": "Vous pouvez spécifier un nombre entre 1 et 100. Si vous indiquez 50, cela signifie que l'élément doit être visible à au moins 50 % en fonction du type de correspondance de défilement.",
+        "ScrollReachTriggerPercentageDescription": "Vous pouvez spécifier un nombre entre 1 et 100. Si vous indiquez 50, cela signifie que l'élément doit être visible à au moins 50 %% en fonction du type de correspondance de défilement.",
         "ScrollReachTriggerPercentageTitle": "Pourcentage",
         "ScrollReachTriggerPixelsDescription": "Le nombre de pixels qui doivent être visibles pour cet élément, selon le type de défilement choisi.",
         "ScrollReachTriggerPixelsTitle": "Pixels",
