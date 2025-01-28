@@ -1006,6 +1006,7 @@
         "HotjarHJID": "Hotjar Site ID",
         "HotjarHJIDDescription": "Your Hotjar Site ID. You can get your Hotjar Site ID from the Sites section in your Hotjar account.",
         "HotjarHJSV": "Hotjar snipet version",
+        "HotjarSnippetVersion": "Hotjar snippet version",
         "HotjarHJSVDescription": "Hotjar code snippet version.",
         "ClickDataAttributeVariableName": "Clicked Data Attribute",
         "ClickDataAttributeVariableDescription": "Reads a custom value from the clicked data-attribute.",

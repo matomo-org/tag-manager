@@ -805,7 +805,7 @@
 					</row>
 					<row>
 						<name>hjsv</name>
-						<title>Hotjar snipet version</title>
+						<title>Hotjar snippet version</title>
 						<value>6</value>
 						<defaultValue>6</defaultValue>
 						<type>integer</type>
