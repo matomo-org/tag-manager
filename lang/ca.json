@@ -597,6 +597,7 @@
         "HotjarHJIDDescription": "El vostre identificador del lloc Hotjar. Podeu obtenir el vostre ID de lloc Hotjar a la secció Llocs del vostre compte Hotjar.",
         "HotjarHJSV": "Versió de fragment Hotjar",
         "HotjarHJSVDescription": "Versió del fragment de codi Hotjar.",
+        "HotjarSnippetVersion": "Versió del fragment Hotjar",
         "HotjarTagDescription": "Mapes de calor del lloc web i eines d'anàlisi del comportament.",
         "HotjarTagName": "Hotjar",
         "IgnoreGtmDataLaterDescription": "Si està marcat, el Gestor d'etiquetes de Matomo exclou els valors de la capa de dades que ja havia establert el Gestor d'etiquetes de Google. Per motius de compatibilitat, el comportament predeterminat és mantenir els valors de la capa de dades establerts per Google Tag Manager.",
