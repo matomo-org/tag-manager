@@ -42,8 +42,32 @@ class TemplateMetadataTest extends UnitTestCase
             ['category' => 'Baz', 'name' => 'ZooName', 'order' => 10],
             ['category' => 'Baz', 'name' => 'FooName', 'order' => 10],
             ['category' => 'Baz', 'name' => 'AooName', 'order' => 10],
+            ['category' => 'A', 'name' => 'First Name', 'order' => 10], // should come after Analytics category
+            ['category' => 'Analytics', 'name' => 'Matomo Configuration', 'order' => 1000], // should be the first category
         );
         $expected = array (
+            array (
+                'name' => 'Analytics',
+                'types' =>
+                    array (
+                        array (
+                            'category' => 'Analytics',
+                            'name' => 'Matomo Configuration',
+                            'order' => 1000,
+                        ),
+                    ),
+            ),
+            array (
+                'name' => 'A',
+                'types' =>
+                    array (
+                        array (
+                            'category' => 'A',
+                            'name' => 'First Name',
+                            'order' => 10,
+                        ),
+                    ),
+            ),
             array (
                 'name' => 'Bar',
                 'types' =>

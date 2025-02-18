@@ -23,6 +23,7 @@ class TemplateMetadata
     public function formatTemplates($templates)
     {
         $byCategory = [];
+        $analyticsCategory = [];
         foreach ($templates as $template) {
             if (is_array($template)) {
                 $tagArray = $template;
@@ -31,7 +32,16 @@ class TemplateMetadata
             }
 
             $category = $tagArray['category'];
-            if (!isset($byCategory[$category])) {
+            if ($category === Piwik::translate('TagManager_CategoryAnalytics')) {
+                if (!isset($analyticsCategory['types'])) {
+                    $analyticsCategory = [
+                        'name' => $category,
+                        'types' => []
+                    ];
+                }
+                $analyticsCategory['types'][] = $tagArray;
+                continue;
+            } elseif (!isset($byCategory[$category])) {
                 $byCategory[$category] = [
                     'name' => $category,
                     'types' => []
@@ -62,6 +72,6 @@ class TemplateMetadata
             });
         }
 
-        return $byCategory;
+        return $analyticsCategory ? array_merge([$analyticsCategory], $byCategory) : $byCategory;
     }
 }
