@@ -63,7 +63,20 @@ class TemplateMetadata
             return strnatcmp($catA['name'], $catB['name']);
         });
 
-        foreach ($byCategory as &$category) {
+        $this->sortByOrder($byCategory);
+        if (!empty($analyticsCategory)) {
+            $analyticsCategory = [$analyticsCategory];
+            $this->sortByOrder($analyticsCategory);
+
+            return array_merge($analyticsCategory, $byCategory);
+        }
+
+        return $byCategory;
+    }
+
+    private function sortByOrder(&$categories)
+    {
+        foreach ($categories as &$category) {
             usort($category['types'], function ($tagA, $tagB) {
                 if ($tagA['order'] == $tagB['order']) {
                     return strnatcmp($tagA['name'], $tagB['name']);
@@ -71,7 +84,5 @@ class TemplateMetadata
                 return $tagA['order'] - $tagB['order'];
             });
         }
-
-        return $analyticsCategory ? array_merge([$analyticsCategory], $byCategory) : $byCategory;
     }
 }
