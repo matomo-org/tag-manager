@@ -23,7 +23,6 @@ class TemplateMetadata
     public function formatTemplates($templates)
     {
         $byCategory = [];
-        $analyticsCategory = [];
         foreach ($templates as $template) {
             if (is_array($template)) {
                 $tagArray = $template;
@@ -32,16 +31,7 @@ class TemplateMetadata
             }
 
             $category = $tagArray['category'];
-            if ($category === Piwik::translate('TagManager_CategoryAnalytics')) {
-                if (!isset($analyticsCategory['types'])) {
-                    $analyticsCategory = [
-                        'name' => $category,
-                        'types' => []
-                    ];
-                }
-                $analyticsCategory['types'][] = $tagArray;
-                continue;
-            } elseif (!isset($byCategory[$category])) {
+            if (!isset($byCategory[$category])) {
                 $byCategory[$category] = [
                     'name' => $category,
                     'types' => []
@@ -63,20 +53,7 @@ class TemplateMetadata
             return strnatcmp($catA['name'], $catB['name']);
         });
 
-        $this->sortByOrder($byCategory);
-        if (!empty($analyticsCategory)) {
-            $analyticsCategory = [$analyticsCategory];
-            $this->sortByOrder($analyticsCategory);
-
-            return array_merge($analyticsCategory, $byCategory);
-        }
-
-        return $byCategory;
-    }
-
-    private function sortByOrder(&$categories)
-    {
-        foreach ($categories as &$category) {
+        foreach ($byCategory as &$category) {
             usort($category['types'], function ($tagA, $tagB) {
                 if ($tagA['order'] == $tagB['order']) {
                     return strnatcmp($tagA['name'], $tagB['name']);
@@ -84,5 +61,15 @@ class TemplateMetadata
                 return $tagA['order'] - $tagB['order'];
             });
         }
+
+        $analyticsCategoryName = Piwik::translate('TagManager_CategoryAnalytics');
+        $analyticsCategoryIndex = array_search($analyticsCategoryName, array_column($byCategory, 'name'));
+        if (!empty($byCategory[$analyticsCategoryIndex])) {
+            $analyticsCategory = $byCategory[$analyticsCategoryIndex];
+            unset($byCategory[$analyticsCategoryIndex]);
+            $byCategory = array_merge([$analyticsCategory], $byCategory);
+        }
+
+        return $byCategory;
     }
 }
