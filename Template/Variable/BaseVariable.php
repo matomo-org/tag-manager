@@ -31,6 +31,7 @@ abstract class BaseVariable extends BaseTemplate
     public const CATEGORY_DEVICE = 'TagManager_CategoryDevice';
     public const CATEGORY_SEO = 'TagManager_CategorySEO';
     public const CATEGORY_OTHERS = 'General_Others';
+    public const CATEGORY_ANALYTICS = 'TagManager_CategoryAnalytics';
 
     protected $templateType = 'Variable';
 

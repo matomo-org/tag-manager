@@ -32,7 +32,7 @@ class MatomoConfigurationVariable extends BaseVariable
 
     public function getCategory()
     {
-        return self::CATEGORY_OTHERS;
+        return self::CATEGORY_ANALYTICS;
     }
 
     public function getIcon()
