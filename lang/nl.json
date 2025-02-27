@@ -176,6 +176,7 @@
         "CustomJsFunctionVariableJsFunctionTitle": "Javascript functie",
         "CustomJsFunctionVariableName": "Aangepast Javascript",
         "CustomRequestProcessingVariableDescription": "Een aangepaste functie om te gebruiken met een Matomo Tracker die alle trackingvragen kan verwerken.",
+        "CustomRequestProcessingVariableJsFunctionTitle": "Javascript functie",
         "CustomTitle": "Aangepaste titel",
         "CustomTitleHelp": "Optioneel, specifieer een aangepaste documenttitel die moet worden gevolgd in plaats van de standaard documenttitel.",
         "CustomUrl": "Aangepaste URL",
