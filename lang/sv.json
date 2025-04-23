@@ -825,7 +825,7 @@
         "SiteWithoutDataReactIntro": "Att spåra din React.js-webbplats eller app är enkelt med Matomo, även för en Single Page Application.",
         "StartDate": "Startdatum",
         "Tag": "Tagg",
-        "TagDescriptionHelp": "Tagg-beskrivningen låter di ange en kort förklaring vad taggen är till för.",
+        "TagDescriptionHelp": "Tagg-beskrivningen låter dig ange en kort förklaring vad taggen är till för.",
         "TagEndDateHelp": "Om den är inställd kommer den här taggen att avfyras endast fram till detta slutdatum. Det angivna datumet antas ligga i %1$sdin lokala tidszon%2$s.",
         "TagFireTriggerRequirement": "Du måste välja minst en \"fire trigger\".",
         "TagManager": "Tagghanterare",
