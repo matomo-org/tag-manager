@@ -21,6 +21,8 @@ use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Plugins\TagManager\tests\Framework\Mock\FakeAccessTagManager;
+use Piwik\Site;
+use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\Mock\FakeAccess;
 
 /**
@@ -437,6 +439,25 @@ class APITest extends IntegrationTestCase
 
         $this->setAdminUser();
         $this->api->deleteContainerVersion($this->idSite, 'foo', $this->idContainerDraftVersion);
+    }
+
+    public function test_createContainer_successEvenWhenDifferentSiteIdAddedInMatomoConfigurationVariable()
+    {
+        $idSite = 1;
+        $newIdSite = Fixture::createWebsite('2012-01-01 02:03:04');
+        $idContainer = $this->api->createDefaultContainerForSite($idSite);
+        $container = $this->api->getContainer($idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $variables = $this->api->getContainerVariables($idSite, $idContainer, $idContainerDraftVersion);
+        $variable = $variables[0];
+        $parameters = $variable['parameters'];
+        $parameters['idSite'] = $newIdSite;
+        $this->api->updateContainerVariable($idSite, $idContainer, $idContainerDraftVersion, $variable['idvariable'], $variable['name'], $parameters);
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($idSite));
+        Site::clearCache(); // so that cache has only the sites admin has access, else was unable to add a test for #990
+        $version = $this->api->createContainerVersion($idSite, $idContainer, 'foo', '', $idContainerDraftVersion);
+        $this->assertNotEmpty($version);
     }
 
     public function test_deleteContainerVersion_shouldFailWhenContainerNotExists()

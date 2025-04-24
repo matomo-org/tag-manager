@@ -129,7 +129,7 @@ class Menu extends \Piwik\Plugin\Menu
                             $this->accessValidator->hasWriteCapability($idSite) && $this->accessValidator->hasPublishLiveEnvironmentCapability($idSite)
                         )
                     ) {
-                        $menu->addItem($menuCategory, 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, function () { window.location.reload(); })");
+                        $menu->addItem($menuCategory, 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, '')");
                     }
                 }
                 $menu->addItem($menuCategory, 'TagManager_InstallCode', $this->urlForAction('releases', $params), $orderId = 140, false, 'icon-embed', "tagManagerHelper.showInstallCode(" . json_encode($container['idcontainer']) . ")");

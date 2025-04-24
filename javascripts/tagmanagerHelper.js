@@ -66,6 +66,11 @@
               if (modal) {
                 modal.close();
               }
+              if (event.version && 'function' !== typeof callback) {
+                  var UI = require('piwik/UI');
+                  var notification = new UI.Notification();
+                   notification.show(_pk_translate('TagManager_VersionPublishSuccess'), {context: 'success', id: 'version_success', title: ''});
+              }
             },
           });
         },
