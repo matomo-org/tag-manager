@@ -362,14 +362,19 @@ export default defineComponent({
           this.$emit('changeVersion', {
             version: this.version,
           });
-          return;
         }
 
         VersionsStore.reload(this.idContainer).then(() => {
-          MatomoUrl.updateHash({
-            ...MatomoUrl.hashParsed.value,
-            idContainerVersion,
-          });
+          if (this.isEmbedded) {
+            MatomoUrl.updateHash({
+              ...MatomoUrl.hashParsed.value,
+            });
+          } else {
+            MatomoUrl.updateHash({
+              ...MatomoUrl.hashParsed.value,
+              idContainerVersion,
+            });
+          }
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Version'));
@@ -421,26 +426,23 @@ export default defineComponent({
             this.$emit('changeVersion', {
               version: this.version,
             });
-            VersionsStore.reload(this.idContainer).then(() => {
+          }
+          VersionsStore.reload(this.idContainer).then(() => {
+            if (this.isEmbedded) {
               MatomoUrl.updateHash({
                 ...MatomoUrl.hashParsed.value,
               });
-              setTimeout(() => {
-                this.showNotification(translate('TagManager_VersionPublishSuccess'), 'success');
-              }, 200);
-            });
-          } else {
-            VersionsStore.reload(this.idContainer).then(() => {
+            } else {
               MatomoUrl.updateHash({
                 ...MatomoUrl.hashParsed.value,
                 idContainerVersion,
               });
+            }
 
-              setTimeout(() => {
-                this.showNotification(translate('TagManager_VersionPublishSuccess'), 'success');
-              }, 200);
-            });
-          }
+            setTimeout(() => {
+              this.showNotification(translate('TagManager_VersionPublishSuccess'), 'success');
+            }, 200);
+          });
         });
       }).finally(() => {
         this.isUpdatingVersion = false;
