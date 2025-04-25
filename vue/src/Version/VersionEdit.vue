@@ -421,19 +421,26 @@ export default defineComponent({
             this.$emit('changeVersion', {
               version: this.version,
             });
-            return;
-          }
-
-          VersionsStore.reload(this.idContainer).then(() => {
-            MatomoUrl.updateHash({
-              ...MatomoUrl.hashParsed.value,
-              idContainerVersion,
+            VersionsStore.reload(this.idContainer).then(() => {
+              MatomoUrl.updateHash({
+                ...MatomoUrl.hashParsed.value,
+              });
+              setTimeout(() => {
+                this.showNotification(translate('TagManager_VersionPublishSuccess'), 'success');
+              }, 200);
             });
+          } else {
+            VersionsStore.reload(this.idContainer).then(() => {
+              MatomoUrl.updateHash({
+                ...MatomoUrl.hashParsed.value,
+                idContainerVersion,
+              });
 
-            setTimeout(() => {
-              this.showNotification(translate('TagManager_VersionPublishSuccess'), 'success');
-            }, 200);
-          });
+              setTimeout(() => {
+                this.showNotification(translate('TagManager_VersionPublishSuccess'), 'success');
+              }, 200);
+            });
+          }
         });
       }).finally(() => {
         this.isUpdatingVersion = false;
