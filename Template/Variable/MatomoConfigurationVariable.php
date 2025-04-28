@@ -10,6 +10,7 @@
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Common;
+use Piwik\NoAccessException;
 use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
 use Piwik\SettingsPiwik;
@@ -84,7 +85,16 @@ class MatomoConfigurationVariable extends BaseVariable
                     $value = trim($value);
                     if (is_numeric($value)) {
                         if ($matomoUrl->getValue() === $url) {
-                            new Site($value);// we validate idSite when it points to this url
+                            try {
+                                new Site($value);// we validate idSite when it points to this url
+                            } catch (NoAccessException $e) {
+                                $request = \Piwik\Request::fromRequest();
+                                $idSite = $request->getIntegerParameter('idSite', 0);
+                                if ($idSite == $value) {
+                                    throw new NoAccessException($e->getMessage());
+                                }
+                                new Site($idSite);
+                            }
                         }
                         return; // valid... we do not validate idSite as it might point to different matomo...
                     }

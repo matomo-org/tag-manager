@@ -362,14 +362,19 @@ export default defineComponent({
           this.$emit('changeVersion', {
             version: this.version,
           });
-          return;
         }
 
         VersionsStore.reload(this.idContainer).then(() => {
-          MatomoUrl.updateHash({
-            ...MatomoUrl.hashParsed.value,
-            idContainerVersion,
-          });
+          if (this.isEmbedded) {
+            MatomoUrl.updateHash({
+              ...MatomoUrl.hashParsed.value,
+            });
+          } else {
+            MatomoUrl.updateHash({
+              ...MatomoUrl.hashParsed.value,
+              idContainerVersion,
+            });
+          }
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Version'));
@@ -421,14 +426,18 @@ export default defineComponent({
             this.$emit('changeVersion', {
               version: this.version,
             });
-            return;
           }
-
           VersionsStore.reload(this.idContainer).then(() => {
-            MatomoUrl.updateHash({
-              ...MatomoUrl.hashParsed.value,
-              idContainerVersion,
-            });
+            if (this.isEmbedded) {
+              MatomoUrl.updateHash({
+                ...MatomoUrl.hashParsed.value,
+              });
+            } else {
+              MatomoUrl.updateHash({
+                ...MatomoUrl.hashParsed.value,
+                idContainerVersion,
+              });
+            }
 
             setTimeout(() => {
               this.showNotification(translate('TagManager_VersionPublishSuccess'), 'success');
