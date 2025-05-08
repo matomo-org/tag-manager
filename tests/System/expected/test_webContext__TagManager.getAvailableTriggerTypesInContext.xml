@@ -95,7 +95,7 @@
 				<description>Triggered as soon as the Tag Manager is executed within the page.</description>
 				<category>Pageview</category>
 				<icon>plugins/TagManager/images/icons/pageview.svg</icon>
-				<help />
+				<help>Triggered whenever a user visits a new page or reloads the current page. You can restrict this trigger by specifying conditions to control when tracking occurs.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -132,7 +132,7 @@
 				<description>Triggered when a specific element becomes visible.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/icons/show.svg</icon>
-				<help />
+				<help>Triggered when a specified element becomes visible in the user's viewport. Identify the element using its element ID or a CSS selector. Optionally, enable tracking for dynamic DOM elements to ensure the trigger works for elements added or modified after the page loads.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -270,7 +270,7 @@
 				<description>Triggered when the window goes into or leaves full screen.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/icons/fullscreen.svg</icon>
-				<help />
+				<help>Triggered when a user enters or exits full-screen mode on your website. Configure this trigger to activate exclusively on entry, on exit, or for both actions, depending on your tracking needs.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -323,7 +323,7 @@
 				<description>Triggered when the current URL changes.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
-				<help />
+				<help>Triggered when the browser's history changes, such as navigating in a single-page application (SPA) or updating the URL without a full page reload. Track virtual pageviews and monitor user interactions in dynamic web environments.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -516,7 +516,7 @@
 				<description>Triggered when a JavaScript error happens.</description>
 				<category>Others</category>
 				<icon>plugins/TagManager/images/icons/error.svg</icon>
-				<help />
+				<help>Triggered when a JavaScript error occurs on the webpage. You can specify conditions to narrow down error tracking.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
