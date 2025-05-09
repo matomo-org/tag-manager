@@ -33,7 +33,7 @@
       >
         <div class="col m6 s12">
           <ContentBlock
-            feature="Tags"
+            :feature="translate('TagManager_Tags')"
             :content-title="`${tagCount} ${translate('TagManager_Tags')}`"
             :help-text="tagsHelpText"
             :edit-url="linkTo('manageTags')"
@@ -76,7 +76,7 @@
         </div>
         <div class="col m6 s12">
           <ContentBlock
-            feature="Triggers"
+            :feature="translate('TagManager_Triggers')"
             :content-title="`${triggerCount} ${translate('TagManager_Triggers')}`"
             :help-text="triggersHelpText"
             :edit-url="linkTo('manageTriggers')"
@@ -120,7 +120,7 @@
       >
         <div class="col m6 s12">
           <ContentBlock
-            feature="Variables"
+            :feature="translate('TagManager_Variables')"
             :content-title="`${variableCount} ${translate('TagManager_Variables')}`"
             :help-text="variablesHelpText"
             :edit-url="linkTo('manageVariables')"
@@ -159,7 +159,7 @@
         </div>
         <div class="col m6 s12">
           <ContentBlock
-            feature="Versions"
+            :feature="translate('TagManager_Versions')"
             :content-title="`${versionCount} ${translate('TagManager_Versions')}`"
             :help-text="versionsHelpText"
             :edit-url="linkTo('manageVersions')"
