@@ -33,9 +33,10 @@
       >
         <div class="col m6 s12">
           <ContentBlock
-            feature="Tag Manager"
+            :feature="translate('TagManager_Tags')"
             :content-title="`${tagCount} ${translate('TagManager_Tags')}`"
             :help-text="tagsHelpText"
+            :edit-url="linkTo('manageTags')"
           >
             <p>
               <span v-if="tagCount">
@@ -75,9 +76,10 @@
         </div>
         <div class="col m6 s12">
           <ContentBlock
-            feature="Tag Manager"
+            :feature="translate('TagManager_Triggers')"
             :content-title="`${triggerCount} ${translate('TagManager_Triggers')}`"
             :help-text="triggersHelpText"
+            :edit-url="linkTo('manageTriggers')"
           >
             <p> <span v-if="triggerCount">
                 {{ translate('TagManager_Names') }}:
@@ -118,9 +120,10 @@
       >
         <div class="col m6 s12">
           <ContentBlock
-            feature="Tag Manager"
+            :feature="translate('TagManager_Variables')"
             :content-title="`${variableCount} ${translate('TagManager_Variables')}`"
             :help-text="variablesHelpText"
+            :edit-url="linkTo('manageVariables')"
           >
             <p> <span v-show="variableCount">
                 {{ translate('TagManager_Names') }}:
@@ -156,9 +159,10 @@
         </div>
         <div class="col m6 s12">
           <ContentBlock
-            feature="Tag Manager"
+            :feature="translate('TagManager_Versions')"
             :content-title="`${versionCount} ${translate('TagManager_Versions')}`"
             :help-text="versionsHelpText"
+            :edit-url="linkTo('manageVersions')"
           >
             <p> <span v-show="lastVersions.length">
                 {{ translate('TagManager_LastVersions') }}:
