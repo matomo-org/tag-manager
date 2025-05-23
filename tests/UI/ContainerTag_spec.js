@@ -183,7 +183,7 @@ describe("ContainerTag", function () {
         await capture.page(page, 'custom_html_tag_write_user_not_editable');
     });
 
-    it('should be able to view a customHTML tag but without edit button ater edit', async function () {
+    it('should be able to view a customHTML tag but without edit button after edit', async function () {
         await setTagName('tagNameNew after write user edit');
         await capture.page(page, 'custom_html_tag_write_user_not_editable_after_edit');
     });
