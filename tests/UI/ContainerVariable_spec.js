@@ -151,6 +151,7 @@ describe("ContainerVariable", function () {
         await selectVariableType('CustomJsFunction');
         await createOrUpdateVariable();
         permissions.setWriteUser();
+        await page.reload();
         await clickFirstRowTableAction('icon-edit');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(750);
@@ -158,7 +159,7 @@ describe("ContainerVariable", function () {
     });
 
     it('should be able to view a customJS variable but without edit button after edit', async function () {
-        await setTagName('tagNameNew after write user edit');
+        await setVariableName('CustomJSVariable after write user edit');
         await capture.page(page, 'custom_js_variable_write_user_not_editable_after_edit');
         await cancelVariable();
         await clickFirstRowTableAction('icon-delete', 3);
