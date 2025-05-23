@@ -597,4 +597,17 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(250);
         await capture.page(page, 'copy_tag_container_select');
     });
+
+    it('should be able to view a customHTML tag but without edit button', async function () {
+        permissions.setWriteUser();
+        await page.goto(container1Base + '#?idTag=1');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(750);
+        await capture.page(page, 'custom_html_tag_write_user_not_editable');
+    });
+
+    it('should be able to view a customHTML tag but without edit button ater edit', async function () {
+        await setTagName('tagNameNew after write user edit');
+        await capture.page(page, 'custom_html_tag_write_user_not_editable_after_edit');
+    });
 });
