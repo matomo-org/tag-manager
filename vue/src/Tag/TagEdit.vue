@@ -30,7 +30,7 @@
           <div
             class="alert alert-danger"
             v-show="isTagDisabled"
-            v-html="getNoCustomTemplatePermissionErrorMessage()"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
           </div>
           <div>
@@ -251,7 +251,7 @@
           <div
             class="alert alert-danger"
             v-show="isTagDisabled"
-            v-html="getNoCustomTemplatePermissionErrorMessage()"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
           </div>
           <SaveButton

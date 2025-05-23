@@ -30,7 +30,7 @@
           <div
             class="alert alert-danger"
             v-show="isTriggerDisabled"
-            v-html="getNoCustomTemplatePermissionErrorMessage()"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
           </div>
           <div>
@@ -151,7 +151,7 @@
           <div
             class="alert alert-danger"
             v-show="isTriggerDisabled"
-            v-html="getNoCustomTemplatePermissionErrorMessage()"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
           </div>
           <SaveButton
