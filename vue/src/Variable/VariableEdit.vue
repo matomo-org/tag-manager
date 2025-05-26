@@ -28,13 +28,10 @@
       >
         <div>
           <div
-            class="alert alert-warning"
+            class="alert alert-danger"
             v-show="isVariableDisabled"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
-            {{ translate(
-              'TagManager_UseCustomTemplateCapabilityRequired',
-              translate('TagManager_CapabilityUseCustomTemplates'),
-            ) }}
           </div>
           <div>
             <Field
@@ -169,17 +166,14 @@
             </div>
           </div>
           <div
-            class="alert alert-warning"
+            class="alert alert-danger"
             v-show="isVariableDisabled"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
-            {{ translate(
-                'TagManager_UseCustomTemplateCapabilityRequired',
-                translate('TagManager_CapabilityUseCustomTemplates'),
-              ) }}
           </div>
           <SaveButton
             class="createButton"
-            v-show="!isVariableDisabled"
+            v-if="!isVariableDisabled"
             @confirm="edit ? updateVariable() : createVariable()"
             :disabled="isUpdating || !isDirty"
             :saving="isUpdating"
@@ -218,8 +212,11 @@
               [`templateType${variableTemplate.id}`]: true,
             }"
             :title="!this.isVariableTemplateDisabled[variableTemplate.id] ? '' :
-              translate('TagManager_UseCustomTemplateCapabilityRequired',
-                translate('TagManager_CapabilityUseCustomTemplates'))"
+              translate('TagManager_UseCustomTemplateCapabilityPermissionRequiredDescription',
+                '',
+                translate('TagManager_CapabilityUseCustomTemplates'),
+                '',
+                )"
           >
             <img
               alt
@@ -673,6 +670,14 @@ export default defineComponent({
     },
     hasPublishCapability() {
       return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
+    getNoCustomTemplatePermissionErrorMessage() {
+      return translate(
+        'TagManager_UseCustomTemplateCapabilityPermissionRequiredDescription',
+        '<strong>',
+        translate('TagManager_CapabilityUseCustomTemplates'),
+        '</strong>',
+      );
     },
   },
   computed: {

@@ -144,6 +144,32 @@ describe("ContainerVariable", function () {
         await capture.page(page, 'create_new_custom_templates_restricted');
     });
 
+    it('should be able to view a customJS variable but without edit button', async function () {
+        await page.goto(container1Base);
+        await page.click('.createNewVariable');
+        await page.waitForNetworkIdle();
+        await selectVariableType('CustomJsFunction');
+        await createOrUpdateVariable();
+        permissions.setWriteUser();
+        await page.reload();
+        await clickFirstRowTableAction('icon-edit');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(750);
+        await capture.page(page, 'custom_js_variable_write_user_not_editable');
+    });
+
+    it('should be able to view a customJS variable but without edit button after edit', async function () {
+        await setVariableName('CustomJSVariable after write user edit');
+        await capture.page(page, 'custom_js_variable_write_user_not_editable_after_edit');
+        await cancelVariable();
+        permissions.setSuperUser();
+        await page.reload();
+        await page.waitForNetworkIdle();
+        await clickFirstRowTableAction('icon-delete', 3);
+        await modal.clickButton(page, 'Yes');
+        await page.waitForNetworkIdle();
+    });
+
     it('should be able to prefill variable', async function () {
         await page.goto(container1Base);
         await page.click('.createNewVariable');

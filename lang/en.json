@@ -797,6 +797,7 @@
         "UrlVariableDescription": "Gets the value of the current page URL.",
         "UrlVariableName": "URL Variable",
         "UseCustomTemplateCapabilityRequired": "This is a Custom Template which can only be created or edited by an \"Admin\" or a user with the \"%1$s\" capability",
+        "UseCustomTemplateCapabilityPermissionRequiredDescription": "This is a Custom Template. You do not have permission to modify Custom Templates. Contact your Matomo superuser to request the %1$sTag Manager: %2$s permission%3$s.",
         "UserAgentVariableDescription": "Gets the value of the user agent which includes the operating system and browser information about the current visitors' device.",
         "UserAgentVariableName": "User Agent",
         "UtcDateVariableDescription": "The current date in UTC, for example \"Mon, 19 Mar 2018 14:00:00 GMT\".",
