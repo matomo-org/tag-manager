@@ -162,6 +162,7 @@ describe("ContainerVariable", function () {
         await setVariableName('CustomJSVariable after write user edit');
         await capture.page(page, 'custom_js_variable_write_user_not_editable_after_edit');
         await cancelVariable();
+        permissions.setSuperUser();
         await page.reload();
         await page.waitForNetworkIdle();
         await clickFirstRowTableAction('icon-delete', 3);
