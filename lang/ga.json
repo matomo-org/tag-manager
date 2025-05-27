@@ -1122,6 +1122,7 @@
         "UrlParameterVariableNameTitle": "Ainm Paraiméadar URL",
         "UrlVariableDescription": "Faigheann luach URL an leathanaigh reatha.",
         "UrlVariableName": "Athróg URL",
+        "UseCustomTemplateCapabilityPermissionRequiredDescription": "Is Teimpléad Saincheaptha é seo. Níl cead agat Teimpléid Saincheaptha a mhodhnú. Téigh i dteagmháil le do shárúsáideoir Matomo chun cead %1$s Bainisteoir Clibeanna: %2$s a iarraidh%3$s.",
         "UseCustomTemplateCapabilityRequired": "Is Teimpléad Saincheaptha é seo nach féidir ach le \"Riarthóir\" nó le húsáideoir a bhfuil an cumas \"%1$s\" aige a chruthú nó a chur in eagar",
         "UserAgentVariableDescription": "Faigheann sé luach an ghníomhaire úsáideora lena n-áirítear an córas oibriúcháin agus faisnéis bhrabhsálaí faoi ghléas reatha na gcuairteoirí.",
         "UserAgentVariableName": "Gníomhaire Úsáideora",
