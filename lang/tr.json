@@ -1147,6 +1147,7 @@
         "UrlParameterVariableNameTitle": "Adres parametresi adı",
         "UrlVariableDescription": "Geçerli sayfa adresinin değerini alır.",
         "UrlVariableName": "Adres değişkeni",
+        "UseCustomTemplateCapabilityPermissionRequiredDescription": "Bu özel bir kalıptır. Özel kalıpları değiştirme izniniz yok. Matomo süper kullanıcınız ile görüşerek %1$sEtiket yöneticisi: %2$s izni isteğinde bulunun%3$s.",
         "UseCustomTemplateCapabilityRequired": "Bu özel kalıp yalnızca \"Admin\" ya da \"%1$s\" izinlerine sahip bir kullanıcı tarafından eklenebilir ya da düzenlenebilir",
         "UserAgentVariableDescription": "Geçerli ziyaretçinin aygıtındaki kullanıcı uygulaması bilgilerini işletim sistemi ve tarayıcı bilgileri ile birlikte alır.",
         "UserAgentVariableName": "Kullanıcı uygulaması",
