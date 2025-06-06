@@ -175,6 +175,19 @@ describe("ContainerTag", function () {
         await capture.page(page, 'create_new_custom_templates_restricted');
     });
 
+    it('should be able to view a customHTML tag but without edit button', async function () {
+        permissions.setWriteUser();
+        await page.goto(container1Base + '#?idTag=1');
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(750);
+        await capture.page(page, 'custom_html_tag_write_user_not_editable');
+    });
+
+    it('should be able to view a customHTML tag but without edit button after edit', async function () {
+        await setTagName('tagNameNew after write user edit');
+        await capture.page(page, 'custom_html_tag_write_user_not_editable_after_edit');
+    });
+
     it('should be able to select matomo tag with goal tracking type', async function () {
       await page.goto(container3Base);
       await page.click('.createNewTag');

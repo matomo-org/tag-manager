@@ -1138,6 +1138,7 @@
         "UrlParameterVariableNameTitle": "Nom del paràmetre de l'URL",
         "UrlVariableDescription": "Obté el valor de l'URL de la pàgina actual.",
         "UrlVariableName": "Variable URL",
+        "UseCustomTemplateCapabilityPermissionRequiredDescription": "Aquesta és una plantilla personalitzada. No teniu permís per modificar plantilles personalitzades. Poseu-vos en contacte amb el vostre superusuari de Matomo per sol·licitar %1$sel permís: %2$sTag Manager%3$s.",
         "UseCustomTemplateCapabilityRequired": "Aquesta és una plantilla personalitzada que només pot ser creada o editada per un \"administrador\" o un usuari amb la capacitat \"%1$s\"",
         "UserAgentVariableDescription": "Obté el valor de l'agent d'usuari que inclou el sistema operatiu i la informació del navegador sobre el dispositiu dels visitants actuals.",
         "UserAgentVariableName": "Agent d'usuari",

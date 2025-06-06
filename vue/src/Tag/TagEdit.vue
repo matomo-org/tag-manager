@@ -28,13 +28,10 @@
       >
         <div>
           <div
-            class="alert alert-warning"
+            class="alert alert-danger"
             v-show="isTagDisabled"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
-            {{ translate(
-                'TagManager_UseCustomTemplateCapabilityRequired',
-                translate('TagManager_CapabilityUseCustomTemplates'),
-              ) }}
           </div>
           <div>
             <Field
@@ -252,17 +249,14 @@
             </div>
           </div>
           <div
-            class="alert alert-warning"
+            class="alert alert-danger"
             v-show="isTagDisabled"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
-            {{ translate(
-            'TagManager_UseCustomTemplateCapabilityRequired',
-            translate('TagManager_CapabilityUseCustomTemplates'),
-          ) }}
           </div>
           <SaveButton
             class="createButton"
-            v-show="!isTagDisabled"
+            v-if="!isTagDisabled"
             @confirm="edit ? updateTag() : createTag()"
             :disabled="isUpdating || !isDirty"
             :saving="isUpdating"
@@ -795,6 +789,14 @@ export default defineComponent({
 
       return true;
     },
+    getNoCustomTemplatePermissionErrorMessage() {
+      return translate(
+        'TagManager_UseCustomTemplateCapabilityPermissionRequiredDescription',
+        '<strong>',
+        translate('TagManager_CapabilityUseCustomTemplates'),
+        '</strong>',
+      );
+    },
   },
   computed: {
     availableFireLimits() {
@@ -829,8 +831,10 @@ export default defineComponent({
     },
     collectionItemAvatarText() {
       return translate(
-        'TagManager_UseCustomTemplateCapabilityRequired',
+        'TagManager_UseCustomTemplateCapabilityPermissionRequiredDescription',
+        '',
         translate('TagManager_CapabilityUseCustomTemplates'),
+        '',
       );
     },
     fireLimitHelp() {
