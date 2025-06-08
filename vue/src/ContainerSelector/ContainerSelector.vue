@@ -10,6 +10,7 @@
     @click="fetchContainers(); showContainerList = !showContainerList"
     :class="{expanded: showContainerList}"
     v-focus-anywhere-but-here="{ blur: onBlur }"
+    v-tooltips
     :title="translate('TagManager_ChooseContainer')"
   >
     <a class="title">
@@ -54,6 +55,7 @@ import {
   FocusAnywhereButHere,
   ActivityIndicator,
   MatomoUrl,
+  Tooltips,
 } from 'CoreHome';
 import { Container } from '../types';
 
@@ -74,6 +76,7 @@ export default defineComponent({
   },
   directives: {
     FocusAnywhereButHere,
+    Tooltips,
   },
   data(): ContainerSelectorState {
     return {
