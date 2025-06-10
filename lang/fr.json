@@ -1115,6 +1115,7 @@
         "UrlParameterVariableNameTitle": "Nom de paramètre d'URL",
         "UrlVariableDescription": "Obtient l'URL de la page courante.",
         "UrlVariableName": "Variable d'URL",
+        "UseCustomTemplateCapabilityPermissionRequiredDescription": "Il s’agit d’un modèle personnalisé. Vous n’avez pas la permission de modifier les modèles personnalisés. Veuillez contacter votre super utilisateur Matomo pour demander la permission %1$sTag Manager : %2$s%3$s.",
         "UseCustomTemplateCapabilityRequired": "Ceci est un modèle personnalisé qui peut être créé ou modifié uniquement par un \"Admin\" ou un utilisateur avec la permission \"%1$s\"",
         "UserAgentVariableDescription": "Obtient la valeur de l'agent d'utilisateur qui indique le système d'exploitation et les information du navigateur à propos du périphérique du visiteur courant.",
         "UserAgentVariableName": "Agent d'utilisateur",
