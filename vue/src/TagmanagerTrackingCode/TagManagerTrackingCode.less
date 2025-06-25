@@ -14,16 +14,16 @@
     margin: 8px 0 0 0;
   }
 
-  label[for="containers"], label[for="environment"] {
-    top: -4px !important;
-  }
-
   .siteSelector {
     max-width: 100%;
   }
 
   .trackingCodeAdvancedOptions {
     margin-left: 20px;
+
+    label:not(.siteSelectorLabel) {
+      top: -4px;
+    }
 
     > .advance-option {
       margin: 1rem 0;
