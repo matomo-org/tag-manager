@@ -3,6 +3,21 @@
         "CategoryClicks": "Tıklamalar",
         "CategoryDate": "Zaman",
         "CategoryErrors": "Xətalar",
+        "CustomHtmlTagTitle": "Fərdi HTML",
+        "EmarsysTagCommandGoTitle": "get",
+        "EtrackerTagAddToCartNumberDescription": "Səbətə əlavə olunan məhsul sayı",
+        "EtrackerTagAddToCartNumberTitle": "Nömrə",
+        "EtrackerTagFormDataTitle": "Forma Məlumatları",
+        "EtrackerTagFormNameTitle": "Forma Adı",
+        "EtrackerTagTrackingTypeTitle": "İzlənmə Növü",
+        "EtrackerTagTransactionBasketTitle": "Səbət",
+        "EtrackerTagTransactionCurrencyTitle": "Valyuta",
+        "EtrackerTagTransactionCustomerGroupTitle": "Müştəri Qrupu",
+        "EtrackerTagTransactionDeliveryConditionsTitle": "Çatdırılma Şərtləri",
+        "EtrackerTagTransactionValueDescription": "Sifarişin Dəyəri",
+        "EtrackerTagTransactionValueTitle": "Sifarişin Dəyəri",
+        "GoogleAnalyticsUniversalTagTrackingTypeTitle": "İzlənmə Növü",
+        "LivezillaDynamicTagDomainTitle": "Livezilla Domeni",
         "PageUrlVariableName": "Sayfa Adresi"
     }
 }
