@@ -575,7 +575,8 @@ describe("ContainerTag", function () {
 
     it('should select site to copy tag to', async function () {
         await page.evaluate(() => $('#destinationSite ul li:first').click());
-        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await page.mouse.move(-10, -10);
         pageWrap = await page.waitForSelector('div.ui-dialog.mtmCopyTag');
         expect(await pageWrap.screenshot()).to.matchImage('copy_tag_site_selected');
     });
