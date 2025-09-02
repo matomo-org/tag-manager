@@ -127,9 +127,9 @@ class Trigger extends BaseModel
         return $references;
     }
 
-    public function deleteContainerTrigger($idSite, $idContainerVersion, $idTrigger)
+    public function deleteContainerTrigger($idSite, $idContainerVersion, $idTrigger, $skipReferenceCheck = false)
     {
-        if ($this->getTriggerReferences($idSite, $idContainerVersion, $idTrigger)) {
+        if (!$skipReferenceCheck && $this->getTriggerReferences($idSite, $idContainerVersion, $idTrigger)) {
             throw new \Exception(Piwik::translate('TagManager_ErrorTriggerNotRemovableAsInUse'));
         }
         $this->dao->deleteContainerTrigger($idSite, $idContainerVersion, $idTrigger, $this->getCurrentDateTime());
