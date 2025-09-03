@@ -17,7 +17,6 @@ use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Model\Container\FixedIdGenerator;
 use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Plugins\TagManager\Model\Salt;
-use Piwik\Plugins\TagManager\Template\Variable\ConstantVariable;
 use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Tests\Framework\Fixture;
