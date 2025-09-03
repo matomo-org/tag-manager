@@ -17,6 +17,7 @@ use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Model\Container\FixedIdGenerator;
 use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Plugins\TagManager\Model\Salt;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\TestCase\SystemTestCase;
@@ -434,6 +435,22 @@ class APITest extends SystemTestCase
 
         $this->runAnyApiTest('TagManager.exportContainerVersion', 'import_overwrite_itself', $params, array('xmlFieldsToRemove' => $this->fieldsToRemove));
         $this->runAnyApiTest('TagManager.getContainer', 'import_overwrite_itself', $params, array('xmlFieldsToRemove' => $this->fieldsToRemove));
+    }
+
+    public function test_import_possible_to_overwrite_itself_with_referenced_variable()
+    {
+        $idSite = self::$fixture->idSite2;
+        $idContainer = self::$fixture->idContainer1;
+        self::$fixture->addContainerVariable($idSite, $idContainer, self::$fixture->idContainer1DraftVersion, 'Constant', 'Constant-Reference', ['constantValue' => 'test']);
+        self::$fixture->addContainerVariable($idSite, $idContainer, self::$fixture->idContainer1DraftVersion, CustomJsFunctionVariable::ID, 'Custom JavaScript Constant Ref', ['jsFunction' => 'function () { return &quot;{{Constant-Reference}}&quot;; }']);
+        $exportDraftContainer1 = API::getInstance()->exportContainerVersion($idSite, $idContainer);
+
+        API::getInstance()->importContainerVersion(json_encode($exportDraftContainer1), $idSite, $idContainer);
+
+        $params = array('token_auth' => Fixture::getTokenAuth(), 'idContainer' => $idContainer, 'idSite' => $idSite);
+
+        $this->runAnyApiTest('TagManager.exportContainerVersion', 'import_overwrite_itself_with_referenced_variable', $params, array('xmlFieldsToRemove' => $this->fieldsToRemove));
+        $this->runAnyApiTest('TagManager.getContainer', 'import_overwrite_itself_with_referenced_variable', $params, array('xmlFieldsToRemove' => $this->fieldsToRemove));
     }
 
     public function test_addSite_createsDefaultContainer()
