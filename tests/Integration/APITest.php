@@ -993,7 +993,6 @@ class APITest extends IntegrationTestCase
         $this->assertEquals($rollBackedDraftVersion['tags'][1]['name'], $currentDraftVersion['tags'][1]['name']);
         $this->assertEquals($rollBackedDraftVersion['triggers'][1]['name'], $currentDraftVersion['triggers'][1]['name']);
         $this->assertEquals($rollBackedDraftVersion['variables'][1]['name'], $currentDraftVersion['variables'][1]['name']);
-
     }
 
     private function getValidImportJson()
