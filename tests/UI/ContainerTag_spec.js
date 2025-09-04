@@ -267,7 +267,7 @@ describe("ContainerTag", function () {
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
-        var nameValue = await page.evaluate(() => function() {$('.modal.open .editTrigger [id=name]').val()});
+        const nameValue = await page.evaluate(() => $('.modal.open .editTrigger [id=name]').val());
         expect(nameValue).to.be.equals('updatedTrigger');
         await capture.modal(page, 'updated_trigger_name_reopen');
         await page.evaluate(() => function() {

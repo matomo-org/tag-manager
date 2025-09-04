@@ -583,11 +583,12 @@ class APITest extends IntegrationTestCase
         $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
         $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
         $fireTrigger = array($idTrigger);
-        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName ', array('customImageSrc' => 'foo'), $fireTrigger);
 
         $this->assertTrue($this->api->pauseContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag));
         $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
         $this->assertEquals('paused', $tag['status']);
+        $this->assertEquals('myName', $tag['name']);
     }
 
     public function test_resumeContainerTag_shouldFailWhenNotHavingWritePermissions()
@@ -630,12 +631,13 @@ class APITest extends IntegrationTestCase
         $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
         $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
         $fireTrigger = array($idTrigger);
-        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName ', array('customImageSrc' => 'foo'), $fireTrigger);
 
         $this->api->pauseContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
         $this->assertTrue($this->api->resumeContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag));
         $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
         $this->assertEquals('active', $tag['status']);
+        $this->assertEquals('myName', $tag['name']);
     }
 
     public function test_addContainerTagsWithoutStatusShouldReturnActiveWhenNotSet()
@@ -860,7 +862,9 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
 
         $this->setUser();
-        $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999, 'myName');
+        $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999, 'myName ');
+        $tag = $this->api->getContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999);
+        $this->assertEquals('myName', $tag['myName']);
     }
 
 
@@ -1262,7 +1266,7 @@ class APITest extends IntegrationTestCase
     public function test_addContainerVariable_successRegularTemplateWithWriteUser()
     {
         $this->setWriteUser();
-        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'Url', 'myName');
+        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'Url', 'myName ');
         $this->assertNotEmpty($id);
         return $id;
     }
@@ -1270,8 +1274,13 @@ class APITest extends IntegrationTestCase
     public function test_updateContainerVariable_successRegularTemplateWithWriteUser()
     {
         $id = $this->test_addContainerVariable_successRegularTemplateWithWriteUser();
+        $variable = $this->api->getContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id);
+        $this->assertEquals('myName', $variable['name']);
 
-        $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('urlPart' => 'href'));
+        $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2 ', array('urlPart' => 'href'));
+
+        $variable = $this->api->getContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id);
+        $this->assertEquals('myName2', $variable['name']);
     }
 
     public function test_updateContainerVariable_failMissingCustomTemplatePermission()
