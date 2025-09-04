@@ -38,7 +38,7 @@
               uicontrol="text"
               name="name"
               :model-value="tag.name"
-              @update:model-value="tag.name = $event; setValueHasChanged()"
+              @update:model-value="tag.name = $event.target.value.trim(); setValueHasChanged()"
               :maxlength="255"
               :title="translate('General_Name')"
               :inline-help="tagNameHelpText"

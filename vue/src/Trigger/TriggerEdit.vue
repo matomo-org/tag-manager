@@ -38,7 +38,7 @@
               uicontrol="text"
               name="name"
               :model-value="trigger.name"
-              @update:model-value="trigger.name = $event; setValueHasChanged()"
+              @update:model-value="trigger.name = $event.target.value.trim(); setValueHasChanged()"
               :maxlength="255"
               :title="translate('General_Name')"
               :inline-help="translate('TagManager_TriggerNameHelp')"

@@ -947,6 +947,55 @@ class APITest extends IntegrationTestCase
         $this->api->importContainerVersion('""', $this->idSite, $this->idContainer);
     }
 
+    public function test_importContainerVersionShouldRollBackToOlderDraftWhenExportDraftHasErrors()
+    {
+        $currentDraftVersion = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
+        $isException = false;
+        $newContainerDetails = [
+            'context' => 'web',
+            'tags' => [
+                $currentDraftVersion['tags'][0]
+            ],
+            'triggers' => [
+                $currentDraftVersion['triggers'][0]
+            ],
+            'variables' => [
+                [
+                    'type' => 'Constant',
+                    'name' => 'Constant-Reference', // Note the extra space
+                    'description' => '',
+                    'default_value' => '',
+                    'lookup_table' => [],
+                    'parameters' => ['constantValue' => 'test'],
+                ],
+                [
+                    'type' => 'CustomJsFunction',
+                    'name' => 'Custom JavaScript Constant Ref',
+                    'description' => '',
+                    'default_value' => '',
+                    'lookup_table' => [],
+                    'parameters' => ['jsFunction' => 'function () { return "{{Constant-Reference}}"; }'],
+                ]
+            ],
+        ];
+        $newContainerDetails['triggers'][0]['conditions'][] = ['comparison' => 'equals', 'actual' => 'Constant-Reference ', 'expected' => false];
+        try {
+            $this->api->importContainerVersion(json_encode($newContainerDetails), $this->idSite, $this->idContainer);
+        } catch (\Exception $e) {
+            $isException = true;
+        }
+
+        $this->assertTrue($isException);
+        $rollBackedDraftVersion = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
+        $this->assertNotEmpty($rollBackedDraftVersion['tags']);
+        $this->assertNotEmpty($rollBackedDraftVersion['triggers']);
+        $this->assertNotEmpty($rollBackedDraftVersion['variables']);
+        $this->assertEquals($rollBackedDraftVersion['tags'][1]['name'], $currentDraftVersion['tags'][1]['name']);
+        $this->assertEquals($rollBackedDraftVersion['triggers'][1]['name'], $currentDraftVersion['triggers'][1]['name']);
+        $this->assertEquals($rollBackedDraftVersion['variables'][1]['name'], $currentDraftVersion['variables'][1]['name']);
+
+    }
+
     private function getValidImportJson()
     {
         return json_encode($this->api->exportContainerVersion($this->idSite, $this->idContainer));
