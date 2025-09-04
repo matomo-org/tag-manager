@@ -255,11 +255,13 @@ describe("ContainerTag", function () {
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
-        await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
+        await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger ');
         await page.waitForTimeout(500);
         await page.click('.modal.open .createButton');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
+        var nameValue = await page.evaluate(() => function() {$('.modal.open .editTrigger [id=name]').val()});
+        expect(nameValue).to.be.equals('updatedTrigger');
         await capture.page(page, 'edit_trigger_directly_updated');
     });
 

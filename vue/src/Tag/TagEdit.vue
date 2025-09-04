@@ -38,7 +38,7 @@
               uicontrol="text"
               name="name"
               :model-value="tag.name"
-              @update:model-value="tag.name = $event.target.value.trim(); setValueHasChanged()"
+              @update:model-value="tag.name = $event; setValueHasChanged()"
               :maxlength="255"
               :title="translate('General_Name')"
               :inline-help="tagNameHelpText"
@@ -848,7 +848,6 @@ export default defineComponent({
     },
     tagNameHelpText() {
       let additionalHelpText = '';
-      console.log(this.tag);
       if (this.tag.type === 'CustomHtml') {
         additionalHelpText = translate('TagManager_CustomHTMLTagNameInlineHelpText',
           '<br><br><strong>',

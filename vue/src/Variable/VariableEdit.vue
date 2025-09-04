@@ -38,7 +38,7 @@
               uicontrol="text"
               name="name"
               :model-value="variable.name"
-              @update:model-value="variable.name = $event.target.value.trim(); setValueHasChanged()"
+              @update:model-value="variable.name = $event; setValueHasChanged()"
               :maxlength="255"
               :title="translate('General_Name')"
               :inline-help="translate('TagManager_VariableNameHelp')"
