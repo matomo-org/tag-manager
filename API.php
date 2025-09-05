@@ -1446,9 +1446,10 @@ class API extends \Piwik\Plugin\API
      * @param int $idSite The id of the site the given container belongs to
      * @param string $idContainer  The id of a container, for example "6OMh6taM"
      * @param string $backupName   If specified, a backup of the current draft will be created under this version name.
+     * @param bool $_isDraftRestoreCall A boolean parameter to specify, if its a backup restore call to avoid nesting exception if backup version has errors
      * @return array
      */
-    public function importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $backupName = '', $isDraftRestoreCall = false)
+    public function importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $backupName = '', bool $_isDraftRestoreCall = false)
     {
         $this->accessValidator->checkWriteCapability($idSite);
         if (!Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
@@ -1461,7 +1462,7 @@ class API extends \Piwik\Plugin\API
             throw new Exception(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
         }
 
-        if (!$isDraftRestoreCall) {
+        if (!$_isDraftRestoreCall) {
             $draft = $this->exportContainerVersion($idSite, $idContainer);
             $exportedContainerVersion = Common::unsanitizeInputValue($exportedContainerVersion);
         }
