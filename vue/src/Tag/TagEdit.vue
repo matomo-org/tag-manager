@@ -848,7 +848,6 @@ export default defineComponent({
     },
     tagNameHelpText() {
       let additionalHelpText = '';
-      console.log(this.tag);
       if (this.tag.type === 'CustomHtml') {
         additionalHelpText = translate('TagManager_CustomHTMLTagNameInlineHelpText',
           '<br><br><strong>',

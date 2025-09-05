@@ -110,11 +110,12 @@ export default defineComponent({
     };
   },
   methods: {
-    showNotification(message: string, context: NotificationType['context']) {
+    showNotification(message: string, context: NotificationType['context'],
+      type: null|NotificationType['type'] = null) {
       const instanceId = NotificationsStore.show({
         message,
         context,
-        type: 'toast',
+        type: type !== null ? type : 'toast',
         id: NOTIFICATION_ID,
       });
 
@@ -158,11 +159,15 @@ export default defineComponent({
                   backupName: this.backupName,
                 },
                 post,
+                {
+                  createErrorNotification: false,
+                },
               ).then(() => {
                 this.showNotification(translate('TagManager_VersionImportSuccess'), 'success');
                 this.isUpdating = false;
                 window.location.reload();
-              }).catch(() => {
+              }).catch((e) => {
+                this.showNotification(e.message, 'error', 'transient');
                 this.isUpdating = false;
               });
             },

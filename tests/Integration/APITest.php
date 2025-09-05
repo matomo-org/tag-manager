@@ -583,11 +583,12 @@ class APITest extends IntegrationTestCase
         $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
         $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
         $fireTrigger = array($idTrigger);
-        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName ', array('customImageSrc' => 'foo'), $fireTrigger);
 
         $this->assertTrue($this->api->pauseContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag));
         $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
         $this->assertEquals('paused', $tag['status']);
+        $this->assertEquals('myName', $tag['name']);
     }
 
     public function test_resumeContainerTag_shouldFailWhenNotHavingWritePermissions()
@@ -630,12 +631,13 @@ class APITest extends IntegrationTestCase
         $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
         $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
         $fireTrigger = array($idTrigger);
-        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName ', array('customImageSrc' => 'foo'), $fireTrigger);
 
         $this->api->pauseContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
         $this->assertTrue($this->api->resumeContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag));
         $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
         $this->assertEquals('active', $tag['status']);
+        $this->assertEquals('myName', $tag['name']);
     }
 
     public function test_addContainerTagsWithoutStatusShouldReturnActiveWhenNotSet()
@@ -860,7 +862,9 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
 
         $this->setUser();
-        $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999, 'myName');
+        $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999, 'myName ');
+        $tag = $this->api->getContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999);
+        $this->assertEquals('myName', $tag['myName']);
     }
 
 
@@ -945,6 +949,54 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('Invalid format for exportedContainerVersion. Value needs to be a valid JSON');
 
         $this->api->importContainerVersion('""', $this->idSite, $this->idContainer);
+    }
+
+    public function test_importContainerVersionShouldRollBackToOlderDraftWhenExportDraftHasErrors()
+    {
+        $currentDraftVersion = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
+        $isException = false;
+        $newContainerDetails = [
+            'context' => 'web',
+            'tags' => [
+                $currentDraftVersion['tags'][0]
+            ],
+            'triggers' => [
+                $currentDraftVersion['triggers'][0]
+            ],
+            'variables' => [
+                [
+                    'type' => 'Constant',
+                    'name' => 'Constant-Reference', // Note the extra space
+                    'description' => '',
+                    'default_value' => '',
+                    'lookup_table' => [],
+                    'parameters' => ['constantValue' => 'test'],
+                ],
+                [
+                    'type' => 'CustomJsFunction',
+                    'name' => 'Custom JavaScript Constant Ref',
+                    'description' => '',
+                    'default_value' => '',
+                    'lookup_table' => [],
+                    'parameters' => ['jsFunction' => 'function () { return "{{Constant-Reference}}"; }'],
+                ]
+            ],
+        ];
+        $newContainerDetails['triggers'][0]['conditions'][] = ['comparison' => 'equals', 'actual' => 'Constant-Reference ', 'expected' => false];
+        try {
+            $this->api->importContainerVersion(json_encode($newContainerDetails), $this->idSite, $this->idContainer);
+        } catch (\Exception $e) {
+            $isException = true;
+        }
+
+        $this->assertTrue($isException);
+        $rollBackedDraftVersion = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
+        $this->assertNotEmpty($rollBackedDraftVersion['tags']);
+        $this->assertNotEmpty($rollBackedDraftVersion['triggers']);
+        $this->assertNotEmpty($rollBackedDraftVersion['variables']);
+        $this->assertEquals($rollBackedDraftVersion['tags'][1]['name'], $currentDraftVersion['tags'][1]['name']);
+        $this->assertEquals($rollBackedDraftVersion['triggers'][1]['name'], $currentDraftVersion['triggers'][1]['name']);
+        $this->assertEquals($rollBackedDraftVersion['variables'][1]['name'], $currentDraftVersion['variables'][1]['name']);
     }
 
     private function getValidImportJson()
@@ -1214,7 +1266,7 @@ class APITest extends IntegrationTestCase
     public function test_addContainerVariable_successRegularTemplateWithWriteUser()
     {
         $this->setWriteUser();
-        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'Url', 'myName');
+        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'Url', 'myName ');
         $this->assertNotEmpty($id);
         return $id;
     }
@@ -1222,8 +1274,13 @@ class APITest extends IntegrationTestCase
     public function test_updateContainerVariable_successRegularTemplateWithWriteUser()
     {
         $id = $this->test_addContainerVariable_successRegularTemplateWithWriteUser();
+        $variable = $this->api->getContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id);
+        $this->assertEquals('myName', $variable['name']);
 
-        $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('urlPart' => 'href'));
+        $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2 ', array('urlPart' => 'href'));
+
+        $variable = $this->api->getContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id);
+        $this->assertEquals('myName2', $variable['name']);
     }
 
     public function test_updateContainerVariable_failMissingCustomTemplatePermission()

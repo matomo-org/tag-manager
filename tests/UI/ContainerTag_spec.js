@@ -255,7 +255,7 @@ describe("ContainerTag", function () {
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
-        await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger');
+        await form.sendFieldValue(page, '.modal.open .editTrigger [id=name]', 'updatedTrigger ');
         await page.waitForTimeout(500);
         await page.click('.modal.open .createButton');
         await page.waitForNetworkIdle();
@@ -267,6 +267,8 @@ describe("ContainerTag", function () {
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
+        const nameValue = await page.evaluate(() => $('.modal.open .editTrigger [id=name]').val());
+        expect(nameValue).to.be.equals('updatedTrigger');
         await capture.modal(page, 'updated_trigger_name_reopen');
         await page.evaluate(() => function() {
           $('.modal.open .modal-close')[0].click();
