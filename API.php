@@ -1475,7 +1475,7 @@ class API extends \Piwik\Plugin\API
         $this->import->checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer);
 
         if (!empty($backupName)) {
-            $this->createContainerVersion($idSite, $idContainer, $backupName);
+            $backupVersionId = $this->createContainerVersion($idSite, $idContainer, $backupName);
         }
 
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -1484,6 +1484,10 @@ class API extends \Piwik\Plugin\API
             $this->import->importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion);
         } catch (Exception $e) {
             if (!$isDraftRestoreCall && !empty($draft)) {
+                if (!empty($backupVersionId)) {
+                    // Delete the backup container if created
+                    $this->deleteContainerVersion($idSite, $idContainer, $backupVersionId);
+                }
                 // rollback to old working draft
                 $this->importContainerVersion(json_encode($draft, JSON_HEX_APOS), $idSite, $idContainer, '', true);
             }
