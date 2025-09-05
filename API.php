@@ -1484,7 +1484,7 @@ class API extends \Piwik\Plugin\API
         try {
             $this->import->importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion);
         } catch (Exception $e) {
-            if (!$isDraftRestoreCall && !empty($draft)) {
+            if (!$_isDraftRestoreCall && !empty($draft)) {
                 if (!empty($backupVersionId)) {
                     // Delete the backup container if created
                     $this->deleteContainerVersion($idSite, $idContainer, $backupVersionId);
