@@ -100,11 +100,6 @@
                 :title="translate('TagManager_EditTrigger')"
               />
               <a
-                class="table-action icon-delete"
-                @click="deleteTrigger(trigger)"
-                :title="translate('TagManager_DeleteX', translate('TagManager_Trigger'))"
-              />
-              <a
                 class="table-action icon-content-copy"
                 v-show="hasPublishCapability()"
                 @click="openCopyDialog(trigger)"
@@ -112,6 +107,11 @@
                   'TagManager_CopyX',
                   translate('TagManager_Trigger'),
                 )"
+              />
+              <a
+                class="table-action icon-delete"
+                @click="deleteTrigger(trigger)"
+                :title="translate('TagManager_DeleteX', translate('TagManager_Trigger'))"
               />
             </td>
           </tr>

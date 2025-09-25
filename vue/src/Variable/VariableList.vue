@@ -103,11 +103,6 @@
                 :title="translate('TagManager_EditVariable')"
               />
               <a
-                class="table-action icon-delete"
-                @click="deleteVariable(variable)"
-                :title="translate('TagManager_DeleteX', translate('TagManager_Variable'))"
-              />
-              <a
                 class="table-action icon-content-copy"
                 v-show="hasPublishCapability()"
                 @click="openCopyDialog(variable)"
@@ -115,6 +110,11 @@
                   'TagManager_CopyX',
                   translate('TagManager_Variable'),
                 )"
+              />
+              <a
+                class="table-action icon-delete"
+                @click="deleteVariable(variable)"
+                :title="translate('TagManager_DeleteX', translate('TagManager_Variable'))"
               />
             </td>
           </tr>

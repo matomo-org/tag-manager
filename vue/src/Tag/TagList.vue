@@ -156,11 +156,6 @@
                 :title="translate('TagManager_EditTag')"
               />
               <a
-                class="table-action icon-delete"
-                @click="deleteTag(tag)"
-                :title="translate('TagManager_DeleteX', translate('TagManager_Tag'))"
-              />
-              <a
                 class="table-action icon-content-copy"
                 v-show="hasPublishCapability()"
                 @click="openCopyDialog(tag)"
@@ -168,6 +163,11 @@
                   'TagManager_CopyX',
                   translate('TagManager_Tag'),
                 )"
+              />
+              <a
+                class="table-action icon-delete"
+                @click="deleteTag(tag)"
+                :title="translate('TagManager_DeleteX', translate('TagManager_Tag'))"
               />
             </td>
           </tr>
