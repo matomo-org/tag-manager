@@ -1835,8 +1835,9 @@
                 windowAlias.dataLayer = windowAlias.dataLayer || [];
 
                 const syncDataLayer = function(array, callback) {
+                    const originalPush = array.push;
                     array.push = function(e) {
-                        Array.prototype.push.call(array, e);
+                        originalPush.call(array, e);
                         callback(array);
                     };
                 }
