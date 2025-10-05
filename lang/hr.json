@@ -2,9 +2,13 @@
     "TagManager": {
         "CategoryClicks": "Klikovi",
         "CategoryDate": "Datum",
+        "MatomoConfigurationMatomoIDSiteDescription": "ID stranice (idSite) u kojoj želiš pratiti podatke. idSite trenutačne web stranice je unaprijed konfiguriran. ID bilo koje druge web stranice možeš pronaći pod „Administracija → Upravljanje mjerljivim jedinicama/web stranicama”.",
+        "MatomoConfigurationMatomoUserIdDescription": "Postavlja korisnički ID ovom korisniku (kao što je e-mail adresa ili korisničko ime).",
+        "MatomoConfigurationMatomoUserIdTitle": "Korisnički ID",
         "PageUrlVariableName": "URL stranice",
         "ReferrerUrlVariableName": "Referrer URL",
         "ReferrerVariableName": "Referrer URL",
-        "Type": "Vrsta"
+        "Type": "Vrsta",
+        "ViewX": "Prikaži %s"
     }
 }
