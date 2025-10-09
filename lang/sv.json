@@ -262,6 +262,7 @@
         "ElementVisibilityTriggerSelectionMethodTitle": "Selektionsmetod",
         "EmarsysTagCommandCategoryDescription": "Rapportera aktuell kategori som besökaren tittar på.",
         "EmarsysTagCommandCategoryTitle": "kategori",
+        "EmarsysTagCommandCategoryTitleOptional": "Kategori (valfri)",
         "EmarsysTagCommandGoDescription": "Kör köns kommandon vilket skickar dem till rekommendationstjänsten för bearbetning.",
         "EmarsysTagCommandGoTitle": "gå",
         "EmarsysTagCommandTagDescription": "Lägg till en godtycklig tagg till den aktuella händelsen. Taggen samlas in och kan ses senare i andra Emarsys-produkter.",
