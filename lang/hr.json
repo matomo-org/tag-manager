@@ -1,14 +1,28 @@
 {
     "TagManager": {
+        "BrowserLanguageVariableName": "Jezik preglednika",
+        "CapabilityUseCustomTemplates": "Koristi prilagođene predloške",
+        "CategoryAds": "Oglasi",
+        "CategoryAnalytics": "Analize",
+        "CategoryClick": "Klik",
         "CategoryClicks": "Klikovi",
+        "CategoryContainerInfo": "Informacije kontejnera",
+        "CategoryCustom": "Prilagođeno",
         "CategoryDate": "Datum",
+        "CategoryDevelopers": "Razvijatelji",
+        "CategoryDevice": "Uređaj",
+        "CategoryHistory": "Povijest",
+        "EndDate": "Datum kraja",
         "MatomoConfigurationMatomoIDSiteDescription": "ID stranice (idSite) u kojoj želiš pratiti podatke. idSite trenutačne web stranice je unaprijed konfiguriran. ID bilo koje druge web stranice možeš pronaći pod „Administracija → Upravljanje mjerljivim jedinicama/web stranicama”.",
+        "MatomoConfigurationMatomoJsEndpointCustom": "Prilagođeno",
+        "MatomoConfigurationMatomoTrackingEndpointCustom": "Prilagođeno",
         "MatomoConfigurationMatomoUserIdDescription": "Postavlja korisnički ID ovom korisniku (kao što je e-mail adresa ili korisničko ime).",
         "MatomoConfigurationMatomoUserIdTitle": "Korisnički ID",
         "PageUrlVariableName": "URL stranice",
         "ReferrerUrlVariableName": "Referrer URL",
         "ReferrerVariableName": "Referrer URL",
         "Type": "Vrsta",
-        "ViewX": "Prikaži %s"
+        "ViewX": "Prikaži %s",
+        "ZendeskChatTagDescription": "Dosegni svoje kupce trenutno putem weba, mobitela i poruka."
     }
 }
