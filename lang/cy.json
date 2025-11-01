@@ -1,5 +1,9 @@
 {
     "TagManager": {
-        "CategoryDate": "Dyddiad"
+        "CategoryDate": "Dyddiad",
+        "ChooseWebsite": "Dewiswch wefan",
+        "EtrackerTagTransactionCurrencyTitle": "Arian Breiniol",
+        "InvalidDebugUrlError": "Gwall",
+        "MatomoTagEcommerceViewPrice": "Pris"
     }
 }
