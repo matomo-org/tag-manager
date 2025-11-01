@@ -1,6 +1,9 @@
 {
     "TagManager": {
         "CategoryDate": "তারিখ",
+        "EtrackerTagTransactionCurrencyTitle": "মুদ্রা",
+        "InvalidDebugUrlError": "ত্রুটি",
+        "MatomoTagEcommerceViewPrice": "মূল্য",
         "Tag": "ট্যাগ",
         "Version": "সংস্করণ"
     }
