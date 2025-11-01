@@ -2,6 +2,11 @@
     "TagManager": {
         "CategoryClicks": "Klikovi",
         "CategoryDate": "Datum",
+        "ChooseWebsite": "Izaberite web sajt",
+        "EtrackerTagTransactionCurrencyTitle": "Valuta",
+        "InvalidDebugUrlError": "Greška",
+        "MatomoTagEcommerceViewPrice": "Cijena",
+        "MatomoTagEcommerceViewProductName": "Ime proizvoda",
         "PageUrlVariableName": "URL stranice",
         "Version": "Verzija"
     }
