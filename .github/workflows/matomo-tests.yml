@@ -1,7 +1,7 @@
 # Action for running tests
 # This file has been automatically created.
 # To recreate it you can run this command
-# ./console generate:test-action --plugin="TagManager" --php-versions="7.2,8.4" --schedule-cron="45 2 * * 6"
+# ./console generate:test-action --plugin="TagManager" --php-versions="matomo5_min_php,matomo5_max_php" --schedule-cron="45 2 * * 6"
 
 name: Plugin TagManager Tests
 
@@ -37,7 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.2', '8.4' ]
+        php: [ 'matomo5_min_php', 'matomo5_max_php' ]
         target: ['${{ github.base_ref || github.ref_name }}']
     steps:
       - uses: actions/checkout@v3
@@ -54,7 +54,7 @@ jobs:
           test-type: 'PluginTests'
           matomo-test-branch: ${{ matrix.target }}
           artifacts-pass: ${{ secrets.ARTIFACTS_PASS }}
-          upload-artifacts: ${{ matrix.php == '7.2' && matrix.target == 'maximum_supported_matomo' }}
+          upload-artifacts: ${{ matrix.php == 'matomo5_min_php' && matrix.target == 'maximum_supported_matomo' }}
   Javascript:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -73,7 +73,7 @@ jobs:
           plugin-name: 'TagManager'
           matomo-test-branch: ${{ matrix.target }}
           test-type: 'JS'
-          php-version: '7.2'
+          php-version: 'matomo5_min_php'
           node-version: '12'
   UI:
     runs-on: ubuntu-24.04
@@ -88,7 +88,7 @@ jobs:
           plugin-name: 'TagManager'
           matomo-test-branch: ${{ github.base_ref || github.ref_name }}
           test-type: 'UI'
-          php-version: '7.2'
+          php-version: 'matomo5_min_php'
           node-version: '16'
           artifacts-pass: ${{ secrets.ARTIFACTS_PASS }}
           upload-artifacts: true
