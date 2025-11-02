@@ -8,7 +8,9 @@
         "AllLinksClickTriggerHelp": "Dicetuskan pada sebarang klik pada mana-mana elemen. Untuk mendengar klik pada elemen tertentu atau butang klik tertentu, sila tambah syarat berdasarkan pembolehubah \"Klik\" atau pada pembolehubah \"ButangKlik\" dalam tetapan lanjutan.",
         "AllLinksClickTriggerName": "Semua Pautan Klik",
         "CategoryClicks": "Klik",
+        "EtrackerTagTransactionCurrencyTitle": "Mata wang",
         "PageUrlVariableName": "Laman URL",
+        "Tag": "Tag",
         "Version": "Versi"
     }
 }

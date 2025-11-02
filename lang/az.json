@@ -17,7 +17,9 @@
         "EtrackerTagTransactionValueDescription": "Sifarişin Dəyəri",
         "EtrackerTagTransactionValueTitle": "Sifarişin Dəyəri",
         "GoogleAnalyticsUniversalTagTrackingTypeTitle": "İzlənmə Növü",
+        "InvalidDebugUrlError": "Mali",
         "LivezillaDynamicTagDomainTitle": "Livezilla Domeni",
+        "MatomoTagEcommerceViewPrice": "Qiymət",
         "PageUrlVariableName": "Sayfa Adresi"
     }
 }

@@ -6,12 +6,18 @@
         "CategoryEmail": "بريد إلكتروني",
         "CategoryErrors": "أخطاء",
         "CategoryHistory": "التاريخ",
+        "ChooseWebsite": "اختر الموقع",
+        "EtrackerTagTransactionCurrencyTitle": "العملة",
+        "InvalidDebugUrlError": "خطأ",
         "ManageX": "إدارة %s",
+        "MatomoConfigurationMatomoUserIdTitle": "معرّف المستخدم",
+        "MatomoTagEcommerceViewPrice": "السعر",
         "PageTitleVariableName": "عنوان الصفحة",
         "PageUrlVariableName": "رابط الصفحة",
         "ReferrerUrlVariableName": "جاء من",
         "ReferrerVariableName": "جاء من",
         "Tag": "علامة",
+        "TagLowercase": "وسم",
         "Type": "النوع",
         "Version": "الإصدار"
     }
