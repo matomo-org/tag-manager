@@ -44,6 +44,12 @@
                 if (etrackerConfig.etrackerDNT) {
                     script.setAttribute('data-respect-dnt', 'true');
                 }
+                if (etrackerConfig.enableEtrackerProxyDomain) {
+                    script.src = '//' + etrackerConfig.etrackerProxyDomain + '/code/e.js';
+                }
+                else {
+                    script.src = '//code.etracker.com/code/e.js';
+                }
                 script.src = '//code.etracker.com/code/e.js';
                 script.setAttribute('async', '');
                 s.parentNode.insertBefore(script, s);
