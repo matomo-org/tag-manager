@@ -54,6 +54,21 @@ class EtrackerConfigurationVariable extends BaseVariable
                     return trim($value);
                 };
             }),
+            $this->makeSetting('enableEtrackerProxyDomain', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableEnableProxyDomainTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariableEnableProxyDomainDescription');
+            }),
+            $this->makeSetting('etrackerProxyDomain', false, FieldConfig::TYPE_STRING, function (FieldConfig $field) {
+                $field->condition = 'enableEtrackerProxyDomain';
+                $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableProxyDomainTitle');
+                $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariableProxyDomainDescription');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->validators[] = new NotEmpty();
+                $field->validators[] = new CharacterLength(4, 200);
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
             $this->makeSetting('etrackerBlockCookies', true, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableBlockCookiesTitle');
             }),
