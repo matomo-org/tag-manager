@@ -43,7 +43,7 @@ class CustomHtmlTag extends BaseTag
                 $field->description = Piwik::translate('TagManager_CustomHtmlTagDescriptionText');
                 $field->inlineHelp = Piwik::translate(
                     'TagManager_CustomHtmlTagHelpText',
-                    ['<a rel="noreferrer noopener" target="_blank" href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/faq_26815/', null, null, 'App.TagManager.getParameters') . '">', '</a>']
+                    [Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/faq_26815/', null, null, 'App.TagManager.getParameters'), '</a>']
                 );
                 $field->validators[] = new NotEmpty();
                 $field->uiControlAttributes = ['spellcheck' => 'false'];
