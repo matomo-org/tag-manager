@@ -28,6 +28,10 @@
                     }
                 }
             }
+            //Proxy Domain
+            if(etrackerConfig.enableEtrackerProxyDomain){
+                window['et_proxy_redirect'] = "\/\/"+etrackerConfig.etrackerProxyDomain;
+            }
 
             if (!hasBeenLoaded && etrackerID) {
                 hasBeenLoaded = true;
