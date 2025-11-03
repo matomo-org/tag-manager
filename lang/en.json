@@ -930,7 +930,7 @@
         "EtrackerConfigurationVariableCustomDimensionsDescription": "Optionally set one or multiple custom dimensions.",
 		"EtrackerConfigurationVariableEnableProxyDomainTitle": "Enable etracker Tracking Domain",
 		"EtrackerConfigurationVariableEnableProxyDomainDescription": "Set up custom domain instead of using code.etracker.com",
-		"EtrackerConfigurationVariableProxyDomainTitle": "Your etracker Tracking Domain",
+		"EtrackerConfigurationVariableProxyDomainTitle": "Your custom etracker Tracking Domain",
 		"EtrackerConfigurationVariableProxyDomainDescription": "Use hostname like e.g. 'analytics.domain.com'",
         "JavaScriptVariableNameTitle": "JavaScript Variable Name",
         "JavaScriptVariableNameDescription": "The name of any variable that is available within the global scope. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example \"document.referrer\".",
