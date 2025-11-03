@@ -1705,7 +1705,7 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description />
-						<inlineHelp>The consent state must be 'denied' before the user gives consent. Once consent is received, you can trigger this tag with the action mode set to 'update' and all consents state set to 'granted' for all consent types. (All consent types are available in the Google documentation). Consent state must be 'denied' or 'granted', no other values are allowed. &lt;a href="https://matomo.org/faq/tag-manager/google-consent-tag-in-matomo-tag-manager/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=Tag.TagManager.GoogleConsentMode" target="_blank" rel="noreferrer noopener"&gt;Learn more&lt;/a&gt;.</inlineHelp>
+						<inlineHelp>The consent state must be 'denied' before the user gives consent. Once consent is received, you can trigger this tag with the action mode set to 'update' and all consents state set to 'granted' for all consent types. (All consent types are available in the Google documentation). Consent state must be 'denied' or 'granted', no other values are allowed. &lt;a target="_blank" rel="noreferrer noopener" href="https://matomo.org/faq/tag-manager/google-consent-tag-in-matomo-tag-manager/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=Tag.TagManager.GoogleConsentMode"&gt;Learn more&lt;/a&gt;.</inlineHelp>
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1779,7 +1779,7 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
-						<inlineHelp>&lt;a rel="noreferrer noopener" target="_blank" href=&quot;https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=App.TagManager.getParameters&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
+						<inlineHelp>&lt;a target="_blank" rel="noreferrer noopener" href=&quot;https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=App.TagManager.getParameters&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
