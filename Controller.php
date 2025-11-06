@@ -96,7 +96,7 @@ class Controller extends \Piwik\Plugin\Controller
                 Piwik::translate('TagManager_DashboardHelp2'),
                 Piwik::translate('TagManager_DashboardHelp3'),
                 Piwik::translate('TagManager_DashboardHelp4', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/'),
                     '</a>',
                 ]),
             ]
@@ -105,12 +105,12 @@ class Controller extends \Piwik\Plugin\Controller
         $tagsHelpText = $this->renderTemplate('helpContent', [
             'paragraphs' => [
                 Piwik::translate('TagManager_DashboardTagsHelp1', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/tags/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/tags/'),
                     '</a>'
                 ]),
                 Piwik::translate('TagManager_DashboardTagsHelp2'),
                 Piwik::translate('TagManager_DashboardTagsHelp3', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/'),
                     '</a>',
                 ]),
             ]
@@ -119,12 +119,12 @@ class Controller extends \Piwik\Plugin\Controller
         $triggersHelpText = $this->renderTemplate('helpContent', [
             'paragraphs' => [
                 Piwik::translate('TagManager_DashboardTriggersHelp1', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/triggers/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/triggers/'),
                     '</a>'
                 ]),
                 Piwik::translate('TagManager_DashboardTriggersHelp2'),
                 Piwik::translate('TagManager_DashboardTriggersHelp3', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/'),
                     '</a>',
                 ]),
             ]
@@ -133,12 +133,12 @@ class Controller extends \Piwik\Plugin\Controller
         $variablesHelpText = $this->renderTemplate('helpContent', [
             'paragraphs' => [
                 Piwik::translate('TagManager_DashboardVariablesHelp1', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/variables/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/variables/'),
                     '</a>'
                 ]),
                 Piwik::translate('TagManager_DashboardVariablesHelp2'),
                 Piwik::translate('TagManager_DashboardVariablesHelp3', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/'),
                     '</a>',
                 ]),
             ]
@@ -147,12 +147,12 @@ class Controller extends \Piwik\Plugin\Controller
         $versionsHelpText = $this->renderTemplate('helpContent', [
             'paragraphs' => [
                 Piwik::translate('TagManager_DashboardVersionsHelp1', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/versions-and-publish/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/versions-and-publish/'),
                     '</a>'
                 ]),
                 Piwik::translate('TagManager_DashboardVersionsHelp2'),
                 Piwik::translate('TagManager_DashboardVersionsHelp3', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/container-dashboard-in-matomo-tag-manager/'),
                     '</a>',
                 ]),
             ]
@@ -176,11 +176,11 @@ class Controller extends \Piwik\Plugin\Controller
             'paragraphs' => [
                 Piwik::translate('TagManager_ManageTagsHelp2'),
                 Piwik::translate('TagManager_ManageTagsHelp3', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/tags/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/tags/'),
                     '</a>',
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/'),
                     '</a>',
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/tag-manager-training/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/tag-manager-training/'),
                     '</a>',
                 ]),
             ]
@@ -198,11 +198,11 @@ class Controller extends \Piwik\Plugin\Controller
             'paragraphs' => [
                 Piwik::translate('TagManager_ManageTriggersHelp2'),
                 Piwik::translate('TagManager_ManageTriggersHelp3', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/triggers/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/triggers/'),
                     '</a>',
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/'),
                     '</a>',
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/tag-manager-training/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/tag-manager-training/'),
                     '</a>',
                 ]),
             ]
@@ -222,11 +222,11 @@ class Controller extends \Piwik\Plugin\Controller
             'paragraphs' => [
                 Piwik::translate('TagManager_ManageVariablesHelp2'),
                 Piwik::translate('TagManager_ManageVariablesHelp3', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/variables/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/variables/'),
                     '</a>',
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/'),
                     '</a>',
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/tag-manager-training/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/tag-manager-training/'),
                     '</a>',
                 ]),
             ]
@@ -250,11 +250,11 @@ class Controller extends \Piwik\Plugin\Controller
             'paragraphs' => [
                 Piwik::translate('TagManager_ManageVersionsHelp2'),
                 Piwik::translate('TagManager_ManageVersionsHelp3', [
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/versions-and-publish/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/versions-and-publish/'),
                     '</a>',
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/'),
                     '</a>',
-                    '<a href="' . Url::addCampaignParametersToMatomoLink('https://matomo.org/tag-manager-training/') . '" rel="noreferrer noopener" target="_blank">',
+                    Url::getExternalLinkTag('https://matomo.org/tag-manager-training/'),
                     '</a>',
                 ]),
             ]
