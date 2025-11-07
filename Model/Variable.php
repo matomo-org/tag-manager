@@ -458,6 +458,7 @@ class Variable extends BaseModel
         $newVarName = $this->dao->makeCopyNameUnique($idDestinationSite, $variable['name'], $idDestinationVersion);
 
         $this->copyReferencedVariables($variable, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationVersion);
+        $this->postCopyVariableActivity($idSite, $idDestinationSite, $idContainerVersion, null, $idDestinationContainer, $variable);
 
         return $this->addContainerVariable(
             $idDestinationSite,
@@ -533,6 +534,8 @@ class Variable extends BaseModel
             $variable['description']
         );
 
+        $this->postCopyVariableActivity($idSite, $idDestinationSite, $idContainerVersion, $idDestinationContainerVersion, null, $variable);
+
         return $newVarName;
     }
 
@@ -587,5 +590,29 @@ class Variable extends BaseModel
         }
 
         return $variable;
+    }
+
+    private function postCopyVariableActivity(int $idSite, int $idDestinationSite, int $idContainerVersion, ?int $idDestinationContainerVersion, ?string $idDestinationContainer, array $variable)
+    {
+        if (class_exists('\Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData')) {
+            $additionalData = [
+                'idSite' => $idSite,
+                'idDestinationSites' => $idDestinationSite,
+                'idContainerVersion' => $idContainerVersion,
+                'idDestinationContainer' => $idDestinationContainer,
+                'idDestinationContainerVersion' => $idDestinationContainerVersion,
+                'idVariable' => $variable['idvariable'],
+            ];
+            (
+            new \Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData(
+                'TagManager_Variable',
+                $variable['name'],
+                $variable['idvariable'],
+                $idSite,
+                [$idDestinationSite],
+                $additionalData
+            )
+            )->postActivityEvent();
+        }
     }
 }

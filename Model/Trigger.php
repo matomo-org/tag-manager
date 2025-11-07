@@ -182,6 +182,7 @@ class Trigger extends BaseModel
         StaticContainer::get(Variable::class)->copyReferencedVariables($trigger, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationVersion);
 
         $newName = $this->dao->makeCopyNameUnique($idDestinationSite, $trigger['name'], $idDestinationVersion);
+        $this->postCopyTriggerActivity($idSite, $idDestinationSite, $idContainerVersion, $idDestinationVersion, null, $trigger);
         return $this->addContainerTrigger(
             $idDestinationSite,
             $idDestinationVersion,
@@ -216,6 +217,7 @@ class Trigger extends BaseModel
         StaticContainer::get(Variable::class)->copyReferencedVariables($trigger, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationVersion);
 
         $newName = $this->dao->makeCopyNameUnique($idDestinationSite, $trigger['name'], $idDestinationVersion);
+        $this->postCopyTriggerActivity($idSite, $idDestinationSite, $idContainerVersion, null, $idDestinationContainer, $trigger);
         return $this->addContainerTrigger(
             $idDestinationSite,
             $idDestinationVersion,
@@ -278,5 +280,29 @@ class Trigger extends BaseModel
         }
 
         return $trigger;
+    }
+
+    private function postCopyTriggerActivity(int $idSite, int $idDestinationSite, int $idContainerVersion, ?int $idDestinationContainerVersion, ?string $idDestinationContainer, array $trigger)
+    {
+        if (class_exists('\Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData')) {
+            $additionalData = [
+                'idSite' => $idSite,
+                'idDestinationSites' => $idDestinationSite,
+                'idContainerVersion' => $idContainerVersion,
+                'idDestinationContainer' => $idDestinationContainer,
+                'idDestinationContainerVersion' => $idDestinationContainerVersion,
+                'idTrigger ' => $trigger['idtrigger'],
+            ];
+            (
+            new \Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData(
+                'TagManager_Trigger',
+                $trigger['name'],
+                $trigger['idtrigger'],
+                $idSite,
+                [$idDestinationSite],
+                $additionalData
+            )
+            )->postActivityEvent();
+        }
     }
 }
