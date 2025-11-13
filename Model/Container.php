@@ -497,18 +497,13 @@ class Container extends BaseModel
     public function copyContainer(int $idSite, string $idContainer, ?int $idDestinationSite = 0): string
     {
         $this->checkContainerExists($idSite, $idContainer);
-        // Define data array before any alterations to the variables
-        $additionalData = [
-            'idSite' => $idSite,
-            'idDestinationSites' => $idDestinationSite,
-            'idContainer' => $idContainer,
-        ];
 
         // If the destination site is empty, assume the source is the destination
         $idDestinationSite = $idDestinationSite === 0 ? $idSite : $idDestinationSite;
 
         $container = $this->getContainer($idSite, $idContainer);
         $containerName = $container['name'];
+        $idContainerVersion = $container['draft']['idcontainerversion'] ?? null;
 
         // Make sure that the name of the container isn't already in use for the destination site
         $container['name'] = $this->dao->makeCopyNameUnique($idDestinationSite, $container['name']);
@@ -532,6 +527,12 @@ class Container extends BaseModel
 
         // Make sure to record the activity for the report being copied
         if (class_exists('\Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData')) {
+            $additionalData = [
+                'idSite' => $idSite,
+                'idDestinationSites' => $idDestinationSite,
+                'idContainerVersion' => $idContainerVersion,
+                'idContainer' => $idContainer,
+            ];
             (
                 new \Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData(
                     'TagManager_Container',

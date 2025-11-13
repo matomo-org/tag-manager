@@ -202,14 +202,6 @@ class Tag extends BaseModel
     public function copyTag(int $idSite, int $idContainerVersion, int $idTag, ?int $idDestinationSite = null, ?string $idDestinationContainer = null): int
     {
         $tag = $this->getContainerTag($idSite, $idContainerVersion, $idTag);
-        // Define data array before any alterations to the variables
-        $additionalData = [
-            'idSite' => $idSite,
-            'idDestinationSites' => $idDestinationSite,
-            'idContainerVersion' => $idContainerVersion,
-            'idDestinationContainer' => $idDestinationContainer,
-            'idTag' => $idTag,
-        ];
 
         $idDestinationVersion = $idContainerVersion;
         if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
@@ -221,6 +213,13 @@ class Tag extends BaseModel
         $newName = $this->dao->makeCopyNameUnique($idDestinationSite, $tag['name'], $idDestinationVersion);
 
         if (class_exists('\Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData')) {
+            $additionalData = [
+                'idSite' => $idSite,
+                'idDestinationSites' => $idDestinationSite,
+                'idContainerVersion' => $idContainerVersion,
+                'idDestinationContainer' => $idDestinationContainer,
+                'idTag' => $idTag,
+            ];
             (
                 new \Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData(
                     'TagManager_Tag',
