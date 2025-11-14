@@ -291,7 +291,7 @@ class Trigger extends BaseModel
                 'idContainerVersion' => $idContainerVersion,
                 'idDestinationContainer' => $idDestinationContainer,
                 'idDestinationContainerVersion' => $idDestinationContainerVersion,
-                'idTrigger ' => $trigger['idtrigger'],
+                'idTrigger' => $trigger['idtrigger'],
             ];
             (
             new \Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData(
