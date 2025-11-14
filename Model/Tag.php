@@ -212,6 +212,26 @@ class Tag extends BaseModel
 
         $newName = $this->dao->makeCopyNameUnique($idDestinationSite, $tag['name'], $idDestinationVersion);
 
+        if (class_exists('\Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData')) {
+            $additionalData = [
+                'idSite' => $idSite,
+                'idDestinationSites' => $idDestinationSite,
+                'idContainerVersion' => $idContainerVersion,
+                'idDestinationContainer' => $idDestinationContainer,
+                'idTag' => $idTag,
+            ];
+            (
+                new \Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData(
+                    'TagManager_Tag',
+                    $tag['name'],
+                    $idTag,
+                    $idSite,
+                    [$idDestinationSite],
+                    $additionalData
+                )
+            )->postActivityEvent();
+        }
+
         return $this->addContainerTag(
             $idDestinationSite,
             $idDestinationVersion,
