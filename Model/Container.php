@@ -502,6 +502,8 @@ class Container extends BaseModel
         $idDestinationSite = $idDestinationSite === 0 ? $idSite : $idDestinationSite;
 
         $container = $this->getContainer($idSite, $idContainer);
+        $containerName = $container['name'];
+        $idContainerVersion = $container['draft']['idcontainerversion'] ?? null;
 
         // Make sure that the name of the container isn't already in use for the destination site
         $container['name'] = $this->dao->makeCopyNameUnique($idDestinationSite, $container['name']);
@@ -522,6 +524,26 @@ class Container extends BaseModel
         $exported = $this->getExport()->exportContainerVersion($idSite, $idContainer, $container['draft']['idcontainerversion']);
         $import = StaticContainer::get('Piwik\Plugins\TagManager\API\Import');
         $import->importContainerVersion($exported, $idDestinationSite, $idContainerNew, $idContainerNewVersion);
+
+        // Make sure to record the activity for the report being copied
+        if (class_exists('\Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData')) {
+            $additionalData = [
+                'idSite' => $idSite,
+                'idDestinationSites' => $idDestinationSite,
+                'idContainerVersion' => $idContainerVersion,
+                'idContainer' => $idContainer,
+            ];
+            (
+                new \Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData(
+                    'TagManager_Container',
+                    $containerName,
+                    $idContainerNewVersion,
+                    $idSite,
+                    [$idDestinationSite],
+                    $additionalData
+                )
+            )->postActivityEvent();
+        }
 
         // If we're copying to the same site, we're done
         if ($idSite === $idDestinationSite) {

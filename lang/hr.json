@@ -67,6 +67,7 @@
         "MatomoConfigurationMatomoIDSiteDescription": "ID stranice (idSite) u kojoj želiš pratiti podatke. idSite trenutačne web stranice je unaprijed konfiguriran. ID bilo koje druge web stranice možeš pronaći pod „Administracija → Upravljanje mjerljivim jedinicama/web stranicama”.",
         "MatomoConfigurationMatomoJsEndpointCustom": "Prilagođeno",
         "MatomoConfigurationMatomoSetLinkClassesDescription": "Postavi klase koje će se tretirati kao vanjske poveznice (dodatno uz piwik_link). Primjer: „class1” ili „class1,class2”",
+        "MatomoConfigurationMatomoTrackBotsDescription": "Matomo standardno ne prati posjete botova kako bi prikazao točne mjerne podatke posjetitelja. Deaktiviraj ovu opciju za dodavanje praćenja posjeta od botova.",
         "MatomoConfigurationMatomoTrackingEndpointCustom": "Prilagođeno",
         "MatomoConfigurationMatomoUserIdDescription": "Postavlja korisnički ID ovom korisniku (kao što je e-mail adresa ili korisničko ime).",
         "MatomoConfigurationMatomoUserIdTitle": "Korisnički ID",
