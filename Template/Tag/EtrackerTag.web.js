@@ -48,6 +48,10 @@
                 if (etrackerConfig.etrackerDNT) {
                     script.setAttribute('data-respect-dnt', 'true');
                 }
+                //custom cookie domain
+                if (etrackerConfig.enableEtrackerCookieDomain) {
+                    script.setAttribute('data-cookie-domain', etrackerConfig.etrackerCookieDomain);
+                }
                 //custom tracking domain
                 if (etrackerConfig.enableEtrackerProxyDomain) {
                     script.src = '//' + etrackerConfig.etrackerProxyDomain + '/code/e.js';
