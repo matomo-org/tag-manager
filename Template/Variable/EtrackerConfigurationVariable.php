@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
+use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
 
 class EtrackerConfigurationVariable extends BaseVariable
