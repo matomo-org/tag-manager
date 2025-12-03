@@ -5,8 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 describe("ContainerTrigger", function () {
-    this.timeout(0);
-
     this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
     this.optionsOverride = {
         'persist-fixture-data': false
