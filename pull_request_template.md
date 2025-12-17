@@ -24,3 +24,5 @@
 - [✔/✖/NA] Are all newly added texts included via translation?
 - [✔/✖/NA] Are text sanitized properly? (Eg use of v-text v/s v-html for vue)
 - [✔/✖/NA] Version bumped?
+- [✔/✖/NA] I have understood, reviewed, and tested all AI outputs before use
+- [✔/✖/NA] All AI instructions respect security, IP, and privacy rules
