@@ -1,9 +1,16 @@
 {
     "TagManager": {
+        "BingUETTagIdTitle": "ŞV",
+        "BugsnagTagApiKeyTitle": "API açarı",
+        "BugsnagTagCollectUserIpTitle": "istifadəçi IP-sini topla",
         "CategoryClicks": "Tıklamalar",
         "CategoryDate": "Zaman",
         "CategoryErrors": "Xətalar",
+        "CustomHtmlHtmlPositionTitle": "Yerləşmə",
+        "CustomHtmlTagHelpText": "%1$sDaha ətraflı%2$s",
         "CustomHtmlTagTitle": "Fərdi HTML",
+        "CustomImageTagSrcTitle": "Şəkil URL-i",
+        "EmarsysTagCommandCategoryTitleOptional": "Kateqoriya (istəyə bağlı)",
         "EmarsysTagCommandGoTitle": "get",
         "EtrackerTagAddToCartNumberDescription": "Səbətə əlavə olunan məhsul sayı",
         "EtrackerTagAddToCartNumberTitle": "Nömrə",
