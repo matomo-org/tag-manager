@@ -25,6 +25,7 @@ use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\Model\Trigger;
 use Piwik\Plugins\TagManager\Model\Variable;
+use Piwik\Plugins\TagManager\Template\Tag\TagsProvider;
 use Piwik\Site;
 use Piwik\Url;
 use Piwik\View;
@@ -439,7 +440,15 @@ class Controller extends \Piwik\Plugin\Controller
         $idTag = $request->getIntegerParameter('idTag');
         $idContainerVersion = $request->getIntegerParameter('idContainerVersion');
 
-        $idTagNew = StaticContainer::get(Tag::class)->copyTag($this->idSite, $idContainerVersion, $idTag, $idDestinationSite, $idDestinationContainer);
+        $tagModel = StaticContainer::get(Tag::class);
+        if ($this->idSite !== $idDestinationSite) {
+            $tag = $tagModel->getContainerTag($this->idSite, $idContainerVersion, $idTag);
+            if (!empty($tag) && StaticContainer::get(TagsProvider::class)->isCustomTemplate($tag['type'])) {
+                $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
+            }
+        }
+
+        $idTagNew = $tagModel->copyTag($this->idSite, $idContainerVersion, $idTag, $idDestinationSite, $idDestinationContainer);
 
         $url = 'index.php?module=TagManager&action=manageTags&'
             . Url::getQueryStringFromParameters([
