@@ -224,7 +224,7 @@ export default defineComponent({
       AjaxHelper.fetch(requestParams).then((response) => {
         // If there was an issue with the response, display a generic error
         if (!response || !response.isSuccess || !response.urlToNewCopy) {
-          const message = translate('General_ErrorRequest', '', '');
+          const message = response.message ?? translate('General_ErrorRequest', '', '');
           const notificationInstanceId = NotificationsStore.show({
             message,
             id: 'CopyDialogResultNotification',

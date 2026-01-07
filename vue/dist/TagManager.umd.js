@@ -8970,20 +8970,20 @@ function getCircularReplacer() {
 Debuggingvue_type_script_lang_ts.render = Debuggingvue_type_template_id_1ae9acce_render
 
 /* harmony default export */ var Debugging = (Debuggingvue_type_script_lang_ts);
-// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--1-1!./plugins/TagManager/vue/src/CopyDialog/CopyDialog.vue?vue&type=template&id=2360e942
+// CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-babel/node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/@vue/cli-plugin-babel/node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--1-1!./plugins/TagManager/vue/src/CopyDialog/CopyDialog.vue?vue&type=template&id=42ec6b3c
 
-const CopyDialogvue_type_template_id_2360e942_hoisted_1 = {
+const CopyDialogvue_type_template_id_42ec6b3c_hoisted_1 = {
   class: "copyMtmObjectDialog"
 };
-const CopyDialogvue_type_template_id_2360e942_hoisted_2 = ["innerHTML"];
-const CopyDialogvue_type_template_id_2360e942_hoisted_3 = ["innerHTML"];
-function CopyDialogvue_type_template_id_2360e942_render(_ctx, _cache, $props, $setup, $data, $options) {
+const CopyDialogvue_type_template_id_42ec6b3c_hoisted_2 = ["innerHTML"];
+const CopyDialogvue_type_template_id_42ec6b3c_hoisted_3 = ["innerHTML"];
+function CopyDialogvue_type_template_id_42ec6b3c_render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_Field = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveComponent"])("Field");
   const _directive_form = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["resolveDirective"])("form");
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", CopyDialogvue_type_template_id_2360e942_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h2", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.getCopyDialogTitle), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.getCopyDescription) + "  ", 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", CopyDialogvue_type_template_id_42ec6b3c_hoisted_1, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("h2", null, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.getCopyDialogTitle), 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("p", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.getCopyDescription) + "  ", 1), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("span", {
     innerHTML: _ctx.$sanitize(_ctx.getLearnMoreLink),
     class: "learnMore"
-  }, null, 8, CopyDialogvue_type_template_id_2360e942_hoisted_2)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])((Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_Field, {
+  }, null, 8, CopyDialogvue_type_template_id_42ec6b3c_hoisted_2)]), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withDirectives"])((Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createVNode"])(_component_Field, {
     uicontrol: "site",
     name: "destinationSite",
     title: _ctx.translate('TagManager_ChooseWebsite'),
@@ -9003,12 +9003,12 @@ function CopyDialogvue_type_template_id_2360e942_render(_ctx, _cache, $props, $s
     key: 1,
     class: "copyNote",
     innerHTML: _ctx.$sanitize(_ctx.getCopyContainerNote)
-  }, null, 8, CopyDialogvue_type_template_id_2360e942_hoisted_3)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("button", {
+  }, null, 8, CopyDialogvue_type_template_id_42ec6b3c_hoisted_3)) : Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createCommentVNode"])("", true), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementVNode"])("button", {
     class: "btn",
     onClick: _cache[2] || (_cache[2] = (...args) => _ctx.performCopy && _ctx.performCopy(...args))
   }, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.translate('General_Copy')), 1)])), [[_directive_form]])]);
 }
-// CONCATENATED MODULE: ./plugins/TagManager/vue/src/CopyDialog/CopyDialog.vue?vue&type=template&id=2360e942
+// CONCATENATED MODULE: ./plugins/TagManager/vue/src/CopyDialog/CopyDialog.vue?vue&type=template&id=42ec6b3c
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-plugin-typescript/node_modules/cache-loader/dist/cjs.js??ref--15-0!./node_modules/babel-loader/lib!./node_modules/@vue/cli-plugin-typescript/node_modules/ts-loader??ref--15-2!./node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/@vue/cli-service/node_modules/vue-loader-v16/dist??ref--1-1!./plugins/TagManager/vue/src/CopyDialog/CopyDialog.vue?vue&type=script&lang=ts
 
@@ -9155,7 +9155,8 @@ function CopyDialogvue_type_template_id_2360e942_render(_ctx, _cache, $props, $s
       external_CoreHome_["AjaxHelper"].fetch(requestParams).then(response => {
         // If there was an issue with the response, display a generic error
         if (!response || !response.isSuccess || !response.urlToNewCopy) {
-          const message = Object(external_CoreHome_["translate"])('General_ErrorRequest', '', '');
+          var _response$message;
+          const message = (_response$message = response.message) !== null && _response$message !== void 0 ? _response$message : Object(external_CoreHome_["translate"])('General_ErrorRequest', '', '');
           const notificationInstanceId = external_CoreHome_["NotificationsStore"].show({
             message,
             id: 'CopyDialogResultNotification',
@@ -9339,7 +9340,7 @@ function CopyDialogvue_type_template_id_2360e942_render(_ctx, _cache, $props, $s
 
 
 
-CopyDialogvue_type_script_lang_ts.render = CopyDialogvue_type_template_id_2360e942_render
+CopyDialogvue_type_script_lang_ts.render = CopyDialogvue_type_template_id_42ec6b3c_render
 
 /* harmony default export */ var CopyDialog = (CopyDialogvue_type_script_lang_ts);
 // CONCATENATED MODULE: ./plugins/TagManager/vue/src/index.ts
