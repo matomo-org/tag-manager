@@ -474,6 +474,7 @@
         "FormSubmitTriggerHelp": "Shkaktuar nga parashtrimi i çfarëdo formulari te faqja e tanishme. Që të përgjohen formularë specifikë, ju lutemi, shtoni kushte bazuar mbi një ndryshore “formular”, që nga rregullimet e mëtejshme.",
         "FormSubmitTriggerName": "Parashtrim Formulari",
         "FullscreenTriggerDescription": "Shkaktuar kur dritarja kalohet nën, ose hiqet nga gjendja “Sa Krejt Ekrani”.",
+        "FullscreenTriggerHelp": "Vënë në punë kur një përdorues hyn ose del nga mënyra “sa krejt ekrani”. Formësojeni këtë shkaktues të aktivizohet prej kalimin nën mënyrën, për daljen nga mënyra, ose për të dy veprimet, në varësi në nevojave tuaja për ndjekje.",
         "FullscreenTriggerName": "Sa krejt ekrani",
         "FullscreenTriggerTriggerActionTitle": "Vëre në punë këtë shkaktues kur veprimi është",
         "FullscreenTriggerTriggerLimitDescription": "Jepeni “0” që të vihet në punë çdo herë që ngjet akti",
