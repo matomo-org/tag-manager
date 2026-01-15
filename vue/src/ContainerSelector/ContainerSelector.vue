@@ -33,7 +33,7 @@
           </li>
           <li
             v-for="containerEntry in containers"
-            :title="`${containerEntry.name} (${containerEntry.idcontainer})`"
+            :title="this.htmlEntities(`${containerEntry.name} (${containerEntry.idcontainer})`)"
             :key="containerEntry.idcontainer"
           >
             <a :href="linkTo(containerEntry.idcontainer)">
@@ -121,6 +121,9 @@ export default defineComponent({
     },
     truncateText(text: string, length: number) {
       return tagManagerHelper.truncateText(text, length);
+    },
+    htmlEntities(v: string) {
+      return Matomo.helper.htmlEntities(v);
     },
   },
   computed: {
