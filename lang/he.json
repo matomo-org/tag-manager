@@ -5,11 +5,18 @@
         "CategoryEmail": "אימייל",
         "CategoryErrors": "שגיאות",
         "ChooseWebsite": "בחירת אתר",
+        "DiffAdded": "נוסף",
+        "DiffPaused": "הוקפא",
+        "EditTag": "לערוך תגית",
         "EtrackerTagTransactionCurrencyTitle": "מטבע",
+        "Import": "ייבא",
         "InvalidDebugUrlError": "שגיאה",
         "MatomoConfigurationMatomoUserIdTitle": "User ID",
         "MatomoTagEcommerceViewPrice": "מחיר",
         "PageUrlVariableName": "כתובת העמוד",
+        "Priority": "עדיפות",
+        "Tag": "תג",
+        "Unlimited": "ללא הגבלה",
         "Version": "גרסה"
     }
 }
