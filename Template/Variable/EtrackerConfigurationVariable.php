@@ -64,8 +64,8 @@ class EtrackerConfigurationVariable extends BaseVariable
                 $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableProxyDomainTitle');
                 $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariableProxyDomainDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->validators[] = new NotEmpty();
-                $field->validators[] = new CharacterLength(4, 200);
+                //$field->validators[] = new NotEmpty();
+                //$field->validators[] = new CharacterLength(4, 200);
                 $field->transform = function ($value) {
                     return trim($value);
                 };
@@ -79,8 +79,8 @@ class EtrackerConfigurationVariable extends BaseVariable
                 $field->title = Piwik::translate('TagManager_EtrackerConfigurationVariableCookieDomainTitle');
                 $field->description = Piwik::translate('TagManager_EtrackerConfigurationVariableCookieDomainDescription');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->validators[] = new NotEmpty();
-                $field->validators[] = new CharacterLength(4, 200);
+                //$field->validators[] = new NotEmpty();
+                //$field->validators[] = new CharacterLength(4, 200);
                 $field->transform = function ($value) {
                     return trim($value);
                 };
