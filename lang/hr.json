@@ -60,6 +60,7 @@
         "FacebookPixelTagDescription": "Facebook Pixel je usluga web analitike i oglašavanja koju nudi Facebook.",
         "Filter": "Filtar",
         "InvalidDebugUrlError": "Greška",
+        "LearnMore": "Saznaj više",
         "MatomoConfigurationMatomoAlwaysUseSendBeaconDescription": "Aktivira korištenje metode „sendBeacon” umjesto uobičajenog AJAX zahtjeva. To znači da će, kada korisnik na primjer klikne vanjsku poveznicu, navigacija na tu stranicu biti znatno brža.",
         "MatomoConfigurationMatomoCustomDimensionsTitle": "Prilagođene dimenzije",
         "MatomoConfigurationMatomoDomainsDescription": "Koristi se za otkrivanje vanjskih poveznica. Dodaj imena hostova ili domene koje će se tretirati kao lokalni. Za zamjenske poddomene možeš koristiti: „.primjer.com” ili „*.primjer.com”. Također možeš navesti i stazu unutar domene: „*.primjer.com/podstranica1”.",
