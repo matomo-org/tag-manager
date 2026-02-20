@@ -719,7 +719,7 @@
         "MatomoConfigurationMatomoHeartBeatTimeTitle": "Am HeartBeat",
         "MatomoConfigurationMatomoIDSiteDescription": "An idSite is mian leat sonraí a rianú isteach. Tá idSite an láithreáin ghréasáin reatha réamhchumraithe. Is féidir go bhfaighidh tú idSite aon suíomh Gréasáin eile faoi \"Riarachán → Bainistigh Rudaí Intomhaiste/Láithreáin Ghréasáin\".",
         "MatomoConfigurationMatomoIDSiteException": "Ní féidir leis an idSite ach idSites agus athróga a áireamh.",
-        "MatomoConfigurationMatomoIDSiteTitle": "IDSite Matomo",
+        "MatomoConfigurationMatomoIDSiteTitle": "idSite Matomo",
         "MatomoConfigurationMatomoJsEndpointCustom": "Saincheaptha",
         "MatomoConfigurationMatomoJsEndpointCustomDescription": "Anseo is féidir leat cosán neamhchaighdeánach a chumrú chun an rianaitheoir a fháil uaidh. Cuirfear i gceangal leis an URL Matomo. Níor cheart tosú le '/'. Coinnigh i gcuimhne, ós rud é go bhfuil sé seo neamhchaighdeánach, go gcaithfidh tú na hiarratais a láimhseáil ann tú féin!",
         "MatomoConfigurationMatomoJsEndpointCustomPlaceholder": "e.g. saincheaptha.js",
