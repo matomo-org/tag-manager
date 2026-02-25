@@ -1,5 +1,9 @@
 ## Changelog
 
+0.2.7 - 02/03/2026
+
+*  Updated API documentation
+
 0.2.6
 
 * Fix changing name of variable causes removing trigger in a tag
