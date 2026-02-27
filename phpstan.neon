@@ -1,0 +1,21 @@
+parameters:
+    level: 1
+    phpVersion: 70200
+    tmpDir: /tmp/phpstan/TagManager/main
+    paths:
+        - .
+    excludePaths:
+        - tests/*
+        - vendor/
+        - github-action-tests/
+    bootstrapFiles:
+        - ../../bootstrap-phpstan.php
+    universalObjectCratesClasses:
+        - Piwik\Config
+        - Piwik\View
+        - Piwik\ViewDataTable\Config
+    scanDirectories:
+        # ../../ does not actually seem to give us anything
+        # that ../plugins/ does not, but including it for
+        # completeness.  It does not seem to slow down performance.
+        - ../../
