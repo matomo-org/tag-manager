@@ -284,6 +284,7 @@ describe("ContainerTrigger", function () {
         await page.evaluate(() => $('#destinationSite ul li:first').click());
         await page.waitForTimeout(250);
         pageWrap = await page.waitForSelector('div.ui-dialog.mtmCopyTrigger');
+        await page.mouse.move(-10, -10);
         expect(await pageWrap.screenshot()).to.matchImage('copy_trigger_site_selected');
     });
 
