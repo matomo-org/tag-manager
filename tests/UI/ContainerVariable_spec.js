@@ -142,6 +142,13 @@ describe("ContainerVariable", function () {
         await capture.page(page, 'create_new_custom_templates_restricted');
     });
 
+    it('should be able to view a variable list with delete action not visible for custom JS', async function () {
+        permissions.setWriteUser();
+        await page.goto(container1Base);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'custom_js_variable_list_delete_ction_hidden_when_no_access');
+    });
+
     it('should be able to view a customJS variable but without edit button', async function () {
         await page.goto(container1Base);
         await page.click('.createNewVariable');
@@ -154,13 +161,6 @@ describe("ContainerVariable", function () {
         await page.waitForNetworkIdle();
         await page.waitForTimeout(750);
         await capture.page(page, 'custom_js_variable_write_user_not_editable');
-    });
-
-    it('should be able to view a variable list with delete action not visible for custom JS', async function () {
-        permissions.setWriteUser();
-        await page.goto(container1Base);
-        await page.waitForNetworkIdle();
-        await capture.page(page, 'custom_js_variable_list_delete_ction_hidden_when_no_access');
     });
 
     it('should be able to view a customJS variable but without edit button after edit', async function () {
