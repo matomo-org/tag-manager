@@ -156,7 +156,16 @@ describe("ContainerVariable", function () {
         await capture.page(page, 'custom_js_variable_write_user_not_editable');
     });
 
+    it('should be able to view a variable list with delete action not visible for custom JS', async function () {
+        permissions.setWriteUser();
+        await page.goto(container1Base);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'custom_js_variable_list_delete_action_hidden_when_no_access');
+    });
+
     it('should be able to view a customJS variable but without edit button after edit', async function () {
+        await clickFirstRowTableAction('icon-edit');
+        await page.waitForNetworkIdle();
         await setVariableName('CustomJSVariable after write user edit');
         await capture.page(page, 'custom_js_variable_write_user_not_editable_after_edit');
         await cancelVariable();
@@ -168,15 +177,7 @@ describe("ContainerVariable", function () {
         await page.waitForNetworkIdle();
     });
 
-    it('should be able to view a variable list with delete action not visible for custom JS', async function () {
-        permissions.setWriteUser();
-        await page.goto(container1Base);
-        await page.waitForNetworkIdle();
-        await capture.page(page, 'custom_js_variable_list_delete_ction_hidden_when_no_access');
-    });
-
     it('should be able to prefill variable', async function () {
-        permissions.setSuperUser();
         await page.goto(container1Base);
         await page.click('.createNewVariable');
         await page.waitForNetworkIdle();
