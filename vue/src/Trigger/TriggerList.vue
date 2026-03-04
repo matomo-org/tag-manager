@@ -109,6 +109,7 @@
                 )"
               />
               <a
+                v-show="!trigger.typeMetadata?.isCustomTemplate || canUseCustomTemplates"
                 class="table-action icon-delete"
                 @click="deleteTrigger(trigger)"
                 :title="translate('TagManager_DeleteX', translate('TagManager_Trigger'))"
@@ -339,6 +340,9 @@ export default defineComponent({
     getActionClasses(): string {
       const copyClass = this.hasPublishCapability() ? ' hasCopyAction' : '';
       return `action${copyClass}`;
+    },
+    canUseCustomTemplates() {
+      return Matomo.hasUserCapability('tagmanager_use_custom_templates');
     },
   },
 });

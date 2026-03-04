@@ -837,7 +837,11 @@ class API extends \Piwik\Plugin\API
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
-        if ($this->getContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger)) {
+        $trigger = $this->getContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger);
+        if ($trigger) {
+            if ($this->variablesProvider->isCustomTemplate($trigger['type'])) {
+                $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+            }
             $this->triggers->deleteContainerTrigger($idSite, $idContainerVersion, $idTrigger);
             $this->updateContainerPreviewRelease($idSite, $idContainer);
             Piwik::postEvent('TagManager.deleteContainerTrigger.end', array(array(
@@ -1085,10 +1089,10 @@ class API extends \Piwik\Plugin\API
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
         $variable = $this->getContainerVariable($idSite, $idContainer, $idContainerVersion, $idVariable);
-        if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
-            $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
-        }
         if ($variable) {
+            if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
+                $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+            }
             $this->variables->deleteContainerVariable($idSite, $idContainerVersion, $idVariable);
             $this->updateContainerPreviewRelease($idSite, $idContainer);
             Piwik::postEvent('TagManager.deleteContainerVariable.end', array(array(
