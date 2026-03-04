@@ -839,7 +839,7 @@ class API extends \Piwik\Plugin\API
 
         $trigger = $this->getContainerTrigger($idSite, $idContainer, $idContainerVersion, $idTrigger);
         if ($trigger) {
-            if ($this->variablesProvider->isCustomTemplate($trigger['type'])) {
+            if ($this->triggersProvider->isCustomTemplate($trigger['type'])) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
             $this->triggers->deleteContainerTrigger($idSite, $idContainerVersion, $idTrigger);
