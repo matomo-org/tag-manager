@@ -175,6 +175,7 @@ describe("ContainerTag", function () {
 
     it('should be able to view a customHTML tag but without edit button', async function () {
         permissions.setWriteUser();
+        permissions.setCapabilities({"tagmanager_use_custom_templates": []});
         await page.goto(container1Base + '#?idTag=1');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(750);
@@ -184,6 +185,14 @@ describe("ContainerTag", function () {
     it('should be able to view a customHTML tag but without edit button after edit', async function () {
         await setTagName('tagNameNew after write user edit');
         await capture.page(page, 'custom_html_tag_write_user_not_editable_after_edit');
+    });
+
+    it('should hide pause and delete actions for custom template tags without capability', async function () {
+        permissions.setWriteUser();
+        permissions.setCapabilities({"tagmanager_use_custom_templates": []});
+        await page.goto(container1Base);
+        await page.waitForTimeout(250);
+        await capture.page(page, 'custom_template_tag_actions_hidden');
     });
 
     it('should be able to select matomo tag with goal tracking type', async function () {

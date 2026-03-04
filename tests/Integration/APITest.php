@@ -493,6 +493,26 @@ class APITest extends IntegrationTestCase
         $this->api->deleteContainerVariable($this->idSite, 9999, $this->idContainerDraftVersion, $idVariable = 999);
     }
 
+    public function test_deleteContainerVariable_shouldFailWhenMissingCustomTemplateCapability()
+    {
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $idVariable = $this->api->addContainerVariable(
+            $this->idSite,
+            $this->idContainer,
+            $this->idContainerDraftVersion,
+            CustomJsFunctionVariable::ID,
+            'myCustomVariable'
+        );
+
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array());
+        $this->api->deleteContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idVariable);
+    }
+
     public function test_deleteContainerTrigger_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
@@ -543,6 +563,30 @@ class APITest extends IntegrationTestCase
         $this->api->deleteContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
     }
 
+    public function test_deleteContainerTag_shouldFailWhenMissingCustomTemplateCapability()
+    {
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, WindowLoadedTrigger::ID, 'myTagDeleteTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag(
+            $this->idSite,
+            $this->idContainer,
+            $this->idContainerDraftVersion,
+            CustomHtmlTag::ID,
+            'myCustomTag',
+            array('customHtml' => 'foo'),
+            $fireTrigger
+        );
+
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array());
+        $this->api->deleteContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag);
+    }
+
     public function test_pauseContainerTag_shouldFailWhenNotHavingWritePermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
@@ -589,6 +633,30 @@ class APITest extends IntegrationTestCase
         $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
         $this->assertEquals('paused', $tag['status']);
         $this->assertEquals('myName', $tag['name']);
+    }
+
+    public function test_pauseContainerTag_shouldFailWhenMissingCustomTemplateCapability()
+    {
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, WindowLoadedTrigger::ID, 'myTagPauseTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag(
+            $this->idSite,
+            $this->idContainer,
+            $this->idContainerDraftVersion,
+            CustomHtmlTag::ID,
+            'myCustomTag',
+            array('customHtml' => 'foo'),
+            $fireTrigger
+        );
+
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array());
+        $this->api->pauseContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag);
     }
 
     public function test_resumeContainerTag_shouldFailWhenNotHavingWritePermissions()
@@ -638,6 +706,31 @@ class APITest extends IntegrationTestCase
         $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
         $this->assertEquals('active', $tag['status']);
         $this->assertEquals('myName', $tag['name']);
+    }
+
+    public function test_resumeContainerTag_shouldFailWhenMissingCustomTemplateCapability()
+    {
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, WindowLoadedTrigger::ID, 'myTagResumeTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag(
+            $this->idSite,
+            $this->idContainer,
+            $this->idContainerDraftVersion,
+            CustomHtmlTag::ID,
+            'myCustomTag',
+            array('customHtml' => 'foo'),
+            $fireTrigger
+        );
+        $this->api->pauseContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag);
+
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array());
+        $this->api->resumeContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag);
     }
 
     public function test_addContainerTagsWithoutStatusShouldReturnActiveWhenNotSet()
