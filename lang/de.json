@@ -466,6 +466,7 @@
         "GoogleAnalyticsUniversalTagPropertyIdTitle": "Property-ID",
         "GoogleAnalyticsUniversalTagTrackingTypeDescription": "Nur der Tracking-Typ \"Seitenansicht\" wird aktuell unterstützt.",
         "GoogleAnalyticsUniversalTagTrackingTypeTitle": "Tracking-Typ",
+        "GoogleConsentModeV2TagConsentStateTitle": "Zustimmungsstatus",
         "HideAdvancedSettings": "Erweiterte Einstellungen verbergen",
         "HistoryChangeTriggerDescription": "Wird ausgelöst, wenn sich die aktuelle URL ändert.",
         "HistoryChangeTriggerName": "History Änderung",
