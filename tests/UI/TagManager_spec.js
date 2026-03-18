@@ -178,8 +178,7 @@ describe("TagManager", function () {
     it('should show the manage website screen', async function () {
         const urlToTest = "?module=SitesManager&action=index&idSite=2&period=day&date=yesterday&showaddsite=false";
         await page.goto(urlToTest);
-        const pageElement = await page.$('.page');
-        expect(await pageElement.screenshot()).to.matchImage('manageWebsites');
+        await capture.page(page, 'manageWebsites')
     });
 
     it('should show the container detail when delete button is pressed', async function () {
