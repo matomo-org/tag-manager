@@ -788,7 +788,7 @@
         "MatomoConfigurationMatomoSetSecureCookieDescription": "Bu seçenek açıldığında, tüm birinci taraf tanımlama bilgilerinde güvenli tanımlama bilgisi işareti etkinleştirilir. Bu seçenek, site yalnızca HTTPS üzerinden yayınlanıyorsa kullanılmalıdır. Böylece tüm izleme tanımlama bilgileri her zaman güvenli bağlantı üzerinden gönderilir.",
         "MatomoConfigurationMatomoSetSecureCookieTitle": "Güvenli tanımlama bilgisi kullanılsın",
         "MatomoConfigurationMatomoTrackAllContentImpressionsDescription": "Bu seçenek açıldığında, tüm içerik blokları için DOM tamamıyla taranarak içerik izleme özelliği açılır ve sayfa yüklendikten sonra tüm gösterimler izlenir.",
-        "MatomoConfigurationMatomoTrackAllContentImpressionsTitle": "Tüm içerik gösterimler izlensin",
+        "MatomoConfigurationMatomoTrackAllContentImpressionsTitle": "Tüm içerik gösterimleri izlensin",
         "MatomoConfigurationMatomoTrackBotsDescription": "Varsayılan olarak, Matomo bot ziyaretlerini izlemez ve böylece doğru ziyaretçi ölçümlerini görüntüler. Bu seçenek etkinleştirildiğinde, bot ziyaretleri de izlenir.",
         "MatomoConfigurationMatomoTrackBotsTitle": "Botlar izlensin",
         "MatomoConfigurationMatomoTrackVisibleContentImpressionsDescription": "Bu seçenek açıldığında, tüm içerik blokları için DOM tamamıyla taranarak içerik izleme özelliği açılır. Ancak yalnızca kullanıcı içeriği kaydırdığında ve içerik gerçekten görünür olduğunda içerik gösterimleri izlenir.",
