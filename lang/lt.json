@@ -1,5 +1,6 @@
 {
     "TagManager": {
+        "BingUETTagIdTitle": "ID:",
         "BrowserLanguageVariableName": "Naršyklės kalba",
         "CategoryAnalytics": "Analizė",
         "CategoryClicks": "Spustelėjimai",
@@ -17,6 +18,7 @@
         "ConstantVariableName": "Konstanta",
         "Container": "Konteineris",
         "Containers": "Konteineriai",
+        "ContextWeb": "Saitynas",
         "CopyX": "Kopijuoti %s",
         "Created": "Sukurtas",
         "CreatedDate": "Sukūrimo data",
@@ -30,6 +32,7 @@
         "DisablePreview": "Išjungti peržiūrą",
         "DisablingPreviewPleaseWait": "Išjungiama peržiūros veiksena, palaukite…",
         "ElementVisibilityTriggerElementIDTitle": "Elemento ID",
+        "EmarsysTagCommandGoTitle": "eik_x_y",
         "EnablingPreviewPleaseWait": "Įjungiama peržiūros veiksena, palaukite…",
         "Entry": "Įrašas",
         "EtrackerTagAddToCartNumberTitle": "Pažinti skaičius",
@@ -62,6 +65,7 @@
         "ScreenWidthVariableName": "Ekrano plotis",
         "ShowAdvancedSettings": "Rodyti išplėstinius nustatymus",
         "StartDate": "Pradžios data",
+        "Tag": "Žymelė",
         "ThemeColorTagName": "Apipavidalinimo spalva",
         "ThemeColorTagThemeColorTitle": "Apipavidalinimo spalva",
         "Trigger": "Trigger",
