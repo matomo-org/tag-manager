@@ -87,6 +87,7 @@
         "ContainerLowercase": "容器",
         "Containers": "容器",
         "Context": "上下文",
+        "ContextWeb": "網頁",
         "CreateNewContainer": "创建新的容器",
         "CreateNewTag": "创建新标签",
         "CreateNewTrigger": "创建触发器",
