@@ -771,6 +771,7 @@
         "MatomoConfigurationMatomoTrackingEndpointCustom": "Vetjak",
         "MatomoConfigurationMatomoTrackingEndpointCustomDescription": "Këtu mund të formësoni një shteg jo standard për ndjekje kërkesash. Do t’i shtohet URL-së Matomo. S’duhet të fillojë me '/'. Mbani parasysh se, ngaqë është jo standarde, do t’ju duhet t’i sillni vetë kërkesat atje!",
         "MatomoConfigurationMatomoTrackingEndpointCustomPlaceholder": "p.sh., custom.php",
+        "MatomoConfigurationMatomoTrackingEndpointCustomTitle": "Shteg Objektivi Kërkese të Përshtatur Ndjekjeje",
         "MatomoConfigurationMatomoTrackingEndpointDescription": "Këtu mund të formësoni shtegun e synuar për kërkesa ndjekjeje.",
         "MatomoConfigurationMatomoTrackingEndpointTitle": "Shteg i Synuar Kërkesash Ndjekjeje",
         "MatomoConfigurationMatomoUrlDescription": "URL-ja e instancës tuaj Matomo. S’duhet të përmbajë “/index.php” apo “piwik.php”. URL-ja për URL të instancës tuaj të tanishme Matomo është e formësuar paraprakisht.",
