@@ -312,6 +312,7 @@ describe("ContainerVariable", function () {
         await page.evaluate(() => $('div.matomo-field-select ul li:first').click());
         await page.waitForTimeout(250);
         pageWrap = await page.waitForSelector('div.ui-dialog.mtmCopyVariable');
+        await page.waitForTimeout(250);
         expect(await pageWrap.screenshot()).to.matchImage('copy_variable_container_selected');
     });
 
@@ -359,6 +360,10 @@ describe("ContainerVariable", function () {
         });
         await page.evaluate(() => $('div.matomo-field-select div.select-wrapper input.dropdown-trigger')[0].click());
         await page.waitForTimeout(250);
-        await capture.page(page, 'copy_variable_container_select');
+        await capture.selector(
+          page,
+          'copy_variable_container_select',
+          '.ui-dialog.mtmCopyVariable, .ui-dialog.mtmCopyVariable ul.dropdown-content'
+        );
     });
 });

@@ -317,6 +317,10 @@ describe("ContainerTrigger", function () {
         });
         await page.evaluate(() => $('div.matomo-field-select div.select-wrapper input.dropdown-trigger')[0].click());
         await page.waitForTimeout(250);
-        await capture.page(page, 'copy_trigger_container_select');
+        await capture.selector(
+          page,
+          'copy_trigger_container_select',
+          '.ui-dialog.mtmCopyTrigger, .ui-dialog.mtmCopyTrigger ul.dropdown-content'
+        );
     });
 });
