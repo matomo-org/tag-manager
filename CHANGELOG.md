@@ -1,5 +1,10 @@
 ## Changelog
 
+0.2.8 - 27/04/2026
+
+*  Updated API documentation
+
+
 0.2.7 - 02/03/2026
 
 *  Updated API documentation
