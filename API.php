@@ -953,7 +953,8 @@ class API extends \Piwik\Plugin\API
      * @param string $type The variable template ID to create.
      * @param string $name The display name for the variable.
      * @param array<string, mixed> $parameters Parameter values keyed by template parameter name.
-     * @param false|string|null $defaultValue Optional fallback value returned when the variable resolves to no value.
+     * @param bool|float|int|string|null $defaultValue Optional fallback value returned when the variable resolves to
+     *                                                 no value.
      * @param array<int, array<string, mixed>> $lookupTable Lookup rules for variable value translation. Use
      *                                                      {@link TagManager.getAvailableComparisons} to list
      *                                                      supported comparison operators.
@@ -1006,7 +1007,8 @@ class API extends \Piwik\Plugin\API
      * @param int $idVariable The variable ID to update.
      * @param string $name The updated display name for the variable.
      * @param array<string, mixed> $parameters Parameter values keyed by template parameter name.
-     * @param string|null $defaultValue Optional fallback value returned when the variable resolves to no value.
+     * @param bool|float|int|string|null $defaultValue Optional fallback value returned when the variable resolves to
+     *                                                 no value.
      * @param array<int, array<string, mixed>> $lookupTable Lookup rules for variable value translation. Use
      *                                                      {@link TagManager.getAvailableComparisons} to list
      *                                                      supported comparison operators.
