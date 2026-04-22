@@ -308,6 +308,10 @@ class Controller extends \Piwik\Plugin\Controller
 
         $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($this->idSite);
         $variables['containerMenuItems'] = $this->buildContainerMenuItems($containers, \Piwik\Request::fromRequest()->getStringParameter('action', ''), $idContainer);
+        $variables['mobileTagManagerMenu'] = $this->buildMobileTagManagerMenu(
+            $variables['containerMenuItems'],
+            $variables['container']['name'] . ' (' . $variables['container']['idcontainer'] . ')'
+        );
 
         $variables['idcontainerversion'] = null;
         if (!empty($variables['container']['draft']['idcontainerversion'])) {
@@ -369,6 +373,56 @@ class Controller extends \Piwik\Plugin\Controller
         }
 
         return $items;
+    }
+
+    private function buildMobileTagManagerMenu(array $containerMenuItems, ?string $dropdownTitle = null): array
+    {
+        $menu = MenuTagManager::getInstance()->getMenu();
+
+        if (empty($containerMenuItems)) {
+            return $menu;
+        }
+
+        if (!isset($menu['TagManager_TagManager'])) {
+            $menu['TagManager_TagManager'] = array();
+        }
+
+        $tagManagerMenu = $menu['TagManager_TagManager'];
+        $orderedMenu = array();
+
+        foreach ($tagManagerMenu as $name => $menuItem) {
+            if ($name[0] === '_') {
+                $orderedMenu[$name] = $menuItem;
+            }
+        }
+
+        foreach ($tagManagerMenu as $name => $menuItem) {
+            if ($name[0] !== '_' && isset($menuItem['_url']['action']) && $menuItem['_url']['action'] === 'manageContainers') {
+                $orderedMenu[$name] = $menuItem;
+            }
+        }
+
+        foreach ($containerMenuItems as $containerMenuItem) {
+            $orderedMenu[$containerMenuItem['name']] = array(
+                '_url' => array(),
+                '_tooltip' => $containerMenuItem['name'],
+            );
+
+            if (!empty($containerMenuItem['url'])) {
+                parse_str(parse_url($containerMenuItem['url'], PHP_URL_QUERY) ?: '', $queryParameters);
+                $orderedMenu[$containerMenuItem['name']]['_url'] = $queryParameters;
+            }
+        }
+
+        foreach ($tagManagerMenu as $name => $menuItem) {
+            if ($name[0] !== '_' && (!isset($menuItem['_url']['action']) || $menuItem['_url']['action'] !== 'manageContainers')) {
+                $orderedMenu[$name] = $menuItem;
+            }
+        }
+
+        $menu['TagManager_TagManager'] = $orderedMenu;
+
+        return $menu;
     }
 
     public function exportContainerVersion()

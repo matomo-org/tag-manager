@@ -63,7 +63,7 @@
                         true
                     ) }}
                 </ul>
-                <div vue-entry="CoreHome.MobileLeftMenu" menu="{{ tagManagerMenu|json_encode }}"></div>
+                <div vue-entry="CoreHome.MobileLeftMenu" menu="{{ mobileTagManagerMenu|default(tagManagerMenu)|json_encode }}"></div>
             </div>
         {% elseif showContainerMenuDropdown is defined and showContainerMenuDropdown %}
             <div id="secondNavBar" class="Menu--admin z-depth-1">
