@@ -44,10 +44,24 @@
   height: 16px;
   margin-right: 13px;
   padding-right: 0;
-  vertical-align: text-bottom;
+  vertical-align: center;
   background: url("plugins/TagManager/images/icons/tag-manager-icon.svg") no-repeat center;
   background-size: contain;
 }
+
+#secondNavBar.Menu--admin .tagManagerLeftMenuDropdown.active .menuDropdown {
+  background-color: @theme-color-background-tinyContrast;
+}
+
+// Prevent flashing nav before vue takes over and collapses it
+#root #secondNavBar.Menu--admin .tagManagerLeftMenuDropdown > div[vue-entry="CoreHome.MenuItemsDropdown"] > a {
+  display: none !important;
+}
+
+#root #secondNavBar.Menu--admin .tagManagerLeftMenuDropdown > div[vue-entry="CoreHome.MenuItemsDropdown"] .item {
+  padding-left: 45px !important;
+}
+
 
 .modal.open .editVersion .versionChanges h3 {
   margin-top: 32px;

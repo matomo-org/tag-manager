@@ -90,16 +90,15 @@ class Menu extends \Piwik\Plugin\Menu
         }
 
         $params = array('idContainer' => $idContainer); // not needed as it is already present in url but we make sure the id is set
-        $menuCategory = strlen($container['name']) > 50 ? substr($container['name'], 0, 50) . '…' : $container['name'];
 
 
         if ($this->accessValidator->hasWriteCapability($idSite)) {
-            $menu->addItem($menuCategory, 'Dashboard', $this->urlForAction('dashboard', $params), $orderId = 104);
+            $menu->addItem('TagManager_TagManager', 'Dashboard', $this->urlForAction('dashboard', $params), $orderId = 104);
         }
 
-        $menu->addItem($menuCategory, 'TagManager_Tags', $this->urlForAction('manageTags', $params), $orderId = 105);
-        $menu->addItem($menuCategory, 'TagManager_Triggers', $this->urlForAction('manageTriggers', $params), $orderId = 110);
-        $menu->addItem($menuCategory, 'TagManager_Variables', $this->urlForAction('manageVariables', $params), $orderId = 115);
+        $menu->addItem('TagManager_TagManager', 'TagManager_Tags', $this->urlForAction('manageTags', $params), $orderId = 105);
+        $menu->addItem('TagManager_TagManager', 'TagManager_Triggers', $this->urlForAction('manageTriggers', $params), $orderId = 110);
+        $menu->addItem('TagManager_TagManager', 'TagManager_Variables', $this->urlForAction('manageVariables', $params), $orderId = 115);
 
         $previewEnabled = false;
 
@@ -110,11 +109,11 @@ class Menu extends \Piwik\Plugin\Menu
         }
 
         if ($this->accessValidator->hasWriteCapability($idSite)) {
-            $menu->addItem($menuCategory, 'TagManager_Versions', $this->urlForAction('manageVersions', $params), $orderId = 115);
+            $menu->addItem('TagManager_TagManager', 'TagManager_Versions', $this->urlForAction('manageVersions', $params), $orderId = 115);
             if ($previewEnabled) {
-                $menu->addItem($menuCategory, 'TagManager_DisablePreview', array(), $orderId = 130, false, 'icon-bug', "tagManagerHelper.disablePreviewMode(" . json_encode($container['idcontainer']) . ")");
+                $menu->addItem('TagManager_TagManager', 'TagManager_DisablePreview', array(), $orderId = 130, false, 'icon-bug', "tagManagerHelper.disablePreviewMode(" . json_encode($container['idcontainer']) . ")");
             } else {
-                $menu->addItem($menuCategory, 'TagManager_EnablePreviewDebug', array(), $orderId = 130, false, 'icon-bug', "tagManagerHelper.enablePreviewMode(" . json_encode($container['idcontainer']) . ")");
+                $menu->addItem('TagManager_TagManager', 'TagManager_EnablePreviewDebug', array(), $orderId = 130, false, 'icon-bug', "tagManagerHelper.enablePreviewMode(" . json_encode($container['idcontainer']) . ")");
             }
 
             if (
@@ -123,11 +122,11 @@ class Menu extends \Piwik\Plugin\Menu
                     $this->accessValidator->hasWriteCapability($idSite) && $this->accessValidator->hasPublishLiveEnvironmentCapability($idSite)
                 )
             ) {
-                $menu->addItem($menuCategory, 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, '')");
+                $menu->addItem('TagManager_TagManager', 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, '')");
             }
         }
 
-        $menu->addItem($menuCategory, 'TagManager_InstallCode', $this->urlForAction('releases', $params), $orderId = 140, false, 'icon-embed', "tagManagerHelper.showInstallCode(" . json_encode($container['idcontainer']) . ")");
+        $menu->addItem('TagManager_TagManager', 'TagManager_InstallCode', $this->urlForAction('releases', $params), $orderId = 140, false, 'icon-embed', "tagManagerHelper.showInstallCode(" . json_encode($container['idcontainer']) . ")");
     }
 
     private function addContainerMenuItems(MenuTagManager $menu, array $containers, string $action): void
