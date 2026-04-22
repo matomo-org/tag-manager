@@ -19,6 +19,8 @@ use Piwik\Plugins\TagManager\Model\Environment;
 
 class Menu extends \Piwik\Plugin\Menu
 {
+    public const CONTAINER_MENU_COLLAPSE_THRESHOLD = 5;
+
     /**
      * @var AccessValidator
      */
@@ -128,6 +130,31 @@ class Menu extends \Piwik\Plugin\Menu
         $menu->addItem($menuCategory, 'TagManager_InstallCode', $this->urlForAction('releases', $params), $orderId = 140, false, 'icon-embed', "tagManagerHelper.showInstallCode(" . json_encode($container['idcontainer']) . ")");
     }
 
+    private function addContainerMenuItems(MenuTagManager $menu, array $containers, string $action): void
+    {
+        if (self::shouldCollapseContainerMenu(count($containers))) {
+            return;
+        }
+
+        foreach ($containers as $container) {
+            $params = array(
+                'idContainer' => $container['idcontainer'],
+            );
+
+            $menu->addItem(
+                'TagManager_TagManager',
+                $container['name'] . ' (' . $container['idcontainer'] . ')',
+                $this->urlForAction($action, $params),
+                120
+            );
+        }
+    }
+
+    public static function shouldCollapseContainerMenu(int $containerCount): bool
+    {
+        return $containerCount > self::CONTAINER_MENU_COLLAPSE_THRESHOLD;
+    }
+
     public function configureTagManagerMenu(MenuTagManager $menu)
     {
         $idSite = \Piwik\Request::fromRequest()->getIntegerParameter('idSite', 0);
@@ -150,24 +177,13 @@ class Menu extends \Piwik\Plugin\Menu
         $action = \Piwik\Request::fromRequest()->getStringParameter('action', '');
 
         if (in_array($action, ['manageContainers'], true)) {
-            foreach ($containers as $container) {
-                if (!$action || $action === 'manageContainers') {
-                    $action = $this->accessValidator->hasWriteCapability($idSite)
-                        ? 'dashboard'
-                        : 'manageTags';
-                }
-
-                $params = array(
-                    'idContainer' => $container['idcontainer'],
-                );
-
-                $menu->addItem(
-                    'TagManager_TagManager',
-                    $container['name'] . ' (' . $container['idcontainer'] . ')',
-                    $this->urlForAction($action, $params),
-                    120
-                );
+            if (!$action || $action === 'manageContainers') {
+                $action = $this->accessValidator->hasWriteCapability($idSite)
+                    ? 'dashboard'
+                    : 'manageTags';
             }
+
+            $this->addContainerMenuItems($menu, $containers, $action);
         }
 
 

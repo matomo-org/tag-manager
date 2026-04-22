@@ -74,8 +74,11 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $this->accessValidator->checkViewPermission($this->idSite);
 
-        $idContainer = Common::getRequestVar('idContainer', '', 'string');
+
+        $idContainer = \Piwik\Request::fromRequest()->getStringParameter('idContainer', '');
+        $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($this->idSite);
         $container = null;
+
         if (!empty($idContainer)) {
             try {
                 $container = Request::processRequest('TagManager.getContainer', ['idSite' => $this->idSite, 'idContainer' => $idContainer]);
@@ -84,8 +87,29 @@ class Controller extends \Piwik\Plugin\Controller
             }
         }
 
+        $containerMenuItems = array();
+        if (Menu::shouldCollapseContainerMenu(count($containers))) {
+            $containerAction = $this->accessValidator->hasWriteCapability($this->idSite)
+                ? 'dashboard'
+                : 'manageTags';
+
+            foreach ($containers as $containerEntry) {
+                $containerMenuItems[] = array(
+                    'id' => $containerEntry['idcontainer'],
+                    'name' => $containerEntry['name'] . ' (' . $containerEntry['idcontainer'] . ')',
+                    'url' => 'index.php' . Url::getCurrentQueryStringWithParametersModified(array(
+                        'module' => 'TagManager',
+                        'action' => $containerAction,
+                        'idContainer' => $containerEntry['idcontainer'],
+                    )),
+                );
+            }
+        }
+
         return $this->renderTemplate('manageContainers', array(
-            'container' => $container
+            'container' => $container,
+            'showContainerMenuDropdown' => !empty($containerMenuItems),
+            'containerMenuItems' => $containerMenuItems,
         ));
     }
 
