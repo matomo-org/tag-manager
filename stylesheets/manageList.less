@@ -36,34 +36,6 @@
     }
   }
 }
-
-#secondNavBar.Menu--admin .menu-icon.tag-manager-menu-icon,
-#mobile-left-menu .tag-manager-menu-icon {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin-right: 13px;
-  padding-right: 0;
-  vertical-align: middle;
-  background: url("plugins/TagManager/images/icons/tag-manager-icon.svg") no-repeat center;
-  background-size: contain;
-}
-
-#mobile-left-menu .tag-manager-menu-icon { margin-top: 16px; }
-
-#secondNavBar.Menu--admin .tagManagerLeftMenuDropdown.active .menuDropdown {
-  background-color: @theme-color-background-tinyContrast;
-}
-
-// Prevent flashing nav before vue takes over and collapses it
-#root #secondNavBar.Menu--admin .tagManagerLeftMenuDropdown > div[vue-entry="CoreHome.MenuItemsDropdown"] > a {
-  display: none !important;
-}
-
-#root #secondNavBar.Menu--admin .tagManagerLeftMenuDropdown > div[vue-entry="CoreHome.MenuItemsDropdown"] .item {
-  padding-left: 45px !important;
-}
-
 .modal.open .editVersion .versionChanges h3 {
   margin-top: 32px;
 }

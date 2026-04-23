@@ -10,7 +10,6 @@
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\API\Request;
-use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Menu\MenuTop;
 use Piwik\Piwik;
@@ -19,8 +18,6 @@ use Piwik\Plugins\TagManager\Model\Environment;
 
 class Menu extends \Piwik\Plugin\Menu
 {
-    public const CONTAINER_MENU_COLLAPSE_THRESHOLD = 5;
-
     /**
      * @var AccessValidator
      */
@@ -131,10 +128,6 @@ class Menu extends \Piwik\Plugin\Menu
 
     private function addContainerMenuItems(MenuTagManager $menu, array $containers, string $action): void
     {
-        if (self::shouldCollapseContainerMenu(count($containers))) {
-            return;
-        }
-
         foreach ($containers as $container) {
             $params = array(
                 'idContainer' => $container['idcontainer'],
@@ -142,17 +135,20 @@ class Menu extends \Piwik\Plugin\Menu
 
             $menu->addItem(
                 'TagManager_TagManager',
-                $container['name'] . ' (' . $container['idcontainer'] . ')',
+                $container['name'],
                 $this->urlForAction($action, $params),
-                120
+                100,
+                false,
+                false,
+                false,
+                false,
+                false,
+                0,
+                'container-menu-item'
             );
         }
     }
 
-    public static function shouldCollapseContainerMenu(int $containerCount): bool
-    {
-        return $containerCount > self::CONTAINER_MENU_COLLAPSE_THRESHOLD;
-    }
 
     public function configureTagManagerMenu(MenuTagManager $menu)
     {
@@ -167,23 +163,21 @@ class Menu extends \Piwik\Plugin\Menu
         $manageContainers = Piwik::translate('TagManager_ManageX', Piwik::translate('TagManager_Containers'));
 
         $paramsNoContainerId = array('idContainer' => null);// prevents eg error after deleting a container if idContainer is still set
-        $menu->addItem('TagManager_TagManager', null, $this->urlForAction('manageContainers', $paramsNoContainerId), $orderId = 99);
-        $menu->addItem('TagManager_TagManager', $manageContainers, $this->urlForAction('manageContainers', $paramsNoContainerId), $orderId = 99);
+        $menu->addItem('TagManager_TagManager', null, $this->urlForAction('manageContainers', $paramsNoContainerId), $orderId = 50);
+        $menu->addItem('TagManager_TagManager', $manageContainers, $this->urlForAction('manageContainers', $paramsNoContainerId), $orderId = 50);
 
 
         $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($idSite);
 
         $action = \Piwik\Request::fromRequest()->getStringParameter('action', '');
 
-        if (in_array($action, ['manageContainers'], true)) {
-            if (!$action || $action === 'manageContainers') {
-                $action = $this->accessValidator->hasWriteCapability($idSite)
-                    ? 'dashboard'
-                    : 'manageTags';
-            }
-
-            $this->addContainerMenuItems($menu, $containers, $action);
+        if (!$action || $action === 'manageContainers') {
+            $action = $this->accessValidator->hasWriteCapability($idSite)
+                ? 'dashboard'
+                : 'manageTags';
         }
+
+        $this->addContainerMenuItems($menu, $containers, $action);
 
 
         $idContainer = \Piwik\Request::fromRequest()->getStringParameter('idContainer', '');

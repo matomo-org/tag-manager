@@ -74,7 +74,6 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $this->accessValidator->checkViewPermission($this->idSite);
 
-
         $idContainer = \Piwik\Request::fromRequest()->getStringParameter('idContainer', '');
         $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($this->idSite);
         $container = null;
@@ -94,7 +93,6 @@ class Controller extends \Piwik\Plugin\Controller
 
         return $this->renderTemplate('manageContainers', array(
             'container' => $container,
-            'showContainerMenuDropdown' => !empty($container) || Menu::shouldCollapseContainerMenu(count($containers)),
             'containerMenuItems' => $containerMenuItems,
         ));
     }
@@ -307,7 +305,7 @@ class Controller extends \Piwik\Plugin\Controller
         }
 
         $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($this->idSite);
-        $variables['containerMenuItems'] = $this->buildContainerMenuItems($containers, \Piwik\Request::fromRequest()->getStringParameter('action', ''), $idContainer);
+        $variables['containerMenuItems'] = $this->buildContainerMenuItems($containers, \Piwik\Request::fromRequest()->getStringParameter('action', ''));
         $variables['mobileTagManagerMenu'] = $this->buildMobileTagManagerMenu(
             $variables['containerMenuItems'],
             $variables['container']['name'] . ' (' . $variables['container']['idcontainer'] . ')'
@@ -352,15 +350,20 @@ class Controller extends \Piwik\Plugin\Controller
         return $this->renderTemplate($template, $variables);
     }
 
-    private function buildContainerMenuItems(array $containers, string $targetAction, ?string $excludedContainerId = null): array
+    private function buildContainerMenuItems(array $containers, string $targetAction): array
     {
         $items = array();
 
-        foreach ($containers as $containerEntry) {
-            if ($excludedContainerId !== null && $containerEntry['idcontainer'] === $excludedContainerId) {
-                continue;
-            }
+        $sortedContainers = $containers;
 
+        usort($sortedContainers, function ($a, $b) {
+            $aTime = strtotime($a['created_date']);
+            $bTime = strtotime($b['created_date']);
+
+            return $bTime <=> $aTime; // desc
+        });
+
+        foreach ($sortedContainers as $containerEntry) {
             $items[] = array(
                 'id' => $containerEntry['idcontainer'],
                 'name' => $containerEntry['name'],
@@ -371,6 +374,8 @@ class Controller extends \Piwik\Plugin\Controller
                 )),
             );
         }
+
+
 
         return $items;
     }
@@ -706,6 +711,8 @@ class Controller extends \Piwik\Plugin\Controller
 
         [$defaultAction, $defaultParameters] = Menu::getDefaultAction();
         $view->tagAction = $defaultAction;
+
+        $view->currentIdContainer = \Piwik\Request::fromRequest()->getStringParameter('idContainer', '');
 
         foreach ($variables as $key => $value) {
             $view->$key = $value;
