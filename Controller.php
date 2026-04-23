@@ -393,39 +393,41 @@ class Controller extends \Piwik\Plugin\Controller
         }
 
         $tagManagerMenu = $menu['TagManager_TagManager'];
-        $orderedMenu = array();
+
+        $prefixItems = array();
+        $manageContainersItems = array();
+        $otherItems = array();
 
         foreach ($tagManagerMenu as $name => $menuItem) {
             if ($name[0] === '_') {
-                $orderedMenu[$name] = $menuItem;
+                $prefixItems[$name] = $menuItem;
+                continue;
+            }
+
+            $isManageContainers = isset($menuItem['_url']['action'])
+                && $menuItem['_url']['action'] === 'manageContainers';
+
+            if ($isManageContainers) {
+                $manageContainersItems[$name] = $menuItem;
+            } else {
+                $otherItems[$name] = $menuItem;
             }
         }
 
-        foreach ($tagManagerMenu as $name => $menuItem) {
-            if ($name[0] !== '_' && isset($menuItem['_url']['action']) && $menuItem['_url']['action'] === 'manageContainers') {
-                $orderedMenu[$name] = $menuItem;
-            }
-        }
-
+        $containerItems = array();
         foreach ($containerMenuItems as $containerMenuItem) {
-            $orderedMenu[$containerMenuItem['name']] = array(
+            $containerItems[$containerMenuItem['name']] = array(
                 '_url' => array(),
                 '_tooltip' => $containerMenuItem['name'],
             );
 
             if (!empty($containerMenuItem['url'])) {
                 parse_str(parse_url($containerMenuItem['url'], PHP_URL_QUERY) ?: '', $queryParameters);
-                $orderedMenu[$containerMenuItem['name']]['_url'] = $queryParameters;
+                $containerItems[$containerMenuItem['name']]['_url'] = $queryParameters;
             }
         }
 
-        foreach ($tagManagerMenu as $name => $menuItem) {
-            if ($name[0] !== '_' && (!isset($menuItem['_url']['action']) || $menuItem['_url']['action'] !== 'manageContainers')) {
-                $orderedMenu[$name] = $menuItem;
-            }
-        }
-
-        $menu['TagManager_TagManager'] = $orderedMenu;
+        $menu['TagManager_TagManager'] = $prefixItems + $manageContainersItems + $containerItems + $otherItems;
 
         return $menu;
     }
