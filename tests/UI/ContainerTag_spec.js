@@ -618,6 +618,10 @@ describe("ContainerTag", function () {
         });
         await page.evaluate(() => $('div.matomo-field-select div.select-wrapper input.dropdown-trigger')[0].click());
         await page.waitForTimeout(250);
-        await capture.page(page, 'copy_tag_container_select');
+        await capture.selector(
+          page,
+          'copy_tag_container_select',
+          '.ui-dialog.mtmCopyTag, .ui-dialog.mtmCopyTag ul.dropdown-content'
+        );
     });
 });
