@@ -162,9 +162,12 @@ class Menu extends \Piwik\Plugin\Menu
 
         $manageContainers = Piwik::translate('TagManager_ManageX', Piwik::translate('TagManager_Containers'));
 
-        $paramsNoContainerId = array('idContainer' => null);// prevents eg error after deleting a container if idContainer is still set
-        $menu->addItem('TagManager_TagManager', null, $this->urlForAction('manageContainers', $paramsNoContainerId), $orderId = 50);
-        $menu->addItem('TagManager_TagManager', $manageContainers, $this->urlForAction('manageContainers', $paramsNoContainerId), $orderId = 50);
+        $currentIdContainer = \Piwik\Request::fromRequest()->getStringParameter('idContainer', '');
+        $manageContainersParams = array(
+            'idContainer' => $currentIdContainer ?: null,
+        );// keeps the current container context when navigating back to manage containers
+        $menu->addItem('TagManager_TagManager', null, $this->urlForAction('manageContainers', $manageContainersParams), $orderId = 50);
+        $menu->addItem('TagManager_TagManager', $manageContainers, $this->urlForAction('manageContainers', $manageContainersParams), $orderId = 50);
 
 
         $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($idSite);
