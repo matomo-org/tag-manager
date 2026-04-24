@@ -268,6 +268,9 @@ class TagManagerFixture extends Fixture
 
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addHour(0.1)->getDatetime());
         $t->setUrl('http://example.com/');
-        self::checkResponse($t->doTrackPageView('Viewing homepage'));
+        $response = $t->doTrackPageView('Viewing homepage');
+
+        // Some test environments append informational HTML after the beacon body.
+        self::assertStringStartsWith('GIF89a', $response, 'Expected tracker response to start with a GIF beacon.');
     }
 }

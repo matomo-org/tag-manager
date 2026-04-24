@@ -49,6 +49,14 @@ describe("TagManager", function () {
         await capture.page(page, 'manage_containers');
     });
 
+    it('should show only the site selector in top controls on manage containers', async function () {
+        await page.goto(generalParamsSite1 + urlBase + 'manageContainers');
+        await page.waitForNetworkIdle();
+
+        expect(await page.evaluate(() => $('.top_controls .top_bar_sites_selector').length)).to.equal(1);
+        expect(await page.evaluate(() => $('.top_controls .tagContainerSelector').length)).to.equal(0);
+    });
+
     it('should show websites dropdown without all websites', async function () {
         await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
         pageWrap = await page.$('.top_bar_sites_selector .dropdown');
@@ -61,10 +69,11 @@ describe("TagManager", function () {
         await capture.topControls(page, 'top_controls_no_container_exists');
     });
 
-    it('should open container selector and show no containers exist', async function () {
-        await page.click('.tagContainerSelector');
-        await page.waitForTimeout(250);
-        await capture.selector(page, 'top_controls_no_container_exists_open', selectorContainerOpen);
+    it('should not show a container selector on manage containers when no container exists', async function () {
+        await page.goto(generalParamsSite5 + urlBase + 'manageContainers');
+        await page.waitForNetworkIdle();
+
+        expect(await page.evaluate(() => $('.top_controls .tagContainerSelector').length)).to.equal(0);
     });
 
     it('should show top bar list when container has no content', async function () {
@@ -141,6 +150,29 @@ describe("TagManager", function () {
         await capture.selector(page, 'top_controls_container_with_entries_open', selectorContainerOpen);
     });
 
+    it('should show a container dropdown in the left menu for multi-container sites', async function () {
+        await page.goto(containerWithEntries);
+        await page.waitForNetworkIdle();
+
+        expect(await page.evaluate(() => $('#secondNavBar .tag-manager-left-menu-dropdown').length)).to.equal(1);
+        expect(await page.evaluate(() => $('#secondNavBar .tag-manager-left-menu-dropdown .item.active').text().trim())).to.equal('Container1');
+        expect(await page.evaluate(() => $('#secondNavBar .container-menu-item').length)).to.equal(0);
+    });
+
+    it('should include containers in the mobile left menu', async function () {
+        await page.goto(containerWithEntries);
+        page.webpage.setViewport({ width: 768, height: 512 });
+        await page.evaluate(function () {
+            $('.activateLeftMenu>span').click();
+            $('#mobile-left-menu .icon-chevron-down').click();
+        });
+        await page.waitForTimeout(250);
+
+        expect(await page.evaluate(() => $('#mobile-left-menu li li a:contains("Manage Containers")').length > 0)).to.equal(true);
+        expect(await page.evaluate(() => $('#mobile-left-menu li li a:contains("Container1")').length > 0)).to.equal(true);
+        expect(await page.evaluate(() => $('#mobile-left-menu li li a:contains("Container2")').length > 0)).to.equal(true);
+    });
+
     it('should be able to show install code page for container with content', async function () {
         await page.goto(containerWithEntries);
         await (await page.jQuery('#secondNavBar .item:contains(Install Code)')).click();
@@ -148,10 +180,47 @@ describe("TagManager", function () {
         await capture.modal(page, 'install_code_with_content');
     });
 
+    it('should keep the selected container when navigating to manage containers', async function () {
+        await page.goto(containerWithEntries);
+        await (await page.jQuery('#secondNavBar .item:contains(Manage Containers)')).click();
+        await page.waitForNetworkIdle();
+
+        expect(page.url()).to.contain('action=manageContainers');
+        expect(page.url()).to.contain('idContainer=aaacont1');
+        expect(await page.evaluate(() => $('#secondNavBar .tag-manager-left-menu-dropdown .item.active').text().trim())).to.equal('Container1');
+        expect(await page.evaluate(() => $('#secondNavBar .item:contains(Tags)').length > 0)).to.equal(true);
+    });
+
+    it('should show selected container context on manage containers when idContainer is in the query string', async function () {
+        await page.goto(generalParamsSite1 + urlBase + 'manageContainers&idContainer=aaacont1');
+        await page.waitForNetworkIdle();
+
+        expect(await page.evaluate(() => $('#secondNavBar .tag-manager-left-menu-dropdown').length)).to.equal(1);
+        expect(await page.evaluate(() => $('#secondNavBar .tag-manager-left-menu-dropdown .title').text().trim())).to.contain('Container1');
+        expect(await page.evaluate(() => $('#secondNavBar .tag-manager-left-menu-dropdown .item.active').text().trim())).to.equal('Container1');
+        expect(await page.evaluate(() => $('#secondNavBar .item:contains(Dashboard)').length > 0)).to.equal(true);
+        expect(await page.evaluate(() => $('#secondNavBar .item:contains(Tags)').length > 0)).to.equal(true);
+    });
+
     it('should be able to copy mtm tracking code', async function () {
-        await page.allowClipboard();
-        await page.click('.copyToClipboardSpan');
-        const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+        await page.goto(containerWithEntries);
+        await page.waitForNetworkIdle();
+        await (await page.jQuery('#secondNavBar .item:contains(Install Code)')).click();
+        await page.waitForSelector('.modal.open .manageInstallTagCode .copyToClipboardButton');
+        await page.evaluate(() => {
+            const originalExecCommand = document.execCommand.bind(document);
+            window.__copiedText = '';
+            document.execCommand = ((commandId) => {
+                if (commandId === 'copy') {
+                    const textarea = document.querySelector('textarea[readonly]');
+                    window.__copiedText = (textarea && textarea.value) || '';
+                }
+                return originalExecCommand(commandId);
+            });
+        });
+        await page.click('.modal.open .manageInstallTagCode .copyToClipboardButton');
+        const clipboardText = await page.evaluate(() => window.__copiedText)
+            .then((text) => text.replace(/https?:\/\/[^/]+\//g, 'http://localhost/'));
         const expectedText = `<!-- Matomo Tag Manager -->
 <script>
   var _mtm = window._mtm = window._mtm || [];
@@ -166,7 +235,8 @@ describe("TagManager", function () {
     });
 
     it('should be able to show publish page for container with content', async function () {
-        await modal.close(page);
+        await page.goto(containerWithEntries);
+        await page.waitForNetworkIdle();
         await page.evaluate(function(){
             $('#secondNavBar .item:contains(Publish)').click();
         });
