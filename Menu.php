@@ -88,7 +88,6 @@ class Menu extends \Piwik\Plugin\Menu
 
         $params = array('idContainer' => $idContainer); // not needed as it is already present in url but we make sure the id is set
 
-
         if ($this->accessValidator->hasWriteCapability($idSite)) {
             $menu->addItem('TagManager_TagManager', 'Dashboard', $this->urlForAction('dashboard', $params), $orderId = 104);
         }
@@ -149,7 +148,6 @@ class Menu extends \Piwik\Plugin\Menu
         }
     }
 
-
     public function configureTagManagerMenu(MenuTagManager $menu)
     {
         $idSite = \Piwik\Request::fromRequest()->getIntegerParameter('idSite', 0);
@@ -169,7 +167,6 @@ class Menu extends \Piwik\Plugin\Menu
         $menu->addItem('TagManager_TagManager', null, $this->urlForAction('manageContainers', $manageContainersParams), $orderId = 50);
         $menu->addItem('TagManager_TagManager', $manageContainers, $this->urlForAction('manageContainers', $manageContainersParams), $orderId = 50);
 
-
         $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($idSite);
 
         $action = \Piwik\Request::fromRequest()->getStringParameter('action', '');
@@ -182,13 +179,10 @@ class Menu extends \Piwik\Plugin\Menu
 
         $this->addContainerMenuItems($menu, $containers, $action);
 
-
         $idContainer = \Piwik\Request::fromRequest()->getStringParameter('idContainer', '');
 
         if ($idContainer) {
             $this->configureContainerSubMenu($menu, $idContainer);
         }
-
-
     }
 }
