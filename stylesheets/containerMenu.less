@@ -1,53 +1,88 @@
-#root #secondNavBar .navbar li a.container-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: block;
-  width: 100%;
+#root {
+  #secondNavBar {
+    .navbar {
+      li a.container-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+        width: 100%;
+      }
+
+      .menuDropdown {
+        .title {
+          display: flex;
+          align-items: center;
+
+          .title-label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block;
+          }
+        }
+      }
+    }
+
+    &.Menu--admin {
+      .tag-manager-left-menu-dropdown > div[vue-entry="CoreHome.MenuItemsDropdown"] {
+        .items {
+          width: 100%;
+        }
+
+        .item {
+          padding-left: 36px !important;
+        }
+      }
+    }
+  }
+
+  #mobile-left-menu {
+    li li > a {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+    }
+  }
 }
 
-#root #secondNavBar .navbar .menuDropdown .title {
-  display: flex;
-  align-items: center;
+#secondNavBar.Menu--admin,
+#mobile-left-menu {
+  .tag-manager-menu-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    padding-right: 0;
+    vertical-align: middle;
+    background: url("/plugins/TagManager/images/icons/tag-manager-icon.svg") no-repeat center;
+    background-size: contain;
+  }
 }
 
-#root #secondNavBar .navbar .menuDropdown .title .title-label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: block;
+#secondNavBar.Menu--admin {
+  .menu-icon.tag-manager-menu-icon {
+    margin-top: 5px;
+  }
+
+  .tag-manager-left-menu-dropdown {
+    .menuDropdown {
+      padding-right: 0;
+    }
+
+    &.active .title {
+      display: block;
+      width: 100%;
+      background-color: @theme-color-menu-contrast-backgroundHover;
+      color: @theme-color-menu-contrast-textActive;
+      border-radius: 8px;
+    }
+  }
 }
 
-#secondNavBar.Menu--admin .menu-icon.tag-manager-menu-icon,
-#mobile-left-menu .tag-manager-menu-icon {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin-right: 13px;
-  padding-right: 0;
-  vertical-align: middle;
-  background: url("/plugins/TagManager/images/icons/tag-manager-icon.svg") no-repeat center;
-  background-size: contain;
-}
-
-#mobile-left-menu .tag-manager-menu-icon { margin-top: 16px; }
-
-#secondNavBar.Menu--admin .tagManagerLeftMenuDropdown.active .menuDropdown {
-  background-color: @theme-color-background-tinyContrast;
-}
-
-// Prevent flashing nav before vue takes over and collapses it
-#root #secondNavBar.Menu--admin .tagManagerLeftMenuDropdown > div[vue-entry="CoreHome.MenuItemsDropdown"] > a {
-  display: none !important;
-}
-
-#root #secondNavBar.Menu--admin .tagManagerLeftMenuDropdown > div[vue-entry="CoreHome.MenuItemsDropdown"] .item {
-  padding-left: 45px !important;
-}
-
-#root #mobile-left-menu li li > a {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: block;
+#mobile-left-menu {
+  .tag-manager-menu-icon {
+    margin-top: 16px;
+  }
 }

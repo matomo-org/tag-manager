@@ -15,142 +15,65 @@
 
 {% block root %}
     {% include "@CoreHome/_topScreen.twig" %}
+    {% import '@TagManager/_menu.twig' as menu %}
 
-<div class="top_controls">
-    <div vue-entry="CoreHome.QuickAccess" class="piwikTopControl borderedControl">
-    </div>
+    {% set hasSidebar = showMenu is not defined or showMenu %}
 
-    {% block topcontrols %}
+    <div class="layoutWithSidebar{% if hasSidebar %} layoutWithSidebar--hasSidebar{% endif %}">
+        {% if hasSidebar %}
+            {{ menu.menu(tagManagerMenu, mobileTagManagerMenu|default(tagManagerMenu), currentModule, currentAction, currentIdContainer, containerMenuItems) }}
+        {% endif %}
 
-        <div class="top_bar_sites_selector piwikTopControl">
-            <div
-                vue-entry="CoreHome.SiteSelector"
-                show-selected-site="true"
-                show-all-sites-item="false"
-                class="sites_autocomplete"
-            ></div>
-        </div>
+        <div class="layoutWithSidebarContent">
+            <div class="top_controls">
+                {% block topcontrols %}
 
-        <div class="piwikTopControl">
-            <div
-                vue-entry="TagManager.ContainerSelector"
-                {% if container is defined and container is not empty %}container-name="{{ (container.name ~ ' (' ~ container.idcontainer ~ ')')|json_encode }}"{% endif %}
-            ></div>
-        </div>
-    {% endblock %}
+                    <div class="top_bar_sites_selector piwikTopControl">
+                        <div
+                            vue-entry="CoreHome.SiteSelector"
+                            show-selected-site="true"
+                            show-all-sites-item="false"
+                            class="sites_autocomplete"
+                        ></div>
+                    </div>
 
-    <span class="icon icon-arrowup"></span>
-</div>
+                    <div class="piwikTopControl">
+                        <div
+                            vue-entry="TagManager.ContainerSelector"
+                            {% if container is defined and container is not empty %}container-name="{{ (container.name ~ ' (' ~ container.idcontainer ~ ')')|json_encode }}"{% endif %}
+                        ></div>
+                    </div>
+                {% endblock %}
 
-{% import 'ajaxMacros.twig' as ajax %}
-    {{ ajax.requestErrorDiv(emailSuperUser|default(''), areAdsForProfessionalServicesEnabled, currentModule) }}
-    {{ postEvent("Template.beforeContent", "admin", currentModule, currentAction) }}
-
-<div class="page">
-    {% if showMenu is not defined or showMenu %}
-        {% set collapseContainersMenuWhenMoreThan = 1 %}
-        {% set showContainersStandard = containerMenuItems|length <= collapseContainersMenuWhenMoreThan %}
-        {% set showContainersDropDown = containerMenuItems|length > collapseContainersMenuWhenMoreThan %}
-        <div id="secondNavBar" class="Menu--admin z-depth-1">
-            <ul class="navbar hide-on-med-and-down" aria-label="{{ 'CoreHome_MainNavigation'|translate|e('html_attr') }}" role="menu">
-                {% for level1, level2 in tagManagerMenu %}
-                    <li class="menuTab" role="menuitem">
-                        <a class="item" tabindex="5">
-                            <span class="menu-icon {{ level2._icon }}"></span>{{ level1|translate }}
-                            <span class="hidden">{{ 'CoreHome_Menu'|translate }}</span>
-                        </a>
-
-                        <ul role="menu">
-                            {% set isFirstContainer = true %}
-                            {% for name, urlParameters in level2 %}
-                                {% if name|slice(0,1) != '_' %}
-                                    {% set isContainer = urlParameters._cssClass is defined and urlParameters._cssClass == 'container-menu-item' %}
-                                    {% set isActive = isContainer == false and urlParameters._url.module is defined and urlParameters._url.module == currentModule and urlParameters._url.action is defined and urlParameters._url.action == currentAction %}
-                                    {% set isActiveContainer = isContainer and urlParameters._url.idContainer is defined and urlParameters._url.idContainer == currentIdContainer %}
-
-                                    {% if isFirstContainer and isContainer and showContainersDropDown %}
-                                        {% set isFirstContainer = false %}
-                                        {% set currentContainerName = '' %}
-                                        {% if currentIdContainer is not empty %}
-                                            {% for item in containerMenuItems %}
-                                                {% if item.id == currentIdContainer %}
-                                                    {% set currentContainerName = item.name %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-
-                                        {% set defaultItem = currentContainerName
-                                            ? currentContainerName
-                                            : 'TagManager_ChooseContainer'|translate|e('html_attr')
-                                        %}
-
-                                        <li role="menuitem" class="tagManagerLeftMenuDropdown{{ currentIdContainer ? ' active' : '' }}">
-                                            <div
-                                                    vue-entry="CoreHome.MenuItemsDropdown"
-                                                    menu-title="{{ defaultItem }}"
-                                                    tooltip="{{ defaultItem }}"
-                                                    show-search="true"
-                                            >
-                                                {% for item in containerMenuItems %}
-                                                    <a
-                                                            class="container-name item{{ item.id == currentIdContainer ? ' active' : '' }}"
-                                                            href="{{ item.url|e('html_attr') }}"
-                                                            title="{{ item.name|e('html_attr') }}"
-                                                    >
-                                                        {{ item.name }}
-                                                    </a>
-                                                {% endfor %}
-                                            </div>
-                                        </li>
-                                    {% endif %}
-                                    {% if (not isContainer) or (showContainersStandard and isContainer) %}
-                                        <li {% if isActive or isActiveContainer %}class="active"{% endif %} role="menuitem">
-                                            <a class="container-name item{% if urlParameters._cssClass %} {{ urlParameters._cssClass|e('html_attr') }}{% endif %}" tabindex="5" target="_self"
-                                               title="{{ urlParameters._tooltip|default('')|translate|e('html_attr') }}"
-                                                    {% if urlParameters._onclick is defined and urlParameters._onclick %}
-                                                        onclick="{{ urlParameters._onclick|e('html_attr') }};return false;"
-                                                    {% endif %}
-                                                    {% if urlParameters._url %}
-                                                href="index.php?{{ urlParameters._url|urlRewriteWithParameters|slice(1) }}"
-                                                    {% endif %}>
-                                                {% if urlParameters._icon is defined and urlParameters._icon %}<span class="icon {{ urlParameters._icon|e('html_attr') }}" style="margin-right: 5px;"></span>{% endif %}
-                                                {{ name|translate|rawSafeDecoded }}
-                                            </a>
-                                            {% if urlParameters._help %}
-                                                <div vue-entry="CoreHome.ShowHelpLink" name="{{ urlParameters._name }}" message="{{ urlParameters._help|e('html_attr') }}"></div>
-                                            {% endif %}
-                                        </li>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
-            <div vue-entry="CoreHome.MobileLeftMenu" menu="{{ mobileTagManagerMenu|default(tagManagerMenu)|json_encode }}"></div>
-        </div>
-
-    {% endif %}
-
-    <div class="pageWrap">
-        <a name="main"></a>
-        {% block notification %}
-            {% include "@CoreHome/_notifications.twig" %}
-        {% endblock %}
-        {% include "@CoreHome/_warningInvalidHost.twig" %}
-
-        <div class="admin" id="content">
-
-            <div class="ui-confirm" id="alert">
-                <h2></h2>
-                <input role="no" type="button" value="{{ 'General_Ok'|translate }}"/>
+                {% include "@CoreHome/_headerMessage.twig" %}
             </div>
 
-            {% block content %}
-            {% endblock %}
+            <div class="page">
+                <div class="pageWrap">
+                    {% import 'ajaxMacros.twig' as ajax %}
+                    {{ ajax.requestErrorDiv(emailSuperUser|default(''), areAdsForProfessionalServicesEnabled, currentModule) }}
+                    {{ postEvent("Template.beforeContent", "admin", currentModule, currentAction) }}
 
+                    <a name="main"></a>
+                    {% block notification %}
+                        {% include "@CoreHome/_notifications.twig" %}
+                    {% endblock %}
+                    {% include "@CoreHome/_warningInvalidHost.twig" %}
+
+                    <div class="admin" id="content">
+
+                        <div class="ui-confirm" id="alert">
+                            <h2></h2>
+                            <input role="no" type="button" value="{{ 'General_Ok'|translate }}"/>
+                        </div>
+
+                        {% block content %}
+                        {% endblock %}
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
 {% endblock %}
