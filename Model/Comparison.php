@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Model;
 
 use Exception;
@@ -12,11 +14,11 @@ use Piwik\Piwik;
 
 class Comparison
 {
-    const ID_EQUALS = 'equals';
-    const ID_EQUALS_EXACTLY = 'equals_exactly';
-    const ID_CONTAINS = 'contains';
-    const ID_STARTS_WITH = 'starts_with';
-    const ID_ENDS_WITH = 'ends_with';
+    public const ID_EQUALS = 'equals';
+    public const ID_EQUALS_EXACTLY = 'equals_exactly';
+    public const ID_CONTAINS = 'contains';
+    public const ID_STARTS_WITH = 'starts_with';
+    public const ID_ENDS_WITH = 'ends_with';
 
     public function checkIsValidComparison($comparisonId)
     {
@@ -60,4 +62,3 @@ class Comparison
         return $allComparisons;
     }
 }
-

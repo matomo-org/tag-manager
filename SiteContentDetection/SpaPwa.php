@@ -20,10 +20,15 @@ class SpaPwa extends SiteContentDetectionAbstract
 {
     public static function getName(): string
     {
-        return 'SPA / PWA';
+        return 'Single Page Application';
     }
 
-    public static function getContentType(): string
+    public static function getIcon(): string
+    {
+        return './plugins/TagManager/images/spa.png';
+    }
+
+    public static function getContentType(): int
     {
         return self::TYPE_JS_FRAMEWORK;
     }
@@ -36,11 +41,6 @@ class SpaPwa extends SiteContentDetectionAbstract
     public function isDetected(?string $data = null, ?array $headers = null): bool
     {
         return false;
-    }
-
-    public function shouldShowInstructionTab(SiteContentDetector $detector = null): bool
-    {
-        return true;
     }
 
     public function renderInstructionsTab(SiteContentDetector $detector): string

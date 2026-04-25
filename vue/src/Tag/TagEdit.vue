@@ -28,23 +28,10 @@
       >
         <div>
           <div
-            class="alert alert-warning"
+            class="alert alert-danger"
             v-show="isTagDisabled"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
-            {{ translate(
-                'TagManager_UseCustomTemplateCapabilityRequired',
-                translate('TagManager_CapabilityUseCustomTemplates'),
-              ) }}
-          </div>
-          <div>
-            <Field
-              uicontrol="text"
-              name="type"
-              :model-value="tag.typeMetadata?.name"
-              :disabled="true"
-              :inline-help="tag.typeMetadata?.description + ' ' + tag.typeMetadata?.help"
-              :title="translate('TagManager_Type')"
-            />
           </div>
           <div>
             <Field
@@ -52,9 +39,10 @@
               name="name"
               :model-value="tag.name"
               @update:model-value="tag.name = $event; setValueHasChanged()"
-              :maxlength="50"
+              :maxlength="255"
               :title="translate('General_Name')"
-              :inline-help="translate('TagManager_TagNameHelp')"
+              :inline-help="tagNameHelpText"
+              :placeholder="translate('TagManager_TagNamePlaceholder')"
             />
           </div>
           <div>
@@ -64,8 +52,8 @@
               :model-value="tag.description"
               @update:model-value="tag.description = $event; setValueHasChanged()"
               :maxlength="1000"
-              :title="translate('General_Description')"
-              :inline-help="translate('TagManager_TagDescriptionHelp')"
+              :title="translate('TagManager_Description')"
+              :placeholder="translate('TagManager_TagDescriptionPlaceholder')"
             />
           </div>
           <div
@@ -158,6 +146,7 @@
                 :maxlength="8"
                 :title="translate('TagManager_FireDelay')"
                 :inline-help="translate('TagManager_FireDelayHelp')"
+                :placeholder="translate('TagManager_PlaceholderZero')"
               />
             </div>
             <div>
@@ -169,6 +158,7 @@
                 :maxlength="4"
                 :title="translate('TagManager_Priority')"
                 :inline-help="translate('TagManager_PriorityHelp')"
+                :placeholder="translate('TagManager_PriorityPlaceholder')"
               />
             </div>
             <div class="form-group row tagStartDate">
@@ -259,17 +249,14 @@
             </div>
           </div>
           <div
-            class="alert alert-warning"
+            class="alert alert-danger"
             v-show="isTagDisabled"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
-            {{ translate(
-            'TagManager_UseCustomTemplateCapabilityRequired',
-            translate('TagManager_CapabilityUseCustomTemplates'),
-          ) }}
           </div>
           <SaveButton
             class="createButton"
-            v-show="!isTagDisabled"
+            v-if="!isTagDisabled"
             @confirm="edit ? updateTag() : createTag()"
             :disabled="isUpdating || !isDirty"
             :saving="isUpdating"
@@ -300,6 +287,7 @@
             :key="index"
             class="collection-item avatar"
             @click="createTagType(tagTemplate)"
+            v-show="isTagVisible(tagTemplate.id)"
             :class="{
             disabledTemplate: isTagTemplateDisabled[tagTemplate.id],
             [`templateType${ tagTemplate.id}`]: true,
@@ -343,7 +331,7 @@ import {
   NotificationsStore,
   NotificationType,
   clone,
-  MatomoUrl,
+  MatomoUrl, externalLink,
 } from 'CoreHome';
 import { Field, SaveButton, GroupedSettings } from 'CorePluginsAdmin';
 import AvailableFireLimitsStore from '../AvailableFireLimit.store';
@@ -476,12 +464,13 @@ export default defineComponent({
       NotificationsStore.remove(notificationId);
       NotificationsStore.remove('ajaxHelper');
     },
-    showNotification(message: string, context: NotificationType['context']) {
+    showNotification(message: string, context: NotificationType['context'],
+      type: null|NotificationType['type'] = null) {
       const instanceId = NotificationsStore.show({
         message,
         context,
         id: notificationId,
-        type: 'transient',
+        type: type !== null ? type : 'toast',
       });
 
       setTimeout(() => {
@@ -535,6 +524,10 @@ export default defineComponent({
             this.onBlockTriggerChange();
 
             this.isDirty = false;
+            this.editTitle = translate('TagManager_EditTag');
+            if (this.tag.typeMetadata?.name) {
+              this.editTitle += `: ${this.tag.typeMetadata.name}`;
+            }
           });
 
           return;
@@ -636,17 +629,21 @@ export default defineComponent({
       }
 
       this.chooseTagType = false;
-      this.editTitle = translate('TagManager_CreateNewTag');
 
       this.tag = {
         idsite: parseInt(`${Matomo.idSite}`, 10),
         name: TagsStore.suggestNameForType(tagTemplate.name) || '',
         type: tagTemplate.id,
         fire_limit: 'unlimited',
-        priority: 999,
+        priority: ((tagTemplate.id === 'GoogleTag' || tagTemplate.id === 'GoogleAnalytics4') ? 1 : 999), // if both linking and conversion for Google Ads Conversion or pageview and events for GA4 fires on same trigger, this should get the highest priority else the conversion will throw error
         fire_delay: 0,
         typeMetadata: tagTemplate,
       } as unknown as Tag;
+
+      this.editTitle = translate('TagManager_CreateNewTag');
+      if (this.tag.typeMetadata?.name) {
+        this.editTitle += `: ${this.tag.typeMetadata.name}`;
+      }
 
       this.blockTriggers = [null];
       this.fireTriggers = [null];
@@ -696,23 +693,23 @@ export default defineComponent({
 
         this.isDirty = false;
 
-        const idTag = response.value;
-
         TagsStore.reload(this.idContainer, this.idContainerVersion).then(() => {
-          MatomoUrl.updateHash({
-            ...MatomoUrl.hashParsed.value,
-            idTag,
-          });
+          // Go back to the list of tags
+          this.cancel();
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Tag'));
-            const wantToRedeploy = translate(
-              'TagManager_WantToDeployThisChangeCreateVersion',
-              '<a class="createNewVersionLink">',
-              '</a>',
-            );
+            if (this.hasPublishCapability()) {
+              const wantToRedeploy = translate(
+                'TagManager_WantToDeployThisChangeCreateVersion',
+                '<a class="createNewVersionLink">',
+                '</a>',
+              );
+              this.showNotification(`${createdX} ${wantToRedeploy}`, 'success', 'transient');
+              return;
+            }
 
-            this.showNotification(`${createdX} ${wantToRedeploy}`, 'success');
+            this.showNotification(createdX, 'success');
           }, 200);
         });
       }).finally(() => {
@@ -749,14 +746,21 @@ export default defineComponent({
           this.initIdTag();
         });
 
-        const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Tag'));
-        const wantToDeploy = translate(
-          'TagManager_WantToDeployThisChangeCreateVersion',
-          '<a class="createNewVersionLink">',
-          '</a>',
-        );
+        // Go back to the list of tags
+        this.cancel();
 
-        this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success');
+        const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Tag'));
+        if (this.hasPublishCapability()) {
+          const wantToDeploy = translate(
+            'TagManager_WantToDeployThisChangeCreateVersion',
+            '<a class="createNewVersionLink">',
+            '</a>',
+          );
+          this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success', 'transient');
+          return;
+        }
+
+        this.showNotification(updatedAt, 'success');
       }).finally(() => {
         this.isUpdatingTag = false;
       });
@@ -774,6 +778,24 @@ export default defineComponent({
       }
 
       return true;
+    },
+    hasPublishCapability() {
+      return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
+    isTagVisible(id: string) {
+      if (this.create && id === 'GoogleAnalytics4') {
+        return false;
+      }
+
+      return true;
+    },
+    getNoCustomTemplatePermissionErrorMessage() {
+      return translate(
+        'TagManager_UseCustomTemplateCapabilityPermissionRequiredDescription',
+        '<strong>',
+        translate('TagManager_CapabilityUseCustomTemplates'),
+        '</strong>',
+      );
     },
   },
   computed: {
@@ -809,8 +831,10 @@ export default defineComponent({
     },
     collectionItemAvatarText() {
       return translate(
-        'TagManager_UseCustomTemplateCapabilityRequired',
+        'TagManager_UseCustomTemplateCapabilityPermissionRequiredDescription',
+        '',
         translate('TagManager_CapabilityUseCustomTemplates'),
+        '',
       );
     },
     fireLimitHelp() {
@@ -821,6 +845,17 @@ export default defineComponent({
         translate('TagManager_Once24Hours'),
         translate('TagManager_OnceLifetime'),
       );
+    },
+    tagNameHelpText() {
+      let additionalHelpText = '';
+      if (this.tag.type === 'CustomHtml') {
+        additionalHelpText = translate('TagManager_CustomHTMLTagNameInlineHelpText',
+          '<br><br><strong>',
+          '</strong>',
+          externalLink('https://matomo.org/faq/tag-manager/how-to-add-google-ads-remarketing-tags-in-matomo-tag-manager/'),
+          '</a>');
+      }
+      return translate('TagManager_TagNameHelpV2') + additionalHelpText;
     },
   },
 });

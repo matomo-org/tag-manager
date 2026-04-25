@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
-namespace Piwik\Plugins\TagManager\Dao;
 
+namespace Piwik\Plugins\TagManager\Dao;
 
 use Piwik\Db;
 use Piwik\DbHelper;
@@ -17,7 +18,7 @@ use Piwik\Plugins\TagManager\Input\Name;
 
 class ContainerVersionsDao extends BaseDao implements TagManagerDao
 {
-    const REVISION_DRAFT = 0;
+    public const REVISION_DRAFT = 0;
 
     protected $table = 'tagmanager_container_version';
 
@@ -206,6 +207,19 @@ class ContainerVersionsDao extends BaseDao implements TagManagerDao
         Db::query($query, $bind);
     }
 
+    protected function isNameAlreadyUsed(int $idSite, string $name, ?int $idContainerVersion = null): bool
+    {
+        // Look up the container ID using the version ID
+        $bind = array(self::STATUS_ACTIVE, $idSite, $idContainerVersion);
+        $table = $this->tablePrefixed;
+        $version = Db::fetchRow("SELECT idcontainer FROM $table WHERE status = ? AND idsite = ? AND idcontainerversion = ? LIMIT 1", $bind);
+        if (empty($version['idcontainer'])) {
+            return false;
+        }
+
+        return $this->isNameInUse($idSite, $version['idcontainer'], $name);
+    }
+
     private function enrichVersions($containers)
     {
         if (empty($containers)) {
@@ -232,4 +246,3 @@ class ContainerVersionsDao extends BaseDao implements TagManagerDao
         return $container;
     }
 }
-

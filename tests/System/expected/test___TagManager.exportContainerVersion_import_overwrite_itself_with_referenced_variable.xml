@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<idcontainer>aaacont1</idcontainer>
+	<idsite>2</idsite>
+	<context>web</context>
+	<name>Container1</name>
+	<description />
+	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
+	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
+	
+	
+	
+	
+	<revision>0</revision>
+	<version>
+		<name />
+		<description />
+		<revision>0</revision>
+		
+		
+		
+		
+	</version>
+	<tags>
+		<row>
+			<idtag>31</idtag>
+			<type>CustomHtml</type>
+			<name>My Tag 2</name>
+			<description>My Tag 2 description</description>
+			<status>active</status>
+			<parameters>
+				<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
+				<htmlPosition>bodyEnd</htmlPosition>
+			</parameters>
+			<fire_trigger_ids>
+				<row>35</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+				<row>36</row>
+			</block_trigger_ids>
+			<fire_limit>once_lifetime</fire_limit>
+			<priority>343</priority>
+			<fire_delay>1350</fire_delay>
+			<start_date>2017-01-02 03:04:05</start_date>
+			<end_date>2029-01-02 03:04:05</end_date>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtag>32</idtag>
+			<type>CustomHtml</type>
+			<name>My Tag 1</name>
+			<description />
+			<status>active</status>
+			<parameters>
+				<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
+				<htmlPosition>bodyEnd</htmlPosition>
+			</parameters>
+			<fire_trigger_ids>
+				<row>35</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+			</block_trigger_ids>
+			<fire_limit>unlimited</fire_limit>
+			<priority>999</priority>
+			<fire_delay>0</fire_delay>
+			<start_date />
+			<end_date />
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtag>33</idtag>
+			<type>CustomImage</type>
+			<name>My Tag 3</name>
+			<description />
+			<status>active</status>
+			<parameters>
+				<customImageSrc>/plugins/tracking.png</customImageSrc>
+				<cacheBusterEnabled>1</cacheBusterEnabled>
+			</parameters>
+			<fire_trigger_ids>
+				<row>36</row>
+				<row>37</row>
+			</fire_trigger_ids>
+			<block_trigger_ids>
+			</block_trigger_ids>
+			<fire_limit>unlimited</fire_limit>
+			<priority>999</priority>
+			<fire_delay>0</fire_delay>
+			<start_date />
+			<end_date />
+			
+			
+			
+			
+		</row>
+	</tags>
+	<triggers>
+		<row>
+			<idtrigger>35</idtrigger>
+			<type>CustomEvent</type>
+			<name>My trigger1</name>
+			<description>My trigger1 description setting it to a very long description to show up in the UI clipped</description>
+			<parameters>
+				<eventName>foo</eventName>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtrigger>36</idtrigger>
+			<type>WindowLoaded</type>
+			<name>Mytrigger2</name>
+			<description />
+			<parameters>
+			</parameters>
+			<conditions>
+				<row>
+					<actual>ErrorUrl</actual>
+					<comparison>contains</comparison>
+					<expected>foo</expected>
+				</row>
+			</conditions>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtrigger>37</idtrigger>
+			<type>DomReady</type>
+			<name>Mytrigger3</name>
+			<description />
+			<parameters>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idtrigger>38</idtrigger>
+			<type>CustomEvent</type>
+			<name>My trigger4</name>
+			<description />
+			<parameters>
+				<eventName>foo{{My Var 3}}bar{{My Var 2}}baz{{PageUrl}}yeah</eventName>
+			</parameters>
+			<conditions>
+			</conditions>
+			
+			
+			
+			
+		</row>
+	</triggers>
+	<variables>
+		<row>
+			<idvariable>22</idvariable>
+			<type>DataLayer</type>
+			<name>My Var 1</name>
+			<description />
+			<parameters>
+				<dataLayerName>fooBarName</dataLayerName>
+			</parameters>
+			<lookup_table>
+				<row>
+					<match_value>foo</match_value>
+					<comparison>equals</comparison>
+					<out_value>bar</out_value>
+				</row>
+			</lookup_table>
+			<default_value>10</default_value>
+			
+			
+			
+			
+		</row>
+		<row>
+			<idvariable>23</idvariable>
+			<type>DataLayer</type>
+			<name>My Var 2</name>
+			<description />
+			<parameters>
+				<dataLayerName>dataVarName</dataLayerName>
+			</parameters>
+			<lookup_table>
+			</lookup_table>
+			<default_value />
+			
+			
+			
+			
+		</row>
+		<row>
+			<idvariable>24</idvariable>
+			<type>DataLayer</type>
+			<name>My Var 3</name>
+			<description>My Var 3 description</description>
+			<parameters>
+				<dataLayerName>dataVarName</dataLayerName>
+			</parameters>
+			<lookup_table>
+			</lookup_table>
+			<default_value />
+			
+			
+			
+			
+		</row>
+		<row>
+			<idvariable>25</idvariable>
+			<type>Constant</type>
+			<name>Constant-Reference</name>
+			<description />
+			<parameters>
+				<constantValue>test</constantValue>
+			</parameters>
+			<lookup_table>
+			</lookup_table>
+			<default_value />
+			
+			
+			
+			
+		</row>
+		<row>
+			<idvariable>26</idvariable>
+			<type>CustomJsFunction</type>
+			<name>Custom JavaScript Constant Ref</name>
+			<description />
+			<parameters>
+				<jsFunction>function () { return &quot;{{Constant-Reference}}&quot;; }</jsFunction>
+			</parameters>
+			<lookup_table>
+			</lookup_table>
+			<default_value />
+			
+			
+			
+			
+		</row>
+	</variables>
+</result>

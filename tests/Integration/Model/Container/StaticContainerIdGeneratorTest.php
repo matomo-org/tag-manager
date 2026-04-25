@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -26,5 +27,4 @@ class StaticContainerIdGeneratorTest extends IntegrationTestCase
         $this->assertSame('foobar', $generator->generateId());
         $this->assertSame('foobar', $generator->generateId());
     }
-
 }

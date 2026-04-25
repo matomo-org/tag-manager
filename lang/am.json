@@ -2,6 +2,8 @@
     "TagManager": {
         "CategoryClicks": "ጠቃድርጎች",
         "CategoryEmail": "ኢ-ሜይል",
+        "EtrackerTagTransactionCurrencyTitle": "ገንዘብ",
+        "InvalidDebugUrlError": "ስህተት",
         "Version": "ስሪት"
     }
 }

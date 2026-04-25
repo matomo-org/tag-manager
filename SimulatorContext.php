@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\Plugins\TagManager\Context\BaseContext;
@@ -13,7 +15,7 @@ use Piwik\Plugins\TagManager\Context\BaseContext;
 // we only want to use it to detect whether a variable references itself or if there is any recursion
 class SimulatorContext extends BaseContext
 {
-    const ID = 'simulator';
+    public const ID = 'simulator';
 
     public function getId()
     {
@@ -49,5 +51,4 @@ class SimulatorContext extends BaseContext
     {
         return [];
     }
-
 }

@@ -10,17 +10,21 @@
 namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
 use Piwik\Container\StaticContainer;
+use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Model\Comparison;
+use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Tag;
+use Piwik\Plugins\TagManager\Model\Trigger;
 use Piwik\Plugins\TagManager\Model\Variable;
 use Piwik\Plugins\TagManager\TagManager;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Tag\MatomoTag;
 use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
-use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ClickButtonVariable;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ErrorUrlVariable;
 use Piwik\Plugins\TagManager\Template\Variable\ReferrerUrlVariable;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
@@ -199,7 +203,9 @@ class VariableTest extends IntegrationTestCase
                         'defaultValue' => '',
                         'type' => 'string',
                         'uiControl' => 'text',
-                        'uiControlAttributes' => [],
+                        'uiControlAttributes' => [
+                            'placeholder' => 'e.g. object1.myPropertyOfObject1'
+                        ],
                         'availableValues' => null,
                         'description' => 'The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example "object1.myPropertyOfObject1".',
                         'inlineHelp' => null,
@@ -262,7 +268,9 @@ class VariableTest extends IntegrationTestCase
                         'defaultValue' => '',
                         'type' => 'string',
                         'uiControl' => 'text',
-                        'uiControlAttributes' => [],
+                        'uiControlAttributes' => [
+                            'placeholder' => 'e.g. object1.myPropertyOfObject1'
+                        ],
                         'availableValues' => null,
                         'description' => 'The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example "object1.myPropertyOfObject1".',
                         'inlineHelp' => null,
@@ -378,7 +386,9 @@ class VariableTest extends IntegrationTestCase
                         'defaultValue' => '',
                         'type' => 'string',
                         'uiControl' => 'text',
-                        'uiControlAttributes' => [],
+                        'uiControlAttributes' => [
+                            'placeholder' => 'e.g. object1.myPropertyOfObject1'
+                        ],
                         'availableValues' => null,
                         'description' => 'The name of any variable that is stored within the dataLayer. In case you want to access the value of a nested object, you can access the value of an object by separating each property by a dot, for example "object1.myPropertyOfObject1".',
                         'inlineHelp' => null,
@@ -415,6 +425,73 @@ class VariableTest extends IntegrationTestCase
         $this->assertSame("{{{$newVariableName}}}", $tag1['parameters']['matomoConfig']);
         $tag2 = $this->tagModel->getContainerTag($this->idSite, $this->containerVersion1, $idTag2);
         $this->assertSame("{{{$newVariableName}}}", $tag2['parameters']['matomoConfig']);
+    }
+
+    public function testUpdateContainerVariableNameReferencesInCustomJsVariable()
+    {
+        $variableParams = ['jsFunction' => 'function () { return 12345; }'];
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'TestVariable', $variableParams);
+        $this->assertSame(2, $idVariable);
+
+        $idReferencingVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'ReferencingTestVariable', $parameters = ['jsFunction' => 'function () { return {{TestVariable}}; }']);
+        $this->assertSame(3, $idReferencingVariable);
+
+        $newVariableName = 'NewVariableName';
+        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $idVariable, $newVariableName, $variableParams);
+
+        $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
+        $this->assertNotEmpty($variable['parameters']['jsFunction']);
+        $this->assertSame($variableParams['jsFunction'], $variable['parameters']['jsFunction']);
+        $referencingVariable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idReferencingVariable);
+        $this->assertSame('function () { return {{NewVariableName}}; }', $referencingVariable['parameters']['jsFunction']);
+    }
+
+    public function testListVariableNamesInParameters()
+    {
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, DataLayerVariable::ID, 'MyName', $parameters = ['dataLayerName' => 'fooBar'], 'myDefault');
+        $this->assertSame(2, $idVariable);
+
+        $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
+
+        $trigger = StaticContainer::get('Piwik\Plugins\TagManager\Model\Trigger');
+        $idTrigger1 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger1', [], []);
+        $this->assertSame(1, $idTrigger1);
+        $tagParameters = ['matomoConfig' => "{{{$variable['name']}}}", 'trackingType' => 'pageview'];
+        $idTag = $this->tagModel->addContainerTag($this->idSite, $this->containerVersion1, MatomoTag::ID, 'Tag1Name', $tagParameters, [$idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 0, 9999, $this->now, $this->now);
+        $this->assertSame(1, $idTag);
+
+        $tag = $this->tagModel->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
+        $variableList = $this->model->listVariableNamesInParameters($tag);
+        $this->assertCount(1, $variableList);
+        $this->assertSame([$variable['name']], $variableList);
+    }
+
+    /**
+     * @dataProvider getListVariableNamesInParametersInCustomJsVariableTestData
+     * @param string $functionString
+     * @param array $expectedList
+     * @return void
+     */
+    public function testListVariableNamesInParametersInCustomJsVariable(string $functionString, array $expectedList)
+    {
+        $variableParams = ['jsFunction' => $functionString];
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'TestVariable', $variableParams);
+        $this->assertSame(2, $idVariable);
+
+        $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
+        $variableList = $this->model->listVariableNamesInParameters($variable);
+        $this->assertSame($expectedList, $variableList);
+    }
+
+    public function getListVariableNamesInParametersInCustomJsVariableTestData()
+    {
+        return [
+            ['function () { return 12345; }', []],
+            ['function () { return {{TestVariable}}; }', ['TestVariable']],
+            ['function () { return {{TestVariable}} {{AnotherTestVariable}}; }', ['TestVariable', 'AnotherTestVariable']],
+            ['function () { return {{TestVariable}} {{AnotherTestVariable}} {{ThirdTestVariable}}; }', ['TestVariable', 'AnotherTestVariable', 'ThirdTestVariable']],
+            ['function () { return {{TestVariable}} {{AnotherTestVariable}} {{ThirdTestVariable}} {{TestVariable}} {{AnotherTestVariable}}; }', ['TestVariable', 'AnotherTestVariable', 'ThirdTestVariable']],
+        ];
     }
 
     public function testGetContainer()
@@ -555,10 +632,185 @@ class VariableTest extends IntegrationTestCase
         $this->assertSame(1, $count);
     }
 
+    public function testDeleteContainerVariableReferencedByVariable()
+    {
+        $variableParams = ['jsFunction' => 'function () { return 12345; }'];
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'TestVariable', $variableParams);
+        $this->assertSame(2, $idVariable);
+
+        $idReferencingVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'ReferencingTestVariable', $parameters = ['jsFunction' => 'function () { return {{TestVariable}}; }']);
+        $this->assertSame(3, $idReferencingVariable);
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(Piwik::translate('TagManager_ErrorDeleteReferencedVariable'));
+        $this->model->deleteContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
+    }
+
+    public function testGetVariableReferencesFromVariable()
+    {
+        $variableParams = ['jsFunction' => 'function () { return 12345; }'];
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'TestVariable', $variableParams);
+        $this->assertSame(2, $idVariable);
+
+        $idReferencingVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'ReferencingTestVariable', $parameters = ['jsFunction' => 'function () { return {{TestVariable}}; }']);
+        $this->assertSame(3, $idReferencingVariable);
+
+        $result = $this->model->getContainerVariableReferences($this->idSite, $this->containerVersion1, $idVariable);
+        $this->assertIsArray($result);
+        $this->assertCount(1, $result);
+        $this->assertSame([
+            [
+                'referenceId' => $idReferencingVariable,
+                'referenceType' => 'variable',
+                'referenceTypeName' => 'Variable',
+                'referenceName' => 'ReferencingTestVariable',
+            ]
+        ], $result);
+    }
+
     public function testGetVariableReferencesWhenNoReferences()
     {
         // we test the references apart from this via API in system tests
         $this->assertSame([], $this->model->getContainerVariableReferences($this->idSite, $this->containerVersion1, $this->idVariable1));
+    }
+
+    public function testCopyReferencedVariables()
+    {
+        $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
+        $variableName = $variable['name'];
+        $trigger = StaticContainer::get(Trigger::class);
+        $idTrigger1 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger1', [], []);
+        $tagModel = StaticContainer::get(Tag::class);
+        $idTag = $tagModel->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'TagReferencingVariable', ['customHtml' => '<h2>Hello  {{' . $variableName . '}}</h2>'], [$idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 0, 9999, $this->now, $this->now);
+        $initialTag = $tagModel->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
+        $tag = $tagModel->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
+
+        $this->assertCount(1, $this->model->getContainerVariables($this->idSite, $this->containerVersion1), 'There should be one variable.');
+
+        $this->model->copyReferencedVariables($tag, $this->idSite, $this->containerVersion1);
+
+        $this->assertCount(1, $this->model->getContainerVariables($this->idSite, $this->containerVersion1), 'There should be one variable.');
+        $this->assertEquals($initialTag, $tag, 'The tag should still be the same');
+    }
+
+    public function testCopyReferencedVariablesToDifferentContainer()
+    {
+        $variable = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
+        $variableName = $variable['name'];
+        $trigger = StaticContainer::get(Trigger::class);
+        $idTrigger1 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger1', [], []);
+        $tagModel = StaticContainer::get(Tag::class);
+        $idTag = $tagModel->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'TagReferencingVariable', ['customHtml' => '<h2>Hello  {{' . $variableName . '}}</h2>'], [$idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 0, 9999, $this->now, $this->now);
+        $initialTag = $tagModel->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
+        $tag = $tagModel->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
+
+        $this->assertCount(0, $this->model->getContainerVariables($this->idSite, $this->containerVersion2), 'There should be no variables yet.');
+
+        $this->model->copyReferencedVariables($tag, $this->idSite, $this->containerVersion1, $this->idSite, $this->containerVersion2);
+        $this->assertCount(1, $this->model->getContainerVariables($this->idSite, $this->containerVersion2), 'There should be one variable.');
+        $this->assertEquals($initialTag, $tag, 'The tag should still be the same');
+
+        // Test that running copy again doesn't result in another copy
+        $this->model->copyReferencedVariables($tag, $this->idSite, $this->containerVersion1, $this->idSite, $this->containerVersion2);
+        $this->assertEquals($initialTag, $tag, 'The tag should still be the same');
+        $this->assertCount(1, $this->model->getContainerVariables($this->idSite, $this->containerVersion2), 'There should be one variable.');
+    }
+
+    public function testCopyVariable()
+    {
+        $this->assertCount(1, $this->model->getContainerVariables($this->idSite, $this->containerVersion1), 'There should be one variable before copy');
+        $idNewVariable = $this->model->copyVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
+        $this->assertGreaterThan(0, $idNewVariable);
+        $this->assertNotSame($this->idVariable1, $idNewVariable);
+
+        $this->assertCount(2, $this->model->getContainerVariables($this->idSite, $this->containerVersion1), 'There should be two variable after copy');
+
+        $variable1 = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
+        $variable2 = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idNewVariable);
+
+        $this->assertSame($variable1['name'] . ' (1)', $variable2['name'], 'The name should have been updated');
+        unset($variable1['idvariable']);
+        unset($variable2['idvariable']);
+        unset($variable1['name']);
+        unset($variable2['name']);
+
+        $this->assertEquals($variable1, $variable2, 'The variable should match');
+    }
+
+    public function testCopyVariableDifferentContainer()
+    {
+        $containerModel = StaticContainer::get(Container::class);
+        $context = WebContext::ID;
+        $description = 'My description';
+
+        $idContainer = $containerModel->addContainer($this->idSite, $context, 'FooContainer', $description, 0, 0, 0);
+        $container = $containerModel->getContainer($this->idSite, $idContainer);
+        $idContainerVersion = $container['draft']['idcontainerversion'];
+
+        $this->assertCount(0, $this->model->getContainerVariables($this->idSite, $idContainerVersion), 'There should be no variables before copy');
+        $idNewVariable = $this->model->copyVariable($this->idSite, $this->containerVersion1, $this->idVariable1, $this->idSite, $container['idcontainer']);
+        $this->assertGreaterThan(0, $idNewVariable);
+        $this->assertNotSame($this->idVariable1, $idNewVariable);
+
+        $this->assertCount(1, $this->model->getContainerVariables($this->idSite, $idContainerVersion), 'There should be one variable after copy');
+
+        $variable1 = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
+        $variable2 = $this->model->getContainerVariable($this->idSite, $idContainerVersion, $idNewVariable);
+
+        $this->assertNotSame($variable1['idcontainerversion'], $variable2['idcontainerversion'], 'The version should be different');
+        unset($variable1['idvariable']);
+        unset($variable2['idvariable']);
+        unset($variable1['idcontainerversion']);
+        unset($variable2['idcontainerversion']);
+
+        $this->assertEquals($variable1, $variable2, 'The variable should match');
+    }
+
+    public function testCopyVariableReferencingVariable()
+    {
+        $variableParams = ['jsFunction' => 'function () { return 12345; }'];
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'TestVariable', $variableParams);
+        $this->assertSame(2, $idVariable);
+
+        $idReferencingVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'ReferencingTestVariable', $parameters = ['jsFunction' => 'function () { return {{TestVariable}}; }']);
+        $this->assertSame(3, $idReferencingVariable);
+
+        $containerModel = StaticContainer::get(Container::class);
+        $context = WebContext::ID;
+        $description = 'My description';
+
+        $idContainer = $containerModel->addContainer($this->idSite, $context, 'FooContainer', $description, 0, 0, 0);
+        $container = $containerModel->getContainer($this->idSite, $idContainer);
+        $idContainerVersion = $container['draft']['idcontainerversion'];
+
+        $this->assertCount(0, $this->model->getContainerVariables($this->idSite, $idContainerVersion), 'There should be no variables before copy');
+        $idNewVariable = $this->model->copyVariable($this->idSite, $this->containerVersion1, $idReferencingVariable, $this->idSite, $container['idcontainer']);
+        $this->assertGreaterThan(0, $idNewVariable);
+        $this->assertNotSame($idReferencingVariable, $idNewVariable);
+
+        $this->assertCount(2, $this->model->getContainerVariables($this->idSite, $idContainerVersion), 'There should be two variables after copy');
+
+        $variable1 = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idReferencingVariable);
+        $variable2 = $this->model->getContainerVariable($this->idSite, $idContainerVersion, $idNewVariable);
+
+        $this->assertNotSame($variable1['idcontainerversion'], $variable2['idcontainerversion'], 'The version should be different');
+        unset($variable1['idvariable']);
+        unset($variable2['idvariable']);
+        unset($variable1['idcontainerversion']);
+        unset($variable2['idcontainerversion']);
+
+        $this->assertEquals($variable1, $variable2, 'The variable should match');
+
+        $variable1 = $this->model->getContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
+        $variable2 = $this->model->findVariableByName($this->idSite, $idContainerVersion, $variable1['name']);
+
+        $this->assertNotSame($variable1['idcontainerversion'], $variable2['idcontainerversion'], 'The version should be different');
+        unset($variable1['idvariable']);
+        unset($variable2['idvariable']);
+        unset($variable1['idcontainerversion']);
+        unset($variable2['idcontainerversion']);
+
+        $this->assertEquals($variable1, $variable2, 'The copied referenced variable should match');
     }
 
     private function addContainerVariable($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $defaultValue = '', $lookupTable = [], $description = '')

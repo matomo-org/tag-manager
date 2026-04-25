@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Piwik;
@@ -35,6 +37,7 @@ class DomElementVariable extends BaseVariable
             $this->makeSetting('cssSelector', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($selectionMethod) {
                 $field->title = Piwik::translate('TagManager_ElementVisibilityTriggerCssSelectorTitle');
                 $field->description = Piwik::translate('TagManager_DomElementVariableCssSelectorDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_ElementVisibilityTriggerCssSelectorPlaceholder')];
                 $field->condition = 'selectionMethod == "cssSelector"';
                 $field->validate = function ($value) use ($selectionMethod, $field) {
                     if ($selectionMethod->getValue() === 'cssSelector' && empty($value)) {
@@ -45,6 +48,7 @@ class DomElementVariable extends BaseVariable
             $this->makeSetting('elementId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($selectionMethod) {
                 $field->title = Piwik::translate('TagManager_ElementVisibilityTriggerElementIDTitle');
                 $field->description = Piwik::translate('TagManager_ElementVisibilityTriggerElementIDDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_ElementVisibilityTriggerElementIdPlaceholder')];
                 $field->condition = 'selectionMethod == "elementId"';
                 $field->validate = function ($value) use ($selectionMethod, $field) {
                     if ($selectionMethod->getValue() === 'elementId' && empty($value)) {
@@ -58,6 +62,7 @@ class DomElementVariable extends BaseVariable
             $this->makeSetting('attributeName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_DomElementVariableAttributeNameTitle');
                 $field->inlineHelp = Piwik::translate('TagManager_DomElementVariableAttributeNameInlineHelp');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_DomElementVariableAttributeNamePlaceholder')];
                 $field->transform = function ($value) {
                     return trim($value);
                 };
@@ -65,5 +70,4 @@ class DomElementVariable extends BaseVariable
 
         );
     }
-
 }

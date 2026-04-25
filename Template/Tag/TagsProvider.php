@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Container\StaticContainer;
@@ -13,8 +15,8 @@ use Piwik\Plugin\Manager;
 use Piwik\Plugins\TagManager\Configuration;
 use Piwik\Plugins\TagManager\SystemSettings;
 
-class TagsProvider {
-
+class TagsProvider
+{
     /**
      * @var Manager
      */
@@ -138,5 +140,4 @@ class TagsProvider {
         }
         return false;
     }
-
 }

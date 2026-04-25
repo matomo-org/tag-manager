@@ -5,6 +5,9 @@
 	<context>web</context>
 	<name>Container3</name>
 	<description>My container 3 description</description>
+	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
+	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	<status>active</status>
 	
 	

@@ -15,6 +15,16 @@
         {{ translate('TagManager_VersionUsageBenefits') }}
         {{ translate('TagManager_ConfigureEnvironmentsSuperUser') }}
       </p>
+      <div class="versionSearchFilter">
+        <Field
+          uicontrol="text"
+          name="versionSearch"
+          :title="translate('General_Search')"
+          v-show="versions.length > 0"
+          v-model="versionSearch"
+        >
+        </Field>
+      </div>
       <table v-content-table>
         <thead>
           <tr>
@@ -45,7 +55,7 @@
               {{ translate('TagManager_NoVersionsFound') }}
               <a
                 class="createContainerVersionNow"
-                v-show="hasWriteAccess"
+                v-show="hasWriteAccess && hasCustomTemplatesCapability"
                 @click="createVersion()"
               >
                 {{ translate('TagManager_CreateNewVersionNow') }}
@@ -59,12 +69,12 @@
             :key="version.revision"
           >
             <td class="index">{{ version.revision }}</td>
-            <td class="name">{{ version.name }}</td>
+            <td class="name" :title="version.name">{{ truncateText(version.name, 50) }}</td>
             <td
               class="description"
               :title="version.description"
             >
-              {{ truncateText(version.description, 30) }}
+              {{ truncateText(version.description, 75) }}
             </td>
             <td class="environments">
               <span
@@ -84,7 +94,7 @@
             <td class="action">
               <a
                 class="table-action icon-rocket"
-                v-show="hasWriteAccess"
+                v-show="hasWriteAccess && (hasCustomTemplatesCapability || canPublishToLive)"
                 @click="publishVersion(version)"
                 :title="translate('TagManager_PublishVersion', version.name)"
               />
@@ -109,7 +119,8 @@
               />
               <a
                 class="table-action icon-delete"
-                v-show="version.releases.length === 0 && hasWriteAccess"
+                v-show="version.releases.length === 0 && hasWriteAccess
+                && hasCustomTemplatesCapability"
                 @click="deleteVersion(version)"
                 :title="translate('TagManager_DeleteX', translate('TagManager_Version'))"
               />
@@ -120,7 +131,7 @@
       <div class="tableActionBar">
         <a
           class="createNewVersion"
-          v-show="hasWriteAccess"
+          v-show="hasWriteAccess && hasCustomTemplatesCapability"
           @click="createVersion()"
         >
           <span class="icon-add">&nbsp;</span>{{ translate('TagManager_CreateNewVersion') }}
@@ -135,7 +146,7 @@
         </a>
         <a
           class="importVersion"
-          v-show="hasWriteAccess"
+          v-show="hasWriteAccess && hasCustomTemplatesCapability"
           @click="importVersion()"
         >
           <span class="icon-upload">&nbsp;</span>{{ translate('TagManager_Import') }}
@@ -218,11 +229,12 @@ import {
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
 import VersionsStore from './Versions.store';
-import { Version } from '../types';
+import { Release, Version } from '../types';
 import AvailableEnvironmentsStore from '../AvailableEnvironments.store';
 
 interface VersionListState {
   versionToBePublished: Version|null;
+  versionSearch: string;
 }
 
 const { tagManagerHelper } = window;
@@ -245,6 +257,7 @@ export default defineComponent({
   data(): VersionListState {
     return {
       versionToBePublished: null,
+      versionSearch: '',
     };
   },
   created() {
@@ -370,17 +383,37 @@ export default defineComponent({
       return VersionsStore.versions.value;
     },
     sortedVersions() {
-      const sorted = [...this.versions];
-      sorted.sort((lhs, rhs) => {
+      const searchFilter = this.versionSearch.toLowerCase();
+
+      // look through string properties of versions for values that have searchFilter in them
+      // (mimics angularjs filter() filter)
+      const result = [...this.versions].filter((h) => Object.keys(h).some((propName) => {
+        const entity = h as unknown as Record<string, unknown>;
+        let propValue = '';
+        if (typeof entity[propName] === 'string') {
+          propValue = (entity[propName] as string);
+        } else if (propName === 'releases') {
+          Object.values((entity.releases) as Release[]).forEach((value) => {
+            if (value.environment) {
+              propValue += `${value.environment} `;
+            }
+          });
+        }
+        return propValue.toLowerCase().indexOf(searchFilter) !== -1;
+      }));
+      result.sort((lhs, rhs) => {
         if (lhs.revision < rhs.revision) {
           return 1;
         }
         return lhs.revision > rhs.revision ? 0 : 1;
       });
-      return sorted;
+      return result;
     },
     hasWriteAccess() {
       return Matomo.hasUserCapability('tagmanager_write');
+    },
+    hasCustomTemplatesCapability() {
+      return Matomo.hasUserCapability('tagmanager_use_custom_templates');
     },
     canPublishToLive() {
       return Matomo.hasUserCapability('tagmanager_publish_live_container');

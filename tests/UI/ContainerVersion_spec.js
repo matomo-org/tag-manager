@@ -5,8 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 describe("ContainerVersion", function () {
-    this.timeout(0);
-
     this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
     this.optionsOverride = {
         'persist-fixture-data': false
@@ -83,9 +81,46 @@ describe("ContainerVersion", function () {
         await page.click('.editVersion .entityCancel a');
     }
 
+    async function searchVersion(searchTerm)
+    {
+        await page.focus('#versionSearch');
+        await page.evaluate((searchTerm) => {
+          var search = document.getElementById('versionSearch');
+          search.value = searchTerm;
+          var event = new Event('change');
+          search.dispatchEvent(event);
+        }, searchTerm);
+        await page.waitForTimeout(200);
+    }
+
     it('should load versions page with some versions', async function () {
         await page.goto(container1Base);
         await capture.page(page, 'version_some_exist');
+    });
+
+    it('should be able to search versions by name', async function () {
+        await searchVersion('container1_v5');
+        await capture.page(page, 'version_search_name');
+    });
+
+    it('should be able to search versions by description', async function () {
+        await searchVersion('Version with linked variables');
+        await capture.page(page, 'version_search_description');
+    });
+
+    it('should be able to search versions by environment', async function () {
+        await searchVersion('staging');
+        await capture.page(page, 'version_search_env');
+    });
+
+    it('should be able to search versions by environment multiple', async function () {
+        await searchVersion('live dev');
+        await capture.page(page, 'version_search_env_multiple');
+    });
+
+    it('should be able to search versions by value not present', async function () {
+        await searchVersion('shjdkfk');
+        await capture.page(page, 'version_search_empty_result');
     });
 
     it('should be able to create a new version', async function () {
@@ -102,7 +137,7 @@ describe("ContainerVersion", function () {
 
     it('should be able to prefill version', async function () {
         await setVersionName('My Version Name');
-        await setVersionDescription('My Description');
+        await setVersionDescription('My Description setting it to a very long description to show up in the UI clipped!!!');
         await capture.page(page, 'create_new_prefilled');
     });
 
@@ -144,7 +179,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should load an edit version through URL', async function () {
-        await page.goto(container1Base + '#?idContainerVersion=11');
+        await page.goto(container1Base + '#?idContainerVersion=12');
         await capture.page(page, 'edit_url');
     });
 
@@ -159,6 +194,18 @@ describe("ContainerVersion", function () {
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'updated_back_to_list');
+    });
+
+    it('should load the TagManager menu correctly on mobile', async function() {
+        page.webpage.setViewport({ width: 768, height: 512 });
+        await page.evaluate(function(){
+          $('.activateLeftMenu>span').click();
+          $('#mobile-left-menu .icon-chevron-down').click();
+        });
+        await page.waitForTimeout(250);
+
+        const element = await page.jQuery('#mobile-left-menu');
+        expect(await element.screenshot()).to.matchImage('mobile_tag_manager_left_menu');
     });
 
     it('should show confirm delete version dialog', async function () {
@@ -223,6 +270,7 @@ describe("ContainerVersion", function () {
     it('should be possible to confirm publish version to different environment', async function () {
         await modal.clickButton(page, 'Publish');
         await page.mouse.move(-10, -10);
+        await page.waitForNetworkIdle();
         await capture.page(page, 'publish_environment_confirmed');
     });
 
@@ -232,18 +280,24 @@ describe("ContainerVersion", function () {
         await capture.page(page, 'debug_version_enable');
     });
 
-    it('should load versions page with some versions as view user', async function () {
-        permissions.setViewUser();
+    it('should load versions page with some versions as write user', async function () {
+        permissions.setWriteUser();
         await page.goto(container1Base);
-        await capture.page(page, 'version_some_exist_view_user');
+        await capture.page(page, 'version_some_exist_write_user');
     });
 
-    it('should load versions page with no versions as view user', async function () {
-        permissions.setViewUser();
+    it('should be possible to edit a version by clicking on edit', async function () {
+        permissions.setWriteUser();
+        await clickFirstRowTableAction('icon-edit');
+        await capture.page(page, 'edit_through_list_for_write_user');
+    });
+
+    it('should load versions page with no versions as write user', async function () {
+        permissions.setWriteUser();
         await page.goto(container3Base);
         await page.waitForSelector('.manageVersion', { visible: true });
-        await capture.selector(page, 'version_none_exist_view_user', '.manageVersion');
-    });
+        await capture.selector(page, 'version_none_exist_write_user', '.manageVersion');
+    })
 
     it('should be able to show import version screen', async function () {
         await page.goto(container1Base);
@@ -272,20 +326,5 @@ describe("ContainerVersion", function () {
         await page.waitForSelector('.tagManagerManageList td');
         await page.waitForTimeout(200);
         await capture.page(page, 'import_version_confirmed');
-    });
-
-    it('should show notice not possible to publish to live container and preselect alternative environment', async function () {
-        permissions.setWriteUser();
-        await page.goto(container1Base);
-        await page.click('.createNewVersion');
-        await page.waitForNetworkIdle();
-        await capture.page(page, 'no_publish_live_container_capability');
-    });
-
-    it('should show notice not possible to publish to live container and preselect alternative environment in selector', async function () {
-        permissions.setWriteUser();
-        await page.goto(container1Base);
-        await clickFirstRowTableAction('icon-rocket');
-        await capture.modal(page, 'no_publish_live_container_capability_selector');
     });
 });

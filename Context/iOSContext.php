@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Context;
 
 use Piwik\Common;
@@ -12,7 +14,7 @@ use Piwik\SettingsPiwik;
 
 class iOSContext extends BaseContext
 {
-    const ID = 'ios';
+    public const ID = 'ios';
 
     public function getId()
     {
@@ -65,5 +67,4 @@ class iOSContext extends BaseContext
     {
         return $this->getInstallInstructions($container, $environment);
     }
-
 }

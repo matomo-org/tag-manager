@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -15,15 +16,18 @@ use Piwik\Validators\NotEmpty;
 
 class HoneybadgerTag extends BaseTag
 {
-    public function getName() {
+    public function getName()
+    {
         return "Honeybadger";
     }
 
-    public function getIcon() {
+    public function getIcon()
+    {
         return 'plugins/TagManager/images/icons/honeybadger.svg';
     }
 
-    public function getParameters() {
+    public function getParameters()
+    {
         return array(
             $this->makeSetting('honeybadgerApiKey', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_HoneybadgerTagApiKeyTitle');
@@ -49,8 +53,8 @@ class HoneybadgerTag extends BaseTag
         );
     }
 
-    public function getCategory() {
+    public function getCategory()
+    {
         return self::CATEGORY_DEVELOPERS;
     }
-
 }

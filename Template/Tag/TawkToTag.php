@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -16,23 +17,28 @@ use Piwik\Validators\NotEmpty;
 
 class TawkToTag extends BaseTag
 {
-    public function getName() {
+    public function getName()
+    {
         return "Tawk.to";
     }
 
-    public function getCategory() {
+    public function getCategory()
+    {
         return self::CATEGORY_SOCIAL;
     }
 
-    public function getIcon() {
+    public function getIcon()
+    {
         return 'plugins/TagManager/images/icons/tawk_to.png';
     }
 
-    public function getParameters() {
+    public function getParameters()
+    {
         return array(
             $this->makeSetting('tawkToId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_TawkToTagIdTitle');
                 $field->description = Piwik::translate('TagManager_TawkToTagIdDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_TawkToTagIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);
@@ -46,6 +52,7 @@ class TawkToTag extends BaseTag
             $this->makeSetting('tawkToWidgetId', 'default', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_TawkToTagWidgetIdTitle');
                 $field->description = Piwik::translate('TagManager_TawkToTagWidgetIdDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_TawkToTagWidgetIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);
@@ -58,5 +65,4 @@ class TawkToTag extends BaseTag
             }),
         );
     }
-
 }

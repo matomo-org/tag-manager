@@ -41,7 +41,7 @@
 
     tagManagerHelper.createNewVersion = function () {
         var containerId = CoreHome.MatomoUrl.parsed.value.idContainer;
-        this.editVersion(null, containerId, 0, function () { window.location.reload(); });
+        this.editVersion(containerId, 0, function () { window.location.reload(); });
     };
     tagManagerHelper.editVersion = function (idContainer, idContainerVersion, callback) {
       var createVNode = Vue.createVNode;
@@ -266,7 +266,7 @@
         ajaxRequest.send();
     };
     tagManagerHelper.updateDebugSiteFlag = function (url, idContainer, debugFlag) {
-        if (!url || !idContainer || !debugFlag) {
+        if (!url || !idContainer || !debugFlag || !(/^https?:\/\//.test(url))) {
             return;
         }
         window.open(url + (url.indexOf('?') == -1 ? '?' : '&') + 'mtmPreviewMode=' + encodeURIComponent(idContainer) + '&mtmSetDebugFlag=' + encodeURIComponent(debugFlag), '_blank', 'noreferrer');

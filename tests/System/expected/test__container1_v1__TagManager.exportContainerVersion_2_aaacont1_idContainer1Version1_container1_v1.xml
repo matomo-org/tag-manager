@@ -5,6 +5,9 @@
 	<context>web</context>
 	<name>Container1</name>
 	<description />
+	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
+	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	
 	
 	
@@ -23,10 +26,10 @@
 	</tags>
 	<triggers>
 		<row>
-			<idtrigger>4</idtrigger>
+			<idtrigger>5</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
-			<description>My trigger1 description</description>
+			<description>My trigger1 description setting it to a very long description to show up in the UI clipped</description>
 			<parameters>
 				<eventName>foo</eventName>
 			</parameters>
@@ -38,7 +41,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>5</idtrigger>
+			<idtrigger>6</idtrigger>
 			<type>WindowLoaded</type>
 			<name>Mytrigger2</name>
 			<description />
@@ -57,7 +60,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>6</idtrigger>
+			<idtrigger>7</idtrigger>
 			<type>DomReady</type>
 			<name>Mytrigger3</name>
 			<description />

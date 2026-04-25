@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -12,12 +13,16 @@ use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\API;
 use Piwik\Plugins\TagManager\Context\WebContext;
+use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
 use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
+use Piwik\Plugins\TagManager\tests\Framework\Mock\FakeAccessTagManager;
+use Piwik\Site;
+use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\Mock\FakeAccess;
 
 /**
@@ -34,6 +39,7 @@ class APITest extends IntegrationTestCase
     private $idSite;
 
     private $idContainer;
+    private $idContainerQuotes;
     private $idContainerDraftVersion;
 
     /**
@@ -272,6 +278,16 @@ class APITest extends IntegrationTestCase
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
     }
 
+    public function test_publishContainerVersion_shouldFailWhenHavingOnlyAdminAccess()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array());
+        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_PREVIEW);
+    }
+
     public function test_publishContainerVersion_shouldFailWhenContainerVersionDoesNotExist()
     {
         $this->expectException(\Exception::class);
@@ -297,12 +313,13 @@ class APITest extends IntegrationTestCase
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
     }
 
-    public function test_publishContainerVersion_shouldSucceedForAdmin()
+    public function test_publishContainerVersion_shouldFailForAdmin()
     {
-        // This test case actually doesn't have any assertions, but the fixture already performs some when it is set up.
-        // self::expectNotToPerformAssertions();
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
 
-        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
+        $this->setWriteUser();
+        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_PREVIEW);
     }
 
     public function test_publishContainerVersion_shouldSucceedForPublishLiveCapability()
@@ -311,7 +328,10 @@ class APITest extends IntegrationTestCase
         // self::expectNotToPerformAssertions();
 
         $this->setWriteUser();
-        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+        FakeAccess::$idSitesCapabilities = array(
+            UseCustomTemplates::ID => array($this->idSite),
+            PublishLiveContainer::ID => array($this->idSite),
+        );
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, Environment::ENVIRONMENT_LIVE);
     }
 
@@ -346,7 +366,7 @@ class APITest extends IntegrationTestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
 
-        $this->api->updateContainer($this->idSite, '9999',  'TheName');
+        $this->api->updateContainer($this->idSite, '9999', 'TheName');
     }
 
     public function test_updateContainerVersion_shouldFailWhenNotHavingViewPermissions()
@@ -364,6 +384,16 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('The requested container version does not exist');
 
         $this->api->updateContainerVersion($this->idSite, $this->idContainer, 99999, 'TheName');
+    }
+
+    public function test_updateContainerVersion_shouldThrowExceptionForInvalidNameLength()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Version name: The value contains "52" characters but should contain at most 50 characters.');
+
+        $this->setSuperUser();
+        $idContainerVersion = $this->api->createContainerVersion($this->idSite, $this->idContainer, 'My Name');
+        $this->api->updateContainerVersion($this->idSite, $this->idContainer, $idContainerVersion, 'My Name very long!!!! name should throw an exception', 'TheName');
     }
 
     public function test_createContainerVersion_shouldFailWhenNotHavingViewPermissions()
@@ -384,6 +414,15 @@ class APITest extends IntegrationTestCase
         $this->api->createContainerVersion($this->idSite, $this->idContainer, 'TheName');
     }
 
+    public function test_createContainerVersion_shouldThrowExceptionForInvalidNameLength()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Version name: The value contains "52" characters but should contain at most 50 characters.');
+
+        $this->setSuperUser();
+        $this->api->createContainerVersion($this->idSite, $this->idContainer, 'My Name very long!!!! name should throw an exception');
+    }
+
     public function test_deleteContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
@@ -391,6 +430,34 @@ class APITest extends IntegrationTestCase
 
         $this->setUser();
         $this->api->deleteContainerVersion($this->idSite, 'foo', $this->idContainerDraftVersion);
+    }
+
+    public function test_deleteContainerVersion_shouldFailWhenHavingOnlyWritePermissions()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setAdminUser();
+        $this->api->deleteContainerVersion($this->idSite, 'foo', $this->idContainerDraftVersion);
+    }
+
+    public function test_createContainer_successEvenWhenDifferentSiteIdAddedInMatomoConfigurationVariable()
+    {
+        $idSite = 1;
+        $newIdSite = Fixture::createWebsite('2012-01-01 02:03:04');
+        $idContainer = $this->api->createDefaultContainerForSite($idSite);
+        $container = $this->api->getContainer($idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $variables = $this->api->getContainerVariables($idSite, $idContainer, $idContainerDraftVersion);
+        $variable = $variables[0];
+        $parameters = $variable['parameters'];
+        $parameters['idSite'] = $newIdSite;
+        $this->api->updateContainerVariable($idSite, $idContainer, $idContainerDraftVersion, $variable['idvariable'], $variable['name'], $parameters);
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($idSite));
+        Site::clearCache(); // so that cache has only the sites admin has access, else was unable to add a test for #990
+        $version = $this->api->createContainerVersion($idSite, $idContainer, 'foo', '', $idContainerDraftVersion);
+        $this->assertNotEmpty($version);
     }
 
     public function test_deleteContainerVersion_shouldFailWhenContainerNotExists()
@@ -424,6 +491,26 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('The requested container "9999" does not exist');
 
         $this->api->deleteContainerVariable($this->idSite, 9999, $this->idContainerDraftVersion, $idVariable = 999);
+    }
+
+    public function test_deleteContainerVariable_shouldFailWhenMissingCustomTemplateCapability()
+    {
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $idVariable = $this->api->addContainerVariable(
+            $this->idSite,
+            $this->idContainer,
+            $this->idContainerDraftVersion,
+            CustomJsFunctionVariable::ID,
+            'myCustomVariable'
+        );
+
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array());
+        $this->api->deleteContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idVariable);
     }
 
     public function test_deleteContainerTrigger_shouldFailWhenNotHavingViewPermissions()
@@ -474,6 +561,212 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('The requested container "9999" does not exist');
 
         $this->api->deleteContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
+    }
+
+    public function test_deleteContainerTag_shouldFailWhenMissingCustomTemplateCapability()
+    {
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, WindowLoadedTrigger::ID, 'myTagDeleteTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag(
+            $this->idSite,
+            $this->idContainer,
+            $this->idContainerDraftVersion,
+            CustomHtmlTag::ID,
+            'myCustomTag',
+            array('customHtml' => 'foo'),
+            $fireTrigger
+        );
+
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array());
+        $this->api->deleteContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag);
+    }
+
+    public function test_pauseContainerTag_shouldFailWhenNotHavingWritePermissions()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
+        $this->setUser();
+        $this->api->pauseContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag = 999);
+    }
+
+    public function test_pauseContainerTag_shouldFailWhenVersionNotExists()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
+        $this->api->pauseContainerTag($this->idSite, $this->idContainer, 9999, $idTag = 999);
+    }
+
+    public function test_pauseContainerTag_shouldFailWhenContainerNotExists()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
+        $this->api->pauseContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
+    }
+
+    public function test_pauseContainerTag_shouldFailWhenContainerExistsButTagNotExists()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+
+        $this->assertFalse($this->api->pauseContainerTag($this->idSite, $idContainer, $container['versions'][0]['idcontainerversion'], $idTag = 999));
+    }
+
+    public function test_pauseContainerTag_success()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName ', array('customImageSrc' => 'foo'), $fireTrigger);
+
+        $this->assertTrue($this->api->pauseContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag));
+        $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertEquals('paused', $tag['status']);
+        $this->assertEquals('myName', $tag['name']);
+    }
+
+    public function test_pauseContainerTag_shouldFailWhenMissingCustomTemplateCapability()
+    {
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, WindowLoadedTrigger::ID, 'myTagPauseTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag(
+            $this->idSite,
+            $this->idContainer,
+            $this->idContainerDraftVersion,
+            CustomHtmlTag::ID,
+            'myCustomTag',
+            array('customHtml' => 'foo'),
+            $fireTrigger
+        );
+
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array());
+        $this->api->pauseContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag);
+    }
+
+    public function test_resumeContainerTag_shouldFailWhenNotHavingWritePermissions()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
+
+        $this->setUser();
+        $this->api->resumeContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag = 999);
+    }
+
+    public function test_resumeContainerTag_shouldFailWhenVersionNotExists()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container version does not exist');
+
+        $this->api->resumeContainerTag($this->idSite, $this->idContainer, 9999, $idTag = 999);
+    }
+
+    public function test_resumeContainerTag_shouldFailWhenContainerNotExists()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The requested container "9999" does not exist');
+
+        $this->api->resumeContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
+    }
+
+    public function test_resumeContainerTag_shouldFailWhenContainerExistsButTagNotExists()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+
+        $this->assertFalse($this->api->resumeContainerTag($this->idSite, $idContainer, $container['versions'][0]['idcontainerversion'], $idTag = 999));
+    }
+
+    public function test_resumeContainerTag_success()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName ', array('customImageSrc' => 'foo'), $fireTrigger);
+
+        $this->api->pauseContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertTrue($this->api->resumeContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag));
+        $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertEquals('active', $tag['status']);
+        $this->assertEquals('myName', $tag['name']);
+    }
+
+    public function test_resumeContainerTag_shouldFailWhenMissingCustomTemplateCapability()
+    {
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, WindowLoadedTrigger::ID, 'myTagResumeTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag(
+            $this->idSite,
+            $this->idContainer,
+            $this->idContainerDraftVersion,
+            CustomHtmlTag::ID,
+            'myCustomTag',
+            array('customHtml' => 'foo'),
+            $fireTrigger
+        );
+        $this->api->pauseContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag);
+
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array());
+        $this->api->resumeContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTag);
+    }
+
+    public function test_addContainerTagsWithoutStatusShouldReturnActiveWhenNotSet()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger);
+        $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertEquals('active', $tag['status']);
+    }
+
+    public function test_addContainerTagsWithStatusShouldReturnActiveWhenInvalidStatusPassed()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger, $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '', $status = 'act');
+        $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertEquals('active', $tag['status']);
+    }
+
+    public function test_addContainerTagsWithStatusShouldReturnPausedStatusWhenPassed()
+    {
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerDraftVersion, WindowLoadedTrigger::ID, 'myNamePauseTagTrigger');
+        $fireTrigger = array($idTrigger);
+        $idTag = $this->api->addContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, 'CustomImage', 'myName', array('customImageSrc' => 'foo'), $fireTrigger, $blockTriggerIds = [], $fireLimit = 'unlimited', $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null, $description = '', $status = 'paused');
+        $tag = $this->api->getContainerTag($this->idSite, $idContainer, $idContainerDraftVersion, $idTag);
+        $this->assertEquals('paused', $tag['status']);
     }
 
     public function test_getContainer_shouldFailWhenNotHavingViewPermissions()
@@ -588,7 +881,7 @@ class APITest extends IntegrationTestCase
 
     public function test_createDefaultContainerForSite_success()
     {
-        $this->setAdminUser();
+        $this->setSuperUser();
         $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
         $this->assertNotEmpty($idContainer);
     }
@@ -662,7 +955,9 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_write Fake exception');
 
         $this->setUser();
-        $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999, 'myName');
+        $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999, 'myName ');
+        $tag = $this->api->getContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 999);
+        $this->assertEquals('myName', $tag['myName']);
     }
 
 
@@ -687,6 +982,31 @@ class APITest extends IntegrationTestCase
     {
         $this->setUser();
         $this->assertNotEmpty($this->api->exportContainerVersion($this->idSite, $this->idContainer));
+    }
+
+    public function test_exportContainerQuoteVersion_success()
+    {
+        $this->setUser();
+        $container = $this->api->exportContainerVersion($this->idSite, $this->idContainerQuotes);
+        $this->assertNotEmpty($container);
+
+        $tags = $container['tags'];
+        $pausedCount = 0;
+        $invalidCount = 0;
+        $activeCount = 0;
+        foreach ($tags as $tag) {
+            if ($tag['status'] === TagsDao::STATUS_ACTIVE) {
+                $activeCount++;
+            } elseif ($tag['status'] === TagsDao::STATUS_PAUSED) {
+                $pausedCount++;
+            } else {
+                $invalidCount++;
+            }
+        }
+
+        $this->assertSame(0, $invalidCount);
+        $this->assertSame(1, $activeCount);
+        $this->assertSame(2, $pausedCount);
     }
 
     public function test_importContainerVersion_shouldFailWhenNotHavingViewPermissions()
@@ -722,6 +1042,54 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('Invalid format for exportedContainerVersion. Value needs to be a valid JSON');
 
         $this->api->importContainerVersion('""', $this->idSite, $this->idContainer);
+    }
+
+    public function test_importContainerVersionShouldRollBackToOlderDraftWhenExportDraftHasErrors()
+    {
+        $currentDraftVersion = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
+        $isException = false;
+        $newContainerDetails = [
+            'context' => 'web',
+            'tags' => [
+                $currentDraftVersion['tags'][0]
+            ],
+            'triggers' => [
+                $currentDraftVersion['triggers'][0]
+            ],
+            'variables' => [
+                [
+                    'type' => 'Constant',
+                    'name' => 'Constant-Reference', // Note the extra space
+                    'description' => '',
+                    'default_value' => '',
+                    'lookup_table' => [],
+                    'parameters' => ['constantValue' => 'test'],
+                ],
+                [
+                    'type' => 'CustomJsFunction',
+                    'name' => 'Custom JavaScript Constant Ref',
+                    'description' => '',
+                    'default_value' => '',
+                    'lookup_table' => [],
+                    'parameters' => ['jsFunction' => 'function () { return "{{Constant-Reference}}"; }'],
+                ]
+            ],
+        ];
+        $newContainerDetails['triggers'][0]['conditions'][] = ['comparison' => 'equals', 'actual' => 'Constant-Reference ', 'expected' => false];
+        try {
+            $this->api->importContainerVersion(json_encode($newContainerDetails), $this->idSite, $this->idContainer);
+        } catch (\Exception $e) {
+            $isException = true;
+        }
+
+        $this->assertTrue($isException);
+        $rollBackedDraftVersion = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
+        $this->assertNotEmpty($rollBackedDraftVersion['tags']);
+        $this->assertNotEmpty($rollBackedDraftVersion['triggers']);
+        $this->assertNotEmpty($rollBackedDraftVersion['variables']);
+        $this->assertEquals($rollBackedDraftVersion['tags'][1]['name'], $currentDraftVersion['tags'][1]['name']);
+        $this->assertEquals($rollBackedDraftVersion['triggers'][1]['name'], $currentDraftVersion['triggers'][1]['name']);
+        $this->assertEquals($rollBackedDraftVersion['variables'][1]['name'], $currentDraftVersion['variables'][1]['name']);
     }
 
     private function getValidImportJson()
@@ -972,6 +1340,7 @@ class APITest extends IntegrationTestCase
         // we do not want to use idSite = 1, instead as we will sometimes also have idTag = 1... better tests this way
         $this->idSite = $this->tagFixture->idSite2;
         $this->idContainer = $this->tagFixture->idContainer1;
+        $this->idContainerQuotes = $this->tagFixture->idContainerQuotes;
         $this->idContainerDraftVersion = $this->tagFixture->idContainer1DraftVersion;
 
         $this->api = API::getInstance();
@@ -990,7 +1359,7 @@ class APITest extends IntegrationTestCase
     public function test_addContainerVariable_successRegularTemplateWithWriteUser()
     {
         $this->setWriteUser();
-        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'Url', 'myName');
+        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'Url', 'myName ');
         $this->assertNotEmpty($id);
         return $id;
     }
@@ -998,23 +1367,21 @@ class APITest extends IntegrationTestCase
     public function test_updateContainerVariable_successRegularTemplateWithWriteUser()
     {
         $id = $this->test_addContainerVariable_successRegularTemplateWithWriteUser();
+        $variable = $this->api->getContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id);
+        $this->assertEquals('myName', $variable['name']);
 
-        $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('urlPart' => 'href'));
+        $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2 ', array('urlPart' => 'href'));
+
+        $variable = $this->api->getContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id);
+        $this->assertEquals('myName2', $variable['name']);
     }
 
     public function test_updateContainerVariable_failMissingCustomTemplatePermission()
     {
-        $this->setAdminUser();
-        $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
-
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
         $this->setWriteUser();
-
-        try {
-            $this->api->updateContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2');
-            $this->fail('Expected exception has not been thrown');
-        } catch (\Exception $e) {
-            self::assertStringContainsString('checkUserHasCapability tagmanager_use_custom_templates', $e->getMessage());
-        }
+        $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
     }
 
     public function test_updateContainerVariable_successWithCustomTemplatePermission()
@@ -1023,6 +1390,7 @@ class APITest extends IntegrationTestCase
         // self::expectNotToPerformAssertions();
 
         $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
         $id = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
 
         $this->setWriteUser();
@@ -1054,33 +1422,25 @@ class APITest extends IntegrationTestCase
 
     public function test_updateContainerTag_failMissingCustomTemplatePermission()
     {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
         $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser($name = 'foobar');
         $this->setAdminUser();
 
         $fireTrigger = array($idTrigger);
 
-        $id = $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
-
-        $this->setWriteUser();
-
-        try {
-            $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customHtml' => 'foo'), $fireTrigger);
-            $this->fail('Expected exception has not been thrown');
-        } catch (\Exception $e) {
-            self::assertStringContainsString('checkUserHasCapability tagmanager_use_custom_templates', $e->getMessage());
-        }
+        $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
     }
 
     public function test_updateContainerTag_successWithCustomTemplatePermission()
     {
-        $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser();
-        $this->setAdminUser();
-
-        $fireTrigger = array($idTrigger);
-        $id = $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
-
         $this->setWriteUser();
         FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser();
+
+        $fireTrigger = array($idTrigger);
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $id = $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
 
         $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customHtml' => 'foo'), $fireTrigger);
     }
@@ -1124,7 +1484,7 @@ class APITest extends IntegrationTestCase
     public function provideContainerConfig()
     {
         return array(
-            'Piwik\Access' => new FakeAccess()
+            'Piwik\Access' => new FakeAccessTagManager()
         );
     }
 }

@@ -2,6 +2,12 @@
     "TagManager": {
         "CategoryClicks": "Націскі",
         "CategoryDate": "Дата",
+        "ChooseWebsite": "Абярыце вэб-сайт",
+        "EtrackerTagTransactionCurrencyTitle": "Валюта",
+        "InvalidDebugUrlError": "Памылка",
+        "MatomoTagEcommerceViewPrice": "Кошт",
+        "MatomoTagEcommerceViewProductName": "Імя прадукта",
+        "MatomoTagEcommerceViewProductSKU": "Прадукт SKU",
         "PageTitleVariableName": "Назва старонкі",
         "PageUrlVariableName": "URL старонкі",
         "ReferrerUrlVariableName": "URL спасыльніка",

@@ -1,15 +1,18 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\tests\Integration\Dao;
 
 use Piwik\Common;
 use Piwik\DbHelper;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
+use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
 
@@ -21,7 +24,6 @@ use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
  */
 class TagsDaoTest extends IntegrationTestCase
 {
-
     /**
      * @var TagsDao
      */
@@ -112,6 +114,10 @@ class TagsDaoTest extends IntegrationTestCase
             'status' => TagsDao::STATUS_ACTIVE,
             'description' => $description
         ), $tag);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertEquals('paused', $tag['status']);
     }
 
     public function test_createTag_Full()
@@ -131,7 +137,7 @@ class TagsDaoTest extends IntegrationTestCase
         $createdDate = $this->now;
         $description = 'Test description for My Name tag';
 
-        $idTag = $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description);
+        $idTag = $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description, $status = '');
         $this->assertSame(1, $idTag);
 
         $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
@@ -155,6 +161,83 @@ class TagsDaoTest extends IntegrationTestCase
             'status' => TagsDao::STATUS_ACTIVE,
             'description' => $description
         ), $tag);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertEquals('paused', $tag['status']);
+    }
+
+    public function test_createTagStatus()
+    {
+        $idSite = 2;
+        $idContainerVersion = 3;
+        $type = 'CustomFoo';
+        $name = 'My Name';
+        $parameters = array('foo' => 'bar', 'mytest' => 5, 'myvalue' => true);
+        $fireTriggerIds = array(7, 19, 32, 1);
+        $blockTriggerIds = array(4, 59);
+        $fireLimit = Tag::FIRE_LIMIT_UNLIMITED;
+        $fireDelay = 94399;
+        $priority = 995;
+        $startDate = '2014-05-07 08:09:10';
+        $endDate = '2018-05-07 08:09:10';
+        $createdDate = $this->now;
+        $description = 'Test description for My Name tag';
+
+        $idTag = $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description, $status = '');
+        $idTag2 = $this->dao->createTag($idSite, $idContainerVersion, $type, $name . '2', $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description, $status = 'asdf');
+        $idTag3 = $this->dao->createTag($idSite, $idContainerVersion, $type, $name . '3', $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description, $status = 'paused');
+        $idTag4 = $this->dao->createTag($idSite, $idContainerVersion, $type, $name . '4', $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description, $status = 'deleted');
+        $idTag5 = $this->dao->createTag($idSite, $idContainerVersion, $type, $name . '5', $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description, $status = 'active');
+        $this->assertSame(1, $idTag);
+        $this->assertSame(2, $idTag2);
+        $this->assertSame(3, $idTag3);
+        $this->assertSame(4, $idTag4);
+        $this->assertSame(5, $idTag5);
+
+        $expectedTag = array(
+            'idtag' => 1,
+            'idcontainerversion' => $idContainerVersion,
+            'idsite' => $idSite,
+            'name' => $name,
+            'type' => $type,
+            'parameters' => $parameters,
+            'fire_trigger_ids' => $fireTriggerIds,
+            'block_trigger_ids' => $blockTriggerIds,
+            'fire_limit' => $fireLimit,
+            'fire_delay' => $fireDelay,
+            'priority' => $priority,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'created_date' => $createdDate,
+            'updated_date' => $createdDate,
+            'deleted_date' => null,
+            'status' => TagsDao::STATUS_ACTIVE,
+            'description' => $description
+        );
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertEquals($expectedTag, $tag);
+
+        $expectedTag['idtag'] = 2;
+        $expectedTag['name'] =  $name . '2';
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag2);
+        $this->assertEquals($expectedTag, $tag);
+
+        $expectedTag['idtag'] = 3;
+        $expectedTag['name'] =  $name . '3';
+        $expectedTag['status'] = 'paused';
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag3);
+        $this->assertEquals($expectedTag, $tag);
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag4);
+        $this->assertEmpty($tag);
+
+        $expectedTag['idtag'] = 5;
+        $expectedTag['name'] =  $name . '5';
+        $expectedTag['status'] = 'active';
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag5);
+        $this->assertEquals($expectedTag, $tag);
     }
 
     public function test_createTag_increasedIdTag()
@@ -172,6 +255,18 @@ class TagsDaoTest extends IntegrationTestCase
         $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
 
         $idTag = $this->createTag($idSite = 3);
+        $this->assertEquals(1, $idTag);
+
+        $this->createTag($idSite = 3);
+    }
+
+    public function test_createTag_failsToInsertSameNameTwiceEvenIfTagPaused()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('TagManager_ErrorNameDuplicate');
+
+        $idTag = $this->createTag($idSite = 3, $idContainerVersion = 5);
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
         $this->assertEquals(1, $idTag);
 
         $this->createTag($idSite = 3);
@@ -386,6 +481,55 @@ class TagsDaoTest extends IntegrationTestCase
         $this->assertEmpty($tag);
     }
 
+    public function test_shouldPauseContainerTag()
+    {
+        $idTag = $this->createTag($idSite = 4, $idContainerVersion = 7, 'Test name');
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertSame('Test name', $tag['name']);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag);
+        $this->assertEquals('paused', $tag['status']);
+    }
+
+    public function test_shouldNotResumeDeletedContainerTag()
+    {
+        $idTag = $this->createTag($idSite = 4, $idContainerVersion = 7, 'Test name');
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertSame('Test name', $tag['name']);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag);
+        $this->assertEquals('paused', $tag['status']);
+
+        $this->dao->deleteContainerTag($idSite, $idContainerVersion, $idTag, $this->now);
+        $this->dao->resumeContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertEmpty($tag);
+    }
+
+    public function test_shouldResumeContainerTag()
+    {
+        $idTag = $this->createTag($idSite = 4, $idContainerVersion = 7, 'Test name');
+
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertSame('Test name', $tag['name']);
+
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag);
+        $this->assertEquals('paused', $tag['status']);
+
+        $this->dao->resumeContainerTag($idSite, $idContainerVersion, $idTag);
+        $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $this->assertNotEmpty($tag);
+        $this->assertEquals('active', $tag['status']);
+    }
+
     public function test_getAllTags_shouldReturnEmptyArray_WhenThereAreNoTags()
     {
         $tags = $this->dao->getAllTags();
@@ -421,6 +565,8 @@ class TagsDaoTest extends IntegrationTestCase
         $idTag1 = $this->createTag($idSite = 3, $idContainerVersion = 5, 'First Tag');
         $idTag2 = $this->createTag($idSite = 3, $idContainerVersion = 5, 'MySecondTag');
         $idTag3 = $this->createTag($idSite = 4, $idContainerVersion = 5, 'My Third Tag');
+        $idTag4 = $this->createTag($idSite = 4, $idContainerVersion = 5, 'My Fourth Tag');
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag4);
 
         $tags3_4 = $this->dao->getContainerTags($idSite = 3, $idContainerVersion = 4);
         $this->assertEquals(array(), $tags3_4);
@@ -429,7 +575,7 @@ class TagsDaoTest extends IntegrationTestCase
         $tags4_5 = $this->dao->getContainerTags($idSite = 4, $idContainerVersion = 5);
 
         $this->assertCount(2, $tags3_5);
-        $this->assertCount(1, $tags4_5);
+        $this->assertCount(2, $tags4_5);
         $this->assertSame(array(), $this->dao->getContainerTags($idSite = 99, $idContainerVersion = 9));
 
         $this->assertSame($idTag1, $tags3_5[0]['idtag']);
@@ -440,6 +586,8 @@ class TagsDaoTest extends IntegrationTestCase
 
         $this->assertSame($idTag3, $tags4_5[0]['idtag']);
         $this->assertSame(4, $tags4_5[0]['idsite']);
+        $this->assertSame('active', $tags4_5[0]['status']);
+        $this->assertSame('paused', $tags4_5[1]['status']);
 
         // ignores deleted status, was before 2 tags
         $this->dao->deleteContainerTag($idSite = 3, $idContainerVersion = 5, $idTag1, $this->now);
@@ -494,7 +642,7 @@ class TagsDaoTest extends IntegrationTestCase
         // should not delete anything when no tag matches
         $this->dao->deleteContainerTag($idSite = 99, $idContainerVersion = 6, $idTag2, $this->now);
         $this->dao->deleteContainerTag($idSite = 4, $idContainerVersion = 6, $idTag2, $this->now);
-        $this->dao->deleteContainerTag($idSite = 3, $idContainerVersion = 5,999, $this->now);
+        $this->dao->deleteContainerTag($idSite = 3, $idContainerVersion = 5, 999, $this->now);
 
         // verify nothing deleted
         $this->assertCount(3, $this->dao->getAllTags());
@@ -516,6 +664,81 @@ class TagsDaoTest extends IntegrationTestCase
         $this->assertSame(null, $tags[2]['deleted_date']);
     }
 
+    public function testMakeCopyNameUniqueNoContainerVersion()
+    {
+        $this->expectException(\Exception::class);
+        $this->dao->makeCopyNameUnique(1, 'FooTag');
+    }
+
+    /**
+     * @dataProvider getMakeCopyNameUniqueTestData
+     * @param string $name
+     * @param array $tags
+     * @param string $expected
+     * @return void
+     */
+    public function testMakeCopyNameUnique(string $name, array $tags, string $expected)
+    {
+        $idSite = 1;
+        $idContainerVersion = 5;
+        foreach ($tags as $number) {
+            $tempName = "FooTag ($number)";
+            if ($number < 1) {
+                $tempName = "FooTag";
+            }
+
+            if ($tags == [0] && strpos($name, 'FooTag') === false) {
+                $tempName = $name;
+            }
+            $this->createTag($idSite, $idContainerVersion, $tempName);
+        }
+
+        $updatedName = $this->dao->makeCopyNameUnique($idSite, $name, $idContainerVersion);
+        $maxChars = Name::MAX_LENGTH;
+        $this->assertLessThanOrEqual($maxChars, strlen($updatedName), "The name should not exceed the {$maxChars} characters");
+        $this->assertSame($expected, $updatedName);
+    }
+
+    public function getMakeCopyNameUniqueTestData(): array
+    {
+        return [
+            ['FooTag', [], 'FooTag'],
+            ['FooTag (1)', [], 'FooTag (1)'],
+            ['FooTag', [0], 'FooTag (1)'],
+            ['FooTag (1)', [0], 'FooTag (1)'],
+            ['FooTag', [1], 'FooTag'],
+            ['FooTag', [1, 2], 'FooTag'],
+            ['FooTag', [1, 2, 3], 'FooTag'],
+            ['FooTag (1)', [1], 'FooTag (2)'],
+            ['FooTag (1)', [1, 2], 'FooTag (3)'],
+            ['FooTag (1)', [1, 2, 3], 'FooTag (4)'],
+            ['FooTag (2)', [1], 'FooTag (2)'],
+            ['FooTag (2)', [1, 2], 'FooTag (3)'],
+            ['FooTag (2)', [1, 2, 3], 'FooTag (4)'],
+            ['FooTag (3)', [1], 'FooTag (3)'],
+            ['FooTag (3)', [1, 2], 'FooTag (3)'],
+            ['FooTag (3)', [1, 2, 3], 'FooTag (4)'],
+            ['FooTag(1)', [1, 2, 3], 'FooTag(1)'],
+            ['SomeOtherName', [1, 2, 3], 'SomeOtherName'],
+            ['SomeOtherName (1)', [1, 2, 3], 'SomeOtherName (1)'],
+            [
+                'Test tag with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcde',
+                [0],
+                'Test tag with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890A (1)'
+            ],
+            [
+                'Test tag with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890A (9)',
+                [0],
+                'Test tag with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890 (10)'
+            ],
+            [
+                'Test tag with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890 (99)',
+                [0],
+                'Test tag with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz123456789 (100)'
+            ],
+        ];
+    }
+
     private function createTag($idSite = 1, $idContainerVersion = 5, $name = 'FooTag')
     {
         $type = 'CustomFoo';
@@ -533,6 +756,4 @@ class TagsDaoTest extends IntegrationTestCase
 
         return $idTag;
     }
-
-
 }

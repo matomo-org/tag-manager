@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Context;
 
 use Piwik\Common;
@@ -12,7 +14,7 @@ use Piwik\SettingsPiwik;
 
 class AndroidContext extends BaseContext
 {
-    const ID = 'android';
+    public const ID = 'android';
 
     public function getId()
     {
@@ -36,7 +38,7 @@ class AndroidContext extends BaseContext
             $containerJs = $this->generatePublicContainer($container, $release);
             $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $release['environment'], $container['created_date']);
             $filesCreated[$path] = json_encode($containerJs);
-            $this->storage->save(PIWIK_DOCUMENT_ROOT. $path, $filesCreated[$path]);
+            $this->storage->save(PIWIK_DOCUMENT_ROOT . $path, $filesCreated[$path]);
         }
         return $filesCreated;
     }
@@ -65,5 +67,4 @@ class AndroidContext extends BaseContext
     {
         return $this->getInstallInstructions($container, $environment);
     }
-
 }

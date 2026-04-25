@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
-namespace Piwik\Plugins\TagManager\Dao;
 
+namespace Piwik\Plugins\TagManager\Dao;
 
 use Piwik\Db;
 use Piwik\DbHelper;
@@ -203,7 +204,12 @@ class VariablesDao extends BaseDao implements TagManagerDao
         $table = $this->tablePrefixed;
         $variables = Db::fetchAll("SELECT idvariable FROM $table WHERE status = ? AND idsite = ? and idcontainerversion = ? and type = ? ORDER BY created_date ASC", $bind);
 
-        return is_array($variables) && count($variables) ? array_column($variables,'idvariable') : [];
+        return is_array($variables) && count($variables) ? array_column($variables, 'idvariable') : [];
+    }
+
+    protected function isNameAlreadyUsed(int $idSite, string $name, ?int $idContainerVersion = null): bool
+    {
+        return $this->isNameInUse($idSite, $idContainerVersion, $name);
     }
 
     private function enrichVariables($variables)
@@ -246,4 +252,3 @@ class VariablesDao extends BaseDao implements TagManagerDao
         return $variable;
     }
 }
-

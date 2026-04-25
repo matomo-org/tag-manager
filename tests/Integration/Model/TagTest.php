@@ -10,14 +10,20 @@
 namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
 use Piwik\Container\StaticContainer;
+use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Input\Name;
+use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Tag;
+use Piwik\Plugins\TagManager\Model\Trigger;
+use Piwik\Plugins\TagManager\Model\Variable;
 use Piwik\Plugins\TagManager\TagManager;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
+use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
+use Piwik\Url;
 
 /**
  * @group TagManager
@@ -43,6 +49,7 @@ class TagTest extends IntegrationTestCase
     private $containerVersion2 = 6;
 
     private $idTag1;
+    private $idTag2;
 
     /**
      * @var TagsDao;
@@ -72,6 +79,7 @@ class TagTest extends IntegrationTestCase
         $this->idTrigger4 = $trigger->addContainerTrigger($this->idSite2, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger3', [], []);
 
         $this->idTag1 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'InitialTag1', ['customHtml' => '<script></script>']);
+        $this->idTag2 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'InitialTag2', ['customHtml' => '<script></script>'], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '', $status = 'paused');
     }
 
     public function tearDown(): void
@@ -219,12 +227,12 @@ class TagTest extends IntegrationTestCase
     public function testAddContainerTagSuccessMinimal()
     {
         $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [], Tag::FIRE_LIMIT_UNLIMITED, 0, '0', false, false);
-        $this->assertSame(2, $idTag);
+        $this->assertSame(3, $idTag);
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
 
         $expected =  [
-            'idtag' => 2,
+            'idtag' => 3,
             'idcontainerversion' => 5,
             'idsite' => 1,
             'type' => 'CustomHtml',
@@ -271,10 +279,11 @@ class TagTest extends IntegrationTestCase
                                     'uiControl' => 'textarea',
                                     'uiControlAttributes' =>
                                          [
+                                             'spellcheck' => 'false'
                                         ],
                                     'availableValues' => null,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
-                                    'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
+                                    'inlineHelp' => Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&mtm_source=Matomo_App_OnPremise&mtm_medium=App.TagManager.getParameters') . 'Learn more</a>',
                                     'introduction' => null,
                                     'condition' => null,
                                     'fullWidth' => false,
@@ -290,7 +299,8 @@ class TagTest extends IntegrationTestCase
                                     'defaultValue' => 'bodyEnd',
                                     'type' => 'string',
                                     'uiControl' => 'select',
-                                    'uiControlAttributes' => [],
+                                    'uiControlAttributes' => [
+                                    ],
                                     'availableValues' => [
                                         'headStart' => 'Head Start',
                                         'headEnd' => 'Head End',
@@ -315,7 +325,7 @@ class TagTest extends IntegrationTestCase
     {
         $description = 'Test description of MyName tag';
         $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, CustomHtmlTag::ID, 'MyName', $parameters = ['customHtml' => '<div></div>'], [$this->idTrigger1], [$this->idTrigger3], Tag::FIRE_LIMIT_ONCE_IN_LIFETIME, 9, '99', '2017-03-01 01:01:01', '2018-03-01 01:01:01', $description);
-        $this->assertSame(2, $idTag);
+        $this->assertSame(3, $idTag);
 
         $tag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
 
@@ -366,10 +376,11 @@ class TagTest extends IntegrationTestCase
                                     'uiControl' => 'textarea',
                                     'uiControlAttributes' =>
                                          [
+                                             'spellcheck' => 'false'
                                         ],
                                     'availableValues' => null,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
-                                    'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
+                                    'inlineHelp' => Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&mtm_source=Matomo_App_OnPremise&mtm_medium=App.TagManager.getParameters') . 'Learn more</a>',
                                     'introduction' => null,
                                     'condition' => null,
                                     'fullWidth' => false,
@@ -385,7 +396,8 @@ class TagTest extends IntegrationTestCase
                                     'defaultValue' => 'bodyEnd',
                                     'type' => 'string',
                                     'uiControl' => 'select',
-                                    'uiControlAttributes' => [],
+                                    'uiControlAttributes' => [
+                                    ],
                                     'availableValues' => [
                                         'headStart' => 'Head Start',
                                         'headEnd' => 'Head End',
@@ -557,10 +569,11 @@ class TagTest extends IntegrationTestCase
                                 'uiControl' => 'textarea',
                                 'uiControlAttributes' =>
                                      [
+                                         'spellcheck' => 'false'
                                     ],
                                 'availableValues' => null,
                                 'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
-                                'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
+                                'inlineHelp' => Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&mtm_source=Matomo_App_OnPremise&mtm_medium=App.TagManager.getParameters') . 'Learn more</a>',
                                 'introduction' => null,
                                 'condition' => null,
                                 'fullWidth' => false,
@@ -576,7 +589,8 @@ class TagTest extends IntegrationTestCase
                                 'defaultValue' => 'bodyEnd',
                                 'type' => 'string',
                                 'uiControl' => 'select',
-                                'uiControlAttributes' => [],
+                                'uiControlAttributes' => [
+                                ],
                                 'availableValues' => [
                                     'headStart' => 'Head Start',
                                     'headEnd' => 'Head End',
@@ -667,8 +681,12 @@ class TagTest extends IntegrationTestCase
 
     public function testGetContainerTagsDoesNotReturnDeleted()
     {
-        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $tags = $this->model->getContainerTags($this->idSite, $this->containerVersion1);
+        $this->assertCount(2, $tags);
+        $this->assertSame('active', $tags[0]['status']);
+        $this->assertSame('paused', $tags[1]['status']);
         $this->model->deleteContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
+        $this->model->deleteContainerTag($this->idSite, $this->containerVersion1, $this->idTag2);
         $this->assertSame([], $this->model->getContainerTags($this->idSite, $this->containerVersion1));
     }
 
@@ -681,7 +699,7 @@ class TagTest extends IntegrationTestCase
         $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v3', $params, [$this->idTrigger4]);
         $this->addContainerTag($this->idSite, $this->containerVersion2, null, 'v4', $params, [$this->idTrigger2]);
 
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
         $this->assertCount(0, $this->model->getContainerTags($this->idSite2, $this->containerVersion2));
@@ -693,7 +711,7 @@ class TagTest extends IntegrationTestCase
         $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v1', ['customHtml' => '<div>foo</div>']);
         $tags = $this->model->getContainerTags($this->idSite, $this->containerVersion1);
 
-        $this->assertCount(2, $tags);
+        $this->assertCount(3, $tags);
         foreach ($tags as $tag) {
             $this->assertNotEmpty($tag['typeMetadata']);
         }
@@ -710,7 +728,7 @@ class TagTest extends IntegrationTestCase
 
         $this->model->setCurrentDateTime('2019-03-04 03:03:03');
 
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
@@ -719,14 +737,14 @@ class TagTest extends IntegrationTestCase
         $this->model->deleteContainerTag($this->idSite, 9999, $idTag3);
         $this->model->deleteContainerTag(9999, $this->containerVersion1, $idTag3);
 
-        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
         $this->model->deleteContainerTag($this->idSite, $this->containerVersion1, $idTag3);
 
         // removes correct one
-        $this->assertCount(2, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(3, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
         $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
 
@@ -745,6 +763,117 @@ class TagTest extends IntegrationTestCase
         }
         // make sure above assertion was executed
         $this->assertSame(1, $count);
+    }
+
+    public function testPauseContainerTag()
+    {
+        $params = ['customHtml' => '<div>foo</div>'];
+        $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v1', $params);
+        $idTag3 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v2', $params);
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v2', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v3', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite, $this->containerVersion2, null, 'v4', $params, [$this->idTrigger2]);
+
+        $this->model->setCurrentDateTime('2019-03-04 03:03:03');
+
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        // deletes nothing when no match
+        $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, 9999);
+        $this->model->pauseContainerTag($this->idSite, 9999, $idTag3);
+        $this->model->pauseContainerTag(9999, $this->containerVersion1, $idTag3);
+
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, $idTag3);
+
+        // removes correct one
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        // sets updated date etc
+        $tags = $this->dao->getAllTags();
+        $count = 0;
+        foreach ($tags as $tag) {
+            if ($tag['idtag'] === $idTag3 || $tag['idtag'] === $this->idTag2) {
+                $count++;
+                $this->assertSame(TagsDao::STATUS_PAUSED, $tag['status']);
+                $this->assertEmpty($tag['deleted_date']);
+            } else {
+                $this->assertSame(TagsDao::STATUS_ACTIVE, $tag['status']);
+                $this->assertEmpty($tag['deleted_date']);
+            }
+        }
+        // make sure above assertion was executed
+        $this->assertSame(2, $count);
+    }
+
+    public function testResumeContainerTag()
+    {
+        $params = ['customHtml' => '<div>foo</div>'];
+        $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v1', $params);
+        $idTag3 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'v2', $params);
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v2', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite2, $this->containerVersion1, null, 'v3', $params, [$this->idTrigger4]);
+        $this->addContainerTag($this->idSite, $this->containerVersion2, null, 'v4', $params, [$this->idTrigger2]);
+
+        $this->model->setCurrentDateTime('2019-03-04 03:03:03');
+
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        // deletes nothing when no match
+        $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, 9999);
+        $this->model->resumeContainerTag($this->idSite, $this->containerVersion1, 9999);
+        $this->model->pauseContainerTag($this->idSite, 9999, $idTag3);
+        $this->model->resumeContainerTag($this->idSite, 9999, $idTag3);
+        $this->model->pauseContainerTag(9999, $this->containerVersion1, $idTag3);
+        $this->model->resumeContainerTag(9999, $this->containerVersion1, $idTag3);
+
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, $idTag3);
+
+        // removes correct one
+        $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
+        $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
+        $this->assertCount(1, $this->model->getContainerTags($this->idSite, $this->containerVersion2));
+
+        // sets updated date etc
+        $tags = $this->dao->getAllTags();
+        $count = 0;
+        foreach ($tags as $tag) {
+            if ($tag['idtag'] === $idTag3 || $tag['idtag'] === $this->idTag2) {
+                $count++;
+                $this->assertSame(TagsDao::STATUS_PAUSED, $tag['status']);
+                $this->assertEmpty($tag['deleted_date']);
+            } else {
+                $this->assertSame(TagsDao::STATUS_ACTIVE, $tag['status']);
+                $this->assertEmpty($tag['deleted_date']);
+            }
+        }
+        // make sure above assertion was executed
+        $this->assertSame(2, $count);
+
+        $this->model->resumeContainerTag($this->idSite, $this->containerVersion1, $this->idTag2);
+        $this->model->resumeContainerTag($this->idSite, $this->containerVersion1, $idTag3);
+        $tags = $this->dao->getAllTags();
+        $count = 0;
+        foreach ($tags as $tag) {
+            $count++;
+            $this->assertSame(TagsDao::STATUS_ACTIVE, $tag['status']);
+            $this->assertEmpty($tag['deleted_date']);
+        }
+        // make sure above assertion was executed
+        $this->assertSame(7, $count);
     }
 
     public function testUpdateParametersSuccess()
@@ -808,10 +937,11 @@ class TagTest extends IntegrationTestCase
                                     'uiControl' => 'textarea',
                                     'uiControlAttributes' =>
                                          [
+                                             'spellcheck' => 'false'
                                         ],
                                     'availableValues' => null,
                                     'description' => 'This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.',
-                                    'inlineHelp' => '<a href="https://matomo.org/faq/tag-manager/faq_26815/">Learn more</a>',
+                                    'inlineHelp' => Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&mtm_source=Matomo_App_OnPremise&mtm_medium=App.TagManager.getParameters') . 'Learn more</a>',
                                     'introduction' => null,
                                     'condition' => null,
                                     'fullWidth' => false,
@@ -827,7 +957,8 @@ class TagTest extends IntegrationTestCase
                                     'defaultValue' => 'bodyEnd',
                                     'type' => 'string',
                                     'uiControl' => 'select',
-                                    'uiControlAttributes' => [],
+                                    'uiControlAttributes' => [
+                                    ],
                                     'availableValues' => [
                                         'headStart' => 'Head Start',
                                         'headEnd' => 'Head End',
@@ -857,7 +988,137 @@ class TagTest extends IntegrationTestCase
         $this->model->updateParameters($this->idSite, $this->containerVersion1, $this->idTag1, $parameters = ['customHtml' => '']);
     }
 
-    private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '')
+    public function testCopyTag()
+    {
+        $idNewTag = $this->model->copyTag($this->idSite, $this->containerVersion1, $this->idTag1);
+
+        $tag1 = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
+        $newTag = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $idNewTag);
+
+        // Make sure that the name is different and then clear it
+        $this->assertNotSame($tag1['name'], $newTag['name']);
+        unset($tag1['name']);
+        unset($newTag['name']);
+        unset($tag1['idtag']);
+        unset($newTag['idtag']);
+
+        $this->assertEquals($tag1, $newTag);
+    }
+
+    public function testCopyTagDifferentContainer()
+    {
+        $containerModel = StaticContainer::get(Container::class);
+        $context = WebContext::ID;
+        $description = 'My description';
+
+        $idContainer = $containerModel->addContainer($this->idSite, $context, 'FooContainer', $description, 0, 0, 0);
+        $container = $containerModel->getContainer($this->idSite, $idContainer);
+        $idContainerVersion = $container['draft']['idcontainerversion'];
+
+        $triggerModel = StaticContainer::get(Trigger::class);
+        $this->assertCount(0, $triggerModel->getContainerTriggers($this->idSite, $idContainerVersion), 'There should be no triggers in this container.');
+
+        $idNewTag = $this->model->copyTag($this->idSite, $this->containerVersion1, $this->idTag1, $this->idSite, $idContainer);
+
+        $this->assertCount(1, $triggerModel->getContainerTriggers($this->idSite, $idContainerVersion), 'The trigger should have been copied to the new container.');
+
+        $tag1 = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
+        $newTag = $this->model->getContainerTag($this->idSite, $idContainerVersion, $idNewTag);
+
+        // Clear the values that won't match
+        $this->assertNotSame($tag1['idcontainerversion'], $newTag['idcontainerversion']);
+        unset($tag1['idcontainerversion']);
+        unset($newTag['idcontainerversion']);
+        $this->assertCount(1, $tag1['fire_trigger_ids']);
+        $this->assertCount(1, $newTag['fire_trigger_ids']);
+        // Make sure that the trigger IDs are different and then clear them
+        $this->assertNotSame($tag1['fire_trigger_ids'][0], $newTag['fire_trigger_ids'][0]);
+        unset($tag1['fire_trigger_ids']);
+        unset($newTag['fire_trigger_ids']);
+        unset($tag1['idtag']);
+        unset($newTag['idtag']);
+
+        $this->assertEquals($tag1, $newTag);
+
+        // Copy again to make sure that copying multiple times to the same container works correctly
+        $idNewTag2 = $this->model->copyTag($this->idSite, $this->containerVersion1, $this->idTag1, $this->idSite, $idContainer);
+
+        $this->assertCount(1, $triggerModel->getContainerTriggers($this->idSite, $idContainerVersion), 'The trigger should have been copied to the new container.');
+
+        $tag1 = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
+        $newTag = $this->model->getContainerTag($this->idSite, $idContainerVersion, $idNewTag);
+        $newTag2 = $this->model->getContainerTag($this->idSite, $idContainerVersion, $idNewTag2);
+
+        // Make sure that the name is different and then clear it
+        $this->assertNotSame($tag1['name'], $newTag2['name']);
+        $this->assertNotSame($newTag['name'], $newTag2['name']);
+        unset($tag1['name']);
+        unset($newTag2['name']);
+        $this->assertNotSame($tag1['idcontainerversion'], $newTag2['idcontainerversion']);
+        unset($tag1['idcontainerversion']);
+        unset($newTag2['idcontainerversion']);
+        $this->assertCount(1, $tag1['fire_trigger_ids']);
+        $this->assertCount(1, $newTag2['fire_trigger_ids']);
+        // Make sure that the trigger IDs are different and then clear them
+        $this->assertNotSame($tag1['fire_trigger_ids'][0], $newTag2['fire_trigger_ids'][0]);
+        unset($tag1['fire_trigger_ids']);
+        unset($newTag2['fire_trigger_ids']);
+        unset($tag1['idtag']);
+        unset($newTag2['idtag']);
+
+        $this->assertEquals($tag1, $newTag2);
+    }
+
+    public function testCopyTagDifferentContainerReferencingVariables()
+    {
+        // Create a tag which references a variable
+        $variableName = 'TestVariableToReference';
+        $variableModel = StaticContainer::get(Variable::class);
+        $variableModel->addContainerVariable($this->idSite, $this->containerVersion1, DataLayerVariable::ID, $variableName, ['dataLayerName' => 'myVariable'], '', []);
+        $this->idTag1 = $this->addContainerTag($this->idSite, $this->containerVersion1, null, 'TagReferencingVariable', ['customHtml' => '<h2>Hello  {{' . $variableName . '}}</h2>']);
+
+        $containerModel = StaticContainer::get(Container::class);
+        $context = WebContext::ID;
+        $description = 'My description';
+
+        $idContainer = $containerModel->addContainer($this->idSite, $context, 'FooContainer', $description, 0, 0, 0);
+        $container = $containerModel->getContainer($this->idSite, $idContainer);
+        $idContainerVersion = $container['draft']['idcontainerversion'];
+
+        // Update trigger to reference variable
+        $tag1 = $this->model->getContainerTag($this->idSite, $this->containerVersion1, $this->idTag1);
+        $this->assertCount(1, $tag1['fire_trigger_ids']);
+        $triggerModel = StaticContainer::get(Trigger::class);
+        $trigger = $triggerModel->getContainerTrigger($this->idSite, $this->containerVersion1, $tag1['fire_trigger_ids'][0]);
+        $variableName2 = 'AnotherVariableToReference';
+        $variableModel->addContainerVariable($this->idSite, $this->containerVersion1, DataLayerVariable::ID, $variableName2, ['dataLayerName' => 'myVariable'], '', []);
+        $conditions = [['comparison' => 'equals', 'actual' => $variableName2, 'expected' => 'someValue']]   ;
+        $triggerModel->updateContainerTrigger($this->idSite, $this->containerVersion1, $tag1['fire_trigger_ids'][0], $trigger['name'], $trigger['parameters'], $conditions, $trigger['description']);
+
+        $this->assertCount(0, $variableModel->getContainerVariables($this->idSite, $idContainerVersion), 'There should be no variables in the container.');
+
+        $idNewTag = $this->model->copyTag($this->idSite, $this->containerVersion1, $this->idTag1, $this->idSite, $idContainer);
+
+        $this->assertCount(2, $variableModel->getContainerVariables($this->idSite, $idContainerVersion), 'The variables should have been copied to the new container.');
+
+        $newTag = $this->model->getContainerTag($this->idSite, $idContainerVersion, $idNewTag);
+
+        // Clear the values that won't match
+        $this->assertNotSame($tag1['idcontainerversion'], $newTag['idcontainerversion']);
+        unset($tag1['idcontainerversion']);
+        unset($newTag['idcontainerversion']);
+        $this->assertCount(1, $newTag['fire_trigger_ids']);
+        // Make sure that the trigger IDs are different and then clear them
+        $this->assertNotSame($tag1['fire_trigger_ids'][0], $newTag['fire_trigger_ids'][0]);
+        unset($tag1['fire_trigger_ids']);
+        unset($newTag['fire_trigger_ids']);
+        unset($tag1['idtag']);
+        unset($newTag['idtag']);
+
+        $this->assertEquals($tag1, $newTag);
+    }
+
+    private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '', $status = '')
     {
         if (!isset($type)) {
             $type = CustomHtmlTag::ID;
@@ -874,7 +1135,7 @@ class TagTest extends IntegrationTestCase
             $endDate = $this->now;
         }
 
-        return $this->model->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
+        return $this->model->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description, $status);
     }
 
     private function updateContainerTag($idSite, $idContainerVersion, $idTag, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '')

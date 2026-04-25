@@ -5,6 +5,9 @@
 	<context>web</context>
 	<name>Default Container</name>
 	<description>This container was auto generated when the website was created.</description>
+	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
+	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	
 	
 	
@@ -21,10 +24,11 @@
 	</version>
 	<tags>
 		<row>
-			<idtag>25</idtag>
+			<idtag>34</idtag>
 			<type>Matomo</type>
-			<name>Pageview</name>
+			<name>Matomo Analytics</name>
 			<description />
+			<status>active</status>
 			<parameters>
 				<matomoConfig>{{Matomo Configuration}}</matomoConfig>
 				<trackingType>pageview</trackingType>
@@ -32,13 +36,21 @@
 				<goalCustomRevenue />
 				<documentTitle />
 				<customUrl />
+				<isEcommerceView>0</isEcommerceView>
+				<productSKU />
+				<productName />
+				<categoryName />
+				<price />
 				<eventCategory />
 				<eventAction />
 				<eventName />
 				<eventValue />
+				<customDimensions>
+				</customDimensions>
+				<areCustomDimensionsSticky>0</areCustomDimensionsSticky>
 			</parameters>
 			<fire_trigger_ids>
-				<row>33</row>
+				<row>39</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
 			</block_trigger_ids>
@@ -55,7 +67,7 @@
 	</tags>
 	<triggers>
 		<row>
-			<idtrigger>33</idtrigger>
+			<idtrigger>39</idtrigger>
 			<type>PageView</type>
 			<name>Pageview</name>
 			<description />
@@ -71,7 +83,7 @@
 	</triggers>
 	<variables>
 		<row>
-			<idvariable>18</idvariable>
+			<idvariable>27</idvariable>
 			<type>MatomoConfiguration</type>
 			<name>Matomo Configuration</name>
 			<description />
@@ -89,6 +101,7 @@
 				<heartBeatTime>15</heartBeatTime>
 				<trackAllContentImpressions>0</trackAllContentImpressions>
 				<trackVisibleContentImpressions>0</trackVisibleContentImpressions>
+				<trackBots>0</trackBots>
 				<disableCookies>0</disableCookies>
 				<requireConsent>0</requireConsent>
 				<requireCookieConsent>0</requireCookieConsent>
@@ -102,6 +115,7 @@
 				<cookiePath />
 				<cookieSameSite>Lax</cookieSameSite>
 				<disableBrowserFeatureDetection>0</disableBrowserFeatureDetection>
+				<disableCampaignParameters>0</disableCampaignParameters>
 				<domains>
 				</domains>
 				<alwaysUseSendBeacon>0</alwaysUseSendBeacon>
@@ -120,6 +134,32 @@
 				<requestMethod>GET</requestMethod>
 				<requestContentType>application/x-www-form-urlencoded; charset=UTF-8</requestContentType>
 				<customRequestProcessing />
+				<customData>
+				</customData>
+				<setDownloadExtensions />
+				<addDownloadExtensions />
+				<removeDownloadExtensions />
+				<setIgnoreClasses />
+				<setReferrerUrl />
+				<setApiUrl />
+				<setPageViewId />
+				<setExcludedReferrers />
+				<setDownloadClasses />
+				<setLinkClasses />
+				<setCampaignNameKey />
+				<setCampaignKeywordKey />
+				<setConsentGiven>0</setConsentGiven>
+				<rememberConsentGiven>0</rememberConsentGiven>
+				<rememberConsentGivenForHours />
+				<forgetConsentGiven>0</forgetConsentGiven>
+				<discardHashTag>0</discardHashTag>
+				<setExcludedQueryParams />
+				<setConversionAttributionFirstReferrer>0</setConversionAttributionFirstReferrer>
+				<setDoNotTrack>0</setDoNotTrack>
+				<setLinkTrackingTimer />
+				<killFrame>0</killFrame>
+				<setCountPreRendered>0</setCountPreRendered>
+				<setRequestQueueInterval />
 			</parameters>
 			<lookup_table>
 			</lookup_table>

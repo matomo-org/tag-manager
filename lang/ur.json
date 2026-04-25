@@ -2,6 +2,10 @@
     "TagManager": {
         "CategoryClicks": "کلکس",
         "CategoryDate": "تاریخ",
+        "ChooseWebsite": "ویب سائیٹ منتخب کریں",
+        "EtrackerTagTransactionCurrencyTitle": "کرنسی",
+        "InvalidDebugUrlError": "غلطی",
+        "MatomoTagEcommerceViewPrice": "قیمت",
         "PageUrlVariableName": "صفحے کا یو آر ایل"
     }
 }

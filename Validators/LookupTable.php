@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -10,8 +11,6 @@ namespace Piwik\Plugins\TagManager\Validators;
 
 use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
-
-
 use Piwik\Validators\BaseValidator;
 use Piwik\Validators\Exception;
 
@@ -36,7 +35,6 @@ class LookupTable extends BaseValidator
         }
 
         foreach ($value as $index => $variable) {
-
             if (!is_array($variable)) {
                 $titleSingular = Piwik::translate('TagManager_Entry');
                 throw new Exception(Piwik::translate('TagManager_ErrorInnerIsNotAnArray', array($titleSingular, $titlePlural)));
@@ -61,5 +59,4 @@ class LookupTable extends BaseValidator
             }
         }
     }
-
 }

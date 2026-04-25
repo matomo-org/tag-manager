@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Dao;
 
 use Piwik\Db;
@@ -16,7 +18,7 @@ use Exception;
 
 class ContainersDao extends BaseDao implements TagManagerDao
 {
-    const ERROR_NAME_IN_USE = 2919;
+    public const ERROR_NAME_IN_USE = 2919;
 
     protected $table = 'tagmanager_container';
 
@@ -28,6 +30,9 @@ class ContainersDao extends BaseDao implements TagManagerDao
                   `context` VARCHAR(10) NOT NULL,
                   `name` VARCHAR(" . Name::MAX_LENGTH . ") NOT NULL,
                   `description` VARCHAR(" . Description::MAX_LENGTH . ") NOT NULL DEFAULT '',
+                  `ignoreGtmDataLayer` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+                  `activelySyncGtmDataLayer` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1,
+                  `isTagFireLimitAllowedInPreviewMode` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
                   `status` VARCHAR(10) NOT NULL,
                   `created_date` DATETIME NOT NULL,
                   `updated_date` DATETIME NOT NULL,
@@ -68,7 +73,7 @@ class ContainersDao extends BaseDao implements TagManagerDao
         return !empty($container);
     }
 
-    public function createContainer($idSite, $idContainer, $context, $name, $description, $createdDate)
+    public function createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer)
     {
         if ($this->isContainerInUse($idContainer)) {
             throw new Exception(Piwik::translate('TagManager_ErrorContainerIdDuplicate'));
@@ -85,6 +90,9 @@ class ContainersDao extends BaseDao implements TagManagerDao
             'context' => $context,
             'name' => $name,
             'description' => !empty($description) ? $description : '',
+            'ignoreGtmDataLayer' => !empty($ignoreGtmDataLayer) ? $ignoreGtmDataLayer : 0,
+            'activelySyncGtmDataLayer' => !empty($activelySyncGtmDataLayer) ? $activelySyncGtmDataLayer : 0,
+            'isTagFireLimitAllowedInPreviewMode' => !empty($isTagFireLimitAllowedInPreviewMode) ? $isTagFireLimitAllowedInPreviewMode : 0,
             'status' => $status,
             'created_date' => $createdDate,
             'updated_date' => $createdDate
@@ -197,6 +205,11 @@ class ContainersDao extends BaseDao implements TagManagerDao
         Db::query($query, $bind);
     }
 
+    protected function isNameAlreadyUsed(int $idSite, string $name, ?int $idContainerVersion = null): bool
+    {
+        return $this->isNameInUse($idSite, $name);
+    }
+
     private function enrichContainers($containers)
     {
         if (empty($containers)) {
@@ -221,4 +234,3 @@ class ContainersDao extends BaseDao implements TagManagerDao
         return $container;
     }
 }
-

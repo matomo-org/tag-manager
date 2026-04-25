@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Piwik;
@@ -23,6 +25,7 @@ class FacebookPixelTag extends BaseTag
         return array(
             $this->makeSetting('pixelId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_FacebookPixelTagPixelIdTitle');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_FacebookPixelTagPixelIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->transform = function ($value) {
                     return trim($value);
@@ -35,5 +38,4 @@ class FacebookPixelTag extends BaseTag
     {
         return self::CATEGORY_SOCIAL;
     }
-
 }

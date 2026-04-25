@@ -35,6 +35,7 @@ export interface VariableType {
   name: string;
   order: number;
   parameters: Record<string, unknown>[];
+  advancedParameters: Record<string, unknown>[];
 }
 
 export interface Variable {
@@ -52,7 +53,7 @@ export interface Variable {
   type: string;
   updated_date?: string;
   updated_date_pretty?: string;
-  typeMetadata: DeepReadonly<VariableType>;
+  typeMetadata: VariableType;
 }
 
 export interface ContainerVariableType {
@@ -254,6 +255,9 @@ export interface Container {
   created_date: string;
   created_date_pretty: string;
   description: string;
+  ignoreGtmDataLayer: boolean;
+  activelySyncGtmDataLayer: boolean;
+  isTagFireLimitAllowedInPreviewMode: boolean;
   draft: Draft;
   idcontainer: string;
   idsite: string|number;

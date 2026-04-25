@@ -5,6 +5,9 @@
 	<context>web</context>
 	<name>My Name</name>
 	<description />
+	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
+	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	
 	
 	
@@ -21,19 +24,20 @@
 	</version>
 	<tags>
 		<row>
-			<idtag>19</idtag>
+			<idtag>25</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 2</name>
 			<description>My Tag 2 description</description>
+			<status>active</status>
 			<parameters>
 				<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
 				<htmlPosition>bodyEnd</htmlPosition>
 			</parameters>
 			<fire_trigger_ids>
-				<row>25</row>
+				<row>27</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
-				<row>26</row>
+				<row>28</row>
 			</block_trigger_ids>
 			<fire_limit>once_lifetime</fire_limit>
 			<priority>343</priority>
@@ -46,16 +50,17 @@
 			
 		</row>
 		<row>
-			<idtag>20</idtag>
+			<idtag>26</idtag>
 			<type>CustomHtml</type>
 			<name>My Tag 1</name>
 			<description />
+			<status>active</status>
 			<parameters>
 				<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
 				<htmlPosition>bodyEnd</htmlPosition>
 			</parameters>
 			<fire_trigger_ids>
-				<row>25</row>
+				<row>27</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
 			</block_trigger_ids>
@@ -70,17 +75,18 @@
 			
 		</row>
 		<row>
-			<idtag>21</idtag>
+			<idtag>27</idtag>
 			<type>CustomImage</type>
 			<name>My Tag 3</name>
 			<description />
+			<status>active</status>
 			<parameters>
 				<customImageSrc>/plugins/tracking.png</customImageSrc>
 				<cacheBusterEnabled>1</cacheBusterEnabled>
 			</parameters>
 			<fire_trigger_ids>
-				<row>26</row>
-				<row>27</row>
+				<row>28</row>
+				<row>29</row>
 			</fire_trigger_ids>
 			<block_trigger_ids>
 			</block_trigger_ids>
@@ -97,10 +103,10 @@
 	</tags>
 	<triggers>
 		<row>
-			<idtrigger>25</idtrigger>
+			<idtrigger>27</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
-			<description>My trigger1 description</description>
+			<description>My trigger1 description setting it to a very long description to show up in the UI clipped</description>
 			<parameters>
 				<eventName>foo</eventName>
 			</parameters>
@@ -112,7 +118,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>26</idtrigger>
+			<idtrigger>28</idtrigger>
 			<type>WindowLoaded</type>
 			<name>Mytrigger2</name>
 			<description />
@@ -131,7 +137,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>27</idtrigger>
+			<idtrigger>29</idtrigger>
 			<type>DomReady</type>
 			<name>Mytrigger3</name>
 			<description />
@@ -145,7 +151,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>28</idtrigger>
+			<idtrigger>30</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger4</name>
 			<description />
@@ -162,7 +168,7 @@
 	</triggers>
 	<variables>
 		<row>
-			<idvariable>12</idvariable>
+			<idvariable>14</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 1</name>
 			<description />
@@ -183,7 +189,7 @@
 			
 		</row>
 		<row>
-			<idvariable>13</idvariable>
+			<idvariable>15</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 2</name>
 			<description />
@@ -199,7 +205,7 @@
 			
 		</row>
 		<row>
-			<idvariable>14</idvariable>
+			<idvariable>16</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 3</name>
 			<description>My Var 3 description</description>

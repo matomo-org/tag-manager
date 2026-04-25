@@ -1,14 +1,17 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\API;
 
 use Piwik\API\Request;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Container;
@@ -76,10 +79,12 @@ class Import
 
     public function checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer)
     {
-        if (!isset($exportedContainerVersion['tags'])
+        if (
+            !isset($exportedContainerVersion['tags'])
             || !isset($exportedContainerVersion['triggers'])
             || !isset($exportedContainerVersion['variables'])
-            || !isset($exportedContainerVersion['context'])) {
+            || !isset($exportedContainerVersion['context'])
+        ) {
             throw new Exception(Piwik::translate('TagManager_ErrorContainerVersionImportIncomplete'));
         }
 
@@ -93,7 +98,7 @@ class Import
         foreach ($exportedContainerVersion['tags'] as $tag) {
             $this->tagsProvider->checkIsValidTag($tag['type']);
 
-            if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
+            if ($this->tagsProvider->isCustomTemplate($tag['type']) && !Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
@@ -101,7 +106,7 @@ class Import
         foreach ($exportedContainerVersion['triggers'] as $trigger) {
             $this->triggersProvider->checkIsValidTrigger($trigger['type']);
 
-            if ($this->triggersProvider->isCustomTemplate($trigger['type'])) {
+            if ($this->triggersProvider->isCustomTemplate($trigger['type']) && !Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
@@ -109,7 +114,7 @@ class Import
         foreach ($exportedContainerVersion['variables'] as $variable) {
             $this->variablesProvider->checkIsValidVariable($variable['type']);
 
-            if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
+            if ($this->variablesProvider->isCustomTemplate($variable['type']) && !Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
         }
@@ -124,11 +129,11 @@ class Import
         }
 
         foreach ($this->triggers->getContainerTriggers($idSite, $idContainerVersion) as $trigger) {
-            $this->triggers->deleteContainerTrigger($idSite, $idContainerVersion, $trigger['idtrigger']);
+            $this->triggers->deleteContainerTrigger($idSite, $idContainerVersion, $trigger['idtrigger'], true);
         }
 
         foreach ($this->variables->getContainerVariables($idSite, $idContainerVersion) as $variable) {
-            $this->variables->deleteContainerVariable($idSite, $idContainerVersion, $variable['idvariable']);
+            $this->variables->deleteContainerVariable($idSite, $idContainerVersion, $variable['idvariable'], true);
         }
 
         $ecv = $exportedContainerVersion;
@@ -146,7 +151,7 @@ class Import
                     'defaultValue' => $variable['default_value'],
                     'lookupTable' => $variable['lookup_table'],
                 ));
-            } catch (EntityRecursionException $e){
+            } catch (EntityRecursionException $e) {
                 throw new \Exception(Piwik::translate('TagManager_EntityRecursionExceptionForVariable', array($variable['name'] . '(' . $variable['type'] . ')')));
             }
         }
@@ -199,10 +204,9 @@ class Import
                 'fireDelay' => $tag['fire_delay'],
                 'priority' => $tag['priority'],
                 'startDate' => $tag['start_date'],
+                'status' => $tag['status'] ?? '',
                 'endDate' => $tag['end_date'],
             ));
         }
     }
-
-
 }

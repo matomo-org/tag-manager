@@ -5,8 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 describe("TagManager", function () {
-    this.timeout(0);
-
     this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
     this.optionsOverride = {
         'persist-fixture-data': false
@@ -46,13 +44,20 @@ describe("TagManager", function () {
 
     var selectorContainerOpen = '.top_controls .tagContainerSelector .dropdown';
 
-    it('should load a getting started page', async function () {
-        await page.goto(generalParamsSite1 + urlBase + 'gettingStarted');
-        await capture.page(page, 'getting_started');
+    it('should load the manage containers page', async function () {
+        await page.goto(generalParamsSite1 + urlBase + 'manageContainers');
+        await capture.page(page, 'manage_containers');
+    });
+
+    it('should show websites dropdown without all websites', async function () {
+        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
+        pageWrap = await page.$('.top_bar_sites_selector .dropdown');
+        expect(await pageWrap.screenshot()).to.matchImage('websites_dropdown_without_all_websites');
+        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
     });
 
     it('should show top bar list when no container exists', async function () {
-        await page.goto(generalParamsSite5 + urlBase + 'gettingStarted');
+        await page.goto(generalParamsSite5 + urlBase + 'manageContainers');
         await capture.topControls(page, 'top_controls_no_container_exists');
     });
 
@@ -143,6 +148,23 @@ describe("TagManager", function () {
         await capture.modal(page, 'install_code_with_content');
     });
 
+    it('should be able to copy mtm tracking code', async function () {
+        await page.allowClipboard();
+        await page.click('.copyToClipboardSpan');
+        const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+        const expectedText = `<!-- Matomo Tag Manager -->
+<script>
+  var _mtm = window._mtm = window._mtm || [];
+  _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+  (function() {
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src='http://localhost/tests/PHPUnit/proxy/js/container_aaacont1.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Tag Manager -->`;
+        expect(clipboardText).to.equal(expectedText);
+    });
+
     it('should be able to show publish page for container with content', async function () {
         await modal.close(page);
         await page.evaluate(function(){
@@ -153,5 +175,56 @@ describe("TagManager", function () {
         await capture.modal(page, 'publish_with_content');
     });
 
+    it('should show the manage website screen', async function () {
+        const urlToTest = "?module=SitesManager&action=index&idSite=2&period=day&date=yesterday&showaddsite=false";
+        await page.goto(urlToTest);
+        await capture.page(page, 'manageWebsites')
+    });
 
+    it('should show the container detail when delete button is pressed', async function () {
+        const pageElement = await page.$('.page');
+        await page.evaluate(function(){
+          $('.sitesManagerList .card-content:eq(1) .icon-delete').click()
+        });
+        await page.waitForTimeout(250);
+        await capture.modal(page, 'manageWebsitesDeleteAction');
+    });
+
+    it("should display the MTM settings page", async function () {
+        await page.goto('?module=CoreAdminHome&action=generalSettings&idSite=1&period=day&date=yesterday#/TagManager');
+        expect(await page.screenshotSelector('#TagManagerPluginSettings')).to.matchImage('settings_page');
+    });
+
+    it("should be able to update restrict MTM access setting", async function () {
+        await page.evaluate(() => $('select[name="restrictTagManagerAccess"]').click());
+        await page.evaluate(() => $('li:nth-child(2)').click());
+        await page.evaluate(() => $('#TagManagerPluginSettings .pluginsSettingsSubmit').click());
+        await page.type('.confirm-password-modal input[type=password]', superUserPassword);
+        await page.click('.confirm-password-modal .modal-close.btn');
+        await page.waitForNetworkIdle();
+        await page.mouse.move(-10, -10);
+        expect(await page.screenshotSelector('#TagManagerPluginSettings')).to.matchImage('update_restrict_setting');
+    });
+
+    it('should fail to load MTM for view user', async function () {
+        permissions.setViewUser();
+        await page.goto(generalParamsSite1 + urlBase + 'manageContainers');
+        const bodyElement = await page.$('body');
+      expect(await bodyElement.screenshot()).to.matchImage('view_access_restricted');
+    });
+
+    it('should show MTM on tracking code page when user access is not restricted', async function () {
+        await page.goto("?idSite=1&module=CoreAdminHome&action=trackingCodeGenerator");
+        await page.waitForNetworkIdle();
+
+        expect(await page.screenshotSelector('div.pageWrap')).to.matchImage('tracking_code_normal');
+    });
+
+    it('should hide MTM from tracking code page when user access is restricted', async function () {
+        permissions.setViewUser();
+        await page.goto("?idSite=1&module=CoreAdminHome&action=trackingCodeGenerator");
+        await page.waitForNetworkIdle();
+
+        expect(await page.screenshotSelector('div.pageWrap')).to.matchImage('tracking_code_hidden');
+    });
 });

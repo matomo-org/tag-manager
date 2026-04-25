@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -14,7 +15,7 @@ use Piwik\Validators\CharacterLength;
 
 class Description
 {
-    const MAX_LENGTH = 1000;
+    public const MAX_LENGTH = 1000;
 
     /**
      * @var string
@@ -32,5 +33,4 @@ class Description
 
         BaseValidator::check($title, $this->description, [new CharacterLength(0, self::MAX_LENGTH)]);
     }
-
 }

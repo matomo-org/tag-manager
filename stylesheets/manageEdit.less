@@ -3,6 +3,8 @@
 
   .multiPairField {
     margin-right: -0.75rem;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 
     .form-group.row {
       margin-left: -0.75rem;
@@ -10,11 +12,16 @@
 
     .input-field {
       padding-right: 0;
+      margin: 0;
     }
   }
 
   .comparisonField {
     max-width: 275px !important;
+  }
+
+  textarea.materialize-textarea {
+    min-height: 3rem;
   }
 
   .multiple {
@@ -29,6 +36,10 @@
     .innerFormField,
     input, select {
       width: ~"calc(100% - 60px)";
+    }
+
+    .fieldUiControl:has(input[id^='consentTypes-p1-']) {
+      width: 300px !important;
     }
 
     .innerFormField input, select{
@@ -124,5 +135,16 @@
 .tag-ui-confirm.ui-confirm {
   h2 {
     text-align: left;
+  }
+}
+
+body.tagmanager .modal.open .expandableList {
+  position: relative;
+}
+
+.editVariable {
+  .form-group.row.matomo-form-field:has(#customData-p1-0) {
+    margin-top: -1rem;
+    margin-bottom: -1rem;
   }
 }

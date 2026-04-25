@@ -1,11 +1,27 @@
 {
     "TagManager": {
+        "BingUETTagIdTitle": "ID",
         "CategoryClicks": "Klikk",
         "CategoryDate": "Dato",
         "CategoryEmail": "Epost",
+        "ChooseWebsite": "Vel nettside",
+        "ContainerLowercase": "behaldar",
+        "DataLayerVariableName": "Datalag",
+        "Environment": "Miljø",
+        "EtrackerConfigurationVariableCustomDimensionsTitle": "Tilpassa dimensjon",
+        "EtrackerTagTransactionCurrencyTitle": "Valuta",
+        "InvalidDebugUrlError": "Feil",
+        "MatomoConfigurationMatomoCustomDimensionsTitle": "Tilpassa dimensjon",
+        "MatomoTagEcommerceViewPrice": "Pris",
+        "MatomoTagEcommerceViewProductName": "Produktnamn",
         "PageTitleVariableName": "Sidetittel",
         "PageUrlVariableName": "Side-URL",
+        "TagLowercase": "merk",
+        "TagManager": "Merkehandtering",
+        "TriggerLowercase": "utløysar",
         "Type": "Type",
+        "UserAgentVariableName": "Brukaragent",
+        "VariableLowercase": "variabel",
         "Version": "Versjon"
     }
 }

@@ -13,7 +13,7 @@
         translate('TagManager_Containers'),
       )"
     >
-      <p>{{ translate('TagManager_ContainerUsageBenefits') }}</p>
+      <p v-html="$sanitize(getManageContainersIntro)"></p>
       <table v-content-table>
         <thead>
           <tr>
@@ -55,13 +55,13 @@
               :title="`${translate('TagManager_Context')}: ` +
                 contexts[container.context]"
             >{{ container.idcontainer }}</td>
-            <td class="name">{{ container.name }}</td>
+            <td class="name" :title="container.name">{{ truncateText(container.name, 50) }}</td>
             <td
               class="description"
               :title="container.description"
-            >{{ truncateText(container.description, 50) }}</td>
+            >{{ truncateText(container.description, 75) }}</td>
             <td class="created"><span>{{ container.created_date_pretty }}</span></td>
-            <td class="action">
+            <td :class="getActionClasses">
               <a
                 class="table-action icon-configure"
                 :href="'?module=TagManager&action=' + containerDefaultAction + '&idContainer='
@@ -83,6 +83,15 @@
                 @click="editContainer(container.idcontainer)"
                 :title="translate(
                   'TagManager_EditX',
+                  translate('TagManager_Container'),
+                )"
+              />
+              <a
+                class="table-action icon-content-copy"
+                v-show="canCopyContainer"
+                @click="openCopyDialog(container)"
+                :title="translate(
+                  'TagManager_CopyX',
                   translate('TagManager_Container'),
                 )"
               />
@@ -139,6 +148,9 @@ import {
   ContentBlock,
   ContentTable,
   MatomoUrl,
+  translate,
+  externalLink,
+  NotificationsStore,
 } from 'CoreHome';
 import AvailableContextsStore from '../AvailableContexts.store';
 import ContainersStore from './Containers.store';
@@ -148,6 +160,12 @@ import VersionsStore from '../Version/Versions.store';
 const { tagManagerHelper } = window;
 
 export default defineComponent({
+  props: {
+    isSuperUser: {
+      type: Boolean,
+      required: true,
+    },
+  },
   components: {
     ContentBlock,
   },
@@ -191,6 +209,17 @@ export default defineComponent({
       });
       return sorted;
     },
+    getManageContainersIntro(): string {
+      const linkString = externalLink('https://matomo.org/guide/tag-manager/getting-started-with-tag-manager/');
+      return translate('TagManager_ManageContainersIntro', linkString, '</a>');
+    },
+    canCopyContainer(): boolean {
+      return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
+    getActionClasses(): string {
+      const copyClass = this.canCopyContainer ? ' hasCopyAction' : '';
+      return `action${copyClass}`;
+    },
   },
   methods: {
     createContainer() {
@@ -209,6 +238,7 @@ export default defineComponent({
       function doDelete() {
         ContainersStore.deleteContainer(container.idcontainer).then(() => {
           ContainersStore.reload();
+          NotificationsStore.remove('CopyDialogResultNotification');
         });
       }
 
@@ -222,6 +252,16 @@ export default defineComponent({
       }
 
       return text;
+    },
+    openCopyDialog(container: Container) {
+      const url = MatomoUrl.stringify({
+        module: 'TagManager',
+        action: 'copyContainerDialog',
+        idSite: container.idsite,
+        idContainer: container.idcontainer,
+      });
+
+      window.Piwik_Popover.createPopupAndLoadUrl(url, '', 'mtmCopyContainer');
     },
   },
 });

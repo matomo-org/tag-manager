@@ -66,7 +66,6 @@ class NewVariableParameterMigrator
         foreach ($activeContainersInfo as $container) {
             $this->processContainer($container['idsite'], $container['idcontainer']);
         }
-
     }
 
     private function processContainer($idSite, $idContainer)
@@ -103,7 +102,7 @@ class NewVariableParameterMigrator
         }
         foreach ($this->fieldMap as $key => $value) {
             // It shouldn't ever already exist, but let's be sure we don't overwrite existing values.
-            if(empty($variableInfo['parameters'][$key])) {
+            if (empty($variableInfo['parameters'][$key])) {
                 $variableInfo['parameters'][$key] = $value;
             }
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -99,5 +100,4 @@ class TemplateLocatorTest extends IntegrationTestCase
 
         $this->assertSame(array('CustomEventTrigger', 'DataLayerVariable'), array_keys($this->templateLocator->getLoadedTemplates()));
     }
-
 }

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Commands;
 
 use Piwik\Plugins\CoreConsole\Commands\GeneratePluginBase;
@@ -35,7 +37,7 @@ class GenerateTrigger extends GeneratePluginBase
         $replace        = array(
             'TagManager' => $pluginName,
             'DomReady' => $triggerId,
-            'Piwik\Plugins\\' .$pluginName. '\Template\Trigger\BaseTrigger' => 'Piwik\Plugins\TagManager\Template\Trigger\BaseTrigger',
+            'Piwik\Plugins\\' . $pluginName . '\Template\Trigger\BaseTrigger' => 'Piwik\Plugins\TagManager\Template\Trigger\BaseTrigger',
             'parameters, ' . $pluginName => 'parameters, TagManager'
         );
         $whitelistFiles = array(

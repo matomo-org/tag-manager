@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -22,7 +23,6 @@ use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
  */
 class ContainersDaoTest extends IntegrationTestCase
 {
-
     /**
      * @var ContainersDao
      */
@@ -47,7 +47,7 @@ class ContainersDaoTest extends IntegrationTestCase
     {
         $columns = DbHelper::getTableColumns($this->tableName);
         $columns = array_keys($columns);
-        $columnsToCheck = array('idcontainer', 'idsite', 'context', 'name', 'description', 'status', 'created_date', 'updated_date', 'deleted_date');
+        $columnsToCheck = array('idcontainer', 'idsite', 'context', 'name', 'description', 'ignoreGtmDataLayer', 'activelySyncGtmDataLayer', 'isTagFireLimitAllowedInPreviewMode', 'status', 'created_date', 'updated_date', 'deleted_date');
 
         $this->assertSame($columnsToCheck, $columns);
     }
@@ -79,7 +79,7 @@ class ContainersDaoTest extends IntegrationTestCase
         $description = 'My description';
         $createdDate = $this->now;
 
-        $idContainerReturned = $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate);
+        $idContainerReturned = $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, 0, 0, 0);
         $this->assertSame($idContainer, $idContainerReturned);
 
         $container = $this->dao->getContainer($idSite, $idContainer);
@@ -93,6 +93,9 @@ class ContainersDaoTest extends IntegrationTestCase
             'created_date' => $createdDate,
             'updated_date' => $createdDate,
             'deleted_date' => null,
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0'
         ), $container);
     }
 
@@ -247,6 +250,9 @@ class ContainersDaoTest extends IntegrationTestCase
             'created_date' => $this->now,
             'updated_date' => $columns['updated_date'],
             'deleted_date' => null,
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
         ), $container);
     }
 
@@ -264,7 +270,7 @@ class ContainersDaoTest extends IntegrationTestCase
 
     public function test_getContainer_shouldReturnContainerWhenItExists_andEncodeFields()
     {
-        $idContainer = $this->createContainer($idSite = 4, $idContainer = 'fedcba', 'Test name');
+        $idContainer = $this->createContainer($idSite = 4, $idContainer = 'fedcba', 'Test name', 1, 1, 1);
 
         $container = $this->dao->getContainer($idSite, $idContainer);
         $this->assertSame(array(
@@ -273,6 +279,9 @@ class ContainersDaoTest extends IntegrationTestCase
             'context' => WebContext::ID,
             'name' => 'Test name',
             'description' => 'My description',
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
+            'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
             'updated_date' => $this->now,
@@ -418,7 +427,6 @@ class ContainersDaoTest extends IntegrationTestCase
 
         $this->assertTrue($this->dao->hasContainer($idContainer1));
         $this->assertTrue($this->dao->hasContainer($idContainer2));
-
     }
 
     public function test_getContainers()
@@ -501,7 +509,7 @@ class ContainersDaoTest extends IntegrationTestCase
         // should not delete anything when no container matches
         $this->dao->deleteContainer($idSite = 99, $idContainer2, $this->now);
         $this->dao->deleteContainer($idSite = 4, $idContainer2, $this->now);
-        $this->dao->deleteContainer($idSite = 3,999, $this->now);
+        $this->dao->deleteContainer($idSite = 3, 999, $this->now);
 
         // verify nothing deleted
         $this->assertCount(3, $this->dao->getAllContainers());
@@ -523,16 +531,55 @@ class ContainersDaoTest extends IntegrationTestCase
         $this->assertSame(null, $containers[2]['deleted_date']);
     }
 
-    private function createContainer($idSite = 1, $idContainer = 'abcdef', $name = 'FooContainer')
+    /**
+     * @dataProvider getMakeCopyNameUniqueTestData
+     * @param string $name
+     * @param array $containers
+     * @param string $expected
+     * @return void
+     */
+    public function testMakeCopyNameUnique(string $name, array $containers, string $expected)
+    {
+        $idSite = 1;
+        foreach ($containers as $number) {
+            $this->createContainer($idSite, 'abc' . $number, "FooContainer ($number)");
+        }
+
+        $updatedName = $this->dao->makeCopyNameUnique($idSite, $name);
+        $this->assertSame($expected, $updatedName);
+    }
+
+    public function getMakeCopyNameUniqueTestData(): array
+    {
+        return [
+            ['FooContainer', [], 'FooContainer'],
+            ['FooContainer (1)', [], 'FooContainer (1)'],
+            ['FooContainer', [1], 'FooContainer'],
+            ['FooContainer', [1, 2], 'FooContainer'],
+            ['FooContainer', [1, 2, 3], 'FooContainer'],
+            ['FooContainer (1)', [1], 'FooContainer (2)'],
+            ['FooContainer (1)', [1, 2], 'FooContainer (3)'],
+            ['FooContainer (1)', [1, 2, 3], 'FooContainer (4)'],
+            ['FooContainer (2)', [1], 'FooContainer (2)'],
+            ['FooContainer (2)', [1, 2], 'FooContainer (3)'],
+            ['FooContainer (2)', [1, 2, 3], 'FooContainer (4)'],
+            ['FooContainer (3)', [1], 'FooContainer (3)'],
+            ['FooContainer (3)', [1, 2], 'FooContainer (3)'],
+            ['FooContainer (3)', [1, 2, 3], 'FooContainer (4)'],
+            ['FooContainer(1)', [1, 2, 3], 'FooContainer(1)'],
+            ['SomeOtherName', [1, 2, 3], 'SomeOtherName'],
+            ['SomeOtherName (1)', [1, 2, 3], 'SomeOtherName (1)'],
+        ];
+    }
+
+    private function createContainer($idSite = 1, $idContainer = 'abcdef', $name = 'FooContainer', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
     {
         $context = WebContext::ID;
         $description = 'My description';
         $createdDate = $this->now;
 
-        $idContainer = $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate);
+        $idContainer = $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
 
         return $idContainer;
     }
-
-
 }

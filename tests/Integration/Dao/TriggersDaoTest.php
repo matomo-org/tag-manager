@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\tests\Integration\Dao;
 
 use Piwik\Common;
@@ -20,7 +22,6 @@ use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
  */
 class TriggersDaoTest extends IntegrationTestCase
 {
-
     /**
      * @var TriggersDao
      */
@@ -463,7 +464,7 @@ class TriggersDaoTest extends IntegrationTestCase
         // should not delete anything when no trigger matches
         $this->dao->deleteContainerTrigger($idSite = 99, $idContainerVersion = 6, $idTrigger2, $this->now);
         $this->dao->deleteContainerTrigger($idSite = 4, $idContainerVersion = 6, $idTrigger2, $this->now);
-        $this->dao->deleteContainerTrigger($idSite = 3, $idContainerVersion = 5,999, $this->now);
+        $this->dao->deleteContainerTrigger($idSite = 3, $idContainerVersion = 5, 999, $this->now);
 
         // verify nothing deleted
         $this->assertCount(3, $this->dao->getAllTriggers());
@@ -500,6 +501,4 @@ class TriggersDaoTest extends IntegrationTestCase
 
         return $idTrigger;
     }
-
-
 }

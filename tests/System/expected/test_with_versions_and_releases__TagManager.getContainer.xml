@@ -5,6 +5,9 @@
 	<context>web</context>
 	<name>Container1</name>
 	<description />
+	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
+	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	<status>active</status>
 	
 	
@@ -12,7 +15,7 @@
 	
 	<versions>
 		<row>
-			<idcontainerversion>11</idcontainerversion>
+			<idcontainerversion>14</idcontainerversion>
 			<idcontainer>aaacont1</idcontainer>
 			<idsite>2</idsite>
 			<status>active</status>
@@ -28,7 +31,7 @@
 			</environments>
 		</row>
 		<row>
-			<idcontainerversion>10</idcontainerversion>
+			<idcontainerversion>12</idcontainerversion>
 			<idcontainer>aaacont1</idcontainer>
 			<idsite>2</idsite>
 			<status>active</status>
@@ -45,7 +48,7 @@
 			</environments>
 		</row>
 		<row>
-			<idcontainerversion>9</idcontainerversion>
+			<idcontainerversion>11</idcontainerversion>
 			<idcontainer>aaacont1</idcontainer>
 			<idsite>2</idsite>
 			<status>active</status>
@@ -60,13 +63,13 @@
 			</environments>
 		</row>
 		<row>
-			<idcontainerversion>8</idcontainerversion>
+			<idcontainerversion>10</idcontainerversion>
 			<idcontainer>aaacont1</idcontainer>
 			<idsite>2</idsite>
 			<status>active</status>
 			<revision>2</revision>
 			<name>container1_v2</name>
-			<description>Version from draft with tags and triggers</description>
+			<description>Version from draft with tags and triggers setting it to a very long description to show up in the UI clipped!!!</description>
 			
 			
 			
@@ -75,7 +78,7 @@
 			</environments>
 		</row>
 		<row>
-			<idcontainerversion>7</idcontainerversion>
+			<idcontainerversion>9</idcontainerversion>
 			<idcontainer>aaacont1</idcontainer>
 			<idsite>2</idsite>
 			<status>active</status>
@@ -94,7 +97,7 @@
 		<row>
 			<idcontainerrelease>1</idcontainerrelease>
 			<idcontainer>aaacont1</idcontainer>
-			<idcontainerversion>10</idcontainerversion>
+			<idcontainerversion>12</idcontainerversion>
 			<idsite>2</idsite>
 			<status>active</status>
 			<environment>live</environment>
@@ -106,7 +109,7 @@
 		<row>
 			<idcontainerrelease>2</idcontainerrelease>
 			<idcontainer>aaacont1</idcontainer>
-			<idcontainerversion>10</idcontainerversion>
+			<idcontainerversion>12</idcontainerversion>
 			<idsite>2</idsite>
 			<status>active</status>
 			<environment>dev</environment>
@@ -118,7 +121,7 @@
 		<row>
 			<idcontainerrelease>3</idcontainerrelease>
 			<idcontainer>aaacont1</idcontainer>
-			<idcontainerversion>11</idcontainerversion>
+			<idcontainerversion>14</idcontainerversion>
 			<idsite>2</idsite>
 			<status>active</status>
 			<environment>staging</environment>

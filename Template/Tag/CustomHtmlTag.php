@@ -1,19 +1,22 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
+use Piwik\Url;
 use Piwik\Validators\NotEmpty;
 
 class CustomHtmlTag extends BaseTag
 {
-    const ID = 'CustomHtml';
+    public const ID = 'CustomHtml';
 
     public function getId()
     {
@@ -38,11 +41,16 @@ class CustomHtmlTag extends BaseTag
                 $field->customFieldComponent = self::FIELD_TEXTAREA_VARIABLE_COMPONENT;
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;
                 $field->description = Piwik::translate('TagManager_CustomHtmlTagDescriptionText');
-                $field->inlineHelp = Piwik::translate('TagManager_CustomHtmlTagHelpText', array('<a href="https://matomo.org/faq/tag-manager/faq_26815/">', '</a>'));
+                $field->inlineHelp = Piwik::translate(
+                    'TagManager_CustomHtmlTagHelpText',
+                    [Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/faq_26815/', null, null, 'App.TagManager.getParameters'), '</a>']
+                );
                 $field->validators[] = new NotEmpty();
+                $field->uiControlAttributes = ['spellcheck' => 'false'];
             }),
             $this->makeSetting('htmlPosition', 'bodyEnd', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_CustomHtmlHtmlPositionTitle');;
+                $field->title = Piwik::translate('TagManager_CustomHtmlHtmlPositionTitle');
+                ;
                 $field->availableValues = array(
                     'headStart' => 'Head Start',
                     'headEnd' => 'Head End',
@@ -50,7 +58,8 @@ class CustomHtmlTag extends BaseTag
                     'bodyEnd' => 'Body End',
                 );
                 $field->uiControl = FieldConfig::UI_CONTROL_SINGLE_SELECT;
-                $field->description = Piwik::translate('TagManager_CustomHtmlHtmlPositionDescription');;
+                $field->description = Piwik::translate('TagManager_CustomHtmlHtmlPositionDescription');
+                ;
             }),
         );
     }
@@ -59,5 +68,4 @@ class CustomHtmlTag extends BaseTag
     {
         return self::CATEGORY_CUSTOM;
     }
-
 }

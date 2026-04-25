@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Piwik;
@@ -50,7 +52,7 @@ class ShareaholicTag extends BaseTag
             $this->makeSetting('shareaholicAppId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($InPageApp) {
                 $field->title = Piwik::translate('TagManager_ShareaholicTagAppIdTitle');
                 $field->description = Piwik::translate('TagManager_ShareaholicTagAppIdDescription');
-                $field->condition = 'shareaholicInPageApp && shareaholicInPageApp !== "total_share_count"';
+                $field->condition = 'shareaholicInPageApp=="share_buttons" || shareaholicInPageApp=="follow_buttons" || shareaholicInPageApp=="recommendations"';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
                 $field->validate = function ($value) use ($InPageApp, $field) {
                     if (!empty($InPageApp->getValue()) && $InPageApp->getValue() != 'total_share_count' && empty($value)) {
@@ -60,7 +62,6 @@ class ShareaholicTag extends BaseTag
                         throw new \Exception("The Total Share Counter doesn't need an App ID");
                     }
                 };
-
             }),
             $this->makeSetting('shareaholicParentSelector', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($InPageApp) {
                 $field->title = Piwik::translate('TagManager_ShareaholicTagParentSelectorTitle');

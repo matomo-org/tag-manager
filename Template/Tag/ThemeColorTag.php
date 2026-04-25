@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -16,16 +17,19 @@ use Piwik\Validators\NotEmpty;
 
 class ThemeColorTag extends BaseTag
 {
-    public function getIcon() {
+    public function getIcon()
+    {
         return 'plugins/TagManager/images/icons/chrome.svg';
     }
 
-    public function getParameters() {
+    public function getParameters()
+    {
         return array(
             $this->makeSetting('themeColor', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_ThemeColorTagName');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_ThemeColorTagThemeColorDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_ThemeColorPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value, Setting $setting) {
                     $value = trim($value);
@@ -40,8 +44,8 @@ class ThemeColorTag extends BaseTag
         );
     }
 
-    public function getCategory() {
+    public function getCategory()
+    {
         return self::CATEGORY_OTHERS;
     }
-
 }

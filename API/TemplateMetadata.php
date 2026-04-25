@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
-namespace Piwik\Plugins\TagManager\API;
 
+namespace Piwik\Plugins\TagManager\API;
 
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Template\Tag\BaseTag;
@@ -56,14 +57,19 @@ class TemplateMetadata
             usort($category['types'], function ($tagA, $tagB) {
                 if ($tagA['order'] == $tagB['order']) {
                     return strnatcmp($tagA['name'], $tagB['name']);
-
                 }
                 return $tagA['order'] - $tagB['order'];
             });
         }
 
+        $analyticsCategoryName = Piwik::translate('TagManager_CategoryAnalytics');
+        $analyticsCategoryIndex = array_search($analyticsCategoryName, array_column($byCategory, 'name'));
+        if (!empty($byCategory[$analyticsCategoryIndex])) {
+            $analyticsCategory = $byCategory[$analyticsCategoryIndex];
+            unset($byCategory[$analyticsCategoryIndex]);
+            $byCategory = array_merge([$analyticsCategory], $byCategory);
+        }
+
         return $byCategory;
     }
-
-
 }

@@ -8,6 +8,7 @@
         <div
             vue-entry="CoreHome.SiteSelector"
             show-selected-site="true"
+            show-all-sites-item="false"
             class="sites_autocomplete"
         ></div>
     </div>
@@ -22,5 +23,5 @@
 {% endblock %}
 
 {% block content %}
-    <div vue-entry="TagManager.ContainerManage"></div>
+    <div vue-entry="TagManager.ContainerManage" is-super-user="{{ isSuperUser|default(false)|json_encode }}"></div>
 {% endblock %}

@@ -13,6 +13,16 @@
       :help-text="variablesHelpText"
     >
       <p>{{ translate('TagManager_VariableUsageBenefits') }}</p>
+      <div class="variableSearchFilter">
+        <Field
+          uicontrol="text"
+          name="variableSearch"
+          :title="translate('General_Search')"
+          v-show="variables.length > 0"
+          v-model="variableSearch"
+        >
+        </Field>
+      </div>
       <table v-content-table>
         <thead>
           <tr>
@@ -58,12 +68,12 @@
             v-for="variable in sortedVariables"
             :key="variable.idvariable"
           >
-            <td class="name">{{ variable.name }}</td>
+            <td class="name" :title="variable.name">{{ truncateText(variable.name, 50) }}</td>
             <td
               class="description"
               :title="variable.description"
             >
-              {{ truncateText(variable.description, 30) }}
+              {{ truncateText(variable.description, 75) }}
             </td>
             <td
               class="type"
@@ -84,7 +94,7 @@
               <span>{{ variable.updated_date_pretty }}</span>
             </td>
             <td
-              class="action"
+              :class="getActionClasses"
               v-show="hasWriteAccess"
             >
               <a
@@ -93,6 +103,16 @@
                 :title="translate('TagManager_EditVariable')"
               />
               <a
+                class="table-action icon-content-copy"
+                v-show="hasPublishCapability()"
+                @click="openCopyDialog(variable)"
+                :title="translate(
+                  'TagManager_CopyX',
+                  translate('TagManager_Variable'),
+                )"
+              />
+              <a
+                v-show="!variable.typeMetadata?.isCustomTemplate || canUseCustomTemplates"
                 class="table-action icon-delete"
                 @click="deleteVariable(variable)"
                 :title="translate('TagManager_DeleteX', translate('TagManager_Variable'))"
@@ -204,18 +224,21 @@ import {
   ContentTable,
   Matomo,
   MatomoUrl,
+  NotificationsStore,
 } from 'CoreHome';
+import { Field } from 'CorePluginsAdmin';
 import VariablesStore from './Variables.store';
 import {
   VariableReference,
   ContainerVariableCategory,
-  Variable,
+  Variable, VariableType,
 } from '../types';
 
 interface VariableListState {
   hasWriteAccess: boolean;
   variableReferences: VariableReference[];
   containerVariables: ContainerVariableCategory[];
+  variableSearch: string;
 }
 
 const { tagManagerHelper } = window;
@@ -233,6 +256,7 @@ export default defineComponent({
     variablesHelpText: String,
   },
   components: {
+    Field,
     ContentBlock,
   },
   directives: {
@@ -243,6 +267,7 @@ export default defineComponent({
       hasWriteAccess: Matomo.hasUserCapability('tagmanager_write'),
       variableReferences: [],
       containerVariables: [],
+      variableSearch: '',
     };
   },
   created() {
@@ -285,6 +310,7 @@ export default defineComponent({
                 variable.idvariable!,
               ).then(() => {
                 VariablesStore.reload(this.idContainer, this.idContainerVersion);
+                NotificationsStore.remove('CopyDialogResultNotification');
               });
             },
           });
@@ -300,6 +326,20 @@ export default defineComponent({
     truncateText(text: string, length: number) {
       return tagManagerHelper.truncateText(text, length);
     },
+    hasPublishCapability() {
+      return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
+    openCopyDialog(variable: Variable) {
+      const url = MatomoUrl.stringify({
+        module: 'TagManager',
+        action: 'copyVariableDialog',
+        idSite: variable.idsite,
+        idContainer: this.idContainer,
+        idVariable: variable.idvariable,
+        idContainerVersion: this.idContainerVersion,
+      });
+      window.Piwik_Popover.createPopupAndLoadUrl(url, '', 'mtmCopyVariable');
+    },
   },
   computed: {
     isLoading() {
@@ -312,14 +352,31 @@ export default defineComponent({
       return VariablesStore.variables.value;
     },
     sortedVariables() {
-      const sorted = [...this.variables];
-      sorted.sort((lhs, rhs) => {
+      const searchFilter = this.variableSearch.toLowerCase();
+
+      // look through string properties of variables for values that have searchFilter in them
+      // (mimics angularjs filter() filter)
+      const result = [...this.variables].filter((h) => Object.keys(h).some((propName) => {
+        const entity = h as unknown as Record<string, unknown>;
+        let propValue = '';
+        if (typeof entity[propName] === 'string') {
+          propValue = (entity[propName] as string);
+        } else if (propName === 'typeMetadata') {
+          const propTypeMeta = (entity.typeMetadata as VariableType);
+          propValue = (propTypeMeta.name as string);
+        } else if (propName === 'parameters' && entity.type === 'CustomJsFunction') {
+          const propTypeParameters = (entity.parameters as Record<string, unknown>);
+          propValue = (propTypeParameters.jsFunction as string);
+        }
+        return propValue.toLowerCase().indexOf(searchFilter) !== -1;
+      }));
+      result.sort((lhs, rhs) => {
         if (lhs.name < rhs.name) {
           return -1;
         }
         return lhs.name > rhs.name ? 1 : 0;
       });
-      return sorted;
+      return result;
     },
     nameTranslatedText(): string {
       return this.translate('TagManager_VariablesNameDescription');
@@ -338,6 +395,13 @@ export default defineComponent({
     },
     actionTranslatedText(): string {
       return this.translate('TagManager_VariablesActionDescription');
+    },
+    getActionClasses(): string {
+      const copyClass = this.hasPublishCapability() ? ' hasCopyAction' : '';
+      return `action${copyClass}`;
+    },
+    canUseCustomTemplates() {
+      return Matomo.hasUserCapability('tagmanager_use_custom_templates');
     },
   },
 });

@@ -15,7 +15,7 @@ use Piwik\Validators\NotEmpty;
 
 class CustomRequestProcessingVariable extends BaseVariable
 {
-    const ID = 'CustomRequestProcessing';
+    public const ID = 'CustomRequestProcessing';
 
     public function getId()
     {

@@ -78,8 +78,11 @@
             return TagManagerTestHelper.buildVariable(variable, templates);
         }
 
-        function buildTag(tag, templates) {
-            return TagManagerTestHelper.buildTag(tag, templates);
+        function buildTag(tag, templates, containerConfig) {
+            if (!containerConfig) {
+                containerConfig = {};
+            }
+            return TagManagerTestHelper.buildTag(tag, templates, containerConfig);
         }
 
         function buildTrigger(trigger, templates) {
@@ -145,7 +148,7 @@
         }});
 
         test("Matomo TagManager", function() {
-            expect(30);
+            expect(36);
 
             equal( typeof window.MatomoTagManager, 'object', 'TagManager' );
 
@@ -205,6 +208,18 @@
             deepEqual([container], TagManager.containers, 'addContainer(), creates container and adds the container');
             strictEqual('Container', getConstructorName(container), 'addContainer(), creates an actual Container instance');
 
+            TagManager.containers = []; // restore original setting
+
+            container = TagManager.addContainer({id: 'fok33'}, {});
+            deepEqual(container.id, 'fok33', 'addContainer(), creates container and adds the container without isTagFireLimitAllowedInPreviewMode');
+            deepEqual(container.isTagFireLimitAllowedInPreviewMode, false, 'isTagFireLimitAllowedInPreviewMode should be false by default');
+            strictEqual('Container', getConstructorName(container), 'addContainer(), creates an actual Container instance without isTagFireLimitAllowedInPreviewMode');
+            TagManager.containers = []; // restore original setting
+
+            container = TagManager.addContainer({id: 'fok34', isTagFireLimitAllowedInPreviewMode: 1}, {});
+            deepEqual(container.id, 'fok34', 'addContainer(), creates container and adds the container with isTagFireLimitAllowedInPreviewMode');
+            deepEqual(container.isTagFireLimitAllowedInPreviewMode, 1, 'isTagFireLimitAllowedInPreviewMode should return value if set');
+            strictEqual('Container', getConstructorName(container), 'addContainer(), creates an actual Container instance with isTagFireLimitAllowedInPreviewMode set');
             TagManager.containers = []; // restore original setting
         });
 
@@ -1077,7 +1092,7 @@
         });
 
         test("Matomo TagManager Template Tag", function() {
-            expect(40);
+            expect(50);
 
             var wasFired = 0;
             var TagManager, parameters;
@@ -1180,6 +1195,36 @@
             var dateFireResult = tag.fire();
             strictEqual(0, tag.numExecuted, 'dateRange, cannot be executed when now is not between date range');
             strictEqual('date range does not match', dateFireResult, 'dateRange, make sure it failed because of date range');
+
+            /** FIRE with isTagFireLimitAllowedInPreviewMode **/
+            window.mtmPreviewWindow = true;
+            tag = buildTag({Tag: exampleTag, fireLimit: MatomoTagManager.Tag.FIRE_LIMIT_ONCE_24HOURS, name: 'mynamesession1'}, {}, {'id':'test12', isTagFireLimitAllowedInPreviewMode: false});
+            tag.fire();
+            strictEqual(1, tag.numExecuted, 'fireLimit Once session, cannot be executed in preview mode if isTagFireLimitAllowedInPreviewMode not set');
+
+
+            tag = buildTag({Tag: exampleTag, fireLimit: MatomoTagManager.Tag.FIRE_LIMIT_ONCE_24HOURS, name: 'mynamesession2'}, {}, {'id':'test13', isTagFireLimitAllowedInPreviewMode: 1});
+            tag.fire();
+            strictEqual(1, tag.numExecuted, 'fireLimit Once session, can be executed once in previewMode if isTagFireLimitAllowedInPreviewMode is set');
+            tag.numExecuted = 0;
+            strictEqual('fire limit 24hours is restricted', tag.fire(), 'fireLimit Once session, can be executed a second time');
+            strictEqual(0, tag.numExecuted, 'fireLimit Once session, cannot be executed a second time even if was not executed before');
+            strictEqual(undefined, MatomoTagManager.storage.local.get('tag', 'mynamesession2'), 'fireLimit Once session, set key in storage');
+
+
+            tag = buildTag({Tag: exampleTag, fireLimit: MatomoTagManager.Tag.FIRE_LIMIT_ONCE_LIFETIME, name: 'mynamesession3'}, {}, {'id':'test12', isTagFireLimitAllowedInPreviewMode: false});
+            tag.fire();
+            strictEqual(1, tag.numExecuted, 'fireLimit Once lifetime, cannot be executed in preview mode if isTagFireLimitAllowedInPreviewMode not set');
+
+
+            tag = buildTag({Tag: exampleTag, fireLimit: MatomoTagManager.Tag.FIRE_LIMIT_ONCE_LIFETIME, name: 'mynamesession4'}, {}, {'id':'test13', isTagFireLimitAllowedInPreviewMode: 1});
+            tag.fire();
+            strictEqual(1, tag.numExecuted, 'fireLimit Once lifetime, can be executed once in previewMode if isTagFireLimitAllowedInPreviewMode is set');
+            tag.numExecuted = 0;
+            strictEqual('fire limit lifetime is restricted', tag.fire(), 'fireLimit Once session, can be executed a second time');
+            strictEqual(0, tag.numExecuted, 'fireLimit Once session, cannot be executed a second time even if was not executed before');
+            strictEqual(undefined, MatomoTagManager.storage.local.get('tag', 'mynamesession4'), 'fireLimit Once lifetime, set key in storage');
+            window.mtmPreviewWindow = false;
 
             /** FIRE DELAY **/
             tag = buildTag({Tag: exampleTag, fireDelay: 600});

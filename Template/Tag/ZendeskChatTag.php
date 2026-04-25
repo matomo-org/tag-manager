@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -17,19 +18,23 @@ use Piwik\Validators\NotEmpty;
 
 class ZendeskChatTag extends BaseTag
 {
-    public function getCategory() {
+    public function getCategory()
+    {
         return self::CATEGORY_SOCIAL;
     }
 
-    public function getIcon() {
+    public function getIcon()
+    {
         return 'plugins/TagManager/images/icons/zendesk_chat.svg';
     }
 
-    public function getParameters() {
+    public function getParameters()
+    {
         return array(
             $this->makeSetting('zendeskChatId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_ZendeskChatTagChatIdTitle');
                 $field->description = Piwik::translate('TagManager_ZendeskChatTagChatIdDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_ZendeskChatTagChatIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value, Setting $setting) {
                     $value = trim($value);
@@ -43,9 +48,7 @@ class ZendeskChatTag extends BaseTag
                 $field->transform = function ($value) {
                     return trim($value);
                 };
-
             }),
         );
     }
-
 }

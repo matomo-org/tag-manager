@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Container\StaticContainer;
@@ -16,9 +18,9 @@ use Piwik\Validators\NotEmpty;
 
 class MatomoTag extends BaseTag
 {
-    const ID = 'Matomo';
-    const PARAM_MATOMO_CONFIG = 'matomoConfig';
-    const REPLACE_TRACKER_KEY = "var replaceMeWithTracker='';";
+    public const ID = 'Matomo';
+    public const PARAM_MATOMO_CONFIG = 'matomoConfig';
+    public const REPLACE_TRACKER_KEY = "var replaceMeWithTracker='';";
 
     public function getId()
     {
@@ -48,6 +50,13 @@ class MatomoTag extends BaseTag
                 'goal' => Piwik::translate('General_Goal'),
                 'initialise' => Piwik::translate('TagManager_InitializeTrackerOnly'),
             );
+        });
+        $isEcommerceView = $this->makeSetting('isEcommerceView', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+            $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewIsEcommerceView');
+            $inlineHelpLine1 = StaticContainer::get('TagManager.MatomoTagEcommerceViewIsEcommerceViewHelpOnPremise');
+            $field->inlineHelp = $inlineHelpLine1 ? Piwik::translate($inlineHelpLine1) . '<br /><br />' : '';
+            $field->inlineHelp .= Piwik::translate('TagManager_MatomoTagEcommerceViewIsEcommerceViewHelpV2');
+            $field->condition = 'trackingType == "pageview"';
         });
         return array(
             $this->makeSetting(self::PARAM_MATOMO_CONFIG, '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
@@ -105,6 +114,55 @@ class MatomoTag extends BaseTag
                     return trim($value);
                 };
             }),
+            $isEcommerceView,
+            $this->makeSetting('productSKU', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType, $isEcommerceView) {
+                $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewProductSKU');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_MatomoTagEcommerceViewProductSKUHelp');
+                $field->condition = 'trackingType == "pageview" && isEcommerceView';
+                if ($trackingType->getValue() === 'pageview' && $isEcommerceView->getValue()) {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('productName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType, $isEcommerceView) {
+                $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewProductName');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_MatomoTagEcommerceViewProductNameHelp');
+                $field->condition = 'trackingType == "pageview" && isEcommerceView';
+                if ($trackingType->getValue() === 'pageview' && $isEcommerceView->getValue()) {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('categoryName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType, $isEcommerceView) {
+                $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewCategoryName');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_MatomoTagEcommerceViewCategoryNameHelp');
+                $field->condition = 'trackingType == "pageview" && isEcommerceView';
+                if ($trackingType->getValue() === 'pageview' && $isEcommerceView->getValue()) {
+                    $field->validators[] = new CharacterLength(0, 500);
+                }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
+            $this->makeSetting('price', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType, $isEcommerceView) {
+                $field->title = Piwik::translate('TagManager_MatomoTagEcommerceViewPrice');
+                $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->description = Piwik::translate('TagManager_MatomoTagEcommerceViewPriceHelp');
+                $field->condition = 'trackingType == "pageview" && isEcommerceView';
+                if ($trackingType->getValue() === 'pageview' && $isEcommerceView->getValue()) {
+                    $field->validators[] = new Numeric(true, true);
+                }
+                $field->transform = function ($value) {
+                    return trim($value);
+                };
+            }),
             $this->makeSetting('eventCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($trackingType) {
                 $field->title = Piwik::translate('Events_EventCategory');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
@@ -135,19 +193,59 @@ class MatomoTag extends BaseTag
             $this->makeSetting('eventValue', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_EventValue');
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->description = Piwik::translate('TagManager_EventValueHelp');
+                $field->description = Piwik::translate('TagManager_EventValueDescription');
+                $field->inlineHelp = '<br>' . Piwik::translate('TagManager_EventValueInlineHelp', array('<strong>', '</strong>'));
                 $field->condition = 'trackingType == "event"';
                 $field->validators[] = new CharacterLength(0, 500);
                 $field->validators[] = new Numeric(true, true);
                 $field->transform = function ($value) {
-                    if ($value === null || $value === false || $value === ''){
+                    if ($value === null || $value === false || $value === '') {
                         // we make sure in those cases we do not case the value to float automatically by Setting class because
                         // the value is optional and we do not want to have "0" in this case
                         return null;
                     }
                     return $value;
                 };
-            })
+            }),
+            $this->makeSetting('customDimensions', [], FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsTitle');
+                $field->description = Piwik::translate('TagManager_MatomoTagCustomDimensionsDescription');
+                $field->validate = function ($value) {
+                    if (empty($value)) {
+                        return;
+                    }
+                    if (!is_array($value)) {
+                        throw new \Exception(Piwik::translate('TagManager_MatomoConfigurationMatomoCustomDimensionsException'));
+                    }
+                };
+
+                $field->transform = function ($value) {
+                    if (empty($value) || !is_array($value)) {
+                        return [];
+                    }
+                    $withValues = [];
+                    foreach ($value as $dim) {
+                        if (!empty($dim['index']) && !empty($dim['value'])) {
+                            $withValues[] = $dim;
+                        }
+                    }
+
+                    return $withValues;
+                };
+
+                $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
+                $field1 = new FieldConfig\MultiPair('Index', 'index', FieldConfig::UI_CONTROL_TEXT);
+                $field1->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field2 = new FieldConfig\MultiPair('Value', 'value', FieldConfig::UI_CONTROL_TEXT);
+                $field2->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
+                $field->uiControlAttributes['field1'] = $field1->toArray();
+                $field->uiControlAttributes['field2'] = $field2->toArray();
+            }),
+            $this->makeSetting('areCustomDimensionsSticky', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoTagCustomDimensionsSticky');
+                $field->inlineHelp = Piwik::translate('TagManager_MatomoTagCustomDimensionsStickyHelpText1') . '<br /><br />';
+                $field->inlineHelp .= Piwik::translate('TagManager_MatomoTagCustomDimensionsStickyHelpText2');
+            }),
         );
     }
 
@@ -177,5 +275,4 @@ class MatomoTag extends BaseTag
     {
         return 1;
     }
-
 }

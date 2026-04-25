@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\API;
 
 use Piwik\Plugins\TagManager\Model\Container;
@@ -73,7 +75,6 @@ class Export
         $tags = $this->tags->getContainerTags($idSite, $idContainerVersion);
         foreach ($tags as $index => &$tag) {
             unset($tag['idcontainerversion']);
-            unset($tag['status']);
             unset($tag['idsite']);
             unset($tag['typeMetadata']);
             unset($tag['deleted_date']);
@@ -106,6 +107,4 @@ class Export
         }
         return $variables;
     }
-
-
 }

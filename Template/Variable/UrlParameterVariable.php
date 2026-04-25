@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Piwik;
@@ -24,6 +26,7 @@ class UrlParameterVariable extends BaseVariable
             $this->makeSetting('parameterName', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_UrlParameterVariableNameTitle');
                 $field->description = Piwik::translate('TagManager_UrlParameterVariableNameDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_UrlParameterVariableNamePlaceholder')];
                 $field->validators[] = new CharacterLength(1, 300);
                 $field->transform = function ($value) {
                     return trim($value);
@@ -32,5 +35,4 @@ class UrlParameterVariable extends BaseVariable
 
         );
     }
-
 }

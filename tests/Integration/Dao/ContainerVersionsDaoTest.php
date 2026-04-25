@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\tests\Integration\Dao;
 
 use Piwik\Common;
@@ -20,7 +22,6 @@ use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
  */
 class ContainerVersionsDaoTest extends IntegrationTestCase
 {
-
     /**
      * @var ContainerVersionsDao
      */
@@ -503,6 +504,4 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
 
         return $idVersion;
     }
-
-
 }

@@ -1,0 +1,49 @@
+<html>
+<head>
+    <script type="text/javascript">
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['enableLinkTracking']);
+        _paq.push(['FormAnalytics::disable']);
+        // Custom dimension...
+        _paq.push(['setCustomDimension', 2, 'dimensionValue']);
+        _paq.push(['FormAnalytics::enableDebugMode']);
+
+        // Manually track a goal
+        _paq.push(['trackGoal', 1, 123.32]);
+    </script>
+    <!-- Matomo Tag Manager TODO - Replace this with your own MTM container snippet -->
+    <script type="text/javascript">
+        var _mtm = window._mtm = window._mtm || [];
+        _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src='https://matomo.com/js/container_VJMsHw78.js'; s.parentNode.insertBefore(g,s);
+    </script>
+    <!-- End Matomo Tag Manager -->
+    <!-- Some of the stuff below is specific to the tags I have configured in my test container -->
+    <!-- If the new changes are working, all _paq entries should be applied to all trackers, but not until all configs have been processed -->
+    <script type="text/javascript">
+        var _paq = window._paq = window._paq || [];
+        document.addEventListener("DOMContentLoaded", function(){
+            var titleElement = document.getElementsByClassName('site-title')[0];
+            titleElement.addEventListener('mouseover', function () {
+                window._mtm = window._mtm || [];
+                window._mtm.push({'event': 'testDataLayerEvent', 'testDataLayerValue': 'Meep!'});
+                _paq.push(['trackGoal', 1, 111.22]);
+            });
+            _paq.push(['enableCrossDomainLinking']);
+            _paq.push(['disableCookies']);
+            _paq.push(['trackGoal', 1, 88.99]);
+        });
+
+        // Manually track a goal
+        _paq.push(['trackGoal', 1, 543.21]);
+        _paq.push(['setCustomDimension', 3, 'dimensionValue']);
+    </script>
+</head>
+<body>
+<div>
+    <h1 class="site-title">Hello World!</h1>
+    <span class="secret-element" data-secret="This is my super secret data in the DOM." data-dollar="127.01"></span>
+</div>
+</body>
+</html>

@@ -188,6 +188,48 @@ class TagsStore {
     });
   }
 
+  pauseTag(
+    idContainer: string,
+    idContainerVersion: number,
+    idTag: number,
+  ): Promise<void> {
+    this.privateState.isUpdating = true;
+    this.privateState.tags = [];
+
+    return AjaxHelper.fetch(
+      {
+        idTag,
+        idContainerVersion,
+        idContainer,
+        method: 'TagManager.pauseContainerTag',
+      },
+      { withTokenInUrl: true },
+    ).finally(() => {
+      this.privateState.isUpdating = false;
+    });
+  }
+
+  resumeTag(
+    idContainer: string,
+    idContainerVersion: number,
+    idTag: number,
+  ): Promise<void> {
+    this.privateState.isUpdating = true;
+    this.privateState.tags = [];
+
+    return AjaxHelper.fetch(
+      {
+        idTag,
+        idContainerVersion,
+        idContainer,
+        method: 'TagManager.resumeContainerTag',
+      },
+      { withTokenInUrl: true },
+    ).finally(() => {
+      this.privateState.isUpdating = false;
+    });
+  }
+
   suggestNameForType(templateId: string): string|undefined {
     for (let counter = 0; counter < 100; counter += 1) {
       let name = templateId;

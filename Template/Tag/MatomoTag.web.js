@@ -85,12 +85,47 @@
             return matomoUrl;
         }
 
+        function setCustomDimensions(tracker, customDimensions, isBuildObject = false)
+        {
+            if (!tracker) {
+                return;
+            }
+
+            if (!customDimensions || !TagManager.utils.isArray(customDimensions) || customDimensions.length === 0) {
+                return;
+            }
+
+            const dimensionsObject = {};
+
+            var dimIndex;
+            for (dimIndex = 0; dimIndex < customDimensions.length; dimIndex++) {
+                const dimension = customDimensions[dimIndex];
+                if (!dimension || !TagManager.utils.isObject(dimension) || !dimension.index) {
+                    continue;
+                }
+
+                if (!(dimension.value || dimension.value === null)) {
+                    continue;
+                }
+
+                if (isBuildObject) {
+                    const dimensionIndex = 'dimension' + dimension.index;
+                    dimensionsObject[dimensionIndex] = dimension.value;
+                    continue;
+                }
+
+                tracker.setCustomDimension(dimension.index, dimension.value);
+            }
+
+            return dimensionsObject;
+        }
+
         this.fire = function () {
             callbacks.push(function () {
                 if (!parameters.matomoConfig || !parameters.matomoConfig.name) {
                     return;
                 }
-                
+
                 // this is the matomoConfig variable name and the only way to differentiate two different tracker
                 // configurations
                 var variableName = parameters.matomoConfig.name;
@@ -126,6 +161,10 @@
                         tracker.disableBrowserFeatureDetection();
                     }
 
+                    if (matomoConfig.disableCampaignParameters) {
+                        tracker.disableCampaignParameters();
+                    }
+
                     if (matomoConfig.disableCookies) {
                         tracker.disableCookies();
                     }
@@ -137,6 +176,12 @@
 
                     if (matomoConfig.cookieSameSite) {
                         tracker.setCookieSameSite(matomoConfig.cookieSameSite);
+                    }
+
+                    if (matomoConfig.customCookieTimeOutEnable) {
+                        tracker.setVisitorCookieTimeout(matomoConfig.customCookieTimeOut * 86400);
+                        tracker.setReferralCookieTimeout(matomoConfig.referralCookieTimeOut * 86400);
+                        tracker.setSessionCookieTimeout(matomoConfig.sessionCookieTimeOut * 60);
                     }
 
                     if (matomoConfig.setSecureCookie) {
@@ -180,10 +225,10 @@
                     if (matomoConfig.disableAlwaysUseSendBeacon) {
                         tracker.disableAlwaysUseSendBeacon();
                     }
-                    
+
                     if (matomoConfig.forceRequestMethod) {
                         tracker.setRequestMethod(matomoConfig.requestMethod);
-                        if(matomoConfig.requestMethod == 'POST'){
+                        if(matomoConfig.requestMethod.toUpperCase() === 'POST'){
                             tracker.setRequestContentType(matomoConfig.requestContentType);
                         }
                     }
@@ -207,11 +252,11 @@
                     if (matomoConfig.disablePerformanceTracking) {
                         tracker.disablePerformanceTracking();
                     }
-                    
+
                     if (typeof matomoConfig.appendToTrackingUrl === 'string' && matomoConfig.appendToTrackingUrl.length > 0) {
                         tracker.appendToTrackingUrl(matomoConfig.appendToTrackingUrl);
                     }
-                    
+
                     if(typeof matomoConfig.customRequestProcessing === 'function'
                         && matomoConfig.customRequestProcessing.length >= 1 ) {
                         tracker.setCustomRequestProcessing(matomoConfig.customRequestProcessing);
@@ -228,6 +273,9 @@
                     }
                     if (matomoConfig.trackVisibleContentImpressions) {
                         tracker.trackVisibleContentImpressions();
+                    }
+                    if (matomoConfig.trackBots) {
+                        tracker.appendToTrackingUrl('bots=1');
                     }
                     if (matomoConfig.hasOwnProperty('enableFormAnalytics') && !matomoConfig.enableFormAnalytics && window.Matomo && window.Matomo.FormAnalytics && typeof window.Matomo.FormAnalytics.disableFormAnalytics === 'function') {
                         window.Matomo.FormAnalytics.disableFormAnalytics();
@@ -257,17 +305,11 @@
                     lastIdSite = possiblyUpdatedMatomoUrl;
                 }
 
-                if (matomoConfig.customDimensions
-                    && TagManager.utils.isArray(matomoConfig.customDimensions)
-                    && matomoConfig.customDimensions.length) {
-                    var dimIndex;
-                    for (dimIndex = 0; dimIndex < matomoConfig.customDimensions.length; dimIndex++) {
-                        var dimension = matomoConfig.customDimensions[dimIndex];
-                        if (dimension && TagManager.utils.isObject(dimension) && dimension.index && (dimension.value || dimension.value === null)) {
-                            tracker.setCustomDimension(dimension.index, dimension.value);
-                        }
-                    }
-                }
+                const tagCustomDimensions = parameters.get('customDimensions');
+                setCustomDimensions(tracker, matomoConfig.customDimensions);
+                // Override the config custom dimensions with the event specific ones
+                const areCustomDimensionsSticky = parameters.get('areCustomDimensionsSticky');
+                const dimensionsObject = setCustomDimensions(tracker, tagCustomDimensions, !areCustomDimensionsSticky);
 
                 if (tracker) {
                     var trackingType = parameters.get('trackingType');
@@ -280,18 +322,117 @@
                         var customUrl = parameters.get('customUrl');
                         if (customUrl) {
                             tracker.setCustomUrl(customUrl);
-                        }                        
-                        if (matomoConfig.customCookieTimeOutEnable) {  
-                            tracker.setVisitorCookieTimeout(matomoConfig.customCookieTimeOut * 86400);
-                            tracker.setReferralCookieTimeout(matomoConfig.referralCookieTimeOut * 86400);
-                            tracker.setSessionCookieTimeout(matomoConfig.sessionCookieTimeOut * 60);
                         }
 
-                        tracker.trackPageView();
+                        if (parameters.get('isEcommerceView')) {
+                            tracker.setEcommerceView(parameters.get('productSKU'), parameters.get('productName'), parameters.get('categoryName'), parameters.get('price'));
+                        }
+
+                        tracker.trackPageView(customTitle, dimensionsObject);
                     } else if (trackingType === 'event') {
-                        tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'));
+                        tracker.trackEvent(parameters.get('eventCategory'), parameters.get('eventAction'), parameters.get('eventName'), parameters.get('eventValue'), dimensionsObject);
                     } else if (trackingType === 'goal') {
-                        tracker.trackGoal(parameters.get('idGoal'), parameters.get('goalCustomRevenue'));
+                        tracker.trackGoal(parameters.get('idGoal'), parameters.get('goalCustomRevenue'), dimensionsObject);
+                    }
+
+                    if (matomoConfig.customData && matomoConfig.customData.length && matomoConfig.customData[0].name && matomoConfig.customData[0].value) {
+                        tracker.setCustomData(matomoConfig.customData[0].name, matomoConfig.customData[0].value);
+                    }
+
+                    if (matomoConfig.setDownloadExtensions) {
+                        tracker.setDownloadExtensions(matomoConfig.setDownloadExtensions.split(','));
+                    }
+
+                    if (matomoConfig.addDownloadExtensions) {
+                        tracker.addDownloadExtensions(matomoConfig.addDownloadExtensions.split(','));
+                    }
+
+                    if (matomoConfig.removeDownloadExtensions) {
+                        tracker.removeDownloadExtensions(matomoConfig.removeDownloadExtensions.split(','));
+                    }
+
+                    if (matomoConfig.setIgnoreClasses) {
+                        tracker.setIgnoreClasses(matomoConfig.setIgnoreClasses.split(','));
+                    }
+
+                    if (matomoConfig.setReferrerUrl) {
+                        tracker.setReferrerUrl(matomoConfig.setReferrerUrl);
+                    }
+
+                    if (matomoConfig.setAPIUrl) {
+                        tracker.setAPIUrl(matomoConfig.setAPIUrl);
+                    }
+
+                    if (matomoConfig.setPageViewId) {
+                        tracker.setPageViewId(matomoConfig.setPageViewId);
+                    }
+
+                    if (matomoConfig.setExcludedReferrers) {
+                        tracker.setExcludedReferrers(matomoConfig.setExcludedReferrers.split(','));
+                    }
+
+                    if (matomoConfig.setDownloadClasses) {
+                        tracker.setDownloadClasses(matomoConfig.setDownloadClasses.split(','));
+                    }
+
+                    if (matomoConfig.setLinkClasses) {
+                        tracker.setLinkClasses(matomoConfig.setLinkClasses.split(','));
+                    }
+
+                    if (matomoConfig.setCampaignNameKey) {
+                        tracker.setCampaignNameKey(matomoConfig.setCampaignNameKey);
+                    }
+
+                    if (matomoConfig.setCampaignKeywordKey) {
+                        tracker.setCampaignKeywordKey(matomoConfig.setCampaignKeywordKey);
+                    }
+
+                    if (matomoConfig.setConsentGiven) {
+                        tracker.setConsentGiven();
+                    }
+
+                    if (matomoConfig.rememberConsentGiven) {
+                        if (matomoConfig.rememberConsentGivenForHours) {
+                            tracker.rememberConsentGiven(matomoConfig.rememberConsentGivenForHours);
+                        } else {
+                            tracker.rememberConsentGiven();
+                        }
+                    }
+
+                    if (matomoConfig.forgetConsentGiven) {
+                        tracker.forgetConsentGiven();
+                    }
+
+                    if (matomoConfig.discardHashTag) {
+                        tracker.discardHashTag(true);
+                    }
+
+                    if (matomoConfig.setExcludedQueryParams) {
+                        tracker.setExcludedQueryParams(matomoConfig.setExcludedQueryParams.split(','));
+                    }
+
+                    if (matomoConfig.setConversionAttributionFirstReferrer) {
+                        tracker.setConversionAttributionFirstReferrer(true);
+                    }
+
+                    if (matomoConfig.setDoNotTrack) {
+                        tracker.setDoNotTrack(true);
+                    }
+
+                    if (matomoConfig.setLinkTrackingTimer) {
+                        tracker.setLinkTrackingTimer(matomoConfig.setLinkTrackingTimer);
+                    }
+
+                    if (matomoConfig.killFrame) {
+                        tracker.killFrame();
+                    }
+
+                    if (matomoConfig.setCountPreRendered) {
+                        tracker.setCountPreRendered(true);
+                    }
+
+                    if (matomoConfig.setRequestQueueInterval) {
+                        tracker.setRequestQueueInterval(matomoConfig.setRequestQueueInterval);
                     }
                 }
             });

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -72,6 +73,4 @@ class ComparisonsTest extends UnitTestCase
     {
         $this->comparison->checkIsValidComparison($value);
     }
-
-
 }

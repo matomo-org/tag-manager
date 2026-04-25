@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
 use Piwik\Piwik;
@@ -14,8 +16,8 @@ use Piwik\Validators\NotEmpty;
 
 class EmarsysTag extends BaseTag
 {
-    const ID = 'Emarsys';
-    
+    public const ID = 'Emarsys';
+
     public function getId()
     {
         return self::ID;
@@ -38,6 +40,7 @@ class EmarsysTag extends BaseTag
                 $field->title = Piwik::translate('TagManager_EmarsysTagMerchantIdTitle');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_EmarsysTagMerchantIdDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_EmarsysTagMerchantIdPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);
@@ -49,21 +52,24 @@ class EmarsysTag extends BaseTag
                 };
             }),
             $this->makeSetting('commandCategory', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_EmarsysTagCommandCategoryTitle');
+                $field->title = Piwik::translate('TagManager_EmarsysTagCommandCategoryTitleOptional');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_EmarsysTagCommandCategoryDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_EmarsysTagCommandCategoryPlaceholder')];
                 $field->validators[] = new CharacterLength(0, 500);
             }),
             $this->makeSetting('commandView', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_EmarsysTagCommandViewTitle');
+                $field->title = Piwik::translate('TagManager_EmarsysTagCommandViewTitleOptional');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_EmarsysTagCommandViewDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_EmarsysTagCommandViewPlaceholder')];
                 $field->validators[] = new CharacterLength(0, 500);
             }),
             $this->makeSetting('commandTag', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
-                $field->title = Piwik::translate('TagManager_EmarsysTagCommandTagTitle');
+                $field->title = Piwik::translate('TagManager_EmarsysTagCommandTagTitleOptional');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
                 $field->description = Piwik::translate('TagManager_EmarsysTagCommandTagDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_EmarsysTagCommandTagPlaceholder')];
                 $field->validators[] = new CharacterLength(0, 500);
             }),
             $this->makeSetting('commandGo', '', FieldConfig::TYPE_BOOL, function (FieldConfig $field) {

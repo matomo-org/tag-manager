@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Model;
 
 use Piwik\Piwik;
@@ -165,11 +167,10 @@ class Variable extends BaseModel
         }
 
         foreach ($variables as $var) {
-            foreach ($var['typeMetadata']['parameters'] as $parameter) {
-                if ($this->isUsingParameterTheVariable($parameter, $varName)) {
-                    $variableRef = new VariableReference($var['idvariable'], $var['name']);
-                    $references[] = $variableRef->toArray();
-                }
+            $tempReferences = $this->listVariableNamesInParameters($var);
+            if (in_array($varName, $tempReferences)) {
+                $variableRef = new VariableReference($var['idvariable'], $var['name']);
+                $references[] = $variableRef->toArray();
             }
         }
 
@@ -178,7 +179,8 @@ class Variable extends BaseModel
 
     public static function hasFieldConfigVariableParameter($parameter)
     {
-        if (!empty($parameter['component'])
+        if (
+            !empty($parameter['component'])
             && ($parameter['component'] === BaseTemplate::FIELD_TEXTAREA_VARIABLE_COMPONENT
                 || $parameter['component'] === BaseTemplate::FIELD_VARIABLE_COMPONENT
                 || $parameter['component'] === BaseTemplate::FIELD_VARIABLE_TYPE_COMPONENT)
@@ -276,11 +278,12 @@ class Variable extends BaseModel
         $parameters = $entity['parameters'];
         foreach ($entity['typeMetadata']['parameters'] as $parameter) {
             $paramName = $parameter['name'];
-            if ((isset($parameter['component'])
-                        && in_array($parameter['component'], [BaseTemplate::FIELD_VARIABLE_COMPONENT, BaseTemplate::FIELD_VARIABLE_TYPE_COMPONENT]))
+            if (
+                $this->canParameterContainVariables($parameter, $entity['type'])
                 && isset($parameters[$paramName])
                 && is_string($parameters[$paramName])
-                && strpos($parameters[$paramName], $oldVarNameTemplate) !== false) {
+                && strpos($parameters[$paramName], $oldVarNameTemplate) !== false
+            ) {
                 $found = true;
                 $parameters[$paramName] = str_replace($oldVarNameTemplate, $newVarNameTemplate, $parameters[$paramName]);
             }
@@ -288,6 +291,53 @@ class Variable extends BaseModel
         if ($found) {
             return $parameters;
         }
+    }
+
+    private function canParameterContainVariables(array $parameterMetadata, string $entityType)
+    {
+        // If the parameter is for a variable component, or it's the jsFunction param of a CustomJsFunction variable
+        return (
+            (
+                isset($parameterMetadata['component'])
+                && in_array($parameterMetadata['component'], [
+                    BaseTemplate::FIELD_VARIABLE_COMPONENT,
+                    BaseTemplate::FIELD_VARIABLE_TYPE_COMPONENT
+                ])
+            )
+            || ($entityType === 'CustomJsFunction' && $parameterMetadata['name'] === 'jsFunction')
+            || ($entityType === 'CustomHtml' && $parameterMetadata['name'] === 'customHtml')
+        );
+    }
+
+    /**
+     * Check the Tag/Trigger/Variable for references to variables. Return a list of variable names that were found.
+     *
+     * @param array $entity The array of the Tag/Trigger/Variable built when loading the entry from the database
+     * @return array List of names found referenced by the provided entity.
+     */
+    public function listVariableNamesInParameters(array $entity): array
+    {
+        $variables = [];
+        $parameters = $entity['parameters'];
+        foreach ($entity['typeMetadata']['parameters'] as $parameter) {
+            $paramName = $parameter['name'];
+            if (
+                $this->canParameterContainVariables($parameter, $entity['type'])
+                && isset($parameters[$paramName])
+                && is_string($parameters[$paramName])
+                && strpos($parameters[$paramName], '{{') !== false
+            ) {
+                // Use regex to get the list of all the variable names
+                $matches = [];
+                preg_match_all('/{{.[^}]+}}/', $parameters[$paramName], $matches);
+                $matches = array_unique($matches[0]);
+                $variables = array_map(function ($value) {
+                    return trim(str_replace(['{{', '}}'], '', $value));
+                }, $matches);
+            }
+        }
+
+        return array_unique($variables);
     }
 
     public function convertVariableNameToTemplateVar($variableName)
@@ -301,10 +351,10 @@ class Variable extends BaseModel
         return $this->enrichVariables($variables);
     }
 
-    public function deleteContainerVariable($idSite, $idContainerVersion, $idVariable)
+    public function deleteContainerVariable($idSite, $idContainerVersion, $idVariable, $skipReferenceCheck = false)
     {
-        if ($this->getContainerVariableReferences($idSite, $idContainerVersion, $idVariable)) {
-            throw new \Exception('This variable cannot be deleted as it is used in other places. To remove this variable, first remove all places where this variable is used');
+        if (!$skipReferenceCheck && $this->getContainerVariableReferences($idSite, $idContainerVersion, $idVariable)) {
+            throw new \Exception(Piwik::translate('TagManager_ErrorDeleteReferencedVariable'));
         }
         $this->dao->deleteContainerVariable($idSite, $idContainerVersion, $idVariable, $this->getCurrentDateTime());
     }
@@ -319,6 +369,174 @@ class Variable extends BaseModel
     {
         $variable = $this->dao->findVariableByName($idSite, $idContainerVersion, $variableName);
         return $this->enrichVariable($variable);
+    }
+
+    /**
+     * Check the Tag/Trigger/Variable for references to variables. If any are found, update the names in the parameters
+     * to reference the copies. For triggers, do the same for the conditions.
+     *
+     * @param array $entity The array of the Tag/Trigger/Variable built when loading the entry from the database. Copied
+     * by reference so that the variable references within the entity can be updated with the new variable names.
+     * @param int $idSite ID of the source site from which the variables are being copied
+     * @param int $idContainerVersion ID of the source container version from which the variables are being copied
+     * @param null|int $idDestinationSite Optional ID of the site to which the variables are being copied. In not
+     * specified, the idSite is used
+     * @param null|int $idDestinationVersion Optional ID of the container version to which the variables are being
+     * copied. If not specified, the idContainerVersion is used
+     * @return void
+     * @throws \Exception
+     */
+    public function copyReferencedVariables(array &$entity, int $idSite, int $idContainerVersion, ?int $idDestinationSite = 0, ?int $idDestinationVersion = 0): void
+    {
+        $idDestinationSite = $idDestinationSite ?: $idSite;
+        $idDestinationVersion = $idDestinationVersion ?: $idContainerVersion;
+
+        $variableNameList = $this->listVariableNamesInParameters($entity);
+        $variableNameMap = [];
+        foreach ($variableNameList as $variableName) {
+            $newVarName = $this->copyVariableByNameIfNoEquivalent($variableName, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationVersion);
+            // This might be empty if it's a preconfigured variable and doesn't exist in the DB. So, just skip it
+            if (empty($newVarName)) {
+                continue;
+            }
+
+            // Update the references in parameters with the new variable name
+            $entity['parameters'] = $this->replaceVariableNameInParameters($entity, $variableName, $newVarName);
+
+            // Map out the original name to the new one
+            $variableNameMap[$variableName] = $newVarName;
+        }
+
+        // If the entity is not a trigger, we're done
+        if (empty($entity['idtrigger']) || !is_array($entity['conditions'])) {
+            return;
+        }
+
+        // If the entity is a trigger, copy any variables in its conditions
+        foreach ($entity['conditions'] as $index => $condition) {
+            if (empty($condition['actual'])) {
+                continue;
+            }
+
+            // If the variable was already copied above, simply use the name of the new variable copy
+            if (in_array($condition['actual'], $variableNameList)) {
+                $entity['conditions'][$index]['actual'] = $variableNameMap[$condition['actual']];
+                continue;
+            }
+
+            $newVarName = $this->copyVariableByNameIfNoEquivalent($condition['actual'], $idSite, $idContainerVersion, $idDestinationSite, $idDestinationVersion);
+            // This might be empty if it's a preconfigured variable and doesn't exist in the DB. So, just skip it
+            if (empty($newVarName)) {
+                continue;
+            }
+
+            // Replace the old variable name with the new one
+            $entity['conditions'][$index]['actual'] = $newVarName;
+        }
+    }
+
+    /**
+     * Make a copy of the variable and return the ID.
+     *
+     * @param int $idSite
+     * @param int $idContainerVersion
+     * @param int $idVariable
+     * @param null|int $idDestinationSite Optional ID of the site to which to copy the variable. If empty, isSite is used
+     * @param string|null $idDestinationContainer Optional ID of the container to copy the variable to. If not provided
+     * the copy goes to the source site and container
+     * @return int ID of the newly created variable
+     */
+    public function copyVariable(int $idSite, int $idContainerVersion, int $idVariable, ?int $idDestinationSite = 0, ?string $idDestinationContainer = null): int
+    {
+        $idDestinationSite = $idDestinationSite ?: $idSite;
+        $idDestinationVersion = $idContainerVersion;
+        if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
+            $idDestinationVersion = $this->getDraftContainerVersion($idDestinationSite, $idDestinationContainer);
+        }
+
+        $variable = $this->getContainerVariable($idSite, $idContainerVersion, $idVariable);
+        $newVarName = $this->dao->makeCopyNameUnique($idDestinationSite, $variable['name'], $idDestinationVersion);
+
+        $this->copyReferencedVariables($variable, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationVersion);
+        $this->postCopyVariableActivity($idSite, $idDestinationSite, $idContainerVersion, null, $idDestinationContainer, $variable);
+
+        return $this->addContainerVariable(
+            $idDestinationSite,
+            $idDestinationVersion,
+            $variable['type'],
+            $newVarName,
+            $variable['parameters'],
+            $variable['default_value'],
+            $variable['lookup_table'],
+            $variable['description']
+        );
+    }
+
+    private function copyVariableByNameIfNoEquivalent(string $variableName, int $idSite, int $idContainerVersion, int $idDestinationSite, int $idDestinationContainerVersion): string
+    {
+        $variable = $this->findVariableByName($idSite, $idContainerVersion, $variableName);
+        // This might be empty if it's a preconfigured variable and doesn't exist in the DB. So, just skip it
+        if (empty($variable)) {
+            return '';
+        }
+
+        // If the site and container version are the same, we already know that the variable exists, so return its name
+        if ($idSite === $idDestinationSite && $idContainerVersion === $idDestinationContainerVersion) {
+            return $variableName;
+        }
+
+        // If no variable with that name is found, call the method to make a copy
+        $existingVariable = $this->findVariableByName($idDestinationSite, $idDestinationContainerVersion, $variableName);
+        if (empty($existingVariable)) {
+            return $this->copyVariableByName($variable, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationContainerVersion);
+        }
+
+        // If a duplicate variable already exists in the destination container, just use that variable
+        if (
+            $variable['type'] === $existingVariable['type']
+            && $variable['parameters'] == $existingVariable['parameters']
+            && $variable['lookup_table'] == $existingVariable['lookup_table']
+            && $variable['default_value'] == $existingVariable['default_value']
+        ) {
+            return $variableName;
+        }
+
+        // Since no existing duplicate was found, make a copy of the variable
+        return $this->copyVariableByName($variable, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationContainerVersion);
+    }
+
+    private function copyVariableByName(array $variable, int $idSite, int $idContainerVersion, int $idDestinationSite, int $idDestinationContainerVersion): string
+    {
+        if (
+            empty($variable)
+            || empty($variable['type'])
+            || empty($variable['name'])
+            || empty($variable['parameters'])
+            || !isset($variable['default_value'])
+            || !isset($variable['lookup_table'])
+            || !isset($variable['description'])
+        ) {
+            throw new \Exception('Variable name cannot be empty');
+        }
+
+        $this->copyReferencedVariables($variable, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationContainerVersion);
+
+        // Insert the new variable
+        $newVarName = $this->dao->makeCopyNameUnique($idDestinationSite, $variable['name'], $idDestinationContainerVersion);
+        $this->addContainerVariable(
+            $idDestinationSite,
+            $idDestinationContainerVersion,
+            $variable['type'],
+            $newVarName,
+            $variable['parameters'],
+            $variable['default_value'],
+            $variable['lookup_table'],
+            $variable['description']
+        );
+
+        $this->postCopyVariableActivity($idSite, $idDestinationSite, $idContainerVersion, $idDestinationContainerVersion, null, $variable);
+
+        return $newVarName;
     }
 
     private function updateVariableColumns($idSite, $idContainerVersion, $idVariable, $columns)
@@ -374,5 +592,27 @@ class Variable extends BaseModel
         return $variable;
     }
 
+    private function postCopyVariableActivity(int $idSite, int $idDestinationSite, int $idContainerVersion, ?int $idDestinationContainerVersion, ?string $idDestinationContainer, array $variable)
+    {
+        if (class_exists('\Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData')) {
+            $additionalData = [
+                'idSite' => $idSite,
+                'idDestinationSites' => $idDestinationSite,
+                'idContainerVersion' => $idContainerVersion,
+                'idDestinationContainer' => $idDestinationContainer,
+                'idDestinationContainerVersion' => $idDestinationContainerVersion,
+                'idVariable' => $variable['idvariable'],
+            ];
+            (
+            new \Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData(
+                'TagManager_Variable',
+                $variable['name'],
+                $variable['idvariable'],
+                $idSite,
+                [$idDestinationSite],
+                $additionalData
+            )
+            )->postActivityEvent();
+        }
+    }
 }
-

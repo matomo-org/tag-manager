@@ -4,6 +4,8 @@
         "CategoryCustom": "دڵخواز",
         "CategoryDate": "ڕێکەوت",
         "CategoryErrors": "هەڵەکان",
-        "CreatedDate": "ڕێکەوتی دروستبوون"
+        "CreatedDate": "ڕێکەوتی دروستبوون",
+        "MatomoConfigurationMatomoJsEndpointCustom": "دڵخواز",
+        "MatomoConfigurationMatomoTrackingEndpointCustom": "دڵخواز"
     }
 }

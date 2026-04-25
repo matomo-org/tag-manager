@@ -26,6 +26,14 @@
             <a @click="contentTab = 'logs'">Logs</a>
           </li>
           <li class="pull-right">
+            <a id="mtmCloseDebug"
+               @click="mtmCloseDebugWindow()">
+              <svg class="tm-icon tm-icon-close">
+                <use xlink:href="#tm-icon-close"></use>
+              </svg>
+            </a>
+          </li>
+          <li class="pull-right">
             <a id="mtmUpdateDebugPosition"
                @click="mtmUpdateDebugPosition()">{{ positionText }}</a>
           </li>
@@ -45,6 +53,23 @@
           <path d="M27 4l-15 15-7-7-5 5 12 12 20-20z"></path>
         </symbol>
       </defs>
+    </svg>
+
+    <svg
+      aria-hidden="true"
+      style="position: absolute; width: 0; height: 0; overflow: hidden;"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+      <symbol id="tm-icon-close" viewBox="0 0 32 32">
+        <path
+          d="M31.33 0.67c0.893 0.893 0.893 2.34 0 3.232l-27.427 27.427c-0.893 0.893-2.34
+          0.893-3.232 0s-0.893-2.34 0-3.232l27.427-27.427c0.892-0.893 2.34-0.893 3.232 0z"></path>
+        <path
+          d="M0.67 0.67c0.893-0.893 2.34-0.893 3.232 0l27.427 27.427c0.893 0.892 0.893
+          2.34 0 3.232s-2.34 0.892-3.232 0l-27.427-27.427c-0.893-0.893-0.893-2.34 0-3.232z"></path>
+      </symbol>
     </svg>
 
     <div class="page" style="clear:both;">
@@ -345,6 +370,12 @@ export default defineComponent({
         this.positionText = stickyTextTop;
         iframe!.classList.remove('mtmStickyTop');
         iframe!.classList.add('mtmStickyBottom');
+      }
+    },
+    mtmCloseDebugWindow() {
+      const iframe = window.parent.document.getElementById('mtmDebugFrame');
+      if (iframe) {
+        iframe.style.display = 'none';
       }
     },
     selectEvent(eventIndex: number) {

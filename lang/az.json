@@ -1,8 +1,32 @@
 {
     "TagManager": {
+        "BingUETTagIdTitle": "ŞV",
+        "BugsnagTagApiKeyTitle": "API açarı",
+        "BugsnagTagCollectUserIpTitle": "istifadəçi IP-sini topla",
         "CategoryClicks": "Tıklamalar",
         "CategoryDate": "Zaman",
         "CategoryErrors": "Xətalar",
+        "CustomHtmlHtmlPositionTitle": "Yerləşmə",
+        "CustomHtmlTagHelpText": "%1$sDaha ətraflı%2$s",
+        "CustomHtmlTagTitle": "Fərdi HTML",
+        "CustomImageTagSrcTitle": "Şəkil URL-i",
+        "EmarsysTagCommandCategoryTitleOptional": "Kateqoriya (istəyə bağlı)",
+        "EmarsysTagCommandGoTitle": "get",
+        "EtrackerTagAddToCartNumberDescription": "Səbətə əlavə olunan məhsul sayı",
+        "EtrackerTagAddToCartNumberTitle": "Nömrə",
+        "EtrackerTagFormDataTitle": "Forma Məlumatları",
+        "EtrackerTagFormNameTitle": "Forma Adı",
+        "EtrackerTagTrackingTypeTitle": "İzlənmə Növü",
+        "EtrackerTagTransactionBasketTitle": "Səbət",
+        "EtrackerTagTransactionCurrencyTitle": "Valyuta",
+        "EtrackerTagTransactionCustomerGroupTitle": "Müştəri Qrupu",
+        "EtrackerTagTransactionDeliveryConditionsTitle": "Çatdırılma Şərtləri",
+        "EtrackerTagTransactionValueDescription": "Sifarişin Dəyəri",
+        "EtrackerTagTransactionValueTitle": "Sifarişin Dəyəri",
+        "GoogleAnalyticsUniversalTagTrackingTypeTitle": "İzlənmə Növü",
+        "InvalidDebugUrlError": "Mali",
+        "LivezillaDynamicTagDomainTitle": "Livezilla Domeni",
+        "MatomoTagEcommerceViewPrice": "Qiymət",
         "PageUrlVariableName": "Sayfa Adresi"
     }
 }

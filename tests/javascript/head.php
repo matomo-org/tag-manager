@@ -72,7 +72,7 @@ function printTemplates($type)
             parameters = this.buildParameters(parameters);
             return new Template(parameters, window.MatomoTagManager);
         },
-        buildTag: function (tag, templates) {
+        buildTag: function (tag, templates, containerConfig) {
             if (!templates) {
                 templates = {};
             }
@@ -85,7 +85,10 @@ function printTemplates($type)
             if (!tag.type) {
                 tag.type = 'testTag';
             }
-            var container = this.buildContainer({}, templates);
+            if (!containerConfig) {
+                containerConfig = {};
+            }
+            var container = this.buildContainer(containerConfig, templates);
             return new window.MatomoTagManager.Tag(tag, container);
         },
         buildTrigger: function (trigger, templates) {

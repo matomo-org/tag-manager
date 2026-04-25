@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Trigger;
 
 use Piwik\Piwik;
@@ -29,6 +31,7 @@ class TimerTrigger extends BaseTrigger
         return array(
             $this->makeSetting('triggerInterval', 3000, FieldConfig::TYPE_INT, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_TimerTriggerTriggerIntervalTitle');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_TimerTriggerTriggerIntervalPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->validators[] = new NumberRange($min = 50);
             }),
@@ -40,9 +43,9 @@ class TimerTrigger extends BaseTrigger
             $this->makeSetting('triggerLimit', 0, FieldConfig::TYPE_INT, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_TimerTriggerTriggerLimitTitle');
                 $field->description = Piwik::translate('TagManager_TimerTriggerTriggerLimitDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_PlaceholderZero')];
                 $field->validators[] = new NumberRange($min = 0, $max = 900000);
             }),
         );
     }
-
 }

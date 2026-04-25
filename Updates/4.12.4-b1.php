@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -22,8 +23,8 @@ class Updates_4_12_4_b1 extends PiwikUpdates
     public function doUpdate(Updater $updater)
     {
         // Migrate the Matomo type tags to all include the newly configured field.
-        $migrator = new NewVariableParameterMigrator(MatomoConfigurationVariable::ID, 'customCookieTimeOutEnable',0);
-        $migrator->addField('customCookieTimeOut',393);
+        $migrator = new NewVariableParameterMigrator(MatomoConfigurationVariable::ID, 'customCookieTimeOutEnable', 0);
+        $migrator->addField('customCookieTimeOut', 393);
         $migrator->migrate(); // This kicks off the processing of the tag migration.
     }
 }

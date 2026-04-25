@@ -25,6 +25,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 7z,aac,apk,arc,arj,asf,asx,avi,azw3,bin,csv,deb,dm</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Comma separated list of file extensions which will be considered as a download.</description>
@@ -94,7 +95,7 @@
 				<description>Triggered as soon as the Tag Manager is executed within the page.</description>
 				<category>Pageview</category>
 				<icon>plugins/TagManager/images/icons/pageview.svg</icon>
-				<help />
+				<help>Triggered whenever a user visits a new page or reloads the current page. You can restrict this trigger by specifying conditions to control when tracking occurs.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -131,7 +132,7 @@
 				<description>Triggered when a specific element becomes visible.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/icons/show.svg</icon>
-				<help />
+				<help>Triggered when a specified element becomes visible in the user's viewport. Identify the element using its element ID or a CSS selector. Optionally, enable tracking for dynamic DOM elements to ensure the trigger works for elements added or modified after the page loads.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -166,6 +167,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. #submitOrderBtnId</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>A CSS selector allows you to select an element by id, className, element names, etc. If multiple elements match this selector, the first matching element will be used to get the value from. Examples for valid selectors are &quot;.classname&quot;, &quot;#id&quot; or &quot;li a&quot;.</description>
@@ -182,6 +184,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. submitOrderBtnId</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The id attribute specifies a unique id for an HTML element. Insert here the value of an ID attribute of any element within your website.</description>
@@ -218,6 +221,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 50</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description />
@@ -266,7 +270,7 @@
 				<description>Triggered when the window goes into or leaves full screen.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/icons/fullscreen.svg</icon>
-				<help />
+				<help>Triggered when a user enters or exits full-screen mode on your website. Configure this trigger to activate exclusively on entry, on exit, or for both actions, depending on your tracking needs.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -302,6 +306,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 0</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Enter &quot;0&quot; to trigger it each time the event occurs</description>
@@ -318,7 +323,7 @@
 				<description>Triggered when the current URL changes.</description>
 				<category>User Engagement</category>
 				<icon>plugins/TagManager/images/defaultIcon.svg</icon>
-				<help />
+				<help>Triggered when the browser's history changes, such as navigating in a single-page application (SPA) or updating the URL without a full page reload. Track virtual pageviews and monitor user interactions in dynamic web environments.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -437,6 +442,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Enter &quot;0&quot; to not limit how often the trigger should be triggered</description>
@@ -510,7 +516,7 @@
 				<description>Triggered when a JavaScript error happens.</description>
 				<category>Others</category>
 				<icon>plugins/TagManager/images/icons/error.svg</icon>
-				<help />
+				<help>Triggered when a JavaScript error occurs on the webpage. You can specify conditions to narrow down error tracking.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -542,6 +548,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 3000</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description />
@@ -578,6 +585,7 @@
 						<type>integer</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 0</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Enter &quot;0&quot; to not limit the trigger.</description>

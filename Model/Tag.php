@@ -1,12 +1,15 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Model;
 
+use Piwik\Container\StaticContainer;
 use Piwik\Date;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
@@ -22,10 +25,10 @@ use Piwik\Validators\WhitelistedValue;
 
 class Tag extends BaseModel
 {
-    const FIRE_LIMIT_UNLIMITED = 'unlimited';
-    const FIRE_LIMIT_ONCE_IN_LIFETIME = 'once_lifetime';
-    const FIRE_LIMIT_ONCE_24_HOURS = 'once_24hours';
-    const FIRE_LIMIT_ONCE_PER_PAGE = 'once_page';
+    public const FIRE_LIMIT_UNLIMITED = 'unlimited';
+    public const FIRE_LIMIT_ONCE_IN_LIFETIME = 'once_lifetime';
+    public const FIRE_LIMIT_ONCE_24_HOURS = 'once_24hours';
+    public const FIRE_LIMIT_ONCE_PER_PAGE = 'once_page';
 
     /**
      * @var TagsDao
@@ -53,7 +56,7 @@ class Tag extends BaseModel
         ];
     }
 
-    public function addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description = '')
+    public function addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description = '', $status = '')
     {
         $this->validateValues($idSite, $name, $idContainerVersion, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate);
         $this->tagsProvider->checkIsValidTag($type);
@@ -61,7 +64,7 @@ class Tag extends BaseModel
 
         $createdDate = $this->getCurrentDateTime();
 
-        return $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description);
+        return $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description, $status);
     }
 
     private function validateValues($idSite, $name, $idContainerVersion, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate)
@@ -125,7 +128,7 @@ class Tag extends BaseModel
         if (!empty($tag)) {
             $parameters = $this->formatParameters($tag['type'], $parameters);
             $this->updateTagColumns($idSite, $idContainerVersion, $idTag, array(
-                'parameters' => $parameters
+                'parameters' => $parameters,
             ));
         }
     }
@@ -164,10 +167,109 @@ class Tag extends BaseModel
         $this->dao->deleteContainerTag($idSite, $idContainerVersion, $idTag, $this->getCurrentDateTime());
     }
 
+    public function pauseContainerTag($idSite, $idContainerVersion, $idTag)
+    {
+        $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+    }
+
+    public function resumeContainerTag($idSite, $idContainerVersion, $idTag)
+    {
+        $this->dao->resumeContainerTag($idSite, $idContainerVersion, $idTag);
+    }
+
     public function getContainerTag($idSite, $idContainerVersion, $idTag)
     {
         $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
         return $this->enrichTag($tag);
+    }
+
+    /**
+     * Make a copy of a tag. This can either be within the same container or to a different site/container. If within
+     *  the same container, only the tag is copied and it uses the same triggers and variables. If it's going to a
+     *  different container, it will make copies of all the triggers and variables that the tag references so that the
+     *  copy will have the same triggers and variables available.
+     *
+     * @param int $idSite
+     * @param int $idContainerVersion
+     * @param int $idTag ID of the tag to make a copy of
+     * @param int|null $idDestinationSite Optional ID of the site to copy to the tag to. If not provided the copy goes
+     * to the source site and container
+     * @param string|null $idDestinationContainer Optional ID of the container to copy the tag to. If not provided the
+     * copy goes to the source site and container
+     * @return int ID of the newly created Tag
+     * @throws \Exception
+     */
+    public function copyTag(int $idSite, int $idContainerVersion, int $idTag, ?int $idDestinationSite = null, ?string $idDestinationContainer = null): int
+    {
+        $tag = $this->getContainerTag($idSite, $idContainerVersion, $idTag);
+
+        $idDestinationVersion = $idContainerVersion;
+        if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
+            $idDestinationVersion = $this->copyReferencedVariablesAndTriggers($tag, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationContainer);
+        }
+        // If the destination site isn't set, simply use the source site
+        $idDestinationSite = $idDestinationSite ?? $idSite;
+
+        $newName = $this->dao->makeCopyNameUnique($idDestinationSite, $tag['name'], $idDestinationVersion);
+
+        if (class_exists('\Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData')) {
+            $additionalData = [
+                'idSite' => $idSite,
+                'idDestinationSites' => $idDestinationSite,
+                'idContainerVersion' => $idContainerVersion,
+                'idDestinationContainer' => $idDestinationContainer,
+                'idTag' => $idTag,
+            ];
+            (
+                new \Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData(
+                    'TagManager_Tag',
+                    $tag['name'],
+                    $idTag,
+                    $idSite,
+                    [$idDestinationSite],
+                    $additionalData
+                )
+            )->postActivityEvent();
+        }
+
+        return $this->addContainerTag(
+            $idDestinationSite,
+            $idDestinationVersion,
+            $tag['type'],
+            $newName,
+            $tag['parameters'],
+            $tag['fire_trigger_ids'],
+            $tag['block_trigger_ids'],
+            $tag['fire_limit'],
+            $tag['fire_delay'],
+            $tag['priority'],
+            $tag['start_date'],
+            $tag['end_date'],
+            $tag['description'],
+            $tag['status']
+        );
+    }
+
+    private function copyReferencedVariablesAndTriggers(array &$tag, int $idSite, int $idContainerVersion, int $idDestinationSite, string $idDestinationContainer): int
+    {
+        $idDestinationVersion = $this->getDraftContainerVersion($idDestinationSite, $idDestinationContainer);
+
+        // Copy all the referenced variables and triggers and replace those references with references to the newly copied ones
+        StaticContainer::get(Variable::class)->copyReferencedVariables($tag, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationVersion);
+        $tag['fire_trigger_ids'] = $this->copyReferencedTriggers($idSite, $idContainerVersion, $tag['fire_trigger_ids'], $idDestinationSite, $idDestinationVersion);
+        $tag['block_trigger_ids'] = $this->copyReferencedTriggers($idSite, $idContainerVersion, $tag['block_trigger_ids'], $idDestinationSite, $idDestinationVersion);
+
+        return $idDestinationVersion;
+    }
+
+    private function copyReferencedTriggers(int $idSite, int $idContainerVersion, array $triggerIds, int $idDestinationSite, int $idDestinationVersion): array
+    {
+        $newTriggerIds = [];
+        foreach ($triggerIds as $triggerId) {
+            $newTriggerIds[] = StaticContainer::get(Trigger::class)->copyTriggerIfNoEquivalent($idSite, $idContainerVersion, $triggerId, $idDestinationSite, $idDestinationVersion);
+        }
+
+        return $newTriggerIds;
     }
 
     private function updateTagColumns($idSite, $idContainerVersion, $idTag, $columns)
@@ -223,6 +325,4 @@ class Tag extends BaseModel
 
         return $tag;
     }
-
 }
-

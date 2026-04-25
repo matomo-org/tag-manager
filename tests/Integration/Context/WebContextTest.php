@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -75,8 +76,14 @@ class WebContextTest extends IntegrationTestCase
         }
 
         $idContainerVersion = $this->getContainerDraftVersion($idContainer);
-        $this->api->addContainerVariable($this->idSite, $idContainer, $idContainerVersion, MatomoConfigurationVariable::ID, 'MyVar',
-            ['matomoUrl' => 'https://matomo.org{{MyVar}}', 'idSite' => $this->idSite]);
+        $this->api->addContainerVariable(
+            $this->idSite,
+            $idContainer,
+            $idContainerVersion,
+            MatomoConfigurationVariable::ID,
+            'MyVar',
+            ['matomoUrl' => 'https://matomo.org{{MyVar}}', 'idSite' => $this->idSite]
+        );
 
         return $idContainer;
     }
@@ -111,7 +118,6 @@ class WebContextTest extends IntegrationTestCase
         try {
             $this->setupContainerWithRecursion($enablePreviewMode = false);
         } catch (EntityRecursionException $e) {
-
             $dao = new VariablesDao();
             $var = $dao->getAllVariables();
             $this->assertEquals('deleted', $var[0]['status']);
@@ -127,15 +133,25 @@ class WebContextTest extends IntegrationTestCase
     {
         $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
         $idContainerVersion = $this->getContainerDraftVersion($idContainer);
-        $idVariable = $this->api->addContainerVariable($this->idSite, $idContainer, $idContainerVersion, MatomoConfigurationVariable::ID, 'MyVar',
-            ['matomoUrl' => 'https://matomo.org', 'idSite' => $this->idSite]);
+        $idVariable = $this->api->addContainerVariable(
+            $this->idSite,
+            $idContainer,
+            $idContainerVersion,
+            MatomoConfigurationVariable::ID,
+            'MyVar',
+            ['matomoUrl' => 'https://matomo.org', 'idSite' => $this->idSite]
+        );
 
         try {
-
-            $this->api->updateContainerVariable($this->idSite, $idContainer, $idContainerVersion, $idVariable,
-                'MyVar2', ['matomoUrl' => 'https://matomo.org{{MyVar2}}', 'idSite' => $this->idSite]);
+            $this->api->updateContainerVariable(
+                $this->idSite,
+                $idContainer,
+                $idContainerVersion,
+                $idVariable,
+                'MyVar2',
+                ['matomoUrl' => 'https://matomo.org{{MyVar2}}', 'idSite' => $this->idSite]
+            );
         } catch (EntityRecursionException $e) {
-
             $dao = new VariablesDao();
             $var = $dao->getAllVariables();
             $this->assertEquals('active', $var[0]['status']);
@@ -147,5 +163,4 @@ class WebContextTest extends IntegrationTestCase
 
         $this->fail('An expected exception has not been thrown');
     }
-
 }

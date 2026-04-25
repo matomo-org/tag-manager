@@ -12,6 +12,16 @@
       :help-text="triggersHelpText"
     >
       <p>{{ translate('TagManager_TriggerUsageBenefits') }}</p>
+      <div class="triggerSearchFilter">
+        <Field
+          uicontrol="text"
+          name="triggerSearch"
+          :title="translate('General_Search')"
+          v-show="triggers.length > 0"
+          v-model="triggerSearch"
+        >
+        </Field>
+      </div>
       <table v-content-table>
         <thead>
           <tr>
@@ -57,12 +67,12 @@
             v-for="trigger in sortedTriggers"
             :key="trigger.idtrigger"
           >
-            <td class="name">{{ trigger.name }}</td>
+            <td class="name" :title="trigger.name">{{ truncateText(trigger.name, 50) }}</td>
             <td
               class="description"
               :title="trigger.description"
             >
-              {{ truncateText(trigger.description, 30) }}
+              {{ truncateText(trigger.description, 75) }}
             </td>
             <td
               class="type"
@@ -81,7 +91,7 @@
               <span>{{ trigger.updated_date_pretty }}</span>
             </td>
             <td
-              class="action"
+              :class="getActionClasses"
               v-show="hasWriteAccess"
             >
               <a
@@ -90,6 +100,16 @@
                 :title="translate('TagManager_EditTrigger')"
               />
               <a
+                class="table-action icon-content-copy"
+                v-show="hasPublishCapability()"
+                @click="openCopyDialog(trigger)"
+                :title="translate(
+                  'TagManager_CopyX',
+                  translate('TagManager_Trigger'),
+                )"
+              />
+              <a
+                v-show="!trigger.typeMetadata?.isCustomTemplate || canUseCustomTemplates"
                 class="table-action icon-delete"
                 @click="deleteTrigger(trigger)"
                 :title="translate('TagManager_DeleteX', translate('TagManager_Trigger'))"
@@ -160,14 +180,18 @@ import {
   AjaxHelper,
   Matomo,
   ContentBlock,
-  ContentTable, MatomoUrl,
+  ContentTable,
+  MatomoUrl,
+  NotificationsStore,
 } from 'CoreHome';
+import { Field } from 'CorePluginsAdmin';
 import TriggersStore from './Triggers.store';
-import { TriggerReference, Trigger } from '../types';
+import { TriggerReference, Trigger, TriggerType } from '../types';
 
 interface TriggerListState {
   hasWriteAccess: boolean;
   triggerReferences: TriggerReference[];
+  triggerSearch: string;
 }
 
 const { tagManagerHelper } = window;
@@ -185,6 +209,7 @@ export default defineComponent({
     triggersHelpText: String,
   },
   components: {
+    Field,
     ContentBlock,
   },
   directives: {
@@ -194,6 +219,7 @@ export default defineComponent({
     return {
       hasWriteAccess: Matomo.hasUserCapability('tagmanager_write'),
       triggerReferences: [],
+      triggerSearch: '',
     };
   },
   created() {
@@ -226,6 +252,7 @@ export default defineComponent({
               trigger.idtrigger!,
             ).then(() => {
               TriggersStore.reload(this.idContainer, this.idContainerVersion);
+              NotificationsStore.remove('CopyDialogResultNotification');
             });
           };
 
@@ -241,6 +268,20 @@ export default defineComponent({
     truncateText(text: string, length: number) {
       return tagManagerHelper.truncateText(text, length);
     },
+    hasPublishCapability() {
+      return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
+    openCopyDialog(trigger: Trigger) {
+      const url = MatomoUrl.stringify({
+        module: 'TagManager',
+        action: 'copyTriggerDialog',
+        idSite: trigger.idsite,
+        idContainer: this.idContainer,
+        idTrigger: trigger.idtrigger,
+        idContainerVersion: this.idContainerVersion,
+      });
+      window.Piwik_Popover.createPopupAndLoadUrl(url, '', 'mtmCopyTrigger');
+    },
   },
   computed: {
     isLoading() {
@@ -253,14 +294,30 @@ export default defineComponent({
       return TriggersStore.triggers.value;
     },
     sortedTriggers() {
-      const sorted = [...this.triggers];
-      sorted.sort((lhs, rhs) => {
+      const searchFilter = this.triggerSearch.toLowerCase();
+      // look through string properties of triggers for values that have searchFilter in them
+      // (mimics angularjs filter() filter)
+      const result = [...this.triggers].filter((h) => Object.keys(h).some((propName) => {
+        const entity = h as unknown as Record<string, unknown>;
+        let propValue = '';
+        if (typeof entity[propName] === 'string') {
+          propValue = (entity[propName] as string);
+        } else if (propName === 'typeMetadata') {
+          const propTypeMeta = (entity.typeMetadata as TriggerType);
+          propValue = (propTypeMeta.name as string);
+        } else if (propName === 'parameters' && entity.type === 'CustomEvent') {
+          const propTypeParameters = (entity.parameters as Record<string, unknown>);
+          propValue = (propTypeParameters.eventName as string);
+        }
+        return propValue.toLowerCase().indexOf(searchFilter) !== -1;
+      }));
+      result.sort((lhs, rhs) => {
         if (lhs.name < rhs.name) {
           return -1;
         }
         return lhs.name > rhs.name ? 1 : 0;
       });
-      return sorted;
+      return result;
     },
     nameTranslatedText(): string {
       return this.translate('TagManager_TriggersNameDescription');
@@ -279,6 +336,13 @@ export default defineComponent({
     },
     actionTranslatedText(): string {
       return this.translate('TagManager_TriggersActionDescription');
+    },
+    getActionClasses(): string {
+      const copyClass = this.hasPublishCapability() ? ' hasCopyAction' : '';
+      return `action${copyClass}`;
+    },
+    canUseCustomTemplates() {
+      return Matomo.hasUserCapability('tagmanager_use_custom_templates');
     },
   },
 });

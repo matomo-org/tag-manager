@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Dao;
 
 use Piwik\Common;
@@ -71,7 +73,8 @@ class ContainerReleaseDao extends BaseDao implements TagManagerDao
         $sql = "SELECT crd.idcontainer, crd.idsite 
                 FROM $table crd 
                 LEFT JOIN $containerTable conr ON crd.idcontainer = conr.idcontainer 
-                WHERE conr.`status` = ? and crd.`status` = ? group by crd.idsite, crd.idcontainer";
+                WHERE conr.`status` = ? and crd.`status` = ? group by crd.idsite, crd.idcontainer
+                                                             order by crd.idsite, crd.idcontainer";
 
         $containers = Db::fetchAll($sql, array(self::STATUS_ACTIVE, self::STATUS_ACTIVE));
 
@@ -165,6 +168,12 @@ class ContainerReleaseDao extends BaseDao implements TagManagerDao
         return $query->rowCount();
     }
 
+    protected function isNameAlreadyUsed(int $idSite, string $name, ?int $idContainerVersion = null): bool
+    {
+        // This is hard coded since releases don't have a name and therefore don't use this method
+        return true;
+    }
+
     private function enrichReleases($releases)
     {
         if (empty($releases)) {
@@ -191,4 +200,3 @@ class ContainerReleaseDao extends BaseDao implements TagManagerDao
         return $release;
     }
 }
-

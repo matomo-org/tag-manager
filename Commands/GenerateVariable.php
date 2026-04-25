@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -36,7 +37,7 @@ class GenerateVariable extends GeneratePluginBase
         $replace        = array(
             'TagManager' => $pluginName,
             'Url' => $variableId,
-            'Piwik\Plugins\\' .$pluginName. '\Template\Variable\BaseVariable' => 'Piwik\Plugins\TagManager\Template\Variable\BaseVariable',
+            'Piwik\Plugins\\' . $pluginName . '\Template\Variable\BaseVariable' => 'Piwik\Plugins\TagManager\Template\Variable\BaseVariable',
             'parameters, ' . $pluginName => 'parameters, TagManager'
         );
         $whitelistFiles = array(
@@ -103,5 +104,4 @@ class GenerateVariable extends GeneratePluginBase
 
         return $this->askPluginNameAndValidate($pluginNames, $invalidName);
     }
-
 }

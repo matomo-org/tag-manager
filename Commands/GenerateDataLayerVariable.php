@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -42,7 +43,7 @@ class GenerateDataLayerVariable extends GeneratePluginBase
             '/Template/Variable',
             '/Template/Variable/PreConfigured',
             '/Template/Variable/PreConfigured/ClickIdVariable.php',
-            'use Piwik\Plugins\\' .$pluginName => 'use Piwik\Plugins\TagManager'
+            'use Piwik\Plugins\\' . $pluginName => 'use Piwik\Plugins\TagManager'
         );
 
         $this->copyTemplateToPlugin($exampleFolder, $pluginName, $replace, $whitelistFiles);
@@ -98,5 +99,4 @@ class GenerateDataLayerVariable extends GeneratePluginBase
 
         return $this->askPluginNameAndValidate($pluginNames, $invalidName);
     }
-
 }

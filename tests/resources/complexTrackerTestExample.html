@@ -1,0 +1,62 @@
+<html>
+<head>
+    <script type="text/javascript">
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PreMtmLoaded', 1]);
+        _paq.push(['trackGoal', 1, 11.11]);
+    </script>
+    <!-- Matomo Tag Manager  TODO - Replace this with your own MTM container snippet -->
+    <script>
+        var _mtm = window._mtm = window._mtm || [];
+        _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+        (function() {
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src='https://matomo.com/js/container_vVLHATh6.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Tag Manager -->
+    <script type="text/javascript">
+        // Manually track a goal
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['trackGoal', 1, 22.22]);
+        _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'PostMtmLoaded', 2]);
+        _paq.push(['setCustomDimension', 1, 'first']);
+    </script>
+    <script type="text/javascript">
+        _paq.push(['trackGoal', 1, 33.33]);
+        _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'CustomEvent3', 3]);
+    </script>
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['setCustomDimension', 2, 'second']);
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        _paq.push(['trackGoal', 1, 44.44]);
+    </script>
+    <!-- End Matomo Code -->
+    <script type="text/javascript">
+        _paq.push(['setCustomDimension', 3, 'third']);
+        _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'CustomEvent4', 4]);
+        _paq.push(['trackGoal', 1, 55.55]);
+        _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'CustomEvent5', 5]);
+        _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'CustomEvent6', 6]);
+        _paq.push(['trackGoal', 1, 66.66]);
+        setTimeout(function () {
+            _paq.push(['trackEvent', 'MyCategory', 'MyAction', 'CustomEvent7', 7]);
+            _paq.push(['trackGoal', 1, 77.77]);
+        }, 1000);
+    </script>
+</head>
+<body>
+<div class="main-div">
+    <h1 class="site-title">Hello World!</h1>
+</div>
+<div><button type="button" onclick="_paq.push(['trackEvent', 'MyButtonCategory', 'MyButtonAction', 'Button1', 1]);">Test Button 1</button></div>
+<div><button type="button" onclick="_paq.push(['trackEvent', 'MyButtonCategory', 'MyButtonAction', 'Button2', 2]);">Test Button 2</button></div>
+<div><button type="button" onclick="_paq.push(['trackEvent', 'MyButtonCategory', 'MyButtonAction', 'Button3', 3]);">Test Button 3</button></div>
+<div><button type="button" onclick="_paq.push(['trackEvent', 'MyButtonCategory', 'MyButtonAction', 'Button4', 4]);">Test Button 4</button></div>
+<div><button type="button" onclick="_paq.push(['trackEvent', 'MyButtonCategory', 'MyButtonAction', 'Button5', 5]);">Test Button 5</button></div>
+</body>
+</html>

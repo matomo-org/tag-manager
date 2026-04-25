@@ -118,6 +118,9 @@ class ContainersStore {
       {
         name: container.name,
         description: container.description,
+        ignoreGtmDataLayer: container.ignoreGtmDataLayer,
+        activelySyncGtmDataLayer: container.activelySyncGtmDataLayer,
+        isTagFireLimitAllowedInPreviewMode: container.isTagFireLimitAllowedInPreviewMode,
         context: container.context,
       },
       { withTokenInUrl: true },

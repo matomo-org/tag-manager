@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -65,5 +66,4 @@ class SaltTest extends IntegrationTestCase
         $salt3 = $this->salt->getSalt();
         $this->assertSame($salt3, $salt2);
     }
-
 }

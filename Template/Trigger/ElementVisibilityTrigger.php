@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Trigger;
 
 use Piwik\Piwik;
@@ -41,6 +43,7 @@ class ElementVisibilityTrigger extends BaseTrigger
             $this->makeSetting('cssSelector', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($selectionMethod) {
                 $field->title = Piwik::translate('TagManager_ElementVisibilityTriggerCssSelectorTitle');
                 $field->description = Piwik::translate('TagManager_ElementVisibilityTriggerCssSelectorDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_ElementVisibilityTriggerCssSelectorPlaceholder')];
                 $field->condition = 'selectionMethod == "cssSelector"';
                 $field->validate = function ($value) use ($selectionMethod, $field) {
                     if ($selectionMethod->getValue() === 'cssSelector' && empty($value)) {
@@ -51,6 +54,7 @@ class ElementVisibilityTrigger extends BaseTrigger
             $this->makeSetting('elementId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) use ($selectionMethod) {
                 $field->title = Piwik::translate('TagManager_ElementVisibilityTriggerElementIDTitle');
                 $field->description = Piwik::translate('TagManager_ElementVisibilityTriggerElementIDDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_ElementVisibilityTriggerElementIdPlaceholder')];
                 $field->condition = 'selectionMethod == "elementId"';
                 $field->validate = function ($value) use ($selectionMethod, $field) {
                     if ($selectionMethod->getValue() === 'elementId' && empty($value)) {
@@ -70,6 +74,7 @@ class ElementVisibilityTrigger extends BaseTrigger
             }),
             $this->makeSetting('minPercentVisible', 50, FieldConfig::TYPE_INT, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_ElementVisibilityTriggerMinPercentVisibleTitle');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_ElementVisibilityTriggerMinPercentVisiblePlaceholder')];
                 $field->validators[] = new NumberRange($min = 1, $max = 100);
             }),
             $this->makeSetting('observeDomChanges', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
@@ -79,5 +84,4 @@ class ElementVisibilityTrigger extends BaseTrigger
             }),
         );
     }
-
 }

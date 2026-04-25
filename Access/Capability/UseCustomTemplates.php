@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -6,6 +7,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  *
  */
+
 namespace Piwik\Plugins\TagManager\Access\Capability;
 
 use Piwik\Access\Capability;
@@ -14,7 +16,7 @@ use Piwik\Piwik;
 
 class UseCustomTemplates extends Capability
 {
-    const ID = 'tagmanager_use_custom_templates';
+    public const ID = 'tagmanager_use_custom_templates';
 
     public function getId(): string
     {

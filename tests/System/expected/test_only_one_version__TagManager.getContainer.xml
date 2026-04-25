@@ -5,6 +5,9 @@
 	<context>web</context>
 	<name>Container2</name>
 	<description>My container 2 description</description>
+	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
+	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	<status>active</status>
 	
 	
@@ -12,7 +15,7 @@
 	
 	<versions>
 		<row>
-			<idcontainerversion>6</idcontainerversion>
+			<idcontainerversion>8</idcontainerversion>
 			<idcontainer>aaacont2</idcontainer>
 			<idsite>2</idsite>
 			<status>active</status>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -21,6 +22,7 @@ use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\TagManager;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Trigger\CustomEventTrigger;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
 
@@ -116,7 +118,7 @@ class ContainerTest extends IntegrationTestCase
 
     public function test_addContainer()
     {
-        $idContainer = $this->addContainer($this->idSite,'My Name', 'My Description');
+        $idContainer = $this->addContainer($this->idSite, 'My Name', 'My Description');
         $this->assertNotEmpty($idContainer);
 
         $container = $this->model->getContainer($this->idSite, $idContainer);
@@ -127,6 +129,49 @@ class ContainerTest extends IntegrationTestCase
             'context' => WebContext::ID,
             'name' => 'My Name',
             'description' => 'My Description',
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'status' => ContainersDao::STATUS_ACTIVE,
+            'created_date' => $this->now,
+            'updated_date' => $this->now,
+            'created_date_pretty' => 'Jan 1, 2018 02:03:04',
+            'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
+            'versions' => array(),
+            'releases' => array(),
+            'draft' => array (
+                'idcontainerversion' => 2,
+                'idcontainer' => $idContainer,
+                'idsite' => $this->idSite,
+                'status' => ContainersDao::STATUS_ACTIVE,
+                'revision' => 0,
+                'name' => '',
+                'description' => '',
+                'created_date' => '2018-01-01 02:03:04',
+                'updated_date' => '2018-01-01 02:03:04',
+                'created_date_pretty' => 'Jan 1, 2018 02:03:04',
+                'updated_date_pretty' => 'Jan 1, 2018 02:03:04'
+            )
+        );
+        $this->assertSame($expected, $container);
+    }
+
+    public function test_addContainerIgnoreGtmDdataLayer()
+    {
+        $idContainer = $this->addContainer($this->idSite, 'My Name', 'My Description', null, 1, 1, 1);
+        $this->assertNotEmpty($idContainer);
+
+        $container = $this->model->getContainer($this->idSite, $idContainer);
+
+        $expected = array(
+            'idcontainer' => $idContainer,
+            'idsite' => $this->idSite,
+            'context' => WebContext::ID,
+            'name' => 'My Name',
+            'description' => 'My Description',
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
+            'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
             'updated_date' => $this->now,
@@ -153,7 +198,7 @@ class ContainerTest extends IntegrationTestCase
 
     public function test_addContainer_generatesRandomContainerIds()
     {
-        $idContainer1 = $this->addContainer($this->idSite,'My Name', 'My Description');
+        $idContainer1 = $this->addContainer($this->idSite, 'My Name', 'My Description');
         $idContainer2 = $this->addContainer($this->idSite, 'foobar', 'my desc');
         $this->assertNotSame($idContainer1, $idContainer2);
         $this->assertSame(8, strlen($idContainer1));
@@ -199,6 +244,49 @@ class ContainerTest extends IntegrationTestCase
             'context' => WebContext::ID,
             'name' => 'MyUpdated Name',
             'description' => 'My Updated Description',
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'status' => ContainersDao::STATUS_ACTIVE,
+            'created_date' => $this->now,
+            'updated_date' => '2018-02-01 05:06:07',
+            'created_date_pretty' => 'Jan 1, 2018 02:03:04',
+            'updated_date_pretty' => 'Feb 1, 2018 05:06:07',
+            'versions' => array(),
+            'releases' => array(),
+            'draft' => array (
+                'idcontainerversion' => 1,
+                'idcontainer' => $this->idContainer1,
+                'idsite' => $this->idSite,
+                'status' => ContainersDao::STATUS_ACTIVE,
+                'revision' => 0,
+                'name' => '',
+                'description' => '',
+                'created_date' => '2018-01-01 02:03:04',
+                'updated_date' => '2018-01-01 02:03:04',
+                'created_date_pretty' => 'Jan 1, 2018 02:03:04',
+                'updated_date_pretty' => 'Jan 1, 2018 02:03:04'
+            )
+        );
+        $this->assertSame($expected, $container);
+    }
+
+    public function test_updateContainerIgnoreGtmDataLayer()
+    {
+        $this->model->setCurrentDateTime('2018-02-01 05:06:07');
+        $this->updateContainer($this->idSite, $this->idContainer1, 'MyUpdated Name', 'My Updated Description', 1, 1);
+
+        $container = $this->model->getContainer($this->idSite, $this->idContainer1);
+
+        $expected = array(
+            'idcontainer' => $this->idContainer1,
+            'idsite' => $this->idSite,
+            'context' => WebContext::ID,
+            'name' => 'MyUpdated Name',
+            'description' => 'My Updated Description',
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 1 : '1',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
             'updated_date' => '2018-02-01 05:06:07',
@@ -265,6 +353,9 @@ class ContainerTest extends IntegrationTestCase
             'context' => 'web',
             'name' => 'Container1',
             'description' => '',
+            'ignoreGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'activelySyncGtmDataLayer' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
+            'isTagFireLimitAllowedInPreviewMode' => version_compare(PHP_VERSION, '8.0', '>=') ? 0 : '0',
             'status' => ContainersDao::STATUS_ACTIVE,
             'created_date' => $this->now,
             'updated_date' => $this->now,
@@ -433,7 +524,7 @@ class ContainerTest extends IntegrationTestCase
         $idContainer3 = $this->addContainer($this->idSite, 'name3');
         $this->addContainer($this->idSite2, 'name4');
         $this->addContainer($this->idSite2, 'name5');
-        $this->addContainer($this->idSite,'name6');
+        $this->addContainer($this->idSite, 'name6');
         $this->model->setCurrentDateTime('2019-03-04 03:03:03');
 
         $this->assertCount(4, $this->model->getContainers($this->idSite));
@@ -490,7 +581,7 @@ class ContainerTest extends IntegrationTestCase
         $this->expectException(\Piwik\Validators\Exception::class);
         $this->expectExceptionMessage('Description: The value contains');
 
-        $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'name',  str_pad('4', Description::MAX_LENGTH + 1));
+        $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'name', str_pad('4', Description::MAX_LENGTH + 1));
     }
 
     public function test_createContainerVersion_invalidContainer()
@@ -907,7 +998,7 @@ class ContainerTest extends IntegrationTestCase
         $this->assertNotEmpty($instructions[0]['description']);
         $this->assertNotEmpty($instructions[0]['helpUrl']);
         $this->assertNotEmpty($instructions[0]['embedCode']);
-        self::assertStringContainsString(StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1. '.js', $instructions[0]['embedCode']);
+        self::assertStringContainsString(StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '.js', $instructions[0]['embedCode']);
     }
 
     public function test_getAllReleasedContainers_noReleases()
@@ -1151,11 +1242,128 @@ class ContainerTest extends IntegrationTestCase
     public function test_generateContainer_generatesContent()
     {
         $this->addContainerTrigger($this->idSite, $this->idContainer1draft);
+        $this->addContainerVariable($this->idSite, $this->idContainer1draft, 'Macros Pre Configured', 'Macros Pre Configured Description');
         $this->model->enablePreviewMode($this->idSite, $this->idContainer1, $this->idContainer1draft, 'foo');
         $result = $this->model->generateContainer($this->idSite, $this->idContainer1);
-        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'.js']);
-        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir'). '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 .'_preview.js']);
+        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '.js']);
+        $this->assertNotEmpty($result[StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '_preview.js']);
+        $this->assertStringContainsString("TagManager.dataLayer.get('mtm.clickElement')", $result[StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '_preview.js']);
+        $this->assertStringContainsString("return TagManager.dataLayer.get('mtm.clickElement').getAttribute(\"my-attribute\");", $result[StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '_preview.js']);
+        $this->assertStringContainsString('return "not found";', $result[StaticContainer::get('TagManagerContainerStorageDir') . '/' . StaticContainer::get('TagManagerContainerFilesPrefix') . $this->idContainer1 . '_preview.js']);
         $this->assertCount(4, $result);
+    }
+
+    public function testCopyContainer()
+    {
+        $idContainer = $this->addContainer($this->idSite, 'My Name', 'My Description', null, 1, 1, 1);
+        $this->assertNotEmpty($idContainer);
+
+        $idContainerCopy = $this->model->copyContainer($this->idSite, $idContainer, $this->idSite);
+
+        $container = $this->model->getContainer($this->idSite, $idContainer);
+        $containerCopy = $this->model->getContainer($this->idSite, $idContainerCopy);
+
+        $this->assertNotEmpty($containerCopy['idcontainer']);
+        $this->assertNotSame($container['idcontainer'], $containerCopy['idcontainer']);
+        $this->assertNotSame($container['name'], $containerCopy['name']);
+        unset($container['idcontainer']);
+        unset($containerCopy['idcontainer']);
+        unset($container['name']);
+        unset($containerCopy['name']);
+        unset($container['draft']['idcontainer']);
+        unset($containerCopy['draft']['idcontainer']);
+        $this->assertGreaterThan(0, $containerCopy['draft']['idcontainerversion']);
+        unset($container['draft']['idcontainerversion']);
+        unset($containerCopy['draft']['idcontainerversion']);
+        $this->assertSame($container, $containerCopy);
+    }
+
+    public function testCopyContainerWithTagTriggerVariable()
+    {
+        $idContainer = $this->addContainer($this->idSite);
+        $this->assertNotEmpty($idContainer);
+
+        $container = $this->model->getContainer($this->idSite, $idContainer);
+        $this->assertGreaterThan(0, $container['draft']['idcontainerversion']);
+        $idContainerVersion = $container['draft']['idcontainerversion'];
+
+        // Add some tags to the container to be copied
+        $triggerId = $this->addContainerTrigger($this->idSite, $idContainerVersion);
+        $this->addContainerVariable($this->idSite, $idContainerVersion);
+        $this->addContainerTag($this->idSite, $idContainerVersion, 'My Test Tag', [$triggerId]);
+
+        $idContainerCopy = $this->model->copyContainer($this->idSite, $idContainer, $this->idSite);
+
+        $containerCopy = $this->model->getContainer($this->idSite, $idContainerCopy);
+        $this->assertNotEmpty($containerCopy['idcontainer']);
+        $this->assertNotSame($container['idcontainer'], $containerCopy['idcontainer']);
+        $this->assertNotSame($container['name'], $containerCopy['name']);
+        unset($container['idcontainer']);
+        unset($containerCopy['idcontainer']);
+        unset($container['name']);
+        unset($containerCopy['name']);
+        unset($container['draft']['idcontainer']);
+        unset($containerCopy['draft']['idcontainer']);
+        $idContainerCopyVersion = $containerCopy['draft']['idcontainerversion'];
+        $this->assertGreaterThan(0, $containerCopy['draft']['idcontainerversion']);
+        unset($container['draft']['idcontainerversion']);
+        unset($containerCopy['draft']['idcontainerversion']);
+        $this->assertSame($container, $containerCopy);
+
+        $trigger = StaticContainer::get('Piwik\Plugins\TagManager\Model\Trigger');
+        $copiedTriggers = $trigger->getContainerTriggers($this->idSite, $idContainerCopyVersion);
+        $this->assertCount(1, $copiedTriggers);
+        $variable = StaticContainer::get('Piwik\Plugins\TagManager\Model\Variable');
+        $copiedVariables = $variable->getContainerVariables($this->idSite, $idContainerCopyVersion);
+        $this->assertCount(1, $copiedVariables);
+        $tag = StaticContainer::get('Piwik\Plugins\TagManager\Model\Tag');
+        $copiedTags = $tag->getContainerTags($this->idSite, $idContainerCopyVersion);
+        $this->assertCount(1, $copiedTags);
+    }
+
+    public function testCopyContainerToDifferentSite()
+    {
+        $idContainer = $this->addContainer($this->idSite);
+        $this->assertNotEmpty($idContainer);
+
+        $container = $this->model->getContainer($this->idSite, $idContainer);
+        $this->assertGreaterThan(0, $container['draft']['idcontainerversion']);
+        $idContainerVersion = $container['draft']['idcontainerversion'];
+
+        // Add some tags to the container to be copied
+        $triggerId = $this->addContainerTrigger($this->idSite, $idContainerVersion);
+        $this->addContainerVariable($this->idSite, $idContainerVersion);
+        $this->addContainerTag($this->idSite, $idContainerVersion, 'My Test Tag', [$triggerId]);
+
+        $idContainerCopy = $this->model->copyContainer($this->idSite, $idContainer, $idDestinationSite = 2);
+
+        $containerCopy = $this->model->getContainer($idDestinationSite, $idContainerCopy);
+        $this->assertNotEmpty($containerCopy['idcontainer']);
+        $this->assertNotSame($container['idcontainer'], $containerCopy['idcontainer']);
+        $this->assertNotSame($container['idsite'], $containerCopy['idsite']);
+        unset($container['idcontainer']);
+        unset($containerCopy['idcontainer']);
+        unset($container['idsite']);
+        unset($containerCopy['idsite']);
+        unset($container['draft']['idcontainer']);
+        unset($containerCopy['draft']['idcontainer']);
+        unset($container['draft']['idsite']);
+        unset($containerCopy['draft']['idsite']);
+        $idContainerCopyVersion = $containerCopy['draft']['idcontainerversion'];
+        $this->assertGreaterThan(0, $containerCopy['draft']['idcontainerversion']);
+        unset($container['draft']['idcontainerversion']);
+        unset($containerCopy['draft']['idcontainerversion']);
+        $this->assertSame($container, $containerCopy);
+
+        $trigger = StaticContainer::get('Piwik\Plugins\TagManager\Model\Trigger');
+        $copiedTriggers = $trigger->getContainerTriggers($idDestinationSite, $idContainerCopyVersion);
+        $this->assertCount(1, $copiedTriggers);
+        $variable = StaticContainer::get('Piwik\Plugins\TagManager\Model\Variable');
+        $copiedVariables = $variable->getContainerVariables($idDestinationSite, $idContainerCopyVersion);
+        $this->assertCount(1, $copiedVariables);
+        $tag = StaticContainer::get('Piwik\Plugins\TagManager\Model\Tag');
+        $copiedTags = $tag->getContainerTags($idDestinationSite, $idContainerCopyVersion);
+        $this->assertCount(1, $copiedTags);
     }
 
     private function releaseNewVersion($idSite, $idContainer, $idContainerVersion, $versionName = 'v1', $environment = 'foobar')
@@ -1181,18 +1389,18 @@ class ContainerTest extends IntegrationTestCase
         return $this->model->updateContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
     }
 
-    private function addContainer($idSite, $name = 'My Name', $description = '', $context = null)
+    private function addContainer($idSite, $name = 'My Name', $description = '', $context = null, $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
     {
         if (!isset($context)) {
             $context = WebContext::ID;
         }
 
-        return $this->model->addContainer($idSite, $context, $name, $description);
+        return $this->model->addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
     }
 
-    private function updateContainer($idSite, $idContainer, $name = 'Updated Name', $description = '')
+    private function updateContainer($idSite, $idContainer, $name = 'Updated Name', $description = '', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
     {
-        return $this->model->updateContainer($idSite, $idContainer, $name, $description);
+        return $this->model->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
     }
 
     private function publishVersion($idSite, $idContainer, $idContainerVersion, $environment = null, $login = 'mylogin')
@@ -1200,7 +1408,7 @@ class ContainerTest extends IntegrationTestCase
         if (!isset($environment)) {
             $environment = Environment::ENVIRONMENT_LIVE;
         }
-        $this->model->publishVersion($idSite, $idContainer, $idContainerVersion,  $environment, $login);
+        $this->model->publishVersion($idSite, $idContainer, $idContainerVersion, $environment, $login);
     }
 
     private function addContainerTrigger($idSite, $idContainerVersion, $name = 'MyName')
@@ -1219,5 +1427,15 @@ class ContainerTest extends IntegrationTestCase
         $parameters = array('customHtml' => '<p></p>');
         $tag = StaticContainer::get('Piwik\Plugins\TagManager\Model\Tag');
         return $tag->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit = Tag::FIRE_LIMIT_UNLIMITED, $fireDelay = 0, $priority = 999, $startDate = null, $endDate = null);
+    }
+
+    private function addContainerVariable($idSite, $idContainerVersion, $name = 'MyName', $description = '')
+    {
+        $type = CustomJsFunctionVariable::ID;
+        $parameters = array('jsFunction' => 'function () { if ({{ClickElement}}) { return {{ClickElement}}.getAttribute("my-attribute"); } else { return "not found"; } };');
+        $conditions = array();
+
+        $variable = StaticContainer::get('Piwik\Plugins\TagManager\Model\Variable');
+        return $variable->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, false, [], $description);
     }
 }

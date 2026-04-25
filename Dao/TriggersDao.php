@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
-namespace Piwik\Plugins\TagManager\Dao;
 
+namespace Piwik\Plugins\TagManager\Dao;
 
 use Piwik\Db;
 use Piwik\DbHelper;
@@ -144,6 +145,24 @@ class TriggersDao extends BaseDao implements TagManagerDao
     }
 
     /**
+     * Look up the trigger using its name
+     *
+     * @param int $idSite
+     * @param int  $idContainerVersion
+     * @param string $triggerName
+     * @return array|false
+     * @throws \Exception
+     */
+    public function findTriggerByName(int $idSite, int $idContainerVersion, string $triggerName)
+    {
+        $table = $this->tablePrefixed;
+        $bind = array($idSite, $idContainerVersion, self::STATUS_ACTIVE, $triggerName);
+        $trigger = Db::fetchRow("SELECT * FROM $table WHERE idsite = ? AND idcontainerversion = ? AND status = ? AND `name` = ?", $bind);
+
+        return $this->enrichTrigger($trigger);
+    }
+
+    /**
      * @param int $idSite
      * @param string $deletedDate
      */
@@ -171,6 +190,11 @@ class TriggersDao extends BaseDao implements TagManagerDao
         $bind = array(self::STATUS_DELETED, $deletedDate, $idSite, $idContainerVersion, $idTrigger, self::STATUS_DELETED);
 
         Db::query($query, $bind);
+    }
+
+    protected function isNameAlreadyUsed(int $idSite, string $name, ?int $idContainerVersion = null): bool
+    {
+        return $this->isNameInUse($idSite, $idContainerVersion, $name);
     }
 
     private function enrichTriggers($triggers)
@@ -213,4 +237,3 @@ class TriggersDao extends BaseDao implements TagManagerDao
         return $trigger;
     }
 }
-

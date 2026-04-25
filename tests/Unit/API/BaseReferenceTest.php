@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -35,5 +36,4 @@ class BaseReferenceTest extends UnitTestCase
         );
         $this->assertSame($expected, $ref->toArray());
     }
-
 }

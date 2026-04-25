@@ -12,6 +12,16 @@
       :help-text="tagsHelpText"
     >
       <p>{{ translate('TagManager_TagUsageBenefits') }}</p>
+      <div class="tagSearchFilter">
+        <Field
+          uicontrol="text"
+          name="tagSearch"
+          :title="translate('General_Search')"
+          v-show="tags.length > 0"
+          v-model="tagSearch"
+        >
+        </Field>
+      </div>
       <table v-content-table>
         <thead>
           <tr>
@@ -32,7 +42,7 @@
         </thead>
         <tbody>
           <tr v-show="isLoading || isUpdating">
-            <td colspan="5">
+            <td colspan="6">
               <span class="loadingPiwik">
                 <img src="plugins/Morpheus/images/loading-blue.gif" />
                 {{ translate('General_LoadingData') }}
@@ -40,7 +50,7 @@
             </td>
           </tr>
           <tr v-show="!isLoading && tags.length === 0">
-            <td colspan="5">
+            <td colspan="6">
               {{ translate('TagManager_NoTagsFound') }}
               <a
                 class="createContainerTagNow"
@@ -55,12 +65,12 @@
             :key="tag.idtag"
             :id="`tag${ tag.idtag }`"
           >
-            <td class="name">{{ tag.name }}</td>
+            <td class="name" :title="tag.name">{{ truncateText(tag.name, 50) }}</td>
             <td
               class="description"
               :title="tag.description"
             >
-              {{ truncateText(tag.description, 30) }}
+              {{ truncateText(tag.description, 75) }}
             </td>
             <td
               class="type"
@@ -80,14 +90,16 @@
                   v-if="hasWriteAccess"
                   href=""
                   @click.prevent="editTrigger(fireTriggerId)"
+                  :title="this.triggers[fireTriggerId]"
                 >
-                  {{ this.triggers[fireTriggerId] }}
+                  {{ truncateText(this.triggers[fireTriggerId], triggerTruncateLength) }}
                 </a>
                 <span
                   class="chip"
                   v-if="!hasWriteAccess"
+                  :title="this.triggers[fireTriggerId]"
                 >
-                  {{ this.triggers[fireTriggerId] }}
+                  {{ truncateText(this.triggers[fireTriggerId], triggerTruncateLength) }}
                 </span>
               </span>
               <span v-show="tag.block_trigger_ids.length">
@@ -102,14 +114,16 @@
                     v-show="hasWriteAccess"
                     href=""
                     @click.prevent="editTrigger(blockTriggerId)"
+                    :title="this.triggers[blockTriggerId]"
                   >
-                    {{ this.triggers[blockTriggerId] }}
+                    {{ truncateText(this.triggers[blockTriggerId], triggerTruncateLength) }}
                   </a>
                   <span
                     class="chip"
                     v-show="!hasWriteAccess"
+                    :title="this.triggers[blockTriggerId]"
                   >
-                    {{ this.triggers[blockTriggerId] }}
+                    {{ truncateText(this.triggers[blockTriggerId], triggerTruncateLength) }}
                   </span>
                 </span>
               </span>
@@ -121,15 +135,39 @@
               <span>{{ tag.updated_date_pretty }}</span>
             </td>
             <td
-              class="action"
+              :class="getActionClasses"
               v-show="hasWriteAccess"
             >
+              <a
+                v-show="tag.status === 'active'
+                && (!tag.typeMetadata?.isCustomTemplate || canUseCustomTemplates)"
+                class="table-action icon-pause"
+                @click="pauseTag(tag)"
+                :title="translate('TagManager_PauseX', translate('TagManager_Tag'))"
+              />
+              <a
+                v-show="tag.status === 'paused'
+                && (!tag.typeMetadata?.isCustomTemplate || canUseCustomTemplates)"
+                class="table-action icon-play"
+                @click="resumeTag(tag)"
+                :title="translate('TagManager_ResumeX', translate('TagManager_Tag'))"
+              />
               <a
                 class="table-action icon-edit"
                 @click="editTag(tag.idtag, tag.type)"
                 :title="translate('TagManager_EditTag')"
               />
               <a
+                class="table-action icon-content-copy"
+                v-show="hasPublishCapability()"
+                @click="openCopyDialog(tag)"
+                :title="translate(
+                  'TagManager_CopyX',
+                  translate('TagManager_Tag'),
+                )"
+              />
+              <a
+                v-show="!tag.typeMetadata?.isCustomTemplate || canUseCustomTemplates"
                 class="table-action icon-delete"
                 @click="deleteTag(tag)"
                 :title="translate('TagManager_DeleteX', translate('TagManager_Tag'))"
@@ -168,6 +206,40 @@
         :value="translate('General_No')"
       />
     </div>
+    <div
+      class="ui-confirm"
+      id="confirmPauseTag"
+      ref="confirmPauseTag"
+    >
+      <h2>{{ translate('TagManager_PauseTagConfirm') }} </h2>
+      <input
+        role="yes"
+        type="button"
+        :value="translate('General_Yes')"
+      />
+      <input
+        role="no"
+        type="button"
+        :value="translate('General_No')"
+      />
+    </div>
+    <div
+      class="ui-confirm"
+      id="confirmResumeTag"
+      ref="confirmResumeTag"
+    >
+      <h2>{{ translate('TagManager_ResumeTagConfirm') }} </h2>
+      <input
+        role="yes"
+        type="button"
+        :value="translate('General_Yes')"
+      />
+      <input
+        role="no"
+        type="button"
+        :value="translate('General_No')"
+      />
+    </div>
   </div>
 </template>
 
@@ -177,17 +249,22 @@ import {
   ContentBlock,
   ContentTable,
   Matomo,
-  MatomoUrl,
+  MatomoUrl, NotificationsStore, NotificationType, translate,
 } from 'CoreHome';
+import { Field } from 'CorePluginsAdmin';
 import TagsStore from './Tags.store';
 import TriggersStore from '../Trigger/Triggers.store';
-import { Tag } from '../types';
+import { Tag, TagType } from '../types';
 
 interface TagListState {
   hasWriteAccess: boolean;
+  triggerTruncateLength: number;
+  tagSearch: string;
 }
 
 const { tagManagerHelper } = window;
+
+const notificationId = 'tagtagmanagementlist';
 
 export default defineComponent({
   props: {
@@ -203,6 +280,7 @@ export default defineComponent({
   },
   components: {
     ContentBlock,
+    Field,
   },
   directives: {
     ContentTable,
@@ -210,6 +288,8 @@ export default defineComponent({
   data(): TagListState {
     return {
       hasWriteAccess: Matomo.hasUserCapability('tagmanager_write'),
+      triggerTruncateLength: 40,
+      tagSearch: '',
     };
   },
   created() {
@@ -244,10 +324,41 @@ export default defineComponent({
         idTag,
       });
     },
+    pauseTag(tag: Tag) {
+      const doPause = () => {
+        TagsStore.pauseTag(this.idContainer, this.idContainerVersion, tag.idtag).then(() => {
+          TagsStore.reload(this.idContainer, this.idContainerVersion).then(() => {
+            setTimeout(() => {
+              this.showDeployNotification('pause');
+            }, 200);
+          });
+        });
+      };
+
+      Matomo.helper.modalConfirm('#confirmPauseTag', {
+        yes: doPause,
+      });
+    },
+    resumeTag(tag: Tag) {
+      const doResume = () => {
+        TagsStore.resumeTag(this.idContainer, this.idContainerVersion, tag.idtag).then(() => {
+          TagsStore.reload(this.idContainer, this.idContainerVersion).then(() => {
+            setTimeout(() => {
+              this.showDeployNotification('resume');
+            }, 200);
+          });
+        });
+      };
+
+      Matomo.helper.modalConfirm('#confirmResumeTag', {
+        yes: doResume,
+      });
+    },
     deleteTag(tag: Tag) {
       const doDelete = () => {
         TagsStore.deleteTag(this.idContainer, this.idContainerVersion, tag.idtag).then(() => {
           TagsStore.reload(this.idContainer, this.idContainerVersion);
+          NotificationsStore.remove('CopyDialogResultNotification');
         });
       };
 
@@ -257,6 +368,49 @@ export default defineComponent({
     },
     truncateText(text: string, length: number) {
       return tagManagerHelper.truncateText(text, length);
+    },
+    hasPublishCapability() {
+      return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
+    showDeployNotification(type: string) {
+      const translatedString = type === 'pause' ? 'TagManager_PausedTag' : 'TagManager_ResumedTag';
+      const createdX = translate(translatedString, translate('TagManager_Tag'));
+      if (this.hasPublishCapability()) {
+        const wantToRedeploy = translate(
+          'TagManager_WantToDeployThisChangeCreateVersion',
+          '<a class="createNewVersionLink">',
+          '</a>',
+        );
+        this.showNotification(`${createdX} ${wantToRedeploy}`, 'success', 'transient');
+        return;
+      }
+
+      this.showNotification(createdX, 'success');
+    },
+    showNotification(message: string, context: NotificationType['context'],
+      type: null|NotificationType['type'] = null) {
+      const instanceId = NotificationsStore.show({
+        message,
+        context,
+        id: notificationId,
+        type: type !== null ? type : 'toast',
+      });
+
+      setTimeout(() => {
+        NotificationsStore.scrollToNotification(instanceId);
+      }, 200);
+    },
+    openCopyDialog(tag: Tag) {
+      const url = MatomoUrl.stringify({
+        module: 'TagManager',
+        action: 'copyTagDialog',
+        idSite: tag.idsite,
+        idContainer: this.idContainer,
+        idTag: tag.idtag,
+        idContainerVersion: this.idContainerVersion,
+      });
+
+      window.Piwik_Popover.createPopupAndLoadUrl(url, '', 'mtmCopyTag');
     },
   },
   computed: {
@@ -277,14 +431,39 @@ export default defineComponent({
       return TagsStore.tags.value;
     },
     sortedTags() {
-      const sorted = [...this.tags];
-      sorted.sort((lhs, rhs) => {
+      const searchFilter = this.tagSearch.toLowerCase();
+
+      // look through string properties of tags for values that have searchFilter in them
+      // (mimics angularjs filter() filter)
+      const result = [...this.tags].filter((h) => Object.keys(h).some((propName) => {
+        const entity = h as unknown as Record<string, unknown>;
+        let propValue = '';
+        if (typeof entity[propName] === 'string') {
+          propValue = (entity[propName] as string);
+        } else if (propName === 'typeMetadata') {
+          const propTypeMeta = (entity.typeMetadata as TagType);
+          propValue = (propTypeMeta.name as string);
+        } else if (propName === 'fire_trigger_ids') {
+          if (this.triggers && entity.fire_trigger_ids) {
+            Object.values((entity.fire_trigger_ids) as number[]).forEach((value) => {
+              if (this.triggers[value]) {
+                propValue += `${this.triggers[value]} `;
+              }
+            });
+          }
+        } else if (propName === 'parameters' && entity.type === 'CustomHtml') {
+          const propTypeParameters = (entity.parameters as Record<string, unknown>);
+          propValue = (propTypeParameters.customHtml as string);
+        }
+        return propValue.toLowerCase().indexOf(searchFilter) !== -1;
+      }));
+      result.sort((lhs, rhs) => {
         if (lhs.name < rhs.name) {
           return -1;
         }
         return lhs.name > rhs.name ? 1 : 0;
       });
-      return sorted;
+      return result;
     },
     nameTranslatedText(): string {
       return this.translate('TagManager_TagsNameDescription');
@@ -303,6 +482,13 @@ export default defineComponent({
     },
     actionTranslatedText(): string {
       return this.translate('TagManager_TagsActionDescription');
+    },
+    getActionClasses(): string {
+      const copyClass = this.hasPublishCapability() ? ' hasCopyAction' : '';
+      return `action${copyClass}`;
+    },
+    canUseCustomTemplates() {
+      return Matomo.hasUserCapability('tagmanager_use_custom_templates');
     },
   },
 });

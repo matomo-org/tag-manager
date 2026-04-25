@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Context;
 
 use Piwik\API\Request;
@@ -28,10 +30,9 @@ use Piwik\Plugins\TagManager\Template\Trigger\PageViewTrigger;
 use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
 use Piwik\SettingsPiwik;
 
-
 class WebContext extends BaseContext
 {
-    const ID = 'web';
+    public const ID = 'web';
 
     /**
      * @var JavaScriptTagManagerLoader
@@ -43,8 +44,16 @@ class WebContext extends BaseContext
      */
     private $templateLocator;
 
-    public function __construct(VariablesProvider $variablesProvider, Variable $variableModel, Trigger $triggerModel, Tag $tagModel, Container $containerModel, StorageInterface $storage, JavaScriptTagManagerLoader $javaScriptTagManagerLoader, Salt $salt)
-    {
+    public function __construct(
+        VariablesProvider $variablesProvider,
+        Variable $variableModel,
+        Trigger $triggerModel,
+        Tag $tagModel,
+        Container $containerModel,
+        StorageInterface $storage,
+        JavaScriptTagManagerLoader $javaScriptTagManagerLoader,
+        Salt $salt
+    ) {
         parent::__construct($variablesProvider, $variableModel, $triggerModel, $tagModel, $containerModel, $storage, $salt);
         $this->javaScriptTagManagerLoader = $javaScriptTagManagerLoader;
     }
@@ -89,12 +98,13 @@ class WebContext extends BaseContext
         }
 
         $baseJs = $this->javaScriptTagManagerLoader->getJavaScriptContent();
+        $preconfiguredVariablesResponse = $this->getPreConfiguredVariablesJSCodeResponse(self::ID);
 
         foreach ($environments as $environment) {
-            $environmentId = $environment['id'];
+            $environmentId = $environment['id'] ?? false;
             // we make sure to have files even for containers that don't have a release yet, this way they can embed it
             // already nicely into the page and activate it later through the UI
-            if (!in_array($environmentId, $generatedEnvironments, true)) {
+            if ($environmentId && !in_array($environmentId, $generatedEnvironments, true)) {
                 $isPreviewRelease = $environmentId === Environment::ENVIRONMENT_PREVIEW;
                 if ($isPreviewRelease) {
                     $hasPreviewRelease = true;
@@ -103,7 +113,7 @@ class WebContext extends BaseContext
 
                 $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $environmentId, $container['created_date']);
                 $filesCreated[$path] = $js;
-                $this->storage->save(PIWIK_DOCUMENT_ROOT. $path, $js);
+                $this->storage->save(PIWIK_DOCUMENT_ROOT . $path, $js);
             }
         }
 
@@ -114,6 +124,8 @@ class WebContext extends BaseContext
                 $hasPreviewRelease = true;
             }
             $containerJs = $this->generatePublicContainer($container, $release);
+            $replaceMacros = array();
+            $variableTemplates = ['keys' => [], 'values' => []];
 
             foreach ($containerJs['tags'] as &$tag) {
                 $tag['Tag'] = $this->templateLocator->loadTagTemplate($tag, self::ID);
@@ -141,14 +153,32 @@ class WebContext extends BaseContext
                 }
             }
 
-            foreach ($containerJs['variables'] as &$variable) {
+            foreach ($containerJs['variables'] as $variableKey => &$variable) {
                 $variable['Variable'] = $this->templateLocator->loadVariableTemplate($variable, self::ID);
                 $variable['parameters'] = $this->addVariableTemplateToParameters($variable['parameters']);
+                if (!empty($variable['parameters'])) {
+                    $variableTemplates['keys'][] = '{{' . $variable['name'] . '}}';
+                    $variableTemplates['values'][] = 'TagManager._buildVariable(' . json_encode($variable) . ", parameters.get('container')).get()";
+                }
+                if (!empty($variable['parameters']['jsFunction']) && strpos($variable['parameters']['jsFunction'], '{{') !== false) {
+                    $replaceMacros[] = ['key' => $variableKey, 'methodName' => $variable['Variable']];
+                }
 
                 if (!$isPreviewRelease) {
                     $variable['name'] = $variable['type'];
                 } else {
                     $variable['name'] = Common::unsanitizeInputValue($variable['name']);
+                }
+            }
+
+            if (!empty($replaceMacros)) {
+                $mergedKeys = array_merge($preconfiguredVariablesResponse['keys'], $variableTemplates['keys']);
+                $mergedValues = array_merge($preconfiguredVariablesResponse['values'], $variableTemplates['values']);
+                foreach ($replaceMacros as $replaceValues) {
+                    if (!empty($containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction'])) {
+                        $containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction'] = str_replace($mergedKeys, $mergedValues, $containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction']);
+                        $this->templateLocator->updateVariableTemplate($replaceValues['methodName'], str_replace($mergedKeys, $mergedValues, $this->templateLocator->getVariableTemplate($replaceValues['methodName'])));
+                    }
                 }
             }
 
@@ -166,6 +196,11 @@ class WebContext extends BaseContext
 
             $js = $this->addPreviewCode($baseJs, $hasPreviewRelease, $isPreviewRelease, $container);
             $js = str_replace(array('/*!! initContainerHook */', '/*!!! initContainerHook */'), $initContainer, $js);
+
+            $ignoreGtmDataLayer = isset($container['ignoreGtmDataLayer']) && $container['ignoreGtmDataLayer'] == 1 ? 'true' : 'false';
+            $activelySyncGtmDataLayer = isset($container['activelySyncGtmDataLayer']) && $container['activelySyncGtmDataLayer'] == 1 ? 'true' : 'false';
+            $windowLevelSettingsJs = "var ignoreGtmDataLayer = {$ignoreGtmDataLayer}; var activelySyncGtmDataLayer = {$activelySyncGtmDataLayer};";
+            $js = str_replace(array('/*!! windowLevelSettingsHook */', '/*!!! windowLevelSettingsHook */'), $windowLevelSettingsJs, $js);
 
             $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $release['environment'], $container['created_date']);
             $filesCreated[$path] = $js;
@@ -215,7 +250,6 @@ class WebContext extends BaseContext
             foreach ($part as $subkey => $subvalue) {
                 $part[$subkey] = $this->addVariableTemplateIfNeeded($subvalue);
             }
-
         }
         return $part;
     }
@@ -261,7 +295,7 @@ INST;
         return [[
             'description' => Piwik::translate('TagManager_ContextWebInstallInstructions', array('<head>')),
             'embedCode' => $embedCode,
-            'helpUrl' => 'https://developer.matomo.org/guides/tagmanager/embedding'
+            'helpUrl' => Url::addCampaignParametersToMatomoLink('https://developer.matomo.org/guides/tagmanager/embedding', null, null, 'App.TagManager.getInstallInstructions')
         ]];
     }
 
@@ -291,7 +325,7 @@ INST;
         return [[
             'description' => Piwik::translate('TagManager_ContextWebInstallInstructions', array('<head>')),
             'embedCode' => $embedCode,
-            'helpUrl' => 'https://developer.matomo.org/guides/tagmanager/embedding',
+            'helpUrl' => Url::addCampaignParametersToMatomoLink('https://developer.matomo.org/guides/tagmanager/embedding', null, null, 'App.TagManager.getInstallInstructionsReact'),
             'pageViewTriggerEditUrl' => $this->getPageViewTriggerEditUrl($container['idsite'], $container['idcontainer'])
         ]];
     }
@@ -323,5 +357,4 @@ INST;
         }
         return $url;
     }
-
 }

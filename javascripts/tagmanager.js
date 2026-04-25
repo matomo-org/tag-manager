@@ -23,6 +23,8 @@
     var documentAlias = document;
     var windowAlias = window;
 
+    /*!! windowLevelSettingsHook */
+
     /*!! previewModeHook */
 
     if (typeof window.MatomoTagManager !== 'object') {
@@ -1419,6 +1421,7 @@
                 this.numExecuted = 0;
                 this.blocked = false;
                 this.parameters = tag.parameters || {};
+                this.isTagFireLimitAllowedInPreviewMode = container.isTagFireLimitAllowedInPreviewMode || false;
                 var self = this;
 
                 this.addDebugValues = function (tags, action) {
@@ -1447,7 +1450,7 @@
                         storageKey += '_' + container.id;
                     }
 
-                    if (this.fireLimit === Tag.FIRE_LIMIT_ONCE_24HOURS && !window.mtmPreviewWindow) {
+                    if (this.fireLimit === Tag.FIRE_LIMIT_ONCE_24HOURS && (!window.mtmPreviewWindow || this.isTagFireLimitAllowedInPreviewMode)) {
                         // in preview/debug mode we make sure to execute it
                         if (localStorage.get(storageKey, this.name)) {
                             Debug.log('not firing as this tag has 24hours limit reached', this);
@@ -1455,7 +1458,7 @@
                         }
                     }
 
-                    if (this.fireLimit === Tag.FIRE_LIMIT_ONCE_LIFETIME && !window.mtmPreviewWindow) {
+                    if (this.fireLimit === Tag.FIRE_LIMIT_ONCE_LIFETIME && (!window.mtmPreviewWindow || this.isTagFireLimitAllowedInPreviewMode)) {
                         // in preview/debug mode we make sure to execute it
                         if (localStorage.get(storageKey, this.name)) {
                             Debug.log('not firing as this tag has limit reached', this);
@@ -1563,6 +1566,7 @@
 
                 this.id = container.id;
                 this.idsite = container.idsite || null;
+                this.isTagFireLimitAllowedInPreviewMode = container.isTagFireLimitAllowedInPreviewMode || false;
                 this.versionName = container.versionName || null;
                 this.revision = container.revision || null;
                 this.environment = container.environment || null;
@@ -1817,13 +1821,30 @@
 
             dataLayer.push({'mtm.mtmScriptLoadedTime': timeScriptLoaded});
 
-            if ('undefined' !== typeof windowAlias.dataLayer && utils.isArray(windowAlias.dataLayer)) {
+            if (('undefined' === typeof ignoreGtmDataLayer || !ignoreGtmDataLayer) && 'undefined' !== typeof windowAlias.dataLayer && utils.isArray(windowAlias.dataLayer)) {
                 // compatibility for GTM
                 for ( i = 0; i < windowAlias.dataLayer.length; i++) {
                     if (utils.isObject(windowAlias.dataLayer[i])) {
                         dataLayer.push(windowAlias.dataLayer[i]);
                     }
                 }
+            }
+
+            // Only sync the dataLayer changes from GTM if the config has been set
+            if (!('undefined' === typeof activelySyncGtmDataLayer) && activelySyncGtmDataLayer) {
+                windowAlias.dataLayer = windowAlias.dataLayer || [];
+
+                const syncDataLayer = function(array, callback) {
+                    const originalPush = array.push;
+                    array.push = function(e) {
+                        originalPush.call(array, e);
+                        callback(array);
+                    };
+                }
+
+                syncDataLayer(windowAlias.dataLayer, function (e) {
+                    dataLayer.push(windowAlias.dataLayer[windowAlias.dataLayer.length - 1]);
+                });
             }
 
             return TagManager;

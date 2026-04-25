@@ -53,9 +53,18 @@ function setSuperUser()
     testEnvironment.save();
 }
 
+function setWritePublishUser()
+{
+    resetUser();
+    setWriteUser();
+    setCapabilities({"tagmanager_publish_live_container": [1,2,5]});
+    testEnvironment.save();
+}
+
 exports.setCapabilities = setCapabilities;
 exports.setAdminUser = setAdminUser;
 exports.setSuperUser = setSuperUser;
+exports.setWritePublishUser = setWritePublishUser;
 exports.setWriteUser = setWriteUser;
 exports.setViewUser = setViewUser;
 exports.resetUser = resetUser;

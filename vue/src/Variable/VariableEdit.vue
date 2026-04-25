@@ -28,23 +28,10 @@
       >
         <div>
           <div
-            class="alert alert-warning"
+            class="alert alert-danger"
             v-show="isVariableDisabled"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
-            {{ translate(
-              'TagManager_UseCustomTemplateCapabilityRequired',
-              translate('TagManager_CapabilityUseCustomTemplates'),
-            ) }}
-          </div>
-          <div>
-            <Field
-              uicontrol="text"
-              name="type"
-              :model-value="variable.typeMetadata?.name"
-              :disabled="true"
-              :inline-help="typeInlineHelp"
-              :title="translate('TagManager_Type')"
-            />
           </div>
           <div>
             <Field
@@ -52,9 +39,10 @@
               name="name"
               :model-value="variable.name"
               @update:model-value="variable.name = $event; setValueHasChanged()"
-              :maxlength="50"
+              :maxlength="255"
               :title="translate('General_Name')"
               :inline-help="translate('TagManager_VariableNameHelp')"
+              :placeholder="translate('TagManager_VariableNamePlaceholder')"
             />
           </div>
           <div>
@@ -64,8 +52,9 @@
               :model-value="variable.description"
               @update:model-value="variable.description = $event; setValueHasChanged()"
               :maxlength="1000"
-              :title="translate('General_Description')"
+              :title="translate('TagManager_Description')"
               :inline-help="translate('TagManager_VariableDescriptionHelp')"
+              :placeholder="translate('TagManager_VariableDescriptionPlaceholder')"
             />
           </div>
           <div
@@ -102,7 +91,19 @@
               </h3>
             </div>
           </div>
-          <div v-show="showAdvanced && variable.typeMetadata?.hasAdvancedSettings">
+          <div
+              v-if="variable && variable.typeMetadata
+              && variable.typeMetadata.id === 'MatomoConfiguration'"
+              v-show="showAdvanced && variable.typeMetadata?.hasAdvancedSettings"
+          >
+            <GroupedSettings
+                :settings="variable.typeMetadata?.advancedParameters || []"
+                :all-setting-values="parameterValues"
+                @change="parameterValues[$event.name] = $event.value"
+            />
+          </div>
+          <div v-show="showAdvanced && variable.typeMetadata?.hasAdvancedSettings &&
+          variable && variable.typeMetadata && variable.typeMetadata.id !== 'MatomoConfiguration'">
             <div class="innerFormField">
               <Field
                 uicontrol="text"
@@ -111,6 +112,7 @@
                 @update:model-value="variable.default_value = $event; setValueHasChanged()"
                 :title="translate('TagManager_DefaultValue')"
                 :inline-help="translate('TagManager_DefaultValueHelp')"
+                :placeholder="translate('TagManager_DefaultValuePlaceholder')"
               />
             </div>
             <div class="form-group row">
@@ -164,17 +166,14 @@
             </div>
           </div>
           <div
-            class="alert alert-warning"
+            class="alert alert-danger"
             v-show="isVariableDisabled"
+            v-html="$sanitize(getNoCustomTemplatePermissionErrorMessage())"
           >
-            {{ translate(
-                'TagManager_UseCustomTemplateCapabilityRequired',
-                translate('TagManager_CapabilityUseCustomTemplates'),
-              ) }}
           </div>
           <SaveButton
             class="createButton"
-            v-show="!isVariableDisabled"
+            v-if="!isVariableDisabled"
             @confirm="edit ? updateVariable() : createVariable()"
             :disabled="isUpdating || !isDirty"
             :saving="isUpdating"
@@ -213,8 +212,11 @@
               [`templateType${variableTemplate.id}`]: true,
             }"
             :title="!this.isVariableTemplateDisabled[variableTemplate.id] ? '' :
-              translate('TagManager_UseCustomTemplateCapabilityRequired',
-                translate('TagManager_CapabilityUseCustomTemplates'))"
+              translate('TagManager_UseCustomTemplateCapabilityPermissionRequiredDescription',
+                '',
+                translate('TagManager_CapabilityUseCustomTemplates'),
+                '',
+                )"
           >
             <img
               alt
@@ -247,7 +249,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, DeepReadonly } from 'vue';
+import { defineComponent, nextTick } from 'vue';
 import {
   translate,
   AjaxHelper,
@@ -276,11 +278,12 @@ interface VariableEditState {
   isDirty: boolean;
   showAdvanced: boolean;
   canUseCustomTemplates: boolean;
-  availableVariables: DeepReadonly<VariableCategory[]>;
+  availableVariables: VariableCategory[];
   editTitle: string;
   variable: Variable;
   chooseVariableType: boolean;
   parameterValues: Record<string, unknown>;
+  advancedParameters: Record<string, unknown>;
   isUpdatingVar: boolean;
 }
 
@@ -319,6 +322,7 @@ export default defineComponent({
       editTitle: '',
       variable: {} as unknown as Variable,
       parameterValues: {},
+      advancedParameters: {},
       isUpdatingVar: false,
     };
   },
@@ -364,12 +368,13 @@ export default defineComponent({
       NotificationsStore.remove(notificationId);
       NotificationsStore.remove('ajaxHelper');
     },
-    showNotification(message: string, context: NotificationType['context']) {
+    showNotification(message: string, context: NotificationType['context'],
+      type: null|NotificationType['type'] = null) {
       const notificationInstanceId = NotificationsStore.show({
         message,
         context,
         id: notificationId,
-        type: 'transient',
+        type: type !== null ? type : 'toast',
       });
       setTimeout(() => {
         NotificationsStore.scrollToNotification(notificationInstanceId);
@@ -406,6 +411,12 @@ export default defineComponent({
             }
 
             this.variable = clone(variable) as unknown as Variable;
+            this.variable.typeMetadata.parameters = variable.typeMetadata.parameters.filter(
+              (item) => !Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') || !Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
+            );
+            this.variable.typeMetadata.advancedParameters = variable.typeMetadata.parameters.filter(
+              (item) => Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') && Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
+            );
             this.parameterValues = Object.fromEntries(variable.typeMetadata.parameters.map(
               (s) => [s.name, s.value],
             ));
@@ -418,6 +429,9 @@ export default defineComponent({
 
             this.addLookUpEntryIfNoneExists();
             this.isDirty = false;
+            if (this.variable.typeMetadata?.name) {
+              this.editTitle += `: ${this.variable.typeMetadata.name}`;
+            }
           });
 
           return;
@@ -475,7 +489,7 @@ export default defineComponent({
         this.isDirty = true;
       }
     },
-    createVariableType(variableTemplate: DeepReadonly<VariableType>) {
+    createVariableType(variableTemplate: VariableType) {
       if (variableTemplate && this.isVariableTemplateDisabled[variableTemplate.id]) {
         return;
       }
@@ -495,9 +509,22 @@ export default defineComponent({
         typeMetadata: variableTemplate,
       };
 
+      this.variable.typeMetadata.advancedParameters = [];
+      const advancedOptions = variableTemplate.parameters.filter(
+        (item) => Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') && Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
+      );
+      const nonAdvancedOptions = variableTemplate.parameters.filter(
+        (item) => !Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') || !Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
+      );
       this.parameterValues = Object.fromEntries(variableTemplate.parameters.map(
         (s) => [s.name, s.value],
       ));
+      this.variable.typeMetadata.advancedParameters = advancedOptions;
+      this.variable.typeMetadata.parameters = nonAdvancedOptions;
+
+      if (this.variable.typeMetadata?.name) {
+        this.editTitle += `: ${this.variable.typeMetadata.name}`;
+      }
 
       this.addLookUpEntry();
 
@@ -558,20 +585,22 @@ export default defineComponent({
             return;
           }
 
-          MatomoUrl.updateHash({
-            ...MatomoUrl.hashParsed.value,
-            idVariable,
-          });
+          // Go back to the list of variables
+          this.cancel();
 
           setTimeout(() => {
             const createdX = translate('TagManager_CreatedX', translate('TagManager_Variable'));
-            const wantToRedeploy = translate(
-              'TagManager_WantToDeployThisChangeCreateVersion',
-              '<a class="createNewVersionLink">',
-              '</a>',
-            );
+            if (this.hasPublishCapability()) {
+              const wantToRedeploy = translate(
+                'TagManager_WantToDeployThisChangeCreateVersion',
+                '<a class="createNewVersionLink">',
+                '</a>',
+              );
+              this.showNotification(`${createdX} ${wantToRedeploy}`, 'success', 'transient');
+              return;
+            }
 
-            this.showNotification(`${createdX} ${wantToRedeploy}`, 'success');
+            this.showNotification(createdX, 'success');
           }, 200);
         });
       }).finally(() => {
@@ -613,14 +642,21 @@ export default defineComponent({
           this.initIdVariable();
         });
 
-        const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Variable'));
-        const wantToDeploy = translate(
-          'TagManager_WantToDeployThisChangeCreateVersion',
-          '<a class="createNewVersionLink">',
-          '</a>',
-        );
+        // Go back to the list of variables
+        this.cancel();
 
-        this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success');
+        const updatedAt = translate('TagManager_UpdatedX', translate('TagManager_Variable'));
+        if (this.hasPublishCapability()) {
+          const wantToDeploy = translate(
+            'TagManager_WantToDeployThisChangeCreateVersion',
+            '<a class="createNewVersionLink">',
+            '</a>',
+          );
+          this.showNotification(`${updatedAt} ${wantToDeploy}`, 'success', 'transient');
+          return;
+        }
+
+        this.showNotification(updatedAt, 'success');
       }).finally(() => {
         this.isUpdatingVar = false;
       });
@@ -631,6 +667,17 @@ export default defineComponent({
         return false;
       }
       return true;
+    },
+    hasPublishCapability() {
+      return Matomo.hasUserCapability('tagmanager_write') && Matomo.hasUserCapability('tagmanager_use_custom_templates');
+    },
+    getNoCustomTemplatePermissionErrorMessage() {
+      return translate(
+        'TagManager_UseCustomTemplateCapabilityPermissionRequiredDescription',
+        '<strong>',
+        translate('TagManager_CapabilityUseCustomTemplates'),
+        '</strong>',
+      );
     },
   },
   computed: {

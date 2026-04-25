@@ -19,7 +19,6 @@ exports.selector = async function (page, screenshotName, selector)
     await exports.setTableRowHeight(page);
     expect(await page.screenshotSelector(selector)).to.matchImage({
         imageName: screenshotName,
-        comparisonThreshold: 0.05,
     });
 };
 
@@ -35,7 +34,7 @@ exports.pageWithMenu = async function (page, screenshotName)
 
 exports.page = async function (page, screenshotName)
 {
-    await exports.selector(page, screenshotName, '.pageWrap,#notificationContainer,#secondNavBar');
+    await exports.selector(page, screenshotName, '.pageWrap,#notificationContainer,.navbar');
 };
 
 exports.notification = async function (page, screenshotName)

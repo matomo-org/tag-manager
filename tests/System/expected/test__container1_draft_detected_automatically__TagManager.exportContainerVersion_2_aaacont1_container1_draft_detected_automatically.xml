@@ -5,6 +5,9 @@
 	<context>web</context>
 	<name>Container1</name>
 	<description />
+	<ignoreGtmDataLayer>0</ignoreGtmDataLayer>
+	<activelySyncGtmDataLayer>0</activelySyncGtmDataLayer>
+	<isTagFireLimitAllowedInPreviewMode>0</isTagFireLimitAllowedInPreviewMode>
 	
 	
 	
@@ -25,6 +28,7 @@
 			<type>CustomHtml</type>
 			<name>My Tag 2</name>
 			<description>My Tag 2 description</description>
+			<status>active</status>
 			<parameters>
 				<customHtml>&lt;script&gt;&lt;/script&gt;</customHtml>
 				<htmlPosition>bodyEnd</htmlPosition>
@@ -50,6 +54,7 @@
 			<type>CustomHtml</type>
 			<name>My Tag 1</name>
 			<description />
+			<status>active</status>
 			<parameters>
 				<customHtml>&lt;p&gt;&lt;/p&gt;</customHtml>
 				<htmlPosition>bodyEnd</htmlPosition>
@@ -74,6 +79,7 @@
 			<type>CustomImage</type>
 			<name>My Tag 3</name>
 			<description />
+			<status>active</status>
 			<parameters>
 				<customImageSrc>/plugins/tracking.png</customImageSrc>
 				<cacheBusterEnabled>1</cacheBusterEnabled>
@@ -100,7 +106,7 @@
 			<idtrigger>1</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger1</name>
-			<description>My trigger1 description</description>
+			<description>My trigger1 description setting it to a very long description to show up in the UI clipped</description>
 			<parameters>
 				<eventName>foo</eventName>
 			</parameters>
@@ -145,7 +151,7 @@
 			
 		</row>
 		<row>
-			<idtrigger>16</idtrigger>
+			<idtrigger>18</idtrigger>
 			<type>CustomEvent</type>
 			<name>My trigger4</name>
 			<description />
@@ -199,7 +205,7 @@
 			
 		</row>
 		<row>
-			<idvariable>5</idvariable>
+			<idvariable>7</idvariable>
 			<type>DataLayer</type>
 			<name>My Var 3</name>
 			<description>My Var 3 description</description>

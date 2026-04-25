@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Template\Variable\PreConfigured;
 
 class ClickNodeNameVariable extends BaseDataLayerVariable
@@ -18,5 +20,4 @@ class ClickNodeNameVariable extends BaseDataLayerVariable
     {
         return 'mtm.clickNodeName';
     }
-
 }

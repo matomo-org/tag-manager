@@ -5,8 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 describe("Container", function () {
-    this.timeout(0);
-
     this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
     this.optionsOverride = {
         'persist-fixture-data': false
@@ -58,6 +56,13 @@ describe("Container", function () {
         expect(await pageWrap.screenshot()).to.matchImage('site_some_exist');
     });
 
+    it('should show websites dropdown without all websites', async function () {
+        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
+        pageWrap = await page.$('.top_bar_sites_selector .dropdown');
+        expect(await pageWrap.screenshot()).to.matchImage('websites_dropdown_without_all_websites');
+        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
+    });
+
     it('should be able to create a new container', async function () {
         await page.click('.createNewContainer');
         await capture.setTableRowHeight(page);
@@ -88,7 +93,36 @@ describe("Container", function () {
         await capture.page(page, 'edit_url');
     });
 
+    it('should set isTagFireLimitAllowedInPreviewMode as active when set and save', async function(){
+        await page.evaluate(() => $('#isTagFireLimitAllowedInPreviewMode').click());
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'edit_url_with_isTagFireLimitAllowedInPreviewMode');
+    });
+
+    it('should set isTagFireLimitAllowedInPreviewMode as inactive when set and save', async function(){
+        await page.evaluate(() => $('#isTagFireLimitAllowedInPreviewMode').click());
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'edit_url_without_isTagFireLimitAllowedInPreviewMode');
+    });
+
+    it('should set activelySyncGtmDataLayer as active when set and save', async function(){
+        await page.evaluate(() => $('#activelySyncGtmDataLayer').click());
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'edit_url_with_activelySyncGtmDataLayer');
+    });
+
+    it('should set activelySyncGtmDataLayer as inactive when set and save', async function(){
+        await page.evaluate(() => $('#activelySyncGtmDataLayer').click());
+        await page.waitForTimeout(250);
+        await page.waitForNetworkIdle();
+        await capture.page(page, 'edit_url_without_activelySyncGtmDataLayer');
+    });
+
     it('should enable edit button after changing a field', async function () {
+        await page.goto(generalParamsSite1 + urlBase + '#?idContainer=aaacont2');
         await form.sendFieldValue(page, '.editContainer #name', 'My Updated Name');
         await createOrUpdateContainer();
         await capture.page(page, 'edit_url_updated');
@@ -106,6 +140,28 @@ describe("Container", function () {
         await page.waitForTimeout(250);
         await page.waitForNetworkIdle();
         await capture.modal(page, 'install_code_dialog');
+    });
+
+    it('should show dialog to copy container', async function () {
+        await page.goto(generalParamsSite1 + urlBase);
+        await page.click('#containeraaacont1 .table-action.icon-content-copy');
+        await page.waitForTimeout(250);
+        pageWrap = await page.waitForSelector('div.ui-dialog.mtmCopyContainer');
+        expect(await pageWrap.screenshot()).to.matchImage('copy_container_dialog');
+    });
+
+    it('should show list of sites to copy container to', async function () {
+        await page.click('#destinationSite');
+        await page.waitForTimeout(250);
+        pageWrap = await page.waitForSelector('div.ui-dialog.mtmCopyContainer');
+        expect(await pageWrap.screenshot()).to.matchImage('copy_container_site_select');
+    });
+
+    it('should select site to copy container to', async function () {
+        await page.evaluate(() => $('#destinationSite ul li:first').click());
+        await page.waitForTimeout(250);
+        pageWrap = await page.waitForSelector('div.ui-dialog.mtmCopyContainer');
+        expect(await pageWrap.screenshot()).to.matchImage('copy_container_site_selected');
     });
 
     it('should show confirm delete container dialog', async function () {
@@ -149,5 +205,11 @@ describe("Container", function () {
         permissions.setViewUser();
         await page.goto(generalParamsSite5 + urlBase);
         await capture.page(page, 'none_exist_view_user');
+    });
+
+    it('should load container page with some containers as write user', async function () {
+        permissions.setWriteUser();
+        await page.goto(generalParamsSite1 + urlBase);
+        await capture.page(page, 'some_exist_write_user');
     });
 });

@@ -11,10 +11,29 @@
     }
   }
 
+  .tags {
+    th.action, td.action {
+      width: 200px;
+    }
+
+    td.action.hasCopyAction {
+      width: 215px;
+    }
+  }
+
   .preconfiguredVariablesHelp {
     color: #999;
     font-size: 17px;
     cursor: help;
+  }
+
+  .tagSearchFilter, .triggerSearchFilter, .variableSearchFilter, .versionSearchFilter {
+    margin-left: -1rem;
+    margin-top: -1rem;
+
+    input {
+      max-width: 400px;
+    }
   }
 }
 
@@ -31,16 +50,28 @@
 
 .tagManagerTagList {
   .triggers {
+    min-width: 12rem;
     .chip {
       display: inline-block;
       margin-bottom: 4px;
+      height: unset;
     }
+  }
+}
+
+.tagManagerTriggerList {
+  td.action.hasCopyAction {
+    width: 170px;
   }
 }
 
 .tagManagerContainerList {
   th.action, td.action {
     width: 240px;
+  }
+
+  td.action.hasCopyAction {
+    width: 265px;
   }
 }
 .tagManagerVersionList {
@@ -53,6 +84,10 @@
     margin-left: 10px;
     display: inline-block;
     color: #999;
+  }
+
+  td.action.hasCopyAction {
+    width: 170px;
   }
 }
 

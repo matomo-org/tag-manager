@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\tests\Unit\Input;
 
 use Piwik\Plugins\TagManager\Input\Name;
@@ -38,7 +40,7 @@ class NameTest extends UnitTestCase
     public function test_check_shouldThrowException_IfNameIsTooLong()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Name: The value contains "51" characters but should contain at most 50 characters.');
+        $this->expectExceptionMessage('Name: The value contains "256" characters but should contain at most 255 characters.');
 
         $this->checkName(str_pad('4', Name::MAX_LENGTH + 1));
     }
@@ -61,5 +63,4 @@ class NameTest extends UnitTestCase
         $name = new Name($name);
         $name->check();
     }
-
 }

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager;
 
 use Piwik\API\Request;
@@ -17,7 +19,6 @@ use Piwik\Plugins\TagManager\Model\Environment;
 
 class Menu extends \Piwik\Plugin\Menu
 {
-
     /**
      * @var AccessValidator
      */
@@ -30,6 +31,12 @@ class Menu extends \Piwik\Plugin\Menu
 
     public function configureTopMenu(MenuTop $menu)
     {
+        // Check whether to show the MTM top menu. If not, simply return early
+        $idSite = \Piwik\Request::fromRequest()->getIntegerParameter('idSite', 0);
+        if (!StaticContainer::get(SystemSettings::class)->doesCurrentUserHaveTagManagerAccess($idSite)) {
+            return;
+        }
+
         list($defaultAction, $defaultParams) = self::getDefaultAction();
         if ($defaultAction) {
             $menu->addItem('TagManager_TagManager', null, $this->urlForAction($defaultAction, $defaultParams), $orderId = 30);
@@ -51,9 +58,7 @@ class Menu extends \Piwik\Plugin\Menu
             // makes initial pageview slower otherwise
             $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($idSite);
 
-            if (empty($containers)) {
-                $defaultAction = 'gettingStarted';
-            } elseif (count($containers) == 1) {
+            if (count($containers) == 1) {
                 $firstContainer = array_shift($containers);
 
                 $accessValidator = StaticContainer::get('Piwik\Plugins\TagManager\Input\AccessValidator');
@@ -75,11 +80,10 @@ class Menu extends \Piwik\Plugin\Menu
         if (!$idSite || !Piwik::isUserHasViewAccess($idSite)) {
             return;
         }
-        
+
         $manageContainers = Piwik::translate('TagManager_ManageX', Piwik::translate('TagManager_Containers'));
 
         $paramsNoContainerId = array('idContainer' => null);// prevents eg error after deleting a container if idContainer is still set
-        $menu->addItem('TagManager_TagManager', 'TagManager_GettingStarted', $this->urlForAction('gettingStarted', $paramsNoContainerId), $orderId = 5);
         $menu->addItem('TagManager_TagManager', $manageContainers, $this->urlForAction('manageContainers', $paramsNoContainerId), $orderId = 99);
 
         $idContainer = Common::getRequestVar('idContainer', '', 'string');
@@ -92,9 +96,9 @@ class Menu extends \Piwik\Plugin\Menu
                 $container = null; // the container might be deleted by now
             }
             if (!empty($container)) {
-
                 $params = array('idContainer' => $idContainer); // not needed as it is already present in url but we make sure the id is set
-                $menuCategory = $container['name'];
+                $menuCategory = strlen($container['name']) > 50 ? substr($container['name'], 0, 50) . '…' : $container['name'];
+
 
                 if ($this->accessValidator->hasWriteCapability($idSite)) {
                     $menu->addItem($menuCategory, 'Dashboard', $this->urlForAction('dashboard', $params), $orderId = 104);
@@ -103,7 +107,6 @@ class Menu extends \Piwik\Plugin\Menu
                 $menu->addItem($menuCategory, 'TagManager_Tags', $this->urlForAction('manageTags', $params), $orderId = 105);
                 $menu->addItem($menuCategory, 'TagManager_Triggers', $this->urlForAction('manageTriggers', $params), $orderId = 110);
                 $menu->addItem($menuCategory, 'TagManager_Variables', $this->urlForAction('manageVariables', $params), $orderId = 115);
-                $menu->addItem($menuCategory, 'TagManager_Versions', $this->urlForAction('manageVersions', $params), $orderId = 115);
 
                 $previewEnabled = false;
                 foreach ($container['releases'] as $release) {
@@ -113,18 +116,24 @@ class Menu extends \Piwik\Plugin\Menu
                 }
 
                 if ($this->accessValidator->hasWriteCapability($idSite)) {
+                    $menu->addItem($menuCategory, 'TagManager_Versions', $this->urlForAction('manageVersions', $params), $orderId = 115);
                     if ($previewEnabled) {
-                        $menu->addItem($menuCategory, 'TagManager_DisablePreview', array(), $orderId = 130, false,'icon-bug', "tagManagerHelper.disablePreviewMode(" . json_encode($container['idcontainer']) . ")");
+                        $menu->addItem($menuCategory, 'TagManager_DisablePreview', array(), $orderId = 130, false, 'icon-bug', "tagManagerHelper.disablePreviewMode(" . json_encode($container['idcontainer']) . ")");
                     } else {
-                        $menu->addItem($menuCategory, 'TagManager_EnablePreviewDebug', array(), $orderId = 130, false,'icon-bug', "tagManagerHelper.enablePreviewMode(" . json_encode($container['idcontainer']) . ")");
+                        $menu->addItem($menuCategory, 'TagManager_EnablePreviewDebug', array(), $orderId = 130, false, 'icon-bug', "tagManagerHelper.enablePreviewMode(" . json_encode($container['idcontainer']) . ")");
                     }
 
-                    $menu->addItem($menuCategory, 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, function () { window.location.reload(); })");
+                    if (
+                        $this->accessValidator->hasUseCustomTemplatesCapability($idSite) ||
+                        (
+                            $this->accessValidator->hasWriteCapability($idSite) && $this->accessValidator->hasPublishLiveEnvironmentCapability($idSite)
+                        )
+                    ) {
+                        $menu->addItem($menuCategory, 'TagManager_Publish', array(), $orderId = 135, false, 'icon-rocket', "tagManagerHelper.editVersion(" . json_encode($container['idcontainer']) . ", 0, '')");
+                    }
                 }
-                $menu->addItem($menuCategory, 'TagManager_InstallCode', $this->urlForAction('releases', $params), $orderId = 140, false,'icon-embed', "tagManagerHelper.showInstallCode(" . json_encode($container['idcontainer']) . ")");
-
+                $menu->addItem($menuCategory, 'TagManager_InstallCode', $this->urlForAction('releases', $params), $orderId = 140, false, 'icon-embed', "tagManagerHelper.showInstallCode(" . json_encode($container['idcontainer']) . ")");
             }
         }
-
     }
 }

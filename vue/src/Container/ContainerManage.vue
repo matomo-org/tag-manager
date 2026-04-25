@@ -7,7 +7,9 @@
 <template>
   <div class="manageContainer">
     <div v-show="!editMode">
-      <ContainerList />
+      <ContainerList
+        :is-super-user="isSuperUser"
+      />
     </div>
     <div v-show="editMode">
       <ContainerEdit
@@ -28,7 +30,12 @@ interface ContainerManageState {
 }
 
 export default defineComponent({
-  props: {},
+  props: {
+    isSuperUser: {
+      type: Boolean,
+      required: true,
+    },
+  },
   components: {
     ContainerList,
     ContainerEdit,

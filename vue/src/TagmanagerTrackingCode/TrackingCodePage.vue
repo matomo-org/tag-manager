@@ -5,38 +5,42 @@
 -->
 
 <template>
-  <div v-if="currentAction === 'siteWithoutDataTabs'">
-    <p v-html="$sanitize(siteWithoutDataMtmIntro)"></p>
-    <br>
-    <p>
-      <strong>{{ translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro') }}</strong>
-    </p>
-    <TagmanagerTrackingCode
-      :show-container-row="showContainerRow"
-      :current-action="currentAction"
-      :showTestSection="isJsTrackerInstallCheckAvailable"/>
-  </div>
-  <ContentBlock
+  <component
+    :is="currentAction === 'getTrackingMethodsForSite' ? 'div' : 'ContentBlock'"
     anchor="tagmanager"
     :content-title="translate('TagManager_MatomoTagManager')"
-    v-else
   >
-    <p v-html="$sanitize(siteWithoutDataMtmIntro)"></p>
-    <br>
     <p>
+      {{ translate('TagManager_MtmTrackingCodeIntro') }}
+    </p>
+    <br>
+    <p class="followStepsHeading">
       <strong>{{ translate('SitesManager_SiteWithoutDataCloudflareFollowStepsIntro') }}</strong>
     </p>
-    <TagmanagerTrackingCode
-      :show-container-row="showContainerRow"
-      :current-action="currentAction"
-      :showTestSection="false"/>
-  </ContentBlock>
+    <ol style="list-style: inside decimal">
+      <TrackingCodeCommon
+        :show-container-row="showContainerRow"
+        :showBottom="true"
+        :showDescription="false"
+        :showPlainMtmSteps="true"
+        :showAdvancedOptions="currentAction === 'trackingCodeGenerator'"
+        :showTestSection="currentAction === 'getTrackingMethodsForSite'
+                          && isJsTrackerInstallCheckAvailable"
+        @fetchInstallInstructions="fetchInstallInstructions"
+        ref="trackingCodeCommon"
+      />
+    </ol>
+  </component>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { ContentBlock, translate, MatomoUrl } from 'CoreHome';
-import TagmanagerTrackingCode from './TagmanagerTrackingCode.vue';
+import { defineComponent, nextTick } from 'vue';
+import {
+  ContentBlock,
+  AjaxHelper,
+} from 'CoreHome';
+import TrackingCodeCommon from './TrackingCodeCommon.vue';
+import { InstallInstructions } from '../types';
 
 export default defineComponent({
   props: {
@@ -46,47 +50,38 @@ export default defineComponent({
   },
   components: {
     ContentBlock,
-    TagmanagerTrackingCode,
+    TrackingCodeCommon,
   },
-  computed: {
-    trackingInfoTextLine1() {
-      const manageContainersLink = `?${MatomoUrl.stringify({
-        ...MatomoUrl.urlParsed.value,
-        module: 'TagManager',
-        action: 'manageContainers',
-      })}`;
+  methods: {
+    fetchInstallInstructions() {
+      // eslint-disable-next-line
+      const refs = (this.$refs.trackingCodeCommon as any);
+      refs.installInstructions = [];
 
-      return translate(
-        'TagManager_MatomoTagManagerTrackingInfoLine1',
-        `<a href="${manageContainersLink}">`,
-        '</a>',
-      );
-    },
-    trackingInfoTextLine2() {
-      const gettingStartedLink = `?${MatomoUrl.stringify({
-        ...MatomoUrl.urlParsed.value,
-        module: 'TagManager',
-        action: 'gettingStarted',
-      })}`;
+      if (!refs?.site?.id || !refs?.environment) {
+        return;
+      }
 
-      return translate(
-        'TagManager_MatomoTagManagerTrackingInfoLine2',
-        `<a href="${gettingStartedLink}">`,
-        '</a>',
-      );
-    },
-    siteWithoutDataMtmIntro() {
-      const gettingStartedLink = `?${MatomoUrl.stringify({
-        ...MatomoUrl.urlParsed.value,
-        module: 'TagManager',
-        action: 'gettingStarted',
-      })}`;
-
-      return translate(
-        'TagManager_SiteWithoutDataMtmIntro',
-        `<a href="${gettingStartedLink}">`,
-        '</a>',
-      );
+      refs.isLoading = true;
+      AjaxHelper.fetch<InstallInstructions[]>({
+        method: 'TagManager.getContainerInstallInstructions',
+        filter_limit: '-1',
+        idContainer: refs?.idContainer,
+        environment: refs?.environment,
+        idSite: refs?.site?.id,
+      }).then((instructions) => {
+        refs.installInstructions = instructions;
+        nextTick(() => {
+          const codeblocks = Array.isArray(this.$refs.codeblock)
+            ? this.$refs.codeblock
+            : [this.$refs.codeblock];
+          (codeblocks as HTMLElement[]).forEach((n) => {
+            $(n).effect('highlight', {}, 1500);
+          });
+        });
+      }).finally(() => {
+        refs.isLoading = false;
+      });
     },
   },
 });

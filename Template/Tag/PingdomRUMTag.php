@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
@@ -14,23 +15,28 @@ use Piwik\Validators\NotEmpty;
 
 class PingdomRUMTag extends BaseTag
 {
-    public function getName() {
+    public function getName()
+    {
         return "Pingdom Real User Monitoring (RUM)";
     }
 
-    public function getCategory() {
+    public function getCategory()
+    {
         return self::CATEGORY_ANALYTICS;
     }
 
-    public function getIcon() {
+    public function getIcon()
+    {
         return 'plugins/TagManager/images/icons/pingdom.svg';
     }
 
-    public function getParameters() {
+    public function getParameters()
+    {
         return array(
             $this->makeSetting('pingdomROMId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_PingdomRUMTagIdTitle');
                 $field->description = Piwik::translate('TagManager_PingdomRUMTagIdDescription');
+                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_RaygunTagApiKeyPlaceholder')];
                 $field->validators[] = new NotEmpty();
                 $field->transform = function ($value) {
                     return trim($value);
@@ -38,5 +44,4 @@ class PingdomRUMTag extends BaseTag
             }),
         );
     }
-
 }

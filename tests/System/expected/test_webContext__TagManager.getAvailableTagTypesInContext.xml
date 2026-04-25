@@ -1,43 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <result>
 	<row>
-		<name>Ads</name>
-		<types>
-			<row>
-				<id>BingUET</id>
-				<name>Bing Ads UET Tag</name>
-				<description>Adds the Bing Ads Universal Event Tracking Tag to your website so you can apply conversion tracking to your Bing ad campaigns.</description>
-				<category>Ads</category>
-				<icon>plugins/TagManager/images/icons/bing.svg</icon>
-				<help>The tag tracks what your customers are doing after they click on your Bing ad.</help>
-				<order>9999</order>
-				<contexts>
-					<row>web</row>
-				</contexts>
-				<hasAdvancedSettings>1</hasAdvancedSettings>
-				<isCustomTemplate>0</isCustomTemplate>
-				<parameters>
-					<row>
-						<name>bingAdID</name>
-						<title>ID</title>
-						<value />
-						<defaultValue />
-						<type>string</type>
-						<uiControl>text</uiControl>
-						<uiControlAttributes>
-						</uiControlAttributes>
-						<availableValues />
-						<description>You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Manager.</description>
-						<inlineHelp />
-						<introduction />
-						<condition />
-						<fullWidth>0</fullWidth>
-					</row>
-				</parameters>
-			</row>
-		</types>
-	</row>
-	<row>
 		<name>Analytics</name>
 		<types>
 			<row>
@@ -177,6 +140,102 @@
 						</component>
 					</row>
 					<row>
+						<name>isEcommerceView</name>
+						<title>Is Ecommerce View</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description/>
+						<inlineHelp>Ecommerce plugin required.&lt;br /&gt;&lt;br /&gt;Records the current page view as an item (product) page view or an Ecommerce Category page view.</inlineHelp>
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>productSKU</name>
+						<title>Product SKU</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Item's SKU code being viewed. On a category page this should be empty.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot; &amp;&amp; isEcommerceView</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>productName</name>
+						<title>Product Name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Item's Name being viewed. On a category page this should be empty.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot; &amp;&amp; isEcommerceView</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>categoryName</name>
+						<title>Category Name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Category page being viewed. On an item's page, this is the item's category.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot; &amp;&amp; isEcommerceView</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>price</name>
+						<title>Price</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Item's display price, not used in standard Matomo reports, but output in API product reports.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>trackingType == &quot;pageview&quot; &amp;&amp; isEcommerceView</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
 						<name>eventCategory</name>
 						<title>Event Category</title>
 						<value />
@@ -246,8 +305,8 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>The event's value, for example &quot;50&quot; as in user has stayed on the website for 50 seconds.</description>
-						<inlineHelp />
+						<description>Specify a value or choose a variable.</description>
+						<inlineHelp>&lt;br&gt;&lt;strong&gt;Note:&lt;/strong&gt; The value must be &lt;strong&gt;numeric&lt;/strong&gt;. Negative values are allowed but non-numeric values will automatically be replaced with 0.</inlineHelp>
 						<introduction />
 						<condition>trackingType == &quot;event&quot;</condition>
 						<fullWidth>0</fullWidth>
@@ -255,6 +314,60 @@
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
 						</component>
+					</row>
+					<row>
+						<name>customDimensions</name>
+						<title>Custom Dimensions</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>index</key>
+								<title>Index</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues/>
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues/>
+							</field2>
+						</uiControlAttributes>
+						<availableValues/>
+						<description>Optionally, set a value for one or more custom dimensions.</description>
+						<inlineHelp/>
+						<introduction/>
+						<condition/>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>areCustomDimensionsSticky</name>
+						<title>Persist custom dimensions</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues/>
+						<description/>
+						<inlineHelp>When this feature is enabled, the custom dimensions will be used for all subsequent requests while the page is active.&lt;br /&gt;&lt;br /&gt;By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag.</inlineHelp>
+						<introduction/>
+						<condition/>
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -280,6 +393,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. ABC123456789</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Your Emarsys Merchant ID</description>
@@ -290,12 +404,13 @@
 					</row>
 					<row>
 						<name>commandCategory</name>
-						<title>category</title>
+						<title>Category (optional)</title>
 						<value />
 						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>Category matching the product catalog (e.g. Bikes &gt; Road Bikes)</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Report the category currently browsed by the visitor.</description>
@@ -306,12 +421,13 @@
 					</row>
 					<row>
 						<name>commandView</name>
-						<title>view</title>
+						<title>View (optional)</title>
 						<value />
 						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>ID of item viewed (e.g. item_3)</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Report a product view.</description>
@@ -322,12 +438,13 @@
 					</row>
 					<row>
 						<name>commandTag</name>
-						<title>tag</title>
+						<title>Tag (optional)</title>
 						<value />
 						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>Name of defined custom data field (e.g. content_pageview)</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Add an arbitrary tag to the current event. The tag is collected and can be accessed later from other Emarsys products.</description>
@@ -355,12 +472,12 @@
 				</parameters>
 			</row>
 			<row>
-				<id>GoogleAnalyticsUniversal</id>
-				<name>Google Analytics (Universal)</name>
-				<description>Google Analytics is a web analytics service offered by Google.</description>
+				<id>GoogleAnalytics4</id>
+				<name>Google Analytics 4 (GA4)</name>
+				<description>Analytics tools and solutions for your business.</description>
 				<category>Analytics</category>
-				<icon>plugins/TagManager/images/icons/google-analytics-icon.svg</icon>
-				<help>This tag lets you track website pageviews into your Google Analytics. To obtain the Property-ID please log in to your Google Analytics account.</help>
+				<icon>plugins/TagManager/images/icons/google-analytics-4.svg</icon>
+				<help />
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -369,8 +486,8 @@
 				<isCustomTemplate>0</isCustomTemplate>
 				<parameters>
 					<row>
-						<name>propertyId</name>
-						<title>Property ID</title>
+						<name>measurementId</name>
+						<title>Measurement Id</title>
 						<value />
 						<defaultValue />
 						<type>string</type>
@@ -378,29 +495,179 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description>For example &quot;UA-XXXXX-Y&quot;</description>
+						<description />
+						<inlineHelp>Input your Measurement ID. &lt;a href=&quot;https://support.google.com/analytics/answer/12270356&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;Learn more&lt;/a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>GoogleAnalytics4Event</id>
+				<name>Google Analytics: GA4 Event</name>
+				<description>Send an event to Google Analytics 4. This tag requires Google Tag (gtag.js) tag to be configured.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/google-analytics-4.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>eventName</name>
+						<title>Event name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>Specify the name of the event. &lt;a href=&quot;https://support.google.com/analytics/answer/9267735&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;Learn more&lt;/a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventParameters</name>
+						<title />
+						<value />
+						<defaultValue />
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>parameter</key>
+								<title>Parameter</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
 						<inlineHelp />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
 					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>GoogleTag</id>
+				<name>Google Tag (gtag.js)</name>
+				<description>The Google tag provides the Google products you use with data to measure the effectiveness of your website and ads.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/google-tag.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
 					<row>
-						<name>trackingType</name>
-						<title>Tracking Type</title>
-						<value>pageview</value>
-						<defaultValue>pageview</defaultValue>
+						<name>googleTagId</name>
+						<title>Tag ID</title>
+						<value />
+						<defaultValue />
 						<type>string</type>
-						<uiControl>select</uiControl>
+						<uiControl>text</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues>
-							<pageview>Pageview</pageview>
-						</availableValues>
-						<description>Only the tracking type &quot;Pageview&quot; is currently supported.</description>
+						<availableValues />
+						<description />
+						<inlineHelp>A tag ID is an identifier that you put on your page to load a given Google tag. &lt;a href=&quot;https://support.google.com/analytics/answer/9267735&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;Learn more.&lt;/a&gt;</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Hotjar</id>
+				<name>Hotjar</name>
+				<description>Website Heatmaps &amp; Behavior Analytics Tools.</description>
+				<category>Analytics</category>
+				<icon>plugins/TagManager/images/icons/hotjar.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>hjid</name>
+						<title>Hotjar Site ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your Hotjar Site ID. You can get your Hotjar Site ID from the Sites section in your Hotjar account.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>hjsv</name>
+						<title>Hotjar snippet version</title>
+						<value>6</value>
+						<defaultValue>6</defaultValue>
+						<type>integer</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Hotjar code snippet version.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
 					</row>
 				</parameters>
 			</row>
@@ -426,6 +693,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1234567890abcdef1234567890abcdef</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Site ID by logging into Pingdom, going to &quot;Monitoring&quot; and clicking on &quot;Real User Monitoring&quot;. Every added site will get its own Site ID.</description>
@@ -458,6 +726,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 123456</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Your Visual Website Optimizer Account ID</description>
@@ -474,7 +743,7 @@
 				<description>etracker is a web analytics system, you can choose to send a pageview or an event.</description>
 				<category>Analytics</category>
 				<icon>plugins/TagManager/images/icons/etracker.svg</icon>
-				<help />
+				<help>The etracker tag tracks and sends data on user interactions for pageviews or specific events.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
@@ -942,10 +1211,6 @@
 						<introduction />
 						<condition>trackingType == &quot;transaction&quot;</condition>
 						<fullWidth>0</fullWidth>
-						<component>
-							<plugin>TagManager</plugin>
-							<name>FieldVariableTemplate</name>
-						</component>
 					</row>
 					<row>
 						<name>etrackerAddToCartProduct</name>
@@ -1054,6 +1319,438 @@
 		</types>
 	</row>
 	<row>
+		<name>Ads</name>
+		<types>
+			<row>
+				<id>BingUET</id>
+				<name>Bing Ads UET Tag</name>
+				<description>Adds the Bing Ads Universal Event Tracking Tag to your website so you can apply conversion tracking to your Bing ad campaigns.</description>
+				<category>Ads</category>
+				<icon>plugins/TagManager/images/icons/bing.svg</icon>
+				<help>The tag tracks what your customers are doing after they click on your Bing ad.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>bingAdID</name>
+						<title>ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. 1234567890</placeholder>
+						</uiControlAttributes>
+						<availableValues />
+						<description>You can find the Bing Ad ID when creating a new tracking code in the Bing Ad Campaign Manager.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>GoogleAdsConversion</id>
+				<name>Google Ads: Conversion</name>
+				<description>Send an event to track conversions. This tag requires Google Tag (gtag.js) tag to be configured.</description>
+				<category>Ads</category>
+				<icon>plugins/TagManager/images/icons/google-ads.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>googleAdsConversionId</name>
+						<title>Conversion ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>To find the Conversion ID, &lt;a href=&quot;https://support.google.com/tagmanager/answer/6105160&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;see Google Ads Conversion Tracking&lt;a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>googleAdsConversionLabel</name>
+						<title>Conversion label</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>To find the Conversion Label, &lt;a href=&quot;https://support.google.com/tagmanager/answer/6105160&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;see Google Ads Conversion Tracking&lt;a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>googleAdsConversionValue</name>
+						<title>Conversion value</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>googleAdsConversionTransactionId</name>
+						<title>Transaction ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>Passing a dynamic transaction ID helps avoid double counting conversions. The transaction ID must be unique for each transaction. The transaction IDs must not include any information that could be used to identify individual customers. &lt;a href=&quot;https://support.google.com/google-ads/answer/6386790&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;Learn more&lt;a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>googleAdsConversionCurrency</name>
+						<title>Currency code</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
+		<name>Consent Management</name>
+		<types>
+			<row>
+				<id>Axeptio</id>
+				<name>Axeptio</name>
+				<description>Axeptio is a low-code Consent Management Platform.</description>
+				<category>Consent Management</category>
+				<icon>plugins/TagManager/images/icons/axeptio.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>projectId</name>
+						<title>Project Id</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Enter your Project ID. You can find it in the settings menu of your Axeptio project.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>CookieYes</id>
+				<name>CookieYes</name>
+				<description>CookieYes is a cookie consent solution that helps your website achieve GDPR and CCPA compliance.</description>
+				<category>Consent Management</category>
+				<icon>plugins/TagManager/images/icons/cookieyes.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>cookieYesWebsiteKey</name>
+						<title>Website key</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>Enter your website key from CookieYes. To find your CookieYes website key, log in to your CookieYes account &gt; Select your website from the dropdown on the header &gt; Navigate to Advanced Settings &gt; Click Get installation code &gt; Copy your &lt;strong&gt;website key&lt;/strong&gt; from the src attribute (e.g. src= &quot;https://cdn-cookieyes.com/client_data/&lt;strong&gt;your_website_key&lt;/strong&gt;/script.js&quot;).</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Cookiebot</id>
+				<name>Cookiebot</name>
+				<description>Cookiebot CMP makes the use of cookies and online tracking of your website GDPR compliant.</description>
+				<category>Consent Management</category>
+				<icon>plugins/TagManager/images/icons/cookiebot.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>cookiebotId</name>
+						<title>Domain Group ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Insert the domain group id provided in the &quot;Your Script&quot; section on Cookiebot website.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>GoogleConsentModeV2</id>
+				<name>Google Consent Mode</name>
+				<description>Consent mode v2 allows you to communicate to Google the consent status of your users regarding cookies or application IDs.</description>
+				<category>Consent Management</category>
+				<icon>plugins/TagManager/images/icons/google-consent-mode.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>consentAction</name>
+						<title>Consent mode action</title>
+						<value>update</value>
+						<defaultValue>update</defaultValue>
+						<type>array</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<default>default</default>
+							<update>update</update>
+						</availableValues>
+						<description>Select 'default' to set default values, and 'update' to handle users consent.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>consentTypes</name>
+						<title>Consent type</title>
+						<value>
+							<row>
+								<consent_type>ad_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>ad_user_data</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>ad_personalization</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>analytics_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>functionality_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>personalization_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>security_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+						</value>
+						<defaultValue>
+							<row>
+								<consent_type>ad_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>ad_user_data</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>ad_personalization</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>analytics_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>functionality_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>personalization_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+							<row>
+								<consent_type>security_storage</consent_type>
+								<consent_state>granted</consent_state>
+							</row>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>consent_type</key>
+								<title>Consent type</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>consent_state</key>
+								<title>Consent state</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp>The consent state must be 'denied' before the user gives consent. Once consent is received, you can trigger this tag with the action mode set to 'update' and all consents state set to 'granted' for all consent types. (All consent types are available in the Google documentation). Consent state must be 'denied' or 'granted', no other values are allowed. &lt;a target="_blank" rel="noreferrer noopener" href="https://matomo.org/faq/tag-manager/google-consent-tag-in-matomo-tag-manager/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=Tag.TagManager.GoogleConsentMode"&gt;Learn more&lt;/a&gt;.</inlineHelp>
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>OneTrust</id>
+				<name>OneTrust</name>
+				<description>The OneTrust Consent Management Platform orchestrates the collection of consent across web, mobile, and CTV.</description>
+				<category>Consent Management</category>
+				<icon>plugins/TagManager/images/icons/one-trust.svg</icon>
+				<help />
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>domain</name>
+						<title>Data-domain-script</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>To find your OneTrust data-domain-script, log into OneTrust, navigate to Scripts, select your desired domain, select the Production Scripts tab, and  find your data-domain-script in the Production CDN Script.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+		</types>
+	</row>
+	<row>
 		<name>Custom</name>
 		<types>
 			<row>
@@ -1078,10 +1775,11 @@
 						<type>string</type>
 						<uiControl>textarea</uiControl>
 						<uiControlAttributes>
+							<spellcheck>false</spellcheck>
 						</uiControlAttributes>
 						<availableValues />
 						<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
-						<inlineHelp>&lt;a href=&quot;https://matomo.org/faq/tag-manager/faq_26815/&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
+						<inlineHelp>&lt;a target="_blank" rel="noreferrer noopener" href=&quot;https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=App.TagManager.getParameters&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1192,6 +1890,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1234567890</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can find your API key in your project settings from your Bugsnag dashboard.</description>
@@ -1312,6 +2011,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1234567890abcdef1234567890abcdef</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>When you create a new application in your Raygun dashboard, your app API key is displayed at the top of the instructions page. You can also find the API key by clicking the &quot;Application Settings&quot; button in the side bar of the Raygun dashboard.</description>
@@ -1360,6 +2060,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. https://12345abc@sentry.io/1234567</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The DSN (Data Source Name) of your sentry.io project. It should look like 'https://&lt;key&gt;@sentry.io/&lt;project&gt;'</description>
@@ -1453,6 +2154,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. mdp4r5w7rh3y</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>The Drift ID is the text between brackets without quotes at the end of the JS snippet: drift.load('mdp4r5w7rh3y');</description>
@@ -1485,6 +2187,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 123456789012345</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description />
@@ -1517,6 +2220,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 123456</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can find the partner ID by logging into your LinkedIn Campaign Manager, and clicking on &quot;Account Assets&quot; followed by &quot;Insight Tag&quot;. If &quot;Insight Tag&quot; is not available, please set up the Insight Tag by clicking on &quot;Conversion Tracking&quot;. There you can enter a domain and continue the set up. You will find the partner ID in the line `_linkedin_partner_id = &quot;123456&quot;`. In this example the ID would be &quot;123456&quot;.</description>
@@ -1524,6 +2228,27 @@
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>conversionId</name>
+						<title>LinkedIn Conversion ID (optional)</title>
+						<value/>
+						<defaultValue/>
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. 1234567890</placeholder>
+						</uiControlAttributes>
+						<availableValues/>
+						<description>An optional conversion ID if you would like a specific conversion recorded when this tag executes.</description>
+						<inlineHelp>If you are not sure where to find the conversion ID, see the &lt;a href="https://www.linkedin.com/help/lms/answer/a1437736" target="_blank" rel="noreferrer noopener"&gt;LinkedIn documentation&lt;/a&gt; for more information.</inlineHelp>
+						<introduction/>
+						<condition/>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldTextareaVariable</name>
+						</component>
 					</row>
 				</parameters>
 			</row>
@@ -1549,6 +2274,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 1234abcd</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Insert the Livezilla ID from your Dynamic Code section.</description>
@@ -1565,6 +2291,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. https://www.example.com</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Enter the Domain where Livezilla is installed. Example: https://www.example.com</description>
@@ -1660,7 +2387,7 @@
 						<description>If you want to add an In-Page App enter the App ID here. It is about eight digits long. The App ID is not required for the Total Share Counter.</description>
 						<inlineHelp />
 						<introduction />
-						<condition>shareaholicInPageApp &amp;&amp; shareaholicInPageApp !== &quot;total_share_count&quot;</condition>
+						<condition>shareaholicInPageApp=="share_buttons" || shareaholicInPageApp=="follow_buttons" || shareaholicInPageApp=="recommendations"</condition>
 						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
@@ -1711,6 +2438,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 123451c27295ad739e46b6b1</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Site ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Property Settings&quot;. The Site ID has typically about 25 characters, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
@@ -1727,6 +2455,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. default</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Widget ID by logging into Tawk.to, going to &quot;Administration&quot; and clicking on &quot;Chat Widget&quot; and selecting an appropriate widget. The widget ID can be retrieved from &quot;Direct Chat Link&quot; as https://tawk.to/chat/{SITE_ID}/{WIDGET_ID}.</description>
@@ -1759,6 +2488,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>e.g. 123451c27295ad739e46b6b1</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>You can get the Site ID by logging into Zendesk Chat, going to &quot;Settings&quot; and clicking on &quot;Widget&quot;. The Site ID has typically about 32 characters and is the text coming directly after &quot;https://v2.zopim.com/?&quot;, for example &quot;123451c27295ad739e46b6b1&quot;.</description>
@@ -1796,6 +2526,7 @@
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
+							<placeholder>Hexidecimal color (e.g. #11ee33)</placeholder>
 						</uiControlAttributes>
 						<availableValues />
 						<description>Please enter a color as a hexadecimal string (e.g. '#11ee33')</description>

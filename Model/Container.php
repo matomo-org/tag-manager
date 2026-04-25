@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Matomo - free/libre analytics platform
  *
  * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
+
 namespace Piwik\Plugins\TagManager\Model;
 
 use Piwik\Container\StaticContainer;
@@ -19,11 +21,11 @@ use Piwik\Plugins\TagManager\Input\Description;
 use Piwik\Plugins\TagManager\Input\IdSite;
 use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator;
-
+use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
+use Piwik\Validators\NumberRange;
 
 class Container extends BaseModel
 {
-
     /**
      * @var ContainersDao
      */
@@ -54,8 +56,14 @@ class Container extends BaseModel
      */
     private $environment;
 
-    public function __construct(ContainersDao $containersDao, ContainerVersionsDao $containerVersionsDao, ContainerReleaseDao $containerPublishesDao, ContextProvider $contextProvider, ContainerIdGenerator $containerIdGenerator, Environment $environment)
-    {
+    public function __construct(
+        ContainersDao $containersDao,
+        ContainerVersionsDao $containerVersionsDao,
+        ContainerReleaseDao $containerPublishesDao,
+        ContextProvider $contextProvider,
+        ContainerIdGenerator $containerIdGenerator,
+        Environment $environment
+    ) {
         $this->dao = $containersDao;
         $this->versionsDao = $containerVersionsDao;
         $this->releasesDao = $containerPublishesDao;
@@ -95,7 +103,6 @@ class Container extends BaseModel
         if (!empty($container['releases'])) {
             foreach ($container['releases'] as $release) {
                 if ($release['environment'] === Environment::ENVIRONMENT_PREVIEW) {
-
                     // we only want to regenerate the containers if it has a preview enabled
                     $context = $this->contextProvider->getContext($container['context']);
                     if ($context) {
@@ -143,7 +150,7 @@ class Container extends BaseModel
         }
     }
 
-    private function validateContainer($idSite, $name, $description)
+    private function validateContainer($idSite, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer)
     {
         $site = new IdSite($idSite);
         $site->check();
@@ -153,18 +160,24 @@ class Container extends BaseModel
 
         $description = new Description($description);
         $description->check();
+
+        $numberRange = new NumberRange(0, 1);
+        $numberRange->validate($ignoreGtmDataLayer);
+        $numberRange->validate($activelySyncGtmDataLayer);
+
+        $numberRange->validate($isTagFireLimitAllowedInPreviewMode);
     }
 
-    public function addContainer($idSite, $context, $name, $description)
+    public function addContainer($idSite, $context, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer)
     {
-        $this->validateContainer($idSite, $name, $description);
+        $this->validateContainer($idSite, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
         $this->contextProvider->checkIsValidContext($context);
 
         $createdDate = $this->getCurrentDateTime();
 
         $idContainer = $this->containerIdGenerator->generateId();
 
-        $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate);
+        $this->dao->createContainer($idSite, $idContainer, $context, $name, $description, $createdDate, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
 
         $this->versionsDao->createDraftVersion($idSite, $idContainer, $createdDate);
 
@@ -173,13 +186,16 @@ class Container extends BaseModel
         return $idContainer;
     }
 
-    public function updateContainer($idSite, $idContainer, $name, $description)
+    public function updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer)
     {
-        $this->validateContainer($idSite, $name, $description);
+        $this->validateContainer($idSite, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
 
         $columns = array(
             'name' => $name,
-            'description' => $description
+            'description' => $description,
+            'ignoreGtmDataLayer' => $ignoreGtmDataLayer,
+            'isTagFireLimitAllowedInPreviewMode' => $isTagFireLimitAllowedInPreviewMode,
+            'activelySyncGtmDataLayer' => $activelySyncGtmDataLayer,
         );
         $this->updateContainerColumns($idSite, $idContainer, $columns);
         $this->generateContainer($idSite, $idContainer);
@@ -466,5 +482,103 @@ class Container extends BaseModel
 
         return $containerRelease;
     }
-}
 
+    /**
+     * Copy a container, with the option of from one site to another. It will generate a new container ID, but try to
+     * keep everything else the same. If copying to the same site, it will automatically update the name to make it
+     * unique.
+     *
+     * @param int $idSite ID of the site the container being copied belongs to
+     * @param string $idContainer ID of the container being copied
+     * @param null|int $idDestinationSite Optional ID of the site to copy the container to. If left empty, the source site ID
+     * will be used
+     * @return string ID of the newly created copy container
+     */
+    public function copyContainer(int $idSite, string $idContainer, ?int $idDestinationSite = 0): string
+    {
+        $this->checkContainerExists($idSite, $idContainer);
+
+        // If the destination site is empty, assume the source is the destination
+        $idDestinationSite = $idDestinationSite === 0 ? $idSite : $idDestinationSite;
+
+        $container = $this->getContainer($idSite, $idContainer);
+        $containerName = $container['name'];
+        $idContainerVersion = $container['draft']['idcontainerversion'] ?? null;
+
+        // Make sure that the name of the container isn't already in use for the destination site
+        $container['name'] = $this->dao->makeCopyNameUnique($idDestinationSite, $container['name']);
+
+        $idContainerNew = $this->addContainer(
+            $idDestinationSite,
+            $container['context'],
+            $container['name'],
+            $container['description'],
+            $container['ignoreGtmDataLayer'],
+            $container['isTagFireLimitAllowedInPreviewMode'],
+            $container['activelySyncGtmDataLayer']
+        );
+
+        $containerNew = $this->getContainer($idDestinationSite, $idContainerNew);
+        $idContainerNewVersion = $containerNew['draft']['idcontainerversion'];
+
+        $exported = $this->getExport()->exportContainerVersion($idSite, $idContainer, $container['draft']['idcontainerversion']);
+        $import = StaticContainer::get('Piwik\Plugins\TagManager\API\Import');
+        $import->importContainerVersion($exported, $idDestinationSite, $idContainerNew, $idContainerNewVersion);
+
+        // Make sure to record the activity for the report being copied
+        if (class_exists('\Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData')) {
+            $additionalData = [
+                'idSite' => $idSite,
+                'idDestinationSites' => $idDestinationSite,
+                'idContainerVersion' => $idContainerVersion,
+                'idContainer' => $idContainer,
+            ];
+            (
+                new \Piwik\Plugins\ActivityLog\ActivityParamObject\EntityDuplicatedData(
+                    'TagManager_Container',
+                    $containerName,
+                    $idContainerNewVersion,
+                    $idSite,
+                    [$idDestinationSite],
+                    $additionalData
+                )
+            )->postActivityEvent();
+        }
+
+        // If we're copying to the same site, we're done
+        if ($idSite === $idDestinationSite) {
+            return $idContainerNew;
+        }
+
+        $this->updateVariablesWithNewSiteId($idDestinationSite, $idContainerNewVersion);
+
+        return $idContainerNew;
+    }
+
+    private function updateVariablesWithNewSiteId(int $idSite, int $idContainerVersion)
+    {
+        // Check the Matomo configuration variables to update the site ID
+        $variable = StaticContainer::get('Piwik\Plugins\TagManager\Model\Variable');
+        $newVariables = $variable->getContainerVariables($idSite, $idContainerVersion);
+        foreach ($newVariables as $newVariable) {
+            // We only care about Matomo configuration variables
+            if (!isset($newVariable['type']) || $newVariable['type'] !== MatomoConfigurationVariable::ID) {
+                continue;
+            }
+
+            // Update the site ID to match the site to which the container/variables belong
+            $parameters = $newVariable['parameters'];
+            $parameters['idSite'] = $idSite;
+            $variable->updateContainerVariable(
+                $idSite,
+                $idContainerVersion,
+                $newVariable['idvariable'],
+                $newVariable['name'],
+                $parameters,
+                $newVariable['default_value'],
+                $newVariable['lookup_table'],
+                $newVariable['description']
+            );
+        }
+    }
+}
