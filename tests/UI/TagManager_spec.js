@@ -246,12 +246,17 @@ describe("TagManager", function () {
     });
 
     it('should show the manage website screen', async function () {
+        permissions.setSuperUser();
         const urlToTest = "?module=SitesManager&action=index&idSite=2&period=day&date=yesterday&showaddsite=false";
         await page.goto(urlToTest);
         await capture.page(page, 'manageWebsites')
     });
 
     it('should show the container detail when delete button is pressed', async function () {
+        permissions.setSuperUser();
+        const urlToTest = "?module=SitesManager&action=index&idSite=2&period=day&date=yesterday&showaddsite=false";
+        await page.goto(urlToTest);
+        await page.waitForNetworkIdle();
         const pageElement = await page.$('.page');
         await page.evaluate(function(){
           $('.sitesManagerList .card-content:eq(1) .icon-delete').click()

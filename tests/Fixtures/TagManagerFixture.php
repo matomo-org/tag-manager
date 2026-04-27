@@ -67,6 +67,12 @@ class TagManagerFixture extends Fixture
         $this->setUpWebsite();
         $this->setUpContainers();
         $this->trackFirstVisit();
+
+        // Some schema changes are only detected after the test environment has
+        // finished activating plugins and the fixture has populated data.
+        // Running one final update pass keeps UI requests from being redirected
+        // to CoreUpdater during screenshot tests.
+        self::updateDatabase();
     }
 
     public function tearDown(): void
