@@ -153,7 +153,7 @@ describe("ContainerTrigger", function () {
 
     it('should be able to create a new trigger and show update afterwards', async function () {
         await createOrUpdateTrigger();
-      await page.waitForTimeout(250);
+        await page.waitForTimeout(250);
         await capture.page(page, 'create_new_shown_in_list');
     });
 
@@ -253,6 +253,7 @@ describe("ContainerTrigger", function () {
         await setParameterValue('name', 'Test trigger with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890A');
         await createOrUpdateTrigger();
         await page.waitForTimeout(250);
+        await page.mouse.move(10, 10);
         await capture.page(page, 'create_new_long_name');
     });
 
@@ -317,6 +318,10 @@ describe("ContainerTrigger", function () {
         });
         await page.evaluate(() => $('div.matomo-field-select div.select-wrapper input.dropdown-trigger')[0].click());
         await page.waitForTimeout(250);
-        await capture.page(page, 'copy_trigger_container_select');
+        await capture.selector(
+          page,
+          'copy_trigger_container_select',
+          '.ui-dialog.mtmCopyTrigger, .ui-dialog.mtmCopyTrigger ul.dropdown-content'
+        );
     });
 });
