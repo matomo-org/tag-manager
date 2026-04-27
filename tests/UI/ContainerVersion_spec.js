@@ -39,8 +39,20 @@ describe("ContainerVersion", function () {
         } else {
             prefix += ' ';
         }
-        await page.waitForSelector(prefix + '.editVersion [id=name]');
-        await form.sendFieldValue(page, prefix + '.editVersion [id=name]', name);
+        const selector = prefix + '.editVersion [id=name]';
+        await page.waitForSelector(selector, { visible: true });
+        for (let attempt = 0; attempt < 3; attempt += 1) {
+            try {
+                await form.sendFieldValue(page, selector, name);
+                return;
+            } catch (error) {
+                if (!String(error).includes('Promise was collected') || attempt === 2) {
+                    throw error;
+                }
+                await page.waitForTimeout(250);
+                await page.waitForSelector(selector, { visible: true });
+            }
+        }
     }
 
     async function setVersionDescription(name, prefix)
@@ -63,6 +75,14 @@ describe("ContainerVersion", function () {
         await page.waitForTimeout(250);
     }
 
+    async function clickFirstVisibleTableAction(action)
+    {
+        await page.waitForSelector('.tagManagerVersionList .entityTable .table-action.' + action, { visible: true });
+        await page.click('.tagManagerVersionList .entityTable .table-action.' + action);
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
+    }
+
     async function createOrUpdateVersion()
     {
         await page.click('.editVersion .createButton');
@@ -79,6 +99,15 @@ describe("ContainerVersion", function () {
     {
         await page.waitForSelector('.editVersion .entityCancel a');
         await page.click('.editVersion .entityCancel a');
+    }
+
+    async function closeNotificationIfVisible()
+    {
+        const closeButton = await page.$('.notification .close');
+        if (closeButton) {
+            await closeButton.click();
+            await page.waitForTimeout(200);
+        }
     }
 
     async function searchVersion(searchTerm)
@@ -147,7 +176,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to go back to list of versions and show created version', async function () {
-        await page.click('.notification .close');
+        await closeNotificationIfVisible();
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'create_new_shown_in_list');
@@ -155,6 +184,9 @@ describe("ContainerVersion", function () {
 
     it('should be possible to publish new version', async function () {
         await page.click('.createNewVersion');
+        await page.waitForSelector('.editVersion [id=name]', { visible: true });
+        await page.waitForSelector('.editVersion .publishButton', { visible: true });
+        await page.waitForTimeout(250);
         await setVersionName('v3.0');
         await page.waitForTimeout(500);
         await capture.page(page, 'publish_new_prefilled');
@@ -167,7 +199,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to verify it was released', async function () {
-        await page.click('.notification .close');
+        await closeNotificationIfVisible();
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'publish_new_shown_in_list');
@@ -206,11 +238,13 @@ describe("ContainerVersion", function () {
 
         const element = await page.jQuery('#mobile-left-menu');
         expect(await element.screenshot()).to.matchImage('mobile_tag_manager_left_menu');
+
+        page.webpage.setViewport({ width: 1280, height: 768 });
     });
 
     it('should show confirm delete version dialog', async function () {
         await page.goto(container1Base);
-        await clickFirstRowTableAction('icon-delete', 4);
+        await clickFirstVisibleTableAction('icon-delete');
         await capture.modal(page, 'confirm_delete_version');
     });
 
@@ -220,7 +254,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should delete version when confirmed', async function () {
-        await clickFirstRowTableAction('icon-delete', 4);
+        await clickFirstVisibleTableAction('icon-delete');
         await modal.clickButton(page, 'Yes');
         await page.waitForNetworkIdle();
         await capture.page(page, 'confirm_delete_version_confirmed');

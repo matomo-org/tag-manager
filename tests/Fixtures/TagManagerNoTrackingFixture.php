@@ -18,5 +18,9 @@ class TagManagerNoTrackingFixture extends TagManagerFixture
     {
         $this->setUpWebsite();
         $this->setUpContainers();
+
+        // Keep this fixture aligned with TagManagerFixture so UI requests do not
+        // get redirected to CoreUpdater when running the empty-site specs.
+        self::updateDatabase();
     }
 }
