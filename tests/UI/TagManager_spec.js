@@ -5,10 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 describe("TagManager", function () {
-    this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
-    this.optionsOverride = {
-        'persist-fixture-data': false
-    };
+    this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerUiFixture";
 
     var generalParamsSite1 = '?idSite=2&period=day&date=2010-01-03',
         generalParamsSite5 = '?idSite=5&period=day&date=2010-01-03',

@@ -5,10 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 describe("ContainerVersion", function () {
-    this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
-    this.optionsOverride = {
-        'persist-fixture-data': false
-    };
+    this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerVersionUiFixture";
 
     var generalParamsSite1 = '?idSite=2&period=day&date=2010-01-03',
         generalParamsSite5 = '?idSite=5&period=day&date=2010-01-03',
@@ -70,15 +67,37 @@ describe("ContainerVersion", function () {
         if (!rowIndex) {
             rowIndex = 3;
         }
-        await page.click('.tagManagerVersionList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
+        await page.waitForSelector('.tagManagerVersionList .entityTable tbody tr:nth-child(' + rowIndex + ')', { visible: true });
+        await page.evaluate((actionName, rowNumber) => {
+            const selector = '.tagManagerVersionList .entityTable tbody tr:nth-child(' + rowNumber + ') .table-action.' + actionName;
+            const actionElement = $(selector).first();
+
+            if (!actionElement.length) {
+                throw new Error('No node found for selector: ' + selector);
+            }
+
+            actionElement.click();
+        }, action, rowIndex);
         await page.waitForNetworkIdle();
         await page.waitForTimeout(250);
     }
 
-    async function clickFirstVisibleTableAction(action)
+    async function clickDeleteAction(deleteIndex)
     {
-        await page.waitForSelector('.tagManagerVersionList .entityTable .table-action.' + action, { visible: true });
-        await page.click('.tagManagerVersionList .entityTable .table-action.' + action);
+        if (typeof deleteIndex === 'undefined') {
+            deleteIndex = 0;
+        }
+
+        await page.waitForSelector('.tagManagerVersionList .entityTable', { visible: true });
+        await page.evaluate((index) => {
+            const actionElement = $('.tagManagerVersionList .entityTable .table-action.icon-delete').eq(index);
+
+            if (!actionElement.length) {
+                throw new Error('No delete action found at index ' + index);
+            }
+
+            actionElement.click();
+        }, deleteIndex);
         await page.waitForNetworkIdle();
         await page.waitForTimeout(250);
     }
@@ -244,7 +263,7 @@ describe("ContainerVersion", function () {
 
     it('should show confirm delete version dialog', async function () {
         await page.goto(container1Base);
-        await clickFirstVisibleTableAction('icon-delete');
+        await clickDeleteAction(0);
         await capture.modal(page, 'confirm_delete_version');
     });
 
@@ -254,7 +273,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should delete version when confirmed', async function () {
-        await clickFirstVisibleTableAction('icon-delete');
+        await clickDeleteAction(0);
         await modal.clickButton(page, 'Yes');
         await page.waitForNetworkIdle();
         await capture.page(page, 'confirm_delete_version_confirmed');
