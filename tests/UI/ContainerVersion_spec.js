@@ -5,7 +5,10 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 describe("ContainerVersion", function () {
-    this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerVersionUiFixture";
+    this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
+    this.optionsOverride = {
+        'persist-fixture-data': false
+    };
 
     var generalParamsSite1 = '?idSite=2&period=day&date=2010-01-03',
         generalParamsSite5 = '?idSite=5&period=day&date=2010-01-03',
@@ -36,20 +39,8 @@ describe("ContainerVersion", function () {
         } else {
             prefix += ' ';
         }
-        const selector = prefix + '.editVersion [id=name]';
-        await page.waitForSelector(selector, { visible: true });
-        for (let attempt = 0; attempt < 3; attempt += 1) {
-            try {
-                await form.sendFieldValue(page, selector, name);
-                return;
-            } catch (error) {
-                if (!String(error).includes('Promise was collected') || attempt === 2) {
-                    throw error;
-                }
-                await page.waitForTimeout(250);
-                await page.waitForSelector(selector, { visible: true });
-            }
-        }
+        await page.waitForSelector(prefix + '.editVersion [id=name]');
+        await form.sendFieldValue(page, prefix + '.editVersion [id=name]', name);
     }
 
     async function setVersionDescription(name, prefix)
@@ -67,37 +58,7 @@ describe("ContainerVersion", function () {
         if (!rowIndex) {
             rowIndex = 3;
         }
-        await page.waitForSelector('.tagManagerVersionList .entityTable tbody tr:nth-child(' + rowIndex + ')', { visible: true });
-        await page.evaluate((actionName, rowNumber) => {
-            const selector = '.tagManagerVersionList .entityTable tbody tr:nth-child(' + rowNumber + ') .table-action.' + actionName;
-            const actionElement = $(selector).first();
-
-            if (!actionElement.length) {
-                throw new Error('No node found for selector: ' + selector);
-            }
-
-            actionElement.click();
-        }, action, rowIndex);
-        await page.waitForNetworkIdle();
-        await page.waitForTimeout(250);
-    }
-
-    async function clickDeleteAction(deleteIndex)
-    {
-        if (typeof deleteIndex === 'undefined') {
-            deleteIndex = 0;
-        }
-
-        await page.waitForSelector('.tagManagerVersionList .entityTable', { visible: true });
-        await page.evaluate((index) => {
-            const actionElement = $('.tagManagerVersionList .entityTable .table-action.icon-delete').eq(index);
-
-            if (!actionElement.length) {
-                throw new Error('No delete action found at index ' + index);
-            }
-
-            actionElement.click();
-        }, deleteIndex);
+        await page.click('.tagManagerVersionList .entityTable tbody tr:nth-child(' + rowIndex + ') .table-action.' + action);
         await page.waitForNetworkIdle();
         await page.waitForTimeout(250);
     }
@@ -118,15 +79,6 @@ describe("ContainerVersion", function () {
     {
         await page.waitForSelector('.editVersion .entityCancel a');
         await page.click('.editVersion .entityCancel a');
-    }
-
-    async function closeNotificationIfVisible()
-    {
-        const closeButton = await page.$('.notification .close');
-        if (closeButton) {
-            await closeButton.click();
-            await page.waitForTimeout(200);
-        }
     }
 
     async function searchVersion(searchTerm)
@@ -195,7 +147,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to go back to list of versions and show created version', async function () {
-        await closeNotificationIfVisible();
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'create_new_shown_in_list');
@@ -203,9 +155,6 @@ describe("ContainerVersion", function () {
 
     it('should be possible to publish new version', async function () {
         await page.click('.createNewVersion');
-        await page.waitForSelector('.editVersion [id=name]', { visible: true });
-        await page.waitForSelector('.editVersion .publishButton', { visible: true });
-        await page.waitForTimeout(250);
         await setVersionName('v3.0');
         await page.waitForTimeout(500);
         await capture.page(page, 'publish_new_prefilled');
@@ -218,7 +167,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should be possible to verify it was released', async function () {
-        await closeNotificationIfVisible();
+        await page.click('.notification .close');
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'publish_new_shown_in_list');
@@ -257,13 +206,11 @@ describe("ContainerVersion", function () {
 
         const element = await page.jQuery('#mobile-left-menu');
         expect(await element.screenshot()).to.matchImage('mobile_tag_manager_left_menu');
-
-        page.webpage.setViewport({ width: 1280, height: 768 });
     });
 
     it('should show confirm delete version dialog', async function () {
         await page.goto(container1Base);
-        await clickDeleteAction(0);
+        await clickFirstRowTableAction('icon-delete', 4);
         await capture.modal(page, 'confirm_delete_version');
     });
 
@@ -273,7 +220,7 @@ describe("ContainerVersion", function () {
     });
 
     it('should delete version when confirmed', async function () {
-        await clickDeleteAction(0);
+        await clickFirstRowTableAction('icon-delete', 4);
         await modal.clickButton(page, 'Yes');
         await page.waitForNetworkIdle();
         await capture.page(page, 'confirm_delete_version_confirmed');

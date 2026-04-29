@@ -7,14 +7,12 @@
 
 function setCapabilities(capabilities)
 {
-    testEnvironment.testUseMockAuth = 1;
     testEnvironment.idSitesCapabilities = capabilities;
     testEnvironment.save();
 }
 
 function setAdminUser()
 {
-    testEnvironment.testUseMockAuth = 1;
     delete testEnvironment.idSitesViewAccess;
     delete testEnvironment.idSitesWriteAccess;
     testEnvironment.idSitesAdminAccess = [1,2,5];
@@ -23,7 +21,6 @@ function setAdminUser()
 
 function setViewUser()
 {
-    testEnvironment.testUseMockAuth = 1;
     delete testEnvironment.idSitesAdminAccess;
     delete testEnvironment.idSitesWriteAccess;
     testEnvironment.idSitesViewAccess = [1,2,5];
@@ -32,7 +29,6 @@ function setViewUser()
 
 function setWriteUser()
 {
-    testEnvironment.testUseMockAuth = 1;
     delete testEnvironment.idSitesAdminAccess;
     delete testEnvironment.idSitesViewAccess;
     testEnvironment.idSitesWriteAccess = [1,2,5];
@@ -41,7 +37,6 @@ function setWriteUser()
 
 function resetUser()
 {
-    testEnvironment.testUseMockAuth = 1;
     delete testEnvironment.idSitesViewAccess;
     delete testEnvironment.idSitesWriteAccess;
     delete testEnvironment.idSitesAdminAccess;
@@ -51,7 +46,6 @@ function resetUser()
 
 function setSuperUser()
 {
-    testEnvironment.testUseMockAuth = 1;
     delete testEnvironment.idSitesViewAccess;
     delete testEnvironment.idSitesWriteAccess;
     delete testEnvironment.idSitesAdminAccess;

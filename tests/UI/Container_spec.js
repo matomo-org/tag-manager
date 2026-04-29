@@ -6,6 +6,9 @@
  */
 describe("Container", function () {
     this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerFixture";
+    this.optionsOverride = {
+        'persist-fixture-data': false
+    };
 
     var generalParamsSite1 = '?idSite=2&period=day&date=2010-01-03',
         generalParamsSite5 = '?idSite=5&period=day&date=2010-01-03',

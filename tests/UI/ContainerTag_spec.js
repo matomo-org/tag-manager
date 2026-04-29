@@ -6,6 +6,9 @@
  */
 describe("ContainerTag", function () {
     this.fixture = "Piwik\\Plugins\\TagManager\\tests\\Fixtures\\TagManagerTagUiFixture";
+    this.optionsOverride = {
+        'persist-fixture-data': false
+    };
 
     var generalParamsSite1 = '?idSite=2&period=day&date=2010-01-03',
         generalParamsSite5 = '?idSite=5&period=day&date=2010-01-03',
@@ -255,9 +258,7 @@ describe("ContainerTag", function () {
     });
 
     it('should be possible to edit a trigger directly', async function () {
-        await page.goto(container1Base + '#?period=day&date=2010-01-03&idTag=22');
-        await page.waitForNetworkIdle();
-        await page.waitForTimeout(500);
+        await page.reload();
         await page.click('.fireTrigger .icon-edit');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);

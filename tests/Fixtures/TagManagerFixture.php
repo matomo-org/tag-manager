@@ -67,12 +67,6 @@ class TagManagerFixture extends Fixture
         $this->setUpWebsite();
         $this->setUpContainers();
         $this->trackFirstVisit();
-
-        // Some schema changes are only detected after the test environment has
-        // finished activating plugins and the fixture has populated data.
-        // Running one final update pass keeps UI requests from being redirected
-        // to CoreUpdater during screenshot tests.
-        self::updateDatabase();
     }
 
     public function tearDown(): void
@@ -274,9 +268,6 @@ class TagManagerFixture extends Fixture
 
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addHour(0.1)->getDatetime());
         $t->setUrl('http://example.com/');
-        $response = $t->doTrackPageView('Viewing homepage');
-
-        // Some test environments append informational HTML after the beacon body.
-        self::assertStringStartsWith('GIF89a', $response, 'Expected tracker response to start with a GIF beacon.');
+        self::checkResponse($t->doTrackPageView('Viewing homepage'));
     }
 }
