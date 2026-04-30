@@ -75,6 +75,10 @@ describe("ContainerVariable", function () {
 
     async function captureCustomVariablesList(screenshotName)
     {
+        // Avoid flaky screenshots caused by lingering hover state on the content title
+        // after closing dialogs or interacting near the top of the page.
+        await page.mouse.move(-10, -10);
+        await page.waitForTimeout(250);
         await capture.selector(page, screenshotName, '.tagManagerCustomVariablesList')
     }
 
