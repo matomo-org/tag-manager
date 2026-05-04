@@ -2,6 +2,7 @@
     <li role="menuitem" class="tag-manager-left-menu-dropdown{{ currentIdContainer ? ' active' : '' }}">
         <div
             vue-entry="CoreHome.MenuItemsDropdown"
+            class="tag-manager-container-dropdown"
             menu-title="{{ defaultItem }}"
             tooltip="{{ defaultItem }}"
             show-search="true"
@@ -66,7 +67,7 @@
     %}
 
     <div id="secondNavBar" class="Menu--admin z-depth-1">
-        <div vue-entry="CoreHome.QuickAccess" class="piwikTopControl"></div>
+        <div vue-entry="CoreHome.QuickAccess" class="piwikTopControl quick-access piwikSelector"></div>
 
         <ul class="navbar hide-on-med-and-down" aria-label="{{ 'CoreHome_MainNavigation'|translate|e('html_attr') }}" role="menu">
             {% for level1, level2 in tagManagerMenu %}

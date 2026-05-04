@@ -25,6 +25,20 @@
     }
 
     &.Menu--admin {
+      [vue-entry="CoreHome.QuickAccess"]:empty {
+        min-height: 38px;
+        visibility: hidden;
+      }
+
+      .tag-manager-container-dropdown {
+        display: block;
+        min-height: 42px;
+
+        > a.container-name {
+          display: none;
+        }
+      }
+
       .tag-manager-left-menu-dropdown > div[vue-entry="CoreHome.MenuItemsDropdown"] {
         .items {
           width: 100%;
