@@ -36,13 +36,6 @@
                             class="sites_autocomplete"
                         ></div>
                     </div>
-
-                    <div class="piwikTopControl">
-                        <div
-                            vue-entry="TagManager.ContainerSelector"
-                            {% if container is defined and container is not empty %}container-name="{{ (container.name ~ ' (' ~ container.idcontainer ~ ')')|json_encode }}"{% endif %}
-                        ></div>
-                    </div>
                 {% endblock %}
                 {% include "@CoreHome/_headerMessage.twig" %}
             </div>
