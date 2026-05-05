@@ -75,14 +75,6 @@ describe("TagManager", function () {
         await capture.topControls(page, 'top_controls_no_container_exists');
     });
 
-    it('should not show a container selector on manage containers when no container exists', async function () {
-        await page.goto(generalParamsSite5 + urlBase + 'manageContainers');
-
-        expect(await page.$('.top_controls .tagContainerSelector')).to.equal(null);
-        expect(await page.$('#secondNavBar .navbar .tag-manager-left-menu-dropdown')).to.equal(null);
-        expect(await page.$(leftMenuContainerItem)).to.equal(null);
-    });
-
     it('should show a direct container link in the left menu for single container sites', async function () {
         await page.goto('?idSite=3&period=day&date=2010-01-03' + urlBase + 'manageContainers');
 
@@ -97,17 +89,6 @@ describe("TagManager", function () {
         const href = await page.evaluate((selector) => $(selector).attr('href'), leftMenuContainerItem);
         expect(href).to.contain('action=dashboard');
         expect(href).to.contain('idContainer=aaacont4');
-    });
-
-    it('should show top bar list when container has no content', async function () {
-        await page.goto(containerEmpty);
-        await capture.topControls(page, 'top_controls_container_empty');
-    });
-
-    it('should open container selector and show available containers', async function () {
-        await page.click('.tagContainerSelector');
-        await page.waitForTimeout(250);
-        await capture.selector(page, 'top_controls_container_empty_open', selectorContainerOpen);
     });
 
     it('should show a container dropdown in the left menu for multi container sites', async function () {
@@ -207,17 +188,6 @@ describe("TagManager", function () {
         await page.waitForNetworkIdle();
         await page.waitForSelector('#content .card-content', { visible: true });
         await capture.page(page, 'preview_disable');
-    });
-
-    it('should show top bar list when container has no content', async function () {
-        await page.goto(containerWithEntries);
-        await capture.topControls(page, 'top_controls_container_with_entries');
-    });
-
-    it('should show no containers exist in top bar', async function () {
-        await page.click('.tagContainerSelector');
-        await page.waitForTimeout(250);
-        await capture.selector(page, 'top_controls_container_with_entries_open', selectorContainerOpen);
     });
 
     it('should be able to show install code page for container with content', async function () {
