@@ -14,7 +14,7 @@
     :title="translate('TagManager_ChooseContainer')"
   >
     <a class="title">
-      <span class="icon icon-chevron-down">&nbsp;</span>{{ truncateText(actualContainerName, 50) }}
+      {{ truncateText(actualContainerName, 50) }}<span class="icon icon-chevron-down">&nbsp;</span>
     </a>
     <div
       class="dropdown positionInViewport"
