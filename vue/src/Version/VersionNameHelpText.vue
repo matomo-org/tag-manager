@@ -9,7 +9,7 @@
     id="versionNameHelpText"
     class="inline-help-node"
   >
-    {{ translate('TagManager_VersionNameHelp') }}
+    {{ translate('TagManager_VersionNameHelpText') }}
     <br /><br />
     <span
       v-show="lastVersion"

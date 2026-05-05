@@ -36,6 +36,7 @@
         </div>
         <div>
           <Field
+            v-show="edit"
             uicontrol="select"
             name="context"
             :model-value="container.context"
@@ -54,7 +55,7 @@
             @update:model-value="container.name = $event; setValueHasChanged()"
             :maxlength="255"
             :title="translate('General_Name')"
-            :inline-help="translate('TagManager_ContainerNameHelp')"
+            :inline-help="translate('TagManager_ContainerNameHelpText')"
             :placeholder="translate('TagManager_ContainerNamePlaceholder')"
           />
         </div>
@@ -65,7 +66,7 @@
             :model-value="container.description"
             @update:model-value="container.description = $event; setValueHasChanged()"
             :title="translate('TagManager_Description')"
-            :inline-help="translate('TagManager_ContainerDescriptionHelp')"
+            :inline-help="translate('TagManager_ContainerDescriptionHelpText')"
             :placeholder="translate('TagManager_ContainerDescriptionPlaceholder')"
           />
         </div>

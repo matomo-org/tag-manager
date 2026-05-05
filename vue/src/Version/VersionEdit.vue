@@ -46,7 +46,7 @@
                 :model-value="version.description"
                 @update:model-value="version.description = $event; setValueHasChanged()"
                 :title="translate('TagManager_VersionDescriptionOptional')"
-                :inline-help="translate('TagManager_VersionDescriptionHelp')"
+                :inline-help="translate('TagManager_VersionDescriptionHelpText')"
                 :placeholder="translate('TagManager_VersionDescriptionPlaceholder')"
               />
             </div>
