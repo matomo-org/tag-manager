@@ -403,6 +403,7 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
 
         $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
         $this->api->updateContainerVersion($this->idSite, $this->idContainer, $this->idLiveContainerVersion, 'Renamed live version');
     }
 
@@ -458,7 +459,7 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
 
         $this->setAdminUser();
-        $this->api->deleteContainerVersion($this->idSite, 'foo', $this->idContainerDraftVersion);
+        $this->api->deleteContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion);
     }
 
     public function test_createContainer_successEvenWhenDifferentSiteIdAddedInMatomoConfigurationVariable()
