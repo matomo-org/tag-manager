@@ -9,7 +9,7 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration;
 
-use Piwik\Twig;
+use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 
 /**
@@ -74,8 +74,8 @@ class MenuTemplateTest extends IntegrationTestCase
 
     private function renderMacro(string $macro, array $arguments): string
     {
-        $twig = new Twig();
-        $template = $twig->getTwigEnvironment()->createTemplate(
+        $renderer = StaticContainer::get('Piwik\Twig');
+        $template = $renderer->getTwigEnvironment()->createTemplate(
             sprintf(
                 '{%% import "@TagManager/_menu.twig" as menu %%}{{ menu.%s(%s) }}',
                 $macro,
