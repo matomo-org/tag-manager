@@ -72,7 +72,7 @@
       </symbol>
     </svg>
 
-    <div class="page" style="clear:both;">
+    <div class="page" style="clear:both;display: flex;">
       <div
         id="secondNavBar"
         class="Menu--dashboard z-depth-1"
@@ -81,18 +81,18 @@
         <ul class="navbar" role="menu" style="padding: 0;">
           <li class="menuTab" role="menuitem">
             <span class="item" style="font-weight: normal;"> Events
-                <span v-if="mtmEvents.length > 0">
-                    <br><br>
-                    <input
-                      type="checkbox"
-                      class="onlyFiredTags-chk"
-                      name="onlyfiredTags"
-                      id="onlyfiredTags"
-                      value="1" v-model="onlyfiredTags"
-                      style="margin-right: 3.5px"
-                    />
-                    <label for="onlyfiredTags" class="lbl-onlyfiredTags">Only fired tags</label>
-                </span>
+            </span>
+            <span class="item" style="font-weight: normal;"
+                  v-if="mtmEvents.length > 0">
+                <input
+                    type="checkbox"
+                    class="onlyFiredTags-chk"
+                    name="onlyfiredTags"
+                    id="onlyfiredTags"
+                    value="1" v-model="onlyfiredTags"
+                    style="margin-right: 3.5px;margin-top: -3.5px"
+                />
+                <label for="onlyfiredTags" class="lbl-onlyfiredTags">Only fired tags</label>
             </span>
           </li>
           <li v-if="mtmEvents.length === 0" style="padding: 0 0 1rem 1.2rem;">No event executed</li>
