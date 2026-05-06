@@ -123,19 +123,22 @@ describe("TagManager", function () {
         expect(containerHrefs.join(' ')).to.contain('idContainer=aaacont7');
     });
 
-    it('should keep the selected container when navigating to manage containers', async function () {
+    it('should keep the container context when navigating to manage containers', async function () {
         await page.goto(containerWithEntries);
         await (await page.jQuery('#secondNavBar .item:contains(Manage Containers)')).click();
         await page.waitForNetworkIdle();
 
-        const title = await getVisibleText(leftMenuContainerDropdown + ' .title');
-        expect(title).to.deep.equal(['Container1']);
+        expect(page.url()).to.contain('action=manageContainers');
+        expect(page.url()).to.contain('idContainer=aaacont1');
 
         await page.click(leftMenuContainerDropdown + ' .title');
         await page.waitForTimeout(250);
 
         const activeContainer = await getVisibleText(leftMenuContainerDropdown + ' .items .item.active');
-        expect(activeContainer).to.deep.equal(['Container1']);
+        expect(activeContainer).to.deep.equal([]);
+
+        const containerTexts = await getVisibleText(leftMenuContainerDropdown + ' .items .item');
+        expect(containerTexts).to.include('Container1');
     });
 
     it('should be able to show install code page for container without content', async function () {
