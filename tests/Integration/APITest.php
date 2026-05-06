@@ -539,10 +539,8 @@ class APITest extends IntegrationTestCase
         $this->expectException(\Piwik\NoAccessException::class);
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
 
-        $variables = $this->api->getContainerVariables($this->idSite, $this->idContainer, $this->idLiveContainerVersion);
-
         $this->setWriteUser();
-        $this->api->deleteContainerVariable($this->idSite, $this->idContainer, $this->idLiveContainerVersion, $variables[0]['idvariable']);
+        $this->api->deleteContainerVariable($this->idSite, $this->idContainer, $this->idLiveContainerVersion, 999);
     }
 
     public function test_deleteContainerTrigger_shouldFailWhenNotHavingViewPermissions()
