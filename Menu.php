@@ -18,6 +18,8 @@ use Piwik\Plugins\TagManager\Model\Environment;
 
 class Menu extends \Piwik\Plugin\Menu
 {
+    private const CONTAINER_MENU_ITEM_KEY_PREFIX = 'TagManager_Container_';
+
     /**
      * @var AccessValidator
      */
@@ -134,10 +136,10 @@ class Menu extends \Piwik\Plugin\Menu
 
             $menu->addItem(
                 'TagManager_TagManager',
-                $container['name'],
+                self::CONTAINER_MENU_ITEM_KEY_PREFIX . $container['idcontainer'],
                 $this->urlForAction($action, $params),
                 100,
-                false,
+                $container['name'],
                 false,
                 false,
                 false,
