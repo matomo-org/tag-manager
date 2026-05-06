@@ -54,6 +54,7 @@
               :maxlength="1000"
               :title="translate('TagManager_Description')"
               :inline-help="translate('TagManager_TriggerDescriptionHelpText')"
+              :ui-control-attributes="{ class: 'compact-textarea' }"
               :placeholder="translate('TagManager_TriggerDescriptionPlaceholder')"
             />
           </div>

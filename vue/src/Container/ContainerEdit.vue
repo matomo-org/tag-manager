@@ -36,19 +36,6 @@
         </div>
         <div>
           <Field
-            v-show="edit"
-            uicontrol="select"
-            name="context"
-            :model-value="container.context"
-            @update:model-value="container.context = $event; setValueHasChanged()"
-            :disabled="true"
-            :options="contexts"
-            :title="translate('TagManager_Context')"
-            :inline-help="translate('TagManager_ContainerContextHelp')"
-          />
-        </div>
-        <div>
-          <Field
             uicontrol="text"
             name="name"
             :model-value="container.name"
@@ -66,8 +53,21 @@
             :model-value="container.description"
             @update:model-value="container.description = $event; setValueHasChanged()"
             :title="translate('TagManager_Description')"
+            :ui-control-attributes="{ class: 'compact-textarea' }"
             :inline-help="translate('TagManager_ContainerDescriptionHelpText')"
             :placeholder="translate('TagManager_ContainerDescriptionPlaceholder')"
+          />
+        </div>
+        <div>
+          <Field
+            uicontrol="select"
+            name="context"
+            :model-value="container.context"
+            @update:model-value="container.context = $event; setValueHasChanged()"
+            :disabled="true"
+            :options="contexts"
+            :title="translate('TagManager_Context')"
+            :inline-help="contextHelpText"
           />
         </div>
         <div>
@@ -127,7 +127,9 @@ import {
   ContentBlock,
   NotificationsStore,
   NotificationType,
-  clone, MatomoUrl,
+  clone,
+  externalLink,
+  MatomoUrl,
 } from 'CoreHome';
 import { Field, SaveButton } from 'CorePluginsAdmin';
 import AvailableContextsStore from '../AvailableContexts.store';
@@ -325,6 +327,15 @@ export default defineComponent({
     },
     isUpdating() {
       return VariablesStore.isUpdating.value || this.isUpdatingVersion;
+    },
+    contextHelpText() {
+      return `${translate('TagManager_ContainerContextHelp')} ${
+        translate(
+          'General_LearnMore',
+          externalLink('https://matomo.org/faq/tag-manager/create-a-container-in-matomo-tag-manager/'),
+          '</a>',
+        )
+      }`;
     },
   },
 });
