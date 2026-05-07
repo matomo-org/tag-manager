@@ -94,6 +94,7 @@ class Controller extends \Piwik\Plugin\Controller
         return $this->renderTemplate('manageContainers', array(
             'container' => $container,
             'containerMenuItems' => $containerMenuItems,
+            'mobileTagManagerMenu' => $this->buildMobileTagManagerMenu($containerMenuItems),
         ));
     }
 
@@ -401,6 +402,13 @@ class Controller extends \Piwik\Plugin\Controller
         foreach ($tagManagerMenu as $name => $menuItem) {
             if ($name[0] === '_') {
                 $prefixItems[$name] = $menuItem;
+                continue;
+            }
+
+            $isContainerMenuItem = isset($menuItem['_cssClass'])
+                && $menuItem['_cssClass'] === 'container-menu-item';
+
+            if ($isContainerMenuItem) {
                 continue;
             }
 
