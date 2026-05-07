@@ -10,7 +10,7 @@ where it still applies.
         <div
             vue-entry="CoreHome.MenuItemsDropdown"
             class="tag-manager-container-dropdown"
-            menu-title="{{ defaultItem|e('html_attr') }}"
+            menu-title="{{ defaultItem|e('html')|e('html_attr') }}"
             tooltip="{{ defaultItem|e('html_attr') }}"
             show-search="true"
         >
@@ -136,6 +136,6 @@ where it still applies.
             {% endfor %}
         </ul>
 
-        <div vue-entry="CoreHome.MobileLeftMenu" menu="{{ mobileTagManagerMenu|default(tagManagerMenu)|json_encode }}"></div>
+        <div vue-entry="CoreHome.MobileLeftMenu" menu="{{ mobileTagManagerMenu|default(tagManagerMenu)|json_encode|e('html_attr') }}"></div>
     </div>
 {% endmacro %}

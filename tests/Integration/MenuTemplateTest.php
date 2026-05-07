@@ -21,6 +21,7 @@ class MenuTemplateTest extends IntegrationTestCase
 {
     private const XSS_CONTAINER_NAME = 'Container <img src=x onerror=alert(1)> "Quotes" & More';
     private const XSS_CONTAINER_NAME_ESCAPED_FOR_HTML_ATTR = 'Container&#x20;&lt;img&#x20;src&#x3D;x&#x20;onerror&#x3D;alert&#x28;1&#x29;&gt;&#x20;&quot;Quotes&quot;&#x20;&amp;&#x20;More';
+    private const XSS_CONTAINER_NAME_HTML_ESCAPED_FOR_HTML_ATTR = 'Container&#x20;&amp;lt&#x3B;img&#x20;src&#x3D;x&#x20;onerror&#x3D;alert&#x28;1&#x29;&amp;gt&#x3B;&#x20;&amp;quot&#x3B;Quotes&amp;quot&#x3B;&#x20;&amp;amp&#x3B;&#x20;More';
 
     public function testContainerDropdownEscapesContainerNames(): void
     {
@@ -42,7 +43,7 @@ class MenuTemplateTest extends IntegrationTestCase
 
         $this->assertStringContainsString('Container &lt;img src=x onerror=alert(1)&gt; &quot;Quotes&quot; &amp; More', $html);
         $this->assertStringContainsString('title="' . self::XSS_CONTAINER_NAME_ESCAPED_FOR_HTML_ATTR . '"', $html);
-        $this->assertStringContainsString('menu-title="' . self::XSS_CONTAINER_NAME_ESCAPED_FOR_HTML_ATTR . '"', $html);
+        $this->assertStringContainsString('menu-title="' . self::XSS_CONTAINER_NAME_HTML_ESCAPED_FOR_HTML_ATTR . '"', $html);
         $this->assertStringNotContainsString('<img src=x', $html);
         $this->assertStringNotContainsString('"Quotes"', $html);
     }
