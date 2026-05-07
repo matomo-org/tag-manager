@@ -13,6 +13,7 @@ use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\SystemSettings;
+use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\Mock\FakeAccess;
@@ -35,6 +36,11 @@ class AccessValidatorTest extends IntegrationTestCase
      */
     private $settings;
 
+    /**
+     * @var TagManagerFixture
+     */
+    private $tagFixture;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -43,6 +49,9 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->validator = new AccessValidator($this->settings);
 
         Fixture::createWebsite('2014-01-02 03:04:05');
+        $this->tagFixture = new TagManagerFixture();
+        $this->tagFixture->setUpWebsite();
+        $this->tagFixture->setUpContainers();
     }
 
     public function test_checkWriteCapability()
@@ -230,6 +239,44 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->assertTrue($this->validator->hasWriteCapability($idSite = 1));
     }
 
+    public function test_checkWriteCapabilityForContainerVersion_allowsWriteUserForDraftVersion()
+    {
+        self::expectNotToPerformAssertions();
+
+        $this->setWrite();
+        $this->validator->checkWriteCapabilityForContainerVersion(
+            $this->tagFixture->idSite2,
+            $this->tagFixture->idContainer1,
+            $this->tagFixture->idContainer1DraftVersion
+        );
+    }
+
+    public function test_checkWriteCapabilityForContainerVersion_throwsForWriteUserWhenVersionReleasedToLive()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
+
+        $this->setWrite();
+        $this->validator->checkWriteCapabilityForContainerVersion(
+            $this->tagFixture->idSite2,
+            $this->tagFixture->idContainer1,
+            $this->tagFixture->idContainer1Version4
+        );
+    }
+
+    public function test_checkWriteCapabilityForContainerVersion_allowsUserWithPublishLiveCapability()
+    {
+        self::expectNotToPerformAssertions();
+
+        $this->setWrite();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->tagFixture->idSite2));
+        $this->validator->checkWriteCapabilityForContainerVersion(
+            $this->tagFixture->idSite2,
+            $this->tagFixture->idContainer1,
+            $this->tagFixture->idContainer1Version4
+        );
+    }
+
     protected function setAnonymous()
     {
         FakeAccess::clearAccess(false);
@@ -251,7 +298,7 @@ class AccessValidatorTest extends IntegrationTestCase
         FakeAccess::clearAccess(false);
         FakeAccess::$identity = 'testUser';
         FakeAccess::$idSitesView = array();
-        FakeAccess::$idSitesWrite = array(1,3);
+        FakeAccess::$idSitesWrite = array(1,3, $this->tagFixture->idSite2);
         FakeAccess::$idSitesAdmin = array();
     }
 

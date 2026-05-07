@@ -14,6 +14,8 @@ use Piwik\NoAccessException;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
+use Piwik\Plugins\TagManager\Dao\ContainerReleaseDao;
+use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\SystemSettings;
 use Piwik\Site;
@@ -25,9 +27,15 @@ class AccessValidator
      */
     private $settings;
 
-    public function __construct(SystemSettings $settings)
+    /**
+     * @var ContainerReleaseDao|null
+     */
+    private $containerReleaseDao;
+
+    public function __construct(SystemSettings $settings, ?ContainerReleaseDao $containerReleaseDao = null)
     {
         $this->settings = $settings;
+        $this->containerReleaseDao = $containerReleaseDao;
     }
 
     public function checkViewPermission($idSite)
@@ -109,5 +117,28 @@ class AccessValidator
     public function checkSiteExists($idSite)
     {
         new Site($idSite);
+    }
+
+    public function checkWriteCapabilityForContainerVersion($idSite, $idContainer, $idContainerVersion)
+    {
+        if ($this->hasPublishLiveEnvironmentCapability($idSite)) {
+            return;
+        }
+
+        $releases = $this->getContainerReleaseDao()->getReleasesForContainerVersion($idSite, $idContainer, $idContainerVersion);
+        foreach ($releases as $release) {
+            if ($release['environment'] === Environment::ENVIRONMENT_LIVE) {
+                $this->checkPublishLiveEnvironmentCapability($idSite);
+            }
+        }
+    }
+
+    private function getContainerReleaseDao(): ContainerReleaseDao
+    {
+        if (!$this->containerReleaseDao) {
+            $this->containerReleaseDao = StaticContainer::get(ContainerReleaseDao::class);
+        }
+
+        return $this->containerReleaseDao;
     }
 }
