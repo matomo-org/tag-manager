@@ -41,6 +41,7 @@ class APITest extends IntegrationTestCase
     private $idContainer;
     private $idContainerQuotes;
     private $idContainerDraftVersion;
+    private $idLiveContainerVersion;
 
     /**
      * @var API
@@ -396,6 +397,16 @@ class APITest extends IntegrationTestCase
         $this->api->updateContainerVersion($this->idSite, $this->idContainer, $idContainerVersion, 'My Name very long!!!! name should throw an exception', 'TheName');
     }
 
+    public function test_updateContainerVersion_shouldFailWhenWriteUserTargetsLiveReleasedVersion()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $this->api->updateContainerVersion($this->idSite, $this->idContainer, $this->idLiveContainerVersion, 'Renamed live version');
+    }
+
     public function test_createContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
@@ -423,6 +434,16 @@ class APITest extends IntegrationTestCase
         $this->api->createContainerVersion($this->idSite, $this->idContainer, 'My Name very long!!!! name should throw an exception');
     }
 
+    public function test_createContainerVersion_shouldFailWhenWriteUserUsesLiveReleasedSourceVersion()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $this->api->createContainerVersion($this->idSite, $this->idContainer, 'Copy of live version', '', $this->idLiveContainerVersion);
+    }
+
     public function test_deleteContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
@@ -438,7 +459,7 @@ class APITest extends IntegrationTestCase
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
 
         $this->setAdminUser();
-        $this->api->deleteContainerVersion($this->idSite, 'foo', $this->idContainerDraftVersion);
+        $this->api->deleteContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion);
     }
 
     public function test_createContainer_successEvenWhenDifferentSiteIdAddedInMatomoConfigurationVariable()
@@ -513,6 +534,15 @@ class APITest extends IntegrationTestCase
         $this->api->deleteContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idVariable);
     }
 
+    public function test_deleteContainerVariable_shouldFailWhenWriteUserTargetsLiveReleasedVersion()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
+
+        $this->setWriteUser();
+        $this->api->deleteContainerVariable($this->idSite, $this->idContainer, $this->idLiveContainerVersion, 999);
+    }
+
     public function test_deleteContainerTrigger_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
@@ -520,6 +550,17 @@ class APITest extends IntegrationTestCase
 
         $this->setUser();
         $this->api->deleteContainerTrigger($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idTrigger = 999);
+    }
+
+    public function test_deleteContainerTrigger_shouldFailWhenWriteUserTargetsLiveReleasedVersion()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
+
+        $triggers = $this->api->getContainerTriggers($this->idSite, $this->idContainer, $this->idLiveContainerVersion);
+
+        $this->setWriteUser();
+        $this->api->deleteContainerTrigger($this->idSite, $this->idContainer, $this->idLiveContainerVersion, $triggers[0]['idtrigger']);
     }
 
     public function test_deleteContainerTrigger_shouldFailWhenVersionNotExists()
@@ -1342,6 +1383,7 @@ class APITest extends IntegrationTestCase
         $this->idContainer = $this->tagFixture->idContainer1;
         $this->idContainerQuotes = $this->tagFixture->idContainerQuotes;
         $this->idContainerDraftVersion = $this->tagFixture->idContainer1DraftVersion;
+        $this->idLiveContainerVersion = $this->tagFixture->idContainer1Version4;
 
         $this->api = API::getInstance();
 
@@ -1443,6 +1485,40 @@ class APITest extends IntegrationTestCase
         $id = $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName', array('customHtml' => 'foo'), $fireTrigger);
 
         $this->api->updateContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $id, 'myName2', array('customHtml' => 'foo'), $fireTrigger);
+    }
+
+    public function test_deleteContainerTag_shouldFailWhenWriteUserTargetsLiveReleasedVersion()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
+
+        $tags = $this->api->getContainerTags($this->idSite, $this->idContainer, $this->idLiveContainerVersion);
+
+        $this->setWriteUser();
+        $this->api->deleteContainerTag($this->idSite, $this->idContainer, $this->idLiveContainerVersion, $tags[0]['idtag']);
+    }
+
+    public function test_enablePreviewMode_shouldAllowWriteUserForLiveReleasedVersion()
+    {
+        $this->setWriteUser();
+        $this->api->enablePreviewMode($this->idSite, $this->idContainer, $this->idLiveContainerVersion);
+
+        $container = $this->api->getContainer($this->idSite, $this->idContainer);
+        $this->assertNotEmpty($container['releases']);
+    }
+
+    public function test_updateContainerVersion_shouldSucceedWhenWriteUserHasPublishLiveCapability()
+    {
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(
+            UseCustomTemplates::ID => array($this->idSite),
+            PublishLiveContainer::ID => array($this->idSite),
+        );
+
+        $this->api->updateContainerVersion($this->idSite, $this->idContainer, $this->idLiveContainerVersion, 'renamed by publish live');
+        $version = $this->api->getContainerVersion($this->idSite, $this->idContainer, $this->idLiveContainerVersion);
+
+        $this->assertSame('renamed by publish live', $version['name']);
     }
 
     protected function setSuperUser()
