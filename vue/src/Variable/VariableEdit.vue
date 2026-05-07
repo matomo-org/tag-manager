@@ -41,7 +41,10 @@
               @update:model-value="variable.name = $event; setValueHasChanged()"
               :maxlength="255"
               :title="translate('General_Name')"
-              :inline-help="translate('TagManager_VariableNameHelpText')"
+              :inline-help="translate(
+                'TagManager_NameHelpText',
+                translate('TagManager_VariableLowercase'),
+              )"
               :placeholder="translate('TagManager_VariableNamePlaceholder')"
             />
           </div>
@@ -53,7 +56,7 @@
               @update:model-value="variable.description = $event; setValueHasChanged()"
               :maxlength="1000"
               :title="translate('TagManager_Description')"
-              :inline-help="translate('TagManager_VariableDescriptionHelpText')"
+              :inline-help="translate('TagManager_DescriptionHelpText')"
               :ui-control-attributes="{ class: 'compact-textarea' }"
               :placeholder="translate('TagManager_VariableDescriptionPlaceholder')"
             />

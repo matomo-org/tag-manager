@@ -43,7 +43,7 @@
             :maxlength="255"
             :title="translate('General_Name')"
             :inline-help="translate('TagManager_ContainerNameHelpText')"
-            :placeholder="translate('TagManager_ContainerNamePlaceholder')"
+            :placeholder="translate('TagManager_ContainerNamePlaceholderV2')"
           />
         </div>
         <div>
@@ -55,7 +55,7 @@
             :title="translate('TagManager_Description')"
             :ui-control-attributes="{ class: 'compact-textarea' }"
             :inline-help="translate('TagManager_ContainerDescriptionHelpText')"
-            :placeholder="translate('TagManager_ContainerDescriptionPlaceholder')"
+            :placeholder="translate('TagManager_ContainerDescriptionPlaceholderV2')"
           />
         </div>
         <div>
