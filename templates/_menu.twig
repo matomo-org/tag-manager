@@ -1,0 +1,141 @@
+{#
+Tag Manager needs a domain-specific menu that treats containers as selectable context, not normal navigation items.
+Reusing core directly would either show every container as a plain submenu item, lose the searchable
+dropdown/current-container behavior, or require making core’s generic menu macro aware of Tag Manager-specific concepts.
+Keeping the copy local avoids pushing plugin-specific behavior into core while preserving the same core markup/style
+where it still applies.
+#}
+{% macro containerDropdown(containerMenuItems, currentIdContainer, defaultItem, isContainerContextActive) %}
+    <li role="menuitem" class="tag-manager-left-menu-dropdown{{ isContainerContextActive ? ' active' : '' }}">
+        <div
+            vue-entry="CoreHome.MenuItemsDropdown"
+            class="tag-manager-container-dropdown"
+            menu-title="{{ defaultItem|e('html')|e('html_attr') }}"
+            tooltip="{{ defaultItem|e('html_attr') }}"
+            show-search="true"
+        >
+            {% for item in containerMenuItems %}
+                <a
+                    class="container-name item{{ isContainerContextActive and item.id == currentIdContainer ? ' active' : '' }}"
+                    href="{{ item.url|e('html_attr') }}"
+                    title="{{ item.name|e('html_attr') }}"
+                >
+                    {{ item.name|e('html') }}
+                </a>
+            {% endfor %}
+        </div>
+    </li>
+{% endmacro %}
+
+{% macro menuItem(name, urlParameters, isActive, isActiveContainer) %}
+    {% set isContainerMenuItem = urlParameters._cssClass is defined and urlParameters._cssClass == 'container-menu-item' %}
+    {% set menuItemName = isContainerMenuItem ? urlParameters._tooltip : name|translate %}
+    <li {% if isActive or isActiveContainer %}class="active"{% endif %} role="menuitem">
+        <a
+            class="container-name item{% if urlParameters._cssClass %} {{ urlParameters._cssClass|e('html_attr') }}{% endif %}"
+            tabindex="5"
+            target="_self"
+            title="{{ isContainerMenuItem ? urlParameters._tooltip|e('html_attr') : urlParameters._tooltip|default('')|translate|e('html_attr') }}"
+            {% if urlParameters._onclick is defined and urlParameters._onclick %}
+                onclick="{{ urlParameters._onclick|e('html_attr') }};return false;"
+            {% endif %}
+            {% if urlParameters._url %}
+                href="index.php?{{ urlParameters._url|urlRewriteWithParameters|slice(1) }}"
+            {% endif %}
+        >
+            {% if urlParameters._icon is defined and urlParameters._icon %}
+                <span class="icon {{ urlParameters._icon|e('html_attr') }}" style="margin-right: 5px;"></span>
+            {% endif %}
+            {{ isContainerMenuItem ? menuItemName|e('html') : menuItemName|rawSafeDecoded }}
+        </a>
+        {% if urlParameters._help %}
+            <div vue-entry="CoreHome.ShowHelpLink" name="{{ urlParameters._name }}" message="{{ urlParameters._help|e('html_attr') }}"></div>
+        {% endif %}
+    </li>
+{% endmacro %}
+
+{% macro menu(tagManagerMenu, mobileTagManagerMenu, currentModule, currentAction, currentIdContainer, containerMenuItems) %}
+    {% import _self as self %}
+
+    {% set collapseContainersMenuWhenMoreThan = 1 %}
+    {% set showContainersStandard = containerMenuItems|length <= collapseContainersMenuWhenMoreThan %}
+    {% set showContainersDropDown = containerMenuItems|length > collapseContainersMenuWhenMoreThan %}
+    {% set currentContainerName = '' %}
+    {% if currentIdContainer is not empty %}
+        {% for item in containerMenuItems %}
+            {% if item.id == currentIdContainer %}
+                {% set currentContainerName = item.name %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% set isContainerContextActive = currentContainerName is not empty and currentAction != 'manageContainers' %}
+
+    {% set defaultContainerItem = currentContainerName
+        ? currentContainerName
+        : 'TagManager_ChooseContainer'|translate
+    %}
+
+    <div id="secondNavBar" class="Menu--admin z-depth-1">
+        <div vue-entry="CoreHome.QuickAccess" class="piwikTopControl quick-access piwikSelector"></div>
+
+        <ul class="navbar hide-on-med-and-down" aria-label="{{ 'CoreHome_MainNavigation'|translate|e('html_attr') }}" role="menu">
+            {% for level1, level2 in tagManagerMenu %}
+                {% set hasActive = false %}
+                {% for name, urlParameters in level2 %}
+                    {% set isMetaEntry = name|slice(0,1) == '_' %}
+                    {% if not isMetaEntry %}
+                        {% set isContainer = urlParameters._cssClass is defined and urlParameters._cssClass == 'container-menu-item' %}
+                        {% set isActive = not isContainer
+                            and urlParameters._url.module is defined and urlParameters._url.module == currentModule
+                            and urlParameters._url.action is defined and urlParameters._url.action == currentAction
+                        %}
+                        {% set isActiveContainer = isContainer
+                            and isContainerContextActive
+                            and urlParameters._url.idContainer is defined and urlParameters._url.idContainer == currentIdContainer
+                        %}
+                        {% set hasActive = hasActive or isActive or isActiveContainer %}
+                    {% endif %}
+                {% endfor %}
+
+                <li class="menuTab{% if hasActive %} active{% endif %}" role="menuitem">
+                    <a class="item" tabindex="5">
+                        <span class="menu-icon {{ level2._icon }}"></span>{{ level1|translate }}
+                        <span class="hidden">{{ 'CoreHome_Menu'|translate }}</span>
+                    </a>
+
+                    <ul role="menu">
+                        {% set renderedContainerDropdown = false %}
+
+                        {% for name, urlParameters in level2 %}
+                            {% set isMetaEntry = name|slice(0,1) == '_' %}
+                            {% if not isMetaEntry %}
+                                {% set isContainer = urlParameters._cssClass is defined and urlParameters._cssClass == 'container-menu-item' %}
+                                {% set isActive = not isContainer
+                                    and urlParameters._url.module is defined and urlParameters._url.module == currentModule
+                                    and urlParameters._url.action is defined and urlParameters._url.action == currentAction
+                                %}
+                                {% set isActiveContainer = isContainer
+                                    and isContainerContextActive
+                                    and urlParameters._url.idContainer is defined and urlParameters._url.idContainer == currentIdContainer
+                                %}
+
+                                {% if not renderedContainerDropdown and isContainer and showContainersDropDown %}
+                                    {% set renderedContainerDropdown = true %}
+                                    {{ self.containerDropdown(containerMenuItems, currentIdContainer, defaultContainerItem, isContainerContextActive) }}
+                                {% endif %}
+
+                                {% set shouldRenderMenuItem = (not isContainer) or (showContainersStandard and isContainer) %}
+                                {% if shouldRenderMenuItem %}
+                                    {{ self.menuItem(name, urlParameters, isActive, isActiveContainer) }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div vue-entry="CoreHome.MobileLeftMenu" menu="{{ mobileTagManagerMenu|default(tagManagerMenu)|json_encode|e('html_attr') }}"></div>
+    </div>
+{% endmacro %}

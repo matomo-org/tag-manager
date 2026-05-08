@@ -1,0 +1,119 @@
+#root {
+  #secondNavBar {
+    .navbar {
+      li a.container-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+        width: 100%;
+      }
+
+      .menuDropdown {
+        .title {
+          display: flex;
+          align-items: center;
+
+          .title-label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block;
+          }
+        }
+      }
+    }
+
+    &.Menu--admin {
+      [vue-entry="CoreHome.QuickAccess"]:empty {
+        visibility: hidden;
+      }
+
+      .tag-manager-container-dropdown {
+        display: block;
+
+        > a.container-name {
+          display: none;
+        }
+      }
+
+      .tag-manager-left-menu-dropdown > div[vue-entry="CoreHome.MenuItemsDropdown"] {
+        .items {
+          width: 100%;
+        }
+
+        .item {
+          padding-left: 36px !important;
+        }
+      }
+    }
+  }
+
+  #mobile-left-menu {
+    li li > a {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+    }
+  }
+}
+
+#secondNavBar.Menu--admin,
+#mobile-left-menu {
+  .tag-manager-menu-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    padding-right: 0;
+    vertical-align: middle;
+    background-color: currentColor;
+    mask: url("/plugins/TagManager/images/icons/tag-manager-icon.svg") no-repeat center / contain;
+    -webkit-mask: url("/plugins/TagManager/images/icons/tag-manager-icon.svg") no-repeat center / contain;
+  }
+}
+
+#secondNavBar.Menu--admin {
+  .menu-icon.tag-manager-menu-icon {
+    margin-top: 5px;
+  }
+
+  .tag-manager-left-menu-dropdown {
+    .menuDropdown {
+      padding-right: 0;
+    }
+
+    &.active > .menuDropdown,
+    &.active .title {
+      display: block;
+      width: 100%;
+      background-color: transparent;
+      color: @theme-color-menu-contrast-textActive;
+    }
+  }
+}
+
+#root #secondNavBar.Menu--admin .navbar .tag-manager-left-menu-dropdown:not(.active) .menuDropdown .title {
+  color: @theme-color-menu-contrast-text;
+
+  &:hover,
+  &:focus {
+    color: @theme-color-menu-contrast-text;
+  }
+}
+
+#root #secondNavBar.Menu--admin .navbar li:not(.active) > a.item.container-menu-item {
+  color: @theme-color-menu-contrast-text;
+}
+
+#root #secondNavBar.Menu--admin .navbar li.active > a.item.container-menu-item {
+  background-color: transparent;
+  color: @theme-color-menu-contrast-textActive;
+}
+
+#mobile-left-menu {
+  .tag-manager-menu-icon {
+    margin-top: 16px;
+  }
+}

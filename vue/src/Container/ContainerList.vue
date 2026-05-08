@@ -237,8 +237,8 @@ export default defineComponent({
     deleteContainer(container: Container) {
       function doDelete() {
         ContainersStore.deleteContainer(container.idcontainer).then(() => {
-          ContainersStore.reload();
           NotificationsStore.remove('CopyDialogResultNotification');
+          window.location.reload();
         });
       }
 

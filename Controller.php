@@ -74,8 +74,10 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $this->accessValidator->checkViewPermission($this->idSite);
 
-        $idContainer = Common::getRequestVar('idContainer', '', 'string');
+        $idContainer = \Piwik\Request::fromRequest()->getStringParameter('idContainer', '');
+        $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($this->idSite);
         $container = null;
+
         if (!empty($idContainer)) {
             try {
                 $container = Request::processRequest('TagManager.getContainer', ['idSite' => $this->idSite, 'idContainer' => $idContainer]);
@@ -84,8 +86,15 @@ class Controller extends \Piwik\Plugin\Controller
             }
         }
 
+        $containerAction = $this->accessValidator->hasWriteCapability($this->idSite)
+            ? 'dashboard'
+            : 'manageTags';
+        $containerMenuItems = $this->buildContainerMenuItems($containers, $containerAction);
+
         return $this->renderTemplate('manageContainers', array(
-            'container' => $container
+            'container' => $container,
+            'containerMenuItems' => $containerMenuItems,
+            'mobileTagManagerMenu' => $this->buildMobileTagManagerMenu($containerMenuItems),
         ));
     }
 
@@ -296,6 +305,13 @@ class Controller extends \Piwik\Plugin\Controller
             $variables['container'] = Request::processRequest('TagManager.getContainer', ['idSite' => $this->idSite, 'idContainer' => $idContainer]);
         }
 
+        $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($this->idSite);
+        $variables['containerMenuItems'] = $this->buildContainerMenuItems($containers, \Piwik\Request::fromRequest()->getStringParameter('action', ''));
+        $variables['mobileTagManagerMenu'] = $this->buildMobileTagManagerMenu(
+            $variables['containerMenuItems'],
+            $variables['container']['name'] . ' (' . $variables['container']['idcontainer'] . ')'
+        );
+
         $variables['idcontainerversion'] = null;
         if (!empty($variables['container']['draft']['idcontainerversion'])) {
             $variables['idcontainerversion'] = $variables['container']['draft']['idcontainerversion'];
@@ -333,6 +349,95 @@ class Controller extends \Piwik\Plugin\Controller
         }
 
         return $this->renderTemplate($template, $variables);
+    }
+
+    private function buildContainerMenuItems(array $containers, string $targetAction): array
+    {
+        $items = array();
+
+        $sortedContainers = $containers;
+
+        usort($sortedContainers, function ($a, $b) {
+            $aTime = strtotime($a['created_date']);
+            $bTime = strtotime($b['created_date']);
+
+            return $bTime <=> $aTime; // desc
+        });
+
+        foreach ($sortedContainers as $containerEntry) {
+            $items[] = array(
+                'id' => $containerEntry['idcontainer'],
+                'name' => $containerEntry['name'],
+                'url' => 'index.php' . Url::getCurrentQueryStringWithParametersModified(array(
+                    'module' => 'TagManager',
+                    'action' => $targetAction,
+                    'idContainer' => $containerEntry['idcontainer'],
+                )),
+            );
+        }
+
+
+
+        return $items;
+    }
+
+    private function buildMobileTagManagerMenu(array $containerMenuItems, ?string $dropdownTitle = null): array
+    {
+        $menu = MenuTagManager::getInstance()->getMenu();
+
+        if (empty($containerMenuItems)) {
+            return $menu;
+        }
+
+        if (!isset($menu['TagManager_TagManager'])) {
+            $menu['TagManager_TagManager'] = array();
+        }
+
+        $tagManagerMenu = $menu['TagManager_TagManager'];
+
+        $prefixItems = array();
+        $manageContainersItems = array();
+        $otherItems = array();
+
+        foreach ($tagManagerMenu as $name => $menuItem) {
+            if ($name[0] === '_') {
+                $prefixItems[$name] = $menuItem;
+                continue;
+            }
+
+            $isContainerMenuItem = isset($menuItem['_cssClass'])
+                && $menuItem['_cssClass'] === 'container-menu-item';
+
+            if ($isContainerMenuItem) {
+                continue;
+            }
+
+            $isManageContainers = isset($menuItem['_url']['action'])
+                && $menuItem['_url']['action'] === 'manageContainers';
+
+            if ($isManageContainers) {
+                $manageContainersItems[$name] = $menuItem;
+            } else {
+                $otherItems[$name] = $menuItem;
+            }
+        }
+
+        $containerItems = array();
+        foreach ($containerMenuItems as $containerMenuItem) {
+            $containerItems[$containerMenuItem['name']] = array(
+                '_url' => array(),
+                '_tooltip' => $containerMenuItem['name'],
+            );
+
+            if (!empty($containerMenuItem['url'])) {
+                parse_str(parse_url($containerMenuItem['url'], PHP_URL_QUERY) ?: '', $queryParameters);
+                $containerItems[$containerMenuItem['name']]['_url'] = $queryParameters;
+            }
+        }
+
+        $menu['TagManager_TagManager'] = $prefixItems + $manageContainersItems + $containerItems + $otherItems;
+
+        return $menu;
     }
 
     public function exportContainerVersion()
@@ -616,6 +721,8 @@ class Controller extends \Piwik\Plugin\Controller
 
         [$defaultAction, $defaultParameters] = Menu::getDefaultAction();
         $view->tagAction = $defaultAction;
+
+        $view->currentIdContainer = \Piwik\Request::fromRequest()->getStringParameter('idContainer', '');
 
         foreach ($variables as $key => $value) {
             $view->$key = $value;
