@@ -15,13 +15,13 @@
 
 {% block root %}
     {% include "@CoreHome/_topScreen.twig" %}
+    {% import '@TagManager/_menu.twig' as menu %}
 
     {% set hasSidebar = showMenu is not defined or showMenu %}
 
     <div class="layoutWithSidebar{% if hasSidebar %} layoutWithSidebar--hasSidebar{% endif %}">
         {% if hasSidebar %}
-            {% import '@CoreHome/_menu.twig' as menu %}
-            {{ menu.menu(tagManagerMenu, false, 'Menu--admin', currentModule, currentAction, null, null, true) }}
+            {{ menu.menu(tagManagerMenu, mobileTagManagerMenu|default(tagManagerMenu), currentModule, currentAction, currentIdContainer, containerMenuItems) }}
         {% endif %}
 
         <div class="layoutWithSidebarContent">
@@ -36,16 +36,8 @@
                             class="sites_autocomplete"
                         ></div>
                     </div>
-
-                    <div class="piwikTopControl">
-                        <div
-                            vue-entry="TagManager.ContainerSelector"
-                            {% if container is defined and container is not empty %}container-name="{{ (container.name ~ ' (' ~ container.idcontainer ~ ')')|json_encode }}"{% endif %}
-                        ></div>
-                    </div>
                 {% endblock %}
-
-                <span class="icon icon-arrowup zenModeToggle"></span>
+                {% include "@CoreHome/_headerMessage.twig" %}
             </div>
 
             <div class="page">

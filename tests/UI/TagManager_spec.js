@@ -42,7 +42,21 @@ describe("TagManager", function () {
         await page.click('.editContainer .entityCancel a');
     }
 
-    var selectorContainerOpen = '.top_controls .tagContainerSelector .dropdown';
+    var selectorContainerOpen = '.top_controls .tagContainerSelector .dropdown',
+        leftMenuContainerItem = '#secondNavBar .navbar .container-menu-item',
+        leftMenuContainerDropdown = '#secondNavBar .navbar .tag-manager-left-menu-dropdown .menuDropdown';
+
+    async function getVisibleText(selector)
+    {
+        return page.evaluate((selector) => {
+            return $(selector)
+                .filter(':visible')
+                .map(function () {
+                    return $(this).text().trim().replace(/\s+/g, ' ');
+                })
+                .get();
+        }, selector);
+    }
 
     it('should load the manage containers page', async function () {
         await page.goto(generalParamsSite1 + urlBase + 'manageContainers');
@@ -61,21 +75,70 @@ describe("TagManager", function () {
         await capture.topControls(page, 'top_controls_no_container_exists');
     });
 
-    it('should open container selector and show no containers exist', async function () {
-        await page.click('.tagContainerSelector');
-        await page.waitForTimeout(250);
-        await capture.selector(page, 'top_controls_no_container_exists_open', selectorContainerOpen);
+    it('should show a direct container link in the left menu for single container sites', async function () {
+        await page.goto('?idSite=3&period=day&date=2010-01-03' + urlBase + 'manageContainers');
+
+        expect(await page.$('#secondNavBar .navbar .tag-manager-left-menu-dropdown')).to.equal(null);
+
+        const containerItems = await page.$$(leftMenuContainerItem);
+        expect(containerItems).to.have.length(1);
+
+        const containerText = await getVisibleText(leftMenuContainerItem);
+        expect(containerText).to.deep.equal(['Container4']);
+
+        const href = await page.evaluate((selector) => $(selector).attr('href'), leftMenuContainerItem);
+        expect(href).to.contain('action=dashboard');
+        expect(href).to.contain('idContainer=aaacont4');
     });
 
-    it('should show top bar list when container has no content', async function () {
-        await page.goto(containerEmpty);
-        await capture.topControls(page, 'top_controls_container_empty');
+    it('should show a container dropdown in the left menu for multi container sites', async function () {
+        await page.goto(generalParamsSite1 + urlBase + 'manageContainers');
+
+        expect(await page.$(leftMenuContainerItem)).to.equal(null);
+        expect(await page.$(leftMenuContainerDropdown)).to.not.equal(null);
+
+        await page.click(leftMenuContainerDropdown + ' .title');
+        await page.waitForTimeout(250);
+
+        const containerTexts = await getVisibleText(leftMenuContainerDropdown + ' .items .item');
+        expect(containerTexts).to.include.members([
+            'Container1',
+            'Container2',
+            'Container3',
+            'Container with "Quotes"',
+        ]);
+
+        const containerHrefs = await page.evaluate((selector) => {
+            return $(selector)
+                .filter(':visible')
+                .map(function () {
+                    return $(this).attr('href');
+                })
+                .get();
+        }, leftMenuContainerDropdown + ' .items .item');
+
+        expect(containerHrefs.join(' ')).to.contain('idContainer=aaacont1');
+        expect(containerHrefs.join(' ')).to.contain('idContainer=aaacont2');
+        expect(containerHrefs.join(' ')).to.contain('idContainer=aaacont3');
+        expect(containerHrefs.join(' ')).to.contain('idContainer=aaacont7');
     });
 
-    it('should open container selector and show available containers', async function () {
-        await page.click('.tagContainerSelector');
+    it('should keep the container context when navigating to manage containers', async function () {
+        await page.goto(containerWithEntries);
+        await (await page.jQuery('#secondNavBar .item:contains(Manage Containers)')).click();
+        await page.waitForNetworkIdle();
+
+        expect(page.url()).to.contain('action=manageContainers');
+        expect(page.url()).to.contain('idContainer=aaacont1');
+
+        await page.click(leftMenuContainerDropdown + ' .title');
         await page.waitForTimeout(250);
-        await capture.selector(page, 'top_controls_container_empty_open', selectorContainerOpen);
+
+        const activeContainer = await getVisibleText(leftMenuContainerDropdown + ' .items .item.active');
+        expect(activeContainer).to.deep.equal([]);
+
+        const containerTexts = await getVisibleText(leftMenuContainerDropdown + ' .items .item');
+        expect(containerTexts).to.include('Container1');
     });
 
     it('should be able to show install code page for container without content', async function () {
@@ -128,17 +191,6 @@ describe("TagManager", function () {
         await page.waitForNetworkIdle();
         await page.waitForSelector('#content .card-content', { visible: true });
         await capture.page(page, 'preview_disable');
-    });
-
-    it('should show top bar list when container has no content', async function () {
-        await page.goto(containerWithEntries);
-        await capture.topControls(page, 'top_controls_container_with_entries');
-    });
-
-    it('should show no containers exist in top bar', async function () {
-        await page.click('.tagContainerSelector');
-        await page.waitForTimeout(250);
-        await capture.selector(page, 'top_controls_container_with_entries_open', selectorContainerOpen);
     });
 
     it('should be able to show install code page for container with content', async function () {
