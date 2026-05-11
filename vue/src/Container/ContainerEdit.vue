@@ -36,26 +36,14 @@
         </div>
         <div>
           <Field
-            uicontrol="select"
-            name="context"
-            :model-value="container.context"
-            @update:model-value="container.context = $event; setValueHasChanged()"
-            :disabled="true"
-            :options="contexts"
-            :title="translate('TagManager_Context')"
-            :inline-help="translate('TagManager_ContainerContextHelp')"
-          />
-        </div>
-        <div>
-          <Field
             uicontrol="text"
             name="name"
             :model-value="container.name"
             @update:model-value="container.name = $event; setValueHasChanged()"
             :maxlength="255"
             :title="translate('General_Name')"
-            :inline-help="translate('TagManager_ContainerNameHelp')"
-            :placeholder="translate('TagManager_ContainerNamePlaceholder')"
+            :inline-help="translate('TagManager_ContainerNameHelpText')"
+            :placeholder="translate('TagManager_ContainerNamePlaceholderV2')"
           />
         </div>
         <div>
@@ -65,8 +53,21 @@
             :model-value="container.description"
             @update:model-value="container.description = $event; setValueHasChanged()"
             :title="translate('TagManager_Description')"
-            :inline-help="translate('TagManager_ContainerDescriptionHelp')"
-            :placeholder="translate('TagManager_ContainerDescriptionPlaceholder')"
+            :ui-control-attributes="{ class: 'compact-textarea' }"
+            :inline-help="translate('TagManager_ContainerDescriptionHelpText')"
+            :placeholder="translate('TagManager_ContainerDescriptionPlaceholderV2')"
+          />
+        </div>
+        <div>
+          <Field
+            uicontrol="select"
+            name="context"
+            :model-value="container.context"
+            @update:model-value="container.context = $event; setValueHasChanged()"
+            :disabled="true"
+            :options="contexts"
+            :title="translate('TagManager_Context')"
+            :inline-help="contextHelpText"
           />
         </div>
         <div>
@@ -126,7 +127,9 @@ import {
   ContentBlock,
   NotificationsStore,
   NotificationType,
-  clone, MatomoUrl,
+  clone,
+  externalLink,
+  MatomoUrl,
 } from 'CoreHome';
 import { Field, SaveButton } from 'CorePluginsAdmin';
 import AvailableContextsStore from '../AvailableContexts.store';
@@ -324,6 +327,15 @@ export default defineComponent({
     },
     isUpdating() {
       return VariablesStore.isUpdating.value || this.isUpdatingVersion;
+    },
+    contextHelpText() {
+      return `${translate('TagManager_ContainerContextHelp')} ${
+        translate(
+          'General_LearnMore',
+          externalLink('https://matomo.org/faq/tag-manager/create-a-container-in-matomo-tag-manager/'),
+          '</a>',
+        )
+      }`;
     },
   },
 });

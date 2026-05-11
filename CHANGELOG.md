@@ -1,5 +1,9 @@
 ## Changelog
 
+0.2.9 - 05/05/2026
+
+*  Updated inline helptexts
+
 0.2.8 - 27/04/2026
 
 *  Updated API documentation

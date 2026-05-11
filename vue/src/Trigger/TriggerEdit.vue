@@ -41,7 +41,10 @@
               @update:model-value="trigger.name = $event; setValueHasChanged()"
               :maxlength="255"
               :title="translate('General_Name')"
-              :inline-help="translate('TagManager_TriggerNameHelp')"
+              :inline-help="translate(
+                'TagManager_NameHelpText',
+                translate('TagManager_TriggerLowercase'),
+              )"
               :placeholder="translate('TagManager_TriggerNamePlaceholder')"
             />
           </div>
@@ -53,7 +56,8 @@
               @update:model-value="trigger.description = $event; setValueHasChanged()"
               :maxlength="1000"
               :title="translate('TagManager_Description')"
-              :inline-help="translate('TagManager_TriggerDescriptionHelp')"
+              :inline-help="translate('TagManager_DescriptionHelpText')"
+              :ui-control-attributes="{ class: 'compact-textarea' }"
               :placeholder="translate('TagManager_TriggerDescriptionPlaceholder')"
             />
           </div>

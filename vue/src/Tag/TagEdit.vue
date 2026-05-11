@@ -53,6 +53,8 @@
               @update:model-value="tag.description = $event; setValueHasChanged()"
               :maxlength="1000"
               :title="translate('TagManager_Description')"
+              :inline-help="translate('TagManager_DescriptionHelpText')"
+              :ui-control-attributes="{ class: 'compact-textarea' }"
               :placeholder="translate('TagManager_TagDescriptionPlaceholder')"
             />
           </div>
@@ -855,7 +857,7 @@ export default defineComponent({
           externalLink('https://matomo.org/faq/tag-manager/how-to-add-google-ads-remarketing-tags-in-matomo-tag-manager/'),
           '</a>');
       }
-      return translate('TagManager_TagNameHelpV2') + additionalHelpText;
+      return translate('TagManager_NameHelpText', translate('TagManager_TagLowercase')) + additionalHelpText;
     },
   },
 });
