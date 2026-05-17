@@ -37,6 +37,12 @@ class MatomoTagTest extends IntegrationTestCase
         $this->idSite = Fixture::createWebsite('2014-01-02 03:04:05');
     }
 
+    public function tearDown(): void
+    {
+        TagManager::$enableAutoContainerCreation = true;
+        parent::tearDown();
+    }
+
     public function test_loadTemplate_getUnbundled()
     {
         $template = $this->createTag(false);
