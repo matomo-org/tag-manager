@@ -13,6 +13,7 @@ use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\SystemSettings;
+use Piwik\Plugins\TagManager\TagManager;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
@@ -45,6 +46,8 @@ class AccessValidatorTest extends IntegrationTestCase
     {
         parent::setUp();
 
+        TagManager::$enableAutoContainerCreation = false;
+
         $this->settings = new SystemSettings();
         $this->validator = new AccessValidator($this->settings);
 
@@ -52,6 +55,12 @@ class AccessValidatorTest extends IntegrationTestCase
         $this->tagFixture = new TagManagerFixture();
         $this->tagFixture->setUpWebsite();
         $this->tagFixture->setUpContainers();
+    }
+
+    public function tearDown(): void
+    {
+        TagManager::$enableAutoContainerCreation = true;
+        parent::tearDown();
     }
 
     public function test_checkWriteCapability()

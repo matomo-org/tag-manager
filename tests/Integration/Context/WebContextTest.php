@@ -52,7 +52,7 @@ class WebContextTest extends IntegrationTestCase
 
     public function tearDown(): void
     {
-        TagManager::$enableAutoContainerCreation = false;
+        TagManager::$enableAutoContainerCreation = true;
         parent::tearDown();
     }
 
