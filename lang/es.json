@@ -457,7 +457,7 @@
         "SiteWithoutDataMtmStep2": "Si desea personalizar este contenedor, visite el %1$sTablero del contenedor%2$s",
         "SiteWithoutDataMtmStep3": "Copie el código a continuación y péguelo en cada página de su sitio web. Le recomendamos que lo pegue inmediatamente antes del cierre de la etiqueta %1$s. %2$sMás información%3$s.",
         "SiteWithoutDataReactFollowStepCompleted": "%1$s¡Enhorabuena!%2$s Has instalado correctamente el código de seguimiento de Matomo Analytics a través del Matomo Tag Manager. Para verificar que se estén registrando las visitas, visita tu sitio web y verifica que estos datos sean visibles en tu instancia de Matomo.",
-        "SiteWithoutDataReactIntro": "Es fácil rastrear tu sitio web o aplicación React.js con Matomo, incluso para aplicaciones de página única (SPA).",
+        "SiteWithoutDataReactIntro": "Es fácil rastrear tu sitio web o aplicación React.js con Matomo, incluso para Aplicaciones de Página Única.",
         "StartDate": "Fecha de inicio",
         "Tag": "Etiqueta",
         "TagEndDateHelp": "Si se establece, esta etiqueta se activará solo hasta esta fecha de finalización. Se asumirá que la fecha especificada está en %1$ssu zona horaria local%2$s.",
