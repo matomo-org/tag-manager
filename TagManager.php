@@ -65,10 +65,10 @@ class TagManager extends \Piwik\Plugin
             'SitesManager.deleteSite.end' => 'onSiteDeleted',
             'SitesManager.addSite.end' => 'onSiteAdded',
             'System.addSystemSummaryItems' => 'addSystemSummaryItems',
-            'Template.endTrackingCodePage' => 'addTagManagerCode',
+            'Template.afterJsTracker' => 'addTagManagerCode',
             'Template.siteWithoutDataTab.MatomoTagManager.content' => 'setTagManagerCode',
             'Template.endTrackingHelpPage' => 'addTagManagerTrackingCodeHelp',
-            'Template.endTrackingCodePageTableOfContents' => 'endTrackingCodePageTableOfContents',
+            'Template.afterJsTrackerMenu' => 'addTagManagerMenuLink',
             'Tracker.PageUrl.getQueryParametersToExclude' => 'getQueryParametersToExclude',
             'API.addGlossaryItems' => 'addGlossaryItems',
             'Template.bodyClass' => 'addBodyClass',
@@ -261,7 +261,7 @@ class TagManager extends \Piwik\Plugin
         $parametersToExclude[] = 'mtmSetDebugFlag';
     }
 
-    public function endTrackingCodePageTableOfContents(&$out)
+    public function addTagManagerMenuLink(&$out)
     {
         // Check whether to show the MTM code. If not, simply return early
         if ($this->isAccessRestrictedForUser()) {
