@@ -9,7 +9,9 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
+use Piwik\NoAccessException;
 use Piwik\Container\StaticContainer;
+use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Input\Name;
@@ -20,9 +22,12 @@ use Piwik\Plugins\TagManager\Model\Variable;
 use Piwik\Plugins\TagManager\TagManager;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
+use Piwik\Plugins\TagManager\tests\Framework\Mock\FakeAccessTagManager;
 use Piwik\Tests\Framework\Fixture;
+use Piwik\Tests\Framework\Mock\FakeAccess;
 use Piwik\Url;
 
 /**
@@ -64,6 +69,7 @@ class TagTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
+        FakeAccess::clearAccess(true);
 
         TagManager::$enableAutoContainerCreation = false;
         $this->idSite = Fixture::createWebsite('2014-03-04 05:06:07');
@@ -84,8 +90,16 @@ class TagTest extends IntegrationTestCase
 
     public function tearDown(): void
     {
+        FakeAccess::clearAccess(true);
         TagManager::$enableAutoContainerCreation = true;
         parent::tearDown();
+    }
+
+    public function provideContainerConfig()
+    {
+        return [
+            'Piwik\Access' => new FakeAccessTagManager(),
+        ];
     }
 
     public function testGetFireLimits()
@@ -1116,6 +1130,41 @@ class TagTest extends IntegrationTestCase
         unset($newTag['idtag']);
 
         $this->assertEquals($tag1, $newTag);
+    }
+
+    public function testCopyTagDifferentSiteRejectsReferencedCustomVariablesWithoutDestinationCapability()
+    {
+        $variableModel = StaticContainer::get(Variable::class);
+        $variableModel->addContainerVariable(
+            $this->idSite,
+            $this->containerVersion1,
+            CustomJsFunctionVariable::ID,
+            'SourceCustomVariable',
+            ['jsFunction' => 'function () { return "test"; }'],
+            '',
+            []
+        );
+
+        $idTag = $this->addContainerTag(
+            $this->idSite,
+            $this->containerVersion1,
+            'CustomImage',
+            'ImageTagReferencingCustomVariable',
+            ['customImageSrc' => 'https://example.test/pixel.gif?value={{SourceCustomVariable}}'],
+            [$this->idTrigger1]
+        );
+
+        $containerModel = StaticContainer::get(Container::class);
+        $idDestinationContainer = $containerModel->addContainer($this->idSite2, WebContext::ID, 'DestinationContainer', 'desc', 0, 0, 0);
+
+        FakeAccess::clearAccess(false);
+        FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesCapabilities = [UseCustomTemplates::ID => [$this->idSite]];
+
+        $this->expectException(NoAccessException::class);
+        $this->expectExceptionMessage('tagmanager_use_custom_templates');
+
+        $this->model->copyTag($this->idSite, $this->containerVersion1, $idTag, $this->idSite2, $idDestinationContainer);
     }
 
     private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '', $status = '')

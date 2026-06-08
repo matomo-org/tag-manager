@@ -9,12 +9,14 @@
 
 namespace Piwik\Plugins\TagManager\Model;
 
+use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\API\TagReference;
 use Piwik\Plugins\TagManager\API\TriggerReference;
 use Piwik\Plugins\TagManager\API\VariableReference;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\TagManager\Input\IdSite;
+use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Validators\LookupTable;
 use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Template\BaseTemplate;
@@ -455,6 +457,7 @@ class Variable extends BaseModel
         }
 
         $variable = $this->getContainerVariable($idSite, $idContainerVersion, $idVariable);
+        $this->checkDestinationCanUseCustomTemplate($variable, $idSite, $idDestinationSite);
         $newVarName = $this->dao->makeCopyNameUnique($idDestinationSite, $variable['name'], $idDestinationVersion);
 
         $this->copyReferencedVariables($variable, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationVersion);
@@ -519,6 +522,7 @@ class Variable extends BaseModel
             throw new \Exception('Variable name cannot be empty');
         }
 
+        $this->checkDestinationCanUseCustomTemplate($variable, $idSite, $idDestinationSite);
         $this->copyReferencedVariables($variable, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationContainerVersion);
 
         // Insert the new variable
@@ -537,6 +541,17 @@ class Variable extends BaseModel
         $this->postCopyVariableActivity($idSite, $idDestinationSite, $idContainerVersion, $idDestinationContainerVersion, null, $variable);
 
         return $newVarName;
+    }
+
+    private function checkDestinationCanUseCustomTemplate(array $variable, int $idSite, int $idDestinationSite): void
+    {
+        if ($idSite === $idDestinationSite || empty($variable['type'])) {
+            return;
+        }
+
+        if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
+            StaticContainer::get(AccessValidator::class)->checkUseCustomTemplatesCapability($idDestinationSite);
+        }
     }
 
     private function updateVariableColumns($idSite, $idContainerVersion, $idVariable, $columns)

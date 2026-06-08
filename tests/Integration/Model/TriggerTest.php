@@ -10,6 +10,8 @@
 namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
 use Piwik\Container\StaticContainer;
+use Piwik\NoAccessException;
+use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\TriggersDao;
 use Piwik\Plugins\TagManager\Input\Name;
@@ -22,10 +24,13 @@ use Piwik\Plugins\TagManager\TagManager;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\Template\Trigger\CustomEventTrigger;
 use Piwik\Plugins\TagManager\Template\Trigger\WindowLoadedTrigger;
+use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ErrorUrlVariable;
+use Piwik\Plugins\TagManager\tests\Framework\Mock\FakeAccessTagManager;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
+use Piwik\Tests\Framework\Mock\FakeAccess;
 
 /**
  * @group TagManager
@@ -61,6 +66,7 @@ class TriggerTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
+        FakeAccess::clearAccess(true);
 
         TagManager::$enableAutoContainerCreation = false;
         $this->idSite = Fixture::createWebsite('2014-03-04 05:06:07');
@@ -75,8 +81,16 @@ class TriggerTest extends IntegrationTestCase
 
     public function tearDown(): void
     {
+        FakeAccess::clearAccess(true);
         TagManager::$enableAutoContainerCreation = true;
         parent::tearDown();
+    }
+
+    public function provideContainerConfig()
+    {
+        return [
+            'Piwik\Access' => new FakeAccessTagManager(),
+        ];
     }
 
     public function testAddContainerTriggerInvalidSite()
@@ -682,6 +696,41 @@ class TriggerTest extends IntegrationTestCase
         // Confirm that when trying to copy again, it does in fact create a new copy
         $idSecondTrigger = $this->model->copyTrigger($this->idSite, $this->containerVersion1, $this->idTrigger1, $this->idSite, $idContainer);
         $this->assertNotSame($idNewTrigger, $idSecondTrigger, 'The ID should not be the same');
+    }
+
+    public function testCopyTriggerDifferentSiteRejectsReferencedCustomVariablesWithoutDestinationCapability()
+    {
+        $variableModel = StaticContainer::get(Variable::class);
+        $variableModel->addContainerVariable(
+            $this->idSite,
+            $this->containerVersion1,
+            CustomJsFunctionVariable::ID,
+            'SourceCustomVariable',
+            ['jsFunction' => 'function () { return "test"; }'],
+            '',
+            []
+        );
+
+        $idTrigger = $this->addContainerTrigger(
+            $this->idSite,
+            $this->containerVersion1,
+            CustomEventTrigger::ID,
+            'TriggerReferencingCustomVariable',
+            ['eventName' => 'mtm-event'],
+            [['comparison' => 'equals', 'actual' => 'SourceCustomVariable', 'expected' => 'expected']]
+        );
+
+        $containerModel = StaticContainer::get(Container::class);
+        $idDestinationContainer = $containerModel->addContainer($this->idSite2, WebContext::ID, 'DestinationContainer', 'desc', 0, 0, 0);
+
+        FakeAccess::clearAccess(false);
+        FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesCapabilities = [UseCustomTemplates::ID => [$this->idSite]];
+
+        $this->expectException(NoAccessException::class);
+        $this->expectExceptionMessage('tagmanager_use_custom_templates');
+
+        $this->model->copyTrigger($this->idSite, $this->containerVersion1, $idTrigger, $this->idSite2, $idDestinationContainer);
     }
 
     public function testCopyTriggerReferencesVariable()

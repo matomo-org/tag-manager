@@ -13,6 +13,7 @@ use Piwik\Container\StaticContainer;
 use Piwik\Date;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
+use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Input\IdSite;
 use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Validators\TriggerIds;
@@ -209,6 +210,7 @@ class Tag extends BaseModel
         }
         // If the destination site isn't set, simply use the source site
         $idDestinationSite = $idDestinationSite ?? $idSite;
+        $this->checkDestinationCanUseCustomTemplate($tag, $idSite, $idDestinationSite);
 
         $newName = $this->dao->makeCopyNameUnique($idDestinationSite, $tag['name'], $idDestinationVersion);
 
@@ -260,6 +262,17 @@ class Tag extends BaseModel
         $tag['block_trigger_ids'] = $this->copyReferencedTriggers($idSite, $idContainerVersion, $tag['block_trigger_ids'], $idDestinationSite, $idDestinationVersion);
 
         return $idDestinationVersion;
+    }
+
+    private function checkDestinationCanUseCustomTemplate(array $tag, int $idSite, int $idDestinationSite): void
+    {
+        if ($idSite === $idDestinationSite || empty($tag['type'])) {
+            return;
+        }
+
+        if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
+            StaticContainer::get(AccessValidator::class)->checkUseCustomTemplatesCapability($idDestinationSite);
+        }
     }
 
     private function copyReferencedTriggers(int $idSite, int $idContainerVersion, array $triggerIds, int $idDestinationSite, int $idDestinationVersion): array

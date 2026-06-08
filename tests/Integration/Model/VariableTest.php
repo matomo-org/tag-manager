@@ -10,7 +10,9 @@
 namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
 use Piwik\Container\StaticContainer;
+use Piwik\NoAccessException;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\TagManager\Input\Name;
@@ -27,8 +29,10 @@ use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ErrorUrlVariable;
 use Piwik\Plugins\TagManager\Template\Variable\ReferrerUrlVariable;
+use Piwik\Plugins\TagManager\tests\Framework\Mock\FakeAccessTagManager;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
+use Piwik\Tests\Framework\Mock\FakeAccess;
 
 /**
  * @group TagManager
@@ -69,6 +73,7 @@ class VariableTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
+        FakeAccess::clearAccess(true);
 
         TagManager::$enableAutoContainerCreation = false;
         $this->idSite = Fixture::createWebsite('2014-03-04 05:06:07');
@@ -86,8 +91,16 @@ class VariableTest extends IntegrationTestCase
 
     public function tearDown(): void
     {
+        FakeAccess::clearAccess(true);
         TagManager::$enableAutoContainerCreation = true;
         parent::tearDown();
+    }
+
+    public function provideContainerConfig()
+    {
+        return [
+            'Piwik\Access' => new FakeAccessTagManager(),
+        ];
     }
 
     public function testAddContainerVariableInvalidSite()
@@ -764,6 +777,30 @@ class VariableTest extends IntegrationTestCase
         unset($variable2['idcontainerversion']);
 
         $this->assertEquals($variable1, $variable2, 'The variable should match');
+    }
+
+    public function testCopyVariableDifferentSiteRejectsCustomVariablesWithoutDestinationCapability()
+    {
+        $idVariable = $this->addContainerVariable(
+            $this->idSite,
+            $this->containerVersion1,
+            CustomJsFunctionVariable::ID,
+            'CrossSiteCustomVariable',
+            ['jsFunction' => 'function () { return "test"; }'],
+            ''
+        );
+
+        $containerModel = StaticContainer::get(Container::class);
+        $idDestinationContainer = $containerModel->addContainer($this->idSite2, WebContext::ID, 'DestinationContainer', 'desc', 0, 0, 0);
+
+        FakeAccess::clearAccess(false);
+        FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesCapabilities = [UseCustomTemplates::ID => [$this->idSite]];
+
+        $this->expectException(NoAccessException::class);
+        $this->expectExceptionMessage('tagmanager_use_custom_templates');
+
+        $this->model->copyVariable($this->idSite, $this->containerVersion1, $idVariable, $this->idSite2, $idDestinationContainer);
     }
 
     public function testCopyVariableReferencingVariable()
