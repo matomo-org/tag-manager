@@ -1167,6 +1167,53 @@ class TagTest extends IntegrationTestCase
         $this->model->copyTag($this->idSite, $this->containerVersion1, $idTag, $this->idSite2, $idDestinationContainer);
     }
 
+    public function testCopyTagDifferentSiteRejectsReferencedExistingCustomVariablesWithoutDestinationCapability()
+    {
+        $variableModel = StaticContainer::get(Variable::class);
+        $variableModel->addContainerVariable(
+            $this->idSite,
+            $this->containerVersion1,
+            CustomJsFunctionVariable::ID,
+            'SourceCustomVariable',
+            ['jsFunction' => 'function () { return "test"; }'],
+            '',
+            []
+        );
+
+        $idTag = $this->addContainerTag(
+            $this->idSite,
+            $this->containerVersion1,
+            'CustomImage',
+            'ImageTagReferencingExistingCustomVariable',
+            ['customImageSrc' => 'https://example.test/pixel.gif?value={{SourceCustomVariable}}'],
+            [$this->idTrigger1]
+        );
+
+        $containerModel = StaticContainer::get(Container::class);
+        $idDestinationContainer = $containerModel->addContainer($this->idSite2, WebContext::ID, 'DestinationContainer', 'desc', 0, 0, 0);
+        $destinationContainer = $containerModel->getContainer($this->idSite2, $idDestinationContainer);
+        $idDestinationVersion = $destinationContainer['draft']['idcontainerversion'];
+
+        $variableModel->addContainerVariable(
+            $this->idSite2,
+            $idDestinationVersion,
+            CustomJsFunctionVariable::ID,
+            'SourceCustomVariable',
+            ['jsFunction' => 'function () { return "test"; }'],
+            '',
+            []
+        );
+
+        FakeAccess::clearAccess(false);
+        FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesCapabilities = [UseCustomTemplates::ID => [$this->idSite]];
+
+        $this->expectException(NoAccessException::class);
+        $this->expectExceptionMessage('tagmanager_use_custom_templates');
+
+        $this->model->copyTag($this->idSite, $this->containerVersion1, $idTag, $this->idSite2, $idDestinationContainer);
+    }
+
     private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '', $status = '')
     {
         if (!isset($type)) {

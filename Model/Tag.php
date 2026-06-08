@@ -203,14 +203,13 @@ class Tag extends BaseModel
     public function copyTag(int $idSite, int $idContainerVersion, int $idTag, ?int $idDestinationSite = null, ?string $idDestinationContainer = null): int
     {
         $tag = $this->getContainerTag($idSite, $idContainerVersion, $idTag);
+        $idDestinationSite = $idDestinationSite ?? $idSite;
+        $this->checkDestinationCanUseCustomTemplate($tag, $idSite, $idContainerVersion, $idDestinationSite);
 
         $idDestinationVersion = $idContainerVersion;
         if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
             $idDestinationVersion = $this->copyReferencedVariablesAndTriggers($tag, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationContainer);
         }
-        // If the destination site isn't set, simply use the source site
-        $idDestinationSite = $idDestinationSite ?? $idSite;
-        $this->checkDestinationCanUseCustomTemplate($tag, $idSite, $idDestinationSite);
 
         $newName = $this->dao->makeCopyNameUnique($idDestinationSite, $tag['name'], $idDestinationVersion);
 
@@ -264,13 +263,42 @@ class Tag extends BaseModel
         return $idDestinationVersion;
     }
 
-    private function checkDestinationCanUseCustomTemplate(array $tag, int $idSite, int $idDestinationSite): void
+    public function usesCustomTemplates(int $idSite, int $idContainerVersion, int $idTag): bool
+    {
+        $tag = $this->getContainerTag($idSite, $idContainerVersion, $idTag);
+
+        if (empty($tag)) {
+            return false;
+        }
+
+        if (!empty($tag['type']) && $this->tagsProvider->isCustomTemplate($tag['type'])) {
+            return true;
+        }
+
+        $variableModel = StaticContainer::get(Variable::class);
+        $checkedVariableNames = [];
+        if ($variableModel->doesEntityReferenceCustomTemplates($tag, $idSite, $idContainerVersion, $checkedVariableNames)) {
+            return true;
+        }
+
+        $triggerModel = StaticContainer::get(Trigger::class);
+        $triggerIds = array_merge($tag['fire_trigger_ids'] ?? [], $tag['block_trigger_ids'] ?? []);
+        foreach ($triggerIds as $triggerId) {
+            if ($triggerModel->usesCustomTemplates($idSite, $idContainerVersion, (int) $triggerId, $checkedVariableNames)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function checkDestinationCanUseCustomTemplate(array $tag, int $idSite, int $idContainerVersion, int $idDestinationSite): void
     {
         if ($idSite === $idDestinationSite || empty($tag['type'])) {
             return;
         }
 
-        if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
+        if ($this->usesCustomTemplates($idSite, $idContainerVersion, (int) $tag['idtag'])) {
             StaticContainer::get(AccessValidator::class)->checkUseCustomTemplatesCapability($idDestinationSite);
         }
     }

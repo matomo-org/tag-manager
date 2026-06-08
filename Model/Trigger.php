@@ -142,6 +142,22 @@ class Trigger extends BaseModel
         return $this->enrichTrigger($trigger);
     }
 
+    public function usesCustomTemplates(int $idSite, int $idContainerVersion, int $idTrigger, array &$checkedVariableNames = []): bool
+    {
+        $trigger = $this->getContainerTrigger($idSite, $idContainerVersion, $idTrigger);
+
+        if (empty($trigger)) {
+            return false;
+        }
+
+        if (!empty($trigger['type']) && $this->triggersProvider->isCustomTemplate($trigger['type'])) {
+            return true;
+        }
+
+        return StaticContainer::get(Variable::class)
+            ->doesEntityReferenceCustomTemplates($trigger, $idSite, $idContainerVersion, $checkedVariableNames);
+    }
+
     /**
      * Look up a trigger by its name.
      *
@@ -238,7 +254,16 @@ class Trigger extends BaseModel
             return;
         }
 
-        if ($this->triggersProvider->isCustomTemplate($trigger['type'])) {
+        $checkedVariableNames = [];
+        if (
+            (!empty($trigger['type']) && $this->triggersProvider->isCustomTemplate($trigger['type']))
+            || StaticContainer::get(Variable::class)->doesEntityReferenceCustomTemplates(
+                $trigger,
+                $idSite,
+                $trigger['idcontainerversion'],
+                $checkedVariableNames
+            )
+        ) {
             StaticContainer::get(AccessValidator::class)->checkUseCustomTemplatesCapability($idDestinationSite);
         }
     }

@@ -373,6 +373,49 @@ class Variable extends BaseModel
         return $this->enrichVariable($variable);
     }
 
+    public function usesCustomTemplates(int $idSite, int $idContainerVersion, int $idVariable, array &$checkedVariableNames = []): bool
+    {
+        $variable = $this->getContainerVariable($idSite, $idContainerVersion, $idVariable);
+
+        if (empty($variable)) {
+            return false;
+        }
+
+        return $this->variableUsesCustomTemplates($variable, $idSite, $idContainerVersion, $checkedVariableNames);
+    }
+
+    public function doesEntityReferenceCustomTemplates(array $entity, int $idSite, int $idContainerVersion, array &$checkedVariableNames = []): bool
+    {
+        $referencedVariableNames = $this->listVariableNamesInParameters($entity);
+
+        if (!empty($entity['idtrigger']) && !empty($entity['conditions']) && is_array($entity['conditions'])) {
+            foreach ($entity['conditions'] as $condition) {
+                if (!empty($condition['actual']) && is_string($condition['actual'])) {
+                    $referencedVariableNames[] = $condition['actual'];
+                }
+            }
+        }
+
+        foreach (array_unique($referencedVariableNames) as $variableName) {
+            if (isset($checkedVariableNames[$variableName])) {
+                continue;
+            }
+
+            $checkedVariableNames[$variableName] = true;
+
+            $variable = $this->findVariableByName($idSite, $idContainerVersion, $variableName);
+            if (empty($variable)) {
+                continue;
+            }
+
+            if ($this->variableUsesCustomTemplates($variable, $idSite, $idContainerVersion, $checkedVariableNames)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Check the Tag/Trigger/Variable for references to variables. If any are found, update the names in the parameters
      * to reference the copies. For triggers, do the same for the conditions.
@@ -543,13 +586,27 @@ class Variable extends BaseModel
         return $newVarName;
     }
 
+    private function variableUsesCustomTemplates(array $variable, int $idSite, int $idContainerVersion, array &$checkedVariableNames): bool
+    {
+        if (empty($variable)) {
+            return false;
+        }
+
+        if (!empty($variable['type']) && $this->variablesProvider->isCustomTemplate($variable['type'])) {
+            return true;
+        }
+
+        return $this->doesEntityReferenceCustomTemplates($variable, $idSite, $idContainerVersion, $checkedVariableNames);
+    }
+
     private function checkDestinationCanUseCustomTemplate(array $variable, int $idSite, int $idDestinationSite): void
     {
         if ($idSite === $idDestinationSite || empty($variable['type'])) {
             return;
         }
 
-        if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
+        $checkedVariableNames = [];
+        if ($this->variableUsesCustomTemplates($variable, $idSite, $variable['idcontainerversion'], $checkedVariableNames)) {
             StaticContainer::get(AccessValidator::class)->checkUseCustomTemplatesCapability($idDestinationSite);
         }
     }
