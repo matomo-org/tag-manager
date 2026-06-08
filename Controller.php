@@ -550,7 +550,8 @@ class Controller extends \Piwik\Plugin\Controller
             $idContainerVersion = $request->getIntegerParameter('idContainerVersion');
 
             $tagModel = StaticContainer::get(Tag::class);
-            if ($this->idSite !== $idDestinationSite
+            if (
+                $this->idSite !== $idDestinationSite
                 && $tagModel->usesCustomTemplates($this->idSite, $idContainerVersion, $idTag)
             ) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
@@ -613,7 +614,8 @@ class Controller extends \Piwik\Plugin\Controller
             $idContainerVersion = $request->getIntegerParameter('idContainerVersion');
 
             $triggerModel = StaticContainer::get(Trigger::class);
-            if ($this->idSite !== $idDestinationSite
+            if (
+                $this->idSite !== $idDestinationSite
                 && $triggerModel->usesCustomTemplates($this->idSite, $idContainerVersion, $idTrigger)
             ) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
@@ -676,7 +678,8 @@ class Controller extends \Piwik\Plugin\Controller
             $idContainerVersion = $request->getIntegerParameter('idContainerVersion');
 
             $variableModel = StaticContainer::get(Variable::class);
-            if ($this->idSite !== $idDestinationSite
+            if (
+                $this->idSite !== $idDestinationSite
                 && $variableModel->usesCustomTemplates($this->idSite, $idContainerVersion, $idVariable)
             ) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
