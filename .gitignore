@@ -1,5 +1,6 @@
 tests/System/processed/*xml
 tests/System/processed/*text
+.codex
 /vue/dist/demo.html
 /vue/dist/*.common.js
 /vue/dist/*.map

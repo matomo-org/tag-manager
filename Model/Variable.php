@@ -297,15 +297,9 @@ class Variable extends BaseModel
 
     private function canParameterContainVariables(array $parameterMetadata, string $entityType)
     {
-        // If the parameter is for a variable component, or it's the jsFunction param of a CustomJsFunction variable
+        // Use the field metadata first, then keep legacy fallbacks for template types that allow inline variables.
         return (
-            (
-                isset($parameterMetadata['component'])
-                && in_array($parameterMetadata['component'], [
-                    BaseTemplate::FIELD_VARIABLE_COMPONENT,
-                    BaseTemplate::FIELD_VARIABLE_TYPE_COMPONENT
-                ])
-            )
+            self::hasFieldConfigVariableParameter($parameterMetadata)
             || ($entityType === 'CustomJsFunction' && $parameterMetadata['name'] === 'jsFunction')
             || ($entityType === 'CustomHtml' && $parameterMetadata['name'] === 'customHtml')
         );
@@ -333,9 +327,10 @@ class Variable extends BaseModel
                 $matches = [];
                 preg_match_all('/{{.[^}]+}}/', $parameters[$paramName], $matches);
                 $matches = array_unique($matches[0]);
-                $variables = array_map(function ($value) {
+                $matches = array_map(function ($value) {
                     return trim(str_replace(['{{', '}}'], '', $value));
                 }, $matches);
+                $variables = array_merge($variables, $matches);
             }
         }
 
