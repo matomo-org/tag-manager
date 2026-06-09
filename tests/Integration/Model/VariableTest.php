@@ -10,7 +10,9 @@
 namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
 use Piwik\Container\StaticContainer;
+use Piwik\NoAccessException;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\TagManager\Input\Name;
@@ -27,8 +29,10 @@ use Piwik\Plugins\TagManager\Template\Variable\CustomJsFunctionVariable;
 use Piwik\Plugins\TagManager\Template\Variable\DataLayerVariable;
 use Piwik\Plugins\TagManager\Template\Variable\PreConfigured\ErrorUrlVariable;
 use Piwik\Plugins\TagManager\Template\Variable\ReferrerUrlVariable;
+use Piwik\Plugins\TagManager\tests\Framework\Mock\FakeAccessTagManager;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
+use Piwik\Tests\Framework\Mock\FakeAccess;
 
 /**
  * @group TagManager
@@ -69,6 +73,7 @@ class VariableTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
+        FakeAccess::clearAccess(true);
 
         TagManager::$enableAutoContainerCreation = false;
         $this->idSite = Fixture::createWebsite('2014-03-04 05:06:07');
@@ -86,8 +91,16 @@ class VariableTest extends IntegrationTestCase
 
     public function tearDown(): void
     {
+        FakeAccess::clearAccess(true);
         TagManager::$enableAutoContainerCreation = true;
         parent::tearDown();
+    }
+
+    public function provideContainerConfig()
+    {
+        return [
+            'Piwik\Access' => new FakeAccessTagManager(),
+        ];
     }
 
     public function testAddContainerVariableInvalidSite()
@@ -716,6 +729,65 @@ class VariableTest extends IntegrationTestCase
         $this->assertCount(1, $this->model->getContainerVariables($this->idSite, $this->containerVersion2), 'There should be one variable.');
     }
 
+    public function testCopyReferencedVariablesToDifferentContainerCopiesAllVariableEnabledTextFields()
+    {
+        $idSecondVariable = $this->addContainerVariable(
+            $this->idSite,
+            $this->containerVersion1,
+            null,
+            'SecondVariable',
+            ['dataLayerName' => 'secondVariable'],
+            ''
+        );
+
+        $containerModel = StaticContainer::get(Container::class);
+        $idContainer = $containerModel->addContainer($this->idSite, WebContext::ID, 'FooContainer', 'My description', 0, 0, 0);
+        $container = $containerModel->getContainer($this->idSite, $idContainer);
+        $idDestinationVersion = $container['draft']['idcontainerversion'];
+
+        $this->addContainerVariable(
+            $this->idSite,
+            $idDestinationVersion,
+            null,
+            'InitialVariable1',
+            ['dataLayerName' => 'alreadyExistsInDestination'],
+            ''
+        );
+
+        $trigger = StaticContainer::get(Trigger::class);
+        $idTrigger1 = $trigger->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'MyTrigger1', [], []);
+
+        $idTag = $this->tagModel->addContainerTag(
+            $this->idSite,
+            $this->containerVersion1,
+            MatomoTag::ID,
+            'TagReferencingVariableTextFields',
+            [
+                'matomoConfig' => '{{InitialVariable1}}',
+                'trackingType' => 'pageview',
+                'documentTitle' => 'Title {{InitialVariable1}}',
+                'customUrl' => 'https://example.test/{{SecondVariable}}',
+            ],
+            [$idTrigger1],
+            [],
+            Tag::FIRE_LIMIT_UNLIMITED,
+            0,
+            9999,
+            $this->now,
+            $this->now
+        );
+
+        $tag = $this->tagModel->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
+
+        $this->model->copyReferencedVariables($tag, $this->idSite, $this->containerVersion1, $this->idSite, $idDestinationVersion);
+
+        $this->assertSame('Title {{InitialVariable1 (1)}}', $tag['parameters']['documentTitle']);
+        $this->assertSame('https://example.test/{{SecondVariable}}', $tag['parameters']['customUrl']);
+        $this->assertNotEmpty($this->model->findVariableByName($this->idSite, $idDestinationVersion, 'InitialVariable1 (1)'));
+        $this->assertNotEmpty($this->model->findVariableByName($this->idSite, $idDestinationVersion, 'SecondVariable'));
+        $this->assertSame($idSecondVariable, $this->model->findVariableByName($this->idSite, $this->containerVersion1, 'SecondVariable')['idvariable']);
+    }
+
     public function testCopyVariable()
     {
         $this->assertCount(1, $this->model->getContainerVariables($this->idSite, $this->containerVersion1), 'There should be one variable before copy');
@@ -764,6 +836,30 @@ class VariableTest extends IntegrationTestCase
         unset($variable2['idcontainerversion']);
 
         $this->assertEquals($variable1, $variable2, 'The variable should match');
+    }
+
+    public function testCopyVariableDifferentSiteRejectsCustomVariablesWithoutDestinationCapability()
+    {
+        $idVariable = $this->addContainerVariable(
+            $this->idSite,
+            $this->containerVersion1,
+            CustomJsFunctionVariable::ID,
+            'CrossSiteCustomVariable',
+            ['jsFunction' => 'function () { return "test"; }'],
+            ''
+        );
+
+        $containerModel = StaticContainer::get(Container::class);
+        $idDestinationContainer = $containerModel->addContainer($this->idSite2, WebContext::ID, 'DestinationContainer', 'desc', 0, 0, 0);
+
+        FakeAccess::clearAccess(false);
+        FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesCapabilities = [UseCustomTemplates::ID => [$this->idSite]];
+
+        $this->expectException(NoAccessException::class);
+        $this->expectExceptionMessage('tagmanager_use_custom_templates');
+
+        $this->model->copyVariable($this->idSite, $this->containerVersion1, $idVariable, $this->idSite2, $idDestinationContainer);
     }
 
     public function testCopyVariableReferencingVariable()

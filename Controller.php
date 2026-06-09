@@ -25,9 +25,6 @@ use Piwik\Plugins\TagManager\Model\Environment;
 use Piwik\Plugins\TagManager\Model\Tag;
 use Piwik\Plugins\TagManager\Model\Trigger;
 use Piwik\Plugins\TagManager\Model\Variable;
-use Piwik\Plugins\TagManager\Template\Tag\TagsProvider;
-use Piwik\Plugins\TagManager\Template\Trigger\TriggersProvider;
-use Piwik\Plugins\TagManager\Template\Variable\VariablesProvider;
 use Piwik\Site;
 use Piwik\Url;
 use Piwik\View;
@@ -553,11 +550,11 @@ class Controller extends \Piwik\Plugin\Controller
             $idContainerVersion = $request->getIntegerParameter('idContainerVersion');
 
             $tagModel = StaticContainer::get(Tag::class);
-            if ($this->idSite !== $idDestinationSite) {
-                $tag = $tagModel->getContainerTag($this->idSite, $idContainerVersion, $idTag);
-                if (!empty($tag) && StaticContainer::get(TagsProvider::class)->isCustomTemplate($tag['type'])) {
-                    $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
-                }
+            if (
+                $this->idSite !== $idDestinationSite
+                && $tagModel->usesCustomTemplates($this->idSite, $idContainerVersion, $idTag)
+            ) {
+                $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
             }
 
             $idTagNew = $tagModel->copyTag($this->idSite, $idContainerVersion, $idTag, $idDestinationSite, $idDestinationContainer);
@@ -617,11 +614,11 @@ class Controller extends \Piwik\Plugin\Controller
             $idContainerVersion = $request->getIntegerParameter('idContainerVersion');
 
             $triggerModel = StaticContainer::get(Trigger::class);
-            if ($this->idSite !== $idDestinationSite) {
-                $trigger = $triggerModel->getContainerTrigger($this->idSite, $idContainerVersion, $idTrigger);
-                if (!empty($trigger) && StaticContainer::get(TriggersProvider::class)->isCustomTemplate($trigger['type'])) {
-                    $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
-                }
+            if (
+                $this->idSite !== $idDestinationSite
+                && $triggerModel->usesCustomTemplates($this->idSite, $idContainerVersion, $idTrigger)
+            ) {
+                $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
             }
 
             $idTriggerNew = $triggerModel->copyTrigger($this->idSite, $idContainerVersion, $idTrigger, $idDestinationSite, $idDestinationContainer);
@@ -681,11 +678,11 @@ class Controller extends \Piwik\Plugin\Controller
             $idContainerVersion = $request->getIntegerParameter('idContainerVersion');
 
             $variableModel = StaticContainer::get(Variable::class);
-            if ($this->idSite !== $idDestinationSite) {
-                $variable = $variableModel->getContainerVariable($this->idSite, $idContainerVersion, $idVariable);
-                if (!empty($variable) && StaticContainer::get(VariablesProvider::class)->isCustomTemplate($variable['type'])) {
-                    $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
-                }
+            if (
+                $this->idSite !== $idDestinationSite
+                && $variableModel->usesCustomTemplates($this->idSite, $idContainerVersion, $idVariable)
+            ) {
+                $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
             }
 
             $idVariableNew = $variableModel->copyVariable($this->idSite, $idContainerVersion, $idVariable, $idDestinationSite, $idDestinationContainer);
