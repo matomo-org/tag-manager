@@ -29,7 +29,8 @@
             }
 
             // Load the LinkedIn Insight script only once
-            if (!document.querySelector('script[src*="insight.min.js"]')) {
+             if (!window._mtmLinkedInInsightLoaded) {
+                window._mtmLinkedInInsightLoaded = true;
                 var s = document.getElementsByTagName("script")[0];
                 var b = document.createElement("script");
 
