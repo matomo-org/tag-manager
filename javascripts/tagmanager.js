@@ -96,7 +96,7 @@
                     var parts = key.split('.');
                     var i;
                     for (i = 0; i < parts.length; i++) {
-                        if (parts[i] in obj) {
+                        if (utils.isObject(obj) && parts[i] in obj) {
                             obj = obj[parts[i]];
                         } else {
                             // value does not exist
