@@ -116,13 +116,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     return target;
   };
   const _hoisted_1$w = { class: "tagManagerImportVersion" };
-  const _hoisted_2$s = {
+  const _hoisted_2$r = {
     class: "ui-confirm",
     id: "confirmImportContainerVersion",
     ref: "confirmImportContainerVersion"
   };
-  const _hoisted_3$r = ["value"];
-  const _hoisted_4$m = ["value"];
+  const _hoisted_3$p = ["value"];
+  const _hoisted_4$k = ["value"];
   function _sfc_render$w(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_ActivityIndicator = vue.resolveComponent("ActivityIndicator");
     const _component_Field = vue.resolveComponent("Field");
@@ -169,18 +169,18 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         ]),
         _: 1
       }, 8, ["content-title"]),
-      vue.createElementVNode("div", _hoisted_2$s, [
+      vue.createElementVNode("div", _hoisted_2$r, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_ConfirmImportContainerVersion")), 1),
         vue.createElementVNode("input", {
           role: "yes",
           type: "button",
           value: _ctx.translate("General_Yes")
-        }, null, 8, _hoisted_3$r),
+        }, null, 8, _hoisted_3$p),
         vue.createElementVNode("input", {
           role: "no",
           type: "button",
           value: _ctx.translate("General_No")
-        }, null, 8, _hoisted_4$m)
+        }, null, 8, _hoisted_4$k)
       ], 512)
     ]);
   }
@@ -284,38 +284,36 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     }
   });
   const _hoisted_1$v = { class: "tagManagerManageSelect tagManagerVariableSelect" };
-  const _hoisted_2$r = { class: "tableActionBar" };
-  const _hoisted_3$q = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
-  const _hoisted_4$l = { class: "collection with-header" };
-  const _hoisted_5$i = { class: "collection-header" };
-  const _hoisted_6$g = ["onClick"];
-  const _hoisted_7$g = { class: "title" };
-  const _hoisted_8$g = { class: "secondary-content" };
-  const _hoisted_9$f = ["onClick", "title"];
-  const _hoisted_10$f = { class: "collection-header" };
-  const _hoisted_11$f = ["onClick"];
-  const _hoisted_12$e = { class: "title" };
-  const _hoisted_13$e = { class: "secondary-content" };
-  const _hoisted_14$e = ["title"];
-  const _hoisted_15$e = { class: "tableActionBar" };
-  const _hoisted_16$e = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
+  const _hoisted_2$q = { class: "tableActionBar" };
+  const _hoisted_3$o = { class: "collection with-header" };
+  const _hoisted_4$j = { class: "collection-header" };
+  const _hoisted_5$g = ["onClick"];
+  const _hoisted_6$g = { class: "title" };
+  const _hoisted_7$g = { class: "secondary-content" };
+  const _hoisted_8$f = ["onClick", "title"];
+  const _hoisted_9$e = { class: "collection-header" };
+  const _hoisted_10$e = ["onClick"];
+  const _hoisted_11$e = { class: "title" };
+  const _hoisted_12$e = { class: "secondary-content" };
+  const _hoisted_13$e = ["title"];
+  const _hoisted_14$e = { class: "tableActionBar" };
   function _sfc_render$v(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_ActivityIndicator = vue.resolveComponent("ActivityIndicator");
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$v, [
       vue.createVNode(_component_ActivityIndicator, { loading: _ctx.isLoading }, null, 8, ["loading"]),
-      vue.createElementVNode("div", _hoisted_2$r, [
+      vue.createElementVNode("div", _hoisted_2$q, [
         vue.withDirectives(vue.createElementVNode("a", {
           class: "createNewVariable",
           onClick: _cache[0] || (_cache[0] = ($event) => _ctx.createVariable())
         }, [
-          _hoisted_3$q,
+          _cache[2] || (_cache[2] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
           vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewVariable")), 1)
         ], 512), [
           [vue.vShow, !_ctx.isLoading]
         ])
       ]),
-      vue.createElementVNode("ul", _hoisted_4$l, [
-        vue.createElementVNode("li", _hoisted_5$i, [
+      vue.createElementVNode("ul", _hoisted_3$o, [
+        vue.createElementVNode("li", _hoisted_4$j, [
           vue.createElementVNode("h4", null, vue.toDisplayString(_ctx.translate("TagManager_CustomVariables")), 1)
         ]),
         (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.containerVariables, (variable, index) => {
@@ -324,15 +322,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
             onClick: ($event) => _ctx.selectVariable(variable),
             key: index
           }, [
-            vue.createElementVNode("span", _hoisted_7$g, vue.toDisplayString(variable.name) + " (" + vue.toDisplayString(_ctx.translate("TagManager_Type")) + ": " + vue.toDisplayString(variable.type) + ") ", 1),
-            vue.createElementVNode("span", _hoisted_8$g, [
+            vue.createElementVNode("span", _hoisted_6$g, vue.toDisplayString(variable.name) + " (" + vue.toDisplayString(_ctx.translate("TagManager_Type")) + ": " + vue.toDisplayString(variable.type) + ") ", 1),
+            vue.createElementVNode("span", _hoisted_7$g, [
               vue.createElementVNode("i", {
                 class: "icon-edit",
                 onClick: vue.withModifiers(($event) => _ctx.editVariable(variable), ["stop"]),
                 title: _ctx.translate("General_Edit")
-              }, null, 8, _hoisted_9$f)
+              }, null, 8, _hoisted_8$f)
             ])
-          ], 8, _hoisted_6$g);
+          ], 8, _hoisted_5$g);
         }), 128))
       ]),
       vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_PreconfiguredVariables")), 1),
@@ -341,7 +339,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           class: "collection with-header",
           key: variableCategory.name
         }, [
-          vue.createElementVNode("li", _hoisted_10$f, [
+          vue.createElementVNode("li", _hoisted_9$e, [
             vue.createElementVNode("h4", null, vue.toDisplayString(variableCategory.name), 1)
           ]),
           (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(variableCategory.types, (variableTemplate, index) => {
@@ -350,27 +348,27 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               key: index,
               onClick: ($event) => _ctx.selectVariable(variableTemplate)
             }, [
-              vue.createElementVNode("span", _hoisted_12$e, vue.toDisplayString(variableTemplate.name), 1),
-              vue.withDirectives(vue.createElementVNode("span", _hoisted_13$e, [
+              vue.createElementVNode("span", _hoisted_11$e, vue.toDisplayString(variableTemplate.name), 1),
+              vue.withDirectives(vue.createElementVNode("span", _hoisted_12$e, [
                 vue.createElementVNode("i", {
                   class: "icon-help",
                   title: variableTemplate.description
-                }, null, 8, _hoisted_14$e)
+                }, null, 8, _hoisted_13$e)
               ], 512), [
                 [vue.vShow, !!variableTemplate.description]
               ])
-            ], 8, _hoisted_11$f)), [
+            ], 8, _hoisted_10$e)), [
               [vue.vShow, variableTemplate.is_pre_configured]
             ]);
           }), 128))
         ]);
       }), 128)),
-      vue.createElementVNode("div", _hoisted_15$e, [
+      vue.createElementVNode("div", _hoisted_14$e, [
         vue.withDirectives(vue.createElementVNode("a", {
           class: "createNewVariable",
           onClick: _cache[1] || (_cache[1] = ($event) => _ctx.createVariable())
         }, [
-          _hoisted_16$e,
+          _cache[3] || (_cache[3] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
           vue.createTextVNode(vue.toDisplayString(_ctx.translate(
             "TagManager_CreateNewVariable",
             _ctx.translate("TagManager_Variable")
@@ -463,7 +461,6 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     }
   });
   const _hoisted_1$u = { class: "tagManagerManageSelect tagManagerVariableSelectType" };
-  const _hoisted_2$q = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
   function _sfc_render$u(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$u, [
@@ -482,7 +479,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         class: "createNewVariable",
         onClick: _cache[1] || (_cache[1] = vue.withModifiers(($event) => _ctx.createVariable(), ["prevent"]))
       }, [
-        _hoisted_2$q,
+        _cache[2] || (_cache[2] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
         vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewVariable")), 1)
       ], 512), [
         [vue.vShow, !_ctx.isLoading]
@@ -539,8 +536,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$t = { class: "fieldVariableTemplate" };
   const _hoisted_2$p = ["type", "id", "name", "value"];
-  const _hoisted_3$p = ["title"];
-  const _hoisted_4$k = ["for", "innerHTML"];
+  const _hoisted_3$n = ["title"];
+  const _hoisted_4$i = ["for", "innerHTML"];
   function _sfc_render$t(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$t, [
       vue.createElementVNode("textarea", vue.mergeProps({
@@ -559,11 +556,11 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         style: { "margin-top": "14px", "position": "absolute" },
         title: _ctx.translate("TagManager_ChooseVariable"),
         onClick: _cache[2] || (_cache[2] = ($event) => _ctx.selectVariable())
-      }, null, 8, _hoisted_3$p),
+      }, null, 8, _hoisted_3$n),
       vue.createElementVNode("label", {
         for: _ctx.name,
         innerHTML: _ctx.$sanitize(_ctx.title)
-      }, null, 8, _hoisted_4$k)
+      }, null, 8, _hoisted_4$i)
     ]);
   }
   const FieldTextareaVariable = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$t]]);
@@ -620,9 +617,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$s = { class: "fieldVariableTemplate" };
   const _hoisted_2$o = ["type", "id", "name", "value"];
-  const _hoisted_3$o = ["title"];
-  const _hoisted_4$j = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_5$h = ["for", "innerHTML"];
+  const _hoisted_3$m = ["title"];
+  const _hoisted_4$h = ["for", "innerHTML"];
   function _sfc_render$s(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$s, [
       vue.createElementVNode("input", vue.mergeProps({
@@ -640,12 +636,12 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         class: "icon-code",
         title: _ctx.translate("TagManager_ChooseVariable"),
         onClick: _cache[2] || (_cache[2] = ($event) => _ctx.selectVariable())
-      }, null, 8, _hoisted_3$o),
-      _hoisted_4$j,
+      }, null, 8, _hoisted_3$m),
+      _cache[3] || (_cache[3] = vue.createElementVNode("br", null, null, -1)),
       vue.createElementVNode("label", {
         for: _ctx.name,
         innerHTML: _ctx.$sanitize(_ctx.title)
-      }, null, 8, _hoisted_5$h)
+      }, null, 8, _hoisted_4$h)
     ]);
   }
   const FieldVariableTemplate = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$s]]);
@@ -1261,37 +1257,35 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     ref: "root"
   };
   const _hoisted_2$n = { class: "loadingPiwik" };
-  const _hoisted_3$n = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_4$i = { class: "loadingPiwik" };
-  const _hoisted_5$g = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_6$f = ["innerHTML"];
-  const _hoisted_7$f = {
+  const _hoisted_3$l = { class: "loadingPiwik" };
+  const _hoisted_4$g = ["innerHTML"];
+  const _hoisted_5$f = {
     key: 0,
     class: "form-group row"
   };
-  const _hoisted_8$f = { class: "col s12" };
-  const _hoisted_9$e = { key: 1 };
-  const _hoisted_10$e = { class: "form-group row" };
-  const _hoisted_11$e = { class: "col s12" };
-  const _hoisted_12$d = { key: 2 };
-  const _hoisted_13$d = { class: "innerFormField" };
-  const _hoisted_14$d = { class: "form-group row" };
-  const _hoisted_15$d = { class: "col s12 m12" };
-  const _hoisted_16$d = { for: "lookup_table" };
-  const _hoisted_17$c = { class: "innerFormField comparisonField" };
-  const _hoisted_18$c = { class: "innerFormField" };
-  const _hoisted_19$c = { class: "innerFormField" };
-  const _hoisted_20$c = ["onClick", "title"];
-  const _hoisted_21$c = ["innerHTML"];
-  const _hoisted_22$c = { class: "entityCancel" };
-  const _hoisted_23$b = { id: "confirmSelectVariableType" };
-  const _hoisted_24$b = { class: "collection-header" };
-  const _hoisted_25$b = ["onClick", "title"];
-  const _hoisted_26$9 = ["src"];
-  const _hoisted_27$8 = { class: "title" };
-  const _hoisted_28$8 = { class: "secondary-content" };
-  const _hoisted_29$8 = ["title"];
-  const _hoisted_30$8 = { class: "entityCancel" };
+  const _hoisted_6$f = { class: "col s12" };
+  const _hoisted_7$f = { key: 1 };
+  const _hoisted_8$e = { class: "form-group row" };
+  const _hoisted_9$d = { class: "col s12" };
+  const _hoisted_10$d = { key: 2 };
+  const _hoisted_11$d = { class: "innerFormField" };
+  const _hoisted_12$d = { class: "form-group row" };
+  const _hoisted_13$d = { class: "col s12 m12" };
+  const _hoisted_14$d = { for: "lookup_table" };
+  const _hoisted_15$c = { class: "innerFormField comparisonField" };
+  const _hoisted_16$c = { class: "innerFormField" };
+  const _hoisted_17$c = { class: "innerFormField" };
+  const _hoisted_18$c = ["onClick", "title"];
+  const _hoisted_19$c = ["innerHTML"];
+  const _hoisted_20$c = { class: "entityCancel" };
+  const _hoisted_21$c = { id: "confirmSelectVariableType" };
+  const _hoisted_22$c = { class: "collection-header" };
+  const _hoisted_23$a = ["onClick", "title"];
+  const _hoisted_24$9 = ["src"];
+  const _hoisted_25$8 = { class: "title" };
+  const _hoisted_26$8 = { class: "secondary-content" };
+  const _hoisted_27$8 = ["title"];
+  const _hoisted_28$8 = { class: "entityCancel" };
   function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     const _component_GroupedSettings = vue.resolveComponent("GroupedSettings");
@@ -1307,15 +1301,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           return [
             vue.withDirectives(vue.createElementVNode("p", null, [
               vue.createElementVNode("span", _hoisted_2$n, [
-                _hoisted_3$n,
+                _cache[11] || (_cache[11] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                 vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
               ])
             ], 512), [
               [vue.vShow, _ctx.isLoading]
             ]),
             vue.withDirectives(vue.createElementVNode("p", null, [
-              vue.createElementVNode("span", _hoisted_4$i, [
-                _hoisted_5$g,
+              vue.createElementVNode("span", _hoisted_3$l, [
+                _cache[12] || (_cache[12] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                 vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("TagManager_UpdatingData")), 1)
               ])
             ], 512), [
@@ -1328,7 +1322,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.withDirectives(vue.createElementVNode("div", {
                   class: "alert alert-danger",
                   innerHTML: _ctx.$sanitize(_ctx.getNoCustomTemplatePermissionErrorMessage())
-                }, null, 8, _hoisted_6$f), [
+                }, null, 8, _hoisted_4$g), [
                   [vue.vShow, _ctx.isVariableDisabled]
                 ]),
                 vue.createElementVNode("div", null, [
@@ -1365,20 +1359,20 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     placeholder: _ctx.translate("TagManager_VariableDescriptionPlaceholder")
                   }, null, 8, ["model-value", "title", "inline-help", "placeholder"])
                 ]),
-                ((_b2 = (_a2 = _ctx.variable.typeMetadata) == null ? void 0 : _a2.parameters) == null ? void 0 : _b2.length) ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_7$f, [
-                  vue.createElementVNode("div", _hoisted_8$f, [
+                ((_b2 = (_a2 = _ctx.variable.typeMetadata) == null ? void 0 : _a2.parameters) == null ? void 0 : _b2.length) ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_5$f, [
+                  vue.createElementVNode("div", _hoisted_6$f, [
                     vue.createElementVNode("h3", null, vue.toDisplayString(_ctx.translate("TagManager_ConfigureThisVariable")), 1)
                   ])
                 ])) : vue.createCommentVNode("", true),
-                _ctx.variable ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_9$e, [
+                _ctx.variable ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_7$f, [
                   vue.createVNode(_component_GroupedSettings, {
                     settings: ((_c = _ctx.variable.typeMetadata) == null ? void 0 : _c.parameters) || [],
                     "all-setting-values": _ctx.parameterValues,
                     onChange: _cache[2] || (_cache[2] = ($event) => _ctx.parameterValues[$event.name] = $event.value)
                   }, null, 8, ["settings", "all-setting-values"])
                 ])) : vue.createCommentVNode("", true),
-                vue.withDirectives(vue.createElementVNode("div", _hoisted_10$e, [
-                  vue.createElementVNode("div", _hoisted_11$e, [
+                vue.withDirectives(vue.createElementVNode("div", _hoisted_8$e, [
+                  vue.createElementVNode("div", _hoisted_9$d, [
                     vue.createElementVNode("h3", null, [
                       vue.withDirectives(vue.createElementVNode("a", {
                         class: "showAdvancedSettings",
@@ -1397,7 +1391,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 ], 512), [
                   [vue.vShow, (_d = _ctx.variable.typeMetadata) == null ? void 0 : _d.hasAdvancedSettings]
                 ]),
-                _ctx.variable && _ctx.variable.typeMetadata && _ctx.variable.typeMetadata.id === "MatomoConfiguration" ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("div", _hoisted_12$d, [
+                _ctx.variable && _ctx.variable.typeMetadata && _ctx.variable.typeMetadata.id === "MatomoConfiguration" ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("div", _hoisted_10$d, [
                   vue.createVNode(_component_GroupedSettings, {
                     settings: ((_e = _ctx.variable.typeMetadata) == null ? void 0 : _e.advancedParameters) || [],
                     "all-setting-values": _ctx.parameterValues,
@@ -1407,7 +1401,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   [vue.vShow, _ctx.showAdvanced && ((_f = _ctx.variable.typeMetadata) == null ? void 0 : _f.hasAdvancedSettings)]
                 ]) : vue.createCommentVNode("", true),
                 vue.withDirectives(vue.createElementVNode("div", null, [
-                  vue.createElementVNode("div", _hoisted_13$d, [
+                  vue.createElementVNode("div", _hoisted_11$d, [
                     vue.createVNode(_component_Field, {
                       uicontrol: "text",
                       name: "default_value",
@@ -1421,16 +1415,16 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                       placeholder: _ctx.translate("TagManager_DefaultValuePlaceholder")
                     }, null, 8, ["model-value", "title", "inline-help", "placeholder"])
                   ]),
-                  vue.createElementVNode("div", _hoisted_14$d, [
-                    vue.createElementVNode("div", _hoisted_15$d, [
+                  vue.createElementVNode("div", _hoisted_12$d, [
+                    vue.createElementVNode("div", _hoisted_13$d, [
                       vue.createElementVNode("div", null, [
-                        vue.createElementVNode("label", _hoisted_16$d, vue.toDisplayString(_ctx.translate("TagManager_LookupTableTitle")), 1),
+                        vue.createElementVNode("label", _hoisted_14$d, vue.toDisplayString(_ctx.translate("TagManager_LookupTableTitle")), 1),
                         (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.variable.lookup_table, (lookup, index) => {
                           return vue.openBlock(), vue.createElementBlock("div", {
                             key: index,
                             class: vue.normalizeClass(`lookupTable lookupTable${index} multiple valign-wrapper`)
                           }, [
-                            vue.createElementVNode("div", _hoisted_17$c, [
+                            vue.createElementVNode("div", _hoisted_15$c, [
                               vue.createVNode(_component_Field, {
                                 uicontrol: "select",
                                 name: "lookup_table_comparison",
@@ -1443,7 +1437,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                                 options: _ctx.availableLookUpComparisons
                               }, null, 8, ["model-value", "onUpdate:modelValue", "options"])
                             ]),
-                            vue.createElementVNode("div", _hoisted_18$c, [
+                            vue.createElementVNode("div", _hoisted_16$c, [
                               vue.createVNode(_component_Field, {
                                 uicontrol: "text",
                                 name: "lookup_table_matchvalue",
@@ -1456,7 +1450,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                                 placeholder: _ctx.translate("TagManager_LookupTableMatchValue")
                               }, null, 8, ["model-value", "onUpdate:modelValue", "placeholder"])
                             ]),
-                            vue.createElementVNode("div", _hoisted_19$c, [
+                            vue.createElementVNode("div", _hoisted_17$c, [
                               vue.createVNode(_component_Field, {
                                 uicontrol: "text",
                                 name: "lookup_table_outvalue",
@@ -1474,7 +1468,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                               class: "icon-minus valign",
                               onClick: ($event) => _ctx.removeLookUpEntry(index),
                               title: _ctx.translate("General_Remove")
-                            }, null, 8, _hoisted_20$c)) : vue.createCommentVNode("", true)
+                            }, null, 8, _hoisted_18$c)) : vue.createCommentVNode("", true)
                           ], 2);
                         }), 128))
                       ])
@@ -1486,7 +1480,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.withDirectives(vue.createElementVNode("div", {
                   class: "alert alert-danger",
                   innerHTML: _ctx.$sanitize(_ctx.getNoCustomTemplatePermissionErrorMessage())
-                }, null, 8, _hoisted_21$c), [
+                }, null, 8, _hoisted_19$c), [
                   [vue.vShow, _ctx.isVariableDisabled]
                 ]),
                 !_ctx.isVariableDisabled ? (vue.openBlock(), vue.createBlock(_component_SaveButton, {
@@ -1497,7 +1491,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   saving: _ctx.isUpdating,
                   value: _ctx.edit ? _ctx.translate("CoreUpdater_UpdateTitle") : _ctx.translate("TagManager_CreateNewVariable")
                 }, null, 8, ["disabled", "saving", "value"])) : vue.createCommentVNode("", true),
-                vue.withDirectives(vue.createElementVNode("div", _hoisted_22$c, [
+                vue.withDirectives(vue.createElementVNode("div", _hoisted_20$c, [
                   vue.createElementVNode("a", {
                     onClick: _cache[8] || (_cache[8] = vue.withModifiers(($event) => _ctx.cancel(), ["prevent"]))
                   }, vue.toDisplayString(_ctx.translate("General_Cancel")), 1)
@@ -1508,13 +1502,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
             ], 544), [
               [vue.vShow, !_ctx.chooseVariableType && _ctx.editTitle]
             ]),
-            vue.withDirectives(vue.createElementVNode("div", _hoisted_23$b, [
+            vue.withDirectives(vue.createElementVNode("div", _hoisted_21$c, [
               (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.availableVariables, (variableCategory, index) => {
                 return vue.openBlock(), vue.createElementBlock("ul", {
                   class: "collection with-header",
                   key: index
                 }, [
-                  vue.createElementVNode("li", _hoisted_24$b, [
+                  vue.createElementVNode("li", _hoisted_22$c, [
                     vue.createElementVNode("h4", null, vue.toDisplayString(variableCategory.name), 1)
                   ]),
                   (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(variableCategory.types, (variableTemplate, index2) => {
@@ -1537,24 +1531,24 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         alt: "",
                         class: "circle",
                         src: variableTemplate.icon
-                      }, null, 8, _hoisted_26$9)) : vue.createCommentVNode("", true),
-                      vue.createElementVNode("span", _hoisted_27$8, vue.toDisplayString(variableTemplate.name), 1),
+                      }, null, 8, _hoisted_24$9)) : vue.createCommentVNode("", true),
+                      vue.createElementVNode("span", _hoisted_25$8, vue.toDisplayString(variableTemplate.name), 1),
                       vue.withDirectives(vue.createElementVNode("p", null, vue.toDisplayString(variableTemplate.description), 513), [
                         [vue.vShow, variableTemplate.description]
                       ]),
-                      vue.withDirectives(vue.createElementVNode("span", _hoisted_28$8, [
+                      vue.withDirectives(vue.createElementVNode("span", _hoisted_26$8, [
                         vue.createElementVNode("i", {
                           class: "icon-help",
                           title: variableTemplate.help
-                        }, null, 8, _hoisted_29$8)
+                        }, null, 8, _hoisted_27$8)
                       ], 512), [
                         [vue.vShow, !!variableTemplate.help]
                       ])
-                    ], 10, _hoisted_25$b);
+                    ], 10, _hoisted_23$a);
                   }), 128))
                 ]);
               }), 128)),
-              vue.withDirectives(vue.createElementVNode("div", _hoisted_30$8, [
+              vue.withDirectives(vue.createElementVNode("div", _hoisted_28$8, [
                 vue.createElementVNode("a", {
                   onClick: _cache[10] || (_cache[10] = vue.withModifiers(($event) => _ctx.cancel(), ["prevent"]))
                 }, vue.toDisplayString(_ctx.translate("General_Cancel")), 1)
@@ -1730,49 +1724,46 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$p = { class: "tagManagerManageList tagManagerVariableList" };
   const _hoisted_2$m = { class: "variableSearchFilter" };
-  const _hoisted_3$m = ["title"];
-  const _hoisted_4$h = ["title"];
-  const _hoisted_5$f = ["title"];
+  const _hoisted_3$k = ["title"];
+  const _hoisted_4$f = ["title"];
+  const _hoisted_5$e = ["title"];
   const _hoisted_6$e = ["title"];
   const _hoisted_7$e = ["title"];
-  const _hoisted_8$e = ["title"];
-  const _hoisted_9$d = { colspan: "7" };
-  const _hoisted_10$d = { class: "loadingPiwik" };
-  const _hoisted_11$d = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_12$c = { colspan: "7" };
-  const _hoisted_13$c = ["id"];
+  const _hoisted_8$d = ["title"];
+  const _hoisted_9$c = { colspan: "7" };
+  const _hoisted_10$c = { class: "loadingPiwik" };
+  const _hoisted_11$c = { colspan: "7" };
+  const _hoisted_12$c = ["id"];
+  const _hoisted_13$c = ["title"];
   const _hoisted_14$c = ["title"];
-  const _hoisted_15$c = ["title"];
-  const _hoisted_16$c = ["title"];
-  const _hoisted_17$b = { class: "lookupTable" };
-  const _hoisted_18$b = { class: "icon-ok" };
-  const _hoisted_19$b = ["title"];
+  const _hoisted_15$b = ["title"];
+  const _hoisted_16$b = { class: "lookupTable" };
+  const _hoisted_17$b = { class: "icon-ok" };
+  const _hoisted_18$b = ["title"];
+  const _hoisted_19$b = ["onClick", "title"];
   const _hoisted_20$b = ["onClick", "title"];
   const _hoisted_21$b = ["onClick", "title"];
-  const _hoisted_22$b = ["onClick", "title"];
-  const _hoisted_23$a = { class: "tableActionBar" };
-  const _hoisted_24$a = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
-  const _hoisted_25$a = ["title"];
-  const _hoisted_26$8 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-help preconfiguredVariablesHelp" }, null, -1);
-  const _hoisted_27$7 = { class: "collection-header" };
-  const _hoisted_28$7 = { class: "title" };
-  const _hoisted_29$7 = ["textContent"];
-  const _hoisted_30$7 = { class: "secondary-content" };
-  const _hoisted_31$6 = ["title"];
-  const _hoisted_32$6 = {
+  const _hoisted_22$b = { class: "tableActionBar" };
+  const _hoisted_23$9 = ["title"];
+  const _hoisted_24$8 = { class: "collection-header" };
+  const _hoisted_25$7 = { class: "title" };
+  const _hoisted_26$7 = ["textContent"];
+  const _hoisted_27$7 = { class: "secondary-content" };
+  const _hoisted_28$7 = ["title"];
+  const _hoisted_29$6 = {
     class: "ui-confirm",
     id: "confirmDeleteVariable",
     ref: "confirmDeleteVariable"
   };
-  const _hoisted_33$5 = ["value"];
-  const _hoisted_34$5 = ["value"];
-  const _hoisted_35$5 = {
+  const _hoisted_30$6 = ["value"];
+  const _hoisted_31$3 = ["value"];
+  const _hoisted_32$3 = {
     class: "ui-confirm",
     id: "confirmDeleteVariableNotPossible",
     ref: "confirmDeleteVariableNotPossible"
   };
-  const _hoisted_36$5 = { class: "collection" };
-  const _hoisted_37$5 = ["value"];
+  const _hoisted_33$3 = { class: "collection" };
+  const _hoisted_34$2 = ["value"];
   function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     const _component_ContentBlock = vue.resolveComponent("ContentBlock");
@@ -1803,15 +1794,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.createElementVNode("th", {
                   class: "name",
                   title: _ctx.nameTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Name")), 9, _hoisted_3$m),
+                }, vue.toDisplayString(_ctx.translate("General_Name")), 9, _hoisted_3$k),
                 vue.createElementVNode("th", {
                   class: "description",
                   title: _ctx.descriptionTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Description")), 9, _hoisted_4$h),
+                }, vue.toDisplayString(_ctx.translate("General_Description")), 9, _hoisted_4$f),
                 vue.createElementVNode("th", {
                   class: "type",
                   title: _ctx.typeTranslatedText
-                }, vue.toDisplayString(_ctx.translate("TagManager_Type")), 9, _hoisted_5$f),
+                }, vue.toDisplayString(_ctx.translate("TagManager_Type")), 9, _hoisted_5$e),
                 vue.createElementVNode("th", {
                   class: "lookupTable",
                   title: _ctx.lookupTableTranslatedText
@@ -1823,16 +1814,16 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.withDirectives(vue.createElementVNode("th", {
                   class: "action",
                   title: _ctx.actionTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Actions")), 9, _hoisted_8$e), [
+                }, vue.toDisplayString(_ctx.translate("General_Actions")), 9, _hoisted_8$d), [
                   [vue.vShow, _ctx.hasWriteAccess]
                 ])
               ])
             ]),
             vue.createElementVNode("tbody", null, [
               vue.withDirectives(vue.createElementVNode("tr", null, [
-                vue.createElementVNode("td", _hoisted_9$d, [
-                  vue.createElementVNode("span", _hoisted_10$d, [
-                    _hoisted_11$d,
+                vue.createElementVNode("td", _hoisted_9$c, [
+                  vue.createElementVNode("span", _hoisted_10$c, [
+                    _cache[3] || (_cache[3] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                     vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
                   ])
                 ])
@@ -1840,7 +1831,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 [vue.vShow, _ctx.isLoading || _ctx.isUpdating]
               ]),
               vue.withDirectives(vue.createElementVNode("tr", null, [
-                vue.createElementVNode("td", _hoisted_12$c, [
+                vue.createElementVNode("td", _hoisted_11$c, [
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_NoVariablesFound")) + " ", 1),
                   vue.withDirectives(vue.createElementVNode("a", {
                     class: "createContainerVariableNow",
@@ -1862,17 +1853,17 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   vue.createElementVNode("td", {
                     class: "name",
                     title: variable.name
-                  }, vue.toDisplayString(_ctx.truncateText(variable.name, 50)), 9, _hoisted_14$c),
+                  }, vue.toDisplayString(_ctx.truncateText(variable.name, 50)), 9, _hoisted_13$c),
                   vue.createElementVNode("td", {
                     class: "description",
                     title: variable.description
-                  }, vue.toDisplayString(_ctx.truncateText(variable.description, 75)), 9, _hoisted_15$c),
+                  }, vue.toDisplayString(_ctx.truncateText(variable.description, 75)), 9, _hoisted_14$c),
                   vue.createElementVNode("td", {
                     class: "type",
                     title: variable.typeMetadata.description
-                  }, vue.toDisplayString(variable.typeMetadata.name), 9, _hoisted_16$c),
-                  vue.createElementVNode("td", _hoisted_17$b, [
-                    vue.withDirectives(vue.createElementVNode("span", _hoisted_18$b, null, 512), [
+                  }, vue.toDisplayString(variable.typeMetadata.name), 9, _hoisted_15$b),
+                  vue.createElementVNode("td", _hoisted_16$b, [
+                    vue.withDirectives(vue.createElementVNode("span", _hoisted_17$b, null, 512), [
                       [vue.vShow, variable.lookup_table.length]
                     ])
                   ]),
@@ -1881,7 +1872,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     title: _ctx.translate("TagManager_CreatedOnX", variable.created_date_pretty)
                   }, [
                     vue.createElementVNode("span", null, vue.toDisplayString(variable.updated_date_pretty), 1)
-                  ], 8, _hoisted_19$b),
+                  ], 8, _hoisted_18$b),
                   vue.withDirectives(vue.createElementVNode("td", {
                     class: vue.normalizeClass(_ctx.getActionClasses)
                   }, [
@@ -1889,7 +1880,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                       class: "table-action icon-edit",
                       onClick: ($event) => _ctx.editVariable(variable.idvariable, variable.type),
                       title: _ctx.translate("TagManager_EditVariable")
-                    }, null, 8, _hoisted_20$b),
+                    }, null, 8, _hoisted_19$b),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-content-copy",
                       onClick: ($event) => _ctx.openCopyDialog(variable),
@@ -1897,32 +1888,32 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         "TagManager_CopyX",
                         _ctx.translate("TagManager_Variable")
                       )
-                    }, null, 8, _hoisted_21$b), [
+                    }, null, 8, _hoisted_20$b), [
                       [vue.vShow, _ctx.hasPublishCapability()]
                     ]),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-delete",
                       onClick: ($event) => _ctx.deleteVariable(variable),
                       title: _ctx.translate("TagManager_DeleteX", _ctx.translate("TagManager_Variable"))
-                    }, null, 8, _hoisted_22$b), [
+                    }, null, 8, _hoisted_21$b), [
                       [vue.vShow, !((_a2 = variable.typeMetadata) == null ? void 0 : _a2.isCustomTemplate) || _ctx.canUseCustomTemplates]
                     ])
                   ], 2), [
                     [vue.vShow, _ctx.hasWriteAccess]
                   ])
-                ], 8, _hoisted_13$c);
+                ], 8, _hoisted_12$c);
               }), 128))
             ])
           ])), [
             [_directive_content_table]
           ]),
-          vue.withDirectives(vue.createElementVNode("div", _hoisted_23$a, [
+          vue.withDirectives(vue.createElementVNode("div", _hoisted_22$b, [
             vue.createElementVNode("a", {
               class: "createNewVariable",
               value: "",
               onClick: _cache[2] || (_cache[2] = ($event) => _ctx.createVariable())
             }, [
-              _hoisted_24$a,
+              _cache[4] || (_cache[4] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
               vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewVariable")), 1)
             ])
           ], 512), [
@@ -1935,15 +1926,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         title: _ctx.translate("TagManager_PreConfiguredInfoTitle")
       }, [
         vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_PreconfiguredVariables")) + " ", 1),
-        _hoisted_26$8
-      ], 8, _hoisted_25$a),
+        _cache[5] || (_cache[5] = vue.createElementVNode("span", { class: "icon-help preconfiguredVariablesHelp" }, null, -1))
+      ], 8, _hoisted_23$9),
       vue.createElementVNode("div", null, [
         (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.containerVariables, (variableCategory, index) => {
           return vue.openBlock(), vue.createElementBlock("ul", {
             class: "collection with-header",
             key: index
           }, [
-            vue.createElementVNode("li", _hoisted_27$7, [
+            vue.createElementVNode("li", _hoisted_24$8, [
               vue.createElementVNode("h4", null, vue.toDisplayString(variableCategory.name), 1)
             ]),
             (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(variableCategory.types, (variableTemplate) => {
@@ -1951,18 +1942,18 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 class: "collection-item",
                 key: variableTemplate.id
               }, [
-                vue.createElementVNode("span", _hoisted_28$7, [
+                vue.createElementVNode("span", _hoisted_25$7, [
                   vue.createTextVNode(vue.toDisplayString(variableTemplate.name) + " ", 1),
                   vue.createElementVNode("span", {
                     class: "variableId",
                     textContent: vue.toDisplayString(`{{${variableTemplate.id}}}`)
-                  }, null, 8, _hoisted_29$7)
+                  }, null, 8, _hoisted_26$7)
                 ]),
-                vue.withDirectives(vue.createElementVNode("span", _hoisted_30$7, [
+                vue.withDirectives(vue.createElementVNode("span", _hoisted_27$7, [
                   vue.createElementVNode("i", {
                     class: "icon-help",
                     title: variableTemplate.description
-                  }, null, 8, _hoisted_31$6)
+                  }, null, 8, _hoisted_28$7)
                 ], 512), [
                   [vue.vShow, !!variableTemplate.description]
                 ])
@@ -1973,23 +1964,23 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           ]);
         }), 128))
       ]),
-      vue.createElementVNode("div", _hoisted_32$6, [
+      vue.createElementVNode("div", _hoisted_29$6, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_DeleteVariableConfirm")), 1),
         vue.createElementVNode("input", {
           role: "yes",
           type: "button",
           value: _ctx.translate("General_Yes")
-        }, null, 8, _hoisted_33$5),
+        }, null, 8, _hoisted_30$6),
         vue.createElementVNode("input", {
           role: "no",
           type: "button",
           value: _ctx.translate("General_No")
-        }, null, 8, _hoisted_34$5)
+        }, null, 8, _hoisted_31$3)
       ], 512),
-      vue.createElementVNode("div", _hoisted_35$5, [
+      vue.createElementVNode("div", _hoisted_32$3, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_VariableCannotBeDeleted")), 1),
         vue.createElementVNode("p", null, vue.toDisplayString(_ctx.translate("TagManager_VariableBeingUsedBy")), 1),
-        vue.createElementVNode("ul", _hoisted_36$5, [
+        vue.createElementVNode("ul", _hoisted_33$3, [
           (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.variableReferences, (reference) => {
             return vue.openBlock(), vue.createElementBlock("li", {
               class: "collection-item",
@@ -2002,7 +1993,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           role: "no",
           type: "button",
           value: _ctx.translate("General_Cancel")
-        }, null, 8, _hoisted_37$5)
+        }, null, 8, _hoisted_34$2)
       ], 512)
     ]);
   }
@@ -2053,7 +2044,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$o = { class: "manageVariable" };
   const _hoisted_2$l = { key: 0 };
-  const _hoisted_3$l = { key: 1 };
+  const _hoisted_3$j = { key: 1 };
   function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_VariableList = vue.resolveComponent("VariableList");
     const _component_VariableEdit = vue.resolveComponent("VariableEdit");
@@ -2065,7 +2056,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           "variables-help-text": _ctx.variablesHelpText
         }, null, 8, ["id-container-version", "id-container", "variables-help-text"])
       ])) : vue.createCommentVNode("", true),
-      _ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$l, [
+      _ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$j, [
         vue.createVNode(_component_VariableEdit, {
           "id-container-version": _ctx.idContainerVersion,
           "id-container": _ctx.idContainer,
@@ -2622,36 +2613,34 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     ref: "root"
   };
   const _hoisted_2$k = { class: "loadingPiwik" };
-  const _hoisted_3$k = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_4$g = { class: "loadingPiwik" };
-  const _hoisted_5$e = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_6$d = ["innerHTML"];
-  const _hoisted_7$d = { class: "form-group row" };
-  const _hoisted_8$d = { class: "col s12" };
-  const _hoisted_9$c = { key: 0 };
-  const _hoisted_10$c = { class: "form-group row" };
-  const _hoisted_11$c = { class: "col s12" };
-  const _hoisted_12$b = { class: "form-group row multiple" };
-  const _hoisted_13$b = { class: "col s12 input-field m6" };
-  const _hoisted_14$b = { class: "col s12 input-field m6" };
-  const _hoisted_15$b = { class: "form-help" };
-  const _hoisted_16$b = ["innerHTML"];
-  const _hoisted_17$a = { class: "col s12 m12" };
+  const _hoisted_3$i = { class: "loadingPiwik" };
+  const _hoisted_4$e = ["innerHTML"];
+  const _hoisted_5$d = { class: "form-group row" };
+  const _hoisted_6$d = { class: "col s12" };
+  const _hoisted_7$d = { key: 0 };
+  const _hoisted_8$c = { class: "form-group row" };
+  const _hoisted_9$b = { class: "col s12" };
+  const _hoisted_10$b = { class: "form-group row multiple" };
+  const _hoisted_11$b = { class: "col s12 input-field m6" };
+  const _hoisted_12$b = { class: "col s12 input-field m6" };
+  const _hoisted_13$b = { class: "form-help" };
+  const _hoisted_14$b = ["innerHTML"];
+  const _hoisted_15$a = { class: "col s12 m12" };
+  const _hoisted_16$a = { class: "innerFormField" };
+  const _hoisted_17$a = { class: "innerFormField comparisonField" };
   const _hoisted_18$a = { class: "innerFormField" };
-  const _hoisted_19$a = { class: "innerFormField comparisonField" };
-  const _hoisted_20$a = { class: "innerFormField" };
-  const _hoisted_21$a = ["onClick", "title"];
-  const _hoisted_22$a = { class: "triggerConditionNode" };
-  const _hoisted_23$9 = ["innerHTML"];
-  const _hoisted_24$9 = { class: "entityCancel" };
-  const _hoisted_25$9 = { id: "confirmSelectTriggerType" };
-  const _hoisted_26$7 = { class: "collection-header" };
-  const _hoisted_27$6 = ["onClick", "title"];
-  const _hoisted_28$6 = ["src"];
-  const _hoisted_29$6 = { class: "title" };
-  const _hoisted_30$6 = { class: "secondary-content" };
-  const _hoisted_31$5 = ["title"];
-  const _hoisted_32$5 = { class: "entityCancel" };
+  const _hoisted_19$a = ["onClick", "title"];
+  const _hoisted_20$a = { class: "triggerConditionNode" };
+  const _hoisted_21$a = ["innerHTML"];
+  const _hoisted_22$a = { class: "entityCancel" };
+  const _hoisted_23$8 = { id: "confirmSelectTriggerType" };
+  const _hoisted_24$7 = { class: "collection-header" };
+  const _hoisted_25$6 = ["onClick", "title"];
+  const _hoisted_26$6 = ["src"];
+  const _hoisted_27$6 = { class: "title" };
+  const _hoisted_28$6 = { class: "secondary-content" };
+  const _hoisted_29$5 = ["title"];
+  const _hoisted_30$5 = { class: "entityCancel" };
   function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     const _component_GroupedSettings = vue.resolveComponent("GroupedSettings");
@@ -2667,15 +2656,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           return [
             vue.withDirectives(vue.createElementVNode("p", null, [
               vue.createElementVNode("span", _hoisted_2$k, [
-                _hoisted_3$k,
+                _cache[7] || (_cache[7] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                 vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
               ])
             ], 512), [
               [vue.vShow, _ctx.isLoading]
             ]),
             vue.withDirectives(vue.createElementVNode("p", null, [
-              vue.createElementVNode("span", _hoisted_4$g, [
-                _hoisted_5$e,
+              vue.createElementVNode("span", _hoisted_3$i, [
+                _cache[8] || (_cache[8] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                 vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("TagManager_UpdatingData")), 1)
               ])
             ], 512), [
@@ -2688,7 +2677,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.withDirectives(vue.createElementVNode("div", {
                   class: "alert alert-danger",
                   innerHTML: _ctx.$sanitize(_ctx.getNoCustomTemplatePermissionErrorMessage())
-                }, null, 8, _hoisted_6$d), [
+                }, null, 8, _hoisted_4$e), [
                   [vue.vShow, _ctx.isTriggerDisabled]
                 ]),
                 vue.createElementVNode("div", null, [
@@ -2725,48 +2714,48 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     placeholder: _ctx.translate("TagManager_TriggerDescriptionPlaceholder")
                   }, null, 8, ["model-value", "title", "inline-help", "placeholder"])
                 ]),
-                vue.withDirectives(vue.createElementVNode("div", _hoisted_7$d, [
-                  vue.createElementVNode("div", _hoisted_8$d, [
+                vue.withDirectives(vue.createElementVNode("div", _hoisted_5$d, [
+                  vue.createElementVNode("div", _hoisted_6$d, [
                     vue.createElementVNode("h3", null, vue.toDisplayString(_ctx.translate("TagManager_ConfigureThisTrigger")), 1)
                   ])
                 ], 512), [
                   [vue.vShow, (_b2 = (_a2 = _ctx.trigger.typeMetadata) == null ? void 0 : _a2.parameters) == null ? void 0 : _b2.length]
                 ]),
-                _ctx.trigger ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_9$c, [
+                _ctx.trigger ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_7$d, [
                   vue.createVNode(_component_GroupedSettings, {
                     settings: ((_c = _ctx.trigger.typeMetadata) == null ? void 0 : _c.parameters) || [],
                     "all-setting-values": _ctx.parameterValues,
                     onChange: _cache[2] || (_cache[2] = ($event) => _ctx.parameterValues[$event.name] = $event.value)
                   }, null, 8, ["settings", "all-setting-values"])
                 ])) : vue.createCommentVNode("", true),
-                vue.withDirectives(vue.createElementVNode("div", _hoisted_10$c, [
-                  vue.createElementVNode("div", _hoisted_11$c, [
+                vue.withDirectives(vue.createElementVNode("div", _hoisted_8$c, [
+                  vue.createElementVNode("div", _hoisted_9$b, [
                     vue.createElementVNode("h3", null, vue.toDisplayString(_ctx.translate("TagManager_OnlyTriggerWhen")) + " " + vue.toDisplayString(_ctx.translate("Goals_Optional")), 1)
                   ])
                 ], 512), [
                   [vue.vShow, (_d = _ctx.trigger.typeMetadata) == null ? void 0 : _d.hasAdvancedSettings]
                 ]),
                 vue.withDirectives(vue.createElementVNode("div", null, [
-                  vue.createElementVNode("div", _hoisted_12$b, [
-                    vue.createElementVNode("div", _hoisted_13$b, [
+                  vue.createElementVNode("div", _hoisted_10$b, [
+                    vue.createElementVNode("div", _hoisted_11$b, [
                       vue.createElementVNode("p", null, vue.toDisplayString(_ctx.translate("TagManager_TriggerConditionsHelp")), 1)
                     ]),
-                    vue.createElementVNode("div", _hoisted_14$b, [
-                      vue.createElementVNode("div", _hoisted_15$b, [
+                    vue.createElementVNode("div", _hoisted_12$b, [
+                      vue.createElementVNode("div", _hoisted_13$b, [
                         vue.createElementVNode("span", {
                           class: "inline-help",
                           innerHTML: _ctx.$sanitize(_ctx.triggerInlineHelpText)
-                        }, null, 8, _hoisted_16$b)
+                        }, null, 8, _hoisted_14$b)
                       ])
                     ]),
-                    vue.createElementVNode("div", _hoisted_17$a, [
+                    vue.createElementVNode("div", _hoisted_15$a, [
                       vue.createElementVNode("div", null, [
                         (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.trigger.conditions, (condition, index) => {
                           return vue.openBlock(), vue.createElementBlock("div", {
                             key: index,
                             class: vue.normalizeClass(["condition multiple valign-wrapper", `condition${index}`])
                           }, [
-                            vue.createElementVNode("div", _hoisted_18$a, [
+                            vue.createElementVNode("div", _hoisted_16$a, [
                               vue.createVNode(_component_Field, {
                                 uicontrol: "expandable-select",
                                 name: "condition_actual",
@@ -2780,7 +2769,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                                 title: _ctx.variableIdToName[condition.actual] || condition.actual
                               }, null, 8, ["model-value", "onUpdate:modelValue", "options", "title"])
                             ]),
-                            vue.createElementVNode("div", _hoisted_19$a, [
+                            vue.createElementVNode("div", _hoisted_17$a, [
                               vue.createVNode(_component_Field, {
                                 uicontrol: "select",
                                 name: "condition_comparison",
@@ -2793,7 +2782,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                                 options: _ctx.availableComparisons
                               }, null, 8, ["model-value", "onUpdate:modelValue", "options"])
                             ]),
-                            vue.createElementVNode("div", _hoisted_20$a, [
+                            vue.createElementVNode("div", _hoisted_18$a, [
                               vue.createVNode(_component_Field, {
                                 uicontrol: "text",
                                 name: "condition_expected",
@@ -2810,13 +2799,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                               class: "icon-minus valign",
                               onClick: ($event) => _ctx.removeConditionEntry(index),
                               title: _ctx.translate("General_Remove")
-                            }, null, 8, _hoisted_21$a), [
+                            }, null, 8, _hoisted_19$a), [
                               [vue.vShow, !(index + 1 === _ctx.trigger.conditions.length)]
                             ])
                           ], 2);
                         }), 128))
                       ]),
-                      vue.createElementVNode("p", _hoisted_22$a, vue.toDisplayString(_ctx.translate("TagManager_TriggerConditionNode")), 1)
+                      vue.createElementVNode("p", _hoisted_20$a, vue.toDisplayString(_ctx.translate("TagManager_TriggerConditionNode")), 1)
                     ])
                   ])
                 ], 512), [
@@ -2825,7 +2814,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.withDirectives(vue.createElementVNode("div", {
                   class: "alert alert-danger",
                   innerHTML: _ctx.$sanitize(_ctx.getNoCustomTemplatePermissionErrorMessage())
-                }, null, 8, _hoisted_23$9), [
+                }, null, 8, _hoisted_21$a), [
                   [vue.vShow, _ctx.isTriggerDisabled]
                 ]),
                 !_ctx.isTriggerDisabled ? (vue.openBlock(), vue.createBlock(_component_SaveButton, {
@@ -2836,7 +2825,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   saving: _ctx.isUpdating,
                   value: _ctx.saveButtonText
                 }, null, 8, ["disabled", "saving", "value"])) : vue.createCommentVNode("", true),
-                vue.withDirectives(vue.createElementVNode("div", _hoisted_24$9, [
+                vue.withDirectives(vue.createElementVNode("div", _hoisted_22$a, [
                   vue.createElementVNode("a", {
                     onClick: _cache[4] || (_cache[4] = ($event) => _ctx.cancel())
                   }, vue.toDisplayString(_ctx.translate("General_Cancel")), 1)
@@ -2847,13 +2836,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
             ], 544), [
               [vue.vShow, !_ctx.chooseTriggerType && _ctx.editTitle]
             ]),
-            vue.withDirectives(vue.createElementVNode("div", _hoisted_25$9, [
+            vue.withDirectives(vue.createElementVNode("div", _hoisted_23$8, [
               (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.availableTriggers, (triggerCategory, index) => {
                 return vue.openBlock(), vue.createElementBlock("ul", {
                   class: "collection with-header",
                   key: index
                 }, [
-                  vue.createElementVNode("li", _hoisted_26$7, [
+                  vue.createElementVNode("li", _hoisted_24$7, [
                     vue.createElementVNode("h4", null, vue.toDisplayString(triggerCategory.name), 1)
                   ]),
                   (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(triggerCategory.types, (triggerTemplate, index2) => {
@@ -2871,24 +2860,24 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         alt: "",
                         class: "circle",
                         src: triggerTemplate.icon
-                      }, null, 8, _hoisted_28$6)) : vue.createCommentVNode("", true),
-                      vue.createElementVNode("span", _hoisted_29$6, vue.toDisplayString(triggerTemplate.name), 1),
+                      }, null, 8, _hoisted_26$6)) : vue.createCommentVNode("", true),
+                      vue.createElementVNode("span", _hoisted_27$6, vue.toDisplayString(triggerTemplate.name), 1),
                       vue.withDirectives(vue.createElementVNode("p", null, vue.toDisplayString(triggerTemplate.description), 513), [
                         [vue.vShow, triggerTemplate.description]
                       ]),
-                      vue.withDirectives(vue.createElementVNode("span", _hoisted_30$6, [
+                      vue.withDirectives(vue.createElementVNode("span", _hoisted_28$6, [
                         vue.createElementVNode("i", {
                           class: "icon-help",
                           title: triggerTemplate.help
-                        }, null, 8, _hoisted_31$5)
+                        }, null, 8, _hoisted_29$5)
                       ], 512), [
                         [vue.vShow, !!triggerTemplate.help]
                       ])
-                    ], 10, _hoisted_27$6);
+                    ], 10, _hoisted_25$6);
                   }), 128))
                 ]);
               }), 128)),
-              vue.withDirectives(vue.createElementVNode("div", _hoisted_32$5, [
+              vue.withDirectives(vue.createElementVNode("div", _hoisted_30$5, [
                 vue.createElementVNode("a", {
                   onClick: _cache[6] || (_cache[6] = ($event) => _ctx.cancel())
                 }, vue.toDisplayString(_ctx.translate("General_Cancel")), 1)
@@ -3053,42 +3042,40 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$m = { class: "tagManagerManageList tagManagerTriggerList" };
   const _hoisted_2$j = { class: "triggerSearchFilter" };
-  const _hoisted_3$j = ["title"];
-  const _hoisted_4$f = ["title"];
-  const _hoisted_5$d = ["title"];
+  const _hoisted_3$h = ["title"];
+  const _hoisted_4$d = ["title"];
+  const _hoisted_5$c = ["title"];
   const _hoisted_6$c = ["title"];
   const _hoisted_7$c = ["title"];
-  const _hoisted_8$c = ["title"];
-  const _hoisted_9$b = { colspan: "7" };
-  const _hoisted_10$b = { class: "loadingPiwik" };
-  const _hoisted_11$b = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_12$a = { colspan: "7" };
-  const _hoisted_13$a = ["id"];
+  const _hoisted_8$b = ["title"];
+  const _hoisted_9$a = { colspan: "7" };
+  const _hoisted_10$a = { class: "loadingPiwik" };
+  const _hoisted_11$a = { colspan: "7" };
+  const _hoisted_12$a = ["id"];
+  const _hoisted_13$a = ["title"];
   const _hoisted_14$a = ["title"];
-  const _hoisted_15$a = ["title"];
-  const _hoisted_16$a = ["title"];
-  const _hoisted_17$9 = { class: "conditions" };
-  const _hoisted_18$9 = { class: "icon-ok" };
-  const _hoisted_19$9 = ["title"];
+  const _hoisted_15$9 = ["title"];
+  const _hoisted_16$9 = { class: "conditions" };
+  const _hoisted_17$9 = { class: "icon-ok" };
+  const _hoisted_18$9 = ["title"];
+  const _hoisted_19$9 = ["onClick", "title"];
   const _hoisted_20$9 = ["onClick", "title"];
   const _hoisted_21$9 = ["onClick", "title"];
-  const _hoisted_22$9 = ["onClick", "title"];
-  const _hoisted_23$8 = { class: "tableActionBar" };
-  const _hoisted_24$8 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
-  const _hoisted_25$8 = {
+  const _hoisted_22$9 = { class: "tableActionBar" };
+  const _hoisted_23$7 = {
     class: "ui-confirm",
     id: "confirmDeleteTrigger",
     ref: "confirmDeleteTrigger"
   };
-  const _hoisted_26$6 = ["value"];
-  const _hoisted_27$5 = ["value"];
-  const _hoisted_28$5 = {
+  const _hoisted_24$6 = ["value"];
+  const _hoisted_25$5 = ["value"];
+  const _hoisted_26$5 = {
     class: "ui-confirm",
     id: "confirmDeleteTriggerNotPossible",
     ref: "confirmDeleteTriggerNotPossible"
   };
-  const _hoisted_29$5 = { class: "collection" };
-  const _hoisted_30$5 = ["value"];
+  const _hoisted_27$5 = { class: "collection" };
+  const _hoisted_28$5 = ["value"];
   function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     const _component_ContentBlock = vue.resolveComponent("ContentBlock");
@@ -3118,15 +3105,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.createElementVNode("th", {
                   class: "name",
                   title: _ctx.nameTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Name")), 9, _hoisted_3$j),
+                }, vue.toDisplayString(_ctx.translate("General_Name")), 9, _hoisted_3$h),
                 vue.createElementVNode("th", {
                   class: "description",
                   title: _ctx.descriptionTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Description")), 9, _hoisted_4$f),
+                }, vue.toDisplayString(_ctx.translate("General_Description")), 9, _hoisted_4$d),
                 vue.createElementVNode("th", {
                   class: "type",
                   title: _ctx.typeTranslatedText
-                }, vue.toDisplayString(_ctx.translate("TagManager_Type")), 9, _hoisted_5$d),
+                }, vue.toDisplayString(_ctx.translate("TagManager_Type")), 9, _hoisted_5$c),
                 vue.createElementVNode("th", {
                   class: "conditions",
                   title: _ctx.filterTranslatedText
@@ -3138,16 +3125,16 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.withDirectives(vue.createElementVNode("th", {
                   class: "action",
                   title: _ctx.actionTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Actions")), 9, _hoisted_8$c), [
+                }, vue.toDisplayString(_ctx.translate("General_Actions")), 9, _hoisted_8$b), [
                   [vue.vShow, _ctx.hasWriteAccess]
                 ])
               ])
             ]),
             vue.createElementVNode("tbody", null, [
               vue.withDirectives(vue.createElementVNode("tr", null, [
-                vue.createElementVNode("td", _hoisted_9$b, [
-                  vue.createElementVNode("span", _hoisted_10$b, [
-                    _hoisted_11$b,
+                vue.createElementVNode("td", _hoisted_9$a, [
+                  vue.createElementVNode("span", _hoisted_10$a, [
+                    _cache[3] || (_cache[3] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                     vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
                   ])
                 ])
@@ -3155,7 +3142,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 [vue.vShow, _ctx.isLoading || _ctx.isUpdating]
               ]),
               vue.withDirectives(vue.createElementVNode("tr", null, [
-                vue.createElementVNode("td", _hoisted_12$a, [
+                vue.createElementVNode("td", _hoisted_11$a, [
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_NoTriggersFound")) + " ", 1),
                   vue.withDirectives(vue.createElementVNode("a", {
                     class: "createContainerTriggerNow",
@@ -3177,17 +3164,17 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   vue.createElementVNode("td", {
                     class: "name",
                     title: trigger.name
-                  }, vue.toDisplayString(_ctx.truncateText(trigger.name, 50)), 9, _hoisted_14$a),
+                  }, vue.toDisplayString(_ctx.truncateText(trigger.name, 50)), 9, _hoisted_13$a),
                   vue.createElementVNode("td", {
                     class: "description",
                     title: trigger.description
-                  }, vue.toDisplayString(_ctx.truncateText(trigger.description, 75)), 9, _hoisted_15$a),
+                  }, vue.toDisplayString(_ctx.truncateText(trigger.description, 75)), 9, _hoisted_14$a),
                   vue.createElementVNode("td", {
                     class: "type",
                     title: trigger.typeMetadata.description
-                  }, vue.toDisplayString(trigger.typeMetadata.name), 9, _hoisted_16$a),
-                  vue.createElementVNode("td", _hoisted_17$9, [
-                    vue.withDirectives(vue.createElementVNode("span", _hoisted_18$9, null, 512), [
+                  }, vue.toDisplayString(trigger.typeMetadata.name), 9, _hoisted_15$9),
+                  vue.createElementVNode("td", _hoisted_16$9, [
+                    vue.withDirectives(vue.createElementVNode("span", _hoisted_17$9, null, 512), [
                       [vue.vShow, (_a2 = trigger.conditions) == null ? void 0 : _a2.length]
                     ])
                   ]),
@@ -3196,7 +3183,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     title: _ctx.translate("TagManager_CreatedOnX", trigger.created_date_pretty)
                   }, [
                     vue.createElementVNode("span", null, vue.toDisplayString(trigger.updated_date_pretty), 1)
-                  ], 8, _hoisted_19$9),
+                  ], 8, _hoisted_18$9),
                   vue.withDirectives(vue.createElementVNode("td", {
                     class: vue.normalizeClass(_ctx.getActionClasses)
                   }, [
@@ -3204,7 +3191,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                       class: "table-action icon-edit",
                       onClick: ($event) => _ctx.editTrigger(trigger.idtrigger, trigger.type),
                       title: _ctx.translate("TagManager_EditTrigger")
-                    }, null, 8, _hoisted_20$9),
+                    }, null, 8, _hoisted_19$9),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-content-copy",
                       onClick: ($event) => _ctx.openCopyDialog(trigger),
@@ -3212,32 +3199,32 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         "TagManager_CopyX",
                         _ctx.translate("TagManager_Trigger")
                       )
-                    }, null, 8, _hoisted_21$9), [
+                    }, null, 8, _hoisted_20$9), [
                       [vue.vShow, _ctx.hasPublishCapability()]
                     ]),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-delete",
                       onClick: ($event) => _ctx.deleteTrigger(trigger),
                       title: _ctx.translate("TagManager_DeleteX", _ctx.translate("TagManager_Trigger"))
-                    }, null, 8, _hoisted_22$9), [
+                    }, null, 8, _hoisted_21$9), [
                       [vue.vShow, !((_b2 = trigger.typeMetadata) == null ? void 0 : _b2.isCustomTemplate) || _ctx.canUseCustomTemplates]
                     ])
                   ], 2), [
                     [vue.vShow, _ctx.hasWriteAccess]
                   ])
-                ], 8, _hoisted_13$a);
+                ], 8, _hoisted_12$a);
               }), 128))
             ])
           ])), [
             [_directive_content_table]
           ]),
-          vue.withDirectives(vue.createElementVNode("div", _hoisted_23$8, [
+          vue.withDirectives(vue.createElementVNode("div", _hoisted_22$9, [
             vue.createElementVNode("a", {
               class: "createNewTrigger",
               value: "",
               onClick: _cache[2] || (_cache[2] = ($event) => _ctx.createTrigger())
             }, [
-              _hoisted_24$8,
+              _cache[4] || (_cache[4] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
               vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewTrigger")), 1)
             ])
           ], 512), [
@@ -3246,23 +3233,23 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         ]),
         _: 1
       }, 8, ["content-title", "help-text"]),
-      vue.createElementVNode("div", _hoisted_25$8, [
+      vue.createElementVNode("div", _hoisted_23$7, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_DeleteTriggerConfirm")), 1),
         vue.createElementVNode("input", {
           role: "yes",
           type: "button",
           value: _ctx.translate("General_Yes")
-        }, null, 8, _hoisted_26$6),
+        }, null, 8, _hoisted_24$6),
         vue.createElementVNode("input", {
           role: "no",
           type: "button",
           value: _ctx.translate("General_No")
-        }, null, 8, _hoisted_27$5)
+        }, null, 8, _hoisted_25$5)
       ], 512),
-      vue.createElementVNode("div", _hoisted_28$5, [
+      vue.createElementVNode("div", _hoisted_26$5, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_TriggerCannotBeDeleted")), 1),
         vue.createElementVNode("p", null, vue.toDisplayString(_ctx.translate("TagManager_TriggerBeingUsedBy")), 1),
-        vue.createElementVNode("ul", _hoisted_29$5, [
+        vue.createElementVNode("ul", _hoisted_27$5, [
           (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.triggerReferences, (reference) => {
             return vue.openBlock(), vue.createElementBlock("li", {
               class: "collection-item",
@@ -3275,7 +3262,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           role: "no",
           type: "button",
           value: _ctx.translate("General_Cancel")
-        }, null, 8, _hoisted_30$5)
+        }, null, 8, _hoisted_28$5)
       ], 512)
     ]);
   }
@@ -3441,15 +3428,12 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$k = { class: "col s12 m6" };
   const _hoisted_2$i = ["for"];
-  const _hoisted_3$i = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_4$e = ["name"];
-  const _hoisted_5$c = ["onClick", "title"];
-  const _hoisted_6$b = ["onClick", "title"];
-  const _hoisted_7$b = { class: "col s12 m6" };
-  const _hoisted_8$b = { class: "form-help" };
-  const _hoisted_9$a = { class: "inline-help" };
-  const _hoisted_10$a = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_11$a = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
+  const _hoisted_3$g = ["name"];
+  const _hoisted_4$c = ["onClick", "title"];
+  const _hoisted_5$b = ["onClick", "title"];
+  const _hoisted_6$b = { class: "col s12 m6" };
+  const _hoisted_7$b = { class: "form-help" };
+  const _hoisted_8$a = { class: "inline-help" };
   function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     return vue.openBlock(), vue.createElementBlock("div", {
@@ -3461,7 +3445,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
             for: `${_ctx.type}_triggers`
           }, vue.toDisplayString(_ctx.title), 9, _hoisted_2$i),
           vue.withDirectives(vue.createElementVNode("p", null, [
-            _hoisted_3$i,
+            _cache[2] || (_cache[2] = vue.createElementVNode("br", null, null, -1)),
             vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("TagManager_NoTriggersFound")) + ". ", 1),
             vue.createElementVNode("a", {
               class: "createNewTrigger",
@@ -3487,19 +3471,19 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   "full-width": true,
                   options: _ctx.containerTriggers
                 }, null, 8, ["name", "model-value", "onUpdate:modelValue", "options"])
-              ], 8, _hoisted_4$e),
+              ], 8, _hoisted_3$g),
               vue.withDirectives(vue.createElementVNode("span", {
                 class: "icon-edit valign",
                 onClick: ($event) => _ctx.$emit("edit", idTrigger),
                 title: _ctx.translate("General_Edit")
-              }, null, 8, _hoisted_5$c), [
+              }, null, 8, _hoisted_4$c), [
                 [vue.vShow, idTrigger]
               ]),
               vue.withDirectives(vue.createElementVNode("span", {
                 class: "icon-minus valign",
                 onClick: ($event) => _ctx.removeTrigger(index),
                 title: _ctx.translate("General_Remove")
-              }, null, 8, _hoisted_6$b), [
+              }, null, 8, _hoisted_5$b), [
                 [vue.vShow, index + 1 !== _ctx.modelValue.length]
               ])
             ], 2)), [
@@ -3508,12 +3492,12 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           }), 128))
         ])
       ]),
-      vue.createElementVNode("div", _hoisted_7$b, [
-        vue.createElementVNode("div", _hoisted_8$b, [
-          vue.createElementVNode("span", _hoisted_9$a, [
+      vue.createElementVNode("div", _hoisted_6$b, [
+        vue.createElementVNode("div", _hoisted_7$b, [
+          vue.createElementVNode("span", _hoisted_8$a, [
             vue.createTextVNode(vue.toDisplayString(_ctx.help) + " ", 1),
-            _hoisted_10$a,
-            _hoisted_11$a,
+            _cache[3] || (_cache[3] = vue.createElementVNode("br", null, null, -1)),
+            _cache[4] || (_cache[4] = vue.createElementVNode("br", null, null, -1)),
             vue.createElementVNode("a", {
               class: "createTriggerInHelp",
               onClick: _cache[1] || (_cache[1] = ($event) => _ctx.$emit("create"))
@@ -3676,8 +3660,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$j = { class: "col s12 m6 input-field" };
   const _hoisted_2$h = ["name", "id", "value"];
-  const _hoisted_3$h = { class: "col s12 m6 input-field" };
-  const _hoisted_4$d = ["name", "id", "value"];
+  const _hoisted_3$f = { class: "col s12 m6 input-field" };
+  const _hoisted_4$b = ["name", "id", "value"];
   function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(vue.Fragment, null, [
       vue.createElementVNode("div", _hoisted_1$j, [
@@ -3692,7 +3676,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           onChange: _cache[1] || (_cache[1] = ($event) => _ctx.onDateKeydown($event))
         }, null, 40, _hoisted_2$h)
       ]),
-      vue.createElementVNode("div", _hoisted_3$h, [
+      vue.createElementVNode("div", _hoisted_3$f, [
         vue.createElementVNode("input", {
           ref: "timeInput",
           type: "text",
@@ -3701,7 +3685,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           class: "timeInput",
           value: _ctx.timeText,
           onKeydown: _cache[2] || (_cache[2] = ($event) => _ctx.onTimeKeydown($event))
-        }, null, 40, _hoisted_4$d)
+        }, null, 40, _hoisted_4$b)
       ])
     ], 64);
   }
@@ -4330,57 +4314,53 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     ref: "root"
   };
   const _hoisted_2$g = { class: "loadingPiwik" };
-  const _hoisted_3$g = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_4$c = { class: "loadingPiwik" };
-  const _hoisted_5$b = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_6$a = ["innerHTML"];
-  const _hoisted_7$a = { class: "form-group row" };
-  const _hoisted_8$a = { class: "col s12" };
-  const _hoisted_9$9 = { key: 0 };
+  const _hoisted_3$e = { class: "loadingPiwik" };
+  const _hoisted_4$a = ["innerHTML"];
+  const _hoisted_5$a = { class: "form-group row" };
+  const _hoisted_6$a = { class: "col s12" };
+  const _hoisted_7$a = { key: 0 };
+  const _hoisted_8$9 = { class: "form-group row" };
+  const _hoisted_9$9 = { class: "col s12" };
   const _hoisted_10$9 = { class: "form-group row" };
   const _hoisted_11$9 = { class: "col s12" };
-  const _hoisted_12$9 = { class: "form-group row" };
-  const _hoisted_13$9 = { class: "col s12" };
-  const _hoisted_14$9 = { class: "form-group row tagStartDate" };
-  const _hoisted_15$9 = { class: "col s12 m6" };
-  const _hoisted_16$9 = { class: "row" };
-  const _hoisted_17$8 = { class: "col s12" };
-  const _hoisted_18$8 = {
+  const _hoisted_12$9 = { class: "form-group row tagStartDate" };
+  const _hoisted_13$9 = { class: "col s12 m6" };
+  const _hoisted_14$9 = { class: "row" };
+  const _hoisted_15$8 = { class: "col s12" };
+  const _hoisted_16$8 = {
     for: "start_date_date",
     class: "active"
   };
-  const _hoisted_19$8 = { class: "tagStartDate" };
-  const _hoisted_20$8 = { class: "col s12 m6" };
-  const _hoisted_21$8 = { class: "form-help" };
-  const _hoisted_22$8 = { class: "inline-help" };
-  const _hoisted_23$7 = ["innerHTML"];
-  const _hoisted_24$7 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_25$7 = ["innerHTML"];
-  const _hoisted_26$5 = { class: "form-group row tagEndDate" };
-  const _hoisted_27$4 = { class: "col s12 m6" };
-  const _hoisted_28$4 = { class: "row" };
-  const _hoisted_29$4 = { class: "col s12" };
-  const _hoisted_30$4 = {
+  const _hoisted_17$8 = { class: "tagStartDate" };
+  const _hoisted_18$8 = { class: "col s12 m6" };
+  const _hoisted_19$8 = { class: "form-help" };
+  const _hoisted_20$8 = { class: "inline-help" };
+  const _hoisted_21$8 = ["innerHTML"];
+  const _hoisted_22$8 = ["innerHTML"];
+  const _hoisted_23$6 = { class: "form-group row tagEndDate" };
+  const _hoisted_24$5 = { class: "col s12 m6" };
+  const _hoisted_25$4 = { class: "row" };
+  const _hoisted_26$4 = { class: "col s12" };
+  const _hoisted_27$4 = {
     for: "end_date_date",
     class: "active"
   };
-  const _hoisted_31$4 = { class: "tagEndDate" };
-  const _hoisted_32$4 = { class: "col s12 m6" };
-  const _hoisted_33$4 = { class: "form-help" };
-  const _hoisted_34$4 = { class: "inline-help" };
-  const _hoisted_35$4 = ["innerHTML"];
-  const _hoisted_36$4 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_37$4 = ["innerHTML"];
-  const _hoisted_38$3 = ["innerHTML"];
-  const _hoisted_39$2 = { class: "entityCancel" };
-  const _hoisted_40$2 = { id: "confirmSelectTagType" };
-  const _hoisted_41$2 = { class: "collection-header" };
-  const _hoisted_42$2 = ["onClick", "title"];
-  const _hoisted_43$2 = ["src"];
-  const _hoisted_44$2 = { class: "title" };
-  const _hoisted_45$1 = { class: "secondary-content" };
-  const _hoisted_46$1 = ["title"];
-  const _hoisted_47$1 = { class: "entityCancel" };
+  const _hoisted_28$4 = { class: "tagEndDate" };
+  const _hoisted_29$4 = { class: "col s12 m6" };
+  const _hoisted_30$4 = { class: "form-help" };
+  const _hoisted_31$2 = { class: "inline-help" };
+  const _hoisted_32$2 = ["innerHTML"];
+  const _hoisted_33$2 = ["innerHTML"];
+  const _hoisted_34$1 = ["innerHTML"];
+  const _hoisted_35$1 = { class: "entityCancel" };
+  const _hoisted_36$1 = { id: "confirmSelectTagType" };
+  const _hoisted_37 = { class: "collection-header" };
+  const _hoisted_38 = ["onClick", "title"];
+  const _hoisted_39 = ["src"];
+  const _hoisted_40 = { class: "title" };
+  const _hoisted_41 = { class: "secondary-content" };
+  const _hoisted_42 = ["title"];
+  const _hoisted_43 = { class: "entityCancel" };
   function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     const _component_GroupedSettings = vue.resolveComponent("GroupedSettings");
@@ -4398,15 +4378,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           return [
             vue.withDirectives(vue.createElementVNode("p", null, [
               vue.createElementVNode("span", _hoisted_2$g, [
-                _hoisted_3$g,
+                _cache[20] || (_cache[20] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                 vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
               ])
             ], 512), [
               [vue.vShow, _ctx.isLoading]
             ]),
             vue.withDirectives(vue.createElementVNode("p", null, [
-              vue.createElementVNode("span", _hoisted_4$c, [
-                _hoisted_5$b,
+              vue.createElementVNode("span", _hoisted_3$e, [
+                _cache[21] || (_cache[21] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                 vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("TagManager_UpdatingData")), 1)
               ])
             ], 512), [
@@ -4419,7 +4399,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.withDirectives(vue.createElementVNode("div", {
                   class: "alert alert-danger",
                   innerHTML: _ctx.$sanitize(_ctx.getNoCustomTemplatePermissionErrorMessage())
-                }, null, 8, _hoisted_6$a), [
+                }, null, 8, _hoisted_4$a), [
                   [vue.vShow, _ctx.isTagDisabled]
                 ]),
                 vue.createElementVNode("div", null, [
@@ -4453,14 +4433,14 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     placeholder: _ctx.translate("TagManager_TagDescriptionPlaceholder")
                   }, null, 8, ["model-value", "title", "inline-help", "placeholder"])
                 ]),
-                vue.withDirectives(vue.createElementVNode("div", _hoisted_7$a, [
-                  vue.createElementVNode("div", _hoisted_8$a, [
+                vue.withDirectives(vue.createElementVNode("div", _hoisted_5$a, [
+                  vue.createElementVNode("div", _hoisted_6$a, [
                     vue.createElementVNode("h3", null, vue.toDisplayString(_ctx.translate("TagManager_ConfigureWhatTagDoes")), 1)
                   ])
                 ], 512), [
                   [vue.vShow, (_a2 = _ctx.tag.typeMetadata) == null ? void 0 : _a2.parameters.length]
                 ]),
-                _ctx.tag ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_9$9, [
+                _ctx.tag ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_7$a, [
                   vue.createVNode(_component_GroupedSettings, {
                     settings: ((_b2 = _ctx.tag.typeMetadata) == null ? void 0 : _b2.parameters) || [],
                     "all-setting-values": _ctx.parameterValues,
@@ -4470,8 +4450,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     })
                   }, null, 8, ["settings", "all-setting-values"])
                 ])) : vue.createCommentVNode("", true),
-                vue.withDirectives(vue.createElementVNode("div", _hoisted_10$9, [
-                  vue.createElementVNode("div", _hoisted_11$9, [
+                vue.withDirectives(vue.createElementVNode("div", _hoisted_8$9, [
+                  vue.createElementVNode("div", _hoisted_9$9, [
                     vue.createElementVNode("h3", null, vue.toDisplayString(_ctx.translate("TagManager_ConfigureWhenTagDoes")), 1)
                   ])
                 ], 512), [
@@ -4508,8 +4488,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   onCreate: _cache[7] || (_cache[7] = ($event) => _ctx.onCreateNewBlockTrigger()),
                   onEdit: _cache[8] || (_cache[8] = ($event) => _ctx.editTrigger($event))
                 }, null, 8, ["container-triggers", "title", "help", "model-value"]),
-                vue.withDirectives(vue.createElementVNode("div", _hoisted_12$9, [
-                  vue.createElementVNode("div", _hoisted_13$9, [
+                vue.withDirectives(vue.createElementVNode("div", _hoisted_10$9, [
+                  vue.createElementVNode("div", _hoisted_11$9, [
                     vue.createElementVNode("h3", null, [
                       vue.withDirectives(vue.createElementVNode("a", {
                         href: "",
@@ -4575,13 +4555,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                       placeholder: _ctx.translate("TagManager_PriorityPlaceholder")
                     }, null, 8, ["model-value", "title", "inline-help", "placeholder"])
                   ]),
-                  vue.createElementVNode("div", _hoisted_14$9, [
-                    vue.createElementVNode("div", _hoisted_15$9, [
-                      vue.createElementVNode("div", _hoisted_16$9, [
-                        vue.createElementVNode("div", _hoisted_17$8, [
-                          vue.createElementVNode("label", _hoisted_18$8, vue.toDisplayString(_ctx.translate("TagManager_StartDate")) + ":", 1)
+                  vue.createElementVNode("div", _hoisted_12$9, [
+                    vue.createElementVNode("div", _hoisted_13$9, [
+                      vue.createElementVNode("div", _hoisted_14$9, [
+                        vue.createElementVNode("div", _hoisted_15$8, [
+                          vue.createElementVNode("label", _hoisted_16$8, vue.toDisplayString(_ctx.translate("TagManager_StartDate")) + ":", 1)
                         ]),
-                        vue.createElementVNode("div", _hoisted_19$8, [
+                        vue.createElementVNode("div", _hoisted_17$8, [
                           vue.createVNode(_component_TagDateInput, {
                             name: "start_date",
                             "model-value": _ctx.tag.start_date,
@@ -4594,9 +4574,9 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         ])
                       ])
                     ]),
-                    vue.createElementVNode("div", _hoisted_20$8, [
-                      vue.createElementVNode("div", _hoisted_21$8, [
-                        vue.createElementVNode("span", _hoisted_22$8, [
+                    vue.createElementVNode("div", _hoisted_18$8, [
+                      vue.createElementVNode("div", _hoisted_19$8, [
+                        vue.createElementVNode("span", _hoisted_20$8, [
                           vue.createElementVNode("span", null, [
                             vue.createElementVNode("span", {
                               innerHTML: _ctx.$sanitize(_ctx.translate(
@@ -4604,8 +4584,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                                 "<strong>",
                                 "</strong>"
                               ))
-                            }, null, 8, _hoisted_23$7),
-                            _hoisted_24$7,
+                            }, null, 8, _hoisted_21$8),
+                            _cache[22] || (_cache[22] = vue.createElementVNode("br", null, null, -1)),
                             vue.createElementVNode("span", {
                               class: "currentLocalTime",
                               innerHTML: _ctx.$sanitize(_ctx.translate(
@@ -4614,19 +4594,19 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                                 _ctx.currentTime,
                                 "</strong>"
                               ))
-                            }, null, 8, _hoisted_25$7)
+                            }, null, 8, _hoisted_22$8)
                           ])
                         ])
                       ])
                     ])
                   ]),
-                  vue.createElementVNode("div", _hoisted_26$5, [
-                    vue.createElementVNode("div", _hoisted_27$4, [
-                      vue.createElementVNode("div", _hoisted_28$4, [
-                        vue.createElementVNode("div", _hoisted_29$4, [
-                          vue.createElementVNode("label", _hoisted_30$4, vue.toDisplayString(_ctx.translate("TagManager_EndDate")) + ":", 1)
+                  vue.createElementVNode("div", _hoisted_23$6, [
+                    vue.createElementVNode("div", _hoisted_24$5, [
+                      vue.createElementVNode("div", _hoisted_25$4, [
+                        vue.createElementVNode("div", _hoisted_26$4, [
+                          vue.createElementVNode("label", _hoisted_27$4, vue.toDisplayString(_ctx.translate("TagManager_EndDate")) + ":", 1)
                         ]),
-                        vue.createElementVNode("div", _hoisted_31$4, [
+                        vue.createElementVNode("div", _hoisted_28$4, [
                           vue.createVNode(_component_TagDateInput, {
                             name: "end_date",
                             "model-value": _ctx.tag.end_date,
@@ -4639,9 +4619,9 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         ])
                       ])
                     ]),
-                    vue.createElementVNode("div", _hoisted_32$4, [
-                      vue.createElementVNode("div", _hoisted_33$4, [
-                        vue.createElementVNode("span", _hoisted_34$4, [
+                    vue.createElementVNode("div", _hoisted_29$4, [
+                      vue.createElementVNode("div", _hoisted_30$4, [
+                        vue.createElementVNode("span", _hoisted_31$2, [
                           vue.createElementVNode("span", null, [
                             vue.createElementVNode("span", {
                               innerHTML: _ctx.$sanitize(_ctx.translate(
@@ -4649,8 +4629,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                                 "<strong>",
                                 "</strong>"
                               ))
-                            }, null, 8, _hoisted_35$4),
-                            _hoisted_36$4,
+                            }, null, 8, _hoisted_32$2),
+                            _cache[23] || (_cache[23] = vue.createElementVNode("br", null, null, -1)),
                             vue.createElementVNode("span", {
                               class: "currentLocalTime",
                               innerHTML: _ctx.$sanitize(_ctx.translate(
@@ -4659,7 +4639,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                                 _ctx.currentTime,
                                 "</strong>"
                               ))
-                            }, null, 8, _hoisted_37$4)
+                            }, null, 8, _hoisted_33$2)
                           ])
                         ])
                       ])
@@ -4671,7 +4651,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.withDirectives(vue.createElementVNode("div", {
                   class: "alert alert-danger",
                   innerHTML: _ctx.$sanitize(_ctx.getNoCustomTemplatePermissionErrorMessage())
-                }, null, 8, _hoisted_38$3), [
+                }, null, 8, _hoisted_34$1), [
                   [vue.vShow, _ctx.isTagDisabled]
                 ]),
                 !_ctx.isTagDisabled ? (vue.openBlock(), vue.createBlock(_component_SaveButton, {
@@ -4682,7 +4662,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   saving: _ctx.isUpdating,
                   value: _ctx.edit ? _ctx.translate("CoreUpdater_UpdateTitle") : _ctx.translate("TagManager_CreateNewTag")
                 }, null, 8, ["disabled", "saving", "value"])) : vue.createCommentVNode("", true),
-                vue.createElementVNode("div", _hoisted_39$2, [
+                vue.createElementVNode("div", _hoisted_35$1, [
                   vue.createElementVNode("a", {
                     onClick: _cache[17] || (_cache[17] = ($event) => _ctx.cancel())
                   }, vue.toDisplayString(_ctx.translate("General_Cancel")), 1)
@@ -4691,13 +4671,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
             ], 544), [
               [vue.vShow, !_ctx.chooseTagType && _ctx.editTitle]
             ]),
-            vue.withDirectives(vue.createElementVNode("div", _hoisted_40$2, [
+            vue.withDirectives(vue.createElementVNode("div", _hoisted_36$1, [
               (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.availableTags, (tagCategory) => {
                 return vue.openBlock(), vue.createElementBlock("ul", {
                   class: "collection with-header",
                   key: tagCategory.name
                 }, [
-                  vue.createElementVNode("li", _hoisted_41$2, [
+                  vue.createElementVNode("li", _hoisted_37, [
                     vue.createElementVNode("h4", null, vue.toDisplayString(tagCategory.name), 1)
                   ]),
                   (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(tagCategory.types, (tagTemplate, index) => {
@@ -4715,26 +4695,26 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         alt: "",
                         class: "circle",
                         src: tagTemplate.icon
-                      }, null, 8, _hoisted_43$2)) : vue.createCommentVNode("", true),
-                      vue.createElementVNode("span", _hoisted_44$2, vue.toDisplayString(tagTemplate.name), 1),
+                      }, null, 8, _hoisted_39)) : vue.createCommentVNode("", true),
+                      vue.createElementVNode("span", _hoisted_40, vue.toDisplayString(tagTemplate.name), 1),
                       vue.withDirectives(vue.createElementVNode("p", null, vue.toDisplayString(tagTemplate.description), 513), [
                         [vue.vShow, tagTemplate.description]
                       ]),
-                      vue.withDirectives(vue.createElementVNode("span", _hoisted_45$1, [
+                      vue.withDirectives(vue.createElementVNode("span", _hoisted_41, [
                         vue.createElementVNode("i", {
                           class: "icon-help",
                           title: tagTemplate.help
-                        }, null, 8, _hoisted_46$1)
+                        }, null, 8, _hoisted_42)
                       ], 512), [
                         [vue.vShow, !!tagTemplate.help]
                       ])
-                    ], 10, _hoisted_42$2)), [
+                    ], 10, _hoisted_38)), [
                       [vue.vShow, _ctx.isTagVisible(tagTemplate.id)]
                     ]);
                   }), 128))
                 ]);
               }), 128)),
-              vue.createElementVNode("div", _hoisted_47$1, [
+              vue.createElementVNode("div", _hoisted_43, [
                 vue.createElementVNode("a", {
                   onClick: _cache[19] || (_cache[19] = ($event) => _ctx.cancel())
                 }, vue.toDisplayString(_ctx.translate("General_Cancel")), 1)
@@ -4966,54 +4946,52 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$h = { class: "tagManagerManageList tagManagerTagList" };
   const _hoisted_2$f = { class: "tagSearchFilter" };
-  const _hoisted_3$f = ["title"];
-  const _hoisted_4$b = ["title"];
-  const _hoisted_5$a = ["title"];
+  const _hoisted_3$d = ["title"];
+  const _hoisted_4$9 = ["title"];
+  const _hoisted_5$9 = ["title"];
   const _hoisted_6$9 = ["title"];
   const _hoisted_7$9 = ["title"];
-  const _hoisted_8$9 = ["title"];
+  const _hoisted_8$8 = ["title"];
   const _hoisted_9$8 = { colspan: "6" };
   const _hoisted_10$8 = { class: "loadingPiwik" };
-  const _hoisted_11$8 = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_12$8 = { colspan: "6" };
-  const _hoisted_13$8 = ["id"];
+  const _hoisted_11$8 = { colspan: "6" };
+  const _hoisted_12$8 = ["id"];
+  const _hoisted_13$8 = ["title"];
   const _hoisted_14$8 = ["title"];
-  const _hoisted_15$8 = ["title"];
-  const _hoisted_16$8 = ["title"];
-  const _hoisted_17$7 = { class: "triggers" };
-  const _hoisted_18$7 = ["onClick", "title"];
-  const _hoisted_19$7 = ["title"];
-  const _hoisted_20$7 = ["onClick", "title"];
+  const _hoisted_15$7 = ["title"];
+  const _hoisted_16$7 = { class: "triggers" };
+  const _hoisted_17$7 = ["onClick", "title"];
+  const _hoisted_18$7 = ["title"];
+  const _hoisted_19$7 = ["onClick", "title"];
+  const _hoisted_20$7 = ["title"];
   const _hoisted_21$7 = ["title"];
-  const _hoisted_22$7 = ["title"];
-  const _hoisted_23$6 = ["onClick", "title"];
-  const _hoisted_24$6 = ["onClick", "title"];
-  const _hoisted_25$6 = ["onClick", "title"];
-  const _hoisted_26$4 = ["onClick", "title"];
-  const _hoisted_27$3 = ["onClick", "title"];
-  const _hoisted_28$3 = { class: "tableActionBar" };
-  const _hoisted_29$3 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
-  const _hoisted_30$3 = {
+  const _hoisted_22$7 = ["onClick", "title"];
+  const _hoisted_23$5 = ["onClick", "title"];
+  const _hoisted_24$4 = ["onClick", "title"];
+  const _hoisted_25$3 = ["onClick", "title"];
+  const _hoisted_26$3 = ["onClick", "title"];
+  const _hoisted_27$3 = { class: "tableActionBar" };
+  const _hoisted_28$3 = {
     class: "ui-confirm",
     id: "confirmDeleteTag",
     ref: "confirmDeleteTag"
   };
-  const _hoisted_31$3 = ["value"];
-  const _hoisted_32$3 = ["value"];
-  const _hoisted_33$3 = {
+  const _hoisted_29$3 = ["value"];
+  const _hoisted_30$3 = ["value"];
+  const _hoisted_31$1 = {
     class: "ui-confirm",
     id: "confirmPauseTag",
     ref: "confirmPauseTag"
   };
-  const _hoisted_34$3 = ["value"];
-  const _hoisted_35$3 = ["value"];
-  const _hoisted_36$3 = {
+  const _hoisted_32$1 = ["value"];
+  const _hoisted_33$1 = ["value"];
+  const _hoisted_34 = {
     class: "ui-confirm",
     id: "confirmResumeTag",
     ref: "confirmResumeTag"
   };
-  const _hoisted_37$3 = ["value"];
-  const _hoisted_38$2 = ["value"];
+  const _hoisted_35 = ["value"];
+  const _hoisted_36 = ["value"];
   function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     const _component_ContentBlock = vue.resolveComponent("ContentBlock");
@@ -5043,15 +5021,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.createElementVNode("th", {
                   class: "name",
                   title: _ctx.nameTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Name")), 9, _hoisted_3$f),
+                }, vue.toDisplayString(_ctx.translate("General_Name")), 9, _hoisted_3$d),
                 vue.createElementVNode("th", {
                   class: "description",
                   title: _ctx.descriptionTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Description")), 9, _hoisted_4$b),
+                }, vue.toDisplayString(_ctx.translate("General_Description")), 9, _hoisted_4$9),
                 vue.createElementVNode("th", {
                   class: "type",
                   title: _ctx.typeTranslatedText
-                }, vue.toDisplayString(_ctx.translate("TagManager_Type")), 9, _hoisted_5$a),
+                }, vue.toDisplayString(_ctx.translate("TagManager_Type")), 9, _hoisted_5$9),
                 vue.createElementVNode("th", {
                   class: "triggers",
                   title: _ctx.triggersTranslatedText
@@ -5063,7 +5041,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.withDirectives(vue.createElementVNode("th", {
                   class: "action",
                   title: _ctx.actionTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Actions")), 9, _hoisted_8$9), [
+                }, vue.toDisplayString(_ctx.translate("General_Actions")), 9, _hoisted_8$8), [
                   [vue.vShow, _ctx.hasWriteAccess]
                 ])
               ])
@@ -5072,7 +5050,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               vue.withDirectives(vue.createElementVNode("tr", null, [
                 vue.createElementVNode("td", _hoisted_9$8, [
                   vue.createElementVNode("span", _hoisted_10$8, [
-                    _hoisted_11$8,
+                    _cache[3] || (_cache[3] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                     vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
                   ])
                 ])
@@ -5080,7 +5058,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 [vue.vShow, _ctx.isLoading || _ctx.isUpdating]
               ]),
               vue.withDirectives(vue.createElementVNode("tr", null, [
-                vue.createElementVNode("td", _hoisted_12$8, [
+                vue.createElementVNode("td", _hoisted_11$8, [
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_NoTagsFound")) + " ", 1),
                   vue.withDirectives(vue.createElementVNode("a", {
                     class: "createContainerTagNow",
@@ -5102,16 +5080,16 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   vue.createElementVNode("td", {
                     class: "name",
                     title: tag.name
-                  }, vue.toDisplayString(_ctx.truncateText(tag.name, 50)), 9, _hoisted_14$8),
+                  }, vue.toDisplayString(_ctx.truncateText(tag.name, 50)), 9, _hoisted_13$8),
                   vue.createElementVNode("td", {
                     class: "description",
                     title: tag.description
-                  }, vue.toDisplayString(_ctx.truncateText(tag.description, 75)), 9, _hoisted_15$8),
+                  }, vue.toDisplayString(_ctx.truncateText(tag.description, 75)), 9, _hoisted_14$8),
                   vue.createElementVNode("td", {
                     class: "type",
                     title: tag.typeMetadata.description
-                  }, vue.toDisplayString(tag.typeMetadata.name), 9, _hoisted_16$8),
-                  vue.createElementVNode("td", _hoisted_17$7, [
+                  }, vue.toDisplayString(tag.typeMetadata.name), 9, _hoisted_15$7),
+                  vue.createElementVNode("td", _hoisted_16$7, [
                     (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(tag.fire_trigger_ids, (fireTriggerId, fireTriggerIndex) => {
                       return vue.openBlock(), vue.createElementBlock("span", {
                         key: fireTriggerIndex,
@@ -5124,12 +5102,12 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                           href: "",
                           onClick: vue.withModifiers(($event) => _ctx.editTrigger(fireTriggerId), ["prevent"]),
                           title: this.triggers[fireTriggerId]
-                        }, vue.toDisplayString(_ctx.truncateText(this.triggers[fireTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_18$7)) : vue.createCommentVNode("", true),
+                        }, vue.toDisplayString(_ctx.truncateText(this.triggers[fireTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_17$7)) : vue.createCommentVNode("", true),
                         !_ctx.hasWriteAccess ? (vue.openBlock(), vue.createElementBlock("span", {
                           key: 1,
                           class: "chip",
                           title: this.triggers[fireTriggerId]
-                        }, vue.toDisplayString(_ctx.truncateText(this.triggers[fireTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_19$7)) : vue.createCommentVNode("", true)
+                        }, vue.toDisplayString(_ctx.truncateText(this.triggers[fireTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_18$7)) : vue.createCommentVNode("", true)
                       ]);
                     }), 128)),
                     vue.withDirectives(vue.createElementVNode("span", null, [
@@ -5144,13 +5122,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                             href: "",
                             onClick: vue.withModifiers(($event) => _ctx.editTrigger(blockTriggerId), ["prevent"]),
                             title: this.triggers[blockTriggerId]
-                          }, vue.toDisplayString(_ctx.truncateText(this.triggers[blockTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_20$7), [
+                          }, vue.toDisplayString(_ctx.truncateText(this.triggers[blockTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_19$7), [
                             [vue.vShow, _ctx.hasWriteAccess]
                           ]),
                           vue.withDirectives(vue.createElementVNode("span", {
                             class: "chip",
                             title: this.triggers[blockTriggerId]
-                          }, vue.toDisplayString(_ctx.truncateText(this.triggers[blockTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_21$7), [
+                          }, vue.toDisplayString(_ctx.truncateText(this.triggers[blockTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_20$7), [
                             [vue.vShow, !_ctx.hasWriteAccess]
                           ])
                         ]);
@@ -5164,7 +5142,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     title: _ctx.translate("TagManager_CreatedOnX", tag.created_date_pretty)
                   }, [
                     vue.createElementVNode("span", null, vue.toDisplayString(tag.updated_date_pretty), 1)
-                  ], 8, _hoisted_22$7),
+                  ], 8, _hoisted_21$7),
                   vue.withDirectives(vue.createElementVNode("td", {
                     class: vue.normalizeClass(_ctx.getActionClasses)
                   }, [
@@ -5172,21 +5150,21 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                       class: "table-action icon-pause",
                       onClick: ($event) => _ctx.pauseTag(tag),
                       title: _ctx.translate("TagManager_PauseX", _ctx.translate("TagManager_Tag"))
-                    }, null, 8, _hoisted_23$6), [
+                    }, null, 8, _hoisted_22$7), [
                       [vue.vShow, tag.status === "active" && (!((_a2 = tag.typeMetadata) == null ? void 0 : _a2.isCustomTemplate) || _ctx.canUseCustomTemplates)]
                     ]),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-play",
                       onClick: ($event) => _ctx.resumeTag(tag),
                       title: _ctx.translate("TagManager_ResumeX", _ctx.translate("TagManager_Tag"))
-                    }, null, 8, _hoisted_24$6), [
+                    }, null, 8, _hoisted_23$5), [
                       [vue.vShow, tag.status === "paused" && (!((_b2 = tag.typeMetadata) == null ? void 0 : _b2.isCustomTemplate) || _ctx.canUseCustomTemplates)]
                     ]),
                     vue.createElementVNode("a", {
                       class: "table-action icon-edit",
                       onClick: ($event) => _ctx.editTag(tag.idtag, tag.type),
                       title: _ctx.translate("TagManager_EditTag")
-                    }, null, 8, _hoisted_25$6),
+                    }, null, 8, _hoisted_24$4),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-content-copy",
                       onClick: ($event) => _ctx.openCopyDialog(tag),
@@ -5194,32 +5172,32 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         "TagManager_CopyX",
                         _ctx.translate("TagManager_Tag")
                       )
-                    }, null, 8, _hoisted_26$4), [
+                    }, null, 8, _hoisted_25$3), [
                       [vue.vShow, _ctx.hasPublishCapability()]
                     ]),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-delete",
                       onClick: ($event) => _ctx.deleteTag(tag),
                       title: _ctx.translate("TagManager_DeleteX", _ctx.translate("TagManager_Tag"))
-                    }, null, 8, _hoisted_27$3), [
+                    }, null, 8, _hoisted_26$3), [
                       [vue.vShow, !((_c = tag.typeMetadata) == null ? void 0 : _c.isCustomTemplate) || _ctx.canUseCustomTemplates]
                     ])
                   ], 2), [
                     [vue.vShow, _ctx.hasWriteAccess]
                   ])
-                ], 8, _hoisted_13$8);
+                ], 8, _hoisted_12$8);
               }), 128))
             ])
           ])), [
             [_directive_content_table]
           ]),
-          vue.withDirectives(vue.createElementVNode("div", _hoisted_28$3, [
+          vue.withDirectives(vue.createElementVNode("div", _hoisted_27$3, [
             vue.createElementVNode("a", {
               class: "createNewTag",
               value: "",
               onClick: _cache[2] || (_cache[2] = ($event) => _ctx.createTag())
             }, [
-              _hoisted_29$3,
+              _cache[4] || (_cache[4] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
               vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewTag")), 1)
             ])
           ], 512), [
@@ -5228,44 +5206,44 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         ]),
         _: 1
       }, 8, ["content-title", "help-text"]),
-      vue.createElementVNode("div", _hoisted_30$3, [
+      vue.createElementVNode("div", _hoisted_28$3, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_DeleteTagConfirm")), 1),
         vue.createElementVNode("input", {
           role: "yes",
           type: "button",
           value: _ctx.translate("General_Yes")
-        }, null, 8, _hoisted_31$3),
+        }, null, 8, _hoisted_29$3),
         vue.createElementVNode("input", {
           role: "no",
           type: "button",
           value: _ctx.translate("General_No")
-        }, null, 8, _hoisted_32$3)
+        }, null, 8, _hoisted_30$3)
       ], 512),
-      vue.createElementVNode("div", _hoisted_33$3, [
+      vue.createElementVNode("div", _hoisted_31$1, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_PauseTagConfirm")), 1),
         vue.createElementVNode("input", {
           role: "yes",
           type: "button",
           value: _ctx.translate("General_Yes")
-        }, null, 8, _hoisted_34$3),
+        }, null, 8, _hoisted_32$1),
         vue.createElementVNode("input", {
           role: "no",
           type: "button",
           value: _ctx.translate("General_No")
-        }, null, 8, _hoisted_35$3)
+        }, null, 8, _hoisted_33$1)
       ], 512),
-      vue.createElementVNode("div", _hoisted_36$3, [
+      vue.createElementVNode("div", _hoisted_34, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_ResumeTagConfirm")), 1),
         vue.createElementVNode("input", {
           role: "yes",
           type: "button",
           value: _ctx.translate("General_Yes")
-        }, null, 8, _hoisted_37$3),
+        }, null, 8, _hoisted_35),
         vue.createElementVNode("input", {
           role: "no",
           type: "button",
           value: _ctx.translate("General_No")
-        }, null, 8, _hoisted_38$2)
+        }, null, 8, _hoisted_36)
       ], 512)
     ]);
   }
@@ -5316,7 +5294,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$g = { class: "manageTag" };
   const _hoisted_2$e = { key: 0 };
-  const _hoisted_3$e = { key: 1 };
+  const _hoisted_3$c = { key: 1 };
   function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_TagList = vue.resolveComponent("TagList");
     const _component_TagEdit = vue.resolveComponent("TagEdit");
@@ -5328,7 +5306,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           "tags-help-text": _ctx.tagsHelpText
         }, null, 8, ["id-container", "id-container-version", "tags-help-text"])
       ])) : vue.createCommentVNode("", true),
-      _ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$e, [
+      _ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$c, [
         vue.createVNode(_component_TagEdit, {
           "id-container": _ctx.idContainer,
           "id-container-version": _ctx.idContainerVersion,
@@ -5636,20 +5614,18 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     id: "versionNameHelpText",
     class: "inline-help-node"
   };
-  const _hoisted_2$d = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_3$d = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_4$a = ["innerHTML"];
+  const _hoisted_2$d = ["innerHTML"];
   function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$f, [
       vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_VersionNameHelpText")) + " ", 1),
-      _hoisted_2$d,
-      _hoisted_3$d,
+      _cache[0] || (_cache[0] = vue.createElementVNode("br", null, null, -1)),
+      _cache[1] || (_cache[1] = vue.createElementVNode("br", null, null, -1)),
       vue.withDirectives(vue.createElementVNode("span", {
         innerHTML: _ctx.$sanitize(_ctx.translate(
           "TagManager_NameOfLatestVersion",
           `<strong>${_ctx.lastVersion}</strong>`
         ))
-      }, null, 8, _hoisted_4$a), [
+      }, null, 8, _hoisted_2$d), [
         [vue.vShow, _ctx.lastVersion]
       ])
     ]);
@@ -6015,23 +5991,21 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$d = { class: "editVersion tagManagerManageEdit" };
   const _hoisted_2$c = { class: "loadingPiwik" };
-  const _hoisted_3$c = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_4$9 = { class: "loadingPiwik" };
-  const _hoisted_5$9 = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_6$8 = { key: 0 };
-  const _hoisted_7$8 = { key: 0 };
-  const _hoisted_8$8 = { key: 1 };
-  const _hoisted_9$7 = ["innerHTML"];
-  const _hoisted_10$7 = {
+  const _hoisted_3$b = { class: "loadingPiwik" };
+  const _hoisted_4$8 = { key: 0 };
+  const _hoisted_5$8 = { key: 0 };
+  const _hoisted_6$8 = { key: 1 };
+  const _hoisted_7$8 = ["innerHTML"];
+  const _hoisted_8$7 = {
     key: 2,
     class: "versionChanges"
   };
-  const _hoisted_11$7 = { key: 0 };
+  const _hoisted_9$7 = { key: 0 };
+  const _hoisted_10$7 = { colspan: "4" };
+  const _hoisted_11$7 = { key: 1 };
   const _hoisted_12$7 = { colspan: "4" };
-  const _hoisted_13$7 = { key: 1 };
-  const _hoisted_14$7 = { colspan: "4" };
-  const _hoisted_15$7 = { class: "lastUpdated" };
-  const _hoisted_16$7 = { class: "entityCancel" };
+  const _hoisted_13$7 = { class: "lastUpdated" };
+  const _hoisted_14$7 = { class: "entityCancel" };
   function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     const _component_SaveButton = vue.resolveComponent("SaveButton");
@@ -6048,15 +6022,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           return [
             vue.withDirectives(vue.createElementVNode("p", null, [
               vue.createElementVNode("span", _hoisted_2$c, [
-                _hoisted_3$c,
+                _cache[7] || (_cache[7] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                 vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
               ])
             ], 512), [
               [vue.vShow, _ctx.isLoading]
             ]),
             vue.withDirectives(vue.createElementVNode("p", null, [
-              vue.createElementVNode("span", _hoisted_4$9, [
-                _hoisted_5$9,
+              vue.createElementVNode("span", _hoisted_3$b, [
+                _cache[8] || (_cache[8] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                 vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("TagManager_UpdatingData")), 1)
               ])
             ], 512), [
@@ -6066,7 +6040,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               onSubmit: _cache[6] || (_cache[6] = ($event) => _ctx.edit ? _ctx.updateVersion() : _ctx.createVersion())
             }, [
               vue.createElementVNode("div", null, [
-                _ctx.hasPublishCapability() || _ctx.hasWriteCapability() && _ctx.hasPublishToLiveCapability() ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_6$8, [
+                _ctx.hasPublishCapability() || _ctx.hasWriteCapability() && _ctx.hasPublishToLiveCapability() ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_4$8, [
                   vue.createElementVNode("div", null, [
                     vue.createVNode(_component_Field, {
                       uicontrol: "text",
@@ -6105,7 +6079,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     saving: _ctx.isUpdating,
                     value: _ctx.edit ? _ctx.translate("CoreUpdater_UpdateTitle") : _ctx.translate("TagManager_CreateVersionWithoutPublishing")
                   }, null, 8, ["disabled", "saving", "value"]),
-                  _ctx.create && _ctx.environments.length ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_7$8, [
+                  _ctx.create && _ctx.environments.length ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_5$8, [
                     vue.createVNode(_component_Field, {
                       uicontrol: "select",
                       name: "environment",
@@ -6129,13 +6103,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     saving: _ctx.isUpdating,
                     value: _ctx.translate("TagManager_CreateVersionAndPublishRelease")
                   }, null, 8, ["disabled", "saving", "value"])) : vue.createCommentVNode("", true)
-                ])) : (vue.openBlock(), vue.createElementBlock("div", _hoisted_8$8, [
+                ])) : (vue.openBlock(), vue.createElementBlock("div", _hoisted_6$8, [
                   vue.createElementVNode("div", {
                     class: "alert alert-warning",
                     innerHTML: _ctx.$sanitize(_ctx.showNoAccessErrorMessage)
-                  }, null, 8, _hoisted_9$7)
+                  }, null, 8, _hoisted_7$8)
                 ])),
-                _ctx.lastVersion ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_10$7, [
+                _ctx.lastVersion ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_8$7, [
                   vue.createElementVNode("h3", null, vue.toDisplayString(_ctx.translate("TagManager_ChangesSinceLastVersion")) + ":", 1),
                   vue.withDirectives((vue.openBlock(), vue.createElementBlock("table", null, [
                     vue.createElementVNode("thead", null, [
@@ -6147,23 +6121,23 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                       ])
                     ]),
                     vue.createElementVNode("tbody", null, [
-                      _ctx.isLoadingVersionChanges ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_11$7, [
-                        vue.createElementVNode("td", _hoisted_12$7, [
+                      _ctx.isLoadingVersionChanges ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_9$7, [
+                        vue.createElementVNode("td", _hoisted_10$7, [
                           vue.createVNode(_component_ActivityIndicator, {
                             "loading-message": _ctx.translate("TagManager_DetectingChanges"),
                             loading: true
                           }, null, 8, ["loading-message"])
                         ])
                       ])) : vue.createCommentVNode("", true),
-                      !_ctx.versionChanges.length && !_ctx.isLoadingVersionChanges ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_13$7, [
-                        vue.createElementVNode("td", _hoisted_14$7, vue.toDisplayString(_ctx.translate("UserCountryMap_None")), 1)
+                      !_ctx.versionChanges.length && !_ctx.isLoadingVersionChanges ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_11$7, [
+                        vue.createElementVNode("td", _hoisted_12$7, vue.toDisplayString(_ctx.translate("UserCountryMap_None")), 1)
                       ])) : vue.createCommentVNode("", true),
                       (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.versionChanges, (versionChange, index) => {
                         return vue.openBlock(), vue.createElementBlock("tr", { key: index }, [
                           vue.createElementVNode("td", null, vue.toDisplayString(_ctx.translate(versionChange.entityType)), 1),
                           vue.createElementVNode("td", null, vue.toDisplayString(versionChange.name), 1),
                           vue.createElementVNode("td", null, vue.toDisplayString(_ctx.translate(versionChange.type)), 1),
-                          vue.createElementVNode("td", _hoisted_15$7, [
+                          vue.createElementVNode("td", _hoisted_13$7, [
                             vue.createElementVNode("span", null, vue.toDisplayString(versionChange.lastChanged), 1)
                           ])
                         ]);
@@ -6173,7 +6147,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     [_directive_content_table]
                   ])
                 ])) : vue.createCommentVNode("", true),
-                vue.withDirectives(vue.createElementVNode("div", _hoisted_16$7, [
+                vue.withDirectives(vue.createElementVNode("div", _hoisted_14$7, [
                   vue.createElementVNode("a", {
                     onClick: _cache[5] || (_cache[5] = ($event) => _ctx.cancel())
                   }, vue.toDisplayString(_ctx.translate("General_Cancel")), 1)
@@ -6378,53 +6352,49 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$c = { class: "tagManagerManageList tagManagerVersionList" };
   const _hoisted_2$b = { class: "versionSearchFilter" };
-  const _hoisted_3$b = ["title"];
-  const _hoisted_4$8 = ["title"];
-  const _hoisted_5$8 = ["title"];
+  const _hoisted_3$a = ["title"];
+  const _hoisted_4$7 = ["title"];
+  const _hoisted_5$7 = ["title"];
   const _hoisted_6$7 = ["title"];
   const _hoisted_7$7 = ["title"];
-  const _hoisted_8$7 = ["title"];
+  const _hoisted_8$6 = ["title"];
   const _hoisted_9$6 = { colspan: "7" };
   const _hoisted_10$6 = { class: "loadingPiwik" };
-  const _hoisted_11$6 = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_12$6 = { colspan: "7" };
-  const _hoisted_13$6 = ["id"];
-  const _hoisted_14$6 = { class: "index" };
+  const _hoisted_11$6 = { colspan: "7" };
+  const _hoisted_12$6 = ["id"];
+  const _hoisted_13$6 = { class: "index" };
+  const _hoisted_14$6 = ["title"];
   const _hoisted_15$6 = ["title"];
-  const _hoisted_16$6 = ["title"];
-  const _hoisted_17$6 = { class: "environments" };
-  const _hoisted_18$6 = ["title"];
-  const _hoisted_19$6 = { class: "created" };
-  const _hoisted_20$6 = { class: "action" };
+  const _hoisted_16$6 = { class: "environments" };
+  const _hoisted_17$6 = ["title"];
+  const _hoisted_18$6 = { class: "created" };
+  const _hoisted_19$6 = { class: "action" };
+  const _hoisted_20$6 = ["onClick", "title"];
   const _hoisted_21$6 = ["onClick", "title"];
-  const _hoisted_22$6 = ["onClick", "title"];
-  const _hoisted_23$5 = ["onClick", "href", "title"];
-  const _hoisted_24$5 = ["onClick", "title"];
-  const _hoisted_25$5 = ["onClick", "title"];
-  const _hoisted_26$3 = { class: "tableActionBar" };
-  const _hoisted_27$2 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
-  const _hoisted_28$2 = ["href"];
-  const _hoisted_29$2 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-export" }, " ", -1);
-  const _hoisted_30$2 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-upload" }, " ", -1);
-  const _hoisted_31$2 = {
+  const _hoisted_22$6 = ["onClick", "href", "title"];
+  const _hoisted_23$4 = ["onClick", "title"];
+  const _hoisted_24$3 = ["onClick", "title"];
+  const _hoisted_25$2 = { class: "tableActionBar" };
+  const _hoisted_26$2 = ["href"];
+  const _hoisted_27$2 = {
     class: "ui-confirm",
     id: "confirmDeleteVersion",
     ref: "confirmDeleteVersion"
   };
-  const _hoisted_32$2 = ["value"];
-  const _hoisted_33$2 = ["value"];
-  const _hoisted_34$2 = {
+  const _hoisted_28$2 = ["value"];
+  const _hoisted_29$2 = ["value"];
+  const _hoisted_30$2 = {
     class: "ui-confirm",
     id: "confirmPublishVersion",
     ref: "confirmPublishVersion"
   };
-  const _hoisted_35$2 = {
+  const _hoisted_31 = {
     key: 0,
     class: "alert alert-info",
     style: { "margin-top": "16px" }
   };
-  const _hoisted_36$2 = ["value"];
-  const _hoisted_37$2 = ["value"];
+  const _hoisted_32 = ["value"];
+  const _hoisted_33 = ["value"];
   function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
     var _a2;
     const _component_Field = vue.resolveComponent("Field");
@@ -6455,15 +6425,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.createElementVNode("th", {
                   class: "index",
                   title: _ctx.revisionTranslatedText
-                }, vue.toDisplayString(_ctx.translate("TagManager_Revision")), 9, _hoisted_3$b),
+                }, vue.toDisplayString(_ctx.translate("TagManager_Revision")), 9, _hoisted_3$a),
                 vue.createElementVNode("th", {
                   class: "name",
                   title: _ctx.nameTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Name")), 9, _hoisted_4$8),
+                }, vue.toDisplayString(_ctx.translate("General_Name")), 9, _hoisted_4$7),
                 vue.createElementVNode("th", {
                   class: "description",
                   title: _ctx.descriptionTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Description")), 9, _hoisted_5$8),
+                }, vue.toDisplayString(_ctx.translate("General_Description")), 9, _hoisted_5$7),
                 vue.createElementVNode("th", {
                   class: "environments",
                   title: _ctx.environmentTranslatedText
@@ -6475,14 +6445,14 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 vue.createElementVNode("th", {
                   class: "action",
                   title: _ctx.actionTranslatedText
-                }, vue.toDisplayString(_ctx.translate("General_Actions")), 9, _hoisted_8$7)
+                }, vue.toDisplayString(_ctx.translate("General_Actions")), 9, _hoisted_8$6)
               ])
             ]),
             vue.createElementVNode("tbody", null, [
               vue.withDirectives(vue.createElementVNode("tr", null, [
                 vue.createElementVNode("td", _hoisted_9$6, [
                   vue.createElementVNode("span", _hoisted_10$6, [
-                    _hoisted_11$6,
+                    _cache[6] || (_cache[6] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                     vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
                   ])
                 ])
@@ -6490,7 +6460,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 [vue.vShow, _ctx.isLoading || _ctx.isUpdating]
               ]),
               vue.withDirectives(vue.createElementVNode("tr", null, [
-                vue.createElementVNode("td", _hoisted_12$6, [
+                vue.createElementVNode("td", _hoisted_11$6, [
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_NoVersionsFound")) + " ", 1),
                   vue.withDirectives(vue.createElementVNode("a", {
                     class: "createContainerVersionNow",
@@ -6508,16 +6478,16 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   class: "versions",
                   key: version.revision
                 }, [
-                  vue.createElementVNode("td", _hoisted_14$6, vue.toDisplayString(version.revision), 1),
+                  vue.createElementVNode("td", _hoisted_13$6, vue.toDisplayString(version.revision), 1),
                   vue.createElementVNode("td", {
                     class: "name",
                     title: version.name
-                  }, vue.toDisplayString(_ctx.truncateText(version.name, 50)), 9, _hoisted_15$6),
+                  }, vue.toDisplayString(_ctx.truncateText(version.name, 50)), 9, _hoisted_14$6),
                   vue.createElementVNode("td", {
                     class: "description",
                     title: version.description
-                  }, vue.toDisplayString(_ctx.truncateText(version.description, 75)), 9, _hoisted_16$6),
-                  vue.createElementVNode("td", _hoisted_17$6, [
+                  }, vue.toDisplayString(_ctx.truncateText(version.description, 75)), 9, _hoisted_15$6),
+                  vue.createElementVNode("td", _hoisted_16$6, [
                     (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(version.releases, (release, index) => {
                       return vue.openBlock(), vue.createElementBlock("span", {
                         key: index,
@@ -6531,25 +6501,25 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         vue.withDirectives(vue.createElementVNode("span", null, ", ", 512), [
                           [vue.vShow, index !== version.releases.length - 1]
                         ])
-                      ], 8, _hoisted_18$6);
+                      ], 8, _hoisted_17$6);
                     }), 128))
                   ]),
-                  vue.createElementVNode("td", _hoisted_19$6, [
+                  vue.createElementVNode("td", _hoisted_18$6, [
                     vue.createElementVNode("span", null, vue.toDisplayString(version.created_date_pretty), 1)
                   ]),
-                  vue.createElementVNode("td", _hoisted_20$6, [
+                  vue.createElementVNode("td", _hoisted_19$6, [
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-rocket",
                       onClick: ($event) => _ctx.publishVersion(version),
                       title: _ctx.translate("TagManager_PublishVersion", version.name)
-                    }, null, 8, _hoisted_21$6), [
+                    }, null, 8, _hoisted_20$6), [
                       [vue.vShow, _ctx.hasWriteAccess && (_ctx.hasCustomTemplatesCapability || _ctx.canPublishToLive)]
                     ]),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-bug",
                       onClick: ($event) => _ctx.enableDebugMode(version.idcontainerversion),
                       title: _ctx.translate("TagManager_EnablePreviewDebug")
-                    }, null, 8, _hoisted_22$6), [
+                    }, null, 8, _hoisted_21$6), [
                       [vue.vShow, _ctx.hasWriteAccess]
                     ]),
                     vue.createElementVNode("a", {
@@ -6560,34 +6530,34 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                       }, ["prevent"]),
                       href: _ctx.getExportUrl(version),
                       title: _ctx.translate("TagManager_ExportX", _ctx.translate("TagManager_Version"))
-                    }, null, 8, _hoisted_23$5),
+                    }, null, 8, _hoisted_22$6),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-edit",
                       onClick: ($event) => _ctx.editVersion(version.idcontainerversion),
                       title: _ctx.translate("TagManager_EditX", _ctx.translate("TagManager_Version"))
-                    }, null, 8, _hoisted_24$5), [
+                    }, null, 8, _hoisted_23$4), [
                       [vue.vShow, _ctx.hasWriteAccess]
                     ]),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-delete",
                       onClick: ($event) => _ctx.deleteVersion(version),
                       title: _ctx.translate("TagManager_DeleteX", _ctx.translate("TagManager_Version"))
-                    }, null, 8, _hoisted_25$5), [
+                    }, null, 8, _hoisted_24$3), [
                       [vue.vShow, version.releases.length === 0 && _ctx.hasWriteAccess && _ctx.hasCustomTemplatesCapability]
                     ])
                   ])
-                ], 8, _hoisted_13$6);
+                ], 8, _hoisted_12$6);
               }), 128))
             ])
           ])), [
             [_directive_content_table]
           ]),
-          vue.createElementVNode("div", _hoisted_26$3, [
+          vue.createElementVNode("div", _hoisted_25$2, [
             vue.withDirectives(vue.createElementVNode("a", {
               class: "createNewVersion",
               onClick: _cache[2] || (_cache[2] = ($event) => _ctx.createVersion())
             }, [
-              _hoisted_27$2,
+              _cache[7] || (_cache[7] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
               vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewVersion")), 1)
             ], 512), [
               [vue.vShow, _ctx.hasWriteAccess && _ctx.hasCustomTemplatesCapability]
@@ -6601,14 +6571,14 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               }),
               href: _ctx.getExportDraftUrl()
             }, [
-              _hoisted_29$2,
+              _cache[8] || (_cache[8] = vue.createElementVNode("span", { class: "icon-export" }, " ", -1)),
               vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_ExportDraft")), 1)
-            ], 8, _hoisted_28$2),
+            ], 8, _hoisted_26$2),
             vue.withDirectives(vue.createElementVNode("a", {
               class: "importVersion",
               onClick: _cache[4] || (_cache[4] = ($event) => _ctx.importVersion())
             }, [
-              _hoisted_30$2,
+              _cache[9] || (_cache[9] = vue.createElementVNode("span", { class: "icon-upload" }, " ", -1)),
               vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_Import")), 1)
             ], 512), [
               [vue.vShow, _ctx.hasWriteAccess && _ctx.hasCustomTemplatesCapability]
@@ -6617,20 +6587,20 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         ]),
         _: 1
       }, 8, ["content-title", "help-text"]),
-      vue.createElementVNode("div", _hoisted_31$2, [
+      vue.createElementVNode("div", _hoisted_27$2, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_DeleteVersionConfirm")), 1),
         vue.createElementVNode("input", {
           role: "yes",
           type: "button",
           value: _ctx.translate("General_Yes")
-        }, null, 8, _hoisted_32$2),
+        }, null, 8, _hoisted_28$2),
         vue.createElementVNode("input", {
           role: "no",
           type: "button",
           value: _ctx.translate("General_No")
-        }, null, 8, _hoisted_33$2)
+        }, null, 8, _hoisted_29$2)
       ], 512),
-      vue.createElementVNode("div", _hoisted_34$2, [
+      vue.createElementVNode("div", _hoisted_30$2, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_PublishVersion", (_a2 = _ctx.versionToBePublished) == null ? void 0 : _a2.name)), 1),
         vue.withDirectives(vue.createElementVNode("div", null, [
           vue.createElementVNode("div", null, [
@@ -6656,17 +6626,17 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         ], 512), [
           [vue.vShow, _ctx.availableEnvironmentsToPublish.environnments.length]
         ]),
-        !_ctx.availableEnvironmentsToPublish.environnments.length ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_35$2, vue.toDisplayString(_ctx.translate("TagManager_VersionAlreadyPublishedToAllEnvironments")), 1)) : vue.createCommentVNode("", true),
+        !_ctx.availableEnvironmentsToPublish.environnments.length ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_31, vue.toDisplayString(_ctx.translate("TagManager_VersionAlreadyPublishedToAllEnvironments")), 1)) : vue.createCommentVNode("", true),
         vue.createElementVNode("input", {
           role: "yes",
           type: "button",
           value: _ctx.translate("TagManager_PublishRelease")
-        }, null, 8, _hoisted_36$2),
+        }, null, 8, _hoisted_32),
         vue.createElementVNode("input", {
           role: "no",
           type: "button",
           value: _ctx.translate("General_Cancel")
-        }, null, 8, _hoisted_37$2)
+        }, null, 8, _hoisted_33)
       ], 512)
     ]);
   }
@@ -6716,7 +6686,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$b = { class: "manageVersion" };
   const _hoisted_2$a = { key: 0 };
-  const _hoisted_3$a = { key: 1 };
+  const _hoisted_3$9 = { key: 1 };
   function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_VersionList = vue.resolveComponent("VersionList");
     const _component_VersionEdit = vue.resolveComponent("VersionEdit");
@@ -6727,7 +6697,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           "versions-help-text": _ctx.versionsHelpText
         }, null, 8, ["id-container", "versions-help-text"])
       ])) : vue.createCommentVNode("", true),
-      _ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$a, [
+      _ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$9, [
         vue.createVNode(_component_VersionEdit, {
           "id-container": _ctx.idContainer,
           "id-container-version": _ctx.idContainerVersion
@@ -7052,10 +7022,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     }
   });
   const _hoisted_1$a = { class: "loadingPiwik" };
-  const _hoisted_2$9 = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_3$9 = { class: "loadingPiwik" };
-  const _hoisted_4$7 = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_5$7 = { class: "entityCancel" };
+  const _hoisted_2$9 = { class: "loadingPiwik" };
+  const _hoisted_3$8 = { class: "entityCancel" };
   function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     const _component_SaveButton = vue.resolveComponent("SaveButton");
@@ -7068,15 +7036,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       default: vue.withCtx(() => [
         vue.withDirectives(vue.createElementVNode("p", null, [
           vue.createElementVNode("span", _hoisted_1$a, [
-            _hoisted_2$9,
+            _cache[9] || (_cache[9] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
             vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
           ])
         ], 512), [
           [vue.vShow, _ctx.isLoading]
         ]),
         vue.withDirectives(vue.createElementVNode("p", null, [
-          vue.createElementVNode("span", _hoisted_3$9, [
-            _hoisted_4$7,
+          vue.createElementVNode("span", _hoisted_2$9, [
+            _cache[10] || (_cache[10] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
             vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("TagManager_UpdatingData")), 1)
           ])
         ], 512), [
@@ -7188,7 +7156,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               saving: _ctx.isUpdating,
               value: _ctx.edit ? _ctx.translate("CoreUpdater_UpdateTitle") : _ctx.translate("TagManager_CreateNewContainer")
             }, null, 8, ["disabled", "saving", "value"]),
-            vue.createElementVNode("div", _hoisted_5$7, [
+            vue.createElementVNode("div", _hoisted_3$8, [
               vue.createElementVNode("a", {
                 onClick: _cache[7] || (_cache[7] = ($event) => _ctx.cancel())
               }, vue.toDisplayString(_ctx.translate("General_Cancel")), 1)
@@ -7305,34 +7273,32 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$9 = { class: "tagManagerManageList tagManagerContainerList" };
   const _hoisted_2$8 = ["innerHTML"];
-  const _hoisted_3$8 = { class: "index" };
+  const _hoisted_3$7 = { class: "index" };
   const _hoisted_4$6 = { class: "name" };
   const _hoisted_5$6 = { class: "description" };
   const _hoisted_6$6 = { class: "created" };
   const _hoisted_7$6 = { class: "action" };
-  const _hoisted_8$6 = { colspan: "5" };
+  const _hoisted_8$5 = { colspan: "5" };
   const _hoisted_9$5 = { class: "loadingPiwik" };
-  const _hoisted_10$5 = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_11$5 = { colspan: "5" };
-  const _hoisted_12$5 = ["id"];
+  const _hoisted_10$5 = { colspan: "5" };
+  const _hoisted_11$5 = ["id"];
+  const _hoisted_12$5 = ["title"];
   const _hoisted_13$5 = ["title"];
   const _hoisted_14$5 = ["title"];
-  const _hoisted_15$5 = ["title"];
-  const _hoisted_16$5 = { class: "created" };
-  const _hoisted_17$5 = ["href", "title"];
+  const _hoisted_15$5 = { class: "created" };
+  const _hoisted_16$5 = ["href", "title"];
+  const _hoisted_17$5 = ["onClick", "title"];
   const _hoisted_18$5 = ["onClick", "title"];
   const _hoisted_19$5 = ["onClick", "title"];
   const _hoisted_20$5 = ["onClick", "title"];
-  const _hoisted_21$5 = ["onClick", "title"];
-  const _hoisted_22$5 = { class: "tableActionBar" };
-  const _hoisted_23$4 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
-  const _hoisted_24$4 = {
+  const _hoisted_21$5 = { class: "tableActionBar" };
+  const _hoisted_22$5 = {
     class: "ui-confirm",
     id: "confirmDeleteContainer",
     ref: "confirmDeleteContainer"
   };
-  const _hoisted_25$4 = ["value"];
-  const _hoisted_26$2 = ["value"];
+  const _hoisted_23$3 = ["value"];
+  const _hoisted_24$2 = ["value"];
   function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_ContentBlock = vue.resolveComponent("ContentBlock");
     const _directive_content_table = vue.resolveDirective("content-table");
@@ -7351,7 +7317,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           vue.withDirectives((vue.openBlock(), vue.createElementBlock("table", null, [
             vue.createElementVNode("thead", null, [
               vue.createElementVNode("tr", null, [
-                vue.createElementVNode("th", _hoisted_3$8, vue.toDisplayString(_ctx.translate("General_Id")), 1),
+                vue.createElementVNode("th", _hoisted_3$7, vue.toDisplayString(_ctx.translate("General_Id")), 1),
                 vue.createElementVNode("th", _hoisted_4$6, vue.toDisplayString(_ctx.translate("General_Name")), 1),
                 vue.createElementVNode("th", _hoisted_5$6, vue.toDisplayString(_ctx.translate("General_Description")), 1),
                 vue.createElementVNode("th", _hoisted_6$6, vue.toDisplayString(_ctx.translate("TagManager_CreatedDate")), 1),
@@ -7360,9 +7326,9 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
             ]),
             vue.createElementVNode("tbody", null, [
               vue.withDirectives(vue.createElementVNode("tr", null, [
-                vue.createElementVNode("td", _hoisted_8$6, [
+                vue.createElementVNode("td", _hoisted_8$5, [
                   vue.createElementVNode("span", _hoisted_9$5, [
-                    _hoisted_10$5,
+                    _cache[2] || (_cache[2] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                     vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
                   ])
                 ])
@@ -7370,7 +7336,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 [vue.vShow, _ctx.isLoading || _ctx.isUpdating]
               ]),
               vue.withDirectives(vue.createElementVNode("tr", null, [
-                vue.createElementVNode("td", _hoisted_11$5, [
+                vue.createElementVNode("td", _hoisted_10$5, [
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_NoContainersFound")) + " ", 1),
                   vue.withDirectives(vue.createElementVNode("a", {
                     class: "createContainerNow",
@@ -7391,16 +7357,16 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   vue.createElementVNode("td", {
                     class: "index",
                     title: `${_ctx.translate("TagManager_Context")}: ` + _ctx.contexts[container.context]
-                  }, vue.toDisplayString(container.idcontainer), 9, _hoisted_13$5),
+                  }, vue.toDisplayString(container.idcontainer), 9, _hoisted_12$5),
                   vue.createElementVNode("td", {
                     class: "name",
                     title: container.name
-                  }, vue.toDisplayString(_ctx.truncateText(container.name, 50)), 9, _hoisted_14$5),
+                  }, vue.toDisplayString(_ctx.truncateText(container.name, 50)), 9, _hoisted_13$5),
                   vue.createElementVNode("td", {
                     class: "description",
                     title: container.description
-                  }, vue.toDisplayString(_ctx.truncateText(container.description, 75)), 9, _hoisted_15$5),
-                  vue.createElementVNode("td", _hoisted_16$5, [
+                  }, vue.toDisplayString(_ctx.truncateText(container.description, 75)), 9, _hoisted_14$5),
+                  vue.createElementVNode("td", _hoisted_15$5, [
                     vue.createElementVNode("span", null, vue.toDisplayString(container.created_date_pretty), 1)
                   ]),
                   vue.createElementVNode("td", {
@@ -7413,12 +7379,12 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         "TagManager_ConfigureX",
                         _ctx.translate("TagManager_Container")
                       )
-                    }, null, 8, _hoisted_17$5),
+                    }, null, 8, _hoisted_16$5),
                     vue.createElementVNode("a", {
                       class: "table-action installCode icon-embed",
                       onClick: ($event) => _ctx.installCode(container.idcontainer),
                       title: _ctx.translate("TagManager_InstallCode")
-                    }, null, 8, _hoisted_18$5),
+                    }, null, 8, _hoisted_17$5),
                     vue.withDirectives(vue.createElementVNode("a", {
                       class: "table-action icon-edit",
                       onClick: ($event) => _ctx.editContainer(container.idcontainer),
@@ -7426,7 +7392,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         "TagManager_EditX",
                         _ctx.translate("TagManager_Container")
                       )
-                    }, null, 8, _hoisted_19$5), [
+                    }, null, 8, _hoisted_18$5), [
                       [vue.vShow, _ctx.hasWriteAccess]
                     ]),
                     vue.withDirectives(vue.createElementVNode("a", {
@@ -7436,7 +7402,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         "TagManager_CopyX",
                         _ctx.translate("TagManager_Container")
                       )
-                    }, null, 8, _hoisted_20$5), [
+                    }, null, 8, _hoisted_19$5), [
                       [vue.vShow, _ctx.canCopyContainer]
                     ]),
                     vue.withDirectives(vue.createElementVNode("a", {
@@ -7446,23 +7412,23 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         "TagManager_DeleteX",
                         _ctx.translate("TagManager_Container")
                       )
-                    }, null, 8, _hoisted_21$5), [
+                    }, null, 8, _hoisted_20$5), [
                       [vue.vShow, _ctx.hasWriteAccess]
                     ])
                   ], 2)
-                ], 8, _hoisted_12$5);
+                ], 8, _hoisted_11$5);
               }), 128))
             ])
           ])), [
             [_directive_content_table]
           ]),
-          vue.withDirectives(vue.createElementVNode("div", _hoisted_22$5, [
+          vue.withDirectives(vue.createElementVNode("div", _hoisted_21$5, [
             vue.createElementVNode("a", {
               class: "createNewContainer",
               value: "",
               onClick: _cache[1] || (_cache[1] = ($event) => _ctx.createContainer())
             }, [
-              _hoisted_23$4,
+              _cache[3] || (_cache[3] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
               vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewContainer")), 1)
             ])
           ], 512), [
@@ -7471,18 +7437,18 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         ]),
         _: 1
       }, 8, ["content-title"]),
-      vue.createElementVNode("div", _hoisted_24$4, [
+      vue.createElementVNode("div", _hoisted_22$5, [
         vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_DeleteContainerConfirm")), 1),
         vue.createElementVNode("input", {
           role: "yes",
           type: "button",
           value: _ctx.translate("General_Yes")
-        }, null, 8, _hoisted_25$4),
+        }, null, 8, _hoisted_23$3),
         vue.createElementVNode("input", {
           role: "no",
           type: "button",
           value: _ctx.translate("General_No")
-        }, null, 8, _hoisted_26$2)
+        }, null, 8, _hoisted_24$2)
       ], 512)
     ]);
   }
@@ -7692,54 +7658,40 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$7 = { class: "containerDashboard" };
   const _hoisted_2$7 = { key: 0 };
-  const _hoisted_3$7 = { class: "dashboardCreationDate" };
+  const _hoisted_3$6 = { class: "dashboardCreationDate" };
   const _hoisted_4$5 = { key: 0 };
-  const _hoisted_5$5 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_6$5 = ["innerHTML"];
-  const _hoisted_7$5 = {
+  const _hoisted_5$5 = ["innerHTML"];
+  const _hoisted_6$5 = {
     class: "row",
     style: { "margin-left": "-0.75rem" }
   };
-  const _hoisted_8$5 = { class: "col m6 s12" };
-  const _hoisted_9$4 = { key: 0 };
-  const _hoisted_10$4 = ["href", "title"];
-  const _hoisted_11$4 = { key: 0 };
-  const _hoisted_12$4 = /* @__PURE__ */ vue.createElementVNode("hr", null, null, -1);
-  const _hoisted_13$4 = ["href"];
-  const _hoisted_14$4 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-edit" }, " ", -1);
-  const _hoisted_15$4 = ["href"];
-  const _hoisted_16$4 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
-  const _hoisted_17$4 = { class: "col m6 s12" };
-  const _hoisted_18$4 = { key: 0 };
-  const _hoisted_19$4 = ["href", "title"];
-  const _hoisted_20$4 = /* @__PURE__ */ vue.createElementVNode("hr", null, null, -1);
-  const _hoisted_21$4 = ["href"];
-  const _hoisted_22$4 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-edit" }, " ", -1);
-  const _hoisted_23$3 = ["href"];
-  const _hoisted_24$3 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
-  const _hoisted_25$3 = {
+  const _hoisted_7$5 = { class: "col m6 s12" };
+  const _hoisted_8$4 = { key: 0 };
+  const _hoisted_9$4 = ["href", "title"];
+  const _hoisted_10$4 = { key: 0 };
+  const _hoisted_11$4 = ["href"];
+  const _hoisted_12$4 = ["href"];
+  const _hoisted_13$4 = { class: "col m6 s12" };
+  const _hoisted_14$4 = { key: 0 };
+  const _hoisted_15$4 = ["href", "title"];
+  const _hoisted_16$4 = ["href"];
+  const _hoisted_17$4 = ["href"];
+  const _hoisted_18$4 = {
     class: "row",
     style: { "margin-left": "-0.75rem" }
   };
-  const _hoisted_26$1 = { class: "col m6 s12" };
-  const _hoisted_27$1 = ["href", "title"];
+  const _hoisted_19$4 = { class: "col m6 s12" };
+  const _hoisted_20$4 = ["href", "title"];
+  const _hoisted_21$4 = { key: 0 };
+  const _hoisted_22$4 = ["href"];
+  const _hoisted_23$2 = ["href"];
+  const _hoisted_24$1 = { class: "col m6 s12" };
+  const _hoisted_25$1 = ["title", "href"];
+  const _hoisted_26$1 = { key: 0 };
+  const _hoisted_27$1 = ["title"];
   const _hoisted_28$1 = { key: 0 };
-  const _hoisted_29$1 = /* @__PURE__ */ vue.createElementVNode("hr", null, null, -1);
+  const _hoisted_29$1 = ["href"];
   const _hoisted_30$1 = ["href"];
-  const _hoisted_31$1 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-edit" }, " ", -1);
-  const _hoisted_32$1 = ["href"];
-  const _hoisted_33$1 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
-  const _hoisted_34$1 = { class: "col m6 s12" };
-  const _hoisted_35$1 = ["title", "href"];
-  const _hoisted_36$1 = { key: 0 };
-  const _hoisted_37$1 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_38$1 = ["title"];
-  const _hoisted_39$1 = { key: 0 };
-  const _hoisted_40$1 = /* @__PURE__ */ vue.createElementVNode("hr", null, null, -1);
-  const _hoisted_41$1 = ["href"];
-  const _hoisted_42$1 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-edit" }, " ", -1);
-  const _hoisted_43$1 = ["href"];
-  const _hoisted_44$1 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-add" }, " ", -1);
   function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     var _a2, _b2;
     const _component_ActivityIndicator = vue.resolveComponent("ActivityIndicator");
@@ -7764,21 +7716,21 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               _: 1
             }, 8, ["inline-help"])
           ]),
-          vue.createElementVNode("p", _hoisted_3$7, [
+          vue.createElementVNode("p", _hoisted_3$6, [
             vue.createTextVNode(vue.toDisplayString(_ctx.containerMetaInformation) + " ", 1),
             ((_a2 = _ctx.containerVersion) == null ? void 0 : _a2.description) ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_4$5, [
-              _hoisted_5$5,
+              _cache[0] || (_cache[0] = vue.createElementVNode("br", null, null, -1)),
               vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_Description")) + ": " + vue.toDisplayString((_b2 = _ctx.containerVersion) == null ? void 0 : _b2.description), 1)
             ])) : vue.createCommentVNode("", true)
           ]),
           vue.createElementVNode("p", {
             innerHTML: _ctx.$sanitize(_ctx.containerDashboardDescription)
-          }, null, 8, _hoisted_6$5)
+          }, null, 8, _hoisted_5$5)
         ])), [
           [_directive_content_intro]
         ]),
-        vue.createElementVNode("div", _hoisted_7$5, [
-          vue.createElementVNode("div", _hoisted_8$5, [
+        vue.createElementVNode("div", _hoisted_6$5, [
+          vue.createElementVNode("div", _hoisted_7$5, [
             vue.createVNode(_component_ContentBlock, {
               feature: _ctx.translate("TagManager_Tags"),
               "content-title": `${_ctx.tagCount} ${_ctx.translate("TagManager_Tags")}`,
@@ -7787,7 +7739,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
             }, {
               default: vue.withCtx(() => [
                 vue.createElementVNode("p", null, [
-                  _ctx.tagCount ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_9$4, [
+                  _ctx.tagCount ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_8$4, [
                     vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_Names")) + ": ", 1),
                     (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.sortedContainerVersionTags, (tag, index) => {
                       return vue.openBlock(), vue.createElementBlock("span", { key: index }, [
@@ -7799,32 +7751,32 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                             tag.updated_date_pretty,
                             tag.type
                           )
-                        }, vue.toDisplayString(tag.name), 9, _hoisted_10$4),
-                        index !== _ctx.sortedContainerVersionTags.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_11$4, ", ")) : vue.createCommentVNode("", true)
+                        }, vue.toDisplayString(tag.name), 9, _hoisted_9$4),
+                        index !== _ctx.sortedContainerVersionTags.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_10$4, ", ")) : vue.createCommentVNode("", true)
                       ]);
                     }), 128))
                   ])) : vue.createCommentVNode("", true)
                 ]),
-                _hoisted_12$4,
+                _cache[3] || (_cache[3] = vue.createElementVNode("hr", null, null, -1)),
                 vue.createElementVNode("a", {
                   class: "btn-flat",
                   href: _ctx.linkTo("manageTags")
                 }, [
-                  _hoisted_14$4,
+                  _cache[1] || (_cache[1] = vue.createElementVNode("span", { class: "icon-edit" }, " ", -1)),
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_EditTags")), 1)
-                ], 8, _hoisted_13$4),
+                ], 8, _hoisted_11$4),
                 vue.createElementVNode("a", {
                   class: "btn-flat",
                   href: _ctx.linkTo("manageTags", { idTag: 0 })
                 }, [
-                  _hoisted_16$4,
+                  _cache[2] || (_cache[2] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewTag")), 1)
-                ], 8, _hoisted_15$4)
+                ], 8, _hoisted_12$4)
               ]),
               _: 1
             }, 8, ["feature", "content-title", "help-text", "edit-url"])
           ]),
-          vue.createElementVNode("div", _hoisted_17$4, [
+          vue.createElementVNode("div", _hoisted_13$4, [
             vue.createVNode(_component_ContentBlock, {
               feature: _ctx.translate("TagManager_Triggers"),
               "content-title": `${_ctx.triggerCount} ${_ctx.translate("TagManager_Triggers")}`,
@@ -7833,7 +7785,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
             }, {
               default: vue.withCtx(() => [
                 vue.createElementVNode("p", null, [
-                  _ctx.triggerCount ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_18$4, [
+                  _ctx.triggerCount ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_14$4, [
                     vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_Names")) + ": ", 1),
                     (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.sortedTriggers, (trigger, index) => {
                       return vue.openBlock(), vue.createElementBlock("span", { key: index }, [
@@ -7845,7 +7797,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                             trigger.updated_date_pretty,
                             trigger.type
                           )
-                        }, vue.toDisplayString(trigger.name), 9, _hoisted_19$4),
+                        }, vue.toDisplayString(trigger.name), 9, _hoisted_15$4),
                         vue.withDirectives(vue.createElementVNode("span", null, ", ", 512), [
                           [
                             vue.vShow,
@@ -7856,28 +7808,28 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     }), 128))
                   ])) : vue.createCommentVNode("", true)
                 ]),
-                _hoisted_20$4,
+                _cache[6] || (_cache[6] = vue.createElementVNode("hr", null, null, -1)),
                 vue.createElementVNode("a", {
                   class: "btn-flat",
                   href: _ctx.linkTo("manageTriggers")
                 }, [
-                  _hoisted_22$4,
+                  _cache[4] || (_cache[4] = vue.createElementVNode("span", { class: "icon-edit" }, " ", -1)),
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_EditTriggers")), 1)
-                ], 8, _hoisted_21$4),
+                ], 8, _hoisted_16$4),
                 vue.createElementVNode("a", {
                   class: "btn-flat",
                   href: _ctx.linkTo("manageTriggers", { idTrigger: 0 })
                 }, [
-                  _hoisted_24$3,
+                  _cache[5] || (_cache[5] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewTrigger")), 1)
-                ], 8, _hoisted_23$3)
+                ], 8, _hoisted_17$4)
               ]),
               _: 1
             }, 8, ["feature", "content-title", "help-text", "edit-url"])
           ])
         ]),
-        vue.createElementVNode("div", _hoisted_25$3, [
-          vue.createElementVNode("div", _hoisted_26$1, [
+        vue.createElementVNode("div", _hoisted_18$4, [
+          vue.createElementVNode("div", _hoisted_19$4, [
             vue.createVNode(_component_ContentBlock, {
               feature: _ctx.translate("TagManager_Variables"),
               "content-title": `${_ctx.variableCount} ${_ctx.translate("TagManager_Variables")}`,
@@ -7898,34 +7850,34 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                             variable.updated_date_pretty,
                             variable.type
                           )
-                        }, vue.toDisplayString(variable.name), 9, _hoisted_27$1),
-                        index !== _ctx.sortedVariables.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_28$1, ", ")) : vue.createCommentVNode("", true)
+                        }, vue.toDisplayString(variable.name), 9, _hoisted_20$4),
+                        index !== _ctx.sortedVariables.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_21$4, ", ")) : vue.createCommentVNode("", true)
                       ]);
                     }), 128))
                   ], 512), [
                     [vue.vShow, _ctx.variableCount]
                   ])
                 ]),
-                _hoisted_29$1,
+                _cache[9] || (_cache[9] = vue.createElementVNode("hr", null, null, -1)),
                 vue.createElementVNode("a", {
                   class: "btn-flat",
                   href: _ctx.linkTo("manageVariables")
                 }, [
-                  _hoisted_31$1,
+                  _cache[7] || (_cache[7] = vue.createElementVNode("span", { class: "icon-edit" }, " ", -1)),
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_EditVariables")), 1)
-                ], 8, _hoisted_30$1),
+                ], 8, _hoisted_22$4),
                 vue.createElementVNode("a", {
                   class: "btn-flat",
                   href: _ctx.linkTo("manageVariables", { idVariable: 0 })
                 }, [
-                  _hoisted_33$1,
+                  _cache[8] || (_cache[8] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewVariable")), 1)
-                ], 8, _hoisted_32$1)
+                ], 8, _hoisted_23$2)
               ]),
               _: 1
             }, 8, ["feature", "content-title", "help-text", "edit-url"])
           ]),
-          vue.createElementVNode("div", _hoisted_34$1, [
+          vue.createElementVNode("div", _hoisted_24$1, [
             vue.createVNode(_component_ContentBlock, {
               feature: _ctx.translate("TagManager_Versions"),
               "content-title": `${_ctx.versionCount} ${_ctx.translate("TagManager_Versions")}`,
@@ -7944,43 +7896,43 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                             "manageVersions",
                             { idContainerVersion: lastVersion.idcontainerversion }
                           )
-                        }, vue.toDisplayString(lastVersion.name), 9, _hoisted_35$1),
-                        index !== _ctx.lastVersions.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_36$1, ", ")) : vue.createCommentVNode("", true)
+                        }, vue.toDisplayString(lastVersion.name), 9, _hoisted_25$1),
+                        index !== _ctx.lastVersions.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_26$1, ", ")) : vue.createCommentVNode("", true)
                       ]);
                     }), 128))
                   ], 512), [
                     [vue.vShow, _ctx.lastVersions.length]
                   ]),
                   vue.withDirectives(vue.createElementVNode("span", null, [
-                    _hoisted_37$1,
+                    _cache[10] || (_cache[10] = vue.createElementVNode("br", null, null, -1)),
                     vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("TagManager_Environments")) + ": ", 1),
                     (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.container.releases, (release, index) => {
                       return vue.openBlock(), vue.createElementBlock("span", { key: index }, [
                         vue.createElementVNode("span", {
                           title: _ctx.releaseTooltip(release)
-                        }, vue.toDisplayString(_ctx.ucfirst(release.environment)), 9, _hoisted_38$1),
-                        index !== _ctx.container.releases.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_39$1, ", ")) : vue.createCommentVNode("", true)
+                        }, vue.toDisplayString(_ctx.ucfirst(release.environment)), 9, _hoisted_27$1),
+                        index !== _ctx.container.releases.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_28$1, ", ")) : vue.createCommentVNode("", true)
                       ]);
                     }), 128))
                   ], 512), [
                     [vue.vShow, _ctx.container.releases.length]
                   ])
                 ]),
-                _hoisted_40$1,
+                _cache[13] || (_cache[13] = vue.createElementVNode("hr", null, null, -1)),
                 vue.createElementVNode("a", {
                   class: "btn-flat",
                   href: _ctx.linkTo("manageVersions")
                 }, [
-                  _hoisted_42$1,
+                  _cache[11] || (_cache[11] = vue.createElementVNode("span", { class: "icon-edit" }, " ", -1)),
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_EditVersions")), 1)
-                ], 8, _hoisted_41$1),
+                ], 8, _hoisted_29$1),
                 vue.createElementVNode("a", {
                   class: "btn-flat",
                   href: _ctx.linkTo("manageVersions", { idContainerVersion: 0 })
                 }, [
-                  _hoisted_44$1,
+                  _cache[12] || (_cache[12] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
                   vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewVersion")), 1)
-                ], 8, _hoisted_43$1)
+                ], 8, _hoisted_30$1)
               ]),
               _: 1
             }, 8, ["feature", "content-title", "help-text", "edit-url"])
@@ -8061,12 +8013,11 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$6 = ["title"];
   const _hoisted_2$6 = { class: "title" };
-  const _hoisted_3$6 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon icon-chevron-down" }, " ", -1);
-  const _hoisted_4$4 = { class: "dropdown positionInViewport" };
-  const _hoisted_5$4 = { class: "custom_select_container" };
-  const _hoisted_6$4 = { class: "custom_select_ul_list" };
-  const _hoisted_7$4 = ["title"];
-  const _hoisted_8$4 = ["href"];
+  const _hoisted_3$5 = { class: "dropdown positionInViewport" };
+  const _hoisted_4$4 = { class: "custom_select_container" };
+  const _hoisted_5$4 = { class: "custom_select_ul_list" };
+  const _hoisted_6$4 = ["title"];
+  const _hoisted_7$4 = ["href"];
   function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_ActivityIndicator = vue.resolveComponent("ActivityIndicator");
     const _directive_focus_anywhere_but_here = vue.resolveDirective("focus-anywhere-but-here");
@@ -8081,12 +8032,12 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     }, [
       vue.createElementVNode("a", _hoisted_2$6, [
         vue.createTextVNode(vue.toDisplayString(_ctx.truncateText(_ctx.actualContainerName, 50)), 1),
-        _hoisted_3$6
+        _cache[2] || (_cache[2] = vue.createElementVNode("span", { class: "icon icon-chevron-down" }, " ", -1))
       ]),
-      vue.withDirectives(vue.createElementVNode("div", _hoisted_4$4, [
+      vue.withDirectives(vue.createElementVNode("div", _hoisted_3$5, [
         vue.createVNode(_component_ActivityIndicator, { loading: _ctx.isLoading }, null, 8, ["loading"]),
-        vue.createElementVNode("div", _hoisted_5$4, [
-          vue.createElementVNode("ul", _hoisted_6$4, [
+        vue.createElementVNode("div", _hoisted_4$4, [
+          vue.createElementVNode("ul", _hoisted_5$4, [
             vue.withDirectives(vue.createElementVNode("li", null, [
               vue.createElementVNode("a", {
                 tabindex: "-1",
@@ -8103,8 +8054,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               }, [
                 vue.createElementVNode("a", {
                   href: _ctx.linkTo(containerEntry.idcontainer)
-                }, vue.toDisplayString(containerEntry.name) + " (" + vue.toDisplayString(containerEntry.idcontainer) + ") ", 9, _hoisted_8$4)
-              ], 8, _hoisted_7$4);
+                }, vue.toDisplayString(containerEntry.name) + " (" + vue.toDisplayString(containerEntry.idcontainer) + ") ", 9, _hoisted_7$4)
+              ], 8, _hoisted_6$4);
             }), 128))
           ])
         ])
@@ -8231,30 +8182,27 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     }
   });
   const _hoisted_1$5 = { style: { "margin-left": "-0.75rem" } };
-  const _hoisted_2$5 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_3$5 = ["href"];
-  const _hoisted_4$3 = ["textContent"];
-  const _hoisted_5$3 = { style: { "margin-top": "1rem" } };
-  const _hoisted_6$3 = ["innerHTML"];
-  const _hoisted_7$3 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_8$3 = ["href"];
-  const _hoisted_9$3 = { class: "environment" };
-  const _hoisted_10$3 = { class: "name" };
-  const _hoisted_11$3 = { class: "name" };
-  const _hoisted_12$3 = { class: "released_by" };
-  const _hoisted_13$3 = { class: "released_on" };
-  const _hoisted_14$3 = { key: 0 };
-  const _hoisted_15$3 = { colspan: "7" };
-  const _hoisted_16$3 = { class: "loadingPiwik" };
-  const _hoisted_17$3 = /* @__PURE__ */ vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1);
-  const _hoisted_18$3 = { key: 1 };
-  const _hoisted_19$3 = { colspan: "7" };
-  const _hoisted_20$3 = { class: "environment" };
-  const _hoisted_21$3 = { class: "name" };
-  const _hoisted_22$3 = { class: "revision" };
-  const _hoisted_23$2 = { class: "released_by" };
-  const _hoisted_24$2 = { class: "released_on" };
-  const _hoisted_25$2 = { class: "date" };
+  const _hoisted_2$5 = ["href"];
+  const _hoisted_3$4 = ["textContent"];
+  const _hoisted_4$3 = { style: { "margin-top": "1rem" } };
+  const _hoisted_5$3 = ["innerHTML"];
+  const _hoisted_6$3 = ["href"];
+  const _hoisted_7$3 = { class: "environment" };
+  const _hoisted_8$3 = { class: "name" };
+  const _hoisted_9$3 = { class: "name" };
+  const _hoisted_10$3 = { class: "released_by" };
+  const _hoisted_11$3 = { class: "released_on" };
+  const _hoisted_12$3 = { key: 0 };
+  const _hoisted_13$3 = { colspan: "7" };
+  const _hoisted_14$3 = { class: "loadingPiwik" };
+  const _hoisted_15$3 = { key: 1 };
+  const _hoisted_16$3 = { colspan: "7" };
+  const _hoisted_17$3 = { class: "environment" };
+  const _hoisted_18$3 = { class: "name" };
+  const _hoisted_19$3 = { class: "revision" };
+  const _hoisted_20$3 = { class: "released_by" };
+  const _hoisted_21$3 = { class: "released_on" };
+  const _hoisted_22$3 = { class: "date" };
   function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_Field = vue.resolveComponent("Field");
     const _component_ActivityIndicator = vue.resolveComponent("ActivityIndicator");
@@ -8287,72 +8235,72 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
             return vue.openBlock(), vue.createElementBlock("div", { key: index }, [
               vue.createElementVNode("p", null, [
                 vue.createTextVNode(vue.toDisplayString(installInstruction.description) + " ", 1),
-                _hoisted_2$5,
+                _cache[1] || (_cache[1] = vue.createElementVNode("br", null, null, -1)),
                 installInstruction.helpUrl ? (vue.openBlock(), vue.createElementBlock("a", {
                   key: 0,
                   target: "_blank",
                   href: installInstruction.helpUrl
-                }, vue.toDisplayString(_ctx.translate("TagManager_LearnMore")), 9, _hoisted_3$5)) : vue.createCommentVNode("", true)
+                }, vue.toDisplayString(_ctx.translate("TagManager_LearnMore")), 9, _hoisted_2$5)) : vue.createCommentVNode("", true)
               ]),
               vue.createElementVNode("div", null, [
                 installInstruction.embedCode ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("pre", {
                   key: 0,
                   textContent: vue.toDisplayString(installInstruction.embedCode)
-                }, null, 8, _hoisted_4$3)), [
+                }, null, 8, _hoisted_3$4)), [
                   [_directive_copy_to_clipboard, {}]
                 ]) : vue.createCommentVNode("", true)
               ])
             ]);
           }), 128)),
           vue.createElementVNode("p", null, vue.toDisplayString(_ctx.translate("TagManager_InstallCodePublishEnvironmentNote", "preview")) + " " + vue.toDisplayString(_ctx.translate("TagManager_ConfigureEnvironmentsSuperUser")), 1),
-          vue.createElementVNode("p", _hoisted_5$3, [
+          vue.createElementVNode("p", _hoisted_4$3, [
             vue.createElementVNode("span", {
               innerHTML: _ctx.$sanitize(_ctx.translate(
                 "TagManager_InstallCodeDataLayerNote",
                 "<strong>",
                 "</strong>"
               ))
-            }, null, 8, _hoisted_6$3),
-            _hoisted_7$3,
+            }, null, 8, _hoisted_5$3),
+            _cache[2] || (_cache[2] = vue.createElementVNode("br", null, null, -1)),
             vue.createElementVNode("a", {
               target: "_blank",
               href: _ctx.externalRawLink("https://matomo.org/faq/tag-manager/data-layer-in-matomo-tag-manager/")
-            }, vue.toDisplayString(_ctx.translate("TagManager_LearnMore")), 9, _hoisted_8$3)
+            }, vue.toDisplayString(_ctx.translate("TagManager_LearnMore")), 9, _hoisted_6$3)
           ]),
           vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_ReleasesOverview")), 1),
           vue.withDirectives((vue.openBlock(), vue.createElementBlock("table", null, [
             vue.createElementVNode("thead", null, [
               vue.createElementVNode("tr", null, [
-                vue.createElementVNode("th", _hoisted_9$3, vue.toDisplayString(_ctx.translate("TagManager_Environment")), 1),
-                vue.createElementVNode("th", _hoisted_10$3, vue.toDisplayString(_ctx.translate("TagManager_VersionName")), 1),
-                vue.createElementVNode("th", _hoisted_11$3, vue.toDisplayString(_ctx.translate("TagManager_VersionRevision")), 1),
-                vue.createElementVNode("th", _hoisted_12$3, vue.toDisplayString(_ctx.translate("TagManager_ReleasedBy")), 1),
-                vue.createElementVNode("th", _hoisted_13$3, vue.toDisplayString(_ctx.translate("TagManager_ReleasedOn")), 1)
+                vue.createElementVNode("th", _hoisted_7$3, vue.toDisplayString(_ctx.translate("TagManager_Environment")), 1),
+                vue.createElementVNode("th", _hoisted_8$3, vue.toDisplayString(_ctx.translate("TagManager_VersionName")), 1),
+                vue.createElementVNode("th", _hoisted_9$3, vue.toDisplayString(_ctx.translate("TagManager_VersionRevision")), 1),
+                vue.createElementVNode("th", _hoisted_10$3, vue.toDisplayString(_ctx.translate("TagManager_ReleasedBy")), 1),
+                vue.createElementVNode("th", _hoisted_11$3, vue.toDisplayString(_ctx.translate("TagManager_ReleasedOn")), 1)
               ])
             ]),
             vue.createElementVNode("tbody", null, [
-              _ctx.isLoading ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_14$3, [
-                vue.createElementVNode("td", _hoisted_15$3, [
-                  vue.createElementVNode("span", _hoisted_16$3, [
-                    _hoisted_17$3,
+              _ctx.isLoading ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_12$3, [
+                vue.createElementVNode("td", _hoisted_13$3, [
+                  vue.createElementVNode("span", _hoisted_14$3, [
+                    _cache[3] || (_cache[3] = vue.createElementVNode("img", { src: "plugins/Morpheus/images/loading-blue.gif" }, null, -1)),
                     vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("General_LoadingData")), 1)
                   ])
                 ])
               ])) : vue.createCommentVNode("", true),
-              !_ctx.isLoading && ((_b2 = (_a2 = _ctx.container) == null ? void 0 : _a2.releases) == null ? void 0 : _b2.length) === 0 ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_18$3, [
-                vue.createElementVNode("td", _hoisted_19$3, vue.toDisplayString(_ctx.translate("TagManager_NoReleasesFound")), 1)
+              !_ctx.isLoading && ((_b2 = (_a2 = _ctx.container) == null ? void 0 : _a2.releases) == null ? void 0 : _b2.length) === 0 ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_15$3, [
+                vue.createElementVNode("td", _hoisted_16$3, vue.toDisplayString(_ctx.translate("TagManager_NoReleasesFound")), 1)
               ])) : vue.createCommentVNode("", true),
               (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.sortedReleases, (release) => {
                 var _a3, _b3;
                 return vue.openBlock(), vue.createElementBlock("tr", {
                   key: release.idcontainerrelease
                 }, [
-                  vue.createElementVNode("td", _hoisted_20$3, vue.toDisplayString(_ctx.ucfirst(release.environment)), 1),
-                  vue.createElementVNode("td", _hoisted_21$3, vue.toDisplayString((_a3 = _ctx.releaseVersions[release.idcontainerrelease]) == null ? void 0 : _a3.name), 1),
-                  vue.createElementVNode("td", _hoisted_22$3, vue.toDisplayString((_b3 = _ctx.releaseVersions[release.idcontainerrelease]) == null ? void 0 : _b3.revision), 1),
-                  vue.createElementVNode("td", _hoisted_23$2, vue.toDisplayString(release.release_login), 1),
-                  vue.createElementVNode("td", _hoisted_24$2, [
-                    vue.createElementVNode("span", _hoisted_25$2, vue.toDisplayString(release.release_date_pretty), 1)
+                  vue.createElementVNode("td", _hoisted_17$3, vue.toDisplayString(_ctx.ucfirst(release.environment)), 1),
+                  vue.createElementVNode("td", _hoisted_18$3, vue.toDisplayString((_a3 = _ctx.releaseVersions[release.idcontainerrelease]) == null ? void 0 : _a3.name), 1),
+                  vue.createElementVNode("td", _hoisted_19$3, vue.toDisplayString((_b3 = _ctx.releaseVersions[release.idcontainerrelease]) == null ? void 0 : _b3.revision), 1),
+                  vue.createElementVNode("td", _hoisted_20$3, vue.toDisplayString(release.release_login), 1),
+                  vue.createElementVNode("td", _hoisted_21$3, [
+                    vue.createElementVNode("span", _hoisted_22$3, vue.toDisplayString(release.release_date_pretty), 1)
                   ])
                 ]);
               }), 128))
@@ -8604,38 +8552,36 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$4 = { class: "tagManagerTrackingCode" };
   const _hoisted_2$4 = { key: 0 };
-  const _hoisted_3$4 = { class: "trackingCodeAdvancedOptions" };
+  const _hoisted_3$3 = { class: "trackingCodeAdvancedOptions" };
   const _hoisted_4$2 = { class: "advance-option" };
-  const _hoisted_5$2 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-chevron-down" }, null, -1);
-  const _hoisted_6$2 = /* @__PURE__ */ vue.createElementVNode("span", { class: "icon-chevron-up" }, null, -1);
-  const _hoisted_7$2 = { id: "mtm-advanced-options" };
-  const _hoisted_8$2 = ["innerHTML"];
-  const _hoisted_9$2 = {
+  const _hoisted_5$2 = { id: "mtm-advanced-options" };
+  const _hoisted_6$2 = ["innerHTML"];
+  const _hoisted_7$2 = {
     key: 1,
     class: "row"
   };
-  const _hoisted_10$2 = { class: "col s12 m4" };
-  const _hoisted_11$2 = { class: "form-group row" };
-  const _hoisted_12$2 = { class: "col s12 input-field" };
-  const _hoisted_13$2 = {
+  const _hoisted_8$2 = { class: "col s12 m4" };
+  const _hoisted_9$2 = { class: "form-group row" };
+  const _hoisted_10$2 = { class: "col s12 input-field" };
+  const _hoisted_11$2 = {
     for: "tagManagerTrackingCodeSite",
     class: "siteSelectorLabel"
   };
-  const _hoisted_14$2 = { class: "sites_autocomplete" };
-  const _hoisted_15$2 = { class: "col s12 m4" };
-  const _hoisted_16$2 = { class: "col s12 m4" };
-  const _hoisted_17$2 = ["innerHTML"];
-  const _hoisted_18$2 = {
+  const _hoisted_12$2 = { class: "sites_autocomplete" };
+  const _hoisted_13$2 = { class: "col s12 m4" };
+  const _hoisted_14$2 = { class: "col s12 m4" };
+  const _hoisted_15$2 = ["innerHTML"];
+  const _hoisted_16$2 = {
     key: 1,
     class: "alert alert-info"
   };
-  const _hoisted_19$2 = { href: "" };
-  const _hoisted_20$2 = { key: 0 };
-  const _hoisted_21$2 = ["href"];
+  const _hoisted_17$2 = { href: "" };
+  const _hoisted_18$2 = { key: 0 };
+  const _hoisted_19$2 = ["href"];
+  const _hoisted_20$2 = ["innerHTML"];
+  const _hoisted_21$2 = ["textContent"];
   const _hoisted_22$2 = ["innerHTML"];
-  const _hoisted_23$1 = ["textContent"];
-  const _hoisted_24$1 = ["innerHTML"];
-  const _hoisted_25$1 = { key: 1 };
+  const _hoisted_23$1 = { key: 1 };
   function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_ActivityIndicator = vue.resolveComponent("ActivityIndicator");
     const _component_SiteSelector = vue.resolveComponent("SiteSelector");
@@ -8644,7 +8590,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$4, [
       _ctx.showContainerRow ? (vue.openBlock(), vue.createElementBlock("li", _hoisted_2$4, [
         vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_OptionallyCustomiseContainer")) + " ", 1),
-        vue.createElementVNode("div", _hoisted_3$4, [
+        vue.createElementVNode("div", _hoisted_3$3, [
           vue.createElementVNode("div", _hoisted_4$2, [
             vue.createElementVNode("span", null, [
               !_ctx.isAdvancedDisplayed ? (vue.openBlock(), vue.createElementBlock("a", {
@@ -8653,7 +8599,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 onClick: _cache[0] || (_cache[0] = vue.withModifiers(($event) => _ctx.isAdvancedDisplayed = true, ["prevent"]))
               }, [
                 vue.createTextVNode(vue.toDisplayString(_ctx.translate("CoreAdminHome_ShowAdvancedOptions")) + " ", 1),
-                _hoisted_5$2
+                _cache[5] || (_cache[5] = vue.createElementVNode("span", { class: "icon-chevron-down" }, null, -1))
               ])) : vue.createCommentVNode("", true),
               _ctx.isAdvancedDisplayed ? (vue.openBlock(), vue.createElementBlock("a", {
                 key: 1,
@@ -8661,27 +8607,27 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 onClick: _cache[1] || (_cache[1] = vue.withModifiers(($event) => _ctx.isAdvancedDisplayed = false, ["prevent"]))
               }, [
                 vue.createTextVNode(vue.toDisplayString(_ctx.translate("CoreAdminHome_HideAdvancedOptions")) + " ", 1),
-                _hoisted_6$2
+                _cache[6] || (_cache[6] = vue.createElementVNode("span", { class: "icon-chevron-up" }, null, -1))
               ])) : vue.createCommentVNode("", true)
             ])
           ]),
-          vue.withDirectives(vue.createElementVNode("div", _hoisted_7$2, [
+          vue.withDirectives(vue.createElementVNode("div", _hoisted_5$2, [
             vue.createElementVNode("ul", null, [
               vue.createElementVNode("li", {
                 innerHTML: _ctx.$sanitize(_ctx.getAdvancedStepText)
-              }, null, 8, _hoisted_8$2),
+              }, null, 8, _hoisted_6$2),
               _ctx.showContainerRow || _ctx.environments.length > 1 ? vue.withDirectives((vue.openBlock(), vue.createBlock(_component_ActivityIndicator, {
                 key: 0,
                 loading: true
               }, null, 512)), [
                 [vue.vShow, _ctx.isLoading]
               ]) : vue.createCommentVNode("", true),
-              _ctx.showContainerRow || _ctx.environments.length > 1 ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("div", _hoisted_9$2, [
-                vue.createElementVNode("div", _hoisted_10$2, [
-                  vue.createElementVNode("div", _hoisted_11$2, [
-                    vue.createElementVNode("div", _hoisted_12$2, [
-                      vue.createElementVNode("label", _hoisted_13$2, vue.toDisplayString(_ctx.translate("General_Website")), 1),
-                      vue.createElementVNode("div", _hoisted_14$2, [
+              _ctx.showContainerRow || _ctx.environments.length > 1 ? vue.withDirectives((vue.openBlock(), vue.createElementBlock("div", _hoisted_7$2, [
+                vue.createElementVNode("div", _hoisted_8$2, [
+                  vue.createElementVNode("div", _hoisted_9$2, [
+                    vue.createElementVNode("div", _hoisted_10$2, [
+                      vue.createElementVNode("label", _hoisted_11$2, vue.toDisplayString(_ctx.translate("General_Website")), 1),
+                      vue.createElementVNode("div", _hoisted_12$2, [
                         vue.createVNode(_component_SiteSelector, {
                           id: "tagManagerTrackingCodeSite",
                           modelValue: _ctx.site,
@@ -8694,7 +8640,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     ])
                   ])
                 ]),
-                vue.createElementVNode("div", _hoisted_15$2, [
+                vue.createElementVNode("div", _hoisted_13$2, [
                   vue.createElementVNode("div", null, [
                     vue.createVNode(_component_Field, {
                       uicontrol: "select",
@@ -8711,7 +8657,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     }, null, 8, ["model-value", "options", "disabled", "title"])
                   ])
                 ]),
-                vue.createElementVNode("div", _hoisted_16$2, [
+                vue.createElementVNode("div", _hoisted_14$2, [
                   vue.createElementVNode("div", null, [
                     vue.createVNode(_component_Field, {
                       uicontrol: "select",
@@ -8734,39 +8680,39 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               _ctx.idContainer ? (vue.openBlock(), vue.createElementBlock("li", {
                 key: 2,
                 innerHTML: _ctx.$sanitize(_ctx.getAdvancedStepInfo)
-              }, null, 8, _hoisted_17$2)) : vue.createCommentVNode("", true)
+              }, null, 8, _hoisted_15$2)) : vue.createCommentVNode("", true)
             ])
           ], 512), [
             [vue.vShow, _ctx.isAdvancedDisplayed]
           ])
         ])
       ])) : vue.createCommentVNode("", true),
-      _ctx.idContainer && _ctx.noReleaseFound ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_18$2, [
+      _ctx.idContainer && _ctx.noReleaseFound ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_16$2, [
         vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_NoReleasesFoundForContainer")) + " ", 1),
-        vue.createElementVNode("a", _hoisted_19$2, vue.toDisplayString(_ctx.translate("TagManager_PublishVersionToEnvironmentToViewEmbedCode")), 1)
+        vue.createElementVNode("a", _hoisted_17$2, vue.toDisplayString(_ctx.translate("TagManager_PublishVersionToEnvironmentToViewEmbedCode")), 1)
       ])) : vue.createCommentVNode("", true),
       (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.installInstructions, (installInstruction, index) => {
         return vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: index }, [
-          _ctx.showDescription ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_20$2, [
+          _ctx.showDescription ? (vue.openBlock(), vue.createElementBlock("p", _hoisted_18$2, [
             vue.createTextVNode(vue.toDisplayString(installInstruction.description) + " ", 1),
             installInstruction.helpUrl ? (vue.openBlock(), vue.createElementBlock("a", {
               key: 0,
               target: "_blank",
               href: installInstruction.helpUrl
-            }, vue.toDisplayString(_ctx.translate("TagManager_LearnMore")), 9, _hoisted_21$2)) : vue.createCommentVNode("", true),
-            vue.createTextVNode(". ")
+            }, vue.toDisplayString(_ctx.translate("TagManager_LearnMore")), 9, _hoisted_19$2)) : vue.createCommentVNode("", true),
+            _cache[7] || (_cache[7] = vue.createTextVNode(". ", -1))
           ])) : vue.createCommentVNode("", true),
           _ctx.showPlainMtmSteps ? (vue.openBlock(), vue.createElementBlock("li", {
             key: 1,
             innerHTML: _ctx.$sanitize(_ctx.getMtmStep3)
-          }, null, 8, _hoisted_22$2)) : vue.createCommentVNode("", true),
+          }, null, 8, _hoisted_20$2)) : vue.createCommentVNode("", true),
           vue.createElementVNode("div", null, [
             vue.withDirectives(vue.createElementVNode("pre", {
               class: "codeblock",
               textContent: vue.toDisplayString(installInstruction.embedCode),
               ref_for: true,
               ref: "codeblock"
-            }, null, 8, _hoisted_23$1), [
+            }, null, 8, _hoisted_21$2), [
               [_directive_copy_to_clipboard, {}]
             ])
           ])
@@ -8776,7 +8722,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         !_ctx.showTestSection ? (vue.openBlock(), vue.createElementBlock("p", {
           key: 0,
           innerHTML: _ctx.$sanitize(_ctx.getCongratulationsText)
-        }, null, 8, _hoisted_24$1)) : (vue.openBlock(), vue.createElementBlock("li", _hoisted_25$1, [
+        }, null, 8, _hoisted_22$2)) : (vue.openBlock(), vue.createElementBlock("li", _hoisted_23$1, [
           (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(_ctx.testComponent), { site: _ctx.site }, null, 8, ["site"]))
         ]))
       ], 64)) : vue.createCommentVNode("", true)
@@ -8822,9 +8768,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       }
     }
   });
-  const _hoisted_1$3 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_2$3 = { class: "followStepsHeading" };
-  const _hoisted_3$3 = { style: { "list-style": "inside decimal" } };
+  const _hoisted_1$3 = { class: "followStepsHeading" };
+  const _hoisted_2$3 = { style: { "list-style": "inside decimal" } };
   function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_TrackingCodeCommon = vue.resolveComponent("TrackingCodeCommon");
     return vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(_ctx.currentAction === "getTrackingMethodsForSite" ? "div" : "ContentBlock"), {
@@ -8833,11 +8778,11 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
     }, {
       default: vue.withCtx(() => [
         vue.createElementVNode("p", null, vue.toDisplayString(_ctx.translate("TagManager_MtmTrackingCodeIntro")), 1),
-        _hoisted_1$3,
-        vue.createElementVNode("p", _hoisted_2$3, [
+        _cache[0] || (_cache[0] = vue.createElementVNode("br", null, null, -1)),
+        vue.createElementVNode("p", _hoisted_1$3, [
           vue.createElementVNode("strong", null, vue.toDisplayString(_ctx.translate("SitesManager_SiteWithoutDataCloudflareFollowStepsIntro")), 1)
         ]),
-        vue.createElementVNode("ol", _hoisted_3$3, [
+        vue.createElementVNode("ol", _hoisted_2$3, [
           vue.createVNode(_component_TrackingCodeCommon, {
             "show-container-row": _ctx.showContainerRow,
             showBottom: true,
@@ -9285,167 +9230,70 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$1 = { class: "nav-wrapper" };
   const _hoisted_2$1 = { class: "pull-right" };
-  const _hoisted_3$1 = /* @__PURE__ */ vue.createElementVNode("svg", { class: "tm-icon tm-icon-close" }, [
-    /* @__PURE__ */ vue.createElementVNode("use", { "xlink:href": "#tm-icon-close" })
-  ], -1);
-  const _hoisted_4 = [
-    _hoisted_3$1
-  ];
-  const _hoisted_5 = { class: "pull-right" };
+  const _hoisted_3$1 = { class: "pull-right" };
+  const _hoisted_4 = {
+    "aria-hidden": "true",
+    style: { "position": "absolute", "width": "0", "height": "0", "overflow": "hidden" },
+    version: "1.1",
+    xmlns: "http://www.w3.org/2000/svg",
+    "xmlns:xlink": "http://www.w3.org/1999/xlink"
+  };
+  const _hoisted_5 = {
+    "aria-hidden": "true",
+    style: { "position": "absolute", "width": "0", "height": "0", "overflow": "hidden" },
+    version: "1.1",
+    xmlns: "http://www.w3.org/2000/svg",
+    "xmlns:xlink": "http://www.w3.org/1999/xlink"
+  };
   const _hoisted_6 = {
-    "aria-hidden": "true",
-    style: { "position": "absolute", "width": "0", "height": "0", "overflow": "hidden" },
-    version: "1.1",
-    xmlns: "http://www.w3.org/2000/svg",
-    "xmlns:xlink": "http://www.w3.org/1999/xlink"
-  };
-  const _hoisted_7 = /* @__PURE__ */ vue.createElementVNode("defs", null, [
-    /* @__PURE__ */ vue.createElementVNode("symbol", {
-      id: "tm-icon-checkmark",
-      viewBox: "0 0 32 32"
-    }, [
-      /* @__PURE__ */ vue.createElementVNode("path", { d: "M27 4l-15 15-7-7-5 5 12 12 20-20z" })
-    ])
-  ], -1);
-  const _hoisted_8 = [
-    _hoisted_7
-  ];
-  const _hoisted_9 = {
-    "aria-hidden": "true",
-    style: { "position": "absolute", "width": "0", "height": "0", "overflow": "hidden" },
-    version: "1.1",
-    xmlns: "http://www.w3.org/2000/svg",
-    "xmlns:xlink": "http://www.w3.org/1999/xlink"
-  };
-  const _hoisted_10 = /* @__PURE__ */ vue.createElementVNode("symbol", {
-    id: "tm-icon-close",
-    viewBox: "0 0 32 32"
-  }, [
-    /* @__PURE__ */ vue.createElementVNode("path", { d: "M31.33 0.67c0.893 0.893 0.893 2.34 0 3.232l-27.427 27.427c-0.893 0.893-2.34\n          0.893-3.232 0s-0.893-2.34 0-3.232l27.427-27.427c0.892-0.893 2.34-0.893 3.232 0z" }),
-    /* @__PURE__ */ vue.createElementVNode("path", { d: "M0.67 0.67c0.893-0.893 2.34-0.893 3.232 0l27.427 27.427c0.893 0.892 0.893\n          2.34 0 3.232s-2.34 0.892-3.232 0l-27.427-27.427c-0.893-0.893-0.893-2.34 0-3.232z" })
-  ], -1);
-  const _hoisted_11 = [
-    _hoisted_10
-  ];
-  const _hoisted_12 = {
     class: "page",
     style: { "clear": "both", "display": "flex" }
   };
-  const _hoisted_13 = {
+  const _hoisted_7 = {
     key: 0,
     id: "secondNavBar",
     class: "Menu--dashboard z-depth-1"
   };
-  const _hoisted_14 = {
+  const _hoisted_8 = {
     class: "navbar",
     role: "menu",
     style: { "padding": "0" }
   };
-  const _hoisted_15 = {
+  const _hoisted_9 = {
     class: "menuTab",
     role: "menuitem"
   };
-  const _hoisted_16 = /* @__PURE__ */ vue.createElementVNode("span", {
-    class: "item",
-    style: { "font-weight": "normal" }
-  }, " Events ", -1);
-  const _hoisted_17 = {
+  const _hoisted_10 = {
     key: 0,
     class: "item",
     style: { "font-weight": "normal" }
   };
-  const _hoisted_18 = /* @__PURE__ */ vue.createElementVNode("label", {
-    for: "onlyfiredTags",
-    class: "lbl-onlyfiredTags"
-  }, "Only fired tags", -1);
-  const _hoisted_19 = {
+  const _hoisted_11 = {
     key: 0,
     style: { "padding": "0 0 1rem 1.2rem" }
   };
-  const _hoisted_20 = ["onClick", "title"];
-  const _hoisted_21 = { title: "This tag was fired" };
-  const _hoisted_22 = /* @__PURE__ */ vue.createElementVNode("svg", { class: "tm-icon tm-icon-checkmark" }, [
-    /* @__PURE__ */ vue.createElementVNode("use", { "xlink:href": "#tm-icon-checkmark" })
-  ], -1);
-  const _hoisted_23 = [
-    _hoisted_22
-  ];
-  const _hoisted_24 = { class: "pageWrap" };
-  const _hoisted_25 = {
+  const _hoisted_12 = ["onClick", "title"];
+  const _hoisted_13 = { title: "This tag was fired" };
+  const _hoisted_14 = { class: "pageWrap" };
+  const _hoisted_15 = {
     class: "home",
     id: "content"
   };
-  const _hoisted_26 = /* @__PURE__ */ vue.createElementVNode("h3", null, "Fired Tags", -1);
-  const _hoisted_27 = { class: "entityTable" };
-  const _hoisted_28 = /* @__PURE__ */ vue.createElementVNode("thead", null, [
-    /* @__PURE__ */ vue.createElementVNode("tr", null, [
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Action"),
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Name"),
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Type"),
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Fired count")
-    ])
-  ], -1);
-  const _hoisted_29 = { key: 0 };
-  const _hoisted_30 = /* @__PURE__ */ vue.createElementVNode("td", { colspan: "4" }, "No tags", -1);
-  const _hoisted_31 = [
-    _hoisted_30
-  ];
-  const _hoisted_32 = /* @__PURE__ */ vue.createElementVNode("h3", { style: { "margin-top": "30px" } }, "Not Yet Fired Tags", -1);
-  const _hoisted_33 = { class: "entityTable" };
-  const _hoisted_34 = /* @__PURE__ */ vue.createElementVNode("thead", null, [
-    /* @__PURE__ */ vue.createElementVNode("tr", null, [
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Name"),
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Type")
-    ])
-  ], -1);
-  const _hoisted_35 = /* @__PURE__ */ vue.createElementVNode("td", { colspan: "4" }, "No tags", -1);
-  const _hoisted_36 = [
-    _hoisted_35
-  ];
-  const _hoisted_37 = /* @__PURE__ */ vue.createElementVNode("h3", null, "Triggers", -1);
-  const _hoisted_38 = { class: "entityTable" };
-  const _hoisted_39 = /* @__PURE__ */ vue.createElementVNode("thead", null, [
-    /* @__PURE__ */ vue.createElementVNode("tr", null, [
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Name"),
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Type")
-    ])
-  ], -1);
-  const _hoisted_40 = { key: 0 };
-  const _hoisted_41 = /* @__PURE__ */ vue.createElementVNode("td", { colspan: "4" }, "No trigger", -1);
-  const _hoisted_42 = [
-    _hoisted_41
-  ];
-  const _hoisted_43 = { key: 1 };
-  const _hoisted_44 = /* @__PURE__ */ vue.createElementVNode("h3", null, "Pushed data by this event", -1);
-  const _hoisted_45 = { class: "entityTable" };
-  const _hoisted_46 = { style: { "word-break": "break-all" } };
-  const _hoisted_47 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
-  const _hoisted_48 = /* @__PURE__ */ vue.createElementVNode("h3", null, "Content after this event", -1);
-  const _hoisted_49 = { class: "entityTable" };
-  const _hoisted_50 = { style: { "word-break": "break-all" } };
-  const _hoisted_51 = { class: "entityTable" };
-  const _hoisted_52 = /* @__PURE__ */ vue.createElementVNode("thead", null, [
-    /* @__PURE__ */ vue.createElementVNode("tr", null, [
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Name"),
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Type"),
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Value")
-    ])
-  ], -1);
-  const _hoisted_53 = { key: 0 };
-  const _hoisted_54 = /* @__PURE__ */ vue.createElementVNode("td", { colspan: "3" }, "No variables", -1);
-  const _hoisted_55 = [
-    _hoisted_54
-  ];
-  const _hoisted_56 = { style: { "word-break": "break-all" } };
-  const _hoisted_57 = { class: "entityTable" };
-  const _hoisted_58 = /* @__PURE__ */ vue.createElementVNode("thead", null, [
-    /* @__PURE__ */ vue.createElementVNode("tr", null, [
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Time"),
-      /* @__PURE__ */ vue.createElementVNode("th", null, "Message")
-    ])
-  ], -1);
-  const _hoisted_59 = { style: { "word-break": "break-all" } };
-  const _hoisted_60 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
+  const _hoisted_16 = { class: "entityTable" };
+  const _hoisted_17 = { key: 0 };
+  const _hoisted_18 = { class: "entityTable" };
+  const _hoisted_19 = { class: "entityTable" };
+  const _hoisted_20 = { key: 0 };
+  const _hoisted_21 = { key: 1 };
+  const _hoisted_22 = { class: "entityTable" };
+  const _hoisted_23 = { style: { "word-break": "break-all" } };
+  const _hoisted_24 = { class: "entityTable" };
+  const _hoisted_25 = { style: { "word-break": "break-all" } };
+  const _hoisted_26 = { class: "entityTable" };
+  const _hoisted_27 = { key: 0 };
+  const _hoisted_28 = { style: { "word-break": "break-all" } };
+  const _hoisted_29 = { class: "entityTable" };
+  const _hoisted_30 = { style: { "word-break": "break-all" } };
   function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
     var _a2, _b2, _c, _d, _e, _f, _g, _h, _i, _j;
     return vue.openBlock(), vue.createElementBlock("div", null, [
@@ -9494,9 +9342,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               vue.createElementVNode("a", {
                 id: "mtmCloseDebug",
                 onClick: _cache[5] || (_cache[5] = ($event) => _ctx.mtmCloseDebugWindow())
-              }, _hoisted_4)
+              }, [..._cache[8] || (_cache[8] = [
+                vue.createElementVNode("svg", { class: "tm-icon tm-icon-close" }, [
+                  vue.createElementVNode("use", { "xlink:href": "#tm-icon-close" })
+                ], -1)
+              ])])
             ]),
-            vue.createElementVNode("li", _hoisted_5, [
+            vue.createElementVNode("li", _hoisted_3$1, [
               vue.createElementVNode("a", {
                 id: "mtmUpdateDebugPosition",
                 onClick: _cache[6] || (_cache[6] = ($event) => _ctx.mtmUpdateDebugPosition())
@@ -9505,14 +9357,34 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           ])
         ])
       ]),
-      (vue.openBlock(), vue.createElementBlock("svg", _hoisted_6, _hoisted_8)),
-      (vue.openBlock(), vue.createElementBlock("svg", _hoisted_9, _hoisted_11)),
-      vue.createElementVNode("div", _hoisted_12, [
-        _ctx.contentTab !== "logs" ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_13, [
-          vue.createElementVNode("ul", _hoisted_14, [
-            vue.createElementVNode("li", _hoisted_15, [
-              _hoisted_16,
-              _ctx.mtmEvents.length > 0 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_17, [
+      (vue.openBlock(), vue.createElementBlock("svg", _hoisted_4, [..._cache[9] || (_cache[9] = [
+        vue.createElementVNode("defs", null, [
+          vue.createElementVNode("symbol", {
+            id: "tm-icon-checkmark",
+            viewBox: "0 0 32 32"
+          }, [
+            vue.createElementVNode("path", { d: "M27 4l-15 15-7-7-5 5 12 12 20-20z" })
+          ])
+        ], -1)
+      ])])),
+      (vue.openBlock(), vue.createElementBlock("svg", _hoisted_5, [..._cache[10] || (_cache[10] = [
+        vue.createElementVNode("symbol", {
+          id: "tm-icon-close",
+          viewBox: "0 0 32 32"
+        }, [
+          vue.createElementVNode("path", { d: "M31.33 0.67c0.893 0.893 0.893 2.34 0 3.232l-27.427 27.427c-0.893 0.893-2.34\n          0.893-3.232 0s-0.893-2.34 0-3.232l27.427-27.427c0.892-0.893 2.34-0.893 3.232 0z" }),
+          vue.createElementVNode("path", { d: "M0.67 0.67c0.893-0.893 2.34-0.893 3.232 0l27.427 27.427c0.893 0.892 0.893\n          2.34 0 3.232s-2.34 0.892-3.232 0l-27.427-27.427c-0.893-0.893-0.893-2.34 0-3.232z" })
+        ], -1)
+      ])])),
+      vue.createElementVNode("div", _hoisted_6, [
+        _ctx.contentTab !== "logs" ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_7, [
+          vue.createElementVNode("ul", _hoisted_8, [
+            vue.createElementVNode("li", _hoisted_9, [
+              _cache[12] || (_cache[12] = vue.createElementVNode("span", {
+                class: "item",
+                style: { "font-weight": "normal" }
+              }, " Events ", -1)),
+              _ctx.mtmEvents.length > 0 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_10, [
                 vue.withDirectives(vue.createElementVNode("input", {
                   type: "checkbox",
                   class: "onlyFiredTags-chk",
@@ -9524,10 +9396,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                 }, null, 512), [
                   [vue.vModelCheckbox, _ctx.onlyfiredTags]
                 ]),
-                _hoisted_18
+                _cache[11] || (_cache[11] = vue.createElementVNode("label", {
+                  for: "onlyfiredTags",
+                  class: "lbl-onlyfiredTags"
+                }, "Only fired tags", -1))
               ])) : vue.createCommentVNode("", true)
             ]),
-            _ctx.mtmEvents.length === 0 ? (vue.openBlock(), vue.createElementBlock("li", _hoisted_19, "No event executed")) : vue.createCommentVNode("", true),
+            _ctx.mtmEvents.length === 0 ? (vue.openBlock(), vue.createElementBlock("li", _hoisted_11, "No event executed")) : vue.createCommentVNode("", true),
             (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.mtmEventsReversed, (event, index) => {
               var _a3, _b3;
               return vue.openBlock(), vue.createElementBlock("li", {
@@ -9542,25 +9417,38 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   title: `Time: ${event.time}. Trigger: ${(_a3 = event.metTrigger) == null ? void 0 : _a3.name}`
                 }, [
                   vue.createTextVNode(vue.toDisplayString(event.index) + ": " + vue.toDisplayString(event.name) + " ", 1),
-                  vue.withDirectives(vue.createElementVNode("span", _hoisted_21, _hoisted_23, 512), [
+                  vue.withDirectives(vue.createElementVNode("span", _hoisted_13, [..._cache[13] || (_cache[13] = [
+                    vue.createElementVNode("svg", { class: "tm-icon tm-icon-checkmark" }, [
+                      vue.createElementVNode("use", { "xlink:href": "#tm-icon-checkmark" })
+                    ], -1)
+                  ])], 512), [
                     [vue.vShow, (_b3 = event.tags) == null ? void 0 : _b3.length]
                   ])
-                ], 8, _hoisted_20)) : vue.createCommentVNode("", true)
+                ], 8, _hoisted_12)) : vue.createCommentVNode("", true)
               ], 2);
             }), 128))
           ])
         ])) : vue.createCommentVNode("", true),
-        vue.createElementVNode("div", _hoisted_24, [
-          vue.createElementVNode("div", _hoisted_25, [
+        vue.createElementVNode("div", _hoisted_14, [
+          vue.createElementVNode("div", _hoisted_15, [
             vue.withDirectives(vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.homeTabTitle), 513), [
               [vue.vShow, _ctx.contentTab !== "logs"]
             ]),
             vue.withDirectives(vue.createElementVNode("div", null, [
-              _hoisted_26,
-              vue.createElementVNode("table", _hoisted_27, [
-                _hoisted_28,
+              _cache[18] || (_cache[18] = vue.createElementVNode("h3", null, "Fired Tags", -1)),
+              vue.createElementVNode("table", _hoisted_16, [
+                _cache[15] || (_cache[15] = vue.createElementVNode("thead", null, [
+                  vue.createElementVNode("tr", null, [
+                    vue.createElementVNode("th", null, "Action"),
+                    vue.createElementVNode("th", null, "Name"),
+                    vue.createElementVNode("th", null, "Type"),
+                    vue.createElementVNode("th", null, "Fired count")
+                  ])
+                ], -1)),
                 vue.createElementVNode("tbody", null, [
-                  !((_b2 = (_a2 = _ctx.selectedEvent) == null ? void 0 : _a2.tags) == null ? void 0 : _b2.length) ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_29, _hoisted_31)) : vue.createCommentVNode("", true),
+                  !((_b2 = (_a2 = _ctx.selectedEvent) == null ? void 0 : _a2.tags) == null ? void 0 : _b2.length) ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_17, [..._cache[14] || (_cache[14] = [
+                    vue.createElementVNode("td", { colspan: "4" }, "No tags", -1)
+                  ])])) : vue.createCommentVNode("", true),
                   (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(((_c = _ctx.selectedEvent) == null ? void 0 : _c.tags) || [], (tag, index) => {
                     return vue.openBlock(), vue.createElementBlock("tr", { key: index }, [
                       vue.createElementVNode("td", null, vue.toDisplayString(tag.action), 1),
@@ -9571,11 +9459,18 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   }), 128))
                 ])
               ]),
-              _hoisted_32,
-              vue.createElementVNode("table", _hoisted_33, [
-                _hoisted_34,
+              _cache[19] || (_cache[19] = vue.createElementVNode("h3", { style: { "margin-top": "30px" } }, "Not Yet Fired Tags", -1)),
+              vue.createElementVNode("table", _hoisted_18, [
+                _cache[17] || (_cache[17] = vue.createElementVNode("thead", null, [
+                  vue.createElementVNode("tr", null, [
+                    vue.createElementVNode("th", null, "Name"),
+                    vue.createElementVNode("th", null, "Type")
+                  ])
+                ], -1)),
                 vue.createElementVNode("tbody", null, [
-                  vue.withDirectives(vue.createElementVNode("tr", null, _hoisted_36, 512), [
+                  vue.withDirectives(vue.createElementVNode("tr", null, [..._cache[16] || (_cache[16] = [
+                    vue.createElementVNode("td", { colspan: "4" }, "No tags", -1)
+                  ])], 512), [
                     [vue.vShow, _ctx.notFiredTags.length === 0]
                   ]),
                   (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.notFiredTags, (tag, index) => {
@@ -9590,12 +9485,19 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               [vue.vShow, _ctx.contentTab === "tags" || !_ctx.contentTab]
             ]),
             vue.withDirectives(vue.createElementVNode("div", null, [
-              _hoisted_37,
-              vue.createElementVNode("table", _hoisted_38, [
-                _hoisted_39,
+              _cache[22] || (_cache[22] = vue.createElementVNode("h3", null, "Triggers", -1)),
+              vue.createElementVNode("table", _hoisted_19, [
+                _cache[21] || (_cache[21] = vue.createElementVNode("thead", null, [
+                  vue.createElementVNode("tr", null, [
+                    vue.createElementVNode("th", null, "Name"),
+                    vue.createElementVNode("th", null, "Type")
+                  ])
+                ], -1)),
                 vue.createElementVNode("tbody", null, [
-                  !((_d = _ctx.selectedEvent) == null ? void 0 : _d.metTrigger) ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_40, _hoisted_42)) : vue.createCommentVNode("", true),
-                  ((_e = _ctx.selectedEvent) == null ? void 0 : _e.metTrigger) ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_43, [
+                  !((_d = _ctx.selectedEvent) == null ? void 0 : _d.metTrigger) ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_20, [..._cache[20] || (_cache[20] = [
+                    vue.createElementVNode("td", { colspan: "4" }, "No trigger", -1)
+                  ])])) : vue.createCommentVNode("", true),
+                  ((_e = _ctx.selectedEvent) == null ? void 0 : _e.metTrigger) ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_21, [
                     vue.createElementVNode("td", null, vue.toDisplayString(_ctx.selectedEvent.metTrigger.name), 1),
                     vue.createElementVNode("td", null, vue.toDisplayString(_ctx.selectedEvent.metTrigger.type), 1)
                   ])) : vue.createCommentVNode("", true)
@@ -9605,20 +9507,20 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               [vue.vShow, _ctx.contentTab === "triggers"]
             ]),
             vue.withDirectives(vue.createElementVNode("div", null, [
-              _hoisted_44,
-              vue.createElementVNode("table", _hoisted_45, [
+              _cache[23] || (_cache[23] = vue.createElementVNode("h3", null, "Pushed data by this event", -1)),
+              vue.createElementVNode("table", _hoisted_22, [
                 vue.createElementVNode("tbody", null, [
                   vue.createElementVNode("tr", null, [
-                    vue.createElementVNode("td", _hoisted_46, vue.toDisplayString(_ctx.selectedEventData), 1)
+                    vue.createElementVNode("td", _hoisted_23, vue.toDisplayString(_ctx.selectedEventData), 1)
                   ])
                 ])
               ]),
-              _hoisted_47,
-              _hoisted_48,
-              vue.createElementVNode("table", _hoisted_49, [
+              _cache[24] || (_cache[24] = vue.createElementVNode("br", null, null, -1)),
+              _cache[25] || (_cache[25] = vue.createElementVNode("h3", null, "Content after this event", -1)),
+              vue.createElementVNode("table", _hoisted_24, [
                 vue.createElementVNode("tbody", null, [
                   vue.createElementVNode("tr", null, [
-                    vue.createElementVNode("td", _hoisted_50, vue.toDisplayString(_ctx.selectedEventContainerDataLayer), 1)
+                    vue.createElementVNode("td", _hoisted_25, vue.toDisplayString(_ctx.selectedEventContainerDataLayer), 1)
                   ])
                 ])
               ])
@@ -9626,15 +9528,23 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               [vue.vShow, _ctx.contentTab === "dataLayer"]
             ]),
             vue.withDirectives(vue.createElementVNode("div", null, [
-              vue.createElementVNode("table", _hoisted_51, [
-                _hoisted_52,
+              vue.createElementVNode("table", _hoisted_26, [
+                _cache[27] || (_cache[27] = vue.createElementVNode("thead", null, [
+                  vue.createElementVNode("tr", null, [
+                    vue.createElementVNode("th", null, "Name"),
+                    vue.createElementVNode("th", null, "Type"),
+                    vue.createElementVNode("th", null, "Value")
+                  ])
+                ], -1)),
                 vue.createElementVNode("tbody", null, [
-                  !((_h = (_g = (_f = _ctx.selectedEvent) == null ? void 0 : _f.container) == null ? void 0 : _g.variables) == null ? void 0 : _h.length) ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_53, _hoisted_55)) : vue.createCommentVNode("", true),
+                  !((_h = (_g = (_f = _ctx.selectedEvent) == null ? void 0 : _f.container) == null ? void 0 : _g.variables) == null ? void 0 : _h.length) ? (vue.openBlock(), vue.createElementBlock("tr", _hoisted_27, [..._cache[26] || (_cache[26] = [
+                    vue.createElementVNode("td", { colspan: "3" }, "No variables", -1)
+                  ])])) : vue.createCommentVNode("", true),
                   (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(((_j = (_i = _ctx.selectedEvent) == null ? void 0 : _i.container) == null ? void 0 : _j.variables) || [], (variable, index) => {
                     return vue.openBlock(), vue.createElementBlock("tr", { key: index }, [
                       vue.createElementVNode("td", null, vue.toDisplayString(variable.name), 1),
                       vue.createElementVNode("td", null, vue.toDisplayString(variable.type), 1),
-                      vue.createElementVNode("td", _hoisted_56, vue.toDisplayString(_ctx.stringifySelectedVariable(variable)), 1)
+                      vue.createElementVNode("td", _hoisted_28, vue.toDisplayString(_ctx.stringifySelectedVariable(variable)), 1)
                     ]);
                   }), 128))
                 ])
@@ -9643,17 +9553,22 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               [vue.vShow, _ctx.contentTab === "variables"]
             ]),
             vue.withDirectives(vue.createElementVNode("div", null, [
-              vue.createElementVNode("table", _hoisted_57, [
-                _hoisted_58,
+              vue.createElementVNode("table", _hoisted_29, [
+                _cache[29] || (_cache[29] = vue.createElementVNode("thead", null, [
+                  vue.createElementVNode("tr", null, [
+                    vue.createElementVNode("th", null, "Time"),
+                    vue.createElementVNode("th", null, "Message")
+                  ])
+                ], -1)),
                 vue.createElementVNode("tbody", null, [
                   (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.mtmLogs, (log, index) => {
                     return vue.openBlock(), vue.createElementBlock("tr", { key: index }, [
                       vue.createElementVNode("td", null, vue.toDisplayString(log.time), 1),
-                      vue.createElementVNode("td", _hoisted_59, [
+                      vue.createElementVNode("td", _hoisted_30, [
                         (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(log.messages, (logMessage, index2) => {
                           return vue.openBlock(), vue.createElementBlock("span", { key: index2 }, [
                             vue.createTextVNode(vue.toDisplayString(logMessage), 1),
-                            _hoisted_60
+                            _cache[28] || (_cache[28] = vue.createElementVNode("br", null, null, -1))
                           ]);
                         }), 128))
                       ])
