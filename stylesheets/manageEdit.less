@@ -68,12 +68,17 @@
   }
 
   .collection.with-header {
+    border-color: @theme-color-border-alternative;
+
     .collection-header {
       background-color: @theme-color-background-tinyContrast;
+      border-bottom-color: @theme-color-border-alternative;
     }
     .collection-item {
       cursor: pointer;
       min-height: auto;
+      background-color: @theme-color-background-contrast;
+      border-bottom-color: @theme-color-border-alternative;
       &:hover {
         background-color: @theme-color-background-tinyContrast;
       }
