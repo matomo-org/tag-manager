@@ -8,7 +8,7 @@
 				<name>Matomo Configuration</name>
 				<description>Defines a configuration for Matomo Analytics.</description>
 				<category>Analytics</category>
-				<icon>plugins/TagManager/images/MatomoIcon.png</icon>
+				<icon>plugins/TagManager/images/MatomoIcon.svg</icon>
 				<help />
 				<order>9999</order>
 				<contexts>

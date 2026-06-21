@@ -8,7 +8,7 @@
 				<name>Matomo Analytics</name>
 				<description>Matomo is the leading open source analytics platform.</description>
 				<category>Analytics</category>
-				<icon>plugins/TagManager/images/MatomoIcon.png</icon>
+				<icon>plugins/TagManager/images/MatomoIcon.svg</icon>
 				<help>This tag lets you track pageviews and events into your Matomo. You can customize the tracking to your needs.</help>
 				<order>1</order>
 				<contexts>

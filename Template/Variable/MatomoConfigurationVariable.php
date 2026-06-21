@@ -38,7 +38,7 @@ class MatomoConfigurationVariable extends BaseVariable
 
     public function getIcon()
     {
-        return 'plugins/TagManager/images/MatomoIcon.png';
+        return 'plugins/TagManager/images/MatomoIcon.svg';
     }
 
     public function hasAdvancedSettings()
