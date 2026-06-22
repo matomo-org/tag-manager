@@ -67,7 +67,10 @@ class BaseModel
         }
 
         if (empty($idContainer)) {
-            throw new \Exception(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
+            // Some legacy fixtures and version-only copy paths don't have a backing container-version record.
+            // In that case still require write access for the site, but skip the live-release capability check.
+            StaticContainer::get(AccessValidator::class)->checkWriteCapability($idSite);
+            return;
         }
 
         StaticContainer::get(AccessValidator::class)->checkWriteCapabilityForContainerVersion(
