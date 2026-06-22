@@ -224,7 +224,7 @@
         });
 
         test("Matomo TagManager DataLayer", function() {
-            expect(26);
+            expect(27);
 
             var dataLayer = window.MatomoTagManager.dataLayer;
 
@@ -260,6 +260,9 @@
 
             dataLayer.set('barobjfunc', {get: function () { return 'objfuncvalue4'; }});
             strictEqual( 'objfuncvalue4', dataLayer.get('barobjfunc'), 'DataLayer.get will trigger function if a object with a get function is set' );
+
+            dataLayer.set('ecommerce', null);
+            strictEqual( undefined, dataLayer.get('ecommerce.items'), 'DataLayer.get does not throw when nested object is null' );
 
             /** PUSH **/
             strictEqual(undefined, dataLayer.push('foobar'), 'DataLayer.push does not fail when not an object given' );

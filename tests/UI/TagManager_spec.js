@@ -251,8 +251,9 @@ describe("TagManager", function () {
         await page.evaluate(() => $('select[name="restrictTagManagerAccess"]').click());
         await page.evaluate(() => $('li:nth-child(2)').click());
         await page.evaluate(() => $('#TagManagerPluginSettings .pluginsSettingsSubmit').click());
-        await page.type('.confirm-password-modal input[type=password]', superUserPassword);
-        await page.click('.confirm-password-modal .modal-close.btn');
+        await page.waitForSelector('.confirm-password-modal.open', { visible: true });
+        await page.type('.confirm-password-modal.open input[type=password]', superUserPassword);
+        await page.click('.confirm-password-modal.open .confirm-password-btn');
         await page.waitForNetworkIdle();
         await page.mouse.move(-10, -10);
         expect(await page.screenshotSelector('#TagManagerPluginSettings')).to.matchImage('update_restrict_setting');

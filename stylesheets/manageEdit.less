@@ -68,12 +68,17 @@
   }
 
   .collection.with-header {
+    border-color: @theme-color-border-alternative;
+
     .collection-header {
       background-color: @theme-color-background-tinyContrast;
+      border-bottom-color: @theme-color-border-alternative;
     }
     .collection-item {
       cursor: pointer;
       min-height: auto;
+      background-color: @theme-color-background-contrast;
+      border-bottom-color: @theme-color-border-alternative;
       &:hover {
         background-color: @theme-color-background-tinyContrast;
       }
@@ -94,6 +99,39 @@
     .avatar .circle {
       padding: 6px;
       border-radius: 0 !important;
+    }
+    // The Matomo icon is a wide SVG (the "M" mark); let it keep its aspect
+    // ratio at the same height as the square icons instead of being squeezed
+    // to fit the square slot (which made it look small). Because it is wider
+    // than the 42px square slot, nudge it left so its centre lines up with the
+    // other icons (centre x = 15px left + 21px) instead of crowding the text.
+    .avatar .circle[src$="MatomoIcon.svg"] {
+      width: auto;
+      height: 42px;
+      left: 8px;
+    }
+    // Monochrome (single dark colour) type icons are nearly invisible on the
+    // dark collection background. Invert them in dark mode via the shared
+    // illustration filter (which resolves to `none` in light mode, so this is
+    // safe to apply unconditionally). Colourful brand logos (Google, Hotjar,
+    // etracker, etc.) are deliberately excluded so their colours are preserved.
+    .avatar .circle[src$="pointer.svg"],
+    .avatar .circle[src$="pageview.svg"],
+    .avatar .circle[src$="code.svg"],
+    .avatar .circle[src$="form.svg"],
+    .avatar .circle[src$="image.svg"],
+    .avatar .circle[src$="show.svg"],
+    .avatar .circle[src$="timer.svg"],
+    .avatar .circle[src$="error.svg"],
+    .avatar .circle[src$="fullscreen.svg"],
+    .avatar .circle[src$="interaction.svg"],
+    .avatar .circle[src$="click-data-attribute-variable.svg"],
+    .avatar .circle[src$="drift.svg"],
+    .avatar .circle[src$="pingdom.svg"],
+    .avatar .circle[src$="raygun.svg"],
+    .avatar .circle[src$="sentry.svg"],
+    .avatar .circle[src$="google-consent-mode.svg"] {
+      filter: @theme-filter-on-illustration;
     }
   }
 }
