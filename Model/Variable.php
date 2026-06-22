@@ -492,6 +492,9 @@ class Variable extends BaseModel
         $idDestinationVersion = $idContainerVersion;
         if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
             $idDestinationVersion = $this->getDraftContainerVersion($idDestinationSite, $idDestinationContainer);
+            $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion, $idDestinationContainer);
+        } else {
+            $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion);
         }
 
         $variable = $this->getContainerVariable($idSite, $idContainerVersion, $idVariable);
