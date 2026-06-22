@@ -34,7 +34,7 @@ class MatomoTag extends BaseTag
 
     public function getIcon()
     {
-        return 'plugins/TagManager/images/MatomoIcon.png';
+        return 'plugins/TagManager/images/MatomoIcon.svg';
     }
 
     public function getParameters()
