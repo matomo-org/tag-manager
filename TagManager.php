@@ -59,7 +59,6 @@ class TagManager extends \Piwik\Plugin
             'PluginManager.pluginDeactivated' => 'onPluginActivateOrInstall',
             'PluginManager.pluginUninstalled' => 'onPluginActivateOrInstall',
             'TagManager.regenerateContainerReleases' => 'regenerateReleasedContainers',
-            'Updater.componentUpdated' => 'regenerateReleasedContainers',
             'Controller.CoreHome.checkForUpdates.end' => 'regenerateReleasedContainers',
             'CustomJsTracker.trackerJsChanged' => 'regenerateReleasedContainers', // in case a Matomo tracker is bundled
             'SitesManager.deleteSite.end' => 'onSiteDeleted',
