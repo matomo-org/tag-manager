@@ -769,6 +769,28 @@ class TriggerTest extends IntegrationTestCase
         $this->assertEquals($trigger1, $trigger2, 'The triggers should match');
     }
 
+    public function testCopyTriggerRejectsWriteUserWhenDestinationVersionReleasedToLive()
+    {
+        $containerModel = StaticContainer::get(Container::class);
+
+        $idContainer = $containerModel->addContainer($this->idSite, WebContext::ID, 'LiveContainer', 'desc', 0, 0, 0);
+        $container = $containerModel->getContainer($this->idSite, $idContainer);
+        $idLiveVersion = $container['draft']['idcontainerversion'];
+        $idTrigger = $this->addContainerTrigger($this->idSite, $idLiveVersion, null, 'LiveTrigger', ['eventName' => 'liveEvent']);
+
+        $containerModel->publishVersion($this->idSite, $idContainer, $idLiveVersion, 'live', 'superUserLogin');
+
+        FakeAccess::clearAccess(false);
+        FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesWrite = [$this->idSite];
+        FakeAccess::$idSitesAdmin = [];
+
+        $this->expectException(NoAccessException::class);
+        $this->expectExceptionMessage('tagmanager_publish_live_container');
+
+        $this->model->copyTrigger($this->idSite, $idLiveVersion, $idTrigger);
+    }
+
     private function updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name = 'MyName', $parameters = [], $conditions = [], $description = '')
     {
         return $this->model->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description);

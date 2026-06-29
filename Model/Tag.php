@@ -208,7 +208,11 @@ class Tag extends BaseModel
 
         $idDestinationVersion = $idContainerVersion;
         if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
+            $idDestinationVersion = $this->getDraftContainerVersion($idDestinationSite, $idDestinationContainer);
+            $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion, $idDestinationContainer);
             $idDestinationVersion = $this->copyReferencedVariablesAndTriggers($tag, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationContainer);
+        } else {
+            $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion);
         }
 
         $newName = $this->dao->makeCopyNameUnique($idDestinationSite, $tag['name'], $idDestinationVersion);

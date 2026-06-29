@@ -188,6 +188,7 @@ class Trigger extends BaseModel
     {
         $idDestinationSite = $idDestinationSite ?: $idSite;
         $idDestinationVersion = $idDestinationVersion ?: $idContainerVersion;
+        $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion);
 
         $trigger = $this->getContainerTrigger($idSite, $idContainerVersion, $idTrigger);
         $existingTrigger = $this->findTriggerByName($idDestinationSite, $idDestinationVersion, $trigger['name']);
@@ -229,6 +230,9 @@ class Trigger extends BaseModel
         $idDestinationVersion = $idContainerVersion;
         if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
             $idDestinationVersion = $this->getDraftContainerVersion($idDestinationSite, $idDestinationContainer);
+            $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion, $idDestinationContainer);
+        } else {
+            $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion);
         }
 
         $trigger = $this->getContainerTrigger($idSite, $idContainerVersion, $idTrigger);

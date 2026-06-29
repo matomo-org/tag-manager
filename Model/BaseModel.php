@@ -12,6 +12,8 @@ namespace Piwik\Plugins\TagManager\Model;
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
 use Piwik\Piwik;
+use Piwik\Plugins\TagManager\Dao\ContainerVersionsDao;
+use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Site;
 
 class BaseModel
@@ -56,5 +58,25 @@ class BaseModel
         }
         // Make sure that the type is int
         return intval($idContainerVersion);
+    }
+
+    protected function checkWriteCapabilityForContainerVersion(int $idSite, int $idContainerVersion, ?string $idContainer = null): void
+    {
+        if (empty($idContainer)) {
+            $idContainer = StaticContainer::get(ContainerVersionsDao::class)->getContainerIdByVersion($idSite, $idContainerVersion);
+        }
+
+        if (empty($idContainer)) {
+            // Some legacy fixtures and version-only copy paths don't have a backing container-version record.
+            // In that case still require write access for the site, but skip the live-release capability check.
+            StaticContainer::get(AccessValidator::class)->checkWriteCapability($idSite);
+            return;
+        }
+
+        StaticContainer::get(AccessValidator::class)->checkWriteCapabilityForContainerVersion(
+            $idSite,
+            $idContainer,
+            $idContainerVersion
+        );
     }
 }

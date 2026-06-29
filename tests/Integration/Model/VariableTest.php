@@ -909,6 +909,28 @@ class VariableTest extends IntegrationTestCase
         $this->assertEquals($variable1, $variable2, 'The copied referenced variable should match');
     }
 
+    public function testCopyVariableRejectsWriteUserWhenDestinationVersionReleasedToLive()
+    {
+        $containerModel = StaticContainer::get(Container::class);
+
+        $idContainer = $containerModel->addContainer($this->idSite, WebContext::ID, 'LiveContainer', 'desc', 0, 0, 0);
+        $container = $containerModel->getContainer($this->idSite, $idContainer);
+        $idLiveVersion = $container['draft']['idcontainerversion'];
+        $idVariable = $this->addContainerVariable($this->idSite, $idLiveVersion, null, 'LiveVariable', ['dataLayerName' => 'liveValue'], '');
+
+        $containerModel->publishVersion($this->idSite, $idContainer, $idLiveVersion, 'live', 'superUserLogin');
+
+        FakeAccess::clearAccess(false);
+        FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesWrite = [$this->idSite];
+        FakeAccess::$idSitesAdmin = [];
+
+        $this->expectException(NoAccessException::class);
+        $this->expectExceptionMessage('tagmanager_publish_live_container');
+
+        $this->model->copyVariable($this->idSite, $idLiveVersion, $idVariable);
+    }
+
     private function addContainerVariable($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $defaultValue = '', $lookupTable = [], $description = '')
     {
         if (!isset($type)) {

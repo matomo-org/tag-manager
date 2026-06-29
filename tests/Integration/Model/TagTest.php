@@ -1214,6 +1214,30 @@ class TagTest extends IntegrationTestCase
         $this->model->copyTag($this->idSite, $this->containerVersion1, $idTag, $this->idSite2, $idDestinationContainer);
     }
 
+    public function testCopyTagRejectsWriteUserWhenDestinationVersionReleasedToLive()
+    {
+        $containerModel = StaticContainer::get(Container::class);
+        $triggerModel = StaticContainer::get(Trigger::class);
+
+        $idContainer = $containerModel->addContainer($this->idSite, WebContext::ID, 'LiveContainer', 'desc', 0, 0, 0);
+        $container = $containerModel->getContainer($this->idSite, $idContainer);
+        $idLiveVersion = $container['draft']['idcontainerversion'];
+        $idTrigger = $triggerModel->addContainerTrigger($this->idSite, $idLiveVersion, WindowLoadedTrigger::ID, 'LiveTrigger', [], []);
+        $idTag = $this->addContainerTag($this->idSite, $idLiveVersion, null, 'LiveTag', ['customHtml' => '<script>live</script>'], [$idTrigger]);
+
+        $containerModel->publishVersion($this->idSite, $idContainer, $idLiveVersion, 'live', 'superUserLogin');
+
+        FakeAccess::clearAccess(false);
+        FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesWrite = [$this->idSite];
+        FakeAccess::$idSitesAdmin = [];
+
+        $this->expectException(NoAccessException::class);
+        $this->expectExceptionMessage('tagmanager_publish_live_container');
+
+        $this->model->copyTag($this->idSite, $idLiveVersion, $idTag);
+    }
+
     private function addContainerTag($idSite, $idContainerVersion = 5, $type = null, $name = 'MyName', $parameters = [], $fireTriggerIds = [1], $blockTriggerIds = [], $fireLimit = null, $fireDelay = 0, $priority = 9999, $startDate = null, $endDate = null, $description = '', $status = '')
     {
         if (!isset($type)) {
