@@ -1307,6 +1307,9 @@ class API extends \Piwik\Plugin\API
     {
         $this->accessValidator->checkWriteCapability($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
+        if ($this->containers->hasRelease($idSite, $idContainer, Environment::ENVIRONMENT_LIVE)) {
+            $this->accessValidator->checkPublishLiveEnvironmentCapability($idSite);
+        }
 
         $this->containers->deleteContainer($idSite, $idContainer);
         Piwik::postEvent('TagManager.deleteContainer.end', array(array(

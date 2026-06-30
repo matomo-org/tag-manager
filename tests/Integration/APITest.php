@@ -270,6 +270,26 @@ class APITest extends IntegrationTestCase
         $this->api->deleteContainer($this->idSite, $this->idContainer);
     }
 
+    public function test_deleteContainer_shouldFailWhenWriteUserTargetsLiveReleasedContainer()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
+
+        $this->setWriteUser();
+        $this->api->deleteContainer($this->idSite, $this->idContainer);
+    }
+
+    public function test_deleteContainer_shouldSucceedWhenWriteUserTargetsDraftOnlyContainer()
+    {
+        $this->setWriteUser();
+        $this->api->deleteContainer($this->idSite, $this->idContainerQuotes);
+
+        $this->setAdminUser();
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage($this->idContainerQuotes);
+        $this->api->getContainer($this->idSite, $this->idContainerQuotes);
+    }
+
     public function test_publishContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
