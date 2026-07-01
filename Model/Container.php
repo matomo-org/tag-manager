@@ -320,6 +320,15 @@ class Container extends BaseModel
         }
     }
 
+    public function hasRelease($idSite, $idContainer, $environment)
+    {
+        $this->checkContainerExists($idSite, $idContainer);
+
+        $release = $this->releasesDao->getReleaseForContainerVersion($idSite, $idContainer, $environment);
+
+        return !empty($release);
+    }
+
     public function publishVersion($idSite, $idContainer, $idContainerVersion, $environment, $releaseLogin)
     {
         $this->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
