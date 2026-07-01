@@ -193,6 +193,11 @@ describe("TagManager", function () {
         await page.evaluate(function () {
             $('#notificationContainer .disablePreviewDebug').click();
         });
+        // Disabling preview issues an ajax call and then reloads the page; wait for that to settle
+        // (matching the enable-preview test) before asserting, otherwise the reload is still in
+        // flight and preview is not actually torn down for the following specs.
+        await page.waitForNetworkIdle();
+        await page.waitForTimeout(250);
         await page.waitForNetworkIdle();
         await page.waitForSelector('#content .card-content', { visible: true });
         await capture.page(page, 'preview_disable');
