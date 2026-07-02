@@ -251,9 +251,21 @@ describe("TagManager", function () {
         await page.evaluate(() => $('select[name="restrictTagManagerAccess"]').click());
         await page.evaluate(() => $('li:nth-child(2)').click());
         await page.evaluate(() => $('#TagManagerPluginSettings .pluginsSettingsSubmit').click());
-        await page.waitForSelector('.confirm-password-modal.open', { visible: true });
-        await page.type('.confirm-password-modal.open input[type=password]', superUserPassword);
-        await page.click('.confirm-password-modal.open .confirm-password-btn');
+
+        // Confirm through the password modal by driving it in-page: the modal-close button is treated as
+        // not clickable via a native click under the modern headless Chrome, and its confirm button stays
+        // disabled until the password value reaches the Vue model. Set the value (dispatching input so the
+        // model updates) and trigger the confirm button through jQuery, scoped to the open modal.
+        await page.waitForSelector('.confirm-password-modal.modal.open input[type=password]', { visible: true });
+        await page.evaluate((password) => {
+            var input = document.querySelector('.confirm-password-modal.modal.open input[type=password]');
+            input.value = password;
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+        }, superUserPassword);
+        await page.waitForTimeout(250);
+        await page.evaluate(() => $('.confirm-password-modal.modal.open .confirm-password-btn').click());
+
         await page.waitForNetworkIdle();
         await page.mouse.move(-10, -10);
         expect(await page.screenshotSelector('#TagManagerPluginSettings')).to.matchImage('update_restrict_setting');
