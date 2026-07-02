@@ -187,17 +187,7 @@ describe("TagManager", function () {
     });
 
     it('should be able to disable preview', async function () {
-        // Trigger the link's handler via jQuery rather than page.click(): under the modern headless
-        // Chrome a native click on this notification-bar link hangs in Puppeteer's actionability
-        // checks. The sibling preview tests already click through jQuery for the same reason.
-        await page.evaluate(function () {
-            $('#notificationContainer .disablePreviewDebug').click();
-        });
-        // Disabling preview issues an ajax call and then reloads the page; wait for that to settle
-        // (matching the enable-preview test) before asserting, otherwise the reload is still in
-        // flight and preview is not actually torn down for the following specs.
-        await page.waitForNetworkIdle();
-        await page.waitForTimeout(250);
+        await page.click('#notificationContainer .disablePreviewDebug');
         await page.waitForNetworkIdle();
         await page.waitForSelector('#content .card-content', { visible: true });
         await capture.page(page, 'preview_disable');
