@@ -3,6 +3,7 @@
         this.fire = function () {
 
             var measurementId = parameters.get("measurementId");
+            var serializedMeasurementId = JSON.stringify(String(measurementId));
 
             var gtmScript = document.createElement("script");
             gtmScript.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
@@ -13,7 +14,7 @@
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${measurementId}');
+              gtag('config', ` + serializedMeasurementId + `);
             `;
 
           document.head.appendChild(gtmScript);
