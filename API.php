@@ -1148,6 +1148,9 @@ class API extends \Piwik\Plugin\API
     {
         $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
+        if ($this->containers->hasRelease($idSite, $idContainer, Environment::ENVIRONMENT_LIVE)) {
+            $this->accessValidator->checkPublishLiveEnvironmentCapability($idSite);
+        }
         $this->containers->checkContainerExists($idSite, $idContainer);
 
         $this->containers->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
