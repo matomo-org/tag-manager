@@ -391,6 +391,41 @@ class APITest extends IntegrationTestCase
         $this->api->updateContainer($this->idSite, '9999', 'TheName');
     }
 
+    public function test_updateContainer_shouldFailWhenWriteUserTargetsLiveReleasedContainer()
+    {
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_publish_live_container Fake exception');
+
+        $this->setWriteUser();
+        $this->api->updateContainer($this->idSite, $this->idContainer, 'TheName', '', 1, 0, 1);
+    }
+
+    public function test_updateContainer_shouldSucceedWhenWriteUserTargetsDraftOnlyContainer()
+    {
+        $this->setWriteUser();
+        $this->api->updateContainer($this->idSite, $this->idContainerDraftOnly, 'TheName', '', 1, 0, 1);
+
+        $container = $this->api->getContainer($this->idSite, $this->idContainerDraftOnly);
+        $this->assertSame('TheName', $container['name']);
+        $this->assertEquals(1, $container['ignoreGtmDataLayer']);
+        $this->assertEquals(1, $container['activelySyncGtmDataLayer']);
+    }
+
+    public function test_updateContainer_shouldSucceedWhenWriteUserHasPublishLiveCapability()
+    {
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(
+            PublishLiveContainer::ID => array($this->idSite),
+        );
+
+        $this->api->updateContainer($this->idSite, $this->idContainer, 'TheName', '', 1, 0, 1);
+
+        $container = $this->api->getContainer($this->idSite, $this->idContainer);
+        $this->assertSame('TheName', $container['name']);
+        $this->assertEquals(1, $container['ignoreGtmDataLayer']);
+        $this->assertEquals(1, $container['activelySyncGtmDataLayer']);
+    }
+
     public function test_updateContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);

@@ -1133,7 +1133,7 @@ class API extends \Piwik\Plugin\API
     }
 
     /**
-     * Updates the name and description of the given container.
+     * Updates the given container and its settings.
      *
      * @param int $idSite The ID of the site this container belongs to.
      * @param string $idContainer  The ID of the container you want to update, for example "6OMh6taM".
@@ -1142,12 +1142,15 @@ class API extends \Piwik\Plugin\API
      * @param int $ignoreGtmDataLayer Optionally indicate that we should ignore GTM dataLayer values
      * @param int $isTagFireLimitAllowedInPreviewMode Optionally indicate that we should respect fire tag limits when in preview mode
      * @param int $activelySyncGtmDataLayer Optionally indicate that we should actively sync new events from the GTM dataLayer to MTM
-     * @return string The ID of the created container.
+     * @return string The ID of the updated container.
      */
     public function updateContainer($idSite, $idContainer, $name, $description = '', $ignoreGtmDataLayer = 0, $isTagFireLimitAllowedInPreviewMode = 0, $activelySyncGtmDataLayer = 0)
     {
         $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
+        if ($this->containers->hasRelease($idSite, $idContainer, Environment::ENVIRONMENT_LIVE)) {
+            $this->accessValidator->checkPublishLiveEnvironmentCapability($idSite);
+        }
         $this->containers->checkContainerExists($idSite, $idContainer);
 
         $this->containers->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
