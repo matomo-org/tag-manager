@@ -89,7 +89,7 @@
             </td>
             <td
               class="lastUpdated"
-              :title="translate('TagManager_CreatedOnX', variable.created_date_pretty)"
+              :title="translate('TagManager_CreatedOnX', variable.created_date_pretty || '')"
             >
               <span>{{ variable.updated_date_pretty }}</span>
             </td>
@@ -99,7 +99,7 @@
             >
               <a
                 class="table-action icon-edit"
-                @click="editVariable(variable.idvariable, variable.type)"
+                @click="editVariable(variable.idvariable ?? 0)"
                 :title="translate('TagManager_EditVariable')"
               />
               <a
@@ -114,7 +114,7 @@
               <a
                 v-show="!variable.typeMetadata?.isCustomTemplate || canUseCustomTemplates"
                 class="table-action icon-delete"
-                @click="deleteVariable(variable)"
+                @click="deleteVariable(variable as DeepReadonly<Variable>)"
                 :title="translate('TagManager_DeleteX', translate('TagManager_Variable'))"
               />
             </td>
@@ -234,7 +234,7 @@ import {
   Variable, VariableType,
 } from '../types';
 
-interface VariableListState {
+export interface VariableListState {
   hasWriteAccess: boolean;
   variableReferences: VariableReference[];
   containerVariables: ContainerVariableCategory[];

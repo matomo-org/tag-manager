@@ -8,16 +8,16 @@
   <div class="manageTag">
     <div v-if="!editMode">
       <TagList
-        :id-container="idContainer"
-        :id-container-version="idContainerVersion"
+        :id-container="idContainer ?? ''"
+        :id-container-version="idContainerVersion ?? 0"
         :tags-help-text="tagsHelpText"
       />
     </div>
     <div v-if="editMode">
       <TagEdit
-        :id-container="idContainer"
-        :id-container-version="idContainerVersion"
-        :id-tag="idTag"
+        :id-container="idContainer ?? ''"
+        :id-container-version="idContainerVersion ?? 0"
+        :id-tag="idTag ?? undefined"
       />
     </div>
   </div>
@@ -69,12 +69,12 @@ export default defineComponent({
     },
   },
   computed: {
-    idTag() {
+    idTag(): number | null {
       const idTag = MatomoUrl.hashParsed.value.idTag as string;
       if (!this.isAddAllowed && idTag === '0') {
         return null;
       }
-      return idTag ? parseInt(idTag, 10) : idTag;
+      return idTag ? parseInt(idTag, 10) : null;
     },
     editMode() {
       return typeof this.idTag === 'number';

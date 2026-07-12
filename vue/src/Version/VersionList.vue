@@ -95,7 +95,7 @@
               <a
                 class="table-action icon-rocket"
                 v-show="hasWriteAccess && (hasCustomTemplatesCapability || canPublishToLive)"
-                @click="publishVersion(version)"
+                @click="publishVersion(version as Version)"
                 :title="translate('TagManager_PublishVersion', version.name)"
               />
               <a
@@ -108,7 +108,7 @@
                 target="_blank"
                 class="table-action icon-export"
                 @click.prevent="exportVersion(version.idcontainerversion, version.name);"
-                :href="getExportUrl(version)"
+                :href="getExportUrl(version as Version)"
                 :title="translate('TagManager_ExportX', translate('TagManager_Version'))"
               />
               <a
@@ -121,7 +121,7 @@
                 class="table-action icon-delete"
                 v-show="version.releases.length === 0 && hasWriteAccess
                 && hasCustomTemplatesCapability"
-                @click="deleteVersion(version)"
+                @click="deleteVersion(version as Version)"
                 :title="translate('TagManager_DeleteX', translate('TagManager_Version'))"
               />
             </td>
@@ -175,7 +175,7 @@
       id="confirmPublishVersion"
       ref="confirmPublishVersion"
     >
-      <h2>{{ translate('TagManager_PublishVersion', versionToBePublished?.name) }}</h2>
+      <h2>{{ translate('TagManager_PublishVersion', versionToBePublished?.name || '') }}</h2>
       <div v-show="availableEnvironmentsToPublish.environnments.length">
         <div>
           <Field
@@ -232,7 +232,7 @@ import VersionsStore from './Versions.store';
 import { Release, Version } from '../types';
 import AvailableEnvironmentsStore from '../AvailableEnvironments.store';
 
-interface VersionListState {
+export interface VersionListState {
   versionToBePublished: Version|null;
   versionSearch: string;
 }
@@ -291,7 +291,7 @@ export default defineComponent({
     enableDebugMode(idContainerVersion: number) {
       tagManagerHelper.enablePreviewMode(this.idContainer, idContainerVersion);
     },
-    exportVersion(idContainerVersion: number, versionName: string) {
+    exportVersion(idContainerVersion: number | null, versionName: string) {
       const params: QueryParameters = {
         module: 'API',
         method: 'TagManager.exportContainerVersion',

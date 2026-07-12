@@ -8,14 +8,14 @@
   <div class="manageVersion">
     <div v-if="!editMode">
       <VersionList
-        :id-container="idContainer"
+        :id-container="idContainer ?? ''"
         :versions-help-text="versionsHelpText"
       />
     </div>
     <div v-if="editMode">
       <VersionEdit
-        :id-container="idContainer"
-        :id-container-version="idContainerVersion"
+        :id-container="idContainer ?? ''"
+        :id-container-version="Number(idContainerVersion ?? 0)"
       />
     </div>
   </div>

@@ -559,7 +559,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       }, null, 8, _hoisted_3$n),
       vue.createElementVNode("label", {
         for: _ctx.name,
-        innerHTML: _ctx.$sanitize(_ctx.title)
+        innerHTML: _ctx.$sanitize(_ctx.title || "")
       }, null, 8, _hoisted_4$i)
     ]);
   }
@@ -640,7 +640,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       _cache[3] || (_cache[3] = vue.createElementVNode("br", null, null, -1)),
       vue.createElementVNode("label", {
         for: _ctx.name,
-        innerHTML: _ctx.$sanitize(_ctx.title)
+        innerHTML: _ctx.$sanitize(_ctx.title || "")
       }, null, 8, _hoisted_4$h)
     ]);
   }
@@ -668,14 +668,14 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         "model-value": _ctx.modelValue,
         id: _ctx.name,
         name: _ctx.name,
-        "variable-type-name": _ctx.title,
+        "variable-type-name": _ctx.title || "",
         "variable-type": _ctx.uiControlAttributes.variableType,
         "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => _ctx.$emit("update:modelValue", $event))
       }, null, 8, ["model-value", "id", "name", "variable-type-name", "variable-type"]),
       vue.createElementVNode("label", {
         for: _ctx.name,
         style: { "font-size": "0.8rem" },
-        innerHTML: _ctx.$sanitize(_ctx.title)
+        innerHTML: _ctx.$sanitize(_ctx.title || "")
       }, null, 8, _hoisted_1$r)
     ]);
   }
@@ -1515,11 +1515,11 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     return vue.openBlock(), vue.createElementBlock("li", {
                       key: index2,
                       class: vue.normalizeClass(["collection-item avatar", {
-                        disabledTemplate: this.isVariableTemplateDisabled[variableTemplate.id],
+                        disabledTemplate: _ctx.isVariableTemplateDisabled[variableTemplate.id],
                         [`templateType${variableTemplate.id}`]: true
                       }]),
                       onClick: ($event) => _ctx.createVariableType(variableTemplate),
-                      title: !this.isVariableTemplateDisabled[variableTemplate.id] ? "" : _ctx.translate(
+                      title: !_ctx.isVariableTemplateDisabled[variableTemplate.id] ? "" : _ctx.translate(
                         "TagManager_UseCustomTemplateCapabilityPermissionRequiredDescription",
                         "",
                         _ctx.translate("TagManager_CapabilityUseCustomTemplates"),
@@ -1869,7 +1869,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   ]),
                   vue.createElementVNode("td", {
                     class: "lastUpdated",
-                    title: _ctx.translate("TagManager_CreatedOnX", variable.created_date_pretty)
+                    title: _ctx.translate("TagManager_CreatedOnX", variable.created_date_pretty || "")
                   }, [
                     vue.createElementVNode("span", null, vue.toDisplayString(variable.updated_date_pretty), 1)
                   ], 8, _hoisted_18$b),
@@ -1878,7 +1878,10 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   }, [
                     vue.createElementVNode("a", {
                       class: "table-action icon-edit",
-                      onClick: ($event) => _ctx.editVariable(variable.idvariable, variable.type),
+                      onClick: ($event) => {
+                        var _a3;
+                        return _ctx.editVariable((_a3 = variable.idvariable) != null ? _a3 : 0);
+                      },
                       title: _ctx.translate("TagManager_EditVariable")
                     }, null, 8, _hoisted_19$b),
                     vue.withDirectives(vue.createElementVNode("a", {
@@ -2035,7 +2038,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         if (!this.isAddAllowed && idVariable === "0") {
           return null;
         }
-        return idVariable ? parseInt(idVariable, 10) : idVariable;
+        return idVariable ? parseInt(idVariable, 10) : null;
       },
       editMode() {
         return typeof this.idVariable === "number";
@@ -2046,21 +2049,22 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   const _hoisted_2$l = { key: 0 };
   const _hoisted_3$j = { key: 1 };
   function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
+    var _a2, _b2, _c, _d, _e;
     const _component_VariableList = vue.resolveComponent("VariableList");
     const _component_VariableEdit = vue.resolveComponent("VariableEdit");
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$o, [
       !_ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$l, [
         vue.createVNode(_component_VariableList, {
-          "id-container-version": _ctx.idContainerVersion,
-          "id-container": _ctx.idContainer,
+          "id-container-version": (_a2 = _ctx.idContainerVersion) != null ? _a2 : 0,
+          "id-container": (_b2 = _ctx.idContainer) != null ? _b2 : "",
           "variables-help-text": _ctx.variablesHelpText
         }, null, 8, ["id-container-version", "id-container", "variables-help-text"])
       ])) : vue.createCommentVNode("", true),
       _ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$j, [
         vue.createVNode(_component_VariableEdit, {
-          "id-container-version": _ctx.idContainerVersion,
-          "id-container": _ctx.idContainer,
-          "id-variable": _ctx.idVariable
+          "id-container-version": (_c = _ctx.idContainerVersion) != null ? _c : 0,
+          "id-container": (_d = _ctx.idContainer) != null ? _d : "",
+          "id-variable": (_e = _ctx.idVariable) != null ? _e : void 0
         }, null, 8, ["id-container-version", "id-container", "id-variable"])
       ])) : vue.createCommentVNode("", true)
     ]);
@@ -3180,7 +3184,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   ]),
                   vue.createElementVNode("td", {
                     class: "lastUpdated",
-                    title: _ctx.translate("TagManager_CreatedOnX", trigger.created_date_pretty)
+                    title: _ctx.translate("TagManager_CreatedOnX", trigger.created_date_pretty || "")
                   }, [
                     vue.createElementVNode("span", null, vue.toDisplayString(trigger.updated_date_pretty), 1)
                   ], 8, _hoisted_18$9),
@@ -3189,7 +3193,10 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   }, [
                     vue.createElementVNode("a", {
                       class: "table-action icon-edit",
-                      onClick: ($event) => _ctx.editTrigger(trigger.idtrigger, trigger.type),
+                      onClick: ($event) => {
+                        var _a3;
+                        return _ctx.editTrigger((_a3 = trigger.idtrigger) != null ? _a3 : 0);
+                      },
                       title: _ctx.translate("TagManager_EditTrigger")
                     }, null, 8, _hoisted_19$9),
                     vue.withDirectives(vue.createElementVNode("a", {
@@ -3304,7 +3311,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         if (!this.isAddAllowed && idTrigger === "0") {
           return null;
         }
-        return idTrigger ? parseInt(idTrigger, 10) : idTrigger;
+        return idTrigger ? parseInt(idTrigger, 10) : null;
       },
       editMode() {
         return typeof this.idTrigger === "number";
@@ -3313,14 +3320,15 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$l = { class: "manageTrigger" };
   function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+    var _a2, _b2, _c, _d, _e;
     const _component_TriggerList = vue.resolveComponent("TriggerList");
     const _component_TriggerEdit = vue.resolveComponent("TriggerEdit");
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$l, [
       vue.withDirectives(vue.createElementVNode("div", null, [
         vue.createElementVNode("div", null, [
           vue.createVNode(_component_TriggerList, {
-            "id-container": _ctx.idContainer,
-            "id-container-version": _ctx.idContainerVersion,
+            "id-container": (_a2 = _ctx.idContainer) != null ? _a2 : "",
+            "id-container-version": (_b2 = _ctx.idContainerVersion) != null ? _b2 : 0,
             "triggers-help-text": _ctx.triggersHelpText
           }, null, 8, ["id-container", "id-container-version", "triggers-help-text"])
         ])
@@ -3330,9 +3338,9 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       vue.withDirectives(vue.createElementVNode("div", null, [
         vue.createElementVNode("div", null, [
           vue.createVNode(_component_TriggerEdit, {
-            "id-container": _ctx.idContainer,
-            "id-container-version": _ctx.idContainerVersion,
-            "id-trigger": _ctx.idTrigger
+            "id-container": (_c = _ctx.idContainer) != null ? _c : "",
+            "id-container-version": (_d = _ctx.idContainerVersion) != null ? _d : 0,
+            "id-trigger": (_e = _ctx.idTrigger) != null ? _e : void 0
           }, null, 8, ["id-container", "id-container-version", "id-trigger"])
         ])
       ], 512), [
@@ -4374,7 +4382,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         "content-title": _ctx.editTitle
       }, {
         default: vue.withCtx(() => {
-          var _a2, _b2, _c, _d, _e;
+          var _a2, _b2, _c, _d, _e, _f, _g;
           return [
             vue.withDirectives(vue.createElementVNode("p", null, [
               vue.createElementVNode("span", _hoisted_2$g, [
@@ -4564,7 +4572,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         vue.createElementVNode("div", _hoisted_17$8, [
                           vue.createVNode(_component_TagDateInput, {
                             name: "start_date",
-                            "model-value": _ctx.tag.start_date,
+                            "model-value": (_e = _ctx.tag.start_date) != null ? _e : void 0,
                             "onUpdate:modelValue": _cache[14] || (_cache[14] = ($event) => {
                               _ctx.tag.start_date = $event;
                               _ctx.setValueHasChanged();
@@ -4591,7 +4599,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                               innerHTML: _ctx.$sanitize(_ctx.translate(
                                 "TagManager_CurrentTimeInLocalTimezone",
                                 "<strong>",
-                                _ctx.currentTime,
+                                _ctx.currentTime || "",
                                 "</strong>"
                               ))
                             }, null, 8, _hoisted_22$8)
@@ -4609,7 +4617,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                         vue.createElementVNode("div", _hoisted_28$4, [
                           vue.createVNode(_component_TagDateInput, {
                             name: "end_date",
-                            "model-value": _ctx.tag.end_date,
+                            "model-value": (_f = _ctx.tag.end_date) != null ? _f : void 0,
                             "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => {
                               _ctx.tag.end_date = $event;
                               _ctx.setValueHasChanged();
@@ -4636,7 +4644,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                               innerHTML: _ctx.$sanitize(_ctx.translate(
                                 "TagManager_CurrentTimeInLocalTimezone",
                                 "<strong>",
-                                _ctx.currentTime,
+                                _ctx.currentTime || "",
                                 "</strong>"
                               ))
                             }, null, 8, _hoisted_33$2)
@@ -4646,7 +4654,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     ])
                   ])
                 ], 512), [
-                  [vue.vShow, _ctx.showAdvanced && ((_e = _ctx.tag.typeMetadata) == null ? void 0 : _e.hasAdvancedSettings)]
+                  [vue.vShow, _ctx.showAdvanced && ((_g = _ctx.tag.typeMetadata) == null ? void 0 : _g.hasAdvancedSettings)]
                 ]),
                 vue.withDirectives(vue.createElementVNode("div", {
                   class: "alert alert-danger",
@@ -5101,13 +5109,13 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                           class: "chip",
                           href: "",
                           onClick: vue.withModifiers(($event) => _ctx.editTrigger(fireTriggerId), ["prevent"]),
-                          title: this.triggers[fireTriggerId]
-                        }, vue.toDisplayString(_ctx.truncateText(this.triggers[fireTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_17$7)) : vue.createCommentVNode("", true),
+                          title: _ctx.triggers[fireTriggerId]
+                        }, vue.toDisplayString(_ctx.truncateText(_ctx.triggers[fireTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_17$7)) : vue.createCommentVNode("", true),
                         !_ctx.hasWriteAccess ? (vue.openBlock(), vue.createElementBlock("span", {
                           key: 1,
                           class: "chip",
-                          title: this.triggers[fireTriggerId]
-                        }, vue.toDisplayString(_ctx.truncateText(this.triggers[fireTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_18$7)) : vue.createCommentVNode("", true)
+                          title: _ctx.triggers[fireTriggerId]
+                        }, vue.toDisplayString(_ctx.truncateText(_ctx.triggers[fireTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_18$7)) : vue.createCommentVNode("", true)
                       ]);
                     }), 128)),
                     vue.withDirectives(vue.createElementVNode("span", null, [
@@ -5121,14 +5129,14 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                             class: "chip",
                             href: "",
                             onClick: vue.withModifiers(($event) => _ctx.editTrigger(blockTriggerId), ["prevent"]),
-                            title: this.triggers[blockTriggerId]
-                          }, vue.toDisplayString(_ctx.truncateText(this.triggers[blockTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_19$7), [
+                            title: _ctx.triggers[blockTriggerId]
+                          }, vue.toDisplayString(_ctx.truncateText(_ctx.triggers[blockTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_19$7), [
                             [vue.vShow, _ctx.hasWriteAccess]
                           ]),
                           vue.withDirectives(vue.createElementVNode("span", {
                             class: "chip",
-                            title: this.triggers[blockTriggerId]
-                          }, vue.toDisplayString(_ctx.truncateText(this.triggers[blockTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_20$7), [
+                            title: _ctx.triggers[blockTriggerId]
+                          }, vue.toDisplayString(_ctx.truncateText(_ctx.triggers[blockTriggerId], _ctx.triggerTruncateLength)), 9, _hoisted_20$7), [
                             [vue.vShow, !_ctx.hasWriteAccess]
                           ])
                         ]);
@@ -5139,7 +5147,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                   ]),
                   vue.createElementVNode("td", {
                     class: "lastUpdated",
-                    title: _ctx.translate("TagManager_CreatedOnX", tag.created_date_pretty)
+                    title: _ctx.translate("TagManager_CreatedOnX", tag.created_date_pretty || "")
                   }, [
                     vue.createElementVNode("span", null, vue.toDisplayString(tag.updated_date_pretty), 1)
                   ], 8, _hoisted_21$7),
@@ -5162,7 +5170,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                     ]),
                     vue.createElementVNode("a", {
                       class: "table-action icon-edit",
-                      onClick: ($event) => _ctx.editTag(tag.idtag, tag.type),
+                      onClick: ($event) => _ctx.editTag(tag.idtag),
                       title: _ctx.translate("TagManager_EditTag")
                     }, null, 8, _hoisted_24$4),
                     vue.withDirectives(vue.createElementVNode("a", {
@@ -5285,7 +5293,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         if (!this.isAddAllowed && idTag === "0") {
           return null;
         }
-        return idTag ? parseInt(idTag, 10) : idTag;
+        return idTag ? parseInt(idTag, 10) : null;
       },
       editMode() {
         return typeof this.idTag === "number";
@@ -5296,21 +5304,22 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   const _hoisted_2$e = { key: 0 };
   const _hoisted_3$c = { key: 1 };
   function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+    var _a2, _b2, _c, _d, _e;
     const _component_TagList = vue.resolveComponent("TagList");
     const _component_TagEdit = vue.resolveComponent("TagEdit");
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$g, [
       !_ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$e, [
         vue.createVNode(_component_TagList, {
-          "id-container": _ctx.idContainer,
-          "id-container-version": _ctx.idContainerVersion,
+          "id-container": (_a2 = _ctx.idContainer) != null ? _a2 : "",
+          "id-container-version": (_b2 = _ctx.idContainerVersion) != null ? _b2 : 0,
           "tags-help-text": _ctx.tagsHelpText
         }, null, 8, ["id-container", "id-container-version", "tags-help-text"])
       ])) : vue.createCommentVNode("", true),
       _ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$c, [
         vue.createVNode(_component_TagEdit, {
-          "id-container": _ctx.idContainer,
-          "id-container-version": _ctx.idContainerVersion,
-          "id-tag": _ctx.idTag
+          "id-container": (_c = _ctx.idContainer) != null ? _c : "",
+          "id-container-version": (_d = _ctx.idContainerVersion) != null ? _d : 0,
+          "id-tag": (_e = _ctx.idTag) != null ? _e : void 0
         }, null, 8, ["id-container", "id-container-version", "id-tag"])
       ])) : vue.createCommentVNode("", true)
     ]);
@@ -6601,7 +6610,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         }, null, 8, _hoisted_29$2)
       ], 512),
       vue.createElementVNode("div", _hoisted_30$2, [
-        vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_PublishVersion", (_a2 = _ctx.versionToBePublished) == null ? void 0 : _a2.name)), 1),
+        vue.createElementVNode("h2", null, vue.toDisplayString(_ctx.translate("TagManager_PublishVersion", ((_a2 = _ctx.versionToBePublished) == null ? void 0 : _a2.name) || "")), 1),
         vue.withDirectives(vue.createElementVNode("div", null, [
           vue.createElementVNode("div", null, [
             vue.createVNode(_component_Field, {
@@ -6688,19 +6697,20 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   const _hoisted_2$a = { key: 0 };
   const _hoisted_3$9 = { key: 1 };
   function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+    var _a2, _b2, _c;
     const _component_VersionList = vue.resolveComponent("VersionList");
     const _component_VersionEdit = vue.resolveComponent("VersionEdit");
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$b, [
       !_ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$a, [
         vue.createVNode(_component_VersionList, {
-          "id-container": _ctx.idContainer,
+          "id-container": (_a2 = _ctx.idContainer) != null ? _a2 : "",
           "versions-help-text": _ctx.versionsHelpText
         }, null, 8, ["id-container", "versions-help-text"])
       ])) : vue.createCommentVNode("", true),
       _ctx.editMode ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3$9, [
         vue.createVNode(_component_VersionEdit, {
-          "id-container": _ctx.idContainer,
-          "id-container-version": _ctx.idContainerVersion
+          "id-container": (_b2 = _ctx.idContainer) != null ? _b2 : "",
+          "id-container-version": Number((_c = _ctx.idContainerVersion) != null ? _c : 0)
         }, null, 8, ["id-container", "id-container-version"])
       ])) : vue.createCommentVNode("", true)
     ]);
@@ -7500,6 +7510,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
   });
   const _hoisted_1$8 = { class: "manageContainer" };
   function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+    var _a2;
     const _component_ContainerList = vue.resolveComponent("ContainerList");
     const _component_ContainerEdit = vue.resolveComponent("ContainerEdit");
     return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$8, [
@@ -7509,7 +7520,9 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
         [vue.vShow, !_ctx.editMode]
       ]),
       vue.withDirectives(vue.createElementVNode("div", null, [
-        vue.createVNode(_component_ContainerEdit, { "id-container": _ctx.idContainer }, null, 8, ["id-container"])
+        vue.createVNode(_component_ContainerEdit, {
+          "id-container": (_a2 = _ctx.idContainer) != null ? _a2 : ""
+        }, null, 8, ["id-container"])
       ], 512), [
         [vue.vShow, _ctx.editMode]
       ])
@@ -7710,7 +7723,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               default: vue.withCtx(() => {
                 var _a3;
                 return [
-                  vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_ContainerX", (_a3 = _ctx.container) == null ? void 0 : _a3.name)), 1)
+                  vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_ContainerX", ((_a3 = _ctx.container) == null ? void 0 : _a3.name) || "")), 1)
                 ];
               }),
               _: 1
@@ -7747,8 +7760,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                           href: _ctx.linkTo("manageTags", { idTag: tag.idtag }),
                           title: _ctx.translate(
                             "TagManager_EntityDateTypeMetaInformation",
-                            tag.created_date_pretty,
-                            tag.updated_date_pretty,
+                            tag.created_date_pretty || "",
+                            tag.updated_date_pretty || "",
                             tag.type
                           )
                         }, vue.toDisplayString(tag.name), 9, _hoisted_9$4),
@@ -7793,8 +7806,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                           href: _ctx.linkTo("manageTriggers", { idTrigger: trigger.idtrigger }),
                           title: _ctx.translate(
                             "TagManager_EntityDateTypeMetaInformation",
-                            trigger.created_date_pretty,
-                            trigger.updated_date_pretty,
+                            trigger.created_date_pretty || "",
+                            trigger.updated_date_pretty || "",
                             trigger.type
                           )
                         }, vue.toDisplayString(trigger.name), 9, _hoisted_15$4),
@@ -7846,8 +7859,8 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                           href: _ctx.linkTo("manageVariables", { idVariable: variable.idvariable }),
                           title: _ctx.translate(
                             "TagManager_EntityDateTypeMetaInformation",
-                            variable.created_date_pretty,
-                            variable.updated_date_pretty,
+                            variable.created_date_pretty || "",
+                            variable.updated_date_pretty || "",
                             variable.type
                           )
                         }, vue.toDisplayString(variable.name), 9, _hoisted_20$4),
@@ -7884,56 +7897,60 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
               "help-text": _ctx.versionsHelpText,
               "edit-url": _ctx.linkTo("manageVersions")
             }, {
-              default: vue.withCtx(() => [
-                vue.createElementVNode("p", null, [
-                  vue.withDirectives(vue.createElementVNode("span", null, [
-                    vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_LastVersions")) + ": ", 1),
-                    (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.lastVersions, (lastVersion, index) => {
-                      return vue.openBlock(), vue.createElementBlock("span", { key: index }, [
-                        vue.createElementVNode("a", {
-                          title: _ctx.lastVersionLinkTitle(lastVersion),
-                          href: _ctx.linkTo(
-                            "manageVersions",
-                            { idContainerVersion: lastVersion.idcontainerversion }
-                          )
-                        }, vue.toDisplayString(lastVersion.name), 9, _hoisted_25$1),
-                        index !== _ctx.lastVersions.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_26$1, ", ")) : vue.createCommentVNode("", true)
-                      ]);
-                    }), 128))
-                  ], 512), [
-                    [vue.vShow, _ctx.lastVersions.length]
+              default: vue.withCtx(() => {
+                var _a3, _b3, _c;
+                return [
+                  vue.createElementVNode("p", null, [
+                    vue.withDirectives(vue.createElementVNode("span", null, [
+                      vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_LastVersions")) + ": ", 1),
+                      (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.lastVersions, (lastVersion, index) => {
+                        return vue.openBlock(), vue.createElementBlock("span", { key: index }, [
+                          vue.createElementVNode("a", {
+                            title: _ctx.lastVersionLinkTitle(lastVersion),
+                            href: _ctx.linkTo(
+                              "manageVersions",
+                              { idContainerVersion: lastVersion.idcontainerversion }
+                            )
+                          }, vue.toDisplayString(lastVersion.name), 9, _hoisted_25$1),
+                          index !== _ctx.lastVersions.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_26$1, ", ")) : vue.createCommentVNode("", true)
+                        ]);
+                      }), 128))
+                    ], 512), [
+                      [vue.vShow, _ctx.lastVersions.length]
+                    ]),
+                    vue.withDirectives(vue.createElementVNode("span", null, [
+                      _cache[10] || (_cache[10] = vue.createElementVNode("br", null, null, -1)),
+                      vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("TagManager_Environments")) + ": ", 1),
+                      (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(((_a3 = _ctx.container) == null ? void 0 : _a3.releases) || [], (release, index) => {
+                        var _a4, _b4;
+                        return vue.openBlock(), vue.createElementBlock("span", { key: index }, [
+                          vue.createElementVNode("span", {
+                            title: _ctx.releaseTooltip(release)
+                          }, vue.toDisplayString(_ctx.ucfirst(release.environment)), 9, _hoisted_27$1),
+                          index !== (((_b4 = (_a4 = _ctx.container) == null ? void 0 : _a4.releases) == null ? void 0 : _b4.length) || 0) - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_28$1, ", ")) : vue.createCommentVNode("", true)
+                        ]);
+                      }), 128))
+                    ], 512), [
+                      [vue.vShow, (_c = (_b3 = _ctx.container) == null ? void 0 : _b3.releases) == null ? void 0 : _c.length]
+                    ])
                   ]),
-                  vue.withDirectives(vue.createElementVNode("span", null, [
-                    _cache[10] || (_cache[10] = vue.createElementVNode("br", null, null, -1)),
-                    vue.createTextVNode(" " + vue.toDisplayString(_ctx.translate("TagManager_Environments")) + ": ", 1),
-                    (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.container.releases, (release, index) => {
-                      return vue.openBlock(), vue.createElementBlock("span", { key: index }, [
-                        vue.createElementVNode("span", {
-                          title: _ctx.releaseTooltip(release)
-                        }, vue.toDisplayString(_ctx.ucfirst(release.environment)), 9, _hoisted_27$1),
-                        index !== _ctx.container.releases.length - 1 ? (vue.openBlock(), vue.createElementBlock("span", _hoisted_28$1, ", ")) : vue.createCommentVNode("", true)
-                      ]);
-                    }), 128))
-                  ], 512), [
-                    [vue.vShow, _ctx.container.releases.length]
-                  ])
-                ]),
-                _cache[13] || (_cache[13] = vue.createElementVNode("hr", null, null, -1)),
-                vue.createElementVNode("a", {
-                  class: "btn-flat",
-                  href: _ctx.linkTo("manageVersions")
-                }, [
-                  _cache[11] || (_cache[11] = vue.createElementVNode("span", { class: "icon-edit" }, " ", -1)),
-                  vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_EditVersions")), 1)
-                ], 8, _hoisted_29$1),
-                vue.createElementVNode("a", {
-                  class: "btn-flat",
-                  href: _ctx.linkTo("manageVersions", { idContainerVersion: 0 })
-                }, [
-                  _cache[12] || (_cache[12] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
-                  vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewVersion")), 1)
-                ], 8, _hoisted_30$1)
-              ]),
+                  _cache[13] || (_cache[13] = vue.createElementVNode("hr", null, null, -1)),
+                  vue.createElementVNode("a", {
+                    class: "btn-flat",
+                    href: _ctx.linkTo("manageVersions")
+                  }, [
+                    _cache[11] || (_cache[11] = vue.createElementVNode("span", { class: "icon-edit" }, " ", -1)),
+                    vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_EditVersions")), 1)
+                  ], 8, _hoisted_29$1),
+                  vue.createElementVNode("a", {
+                    class: "btn-flat",
+                    href: _ctx.linkTo("manageVersions", { idContainerVersion: 0 })
+                  }, [
+                    _cache[12] || (_cache[12] = vue.createElementVNode("span", { class: "icon-add" }, " ", -1)),
+                    vue.createTextVNode(vue.toDisplayString(_ctx.translate("TagManager_CreateNewVersion")), 1)
+                  ], 8, _hoisted_30$1)
+                ];
+              }),
               _: 1
             }, 8, ["feature", "content-title", "help-text", "edit-url"])
           ])
@@ -8049,7 +8066,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
             ]),
             (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.containers, (containerEntry) => {
               return vue.openBlock(), vue.createElementBlock("li", {
-                title: this.htmlEntities(`${containerEntry.name} (${containerEntry.idcontainer})`),
+                title: _ctx.htmlEntities(`${containerEntry.name} (${containerEntry.idcontainer})`),
                 key: containerEntry.idcontainer
               }, [
                 vue.createElementVNode("a", {
@@ -8382,6 +8399,9 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
       }
     },
     methods: {
+      asComponent(component) {
+        return component;
+      },
       onSiteChange() {
         var _a2;
         this.installInstructions = [];
@@ -8665,7 +8685,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
                       "model-value": _ctx.environment,
                       "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => {
                         _ctx.environment = $event;
-                        this.$emit("fetchInstallInstructions");
+                        _ctx.$emit("fetchInstallInstructions");
                       }),
                       options: _ctx.environments,
                       disabled: _ctx.environments.length <= 1,
@@ -8723,7 +8743,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
           key: 0,
           innerHTML: _ctx.$sanitize(_ctx.getCongratulationsText)
         }, null, 8, _hoisted_22$2)) : (vue.openBlock(), vue.createElementBlock("li", _hoisted_23$1, [
-          (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(_ctx.testComponent), { site: _ctx.site }, null, 8, ["site"]))
+          (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(_ctx.asComponent(_ctx.testComponent)), { site: _ctx.site }, null, 8, ["site"]))
         ]))
       ], 64)) : vue.createCommentVNode("", true)
     ]);

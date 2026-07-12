@@ -175,7 +175,7 @@
                   <div class="tagStartDate">
                     <TagDateInput
                       name="start_date"
-                      :model-value="tag.start_date"
+                      :model-value="tag.start_date ?? undefined"
                       @update:model-value="tag.start_date = $event; setValueHasChanged();"
                       default-time="00:00:00"
                     />
@@ -197,7 +197,7 @@
                       v-html="$sanitize(translate(
                         'TagManager_CurrentTimeInLocalTimezone',
                         '&lt;strong&gt;',
-                        currentTime,
+                        currentTime || '',
                         '&lt;/strong&gt;',
                       ))"
                     />
@@ -218,7 +218,7 @@
                   <div class="tagEndDate">
                     <TagDateInput
                       name="end_date"
-                      :model-value="tag.end_date"
+                      :model-value="tag.end_date ?? undefined"
                       @update:model-value="tag.end_date = $event; setValueHasChanged();"
                       default-time="23:59:59"
                     />
@@ -240,7 +240,7 @@
                       v-html="$sanitize(translate(
                         'TagManager_CurrentTimeInLocalTimezone',
                         '&lt;strong&gt;',
-                        currentTime,
+                        currentTime || '',
                         '&lt;/strong&gt;',
                       ))"
                     />
@@ -288,7 +288,7 @@
             v-for="(tagTemplate, index) in tagCategory.types"
             :key="index"
             class="collection-item avatar"
-            @click="createTagType(tagTemplate)"
+            @click="createTagType(tagTemplate as TagType)"
             v-show="isTagVisible(tagTemplate.id)"
             :class="{
             disabledTemplate: isTagTemplateDisabled[tagTemplate.id],
@@ -297,7 +297,7 @@
             :title="!isTagTemplateDisabled[tagTemplate.id] ? '' : collectionItemAvatarText"
           >
             <img
-              alt
+              alt=""
               class="circle"
               :src="tagTemplate.icon"
               v-if="tagTemplate.icon"
@@ -354,7 +354,7 @@ interface Option {
   value: string;
 }
 
-interface TagEditState {
+export interface TagEditState {
   isDirty: boolean;
   showAdvanced: boolean;
   chooseTagType: boolean;
