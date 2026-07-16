@@ -212,10 +212,10 @@
             class="collection-item avatar"
             @click="createVariableType(variableTemplate)"
             :class="{
-              disabledTemplate: this.isVariableTemplateDisabled[variableTemplate.id],
+              disabledTemplate: isVariableTemplateDisabled[variableTemplate.id],
               [`templateType${variableTemplate.id}`]: true,
             }"
-            :title="!this.isVariableTemplateDisabled[variableTemplate.id] ? '' :
+            :title="!isVariableTemplateDisabled[variableTemplate.id] ? '' :
               translate('TagManager_UseCustomTemplateCapabilityPermissionRequiredDescription',
                 '',
                 translate('TagManager_CapabilityUseCustomTemplates'),
@@ -223,7 +223,7 @@
                 )"
           >
             <img
-              alt
+              alt=""
               class="circle"
               :src="variableTemplate.icon"
               v-if="variableTemplate.icon"
@@ -278,7 +278,7 @@ import {
 } from '../types';
 import AvailableComparisonsStore from '../AvailableComparisons.store';
 
-interface VariableEditState {
+export interface VariableEditState {
   isDirty: boolean;
   showAdvanced: boolean;
   canUseCustomTemplates: boolean;

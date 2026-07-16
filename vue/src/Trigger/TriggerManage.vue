@@ -9,8 +9,8 @@
     <div v-show="!editMode">
       <div>
         <TriggerList
-          :id-container="idContainer"
-          :id-container-version="idContainerVersion"
+          :id-container="idContainer ?? ''"
+          :id-container-version="idContainerVersion ?? 0"
           :triggers-help-text="triggersHelpText"
         />
       </div>
@@ -18,9 +18,9 @@
     <div v-show="editMode">
       <div>
         <TriggerEdit
-          :id-container="idContainer"
-          :id-container-version="idContainerVersion"
-          :id-trigger="idTrigger"
+          :id-container="idContainer ?? ''"
+          :id-container-version="idContainerVersion ?? 0"
+          :id-trigger="idTrigger ?? undefined"
         />
       </div>
     </div>
@@ -73,12 +73,12 @@ export default defineComponent({
     },
   },
   computed: {
-    idTrigger() {
+    idTrigger(): number | null {
       const idTrigger = MatomoUrl.hashParsed.value.idTrigger as string;
       if (!this.isAddAllowed && idTrigger === '0') {
         return null;
       }
-      return idTrigger ? parseInt(idTrigger, 10) : idTrigger;
+      return idTrigger ? parseInt(idTrigger, 10) : null;
     },
     editMode() {
       return typeof this.idTrigger === 'number';

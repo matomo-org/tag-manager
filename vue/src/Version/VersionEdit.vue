@@ -160,7 +160,7 @@ import VersionsStore from './Versions.store';
 import VersionNameHelpText from './VersionNameHelpText.vue';
 import SelectTagManagerEnvironmentHelpText from './SelectTagManagerEnvironmentHelpText.vue';
 
-interface VersionEditState {
+export interface VersionEditState {
   isDirty: boolean;
   lastVersion: string | null;
   versionChanges: SingleDiff[];

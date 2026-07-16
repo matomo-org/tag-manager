@@ -14,7 +14,7 @@
       class="dateInput"
       :value="dateText"
       @keydown="onDateKeydown($event)"
-      @change="onDateKeydown($event)"
+      @change="onDateKeydown($event as KeyboardEvent)"
     />
   </div>
   <div class="col s12 m6 input-field">
@@ -162,7 +162,7 @@ export default defineComponent({
     $(this.$refs.dateInput as HTMLElement).datepicker({ ...datePickerOptions });
 
     // @ts-ignore
-    $(this.$refs.timeInput as HTMLElement)
+    ($(this.$refs.timeInput as HTMLElement) as any)
       .timepicker({ timeFormat: 'H:i:s' })
       // timepicker triggers a jquery event, not a addEventListener event, so vue doesn't catch
       // it

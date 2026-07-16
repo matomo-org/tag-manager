@@ -8,16 +8,16 @@
   <div class="manageVariable">
     <div v-if="!editMode">
       <VariableList
-        :id-container-version="idContainerVersion"
-        :id-container="idContainer"
+        :id-container-version="idContainerVersion ?? 0"
+        :id-container="idContainer ?? ''"
         :variables-help-text="variablesHelpText"
       />
     </div>
     <div v-if="editMode">
       <VariableEdit
-        :id-container-version="idContainerVersion"
-        :id-container="idContainer"
-        :id-variable="idVariable"
+        :id-container-version="idContainerVersion ?? 0"
+        :id-container="idContainer ?? ''"
+        :id-variable="idVariable ?? undefined"
       />
     </div>
   </div>
@@ -69,12 +69,12 @@ export default defineComponent({
     },
   },
   computed: {
-    idVariable() {
+    idVariable(): number | null {
       const idVariable = MatomoUrl.hashParsed.value.idVariable as string;
       if (!this.isAddAllowed && idVariable === '0') {
         return null;
       }
-      return idVariable ? parseInt(idVariable, 10) : idVariable;
+      return idVariable ? parseInt(idVariable, 10) : null;
     },
     editMode() {
       return typeof this.idVariable === 'number';
