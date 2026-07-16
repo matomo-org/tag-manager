@@ -13,7 +13,7 @@
     </div>
     <div v-show="editMode">
       <ContainerEdit
-        :id-container="idContainer"
+        :id-container="idContainer ?? ''"
       />
     </div>
   </div>

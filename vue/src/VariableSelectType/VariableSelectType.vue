@@ -38,7 +38,7 @@ interface Option {
   value: string;
 }
 
-interface VariableSelectTypeState {
+export interface VariableSelectTypeState {
   containerVariables: Option[];
   isLoading: boolean;
   idContainerVersion: number|null;
