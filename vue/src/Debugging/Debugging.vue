@@ -291,7 +291,7 @@ interface VariableDebugData {
 interface MtmEvent {
   tags: TagDebugData[],
   variables: VariableDebugData[],
-  metTrigger: null,
+  metTrigger: { name: string; type: string } | null;
   name: string;
   eventData: any;
   container: any;

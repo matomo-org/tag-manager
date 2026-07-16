@@ -14,7 +14,7 @@
             feature-name="Tag Manager"
             :inline-help="dashboardHelpText"
           >
-            {{ translate('TagManager_ContainerX', container?.name) }}
+            {{ translate('TagManager_ContainerX', container?.name || '') }}
           </EnrichedHeadline>
         </h2>
         <p class="dashboardCreationDate">
@@ -49,8 +49,8 @@
                     :href="linkTo('manageTags', { idTag: tag.idtag })"
                     :title="translate(
                       'TagManager_EntityDateTypeMetaInformation',
-                      tag.created_date_pretty,
-                      tag.updated_date_pretty,
+                      tag.created_date_pretty || '',
+                      tag.updated_date_pretty || '',
                       tag.type,
                     )"
                   >{{ tag.name }}</a><span
@@ -88,8 +88,8 @@
                     :href="linkTo('manageTriggers', { idTrigger: trigger.idtrigger })"
                     :title="translate(
                       'TagManager_EntityDateTypeMetaInformation',
-                      trigger.created_date_pretty,
-                      trigger.updated_date_pretty,
+                      trigger.created_date_pretty || '',
+                      trigger.updated_date_pretty || '',
                       trigger.type,
                     )"
                   >{{ trigger.name }}</a><span v-show="
@@ -132,8 +132,8 @@
                     :href="linkTo('manageVariables', { idVariable: variable.idvariable })"
                     :title="translate(
                       'TagManager_EntityDateTypeMetaInformation',
-                      variable.created_date_pretty,
-                      variable.updated_date_pretty,
+                      variable.created_date_pretty || '',
+                      variable.updated_date_pretty || '',
                       variable.type,
                     )"
                   >{{ variable.name }}</a><span
@@ -178,14 +178,14 @@
                   </a><span v-if="index !== lastVersions.length - 1">, </span>
                 </span>
               </span>
-              <span v-show="container.releases.length">
+              <span v-show="container?.releases?.length">
                 <br />
                 {{ translate('TagManager_Environments') }}:
-                <span v-for="(release, index) in container.releases" :key="index">
+                <span v-for="(release, index) in (container?.releases || [])" :key="index">
                   <span
                     :title="releaseTooltip(release)"
                   >{{ ucfirst(release.environment) }}</span><span
-                    v-if="index !== container.releases.length - 1"
+                    v-if="index !== (container?.releases?.length || 0) - 1"
                   >, </span>
                 </span>
               </span>

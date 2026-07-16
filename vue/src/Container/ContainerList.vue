@@ -89,7 +89,7 @@
               <a
                 class="table-action icon-content-copy"
                 v-show="canCopyContainer"
-                @click="openCopyDialog(container)"
+                @click="openCopyDialog(container as Container)"
                 :title="translate(
                   'TagManager_CopyX',
                   translate('TagManager_Container'),
@@ -98,7 +98,7 @@
               <a
                 class="table-action icon-delete"
                 v-show="hasWriteAccess"
-                @click="deleteContainer(container)"
+                @click="deleteContainer(container as Container)"
                 :title="translate(
                   'TagManager_DeleteX',
                   translate('TagManager_Container'),

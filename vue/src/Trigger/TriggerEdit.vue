@@ -188,7 +188,7 @@
           </li>
           <li
             class="collection-item avatar"
-            @click="createTriggerType(triggerTemplate)"
+            @click="createTriggerType(triggerTemplate as TriggerType)"
             :class="{
               disabledTemplate: isTriggerTemplateDisabled[triggerTemplate.id],
               [`templateType${ triggerTemplate.id}`]: true,
@@ -198,7 +198,7 @@
             :title="!isTriggerTemplateDisabled[triggerTemplate.id] ? '' : collectionItemAvatarText"
           >
             <img
-              alt
+              alt=""
               class="circle"
               :src="triggerTemplate.icon"
               v-if="triggerTemplate.icon"
@@ -257,7 +257,7 @@ interface Option {
   tooltip: string;
 }
 
-interface TriggerEditState {
+export interface TriggerEditState {
   isDirty: boolean;
   chooseTriggerType: boolean;
   availableTriggers: DeepReadonly<TriggerCategory[]>;
