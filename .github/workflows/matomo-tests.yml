@@ -39,6 +39,9 @@ jobs:
       matrix:
         php: [ '8.1', '8.5' ]
         target: ['${{ github.base_ref || github.ref_name }}']
+        database:
+          - { engine: 'Mysql', version: '8.0' }
+          - { engine: 'Mariadb', version: '10.6' }
     steps:
       - uses: actions/checkout@v3
         with:
@@ -52,6 +55,8 @@ jobs:
           plugin-name: 'TagManager'
           php-version: ${{ matrix.php }}
           test-type: 'PluginTests'
+          mysql-engine: ${{ matrix.database.engine }}
+          mysql-version: ${{ matrix.database.version }}
           matomo-test-branch: ${{ matrix.target }}
           artifacts-pass: ${{ secrets.ARTIFACTS_PASS }}
           upload-artifacts: ${{ matrix.php == '8.1' && matrix.target == 'maximum_supported_matomo' }}
@@ -73,6 +78,8 @@ jobs:
           plugin-name: 'TagManager'
           matomo-test-branch: ${{ matrix.target }}
           test-type: 'JS'
+          mysql-engine: 'Mysql'
+          mysql-version: '8.0'
           php-version: '8.1'
           node-version: '12'
   UI:
@@ -88,6 +95,8 @@ jobs:
           plugin-name: 'TagManager'
           matomo-test-branch: ${{ github.base_ref || github.ref_name }}
           test-type: 'UI'
+          mysql-engine: 'Mysql'
+          mysql-version: '8.0'
           php-version: '8.1'
           node-version: '16'
           artifacts-pass: ${{ secrets.ARTIFACTS_PASS }}
