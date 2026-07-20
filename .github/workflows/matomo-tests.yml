@@ -59,7 +59,7 @@ jobs:
           mysql-version: ${{ matrix.database.version }}
           matomo-test-branch: ${{ matrix.target }}
           artifacts-pass: ${{ secrets.ARTIFACTS_PASS }}
-          upload-artifacts: ${{ matrix.php == '8.1' && matrix.target == 'maximum_supported_matomo' }}
+          upload-artifacts: ${{ matrix.php == '8.1' && matrix.target == 'maximum_supported_matomo' && matrix.database.engine == 'Mysql' }}
   Javascript:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
