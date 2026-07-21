@@ -49,11 +49,8 @@ exports.modal = async function (page, screenshotName)
 
     pageWrap = await page.waitForSelector('.modal.open');
 
-    // Materialize opens modals with a JS (anime.js / requestAnimationFrame) animation that does not
-    // always advance under the modern headless Chrome, leaving the modal at its initial inline
-    // top/transform/opacity. Those stale inline styles make the element-screenshot clip geometry
-    // disagree with what is actually rendered, so the capture ends up offset. Settle the open modal to
-    // its final state before capturing so the geometry and the rendered result match.
+    // Materialize's modal open-animation may not advance under the new headless Chrome, leaving stale
+    // inline styles that offset the capture; settle the open modal to its final state before capturing.
     await page.evaluate(function () {
         document.querySelectorAll('.modal.open').forEach(function (m) {
             m.style.top = '10%';

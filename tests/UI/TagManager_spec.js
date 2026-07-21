@@ -252,10 +252,8 @@ describe("TagManager", function () {
         await page.evaluate(() => $('li:nth-child(2)').click());
         await page.evaluate(() => $('#TagManagerPluginSettings .pluginsSettingsSubmit').click());
 
-        // Confirm through the password modal by driving it in-page: the modal-close button is treated as
-        // not clickable via a native click under the modern headless Chrome, and its confirm button stays
-        // disabled until the password value reaches the Vue model. Set the value (dispatching input so the
-        // model updates) and trigger the confirm button through jQuery, scoped to the open modal.
+        // Drive the password modal in-page: native clicks are flaky under the new headless Chrome and
+        // the confirm button stays disabled until the password reaches the Vue model.
         await page.waitForSelector('.confirm-password-modal.modal.open input[type=password]', { visible: true });
         await page.evaluate((password) => {
             var input = document.querySelector('.confirm-password-modal.modal.open input[type=password]');

@@ -17,9 +17,7 @@ exports.close = async function(page)
     await page.evaluate(function () {
         var $openModal = $('.modal.open');
 
-        // M.Modal.getInstance dereferences the element, which throws if no modal is open. Guard so
-        // close() is a safe no-op when there is nothing to close (the modal state varies under the
-        // modern headless Chrome).
+        // M.Modal.getInstance throws if no modal is open; guard so close() is a safe no-op.
         if (!$openModal.length) {
             return;
         }
