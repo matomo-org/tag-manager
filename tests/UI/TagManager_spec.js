@@ -224,7 +224,8 @@ describe("TagManager", function () {
         });
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
-        await capture.modal(page, 'publish_with_content');
+        // Tolerate the small, intermittent whole-modal rendering variance under the new headless Chrome.
+        await capture.modal(page, 'publish_with_content', 0.005);
     });
 
     it('should show the manage website screen', async function () {

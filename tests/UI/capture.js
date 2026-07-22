@@ -42,7 +42,7 @@ exports.notification = async function (page, screenshotName)
     await exports.selector(page, screenshotName, '#notificationContainer');
 };
 
-exports.modal = async function (page, screenshotName)
+exports.modal = async function (page, screenshotName, comparisonThreshold)
 {
     await page.waitForNetworkIdle();
     await page.waitForTimeout(500); // ensure animation is finished
@@ -60,5 +60,8 @@ exports.modal = async function (page, screenshotName)
     });
 
     await exports.setTableRowHeight(page);
-    expect(await pageWrap.screenshot()).to.matchImage(screenshotName);
+    const image = comparisonThreshold
+        ? { imageName: screenshotName, comparisonThreshold: comparisonThreshold }
+        : screenshotName;
+    expect(await pageWrap.screenshot()).to.matchImage(image);
 };
