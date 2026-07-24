@@ -15,7 +15,14 @@ exports.clickButton = async function(page, button)
 exports.close = async function(page)
 {
     await page.evaluate(function () {
-        var modal = M.Modal.getInstance($('.modal.open'));
+        var $openModal = $('.modal.open');
+
+        // M.Modal.getInstance throws if no modal is open; guard so close() is a safe no-op.
+        if (!$openModal.length) {
+            return;
+        }
+
+        var modal = M.Modal.getInstance($openModal);
 
         if (modal) {
             modal.close();

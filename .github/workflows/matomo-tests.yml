@@ -98,6 +98,6 @@ jobs:
           mysql-engine: 'Mysql'
           mysql-version: '8.0'
           php-version: '8.1'
-          node-version: '16'
+          node-version: '24'
           artifacts-pass: ${{ secrets.ARTIFACTS_PASS }}
           upload-artifacts: true
