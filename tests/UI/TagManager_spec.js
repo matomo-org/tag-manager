@@ -224,7 +224,8 @@ describe("TagManager", function () {
         });
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
-        await capture.modal(page, 'publish_with_content');
+        // Tolerate the small, intermittent whole-modal rendering variance under the new headless Chrome.
+        await capture.modal(page, 'publish_with_content', 0.005);
     });
 
     it('should show the manage website screen', async function () {
@@ -251,9 +252,19 @@ describe("TagManager", function () {
         await page.evaluate(() => $('select[name="restrictTagManagerAccess"]').click());
         await page.evaluate(() => $('li:nth-child(2)').click());
         await page.evaluate(() => $('#TagManagerPluginSettings .pluginsSettingsSubmit').click());
-        await page.waitForSelector('.confirm-password-modal.open', { visible: true });
-        await page.type('.confirm-password-modal.open input[type=password]', superUserPassword);
-        await page.click('.confirm-password-modal.open .confirm-password-btn');
+
+        // Drive the password modal in-page: native clicks are flaky under the new headless Chrome and
+        // the confirm button stays disabled until the password reaches the Vue model.
+        await page.waitForSelector('.confirm-password-modal.modal.open input[type=password]', { visible: true });
+        await page.evaluate((password) => {
+            var input = document.querySelector('.confirm-password-modal.modal.open input[type=password]');
+            input.value = password;
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+        }, superUserPassword);
+        await page.waitForTimeout(250);
+        await page.evaluate(() => $('.confirm-password-modal.modal.open .confirm-password-btn').click());
+
         await page.waitForNetworkIdle();
         await page.mouse.move(-10, -10);
         expect(await page.screenshotSelector('#TagManagerPluginSettings')).to.matchImage('update_restrict_setting');

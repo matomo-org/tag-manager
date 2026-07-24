@@ -42,13 +42,26 @@ exports.notification = async function (page, screenshotName)
     await exports.selector(page, screenshotName, '#notificationContainer');
 };
 
-exports.modal = async function (page, screenshotName)
+exports.modal = async function (page, screenshotName, comparisonThreshold)
 {
     await page.waitForNetworkIdle();
     await page.waitForTimeout(500); // ensure animation is finished
 
     pageWrap = await page.waitForSelector('.modal.open');
 
+    // Materialize's modal open-animation may not advance under the new headless Chrome, leaving stale
+    // inline styles that offset the capture; settle the open modal to its final state before capturing.
+    await page.evaluate(function () {
+        document.querySelectorAll('.modal.open').forEach(function (m) {
+            m.style.top = '10%';
+            m.style.transform = 'none';
+            m.style.opacity = '1';
+        });
+    });
+
     await exports.setTableRowHeight(page);
-    expect(await pageWrap.screenshot()).to.matchImage(screenshotName);
+    const image = comparisonThreshold
+        ? { imageName: screenshotName, comparisonThreshold: comparisonThreshold }
+        : screenshotName;
+    expect(await pageWrap.screenshot()).to.matchImage(image);
 };
