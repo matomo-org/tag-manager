@@ -10,6 +10,7 @@
 namespace Piwik\Plugins\TagManager\tests\Integration;
 
 use Piwik\Container\StaticContainer;
+use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\API;
 use Piwik\Plugins\TagManager\Template\Tag\CustomHtmlTag;
 use Piwik\Plugins\TagManager\tests\Fixtures\TagManagerFixture;
@@ -105,6 +106,18 @@ class ImportTest extends IntegrationTestCase
         $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates');
 
         $this->setUser();
+        $this->exported['tags'][0]['type'] = CustomHtmlTag::ID;
+        $this->import->checkImportContainerIsPossible($this->exported, $this->idSite, $this->idContainer);
+    }
+
+    public function test_checkImportContainerIsPossible_shouldFailForPublishCapabilityWithoutCustomTemplatePermission()
+    {
+        // regression: the publish capability must NOT let a user import (author) a new custom template
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates');
+
+        $this->setUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
         $this->exported['tags'][0]['type'] = CustomHtmlTag::ID;
         $this->import->checkImportContainerIsPossible($this->exported, $this->idSite, $this->idContainer);
     }
