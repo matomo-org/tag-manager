@@ -1478,6 +1478,8 @@ class API extends \Piwik\Plugin\API
             throw new Exception(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
         }
 
+        $this->assertUserCanEditContainerVersion($idSite, $idContainer, $idContainerVersion);
+
         if (!$_isDraftRestoreCall) {
             $draft = $this->exportContainerVersion($idSite, $idContainer);
             $exportedContainerVersion = Common::unsanitizeInputValue($exportedContainerVersion);
