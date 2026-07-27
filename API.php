@@ -526,7 +526,7 @@ class API extends \Piwik\Plugin\API
         $this->accessValidator->checkWriteCapability($idSite);
         $this->assertUserCanEditContainerVersion($idSite, $idContainer, $idContainerVersion);
 
-        if ($this->tagsProvider->isCustomTemplate($type) && !Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
+        if ($this->tagsProvider->isCustomTemplate($type)) {
             $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         }
 
@@ -763,7 +763,7 @@ class API extends \Piwik\Plugin\API
         $this->accessValidator->checkWriteCapability($idSite);
         $this->assertUserCanEditContainerVersion($idSite, $idContainer, $idContainerVersion);
 
-        if ($this->triggersProvider->isCustomTemplate($type) && !Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
+        if ($this->triggersProvider->isCustomTemplate($type)) {
             $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         }
 
@@ -967,7 +967,7 @@ class API extends \Piwik\Plugin\API
         $this->accessValidator->checkWriteCapability($idSite);
         $this->assertUserCanEditContainerVersion($idSite, $idContainer, $idContainerVersion);
 
-        if ($this->variablesProvider->isCustomTemplate($type) && !Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
+        if ($this->variablesProvider->isCustomTemplate($type)) {
             $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         }
 
@@ -1174,7 +1174,7 @@ class API extends \Piwik\Plugin\API
     {
         $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
-        if (!Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID) && !Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
+        if (!Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
             $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         }
         $this->containers->checkContainerExists($idSite, $idContainer);
@@ -1187,7 +1187,9 @@ class API extends \Piwik\Plugin\API
         }
 
         $this->enableGeneratePreview = false;
-        $container = $this->containers->createContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
+        $container = $this->accessValidator->runWithoutCustomTemplatesCapabilityCheck(function () use ($idSite, $idContainer, $idContainerVersion, $name, $description) {
+            return $this->containers->createContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
+        });
         // not needed to create a preview release as no actual change to container was made. Make it faster as the createContainerVersion
         // uses "import" logic which would create a new preview release or check for recursions on every created tag/trigger/...
         $this->enableGeneratePreview = true;
@@ -1207,7 +1209,7 @@ class API extends \Piwik\Plugin\API
     {
         $name = $this->decodeQuotes($name);
         $this->accessValidator->checkWriteCapability($idSite);
-        if (!Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID) && !Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
+        if (!Piwik::isUserHasCapability($idSite, PublishLiveContainer::ID)) {
             $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
         }
         BaseValidator::check(Piwik::translate('TagManager_VersionName'), $name, [new NotEmpty(), new CharacterLength(1, 50)]);
@@ -1508,7 +1510,9 @@ class API extends \Piwik\Plugin\API
                     $this->deleteContainerVersion($idSite, $idContainer, $backupVersionId);
                 }
                 // rollback to old working draft
-                $this->importContainerVersion(json_encode($draft, JSON_HEX_APOS), $idSite, $idContainer, '', true);
+                $this->accessValidator->runWithoutCustomTemplatesCapabilityCheck(function () use ($draft, $idSite, $idContainer) {
+                    $this->importContainerVersion(json_encode($draft, JSON_HEX_APOS), $idSite, $idContainer, '', true);
+                });
             }
             throw $e;
         }

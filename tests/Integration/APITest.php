@@ -1046,6 +1046,51 @@ class APITest extends IntegrationTestCase
         $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName');
     }
 
+    public function test_addContainerTag_shouldFailForPublishCapabilityWithoutCustomTemplatesCapability()
+    {
+        // regression: the publish capability must NOT let a user author a new custom template
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+        $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName');
+    }
+
+    public function test_addContainerVariable_shouldFailForPublishCapabilityWithoutCustomTemplatesCapability()
+    {
+        // regression: the publish capability must NOT let a user author a new custom template
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+        $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
+    }
+
+    public function test_createContainerVersion_publishCapabilityCanVersionContainerWithCustomTemplate()
+    {
+        // a publisher without the custom templates capability must still be able to create (and publish) a version
+        // of a container that already contains custom templates - the recreation is trusted, already-vetted content
+        $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser();
+
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myCustomHtml', array('customHtml' => 'foo'), array($idTrigger));
+
+        // switch to a publisher that does NOT hold the custom templates capability
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        $idVersion = $this->api->createContainerVersion($this->idSite, $this->idContainer, 'v with custom html');
+        $this->assertNotEmpty($idVersion);
+
+        $version = $this->api->getContainerVersion($this->idSite, $this->idContainer, $idVersion);
+        $this->assertSame('v with custom html', $version['name']);
+
+        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $idVersion, Environment::ENVIRONMENT_LIVE);
+    }
+
     public function test_updateContainerTag_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
