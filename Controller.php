@@ -493,6 +493,9 @@ class Controller extends \Piwik\Plugin\Controller
             $idDestinationSite = $request->getIntegerParameter('idDestinationSite');
             // Confirm tha the user has permission to copy to the selected site
             $this->accessValidator->checkWriteCapability($idDestinationSite);
+            // The copy imports the whole container version into the destination site, which may contain custom
+            // templates. Check the capability up front so we don't fail half way through the copy.
+            $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
             $idContainer = $request->getStringParameter('idContainer');
 
             $idContainerNew = $this->container->copyContainer($this->idSite, $idContainer, $idDestinationSite);
