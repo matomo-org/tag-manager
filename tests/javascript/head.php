@@ -17,8 +17,8 @@ $relativeRoot = '../../../..';
 
 function printTemplates($type)
 {
-    $files = glob(PIWIK_DOCUMENT_ROOT . '/plugins/*/Template/' . $type . '/*.web.js');
-    $files2 = glob(PIWIK_DOCUMENT_ROOT . '/plugins/*/Template/' . $type . '/*/*.web.js');
+    $files = glob(PIWIK_DOCUMENT_ROOT . '/plugins/*/Template/' . $type . '/*.web.js') ?: [];
+    $files2 = glob(PIWIK_DOCUMENT_ROOT . '/plugins/*/Template/' . $type . '/*/*.web.js') ?: [];
     $files = array_merge($files, $files2);
     foreach ($files as $file) {
         $name = str_replace('.web.js', '', basename($file));
