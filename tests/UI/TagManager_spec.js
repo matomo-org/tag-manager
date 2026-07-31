@@ -160,6 +160,21 @@ describe("TagManager", function () {
         await capture.page(page, 'preview_enable');
     });
 
+    it('should not expose the preview URL parameters in the notification', async function () {
+        const notificationText = await page.evaluate(function () {
+            return document.querySelector('#notificationContainer').innerText;
+        });
+        expect(notificationText).to.not.contain('mtmPreviewMode');
+    });
+
+    it('should open the preview mode FAQ link in a new tab', async function () {
+        const target = await page.evaluate(function () {
+            var link = document.querySelector('#notificationContainer .previewDebugNotification__description a');
+            return link && link.getAttribute('target');
+        });
+        expect(target).to.equal('_blank');
+    });
+
     it('should change debug URL', async function () {
         await page.evaluate(function() {
             $('#previewDebugUrl').val('https://example.com');
