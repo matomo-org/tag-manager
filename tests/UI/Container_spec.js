@@ -58,7 +58,7 @@ describe("Container", function () {
 
     it('should show websites dropdown without all websites', async function () {
         await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
-        pageWrap = await page.$('.top_bar_sites_selector .dropdown');
+        pageWrap = await page.$('.top_bar_sites_selector .piwikSelector__dropdown');
         expect(await pageWrap.screenshot()).to.matchImage('websites_dropdown_without_all_websites');
         await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
     });
