@@ -983,6 +983,48 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($idContainer);
     }
 
+    public function test_createDefaultContainerForSite_keepsDraftEditableForWriteUser()
+    {
+        $this->setSuperUser();
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $draftVersion = $this->api->getContainerVersion(
+            $this->idSite,
+            $idContainer,
+            $container['draft']['idcontainerversion']
+        );
+
+        $this->assertNotEmpty($container['draft']['idcontainerversion']);
+        $this->assertSame([], $draftVersion['releases']);
+
+        $versions = $this->api->getContainerVersions($this->idSite, $idContainer);
+        $this->assertCount(1, $versions);
+        $this->assertSame('0.1.0 - Auto generated', $versions[0]['name']);
+        $this->assertCount(1, $versions[0]['releases']);
+        $this->assertSame(Environment::ENVIRONMENT_LIVE, $versions[0]['releases'][0]['environment']);
+
+        $this->setWriteUser();
+        $triggerId = $this->api->addContainerTrigger(
+            $this->idSite,
+            $idContainer,
+            $container['draft']['idcontainerversion'],
+            WindowLoadedTrigger::ID,
+            'Write user trigger'
+        );
+
+        $idTag = $this->api->addContainerTag(
+            $this->idSite,
+            $idContainer,
+            $container['draft']['idcontainerversion'],
+            'CustomImage',
+            'Write user tag',
+            array('customImageSrc' => 'foo'),
+            array($triggerId)
+        );
+
+        $this->assertNotEmpty($idTag);
+    }
+
     public function test_addContainerVariable_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
