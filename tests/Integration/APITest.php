@@ -1228,6 +1228,41 @@ class APITest extends IntegrationTestCase
         $this->api->importContainerVersion('""', $this->idSite, $this->idContainer);
     }
 
+    public function test_importContainerVersion_shouldFailWhenExistingDraftHasCustomTemplateAndUserHasNoCustomTemplatesCapability()
+    {
+        // regression: the publish capability must NOT let a user delete an existing custom template by importing
+        // a container version that simply omits it
+        $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        try {
+            $this->api->importContainerVersion($this->getEmptyImportJson(), $this->idSite, $this->idContainer);
+            $this->fail('An expected exception has not been raised');
+        } catch (\Piwik\NoAccessException $e) {
+            $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
+        }
+
+        // the failed import is rolled back to the previous draft, which recreates the entities with new IDs
+        $this->setSuperUser();
+        $names = array_column($this->api->getContainerVariables($this->idSite, $this->idContainer, $this->idContainerDraftVersion), 'name');
+        $this->assertContains('myCustomJs', $names);
+    }
+
+    public function test_importContainerVersion_canReplaceExistingCustomTemplateWithCustomTemplatesCapability()
+    {
+        $idVariable = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+
+        $this->api->importContainerVersion($this->getEmptyImportJson(), $this->idSite, $this->idContainer);
+
+        $this->setSuperUser();
+        $this->assertFalse($this->api->getContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idVariable));
+    }
+
     public function test_importContainerVersionShouldRollBackToOlderDraftWhenExportDraftHasErrors()
     {
         $currentDraftVersion = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
@@ -1279,6 +1314,16 @@ class APITest extends IntegrationTestCase
     private function getValidImportJson()
     {
         return json_encode($this->api->exportContainerVersion($this->idSite, $this->idContainer));
+    }
+
+    private function getEmptyImportJson()
+    {
+        return json_encode(array(
+            'context' => WebContext::ID,
+            'tags' => array(),
+            'triggers' => array(),
+            'variables' => array(),
+        ));
     }
 
     public function test_getContainerInstallInstructions_shouldFailWhenNotHavingViewPermissions()
