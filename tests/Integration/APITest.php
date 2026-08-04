@@ -524,7 +524,7 @@ class APITest extends IntegrationTestCase
         $newIdSite = Fixture::createWebsite('2012-01-01 02:03:04');
         $idContainer = $this->api->createDefaultContainerForSite($idSite);
         $container = $this->api->getContainer($idSite, $idContainer);
-        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idContainerDraftVersion = $container['draft']['idcontainerversion'];
         $variables = $this->api->getContainerVariables($idSite, $idContainer, $idContainerDraftVersion);
         $variable = $variables[0];
         $parameters = $variable['parameters'];
