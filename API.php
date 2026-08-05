@@ -1315,6 +1315,7 @@ class API extends \Piwik\Plugin\API
         if ($this->containers->hasRelease($idSite, $idContainer, Environment::ENVIRONMENT_LIVE)) {
             $this->accessValidator->checkPublishLiveEnvironmentCapability($idSite);
         }
+        $this->checkCanDeleteCustomTemplatesOfContainer($idSite, $idContainer);
 
         $this->containers->deleteContainer($idSite, $idContainer);
         Piwik::postEvent('TagManager.deleteContainer.end', array(array(
@@ -1541,6 +1542,47 @@ class API extends \Piwik\Plugin\API
                 'status' => BaseDao::STATUS_ACTIVE,
             ]];
             $simulatorContext->generate($container);
+        }
+    }
+
+    /**
+     * Deleting a container deletes the draft and all versions of it, including every tag, trigger and variable they
+     * contain. Removing a custom template entity requires the same capability as removing it through the regular
+     * delete API, otherwise a protected entity could be deleted by deleting the container around it.
+     */
+    private function checkCanDeleteCustomTemplatesOfContainer($idSite, $idContainer): void
+    {
+        if ($this->accessValidator->hasUseCustomTemplatesCapability($idSite)) {
+            return;
+        }
+
+        $container = $this->containers->getContainer($idSite, $idContainer);
+
+        // the draft is not part of "versions" as it is stored separately
+        $idContainerVersions = array_column($container['versions'], 'idcontainerversion');
+        if (!empty($container['draft']['idcontainerversion'])) {
+            $idContainerVersions[] = $container['draft']['idcontainerversion'];
+        }
+
+        foreach ($idContainerVersions as $idContainerVersion) {
+            foreach ($this->tags->getContainerTags($idSite, $idContainerVersion) as $tag) {
+                if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
+                    // throws as the capability is known to be missing at this point
+                    $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+                }
+            }
+
+            foreach ($this->triggers->getContainerTriggers($idSite, $idContainerVersion) as $trigger) {
+                if ($this->triggersProvider->isCustomTemplate($trigger['type'])) {
+                    $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+                }
+            }
+
+            foreach ($this->variables->getContainerVariables($idSite, $idContainerVersion) as $variable) {
+                if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
+                    $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
+                }
+            }
         }
     }
 

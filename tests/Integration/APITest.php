@@ -291,6 +291,57 @@ class APITest extends IntegrationTestCase
         $this->api->getContainer($this->idSite, $this->idContainerDraftOnly);
     }
 
+    public function test_deleteContainer_shouldFailWhenAVersionHasCustomTemplateAndUserHasNoCustomTemplatesCapability()
+    {
+        // regression: a container must not be deletable around a custom template the user cannot delete directly.
+        // container1 holds a CustomHtml tag in its draft and in several of its versions
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        try {
+            $this->api->deleteContainer($this->idSite, $this->idContainer);
+            $this->fail('An expected exception has not been raised');
+        } catch (\Piwik\NoAccessException $e) {
+            $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
+        }
+
+        $this->setSuperUser();
+        $this->assertNotEmpty($this->api->getContainer($this->idSite, $this->idContainer));
+    }
+
+    public function test_deleteContainer_shouldFailWhenOnlyTheDraftHasCustomTemplateAndUserHasNoCustomTemplatesCapability()
+    {
+        // the draft is stored separately from the versions, so it needs to be covered as well
+        $this->api->addContainerVariable($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+
+        $this->setWriteUser();
+
+        try {
+            $this->api->deleteContainer($this->idSite, $this->idContainerDraftOnly);
+            $this->fail('An expected exception has not been raised');
+        } catch (\Piwik\NoAccessException $e) {
+            $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
+        }
+
+        $this->setSuperUser();
+        $this->assertNotEmpty($this->api->getContainer($this->idSite, $this->idContainerDraftOnly));
+    }
+
+    public function test_deleteContainer_shouldSucceedWithCustomTemplateWhenHavingCustomTemplatesCapability()
+    {
+        $this->api->addContainerVariable($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+
+        $this->api->deleteContainer($this->idSite, $this->idContainerDraftOnly);
+
+        $this->setSuperUser();
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage($this->idContainerDraftOnly);
+        $this->api->getContainer($this->idSite, $this->idContainerDraftOnly);
+    }
+
     public function test_publishContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
