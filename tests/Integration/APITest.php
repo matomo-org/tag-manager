@@ -1279,12 +1279,10 @@ class APITest extends IntegrationTestCase
         $this->api->importContainerVersion('""', $this->idSite, $this->idContainer);
     }
 
-    public function test_importContainerVersion_shouldFailWhenExistingDraftHasCustomTemplateAndUserHasNoCustomTemplatesCapability()
+    public function test_importContainerVersion_shouldFailWhenExistingDraftHasCustomTemplateTagAndUserHasNoCustomTemplatesCapability()
     {
         // regression: the publish capability must NOT let a user delete an existing custom template by importing
-        // a container version that simply omits it
-        $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
-
+        // a container version that simply omits it. The draft of container1 holds a CustomHtml tag
         $this->setWriteUser();
         FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
 
@@ -1295,15 +1293,87 @@ class APITest extends IntegrationTestCase
             $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
         }
 
-        // the failed import is rolled back to the previous draft, which recreates the entities with new IDs
         $this->setSuperUser();
-        $names = array_column($this->api->getContainerVariables($this->idSite, $this->idContainer, $this->idContainerDraftVersion), 'name');
-        $this->assertContains('myCustomJs', $names);
+        $tagNames = array_column($this->api->getContainerTags($this->idSite, $this->idContainer, $this->idContainerDraftVersion), 'name');
+        $this->assertContains('My Tag 2', $tagNames);
+    }
+
+    public function test_importContainerVersion_shouldFailWhenExistingDraftHasCustomTemplateVariableAndUserHasNoCustomTemplatesCapability()
+    {
+        // container3 has an otherwise empty draft, so the custom template variable is what has to be detected here.
+        // The draft of container1 could not show this as its CustomHtml tag is detected before any variable is looked at
+        $idVariable = $this->api->addContainerVariable($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        try {
+            $this->api->importContainerVersion($this->getEmptyImportJson(), $this->idSite, $this->idContainerDraftOnly);
+            $this->fail('An expected exception has not been raised');
+        } catch (\Piwik\NoAccessException $e) {
+            $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
+        }
+
+        // the rejected import must not have modified the draft at all, so the variable still has its original ID
+        $this->setSuperUser();
+        $variable = $this->api->getContainerVariable($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion, $idVariable);
+        $this->assertSame('myCustomJs', $variable['name']);
+    }
+
+    public function test_importContainerVersion_shouldNotCreateBackupVersionWhenNotAllowedToReplaceCustomTemplate()
+    {
+        $this->api->addContainerVariable($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+
+        $versionsBefore = count($this->api->getContainerVersions($this->idSite, $this->idContainerDraftOnly));
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        try {
+            $this->api->importContainerVersion($this->getEmptyImportJson(), $this->idSite, $this->idContainerDraftOnly, 'myBackup');
+            $this->fail('An expected exception has not been raised');
+        } catch (\Piwik\NoAccessException $e) {
+            $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
+        }
+
+        // the check happens before the backup version is created, so no leftover backup must exist
+        $this->setSuperUser();
+        $this->assertCount($versionsBefore, $this->api->getContainerVersions($this->idSite, $this->idContainerDraftOnly));
+    }
+
+    public function test_importContainerVersion_successForPublisherWhenNoCustomTemplatesInvolved()
+    {
+        // a publisher without the custom templates capability must still be able to import into a draft that holds
+        // no custom templates
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        $import = json_encode(array(
+            'context' => WebContext::ID,
+            'tags' => array(),
+            'triggers' => array(),
+            'variables' => array(
+                array(
+                    'type' => 'Constant',
+                    'name' => 'myConstant',
+                    'description' => '',
+                    'default_value' => '',
+                    'lookup_table' => array(),
+                    'parameters' => array('constantValue' => 'test'),
+                ),
+            ),
+        ));
+
+        $this->api->importContainerVersion($import, $this->idSite, $this->idContainerDraftOnly);
+
+        $this->setSuperUser();
+        $names = array_column($this->api->getContainerVariables($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion), 'name');
+        $this->assertContains('myConstant', $names);
     }
 
     public function test_importContainerVersion_canReplaceExistingCustomTemplateWithCustomTemplatesCapability()
     {
-        $idVariable = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+        $idVariable = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs2', array('jsFunction' => 'function () { return 1; }'));
 
         $this->setWriteUser();
         FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
