@@ -119,6 +119,16 @@ class Import
         }
     }
 
+    public function checkCanReplaceExistingEntities($idSite, $idContainerVersion)
+    {
+        $this->checkReplacingEntitiesIsPossible(
+            $idSite,
+            $this->tags->getContainerTags($idSite, $idContainerVersion),
+            $this->triggers->getContainerTriggers($idSite, $idContainerVersion),
+            $this->variables->getContainerVariables($idSite, $idContainerVersion)
+        );
+    }
+
     /**
      * An import replaces the entire content of the given container version. Removing an existing custom template
      * entity requires the same capability as removing it through the regular delete API, otherwise a user without

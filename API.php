@@ -1495,6 +1495,7 @@ class API extends \Piwik\Plugin\API
 
         // we validate before actually creating a backup version
         $this->import->checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer);
+        $this->import->checkCanReplaceExistingEntities($idSite, $idContainerVersion);
 
         if (!empty($backupName)) {
             $backupVersionId = $this->createContainerVersion($idSite, $idContainer, $backupName);
