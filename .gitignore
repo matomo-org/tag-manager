@@ -5,3 +5,5 @@ tests/System/processed/*text
 /vue/dist/*.common.js
 /vue/dist/*.map
 /vue/dist/*.development.*
+# only the minified bundle is served; the unminified one is no longer built
+/vue/dist/*.umd.js
