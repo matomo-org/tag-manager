@@ -81,7 +81,7 @@ jobs:
           mysql-engine: 'Mysql'
           mysql-version: '8.0'
           php-version: 'matomo6_min_php'
-          node-version: '12'
+          node-version: '24'
   UI:
     runs-on: ubuntu-24.04
     steps:
