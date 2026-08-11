@@ -89,6 +89,10 @@ class Variable extends BaseModel
         $this->validateValues($idSite, $name, $defaultValue, $lookupTable);
         $variable = $this->dao->getContainerVariable($idSite, $idContainerVersion, $idVariable);
         if (!empty($variable)) {
+            if ($variable['name'] !== $name) {
+                $this->checkRenameCanRewriteCustomTemplateReferences($idSite, $idContainerVersion, $variable['name']);
+            }
+
             $parameters = $this->formatParameters($variable['type'], $parameters);
             $columns = array(
                 'name' => $name,
@@ -268,6 +272,38 @@ class Variable extends BaseModel
                 ));
             }
         }
+    }
+
+    private function checkRenameCanRewriteCustomTemplateReferences($idSite, $idContainerVersion, $oldVarName): void
+    {
+        $oldVarNameTemplate = $this->convertVariableNameToTemplateVar($oldVarName);
+
+        $tags = $this->tag->getContainerTags($idSite, $idContainerVersion);
+        $variables = $this->getContainerVariables($idSite, $idContainerVersion);
+
+        foreach (array_merge($tags, $variables) as $entity) {
+            if ($this->referenceIsInsideCustomTemplateBody($entity, $oldVarNameTemplate)) {
+                StaticContainer::get(AccessValidator::class)->checkUseCustomTemplatesCapability($idSite);
+                return;
+            }
+        }
+    }
+
+    private function referenceIsInsideCustomTemplateBody(array $entity, string $oldVarNameTemplate): bool
+    {
+        $type = isset($entity['type']) ? $entity['type'] : '';
+
+        if ($type === 'CustomJsFunction') {
+            $bodyParam = 'jsFunction';
+        } elseif ($type === 'CustomHtml') {
+            $bodyParam = 'customHtml';
+        } else {
+            return false;
+        }
+
+        return isset($entity['parameters'][$bodyParam])
+            && is_string($entity['parameters'][$bodyParam])
+            && strpos($entity['parameters'][$bodyParam], $oldVarNameTemplate) !== false;
     }
 
     private function replaceVariableNameInParameters($entity, $oldVarName, $newVarName)

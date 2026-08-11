@@ -1,13 +1,12 @@
 parameters:
     level: 1
-    phpVersion: 70200
+    phpVersion: 80100
     tmpDir: /tmp/phpstan/TagManager/main
     paths:
         - .
     excludePaths:
         - tests/*
-        - vendor/
-        - github-action-tests/
+        - github-action-tests/ (?)
     bootstrapFiles:
         - ../../bootstrap-phpstan.php
     universalObjectCratesClasses:

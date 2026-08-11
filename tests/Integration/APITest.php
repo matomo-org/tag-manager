@@ -291,6 +291,57 @@ class APITest extends IntegrationTestCase
         $this->api->getContainer($this->idSite, $this->idContainerDraftOnly);
     }
 
+    public function test_deleteContainer_shouldFailWhenAVersionHasCustomTemplateAndUserHasNoCustomTemplatesCapability()
+    {
+        // regression: a container must not be deletable around a custom template the user cannot delete directly.
+        // container1 holds a CustomHtml tag in its draft and in several of its versions
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        try {
+            $this->api->deleteContainer($this->idSite, $this->idContainer);
+            $this->fail('An expected exception has not been raised');
+        } catch (\Piwik\NoAccessException $e) {
+            $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
+        }
+
+        $this->setSuperUser();
+        $this->assertNotEmpty($this->api->getContainer($this->idSite, $this->idContainer));
+    }
+
+    public function test_deleteContainer_shouldFailWhenOnlyTheDraftHasCustomTemplateAndUserHasNoCustomTemplatesCapability()
+    {
+        // the draft is stored separately from the versions, so it needs to be covered as well
+        $this->api->addContainerVariable($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+
+        $this->setWriteUser();
+
+        try {
+            $this->api->deleteContainer($this->idSite, $this->idContainerDraftOnly);
+            $this->fail('An expected exception has not been raised');
+        } catch (\Piwik\NoAccessException $e) {
+            $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
+        }
+
+        $this->setSuperUser();
+        $this->assertNotEmpty($this->api->getContainer($this->idSite, $this->idContainerDraftOnly));
+    }
+
+    public function test_deleteContainer_shouldSucceedWithCustomTemplateWhenHavingCustomTemplatesCapability()
+    {
+        $this->api->addContainerVariable($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+
+        $this->api->deleteContainer($this->idSite, $this->idContainerDraftOnly);
+
+        $this->setSuperUser();
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage($this->idContainerDraftOnly);
+        $this->api->getContainer($this->idSite, $this->idContainerDraftOnly);
+    }
+
     public function test_publishContainerVersion_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
@@ -524,7 +575,7 @@ class APITest extends IntegrationTestCase
         $newIdSite = Fixture::createWebsite('2012-01-01 02:03:04');
         $idContainer = $this->api->createDefaultContainerForSite($idSite);
         $container = $this->api->getContainer($idSite, $idContainer);
-        $idContainerDraftVersion = $container['versions'][0]['idcontainerversion'];
+        $idContainerDraftVersion = $container['draft']['idcontainerversion'];
         $variables = $this->api->getContainerVariables($idSite, $idContainer, $idContainerDraftVersion);
         $variable = $variables[0];
         $parameters = $variable['parameters'];
@@ -983,6 +1034,48 @@ class APITest extends IntegrationTestCase
         $this->assertNotEmpty($idContainer);
     }
 
+    public function test_createDefaultContainerForSite_keepsDraftEditableForWriteUser()
+    {
+        $this->setSuperUser();
+        $idContainer = $this->api->createDefaultContainerForSite($this->idSite);
+        $container = $this->api->getContainer($this->idSite, $idContainer);
+        $draftVersion = $this->api->getContainerVersion(
+            $this->idSite,
+            $idContainer,
+            $container['draft']['idcontainerversion']
+        );
+
+        $this->assertNotEmpty($container['draft']['idcontainerversion']);
+        $this->assertSame([], $draftVersion['releases']);
+
+        $versions = $this->api->getContainerVersions($this->idSite, $idContainer);
+        $this->assertCount(1, $versions);
+        $this->assertSame('0.1.0 - Auto generated', $versions[0]['name']);
+        $this->assertCount(1, $versions[0]['releases']);
+        $this->assertSame(Environment::ENVIRONMENT_LIVE, $versions[0]['releases'][0]['environment']);
+
+        $this->setWriteUser();
+        $triggerId = $this->api->addContainerTrigger(
+            $this->idSite,
+            $idContainer,
+            $container['draft']['idcontainerversion'],
+            WindowLoadedTrigger::ID,
+            'Write user trigger'
+        );
+
+        $idTag = $this->api->addContainerTag(
+            $this->idSite,
+            $idContainer,
+            $container['draft']['idcontainerversion'],
+            'CustomImage',
+            'Write user tag',
+            array('customImageSrc' => 'foo'),
+            array($triggerId)
+        );
+
+        $this->assertNotEmpty($idTag);
+    }
+
     public function test_addContainerVariable_shouldFailWhenNotHavingViewPermissions()
     {
         $this->expectException(\Piwik\NoAccessException::class);
@@ -1044,6 +1137,51 @@ class APITest extends IntegrationTestCase
 
         $this->setWriteUser();
         $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName');
+    }
+
+    public function test_addContainerTag_shouldFailForPublishCapabilityWithoutCustomTemplatesCapability()
+    {
+        // regression: the publish capability must NOT let a user author a new custom template
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+        $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myName');
+    }
+
+    public function test_addContainerVariable_shouldFailForPublishCapabilityWithoutCustomTemplatesCapability()
+    {
+        // regression: the publish capability must NOT let a user author a new custom template
+        $this->expectException(\Piwik\NoAccessException::class);
+        $this->expectExceptionMessage('checkUserHasCapability tagmanager_use_custom_templates Fake exception');
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+        $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myName');
+    }
+
+    public function test_createContainerVersion_publishCapabilityCanVersionContainerWithCustomTemplate()
+    {
+        // a publisher without the custom templates capability must still be able to create (and publish) a version
+        // of a container that already contains custom templates - the recreation is trusted, already-vetted content
+        $idTrigger = $this->test_addContainerTrigger_successRegularTemplateWithWriteUser();
+
+        $this->setAdminUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+        $this->api->addContainerTag($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomHtmlTag::ID, 'myCustomHtml', array('customHtml' => 'foo'), array($idTrigger));
+
+        // switch to a publisher that does NOT hold the custom templates capability
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        $idVersion = $this->api->createContainerVersion($this->idSite, $this->idContainer, 'v with custom html');
+        $this->assertNotEmpty($idVersion);
+
+        $version = $this->api->getContainerVersion($this->idSite, $this->idContainer, $idVersion);
+        $this->assertSame('v with custom html', $version['name']);
+
+        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $idVersion, Environment::ENVIRONMENT_LIVE);
     }
 
     public function test_updateContainerTag_shouldFailWhenNotHavingViewPermissions()
@@ -1141,6 +1279,111 @@ class APITest extends IntegrationTestCase
         $this->api->importContainerVersion('""', $this->idSite, $this->idContainer);
     }
 
+    public function test_importContainerVersion_shouldFailWhenExistingDraftHasCustomTemplateTagAndUserHasNoCustomTemplatesCapability()
+    {
+        // regression: the publish capability must NOT let a user delete an existing custom template by importing
+        // a container version that simply omits it. The draft of container1 holds a CustomHtml tag
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        try {
+            $this->api->importContainerVersion($this->getEmptyImportJson(), $this->idSite, $this->idContainer);
+            $this->fail('An expected exception has not been raised');
+        } catch (\Piwik\NoAccessException $e) {
+            $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
+        }
+
+        $this->setSuperUser();
+        $tagNames = array_column($this->api->getContainerTags($this->idSite, $this->idContainer, $this->idContainerDraftVersion), 'name');
+        $this->assertContains('My Tag 2', $tagNames);
+    }
+
+    public function test_importContainerVersion_shouldFailWhenExistingDraftHasCustomTemplateVariableAndUserHasNoCustomTemplatesCapability()
+    {
+        // container3 has an otherwise empty draft, so the custom template variable is what has to be detected here.
+        // The draft of container1 could not show this as its CustomHtml tag is detected before any variable is looked at
+        $idVariable = $this->api->addContainerVariable($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        try {
+            $this->api->importContainerVersion($this->getEmptyImportJson(), $this->idSite, $this->idContainerDraftOnly);
+            $this->fail('An expected exception has not been raised');
+        } catch (\Piwik\NoAccessException $e) {
+            $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
+        }
+
+        // the rejected import must not have modified the draft at all, so the variable still has its original ID
+        $this->setSuperUser();
+        $variable = $this->api->getContainerVariable($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion, $idVariable);
+        $this->assertSame('myCustomJs', $variable['name']);
+    }
+
+    public function test_importContainerVersion_shouldNotCreateBackupVersionWhenNotAllowedToReplaceCustomTemplate()
+    {
+        $this->api->addContainerVariable($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs', array('jsFunction' => 'function () { return 1; }'));
+
+        $versionsBefore = count($this->api->getContainerVersions($this->idSite, $this->idContainerDraftOnly));
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        try {
+            $this->api->importContainerVersion($this->getEmptyImportJson(), $this->idSite, $this->idContainerDraftOnly, 'myBackup');
+            $this->fail('An expected exception has not been raised');
+        } catch (\Piwik\NoAccessException $e) {
+            $this->assertStringContainsString('tagmanager_use_custom_templates', $e->getMessage());
+        }
+
+        // the check happens before the backup version is created, so no leftover backup must exist
+        $this->setSuperUser();
+        $this->assertCount($versionsBefore, $this->api->getContainerVersions($this->idSite, $this->idContainerDraftOnly));
+    }
+
+    public function test_importContainerVersion_successForPublisherWhenNoCustomTemplatesInvolved()
+    {
+        // a publisher without the custom templates capability must still be able to import into a draft that holds
+        // no custom templates
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+
+        $import = json_encode(array(
+            'context' => WebContext::ID,
+            'tags' => array(),
+            'triggers' => array(),
+            'variables' => array(
+                array(
+                    'type' => 'Constant',
+                    'name' => 'myConstant',
+                    'description' => '',
+                    'default_value' => '',
+                    'lookup_table' => array(),
+                    'parameters' => array('constantValue' => 'test'),
+                ),
+            ),
+        ));
+
+        $this->api->importContainerVersion($import, $this->idSite, $this->idContainerDraftOnly);
+
+        $this->setSuperUser();
+        $names = array_column($this->api->getContainerVariables($this->idSite, $this->idContainerDraftOnly, $this->tagFixture->idContainer3DraftVersion), 'name');
+        $this->assertContains('myConstant', $names);
+    }
+
+    public function test_importContainerVersion_canReplaceExistingCustomTemplateWithCustomTemplatesCapability()
+    {
+        $idVariable = $this->api->addContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, CustomJsFunctionVariable::ID, 'myCustomJs2', array('jsFunction' => 'function () { return 1; }'));
+
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(UseCustomTemplates::ID => array($this->idSite));
+
+        $this->api->importContainerVersion($this->getEmptyImportJson(), $this->idSite, $this->idContainer);
+
+        $this->setSuperUser();
+        $this->assertFalse($this->api->getContainerVariable($this->idSite, $this->idContainer, $this->idContainerDraftVersion, $idVariable));
+    }
+
     public function test_importContainerVersionShouldRollBackToOlderDraftWhenExportDraftHasErrors()
     {
         $currentDraftVersion = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
@@ -1192,6 +1435,16 @@ class APITest extends IntegrationTestCase
     private function getValidImportJson()
     {
         return json_encode($this->api->exportContainerVersion($this->idSite, $this->idContainer));
+    }
+
+    private function getEmptyImportJson()
+    {
+        return json_encode(array(
+            'context' => WebContext::ID,
+            'tags' => array(),
+            'triggers' => array(),
+            'variables' => array(),
+        ));
     }
 
     public function test_getContainerInstallInstructions_shouldFailWhenNotHavingViewPermissions()
