@@ -24,7 +24,7 @@
       style="margin-top: 14px;position: absolute;"
       :title="translate('TagManager_ChooseVariable')"
       @click="selectVariable()"></span>
-    <label :for="name" v-html="$sanitize(title)"></label>
+    <label :for="name" v-html="$sanitize(title || '')"></label>
   </div>
 </template>
 

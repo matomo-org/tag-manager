@@ -10,12 +10,12 @@
       :model-value="modelValue"
       :id="name"
       :name="name"
-      :variable-type-name="title"
+      :variable-type-name="title || ''"
       :variable-type="uiControlAttributes.variableType"
       @update:model-value="$emit('update:modelValue', $event)"
     />
 
-    <label :for="name" style="font-size: 0.8rem;" v-html="$sanitize(title)"></label>
+    <label :for="name" style="font-size: 0.8rem;" v-html="$sanitize(title || '')"></label>
   </div>
 </template>
 

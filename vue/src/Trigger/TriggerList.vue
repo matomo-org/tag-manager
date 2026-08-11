@@ -86,7 +86,7 @@
             </td>
             <td
               class="lastUpdated"
-              :title="translate('TagManager_CreatedOnX', trigger.created_date_pretty)"
+              :title="translate('TagManager_CreatedOnX', trigger.created_date_pretty || '')"
             >
               <span>{{ trigger.updated_date_pretty }}</span>
             </td>
@@ -96,13 +96,13 @@
             >
               <a
                 class="table-action icon-edit"
-                @click="editTrigger(trigger.idtrigger, trigger.type)"
+                @click="editTrigger(trigger.idtrigger ?? 0)"
                 :title="translate('TagManager_EditTrigger')"
               />
               <a
                 class="table-action icon-content-copy"
                 v-show="hasPublishCapability()"
-                @click="openCopyDialog(trigger)"
+                @click="openCopyDialog(trigger as Trigger)"
                 :title="translate(
                   'TagManager_CopyX',
                   translate('TagManager_Trigger'),
@@ -188,7 +188,7 @@ import { Field } from 'CorePluginsAdmin';
 import TriggersStore from './Triggers.store';
 import { TriggerReference, Trigger, TriggerType } from '../types';
 
-interface TriggerListState {
+export interface TriggerListState {
   hasWriteAccess: boolean;
   triggerReferences: TriggerReference[];
   triggerSearch: string;

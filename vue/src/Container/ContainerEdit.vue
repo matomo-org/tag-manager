@@ -138,7 +138,7 @@ import AvailableComparisonsStore from '../AvailableComparisons.store';
 import { Container } from '../types';
 import ContainersStore from './Containers.store';
 
-interface ContainerEditState {
+export interface ContainerEditState {
   isDirty: boolean;
   editTitle: string;
   isUpdatingVersion: boolean;
