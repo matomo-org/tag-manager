@@ -309,12 +309,12 @@
     window.tagManagerHelper = tagManagerHelper;
 
     $(function () {
-      $('body').on('click', 'a.disablePreviewDebug', function (event) {
+      $('body').on('click', '.disablePreviewDebug', function (event) {
         event.preventDefault();
 
         var idContainer = $(event.target).data('idcontainer');
         tagManagerHelper.disablePreviewMode(idContainer);
-      }).on('click', '.preview-debug-url-div button', function (event) {
+      }).on('click', 'previewDebugNotification__debugForm button', function (event) {
         var idContainer = $(event.target).data('idcontainer');
         var debugSiteUrl = $(event.target).data('debug-site-url');
         tagManagerHelper.changeDebugUrl(idContainer, debugSiteUrl);
