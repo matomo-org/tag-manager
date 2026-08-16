@@ -1,7 +1,7 @@
 # Action for running tests
 # This file has been automatically created.
 # To recreate it you can run this command
-# ./console generate:test-action --plugin="TagManager" --php-versions="matomo5_min_php,matomo5_max_php" --schedule-cron="45 2 * * 6"
+# ./console generate:test-action --plugin="TagManager" --php-versions="matomo6_min_php,matomo6_max_php" --schedule-cron="45 2 * * 6"
 
 name: Plugin TagManager Tests
 
@@ -37,8 +37,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ 'matomo5_min_php', 'matomo5_max_php' ]
+        php: [ 'matomo6_min_php', 'matomo6_max_php' ]
         target: ['${{ github.base_ref || github.ref_name }}']
+        database:
+          - { engine: 'Mysql', version: '8.0' }
+          - { engine: 'Mariadb', version: '10.6' }
     steps:
       - uses: actions/checkout@v3
         with:
@@ -52,9 +55,11 @@ jobs:
           plugin-name: 'TagManager'
           php-version: ${{ matrix.php }}
           test-type: 'PluginTests'
+          mysql-engine: ${{ matrix.database.engine }}
+          mysql-version: ${{ matrix.database.version }}
           matomo-test-branch: ${{ matrix.target }}
           artifacts-pass: ${{ secrets.ARTIFACTS_PASS }}
-          upload-artifacts: ${{ matrix.php == 'matomo5_min_php' && matrix.target == 'maximum_supported_matomo' }}
+          upload-artifacts: ${{ matrix.php == 'matomo6_min_php' && matrix.target == 'maximum_supported_matomo' && matrix.database.engine == 'Mysql' }}
   Javascript:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -73,8 +78,10 @@ jobs:
           plugin-name: 'TagManager'
           matomo-test-branch: ${{ matrix.target }}
           test-type: 'JS'
-          php-version: 'matomo5_min_php'
-          node-version: '12'
+          mysql-engine: 'Mysql'
+          mysql-version: '8.0'
+          php-version: 'matomo6_min_php'
+          node-version: '24'
   UI:
     runs-on: ubuntu-24.04
     steps:
@@ -88,7 +95,9 @@ jobs:
           plugin-name: 'TagManager'
           matomo-test-branch: ${{ github.base_ref || github.ref_name }}
           test-type: 'UI'
-          php-version: 'matomo5_min_php'
-          node-version: '16'
+          mysql-engine: 'Mysql'
+          mysql-version: '8.0'
+          php-version: 'matomo6_min_php'
+          node-version: '24'
           artifacts-pass: ${{ secrets.ARTIFACTS_PASS }}
           upload-artifacts: true

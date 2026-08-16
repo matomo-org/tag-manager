@@ -33,7 +33,7 @@
           </li>
           <li
             v-for="containerEntry in containers"
-            :title="this.htmlEntities(`${containerEntry.name} (${containerEntry.idcontainer})`)"
+            :title="htmlEntities(`${containerEntry.name} (${containerEntry.idcontainer})`)"
             :key="containerEntry.idcontainer"
           >
             <a :href="linkTo(containerEntry.idcontainer)">

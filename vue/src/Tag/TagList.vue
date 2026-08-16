@@ -90,16 +90,16 @@
                   v-if="hasWriteAccess"
                   href=""
                   @click.prevent="editTrigger(fireTriggerId)"
-                  :title="this.triggers[fireTriggerId]"
+                  :title="triggers[fireTriggerId]"
                 >
-                  {{ truncateText(this.triggers[fireTriggerId], triggerTruncateLength) }}
+                  {{ truncateText(triggers[fireTriggerId], triggerTruncateLength) }}
                 </a>
                 <span
                   class="chip"
                   v-if="!hasWriteAccess"
-                  :title="this.triggers[fireTriggerId]"
+                  :title="triggers[fireTriggerId]"
                 >
-                  {{ truncateText(this.triggers[fireTriggerId], triggerTruncateLength) }}
+                  {{ truncateText(triggers[fireTriggerId], triggerTruncateLength) }}
                 </span>
               </span>
               <span v-show="tag.block_trigger_ids.length">
@@ -114,23 +114,23 @@
                     v-show="hasWriteAccess"
                     href=""
                     @click.prevent="editTrigger(blockTriggerId)"
-                    :title="this.triggers[blockTriggerId]"
+                    :title="triggers[blockTriggerId]"
                   >
-                    {{ truncateText(this.triggers[blockTriggerId], triggerTruncateLength) }}
+                    {{ truncateText(triggers[blockTriggerId], triggerTruncateLength) }}
                   </a>
                   <span
                     class="chip"
                     v-show="!hasWriteAccess"
-                    :title="this.triggers[blockTriggerId]"
+                    :title="triggers[blockTriggerId]"
                   >
-                    {{ truncateText(this.triggers[blockTriggerId], triggerTruncateLength) }}
+                    {{ truncateText(triggers[blockTriggerId], triggerTruncateLength) }}
                   </span>
                 </span>
               </span>
             </td>
             <td
               class="lastUpdated"
-              :title="translate('TagManager_CreatedOnX', tag.created_date_pretty)"
+              :title="translate('TagManager_CreatedOnX', tag.created_date_pretty || '')"
             >
               <span>{{ tag.updated_date_pretty }}</span>
             </td>
@@ -142,25 +142,25 @@
                 v-show="tag.status === 'active'
                 && (!tag.typeMetadata?.isCustomTemplate || canUseCustomTemplates)"
                 class="table-action icon-pause"
-                @click="pauseTag(tag)"
+                @click="pauseTag(tag as Tag)"
                 :title="translate('TagManager_PauseX', translate('TagManager_Tag'))"
               />
               <a
                 v-show="tag.status === 'paused'
                 && (!tag.typeMetadata?.isCustomTemplate || canUseCustomTemplates)"
                 class="table-action icon-play"
-                @click="resumeTag(tag)"
+                @click="resumeTag(tag as Tag)"
                 :title="translate('TagManager_ResumeX', translate('TagManager_Tag'))"
               />
               <a
                 class="table-action icon-edit"
-                @click="editTag(tag.idtag, tag.type)"
+                @click="editTag(tag.idtag)"
                 :title="translate('TagManager_EditTag')"
               />
               <a
                 class="table-action icon-content-copy"
                 v-show="hasPublishCapability()"
-                @click="openCopyDialog(tag)"
+                @click="openCopyDialog(tag as Tag)"
                 :title="translate(
                   'TagManager_CopyX',
                   translate('TagManager_Tag'),
@@ -169,7 +169,7 @@
               <a
                 v-show="!tag.typeMetadata?.isCustomTemplate || canUseCustomTemplates"
                 class="table-action icon-delete"
-                @click="deleteTag(tag)"
+                @click="deleteTag(tag as Tag)"
                 :title="translate('TagManager_DeleteX', translate('TagManager_Tag'))"
               />
             </td>
@@ -256,7 +256,7 @@ import TagsStore from './Tags.store';
 import TriggersStore from '../Trigger/Triggers.store';
 import { Tag, TagType } from '../types';
 
-interface TagListState {
+export interface TagListState {
   hasWriteAccess: boolean;
   triggerTruncateLength: number;
   tagSearch: string;

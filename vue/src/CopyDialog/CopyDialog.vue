@@ -46,7 +46,7 @@ import {
   Form,
   Field,
 } from 'CorePluginsAdmin';
-import { Container } from '../types.ts';
+import { Container } from '../types';
 import TagsStore from '../Tag/Tags.store';
 import ContainersStore from '../Container/Containers.store';
 import TriggersStore from '../Trigger/Triggers.store';
