@@ -1,11 +1,6 @@
 <div class="previewDebugNotification">
     <div class="previewDebugNotification__header">
         <strong class="previewDebugNotification__title">{{ 'TagManager_PreviewModeEnabledTitle'|translate(version) }}</strong>
-        <div class="previewDebugNotification__disableAction">
-            <button type="button" class="btn btn-outline btn-small disablePreviewDebug"
-                    data-idcontainer="{{ idcontainer|e('html_attr') }}"
-            >{{ 'TagManager_DisablePreview'|translate }}</button>
-        </div>
     </div>
 
     <p class="previewDebugNotification__description">
@@ -20,15 +15,22 @@
         <div vue-entry="CoreHome.Alert" severity="danger" id="debug-notification-alert" style="display: none">
             <strong>{{ 'TagManager_InvalidDebugUrlError'|translate }}!</strong> <span id="debug-notification-alert-message"></span>
         </div>
-        <input type="url" id="previewDebugUrl" class="browser-default previewDebugNotification__urlInput"
-               placeholder="https://example.org"
-               value="{{ debugSiteUrl|e('html_attr') }}">
-        <div class="previewDebugNotification__debugAction">
-            <button type="button" class="btn btn-small"
-                    data-idcontainer="{{ idcontainer|e('html_attr') }}"
-                    data-debug-site-url="{{ debugSiteUrl|e('html_attr') }}">
-                {{ 'TagManager_PreviewDebugUrlButtonText'|translate }}
-            </button>
+        <div class="previewDebugNotification__debugFormRow">
+            <input type="url" id="previewDebugUrl" class="browser-default previewDebugNotification__urlInput"
+                   placeholder="https://example.org"
+                   value="{{ debugSiteUrl|e('html_attr') }}">
+            <div class="previewDebugNotification__debugAction">
+                <button type="button" class="btn btn-small"
+                        data-idcontainer="{{ idcontainer|e('html_attr') }}"
+                        data-debug-site-url="{{ debugSiteUrl|e('html_attr') }}">
+                    {{ 'TagManager_PreviewDebugUrlButtonText'|translate }}
+                </button>
+            </div>
+            <div class="previewDebugNotification__disableAction">
+                <button type="button" class="btn btn-outline btn-small disablePreviewDebug"
+                        data-idcontainer="{{ idcontainer|e('html_attr') }}"
+                >{{ 'TagManager_DisablePreview'|translate }}</button>
+            </div>
         </div>
     </div>
 </div>
