@@ -1,16 +1,7 @@
 .previewDebugNotification {
 
   .previewDebugNotification__header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
     margin-bottom: .5rem;
-  }
-
-  .previewDebugNotification__disableAction {
-    flex: none;
   }
 
   .previewDebugNotification__description {
@@ -25,8 +16,15 @@
     padding-top: 1rem;
   }
 
+  .previewDebugNotification__debugFormRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: safe center;
+    gap: .5rem;
+  }
+
   .previewDebugNotification__urlInput {
-    width: 25%;
+    width: 50%;
     padding: 8px;
     border: 1px solid @theme-color-border-alternative;
     border-radius: 4px;
@@ -35,8 +33,12 @@
   }
 
   .previewDebugNotification__debugAction {
-    display: inline-block;
-    vertical-align: middle;
+    flex: none;
+  }
+
+  .previewDebugNotification__disableAction {
+    flex: none;
+    margin-left: auto;
   }
 }
 
@@ -46,11 +48,6 @@
 
     .previewDebugNotification__urlInput {
       width: 100%;
-      margin-bottom: .5rem;
-    }
-
-    .previewDebugNotification__debugAction {
-      display: block;
     }
   }
 }

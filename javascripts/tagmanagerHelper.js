@@ -314,7 +314,7 @@
 
         var idContainer = $(event.target).data('idcontainer');
         tagManagerHelper.disablePreviewMode(idContainer);
-      }).on('click', '.previewDebugNotification__debugForm button', function (event) {
+      }).on('click', '.previewDebugNotification__debugAction button', function (event) {
         var idContainer = $(event.target).data('idcontainer');
         var debugSiteUrl = $(event.target).data('debug-site-url');
         tagManagerHelper.changeDebugUrl(idContainer, debugSiteUrl);
