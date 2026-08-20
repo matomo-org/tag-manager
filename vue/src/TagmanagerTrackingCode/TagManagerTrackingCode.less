@@ -17,6 +17,19 @@
   .trackingCodeAdvancedOptions {
     margin-left: 20px;
 
+    // The site selector beside these keeps its label in normal flow, so its column starts
+    // lower than a select's. The offset goes on the field's .input-field because that is
+    // the label's containing block: moving it carries the label and the control together,
+    // where a margin on the field itself would move the control and leave the label
+    // behind. It has to be qualified with .matomo-form-field, because the site selector
+    // column hand-writes its own .input-field and would otherwise move too.
+    // 12px is measured against the site selector in this row and is only right here; it
+    // lands the control's top edge exactly and leaves the label 2px low, the two controls
+    // spacing their labels slightly differently.
+    .matomo-form-field .input-field {
+      margin-top: ~"calc(1rem + 12px)";
+    }
+
     > .advance-option {
       margin: 1rem 0;
     }
