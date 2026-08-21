@@ -255,7 +255,9 @@ describe("TagManager", function () {
           $('.sitesManagerList .card-content:eq(1) .icon-delete').click()
         });
         await page.waitForTimeout(250);
-        await capture.modal(page, 'manageWebsitesDeleteAction');
+        // Same whole-modal rendering variance as publish_with_content above, but wider: the modal is
+        // small (742x537), so the identical content still measured 1.5% and 2.3% different on two runs.
+        await capture.modal(page, 'manageWebsitesDeleteAction', 0.03);
     });
 
     it("should display the MTM settings page", async function () {
