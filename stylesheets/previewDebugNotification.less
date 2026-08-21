@@ -1,0 +1,53 @@
+.previewDebugNotification {
+
+  .previewDebugNotification__header {
+    margin-bottom: .5rem;
+  }
+
+  .previewDebugNotification__description {
+    margin: 0 0 .5rem;
+  }
+
+  .previewDebugNotification__instruction {
+    margin: 0;
+  }
+
+  .previewDebugNotification__debugForm {
+    padding-top: 1rem;
+  }
+
+  .previewDebugNotification__debugFormRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: safe center;
+    gap: .5rem;
+  }
+
+  .previewDebugNotification__urlInput {
+    width: 50%;
+    padding: 8px;
+    border: 1px solid @theme-color-border-alternative;
+    border-radius: 4px;
+    box-sizing: border-box;
+    vertical-align: middle;
+  }
+
+  .previewDebugNotification__debugAction {
+    flex: none;
+  }
+
+  .previewDebugNotification__disableAction {
+    flex: none;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .previewDebugNotification {
+
+    .previewDebugNotification__urlInput {
+      width: 100%;
+    }
+  }
+}
