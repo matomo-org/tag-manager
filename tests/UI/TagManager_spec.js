@@ -160,6 +160,21 @@ describe("TagManager", function () {
         await capture.page(page, 'preview_enable');
     });
 
+    it('should not expose the preview URL parameters in the notification', async function () {
+        const notificationText = await page.evaluate(function () {
+            return document.querySelector('#notificationContainer').innerText;
+        });
+        expect(notificationText).to.not.contain('mtmPreviewMode');
+    });
+
+    it('should open the preview mode FAQ link in a new tab', async function () {
+        const target = await page.evaluate(function () {
+            var link = document.querySelector('#notificationContainer .previewDebugNotification__description a');
+            return link && link.getAttribute('target');
+        });
+        expect(target).to.equal('_blank');
+    });
+
     it('should change debug URL', async function () {
         await page.evaluate(function() {
             $('#previewDebugUrl').val('https://example.com');
@@ -240,7 +255,9 @@ describe("TagManager", function () {
           $('.sitesManagerList .card-content:eq(1) .icon-delete').click()
         });
         await page.waitForTimeout(250);
-        await capture.modal(page, 'manageWebsitesDeleteAction');
+        // Same whole-modal rendering variance as publish_with_content above, but wider: the modal is
+        // small (742x537), so the identical content still measured 1.5% and 2.3% different on two runs.
+        await capture.modal(page, 'manageWebsitesDeleteAction', 0.03);
     });
 
     it("should display the MTM settings page", async function () {
