@@ -1655,15 +1655,15 @@
 
             defaultParameters = {document: {cookie: 'mytest=foobar; loginbaz=' + encodeURIComponent('#343ö34:-44095$')}};
             defaultParameters.cookieName = buildVariable('loginbaz');
-            defaultParameters.uriDecode = buildVariable(false);
+            defaultParameters.urlDecode = buildVariable(false);
             strictEqual('%23343%C3%B634%3A-44095%24', resolveTemplateVariable(templateToTest, defaultParameters), 'returns last cookie, uriDecode disabled');
 
             defaultParameters.cookieName = buildVariable('loginbaz');
-            defaultParameters.uriDecode = buildVariable(true);
+            defaultParameters.urlDecode = buildVariable(true);
             strictEqual('#343ö34:-44095$', resolveTemplateVariable(templateToTest, defaultParameters), 'returns last cookie, uriDecode enabled');
 
             defaultParameters.cookieName =  buildVariable('notexisting');
-            defaultParameters.uriDecode = buildVariable(true);
+            defaultParameters.urlDecode = buildVariable(true);
             strictEqual(undefined, resolveTemplateVariable(templateToTest, defaultParameters), 'returns undefined when cookie does not exist, uriDecode enabled');
         });
 
