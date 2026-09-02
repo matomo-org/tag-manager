@@ -1,5 +1,9 @@
 ## Changelog
 
+0.2.11
+
+* Fixed the "URI-decode Cookie" option of the Cookie variable having no effect
+
 0.2.10 - 22/06/2026
 
 * Fixed issue where ecommerce object would break when null
