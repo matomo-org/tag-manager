@@ -10,18 +10,11 @@
       feature="Tag Manager"
       :content-title="editTitle"
     >
-      <p v-show="isLoading">
-        <span class="loadingPiwik">
-          <img src="plugins/Morpheus/images/loading-blue.gif"/>
-          {{ translate('General_LoadingData') }}
-        </span>
-      </p>
-      <p v-show="isUpdating">
-        <span class="loadingPiwik">
-          <img src="plugins/Morpheus/images/loading-blue.gif"/>
-          {{ translate('TagManager_UpdatingData') }}
-        </span>
-      </p>
+      <ActivityIndicator :loading="isLoading" />
+      <ActivityIndicator
+        :loading="isUpdating"
+        :loading-message="translate('TagManager_UpdatingData')"
+      />
       <form @submit="edit ? updateVersion() : createVersion()">
         <div>
           <div v-if="hasPublishCapability() ||
