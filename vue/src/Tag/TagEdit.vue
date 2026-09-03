@@ -10,10 +10,11 @@
       feature="Tag Manager"
       :content-title="editTitle"
     >
-      <ActivityIndicator :loading="isLoading" />
       <ActivityIndicator
-        :loading="isUpdating"
-        :loading-message="translate('TagManager_UpdatingData')"
+        :loading="isLoading || isUpdating"
+        :loading-message="isUpdating
+          ? translate('TagManager_UpdatingData')
+          : translate('General_LoadingData')"
       />
       <form
         v-show="!chooseTagType && editTitle"
