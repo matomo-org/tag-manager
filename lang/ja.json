@@ -973,6 +973,8 @@
         "ShareaholicTagSiteIdDescription": "Shareaholic で新しいサイトを作成し、ここにサイト ID を貼り付けます",
         "ShareaholicTagSiteIdTitle": "Shareaholic サイト ID",
         "ShowAdvancedSettings": "詳細設定を表示する",
+        "SiteWithoutDataMtmStep2": "このコンテナをカスタマイズしたい場合は、%1$sコンテナダッシュボード%2$s を訪問してください",
+        "SiteWithoutDataMtmStep3": "以下のコードをコピーして、あなたのウェブサイトのすべてのページに貼り付けてください。閉じる %1$s タグの直前に貼り付けることを推奨します。%2$s詳しくはこちら%3$s。",
         "SiteWithoutDataReactFollowStepCompleted": "%1$sおめでとうございます！%2$s Matomo タグマネージャ経由で Matomo Analytics トラッキングコードを正常にインストールしました。ヒットがトラッキングされていることを確認するには、ウェブサイトにアクセスし、このデータが Matomo インスタンスで表示されていることを確認してください。",
         "SiteWithoutDataReactIntro": "React.jsのウェブサイトやアプリのトラッキングは、シングルページアプリケーションでもMatomoを使えば簡単です。",
         "StartDate": "開始日",

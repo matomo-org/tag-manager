@@ -6,6 +6,13 @@
  */
 
 import { DeepReadonly } from 'vue';
+import type { Setting } from 'CorePluginsAdmin';
+
+// A setting definition of a tag, trigger or variable type, as the type
+// metadata returns it: a plugin setting plus the ui control's own attributes.
+export interface TypeParameter extends Setting {
+  uiControlAttributes?: Record<string, unknown>;
+}
 
 export interface InstallInstructions {
   description: string;
@@ -34,8 +41,8 @@ export interface VariableType {
   isCustomTemplate: boolean;
   name: string;
   order: number;
-  parameters: Record<string, unknown>[];
-  advancedParameters: Record<string, unknown>[];
+  parameters: TypeParameter[];
+  advancedParameters: TypeParameter[];
 }
 
 export interface Variable {
@@ -83,7 +90,7 @@ export interface VariableType {
   isCustomTemplate: boolean;
   name: string;
   order: number;
-  parameters: Record<string, unknown>[];
+  parameters: TypeParameter[];
 }
 
 export interface VariableCategory {
@@ -110,7 +117,7 @@ export interface TriggerType {
   isCustomTemplate: boolean;
   name: string;
   order: number;
-  parameters: Record<string, unknown>[];
+  parameters: TypeParameter[];
 }
 
 export interface TriggerCategory {
@@ -158,7 +165,7 @@ export interface TagType {
   isCustomTemplate: boolean;
   name: string;
   order: number;
-  parameters: Record<string, unknown>[];
+  parameters: TypeParameter[];
 }
 
 export interface TagTypeCategory {
