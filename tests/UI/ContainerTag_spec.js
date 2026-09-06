@@ -243,15 +243,15 @@ describe("ContainerTag", function () {
           elem.scrollTop(elem.height())
         });
         await page.waitForTimeout(500);
-        await capture.modal(page, 'edit_trigger_directly_popup_list_level1');
+        await capture.modalWithOpenList(page, 'edit_trigger_directly_popup_list_level1');
     });
 
     it('should show the popup list level 2 completely visible', async function () {
-        await page.evaluate(() => $('.modal.open .expandableList .collection.firstLevel li.collection-item:eq(0) h4').click());
+        await page.evaluate(() => $('.expandableList:visible .collection.firstLevel li.collection-item:eq(0) h4').click());
         await page.waitForTimeout(100);
         await page.waitForNetworkIdle();
         await page.waitForTimeout(500);
-        await capture.modal(page, 'edit_trigger_directly_popup_list_level2');
+        await capture.modalWithOpenList(page, 'edit_trigger_directly_popup_list_level2');
         await page.evaluate(() => function() {
           $('.modal.open .modal-close')[0].click();
         });

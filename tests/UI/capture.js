@@ -46,17 +46,22 @@ exports.page = async function (page, screenshotName)
     await exports.selector(page, screenshotName, '.pageWrap,#notificationContainer,.navbar');
 };
 
+exports.pageWithOpenList = async function (page, screenshotName)
+{
+    await exports.selector(page, screenshotName, '.pageWrap,#notificationContainer,.navbar,.expandableSelector__list');
+};
+
 exports.notification = async function (page, screenshotName)
 {
     await exports.selector(page, screenshotName, '#notificationContainer');
 };
 
-exports.modal = async function (page, screenshotName, comparisonThreshold)
+async function settleOpenModal(page)
 {
     await page.waitForNetworkIdle();
     await page.waitForTimeout(500); // ensure animation is finished
 
-    pageWrap = await page.waitForSelector('.modal.open');
+    const modal = await page.waitForSelector('.modal.open');
 
     // Materialize's modal open-animation may not advance under the new headless Chrome, leaving stale
     // inline styles that offset the capture; settle the open modal to its final state before capturing.
@@ -70,8 +75,30 @@ exports.modal = async function (page, screenshotName, comparisonThreshold)
 
     await exports.disableAnimations(page);
     await exports.setTableRowHeight(page);
-    const image = comparisonThreshold
+
+    return modal;
+}
+
+function imageFor(screenshotName, comparisonThreshold)
+{
+    return comparisonThreshold
         ? { imageName: screenshotName, comparisonThreshold: comparisonThreshold }
         : screenshotName;
-    expect(await pageWrap.screenshot()).to.matchImage(image);
+}
+
+exports.modal = async function (page, screenshotName, comparisonThreshold)
+{
+    const modal = await settleOpenModal(page);
+
+    expect(await modal.screenshot()).to.matchImage(imageFor(screenshotName, comparisonThreshold));
+};
+
+// An expandable select renders its list at the page level so it is not clipped by the modal, which
+// also puts it outside a screenshot of the modal element; both have to be named to stay in shot.
+exports.modalWithOpenList = async function (page, screenshotName, comparisonThreshold)
+{
+    await settleOpenModal(page);
+
+    expect(await page.screenshotSelector('.modal.open,.expandableSelector__list'))
+        .to.matchImage(imageFor(screenshotName, comparisonThreshold));
 };
