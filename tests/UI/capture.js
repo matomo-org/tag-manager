@@ -51,12 +51,12 @@ exports.notification = async function (page, screenshotName)
     await exports.selector(page, screenshotName, '#notificationContainer');
 };
 
-exports.modal = async function (page, screenshotName, comparisonThreshold)
+async function settleOpenModal(page)
 {
     await page.waitForNetworkIdle();
     await page.waitForTimeout(500); // ensure animation is finished
 
-    pageWrap = await page.waitForSelector('.modal.open');
+    const modal = await page.waitForSelector('.modal.open');
 
     // Materialize's modal open-animation may not advance under the new headless Chrome, leaving stale
     // inline styles that offset the capture; settle the open modal to its final state before capturing.
@@ -69,9 +69,25 @@ exports.modal = async function (page, screenshotName, comparisonThreshold)
     });
 
     await exports.disableAnimations(page);
+
+    return modal;
+}
+
+exports.modal = async function (page, screenshotName, comparisonThreshold)
+{
+    const modal = await settleOpenModal(page);
+
     await exports.setTableRowHeight(page);
     const image = comparisonThreshold
         ? { imageName: screenshotName, comparisonThreshold: comparisonThreshold }
         : screenshotName;
-    expect(await pageWrap.screenshot()).to.matchImage(image);
+    expect(await modal.screenshot()).to.matchImage(image);
+};
+
+// An expandable select renders its option list at the page level rather than inside the modal, so a
+// modal-only capture would leave out the very thing these shots exist to show is unclipped.
+exports.modalWithOptionList = async function (page, screenshotName)
+{
+    await settleOpenModal(page);
+    await exports.selector(page, screenshotName, '.modal.open,.expandableSelector__list');
 };

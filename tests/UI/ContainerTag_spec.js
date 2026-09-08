@@ -243,15 +243,18 @@ describe("ContainerTag", function () {
           elem.scrollTop(elem.height())
         });
         await page.waitForTimeout(500);
-        await capture.modal(page, 'edit_trigger_directly_popup_list_level1');
+        await capture.modalWithOptionList(page, 'edit_trigger_directly_popup_list_level1');
     });
 
     it('should show the popup list level 2 completely visible', async function () {
-        await page.evaluate(() => $('.modal.open .expandableList .collection.firstLevel li.collection-item:eq(0) h4').click());
-        await page.waitForTimeout(100);
+        // the list is rendered at the page level now, so it is no longer reachable under .modal.open
+        await (await page.jQuery(
+            '.expandableSelector__list .collection.firstLevel li.collection-item:eq(0) h4',
+            { waitFor: true }
+        )).click();
         await page.waitForNetworkIdle();
-        await page.waitForTimeout(500);
-        await capture.modal(page, 'edit_trigger_directly_popup_list_level2');
+        await page.waitForSelector('.expandableSelector__list .secondLevel', { visible: true });
+        await capture.modalWithOptionList(page, 'edit_trigger_directly_popup_list_level2');
         await page.evaluate(() => function() {
           $('.modal.open .modal-close')[0].click();
         });
