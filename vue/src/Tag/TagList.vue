@@ -43,10 +43,7 @@
         <tbody>
           <tr v-show="isLoading || isUpdating">
             <td colspan="6">
-              <span class="loadingPiwik">
-                <img src="plugins/Morpheus/images/loading-blue.gif" />
-                {{ translate('General_LoadingData') }}
-              </span>
+              <ActivityIndicator :loading="true" />
             </td>
           </tr>
           <tr v-show="!isLoading && tags.length === 0">
@@ -246,6 +243,7 @@
 <script lang="ts">
 import { defineComponent, watch } from 'vue';
 import {
+  ActivityIndicator,
   ContentBlock,
   ContentTable,
   Matomo,
@@ -279,6 +277,7 @@ export default defineComponent({
     tagsHelpText: String,
   },
   components: {
+    ActivityIndicator,
     ContentBlock,
     Field,
   },
