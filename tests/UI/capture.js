@@ -46,13 +46,6 @@ exports.page = async function (page, screenshotName)
     await exports.selector(page, screenshotName, '.pageWrap,#notificationContainer,.navbar');
 };
 
-// Same reasoning as modalWithOptionList: an expandable select renders its list at the page level,
-// which reaches past .pageWrap, so a plain page capture cuts off the list the spec is showing.
-exports.pageWithOptionList = async function (page, screenshotName)
-{
-    await exports.selector(page, screenshotName, '.pageWrap,#notificationContainer,.navbar,.expandableSelector__list');
-};
-
 exports.notification = async function (page, screenshotName)
 {
     await exports.selector(page, screenshotName, '#notificationContainer');
@@ -89,12 +82,4 @@ exports.modal = async function (page, screenshotName, comparisonThreshold)
         ? { imageName: screenshotName, comparisonThreshold: comparisonThreshold }
         : screenshotName;
     expect(await modal.screenshot()).to.matchImage(image);
-};
-
-// An expandable select renders its option list at the page level rather than inside the modal, so a
-// modal-only capture would leave out the very thing these shots exist to show is unclipped.
-exports.modalWithOptionList = async function (page, screenshotName)
-{
-    await settleOpenModal(page);
-    await exports.selector(page, screenshotName, '.modal.open,.expandableSelector__list');
 };

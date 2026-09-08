@@ -243,7 +243,7 @@ describe("ContainerTag", function () {
           elem.scrollTop(elem.height())
         });
         await page.waitForTimeout(500);
-        await capture.modalWithOptionList(page, 'edit_trigger_directly_popup_list_level1');
+        await capture.modal(page, 'edit_trigger_directly_popup_list_level1');
     });
 
     it('should show the popup list level 2 completely visible', async function () {
@@ -254,7 +254,7 @@ describe("ContainerTag", function () {
         )).click();
         await page.waitForNetworkIdle();
         await page.waitForSelector('.expandableSelector__list .secondLevel', { visible: true });
-        await capture.modalWithOptionList(page, 'edit_trigger_directly_popup_list_level2');
+        await capture.modal(page, 'edit_trigger_directly_popup_list_level2');
         await page.evaluate(() => function() {
           $('.modal.open .modal-close')[0].click();
         });
