@@ -46,6 +46,13 @@ exports.page = async function (page, screenshotName)
     await exports.selector(page, screenshotName, '.pageWrap,#notificationContainer,.navbar');
 };
 
+// Same reasoning as modalWithOptionList: an expandable select renders its list at the page level,
+// which reaches past .pageWrap, so a plain page capture cuts off the list the spec is showing.
+exports.pageWithOptionList = async function (page, screenshotName)
+{
+    await exports.selector(page, screenshotName, '.pageWrap,#notificationContainer,.navbar,.expandableSelector__list');
+};
+
 exports.notification = async function (page, screenshotName)
 {
     await exports.selector(page, screenshotName, '#notificationContainer');

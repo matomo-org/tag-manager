@@ -139,7 +139,7 @@ describe("ContainerTrigger", function () {
         await selectTriggerType('DomReady');
         await page.click('div.condition0 div.expandableSelector');
         await page.click('ul.firstLevel > li.collection-item:first-child');
-        await capture.page(page, 'select_variable_filter');
+        await capture.pageWithOptionList(page, 'select_variable_filter');
     });
 
     it('should be able to prefill trigger', async function () {
