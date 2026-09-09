@@ -44,7 +44,12 @@
         <tbody>
           <tr v-show="isLoading || isUpdating">
             <td colspan="7">
-              <ActivityIndicator :loading="true" />
+              <ActivityIndicator
+                :loading="isLoading || isUpdating"
+                :loading-message="isUpdating
+                  ? translate('TagManager_UpdatingData')
+                  : translate('General_LoadingData')"
+              />
             </td>
           </tr>
           <tr v-show="!isLoading && versions.length === 0">
