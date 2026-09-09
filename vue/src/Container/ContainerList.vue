@@ -27,10 +27,12 @@
         <tbody>
           <tr v-show="isLoading || isUpdating">
             <td colspan="5">
-              <span class="loadingPiwik">
-                <img src="plugins/Morpheus/images/loading-blue.gif" />
-                {{ translate('General_LoadingData') }}
-              </span>
+              <ActivityIndicator
+                :loading="isLoading || isUpdating"
+                :loading-message="isUpdating
+                  ? translate('TagManager_UpdatingData')
+                  : translate('General_LoadingData')"
+              />
             </td>
           </tr>
           <tr v-show="!isLoading && containers.length === 0">
@@ -144,6 +146,7 @@
 <script lang="ts">
 import { DeepReadonly, defineComponent } from 'vue';
 import {
+  ActivityIndicator,
   Matomo,
   ContentBlock,
   ContentTable,
@@ -167,6 +170,7 @@ export default defineComponent({
     },
   },
   components: {
+    ActivityIndicator,
     ContentBlock,
   },
   directives: {
