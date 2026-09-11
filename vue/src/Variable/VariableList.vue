@@ -44,10 +44,12 @@
         <tbody>
           <tr v-show="isLoading || isUpdating">
             <td colspan="7">
-              <span class="loadingPiwik">
-                <img src="plugins/Morpheus/images/loading-blue.gif" />
-                {{ translate('General_LoadingData') }}
-              </span>
+              <ActivityIndicator
+                :loading="isLoading || isUpdating"
+                :loading-message="isUpdating
+                  ? translate('TagManager_UpdatingData')
+                  : translate('General_LoadingData')"
+              />
             </td>
           </tr>
           <tr v-show="!isLoading && !variables.length">
@@ -219,6 +221,7 @@
 <script lang="ts">
 import { DeepReadonly, defineComponent } from 'vue';
 import {
+  ActivityIndicator,
   AjaxHelper,
   ContentBlock,
   ContentTable,
@@ -256,6 +259,7 @@ export default defineComponent({
     variablesHelpText: String,
   },
   components: {
+    ActivityIndicator,
     Field,
     ContentBlock,
   },
