@@ -1,0 +1,25 @@
+# Dispatches this plugin's build for each maintained branch that is not the default one, because
+# GitHub only ever runs `schedule` from the default branch's copy of a workflow file. The logic
+# lives in matomo-org/plugin-ci-workflows; see the "Branch sweep" section of its README.md for
+# why this dispatches rather than building another branch's source here.
+
+name: Weekly branch sweep
+
+on:
+  schedule:
+    # Sunday, so it does not compete with this plugin's own Saturday build. Keeps the minute and
+    # hour of matomo-tests.yml's cron, so the fleet stays staggered across the window.
+    - cron: '45 2 * * 0'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  sweep:
+    # Granted by the caller because permissions can only be maintained or reduced down a call
+    # chain, never elevated: the called workflow declares these too, but that can only cap them,
+    # not supply them, so without this block the dispatch is unauthorised.
+    permissions:
+      actions: write
+      contents: read
+    uses: matomo-org/plugin-ci-workflows/.github/workflows/plugin-branch-sweep.yml@main

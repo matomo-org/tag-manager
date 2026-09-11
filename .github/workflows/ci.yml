@@ -1,0 +1,26 @@
+name: Plugins CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches:
+      - '**.x-dev'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+  pull-requests: read
+
+jobs:
+  ci:
+    uses: matomo-org/plugin-ci-workflows/.github/workflows/plugin-ci.yml@main
+    with:
+      plugin-name: TagManager
+      # PHPStan has never run here and there is no phpstan.neon to run it with;
+      # adding one is a decision of its own.
+      skip-phpstan: true
+      # No license check has ever run here; enabling one is a decision of its own,
+      # not part of moving the checks that already run onto one caller.
+      skip-license-check: true
