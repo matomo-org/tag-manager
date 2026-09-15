@@ -246,6 +246,28 @@ describe("ContainerTag", function () {
         await capture.modal(page, 'edit_trigger_directly_popup_list_level1');
     });
 
+    it('should let the option list search box be typed into inside the modal', async function () {
+        // The list is teleported to <body>, so it sits outside the modal's DOM subtree, and
+        // Materialize traps focus inside an open dismissible modal by containment. Without core's
+        // exemption the search box cannot hold focus. Clicking the list still works in that state,
+        // so only typing catches the regression: the keystrokes land on the modal instead.
+        await page.waitForSelector('.expandableSelector__list .expandableSearch', { visible: true });
+        await page.type('.expandableSelector__list .expandableSearch', 'pageview');
+
+        const typed = await page.evaluate(
+            () => $('.expandableSelector__list .expandableSearch').val()
+        );
+        expect(typed).to.equal('pageview');
+
+        // leave the list unfiltered for the level 2 spec that follows
+        await page.evaluate(() => {
+            const search = $('.expandableSelector__list .expandableSearch');
+            search.val('');
+            search[0].dispatchEvent(new Event('input', { bubbles: true }));
+        });
+        await page.waitForNetworkIdle();
+    });
+
     it('should show the popup list level 2 completely visible', async function () {
         // the list is rendered at the page level now, so it is no longer reachable under .modal.open
         await (await page.jQuery(
