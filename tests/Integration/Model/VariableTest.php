@@ -12,6 +12,7 @@ namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 use Piwik\Container\StaticContainer;
 use Piwik\NoAccessException;
 use Piwik\Piwik;
+use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
@@ -614,7 +615,14 @@ class VariableTest extends IntegrationTestCase
         // deletes nothing when no match
         $this->model->deleteContainerVariable($this->idSite, $this->containerVersion1, 9999);
         $this->model->deleteContainerVariable($this->idSite, 9999, $idVariable3);
-        $this->model->deleteContainerVariable(9999, $this->containerVersion1, $idVariable3);
+
+        // an unknown site is rejected rather than silently ignored
+        try {
+            $this->model->deleteContainerVariable(9999, $this->containerVersion1, $idVariable3);
+            $this->fail('Expected an exception when the site does not exist');
+        } catch (UnexpectedWebsiteFoundException $e) {
+            // expected
+        }
 
         $this->assertCount(3, $this->model->getContainerVariables($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerVariables($this->idSite2, $this->containerVersion1));
