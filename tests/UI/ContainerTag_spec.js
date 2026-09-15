@@ -249,8 +249,9 @@ describe("ContainerTag", function () {
     it('should let the option list search box be typed into inside the modal', async function () {
         // The list is teleported to <body>, so it sits outside the modal's DOM subtree, and
         // Materialize traps focus inside an open dismissible modal by containment. Without core's
-        // exemption the search box cannot hold focus. Clicking the list still works in that state,
-        // so only typing catches the regression: the keystrokes land on the modal instead.
+        // exemption the search box cannot hold focus and the keystrokes land on the modal instead.
+        // The level 1 screenshot above also catches this - the focus ring is why its baseline
+        // changed - so do not resync that image away; this is the explicit, non-pixel assertion.
         await page.waitForSelector('.expandableSelector__list .expandableSearch', { visible: true });
         await page.type('.expandableSelector__list .expandableSearch', 'pageview');
 
@@ -259,13 +260,21 @@ describe("ContainerTag", function () {
         );
         expect(typed).to.equal('pageview');
 
-        // leave the list unfiltered for the level 2 spec that follows
+        // Leave the list unfiltered for the level 2 spec. Resetting the filter is client side, so
+        // there is no request to wait on - wait for the groups v-show hid to be laid out again,
+        // or a stale filter surfaces over there as an unclickable zero-size node instead.
         await page.evaluate(() => {
             const search = $('.expandableSelector__list .expandableSearch');
             search.val('');
             search[0].dispatchEvent(new Event('input', { bubbles: true }));
         });
-        await page.waitForNetworkIdle();
+        await page.waitForFunction(() => {
+            const groups = document.querySelectorAll(
+                '.expandableSelector__list .collection.firstLevel > li.collection-item'
+            );
+            return groups.length > 0
+                && Array.prototype.every.call(groups, (li) => li.offsetParent !== null);
+        });
     });
 
     it('should show the popup list level 2 completely visible', async function () {
