@@ -1,0 +1,27 @@
+name: Codex Review
+
+on:
+  # nosec — label-gated; this wrapper runs no PR code, see matomo-org/plugin-ci-workflows README.md
+  pull_request_target:
+    types: [labeled]
+
+permissions:
+  contents: none
+
+jobs:
+  codex-review:
+    # The shared workflow gates every one of its own jobs on this label, but it also carries a
+    # cancel-in-progress concurrency group. Without this condition an unrelated label would still
+    # instantiate it, claim that group, and cancel a review already running on this pull request.
+    if: ${{ github.event.label.name == 'codex-review' }}
+    uses: matomo-org/plugin-ci-workflows/.github/workflows/plugin-codex-review.yml@main
+    permissions:
+      actions: read
+      contents: read
+      issues: write
+      pull-requests: write
+    with:
+      plugin-name: TagManager
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      TESTS_ACCESS_TOKEN: ${{ secrets.TESTS_ACCESS_TOKEN }}
