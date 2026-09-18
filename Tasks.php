@@ -36,18 +36,13 @@ class Tasks extends \Piwik\Plugin\Tasks
     {
         /** @var TagManager $tagManager */
         $tagManager = $this->pluginManager->getLoadedPlugin('TagManager');
-        if ($tagManager) {
-            $tagManager->regenerateReleasedContainers();
-        }
+        $tagManager->regenerateReleasedContainers();
     }
 
     public function deleteContainersForNonExistingSite()
     {
         /** @var TagManager $tagManager */
         $tagManager = $this->pluginManager->getLoadedPlugin('TagManager');
-        if (!$tagManager) {
-            return;
-        }
         $containerDao = new ContainersDao();
         $containers = $containerDao->getActiveContainersInfo();
         $siteIdsDeleted = [];

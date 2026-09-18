@@ -1,5 +1,5 @@
 parameters:
-    level: 1
+    level: 5
     phpVersion: 80100
     tmpDir: /tmp/phpstan/TagManager/main
     paths:
@@ -7,6 +7,71 @@ parameters:
     excludePaths:
         - tests/*
         - github-action-tests/ (?)
+    ignoreErrors:
+        # the pre-configured variables reached here widen loadTemplate() with a third $skipTemplate parameter
+        -
+            identifier: arguments.count
+            path: Context/BaseContext.php
+            count: 1
+        # the map is filled inside variableToArray(), so here it still reads as the empty array assigned above
+        -
+            identifier: arrayValues.empty
+            path: Context/BaseContext.php
+            count: 1
+        # $_GET and $_POST are absent when variables_order leaves them out, which is what these guards restore
+        -
+            identifier: isset.variable
+            path: Context/WebContext/JavaScriptTagManagerLoader.php
+            count: 2
+        -
+            identifier: if.alwaysFalse
+            path: Context/WebContext/JavaScriptTagManagerLoader.php
+            count: 2
+        # core documents getCurrentUserTokenAuth() as a string while returning its own string|null property
+        -
+            identifier: nullCoalesce.expr
+            path: Context/WebContext/JavaScriptTagManagerLoader.php
+            count: 1
+        # core's Controller::$site is only set once a site is in scope, which is what this guard tests for
+        -
+            identifier: empty.property
+            path: Controller.php
+            count: 1
+        # Site's constructor loads the site through SitesManager's API, which throws NoAccessException
+        -
+            identifier: catch.neverThrown
+            path: Template/Variable/MatomoConfigurationVariable.php
+            count: 1
+        # core's update template keeps the factory whether or not the update defines migrations
+        -
+            identifier: property.onlyWritten
+            path: Updates/5.0.0-b1.php
+            count: 1
+        -
+            identifier: property.onlyWritten
+            path: Updates/5.0.0-rc3.php
+            count: 1
+        -
+            identifier: property.onlyWritten
+            path: Updates/5.0.0-rc5.php
+            count: 1
+        -
+            identifier: property.onlyWritten
+            path: Updates/5.1.0-b1.php
+            count: 1
+        -
+            identifier: property.onlyWritten
+            path: Updates/5.2.0-b4.php
+            count: 1
+        -
+            identifier: property.onlyWritten
+            path: Updates/5.2.2-b1.php
+            count: 1
+        # the shipped call names the tag type where addField() takes a field name; formatParameters() drops the stray key, so a released update runs as it shipped
+        -
+            identifier: arguments.count
+            path: Updates/5.2.0-b4.php
+            count: 1
     bootstrapFiles:
         - ../../bootstrap-phpstan.php
     universalObjectCratesClasses:

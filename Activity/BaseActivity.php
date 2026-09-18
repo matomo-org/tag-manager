@@ -21,11 +21,8 @@ abstract class BaseActivity extends Activity
 
     protected function hasRequestedApiMethod($method)
     {
-        if (method_exists('Piwik\API\Request', 'getRootApiRequestMethod')) {
-            $method = 'TagManager.' . $method;
-            return $method === Request::getRootApiRequestMethod();
-        }
-        return false;
+        $method = 'TagManager.' . $method;
+        return $method === Request::getRootApiRequestMethod();
     }
 
     protected function getContainerNameFromActivityData($activityData)

@@ -169,7 +169,7 @@ class TagsDao extends BaseDao implements TagManagerDao
         $table = $this->tablePrefixed;
         $tags = Db::fetchAll("SELECT idtag FROM $table WHERE status != ? AND idsite = ? and idcontainerversion = ? and type = ? ORDER BY priority, created_date ASC", $bind);
 
-        return is_array($tags) && count($tags) ? array_column($tags, 'idtag') : [];
+        return count($tags) ? array_column($tags, 'idtag') : [];
     }
 
     /**
@@ -274,7 +274,7 @@ class TagsDao extends BaseDao implements TagManagerDao
             $tags[$index] = $this->enrichTag($tag);
         }
 
-        usort($tags, function ($tagA, $tagB) use ($tags) {
+        usort($tags, function ($tagA, $tagB) {
             return strcasecmp($tagA['priority'], $tagB['priority']);
         });
 
