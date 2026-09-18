@@ -64,10 +64,13 @@ abstract class BaseActivity extends Activity
         return '';
     }
 
+    /**
+     * @return array|false False drops the activity instead of logging it.
+     */
     protected function formatActivityData($idSite, $idContainer, $idContainerVersion, $idEntity)
     {
         if (!is_numeric($idSite) || !is_numeric($idEntity)) {
-            return;
+            return false;
         }
 
         $params = array(
