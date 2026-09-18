@@ -28,7 +28,7 @@ class VariablesProvider
     private $configuration;
 
     /**
-     * @var BaseVariable[]
+     * @var BaseVariable[]|null
      */
     private $cached;
 
@@ -62,6 +62,8 @@ class VariablesProvider
                 return $variable;
             }
         }
+
+        return null;
     }
 
     /**
@@ -77,6 +79,8 @@ class VariablesProvider
                 return $variable;
             }
         }
+
+        return null;
     }
 
     /**
@@ -148,7 +152,7 @@ class VariablesProvider
     }
 
     /**
-     * @return BaseVariable
+     * @return BaseVariable|null
      */
     public function getPreConfiguredVariable($variableId)
     {
@@ -157,6 +161,8 @@ class VariablesProvider
                 return $variable;
             }
         }
+
+        return null;
     }
 
     /**

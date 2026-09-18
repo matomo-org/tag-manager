@@ -17,8 +17,8 @@ use Piwik\Plugins\TagManager\Template\Variable\BaseVariable;
 class TemplateMetadata
 {
     /**
-     * @param BaseTag[]|BaseVariable[]|BaseTrigger[]|array $templates
-     * @return mixed
+     * @param array<BaseTag|BaseVariable|BaseTrigger|array<string, mixed>> $templates
+     * @return array
      */
     public function formatTemplates($templates)
     {

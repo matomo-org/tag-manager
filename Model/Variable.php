@@ -526,7 +526,7 @@ class Variable extends BaseModel
     {
         $idDestinationSite = $idDestinationSite ?: $idSite;
         $idDestinationVersion = $idContainerVersion;
-        if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
+        if (!empty($idDestinationContainer)) {
             $idDestinationVersion = $this->getDraftContainerVersion($idDestinationSite, $idDestinationContainer);
             $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion, $idDestinationContainer);
         } else {

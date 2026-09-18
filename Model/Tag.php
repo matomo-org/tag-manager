@@ -207,7 +207,7 @@ class Tag extends BaseModel
         $this->checkDestinationCanUseCustomTemplate($tag, $idSite, $idContainerVersion, $idDestinationSite);
 
         $idDestinationVersion = $idContainerVersion;
-        if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
+        if (!empty($idDestinationContainer)) {
             $idDestinationVersion = $this->getDraftContainerVersion($idDestinationSite, $idDestinationContainer);
             $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion, $idDestinationContainer);
             $idDestinationVersion = $this->copyReferencedVariablesAndTriggers($tag, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationContainer);

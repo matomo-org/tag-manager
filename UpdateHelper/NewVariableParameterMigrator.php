@@ -25,7 +25,7 @@ class NewVariableParameterMigrator
     /**
      * @param string $variableType Indicates the type of variable that needs to be migrated, such as 'MatomoConfiguration'
      * @param string $variableFieldName The name of the new field being added to the parameters JSON.
-     * @param string $defaultFieldValue The value to default the parameter to. The default is an empty string.
+     * @param string|int|bool|array $defaultFieldValue The parameter's default value, an empty string unless given.
      */
     public function __construct($variableType, $variableFieldName, $defaultFieldValue = '')
     {
@@ -44,7 +44,7 @@ class NewVariableParameterMigrator
      * Specify an additional field to include in the migration.
      *
      * @param string $variableFieldName The name of the new field being added to the parameters JSON.
-     * @param string $defaultFieldValue The value to default the parameter to. The default is an empty string.
+     * @param string|int|bool|array $defaultFieldValue The parameter's default value, an empty string unless given.
      */
     public function addField($variableFieldName, $defaultFieldValue = '')
     {

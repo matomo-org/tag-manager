@@ -40,7 +40,7 @@ class LookupTable extends BaseValidator
                 throw new Exception(Piwik::translate('TagManager_ErrorInnerIsNotAnArray', array($titleSingular, $titlePlural)));
             }
 
-            if (!isset($variable['match_value']) || $variable['match_value'] === false || $variable['match_value'] === null) {
+            if (!isset($variable['match_value']) || $variable['match_value'] === false) {
                 throw new Exception(Piwik::translate('TagManager_ErrorArrayMissingValue', array('match_value', $titlePlural, $index)));
             }
 

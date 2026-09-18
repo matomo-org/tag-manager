@@ -228,7 +228,7 @@ class Trigger extends BaseModel
     {
         $idDestinationSite = $idDestinationSite ?: $idSite;
         $idDestinationVersion = $idContainerVersion;
-        if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
+        if (!empty($idDestinationContainer)) {
             $idDestinationVersion = $this->getDraftContainerVersion($idDestinationSite, $idDestinationContainer);
             $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion, $idDestinationContainer);
         } else {
@@ -260,7 +260,7 @@ class Trigger extends BaseModel
 
         $checkedVariableNames = [];
         if (
-            (!empty($trigger['type']) && $this->triggersProvider->isCustomTemplate($trigger['type']))
+            $this->triggersProvider->isCustomTemplate($trigger['type'])
             || StaticContainer::get(Variable::class)->doesEntityReferenceCustomTemplates(
                 $trigger,
                 $idSite,
