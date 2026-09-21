@@ -13,6 +13,7 @@ use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
+use Piwik\Log;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\API\Export;
@@ -1504,14 +1505,23 @@ class API extends \Piwik\Plugin\API
             $this->import->importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion);
         } catch (Exception $e) {
             if (!$_isDraftRestoreCall && !empty($draft)) {
-                if (!empty($backupVersionId)) {
-                    // Delete the backup container if created
-                    $this->deleteContainerVersion($idSite, $idContainer, $backupVersionId);
+                try {
+                    // rollback to old working draft
+                    $this->accessValidator->runWithoutCustomTemplatesCapabilityCheck(function () use ($draft, $idSite, $idContainer) {
+                        $this->importContainerVersion(json_encode($draft, JSON_HEX_APOS), $idSite, $idContainer, '', true);
+                    });
+
+                    if (!empty($backupVersionId)) {
+                        // Delete the backup container only once the draft has actually been restored
+                        $this->deleteContainerVersion($idSite, $idContainer, $backupVersionId);
+                    }
+                } catch (Exception $restoreException) {
+                    // keep the backup version and let the original failure surface
+                    Log::warning(
+                        'TagManager: failed to restore the container draft after a failed import: %s',
+                        $restoreException->getMessage()
+                    );
                 }
-                // rollback to old working draft
-                $this->accessValidator->runWithoutCustomTemplatesCapabilityCheck(function () use ($draft, $idSite, $idContainer) {
-                    $this->importContainerVersion(json_encode($draft, JSON_HEX_APOS), $idSite, $idContainer, '', true);
-                });
             }
             throw $e;
         }

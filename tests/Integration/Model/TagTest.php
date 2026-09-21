@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
 use Piwik\NoAccessException;
 use Piwik\Container\StaticContainer;
+use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
@@ -749,7 +750,14 @@ class TagTest extends IntegrationTestCase
         // deletes nothing when no match
         $this->model->deleteContainerTag($this->idSite, $this->containerVersion1, 9999);
         $this->model->deleteContainerTag($this->idSite, 9999, $idTag3);
-        $this->model->deleteContainerTag(9999, $this->containerVersion1, $idTag3);
+
+        // an unknown site is rejected rather than silently ignored
+        try {
+            $this->model->deleteContainerTag(9999, $this->containerVersion1, $idTag3);
+            $this->fail('Expected an exception when the site does not exist');
+        } catch (UnexpectedWebsiteFoundException $e) {
+            // expected
+        }
 
         $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
@@ -797,7 +805,14 @@ class TagTest extends IntegrationTestCase
         // deletes nothing when no match
         $this->model->pauseContainerTag($this->idSite, $this->containerVersion1, 9999);
         $this->model->pauseContainerTag($this->idSite, 9999, $idTag3);
-        $this->model->pauseContainerTag(9999, $this->containerVersion1, $idTag3);
+
+        // an unknown site is rejected rather than silently ignored
+        try {
+            $this->model->pauseContainerTag(9999, $this->containerVersion1, $idTag3);
+            $this->fail('Expected an exception when the site does not exist');
+        } catch (UnexpectedWebsiteFoundException $e) {
+            // expected
+        }
 
         $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
@@ -847,8 +862,20 @@ class TagTest extends IntegrationTestCase
         $this->model->resumeContainerTag($this->idSite, $this->containerVersion1, 9999);
         $this->model->pauseContainerTag($this->idSite, 9999, $idTag3);
         $this->model->resumeContainerTag($this->idSite, 9999, $idTag3);
-        $this->model->pauseContainerTag(9999, $this->containerVersion1, $idTag3);
-        $this->model->resumeContainerTag(9999, $this->containerVersion1, $idTag3);
+
+        // an unknown site is rejected rather than silently ignored
+        try {
+            $this->model->pauseContainerTag(9999, $this->containerVersion1, $idTag3);
+            $this->fail('Expected an exception when the site does not exist');
+        } catch (UnexpectedWebsiteFoundException $e) {
+            // expected
+        }
+        try {
+            $this->model->resumeContainerTag(9999, $this->containerVersion1, $idTag3);
+            $this->fail('Expected an exception when the site does not exist');
+        } catch (UnexpectedWebsiteFoundException $e) {
+            // expected
+        }
 
         $this->assertCount(4, $this->model->getContainerTags($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTags($this->idSite2, $this->containerVersion1));
