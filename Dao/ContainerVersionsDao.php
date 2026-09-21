@@ -115,7 +115,7 @@ class ContainerVersionsDao extends BaseDao implements TagManagerDao
 
     /**
      * @param int $idSite
-     * @param array $statuses
+     * @param string $idContainer
      * @return array
      */
     public function getVersionsOfContainer($idSite, $idContainer)
@@ -130,7 +130,7 @@ class ContainerVersionsDao extends BaseDao implements TagManagerDao
 
     /**
      * @param int $idSite
-     * @param array $statuses
+     * @param string $idContainer
      * @return array
      */
     public function getDraftVersion($idSite, $idContainer)
@@ -145,7 +145,8 @@ class ContainerVersionsDao extends BaseDao implements TagManagerDao
 
     /**
      * @param int $idSite
-     * @param array $statuses
+     * @param string $idContainer
+     * @param int $idContainerVersion
      * @return array
      */
     public function getVersion($idSite, $idContainer, $idContainerVersion)

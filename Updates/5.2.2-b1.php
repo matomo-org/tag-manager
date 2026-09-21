@@ -37,7 +37,7 @@ class Updates_5_2_2_b1 extends PiwikUpdates
      * order as positioned in the returned array.
      *
      * @param Updater $updater
-     * @return Migration\Db[]
+     * @return \Piwik\Updater\Migration\Db[]
      */
     public function getMigrations(Updater $updater)
     {

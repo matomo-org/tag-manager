@@ -60,6 +60,9 @@ abstract class BaseContext
      */
     protected $salt;
 
+    /**
+     * @var array<string, array>
+     */
     private $variables = array();
 
     private $nestedVariableCals = [];
@@ -310,7 +313,7 @@ abstract class BaseContext
 
                 if ($start === false || $end === false) {
                     $val = $this->substr($value, $pos);
-                    if ($val !== '' && $val !== false && $val !== null) {
+                    if ($val !== '') {
                         $multiVars[] = $val;
                     }
                     break;
@@ -319,7 +322,7 @@ abstract class BaseContext
                 if ($start !== 0) {
                     // only if string does not start with "{{..."
                     $val = str_replace(array('\\{', '\\}'), array('{', '}'), $this->substr($value, $pos, $start - $pos)); // regular text
-                    if ($val !== '' && $val !== false && $val !== null) {
+                    if ($val !== '') {
                         $multiVars[] = $val;
                     }
                 }
@@ -345,7 +348,7 @@ abstract class BaseContext
                 }
 
                 $pos = $end + $ignoreLengthOpeningBrackets;
-            } while ($end !== false);
+            } while (true);
 
             $allStrings = true;
             foreach ($multiVars as $var) {
