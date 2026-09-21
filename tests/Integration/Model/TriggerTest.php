@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
 use Piwik\Container\StaticContainer;
 use Piwik\NoAccessException;
+use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\TriggersDao;
@@ -506,7 +507,14 @@ class TriggerTest extends IntegrationTestCase
         // deletes nothing when no match
         $this->model->deleteContainerTrigger($this->idSite, $this->containerVersion1, 9999);
         $this->model->deleteContainerTrigger($this->idSite, 9999, $idTrigger3);
-        $this->model->deleteContainerTrigger(9999, $this->containerVersion1, $idTrigger3);
+
+        // an unknown site is rejected rather than silently ignored
+        try {
+            $this->model->deleteContainerTrigger(9999, $this->containerVersion1, $idTrigger3);
+            $this->fail('Expected an exception when the site does not exist');
+        } catch (UnexpectedWebsiteFoundException $e) {
+            // expected
+        }
 
         $this->assertCount(3, $this->model->getContainerTriggers($this->idSite, $this->containerVersion1));
         $this->assertCount(2, $this->model->getContainerTriggers($this->idSite2, $this->containerVersion1));

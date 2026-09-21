@@ -81,6 +81,7 @@ class Variable extends BaseModel
         $this->variablesProvider->checkIsValidVariable($type);
         $createdDate = $this->getCurrentDateTime();
         $parameters = $this->formatParameters($type, $parameters);
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
         return $this->dao->createVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $createdDate, $description);
     }
 
@@ -389,6 +390,7 @@ class Variable extends BaseModel
         if (!$skipReferenceCheck && $this->getContainerVariableReferences($idSite, $idContainerVersion, $idVariable)) {
             throw new \Exception(Piwik::translate('TagManager_ErrorDeleteReferencedVariable'));
         }
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
         $this->dao->deleteContainerVariable($idSite, $idContainerVersion, $idVariable, $this->getCurrentDateTime());
     }
 
@@ -650,6 +652,7 @@ class Variable extends BaseModel
         if (!isset($columns['updated_date'])) {
             $columns['updated_date'] = $this->getCurrentDateTime();
         }
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
         $this->dao->updateVariableColumns($idSite, $idContainerVersion, $idVariable, $columns);
     }
 
