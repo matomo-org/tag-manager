@@ -122,6 +122,8 @@ abstract class BaseTemplate
             }
             return $translated;
         }
+
+        return '';
     }
 
     /**
@@ -138,6 +140,8 @@ abstract class BaseTemplate
             }
             return $translated;
         }
+
+        return '';
     }
 
     /**

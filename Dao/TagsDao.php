@@ -274,7 +274,7 @@ class TagsDao extends BaseDao implements TagManagerDao
             $tags[$index] = $this->enrichTag($tag);
         }
 
-        usort($tags, function ($tagA, $tagB) use ($tags) {
+        usort($tags, function ($tagA, $tagB) {
             return strcasecmp($tagA['priority'], $tagB['priority']);
         });
 

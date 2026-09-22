@@ -148,7 +148,7 @@ class VariablesProvider
     }
 
     /**
-     * @return BaseVariable
+     * @return BaseVariable|null
      */
     public function getPreConfiguredVariable($variableId)
     {
@@ -157,6 +157,8 @@ class VariablesProvider
                 return $variable;
             }
         }
+
+        return null;
     }
 
     /**

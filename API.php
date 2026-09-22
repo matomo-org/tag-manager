@@ -219,7 +219,7 @@ class API extends \Piwik\Plugin\API
 
         $hasCapability = $this->accessValidator->hasPublishLiveEnvironmentCapability($idSite);
 
-        return array_filter($environments, function ($environment) use ($idSite, $hasCapability) {
+        return array_filter($environments, function ($environment) use ($hasCapability) {
             if ($environment['id'] === 'live' && !$hasCapability) {
                 return false;
             }
