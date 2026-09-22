@@ -273,6 +273,8 @@ abstract class BaseTemplate
         if ($this->hasTemplateFile($file)) {
             return trim(file_get_contents($file));
         }
+
+        return null;
     }
 
     /**

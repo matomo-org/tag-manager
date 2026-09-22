@@ -13,6 +13,7 @@ use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
+use Piwik\Log;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\API\Export;
@@ -584,9 +585,8 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
-        $return = $this->tags->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
+        $this->tags->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
-        return $return;
     }
 
     /**
@@ -804,9 +804,8 @@ class API extends \Piwik\Plugin\API
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
 
-        $return = $this->triggers->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description);
+        $this->triggers->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description);
         $this->updateContainerPreviewRelease($idSite, $idContainer);
-        return $return;
     }
 
     /**
@@ -1030,7 +1029,7 @@ class API extends \Piwik\Plugin\API
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
         $name = urldecode($name);
 
-        $return = $this->variables->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description);
+        $this->variables->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description);
 
         try {
             $this->updateContainerPreviewRelease($idSite, $idContainer);
@@ -1050,7 +1049,6 @@ class API extends \Piwik\Plugin\API
             $this->updateContainerPreviewRelease($idSite, $idContainer);
             throw $e;
         }
-        return $return;
     }
 
     /**
@@ -1507,14 +1505,23 @@ class API extends \Piwik\Plugin\API
             $this->import->importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion);
         } catch (Exception $e) {
             if (!$_isDraftRestoreCall && !empty($draft)) {
-                if (!empty($backupVersionId)) {
-                    // Delete the backup container if created
-                    $this->deleteContainerVersion($idSite, $idContainer, $backupVersionId);
+                try {
+                    // rollback to old working draft
+                    $this->accessValidator->runWithoutCustomTemplatesCapabilityCheck(function () use ($draft, $idSite, $idContainer) {
+                        $this->importContainerVersion(json_encode($draft, JSON_HEX_APOS), $idSite, $idContainer, '', true);
+                    });
+
+                    if (!empty($backupVersionId)) {
+                        // Delete the backup container only once the draft has actually been restored
+                        $this->deleteContainerVersion($idSite, $idContainer, $backupVersionId);
+                    }
+                } catch (Exception $restoreException) {
+                    // keep the backup version and let the original failure surface
+                    Log::warning(
+                        'TagManager: failed to restore the container draft after a failed import: %s',
+                        $restoreException->getMessage()
+                    );
                 }
-                // rollback to old working draft
-                $this->accessValidator->runWithoutCustomTemplatesCapabilityCheck(function () use ($draft, $idSite, $idContainer) {
-                    $this->importContainerVersion(json_encode($draft, JSON_HEX_APOS), $idSite, $idContainer, '', true);
-                });
             }
             throw $e;
         }

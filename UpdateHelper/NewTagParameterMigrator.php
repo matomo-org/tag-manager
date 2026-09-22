@@ -25,7 +25,7 @@ class NewTagParameterMigrator
     /**
      * @param string $tagType Indicates the type of tag that needs to be migrated, such as 'Matomo', 'CustomHtml', ...
      * @param string $tagFieldName The name of the new field being added to the parameters JSON.
-     * @param string $defaultFieldValue The value to default the parameter to. The default is an empty string.
+     * @param string|int|bool|array $defaultFieldValue The parameter's default value, an empty string unless given.
      */
     public function __construct($tagType, $tagFieldName, $defaultFieldValue = '')
     {
@@ -44,7 +44,7 @@ class NewTagParameterMigrator
      * Specify an additional field to include in the migration.
      *
      * @param string $tagFieldName The name of the new field being added to the parameters JSON.
-     * @param string $defaultFieldValue The value to default the parameter to. The default is an empty string.
+     * @param string|int|bool|array $defaultFieldValue The parameter's default value, an empty string unless given.
      */
     public function addField($tagFieldName, $defaultFieldValue = '')
     {
