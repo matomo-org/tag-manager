@@ -20,15 +20,6 @@ parameters:
             identifier: arrayValues.empty
             path: Context/BaseContext.php
             count: 1
-        # $_GET and $_POST are absent when variables_order leaves them out, which is what these guards restore
-        -
-            identifier: isset.variable
-            path: Context/WebContext/JavaScriptTagManagerLoader.php
-            count: 2
-        -
-            identifier: if.alwaysFalse
-            path: Context/WebContext/JavaScriptTagManagerLoader.php
-            count: 2
         # core documents getCurrentUserTokenAuth() as a string while returning its own string|null property
         -
             identifier: nullCoalesce.expr
