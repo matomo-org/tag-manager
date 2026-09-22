@@ -21,8 +21,5 @@ jobs:
       # Activity/ classes extend ActivityLog's base, so PHPStan needs that repository checked
       # out to resolve them; without it it stops with an internal error rather than a finding.
       dependent-plugins: 'innocraft/plugin-ActivityLog'
-      # No license check has ever run here; enabling one is a decision of its own,
-      # not part of moving the checks that already run onto one caller.
-      skip-license-check: true
     secrets:
       TESTS_ACCESS_TOKEN: ${{ secrets.TESTS_ACCESS_TOKEN }}
