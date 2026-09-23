@@ -18,3 +18,4 @@ jobs:
     uses: matomo-org/plugin-ci-workflows/.github/workflows/plugin-ci.yml@main
     with:
       plugin-name: TagManager
+      verify-hook: true
