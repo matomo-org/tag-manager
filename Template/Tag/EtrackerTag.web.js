@@ -28,6 +28,10 @@
                     }
                 }
             }
+            //Proxy Domain
+            if(etrackerConfig.enableEtrackerProxyDomain){
+                window['et_proxy_redirect'] = "\/\/"+etrackerConfig.etrackerProxyDomain;
+            }
 
             if (!hasBeenLoaded && etrackerID) {
                 hasBeenLoaded = true;
@@ -44,7 +48,18 @@
                 if (etrackerConfig.etrackerDNT) {
                     script.setAttribute('data-respect-dnt', 'true');
                 }
-                script.src = '//code.etracker.com/code/e.js';
+                //custom cookie domain
+                if (etrackerConfig.enableEtrackerCookieDomain) {
+                    script.setAttribute('data-cookie-domain', etrackerConfig.etrackerCookieDomain);
+                }
+                //custom tracking domain
+                if (etrackerConfig.enableEtrackerProxyDomain) {
+                    script.src = '//' + etrackerConfig.etrackerProxyDomain + '/code/e.js';
+                }
+                //default etracker domain
+                else {
+                    script.src = '//code.etracker.com/code/e.js';
+                }
                 script.setAttribute('async', '');
                 s.parentNode.insertBefore(script, s);
             }
