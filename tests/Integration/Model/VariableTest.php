@@ -854,6 +854,7 @@ class VariableTest extends IntegrationTestCase
 
         FakeAccess::clearAccess(false);
         FakeAccess::$identity = 'testUser';
+        FakeAccess::$idSitesView = [$this->idSite, $this->idSite2];
         FakeAccess::$idSitesCapabilities = [UseCustomTemplates::ID => [$this->idSite]];
 
         $this->expectException(NoAccessException::class);
