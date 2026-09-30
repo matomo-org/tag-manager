@@ -27,6 +27,8 @@ class MenuTagManager extends MenuAbstract
      */
     public function getMenu()
     {
+        $this->resetIfBuiltForAnotherScope();
+
         if (!$this->menu) {
             foreach ($this->getAllMenus() as $menu) {
                 if (method_exists($menu, 'configureTagManagerMenu')) {
