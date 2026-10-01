@@ -19,3 +19,4 @@ jobs:
     with:
       plugin-name: TagManager
       verify-hook: true
+      timezone-regression-exempt: 'Formats stored timestamps in the site timezone for display only; tag start/end windows are stored and evaluated in UTC; nothing is grouped or filtered by site day'
