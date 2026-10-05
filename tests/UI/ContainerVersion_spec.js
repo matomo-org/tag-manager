@@ -216,6 +216,7 @@ describe("ContainerVersion", function () {
 
     it('should do nothing when selecting no', async function () {
         await modal.clickButton(page, 'No');
+        await page.mouse.move(-10, -10);
         await capture.page(page, 'confirm_delete_version_declined');
     });
 
