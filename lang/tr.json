@@ -139,7 +139,7 @@
         "ContainerDescriptionHelp": "İsteğe bağlı olarak, bu kapsayıcının amacını belirtebilirsiniz. Özellikle birden çok kapsayıcısı olan siteler için yararlıdır.",
         "ContainerDescriptionHelpText": "Amaç veya kullanım gibi ek bağlam vermek için bir açıklama yazın. Bu bilgi, bir sitenin birden fazla kapsayıcısı olduğunda kullanışlıdır.",
         "ContainerDescriptionPlaceholder": "Kapsayıcının açıklaması",
-        "ContainerDescriptionPlaceholderV2": "Ana sitenin ziyaretçi etkinlikleri izleniyor",
+        "ContainerDescriptionPlaceholderV2": "Ana sitenin ziyaretçi işlemleri izleniyor",
         "ContainerIdInformation": "Kapsayıcı kimliği: \"%1$s\"",
         "ContainerIdVariableDescription": "Bu kapsayıcının kimliğini geri döndürür. Örnek: \"ab2Dk432\".",
         "ContainerIdVariableName": "Kapsayıcı kimliği",
