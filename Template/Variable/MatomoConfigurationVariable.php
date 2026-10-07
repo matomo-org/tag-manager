@@ -86,7 +86,7 @@ class MatomoConfigurationVariable extends BaseVariable
                     if (is_numeric($value)) {
                         if ($matomoUrl->getValue() === $url) {
                             try {
-                                new Site($value);// we validate idSite when it points to this url
+                                new Site((int) $value);// we validate idSite when it points to this url
                             } catch (NoAccessException $e) {
                                 $request = \Piwik\Request::fromRequest();
                                 $idSite = $request->getIntegerParameter('idSite', 0);

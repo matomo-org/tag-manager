@@ -1,0 +1,6 @@
+includes:
+    - ../phpstan.neon
+parameters:
+    # new files carry no pre-existing debt, so hold them to the strictest level
+    level: 9
+    tmpDir: /tmp/phpstan/TagManager/created

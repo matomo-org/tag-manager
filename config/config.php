@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Matomo - free/libre analytics platform
+ *
+ * @link https://matomo.org
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
+ */
+
 return array(
     'TagManagerContainerStorageDir' => function () {
         // the location where we store the generated javascript or json container files

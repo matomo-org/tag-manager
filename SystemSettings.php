@@ -138,7 +138,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
                 throw new \Exception('Missing array key environment');
             }
 
-            return $val['environment'] !== false && $val['environment'] !== '' && $val['environment'] !== null;
+            return $val['environment'] !== false && $val['environment'] !== '';
         });
         $environments = array_map(function ($val) {
             // make sure to only keep environment but no other properties

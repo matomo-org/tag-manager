@@ -55,11 +55,11 @@ class JavaScriptTagManagerLoader
         $unsetGet = false;
         $unsetPost = false;
 
-        if (!isset($_GET)) {
+        if (!isset($GLOBALS['_GET'])) {
             $_GET = array();
             $unsetGet = true;
         }
-        if (!isset($_POST)) {
+        if (!isset($GLOBALS['_POST'])) {
             $_POST = array();
             $unsetPost = true;
         }

@@ -62,6 +62,8 @@ class Trigger extends BaseModel
         $parameters = $this->formatParameters($type, $parameters);
         $createdDate = $this->getCurrentDateTime();
 
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
+
         return $this->dao->createTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $createdDate, $description);
     }
 
@@ -133,6 +135,7 @@ class Trigger extends BaseModel
         if (!$skipReferenceCheck && $this->getTriggerReferences($idSite, $idContainerVersion, $idTrigger)) {
             throw new \Exception(Piwik::translate('TagManager_ErrorTriggerNotRemovableAsInUse'));
         }
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
         $this->dao->deleteContainerTrigger($idSite, $idContainerVersion, $idTrigger, $this->getCurrentDateTime());
     }
 
@@ -228,7 +231,7 @@ class Trigger extends BaseModel
     {
         $idDestinationSite = $idDestinationSite ?: $idSite;
         $idDestinationVersion = $idContainerVersion;
-        if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
+        if (!empty($idDestinationContainer)) {
             $idDestinationVersion = $this->getDraftContainerVersion($idDestinationSite, $idDestinationContainer);
             $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion, $idDestinationContainer);
         } else {
@@ -260,7 +263,7 @@ class Trigger extends BaseModel
 
         $checkedVariableNames = [];
         if (
-            (!empty($trigger['type']) && $this->triggersProvider->isCustomTemplate($trigger['type']))
+            $this->triggersProvider->isCustomTemplate($trigger['type'])
             || StaticContainer::get(Variable::class)->doesEntityReferenceCustomTemplates(
                 $trigger,
                 $idSite,
@@ -277,6 +280,7 @@ class Trigger extends BaseModel
         if (!isset($columns['updated_date'])) {
             $columns['updated_date'] = $this->getCurrentDateTime();
         }
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
         $this->dao->updateTriggerColumns($idSite, $idContainerVersion, $idTrigger, $columns);
     }
 

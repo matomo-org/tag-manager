@@ -22,6 +22,11 @@ class VersionPublished extends VersionBaseActivity
         $idContainerVersion = $finalAPIParameters['parameters']['idContainerVersion'];
 
         $activityData = $this->formatActivityData($idSite, $idContainer, $idContainerVersion, 0);
+
+        if ($activityData === false) {
+            return false;
+        }
+
         $activityData['environment'] = $finalAPIParameters['parameters']['environment'];
         return $activityData;
     }

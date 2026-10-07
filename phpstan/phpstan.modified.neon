@@ -1,0 +1,4 @@
+includes:
+    - ../phpstan.neon
+parameters:
+    tmpDir: /tmp/phpstan/TagManager/modified

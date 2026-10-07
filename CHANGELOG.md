@@ -2,6 +2,7 @@
 
 0.2.11
 
+* Fixed a blank entry being added to the Activity Log when an event carried no valid site or entity id
 * Fixed the "URI-decode Cookie" option of the Cookie variable having no effect
 
 0.2.10 - 22/06/2026

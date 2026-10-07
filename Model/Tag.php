@@ -63,6 +63,8 @@ class Tag extends BaseModel
         $this->tagsProvider->checkIsValidTag($type);
         $parameters = $this->formatParameters($type, $parameters);
 
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
+
         $createdDate = $this->getCurrentDateTime();
 
         return $this->dao->createTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $createdDate, $description, $status);
@@ -165,16 +167,19 @@ class Tag extends BaseModel
 
     public function deleteContainerTag($idSite, $idContainerVersion, $idTag)
     {
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
         $this->dao->deleteContainerTag($idSite, $idContainerVersion, $idTag, $this->getCurrentDateTime());
     }
 
     public function pauseContainerTag($idSite, $idContainerVersion, $idTag)
     {
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
         $this->dao->pauseContainerTag($idSite, $idContainerVersion, $idTag);
     }
 
     public function resumeContainerTag($idSite, $idContainerVersion, $idTag)
     {
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
         $this->dao->resumeContainerTag($idSite, $idContainerVersion, $idTag);
     }
 
@@ -207,7 +212,7 @@ class Tag extends BaseModel
         $this->checkDestinationCanUseCustomTemplate($tag, $idSite, $idContainerVersion, $idDestinationSite);
 
         $idDestinationVersion = $idContainerVersion;
-        if ($idDestinationSite !== null && !empty($idDestinationContainer)) {
+        if (!empty($idDestinationContainer)) {
             $idDestinationVersion = $this->getDraftContainerVersion($idDestinationSite, $idDestinationContainer);
             $this->checkWriteCapabilityForContainerVersion($idDestinationSite, $idDestinationVersion, $idDestinationContainer);
             $idDestinationVersion = $this->copyReferencedVariablesAndTriggers($tag, $idSite, $idContainerVersion, $idDestinationSite, $idDestinationContainer);
@@ -322,6 +327,7 @@ class Tag extends BaseModel
         if (!isset($columns['updated_date'])) {
             $columns['updated_date'] = $this->getCurrentDateTime();
         }
+        $this->checkWriteCapabilityForContainerVersion($idSite, $idContainerVersion);
         $this->dao->updateTagColumns($idSite, $idContainerVersion, $idTag, $columns);
     }
 

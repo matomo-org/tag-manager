@@ -1,0 +1,7 @@
+# Generated response fixtures are test outputs, not source files.
+tests/System/processed/*
+tests/System/expected/*
+
+# The public Tag Manager tracker is BSD-licensed and carries its own license header.
+javascripts/tagmanager.js
+javascripts/tagmanager.min.js

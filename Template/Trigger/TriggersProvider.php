@@ -28,7 +28,7 @@ class TriggersProvider
     private $configuration;
 
     /**
-     * @var BaseTrigger[]
+     * @var BaseTrigger[]|null
      */
     private $cached;
 
@@ -62,6 +62,8 @@ class TriggersProvider
                 return $trigger;
             }
         }
+
+        return null;
     }
 
     /**
