@@ -176,6 +176,8 @@ describe("TagManager", function () {
     });
 
     it('should change debug URL', async function () {
+        // opening the debug URL in a popup moves this tab to the background, which stalls later screenshots
+        await page.evaluate(() => { window.open = () => null; });
         await page.evaluate(function() {
             $('#previewDebugUrl').val('https://example.com');
         });
@@ -202,6 +204,8 @@ describe("TagManager", function () {
     });
 
     it('should be able to disable preview', async function () {
+        // the page reloaded since the last stub, and disabling the preview opens the debug URL again
+        await page.evaluate(() => { window.open = () => null; });
         await page.click('#notificationContainer .disablePreviewDebug');
         await page.waitForNetworkIdle();
         await page.waitForSelector('#content .card-content', { visible: true });
