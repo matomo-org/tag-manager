@@ -57,10 +57,10 @@ describe("Container", function () {
     });
 
     it('should show websites dropdown without all websites', async function () {
-        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
+        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector .mtm-selector__trigger').click());
         pageWrap = await page.$('.top_bar_sites_selector .mtm-selector__dropdown');
         expect(await pageWrap.screenshot()).to.matchImage('websites_dropdown_without_all_websites');
-        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector a.title').click());
+        await page.evaluate(() => $('.top_bar_sites_selector .siteSelector .mtm-selector__trigger').click());
     });
 
     it('should be able to create a new container', async function () {
