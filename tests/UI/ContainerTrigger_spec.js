@@ -183,6 +183,18 @@ describe("ContainerTrigger", function () {
     it('should show confirm delete trigger dialog_shows_warning_cannot_be_deleted', async function () {
         await page.goto(container1Base);
         await clickFirstRowTableAction('icon-delete', 4);
+        await page.waitForSelector('.modal.open #confirmDeleteTriggerNotPossible .collection-item a');
+        const links = await page.$$eval('#confirmDeleteTriggerNotPossible .collection-item a', (anchors) => anchors.map((a) => ({
+            text: a.textContent.trim(),
+            href: a.getAttribute('href'),
+            target: a.getAttribute('target'),
+        })));
+        const tagUrl = '?idSite=2&period=day&date=2010-01-03&module=TagManager&action=manageTags&idContainer=aaacont1';
+        expect(links).to.deep.equal([
+            { text: 'Tag: My Tag 2', href: tagUrl + '#?idTag=2', target: '_blank' },
+            { text: 'Tag: My Tag 1', href: tagUrl + '#?idTag=1', target: '_blank' },
+        ]);
+
         await capture.modal(page, 'confirm_delete_trigger_warning_referenced');
     });
 

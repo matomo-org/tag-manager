@@ -197,15 +197,7 @@
       <p>
         {{ translate('TagManager_VariableBeingUsedBy') }}
       </p>
-      <ul class="collection">
-        <li
-          class="collection-item"
-          v-for="reference in variableReferences"
-          :key="`${reference.referenceType}.${reference.referenceId}`"
-        >
-          {{ reference.referenceTypeName }}: {{ reference.referenceName }}
-        </li>
-      </ul>
+      <ReferenceList :references="variableReferences" />
       <p>
         {{ translate('TagManager_VariableBeingUsedNeedsRemove') }}
       </p>
@@ -236,6 +228,7 @@ import {
   ContainerVariableCategory,
   Variable, VariableType,
 } from '../types';
+import ReferenceList from '../ReferenceList/ReferenceList.vue';
 
 export interface VariableListState {
   hasWriteAccess: boolean;
@@ -262,6 +255,7 @@ export default defineComponent({
     ActivityIndicator,
     Field,
     ContentBlock,
+    ReferenceList,
   },
   directives: {
     ContentTable,
