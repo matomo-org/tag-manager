@@ -98,10 +98,12 @@ export interface VariableCategory {
   types: VariableType[];
 }
 
+export type ReferenceType = 'tag' | 'trigger' | 'variable';
+
 export interface VariableReference {
   referenceId: number;
   referenceName: string;
-  referenceType: string;
+  referenceType: ReferenceType;
   referenceTypeName: string;
 }
 
@@ -149,6 +151,7 @@ export interface Trigger {
 
 export interface TriggerReference {
   referenceId: number;
+  referenceType: ReferenceType;
   referenceTypeName: string;
   referenceName: string;
 }

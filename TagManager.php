@@ -955,6 +955,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/stylesheets/containerMenu.less";
         $stylesheets[] = "plugins/TagManager/stylesheets/previewDebugNotification.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Tag/TagEdit.less";
+        $stylesheets[] = "plugins/TagManager/vue/src/ReferenceList/ReferenceList.less";
         $stylesheets[] = "plugins/TagManager/vue/src/VariableSelectType/VariableSelectType.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Field/FieldVariableTemplate.less";
         $stylesheets[] = "plugins/TagManager/vue/src/ContainerSelector/ContainerSelector.less";

@@ -218,6 +218,17 @@ describe("ContainerVariable", function () {
     it('should show confirm delete variable dialog_shows_warning_cannot_be_deleted', async function () {
         await page.goto(container1Base);
         await clickFirstRowTableAction('icon-delete', 5);
+        await page.waitForSelector('.modal.open #confirmDeleteVariableNotPossible .collection-item a');
+        const links = await page.$$eval('#confirmDeleteVariableNotPossible .collection-item a', (anchors) => anchors.map((a) => ({
+            text: a.textContent.trim(),
+            href: a.getAttribute('href'),
+            target: a.getAttribute('target'),
+        })));
+        expect(links).to.have.lengthOf(1);
+        expect(links[0].text).to.equal('Trigger: My trigger4');
+        expect(links[0].target).to.equal('_blank');
+        expect(links[0].href).to.match(/^\?idSite=2&period=day&date=2010-01-03&module=TagManager&action=manageTriggers&idContainer=aaacont1#\?idTrigger=\d+$/);
+
         await capture.modal(page, 'confirm_delete_variable_warning_referenced');
     });
 

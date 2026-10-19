@@ -157,15 +157,7 @@
     >
       <h2>{{ translate('TagManager_TriggerCannotBeDeleted') }}</h2>
       <p>{{ translate('TagManager_TriggerBeingUsedBy') }}</p>
-      <ul class="collection">
-        <li
-          class="collection-item"
-          v-for="reference in triggerReferences"
-          :key="reference.referenceId"
-        >
-          {{ reference.referenceTypeName }}: {{ reference.referenceName }}
-        </li>
-      </ul>
+      <ReferenceList :references="triggerReferences" />
       <p>{{ translate('TagManager_TriggerBeingUsedNeedsRemove') }}</p>
       <input
         role="no"
@@ -190,6 +182,7 @@ import {
 import { Field } from 'CorePluginsAdmin';
 import TriggersStore from './Triggers.store';
 import { TriggerReference, Trigger, TriggerType } from '../types';
+import ReferenceList from '../ReferenceList/ReferenceList.vue';
 
 export interface TriggerListState {
   hasWriteAccess: boolean;
@@ -215,6 +208,7 @@ export default defineComponent({
     ActivityIndicator,
     Field,
     ContentBlock,
+    ReferenceList,
   },
   directives: {
     ContentTable,
