@@ -1,0 +1,37 @@
+# Releases this plugin from its dev branch when plugin.json carries an untagged version whose
+# CHANGELOG.md entry is undated. It has no schedule yet, so it only runs when dispatched by hand.
+# The logic lives in matomo-org/plugin-ci-workflows; see the "Weekly release" section of its
+# README.md.
+
+name: Weekly release
+
+on:
+  workflow_dispatch:
+    inputs:
+      all-branches:
+        description: "Also release the other maintained branches"
+        type: boolean
+        default: false
+
+permissions: {}
+
+jobs:
+  release:
+    # Granted here because permissions can only be reduced down a call chain, never elevated.
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+    uses: matomo-org/plugin-ci-workflows/.github/workflows/plugin-dev-release.yml@main
+    secrets:
+      approver-token: ${{ secrets.TESTS_ACCESS_TOKEN }}
+
+  # A dispatched run must not dispatch again, or the branches would keep dispatching each other.
+  other-branches:
+    if: github.event_name == 'schedule' || inputs.all-branches
+    permissions:
+      actions: write
+      contents: read
+    uses: matomo-org/plugin-ci-workflows/.github/workflows/plugin-branch-sweep.yml@main
+    with:
+      workflow-file: weekly-release.yml
