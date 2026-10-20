@@ -110,7 +110,7 @@ abstract class BaseTemplate
 
     /**
      * Get the translated description of this template.
-     * @return string
+     * @return string|null
      */
     public function getDescription()
     {
@@ -122,11 +122,13 @@ abstract class BaseTemplate
             }
             return $translated;
         }
+
+        return null;
     }
 
     /**
      * Get the translated help text for this template.
-     * @return string
+     * @return string|null
      */
     public function getHelp()
     {
@@ -138,6 +140,8 @@ abstract class BaseTemplate
             }
             return $translated;
         }
+
+        return null;
     }
 
     /**

@@ -54,7 +54,7 @@ class ShareaholicTag extends BaseTag
                 $field->description = Piwik::translate('TagManager_ShareaholicTagAppIdDescription');
                 $field->condition = 'shareaholicInPageApp=="share_buttons" || shareaholicInPageApp=="follow_buttons" || shareaholicInPageApp=="recommendations"';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->validate = function ($value) use ($InPageApp, $field) {
+                $field->validate = function ($value) use ($InPageApp) {
                     if (!empty($InPageApp->getValue()) && $InPageApp->getValue() != 'total_share_count' && empty($value)) {
                         throw new \Exception('You need to specify an App ID if you want to use a InPageApp');
                     }
@@ -68,7 +68,7 @@ class ShareaholicTag extends BaseTag
                 $field->description = Piwik::translate('TagManager_ShareaholicTagParentSelectorDescription');
                 $field->condition = 'shareaholicInPageApp';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
-                $field->validate = function ($value) use ($InPageApp, $field) {
+                $field->validate = function ($value) use ($InPageApp) {
                     if (!empty($InPageApp->getValue()) && empty($value)) {
                         throw new \Exception('You need to specify a Parent Selector if you want to use a InPageApp');
                     }
