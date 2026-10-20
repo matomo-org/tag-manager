@@ -244,14 +244,14 @@ class Container extends BaseModel
         }
     }
 
-    public function createContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description)
+    public function createContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description, $createdBy = null)
     {
         $this->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
         $this->validateContainerVersion($idSite, $name, $description);
         $createdDate = $this->getCurrentDateTime();
 
         // create a new version
-        $newIdContainerVersion = $this->versionsDao->createVersion($idSite, $idContainer, $name, $description, $createdDate);
+        $newIdContainerVersion = $this->versionsDao->createVersion($idSite, $idContainer, $name, $description, $createdDate, $createdBy);
 
         // we need to use staticContainer and not in constructor as they would require each other in the constructor and result in a loop
         $export = $this->getExport();
@@ -456,6 +456,8 @@ class Container extends BaseModel
             return $containerVersion;
         }
 
+        // absent until the update adding the column has run
+        $containerVersion['created_by'] = $containerVersion['created_by'] ?? null;
         $containerVersion['created_date_pretty'] = $this->formatDate($containerVersion['created_date'], $containerVersion['idsite']);
         $containerVersion['updated_date_pretty'] = $this->formatDate($containerVersion['updated_date'], $containerVersion['idsite']);
         unset($containerVersion['deleted_date']);

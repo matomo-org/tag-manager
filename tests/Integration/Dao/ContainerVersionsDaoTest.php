@@ -10,6 +10,7 @@
 namespace Piwik\Plugins\TagManager\tests\Integration\Dao;
 
 use Piwik\Common;
+use Piwik\Db;
 use Piwik\DbHelper;
 use Piwik\Plugins\TagManager\Dao\ContainerVersionsDao;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
@@ -46,7 +47,7 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
     {
         $columns = DbHelper::getTableColumns($this->tableName);
         $columns = array_keys($columns);
-        $columnsToCheck = array('idcontainerversion', 'idcontainer', 'idsite', 'status', 'revision', 'name', 'description', 'created_date', 'updated_date', 'deleted_date');
+        $columnsToCheck = array('idcontainerversion', 'idcontainer', 'idsite', 'status', 'revision', 'name', 'description', 'created_date', 'created_by', 'updated_date', 'deleted_date');
 
         $this->assertEquals($columnsToCheck, $columns);
     }
@@ -88,6 +89,7 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
             'name' => '',
             'description' => '',
             'created_date' => $createdDate,
+            'created_by' => null,
             'updated_date' => $createdDate,
             'deleted_date' => null,
         ), $version);
@@ -116,7 +118,7 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
         $description = 'foobar';
         $createdDate = $this->now;
 
-        $idVersion = $this->dao->createVersion($idSite, $idContainer, $name, $description, $createdDate);
+        $idVersion = $this->dao->createVersion($idSite, $idContainer, $name, $description, $createdDate, 'jdoe');
         $this->assertSame(1, $idVersion);
 
         $version = $this->dao->getVersion($idSite, $idContainer, $idVersion);
@@ -129,9 +131,54 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
             'name' => $name,
             'description' => $description,
             'created_date' => $createdDate,
+            'created_by' => 'jdoe',
             'updated_date' => $createdDate,
             'deleted_date' => null,
         ), $version);
+    }
+
+    /**
+     * @dataProvider getNonUserCreators
+     */
+    public function test_createVersion_storesNoCreatorWhenNotCreatedByAUser($createdBy)
+    {
+        $idVersion = $this->dao->createVersion(2, 'abcdef', 'My Name', '', $this->now, $createdBy);
+
+        $this->assertNull($this->dao->getVersion(2, 'abcdef', $idVersion)['created_by']);
+    }
+
+    public function getNonUserCreators(): array
+    {
+        return [[null], [''], ['anonymous'], ['super user was set']];
+    }
+
+    public function test_createVersion_andAnonymizeUserLogin_workBeforeTheUpdateAddingCreatedByHasRun()
+    {
+        Db::exec("ALTER TABLE `{$this->tableName}` DROP COLUMN `created_by`");
+        try {
+            $dao = new ContainerVersionsDao();
+            $idVersion = $dao->createVersion(2, 'abcdef', 'My Name', '', $this->now, 'jdoe');
+            $dao->anonymizeUserLogin('jdoe');
+
+            $this->assertArrayNotHasKey('created_by', $dao->getVersion(2, 'abcdef', $idVersion));
+        } finally {
+            // the table is truncated rather than recreated between tests
+            Db::exec("ALTER TABLE `{$this->tableName}` ADD COLUMN `created_by` VARCHAR("
+                . ContainerVersionsDao::USER_LOGIN_MAX_LENGTH . ") NULL DEFAULT NULL AFTER `created_date`");
+        }
+    }
+
+    public function test_anonymizeUserLogin_onlyRemovesGivenLogin()
+    {
+        $idVersion1 = $this->dao->createVersion(2, 'abcdef', 'First', '', $this->now, 'jdoe');
+        $idVersion2 = $this->dao->createVersion(2, 'abcdef', 'Second', '', $this->now, 'jane');
+        $this->dao->deleteVersion(2, $idVersion2, $this->now);
+        $idVersion3 = $this->dao->createVersion(3, 'bazbar', 'Third', '', $this->now, 'jane');
+
+        $this->dao->anonymizeUserLogin('jane');
+
+        $createdBy = array_column($this->dao->getAllVersions(), 'created_by', 'idcontainerversion');
+        $this->assertSame([$idVersion1 => 'jdoe', $idVersion2 => null, $idVersion3 => null], $createdBy);
     }
 
     public function test_createVersion_increasedIdVersion()
@@ -312,6 +359,7 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
             'description' => 'changedDesc',
             'revision' => '1',
             'created_date' => $this->now,
+            'created_by' => null,
             'updated_date' => '2016-01-02 03:04:05',
             'deleted_date' => null,
             'status' => ContainerVersionsDao::STATUS_ACTIVE,
@@ -344,6 +392,7 @@ class ContainerVersionsDaoTest extends IntegrationTestCase
             'description' => 'foobar',
             'revision' => '1',
             'created_date' => $this->now,
+            'created_by' => null,
             'updated_date' => $this->now,
             'deleted_date' => null,
             'status' => ContainerVersionsDao::STATUS_ACTIVE,

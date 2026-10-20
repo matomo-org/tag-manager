@@ -151,6 +151,12 @@ describe("ContainerVersion", function () {
         await cancelVersion();
         await page.mouse.move(-10, -10);
         await capture.page(page, 'create_new_shown_in_list');
+
+        const createdBy = await page.evaluate(() => [
+          $('.tagManagerVersionList .entityTable tbody tr.versions:first td.createdBy').text().trim(),
+          piwik.userLogin,
+        ]);
+        expect(createdBy[0]).to.equal(createdBy[1]);
     });
 
     it('should be possible to publish new version', async function () {

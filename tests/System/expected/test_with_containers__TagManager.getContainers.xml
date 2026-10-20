@@ -24,6 +24,7 @@
 				<name>container1_v4_rev &quot;Quotes&quot;</name>
 				<description>new version for quotes container</description>
 
+				<created_by>superUserLogin</created_by>
 
 
 
@@ -93,6 +94,7 @@
 			<name />
 			<description />
 
+			<created_by />
 
 
 
@@ -122,6 +124,7 @@
 				<name>container1_v5</name>
 				<description>Version with linked variables</description>
 				
+				<created_by>superUserLogin</created_by>
 				
 				
 				
@@ -138,6 +141,7 @@
 				<name>container1_v4_reversioned</name>
 				<description>new version from an older version</description>
 				
+				<created_by>superUserLogin</created_by>
 				
 				
 				
@@ -155,6 +159,7 @@
 				<name>container1_v3</name>
 				<description>Version from draft with tags, triggers and variables</description>
 				
+				<created_by>superUserLogin</created_by>
 				
 				
 				
@@ -170,6 +175,7 @@
 				<name>container1_v2</name>
 				<description>Version from draft with tags and triggers setting it to a very long description to show up in the UI clipped!!!</description>
 				
+				<created_by>superUserLogin</created_by>
 				
 				
 				
@@ -185,6 +191,7 @@
 				<name>container1_v1</name>
 				<description>Version from draft with only triggers</description>
 				
+				<created_by>superUserLogin</created_by>
 				
 				
 				
@@ -251,6 +258,7 @@
 			<name />
 			<description />
 			
+			<created_by />
 			
 			
 			
@@ -280,6 +288,7 @@
 				<name>container2_v1</name>
 				<description>Version from draft without content</description>
 				
+				<created_by>superUserLogin</created_by>
 				
 				
 				
@@ -298,6 +307,7 @@
 			<name />
 			<description />
 			
+			<created_by />
 			
 			
 			
@@ -330,6 +340,7 @@
 			<name />
 			<description />
 			
+			<created_by />
 			
 			
 			

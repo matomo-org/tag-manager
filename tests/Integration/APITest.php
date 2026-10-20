@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration;
 
+use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\API;
@@ -1829,6 +1830,54 @@ class APITest extends IntegrationTestCase
         $version = $this->api->getContainerVersion($this->idSite, $this->idContainer, $this->idLiveContainerVersion);
 
         $this->assertSame('renamed by publish live', $version['name']);
+    }
+
+    public function test_createContainerVersion_recordsCreatorShownOnlyToUsersWithWriteAccess()
+    {
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+        $idVersion = $this->api->createContainerVersion($this->idSite, $this->idContainer, 'version with creator');
+
+        $this->assertSame(array_fill(0, 4, 'testUser'), $this->getVersionCreatorSeenThroughApi($idVersion));
+
+        $this->setUser();
+        $this->assertSame(array_fill(0, 4, null), $this->getVersionCreatorSeenThroughApi($idVersion));
+    }
+
+    public function test_deletingUser_anonymisesTheirVersionsAndReleases()
+    {
+        $this->setWriteUser();
+        FakeAccess::$idSitesCapabilities = array(PublishLiveContainer::ID => array($this->idSite));
+        $idVersion = $this->api->createContainerVersion($this->idSite, $this->idContainer, 'version to anonymise');
+        $this->api->publishContainerVersion($this->idSite, $this->idContainer, $idVersion, Environment::ENVIRONMENT_LIVE);
+
+        $this->setSuperUser();
+        Piwik::postEvent('UsersManager.deleteUser', ['testUser']);
+
+        $version = $this->api->getContainerVersion($this->idSite, $this->idContainer, $idVersion);
+        $this->assertNull($version['created_by']);
+        $this->assertSame([''], array_column($version['releases'], 'release_login'));
+    }
+
+    /**
+     * @return array the version's created_by as returned by getContainerVersion, getContainerVersions, getContainer
+     *               and getContainers
+     */
+    private function getVersionCreatorSeenThroughApi($idVersion): array
+    {
+        $findCreator = function (array $versions) use ($idVersion) {
+            $creators = array_column($versions, 'created_by', 'idcontainerversion');
+            $this->assertArrayHasKey($idVersion, $creators);
+            return $creators[$idVersion];
+        };
+        $containers = array_column($this->api->getContainers($this->idSite), null, 'idcontainer');
+
+        return [
+            $this->api->getContainerVersion($this->idSite, $this->idContainer, $idVersion)['created_by'],
+            $findCreator($this->api->getContainerVersions($this->idSite, $this->idContainer)),
+            $findCreator($this->api->getContainer($this->idSite, $this->idContainer)['versions']),
+            $findCreator($containers[$this->idContainer]['versions']),
+        ];
     }
 
     protected function setSuperUser()
