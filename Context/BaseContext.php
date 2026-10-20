@@ -509,13 +509,10 @@ abstract class BaseContext
             foreach ($files as $file) {
                 $filename = str_replace($basePath . '/' . StaticContainer::get('TagManagerContainerFilesPrefix'), '', $file);
                 $filename = str_replace('.js', '', $filename);
-                $filename = explode('_', $filename);
-                if (count($filename) === 3) {
-                    // 0 = container
-                    // 1 = environment
-                    // 2 = hash
-                    // we ignore preview environment and live environment already by design but also define it specifically
-                    $env = $filename[1];
+                // <container>_<environment>_<hash>, environment may contain underscores
+                // we ignore preview environment and live environment already by design but also define it specifically
+                if (preg_match('/^[^_]+_(.+)_[0-9a-f]{24}$/', $filename, $matches)) {
+                    $env = $matches[1];
 
                     try {
                         Environment::checkEnvironmentNameFormat($env);
