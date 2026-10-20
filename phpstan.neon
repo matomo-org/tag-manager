@@ -6,6 +6,9 @@ parameters:
         - .
     excludePaths:
         - tests/*
+        # These classes extend ActivityLog, which is an optional private plugin dependency.
+        # Keep PHPStan fork-safe while analysing the rest of TagManager.
+        - Activity/*
         - vendor/
         - github-action-tests/
     bootstrapFiles:
