@@ -503,16 +503,18 @@ var seoMetaDescriptionHelloWorld = "{{Referrer}}";
         $path[] = $context->getJsTargetPath(1, 'abcDefGh', Environment::ENVIRONMENT_PREVIEW, '2014-01-02 03:04:05');
         $path[] = $context->getJsTargetPath(1, 'abcDefGh', 'staging', '2014-01-02 03:04:05');
         $path[] = $context->getJsTargetPath(1, 'abcDefGh', 'baz', '2014-01-02 03:04:05');
+        $path[] = $context->getJsTargetPath(1, 'abcDefGh', 'foo_bar', '2014-01-02 03:04:05');
+        $path[] = $context->getJsTargetPath(1, 'abcDefGh', 'foo_baz', '2014-01-02 03:04:05');
 
         foreach ($path as $file) {
             $this->writeFile(PIWIK_DOCUMENT_ROOT . $file, ' ');
         }
 
         $removed = BaseContext::removeNoLongerExistingEnvironments(array(
-            Environment::ENVIRONMENT_LIVE, 'staging'
+            Environment::ENVIRONMENT_LIVE, 'staging', 'foo_baz'
         ));
         sort($removed);
-        $this->assertEquals(array('baz', 'dev'), $removed);
+        $this->assertEquals(array('baz', 'dev', 'foo_bar'), $removed);
     }
 
     private function createDummyContainerFile($idContainer)
