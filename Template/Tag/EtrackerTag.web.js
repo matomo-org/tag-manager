@@ -7,6 +7,17 @@
 
 (function () {
     var hasBeenLoaded = false;
+    // custom dimensions may only set globals of their own, never ones the browser or page already defines
+    var customDimensionGlobals = {};
+
+    function canSetCustomDimension(index) {
+        index = String(index);
+        if (!/^[A-Za-z0-9_$]+$/.test(index)) {
+            return false;
+        }
+        return customDimensionGlobals[index] === true || !(index in window);
+    }
+
     return function (parameters, TagManager) {
         this.fire = function () {
         var etrackerConfig = parameters.get('etrackerConfig', {});
@@ -30,8 +41,10 @@
                 var dimIndex;
                 for (dimIndex = 0; dimIndex < etrackerConfig.customDimensions.length; dimIndex++) {
                     var dimension = etrackerConfig.customDimensions[dimIndex];
-                    if (dimension && TagManager.utils.isObject(dimension) && dimension.index && dimension.value) {
+                    if (dimension && TagManager.utils.isObject(dimension) && dimension.index && dimension.value
+                        && canSetCustomDimension(dimension.index)) {
                         window[dimension.index] = dimension.value;
+                        customDimensionGlobals[String(dimension.index)] = true;
                     }
                 }
             }

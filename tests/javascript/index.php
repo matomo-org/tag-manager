@@ -2672,6 +2672,34 @@
             document.head.removeChild(addedStyle4);
         });
 
+        test("Matomo TagManager Template EtrackerTag custom dimensions", function() {
+            expect(4);
+            var templateToTest = 'EtrackerTag';
+            window.etrackerTestExistingGlobal = 'original';
+
+            function fireWithDimensions(customDimensions) {
+                fireTemplateTag(templateToTest, {
+                    trackingType: {get: function () { return 'pageview'; }},
+                    etrackerConfig: {get: function () { return {customDimensions: customDimensions}; }}
+                });
+            }
+
+            fireWithDimensions([
+                {index: 'etrackerTestNewGlobal', value: 'first'},
+                {index: 'etrackerTestExistingGlobal', value: 'changed'},
+                {index: 'etrackerTest.invalid', value: 'changed'}
+            ]);
+            strictEqual(window.etrackerTestNewGlobal, 'first', 'sets a global that does not exist yet');
+            strictEqual(window.etrackerTestExistingGlobal, 'original', 'does not overwrite an existing global');
+            strictEqual(window['etrackerTest.invalid'], undefined, 'does not set a global with an invalid name');
+
+            fireWithDimensions([{index: 'etrackerTestNewGlobal', value: 'second'}]);
+            strictEqual(window.etrackerTestNewGlobal, 'second', 'updates a global it set itself when fired again');
+
+            delete window.etrackerTestExistingGlobal;
+            delete window.etrackerTestNewGlobal;
+        });
+
         test("Matomo TagManager Template MatomoTag", function() {
             expect(2);
             var templateToTest = 'MatomoTag';
