@@ -239,6 +239,7 @@ export default defineComponent({
         idContainer: this.idContainer,
         idContainerVersion: this.idContainerVersion,
         idTrigger: trigger.idtrigger,
+        filter_limit: '-1',
       }).then((references) => {
         if (!references || !references.length) {
           this.triggerReferences = [];
