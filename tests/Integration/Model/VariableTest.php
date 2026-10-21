@@ -689,6 +689,32 @@ class VariableTest extends IntegrationTestCase
         ], $result);
     }
 
+    public function testGetVariableReferencesListsEachReferencingItemOnce()
+    {
+        $idVariable = $this->addContainerVariable($this->idSite, $this->containerVersion1, CustomJsFunctionVariable::ID, 'TestVariable', ['jsFunction' => 'function () { return 12345; }']);
+
+        $trigger = StaticContainer::get(Trigger::class);
+        $idTrigger = $trigger->addContainerTrigger($this->idSite, $this->containerVersion1, WindowLoadedTrigger::ID, 'TwoConditionsTrigger', [], [
+            ['actual' => 'TestVariable', 'comparison' => Comparison::ID_EQUALS, 'expected' => 'foo'],
+            ['actual' => 'TestVariable', 'comparison' => Comparison::ID_CONTAINS, 'expected' => 'bar'],
+        ]);
+
+        $idTag = $this->tagModel->addContainerTag($this->idSite, $this->containerVersion1, 'Shareaholic', 'TwoParametersTag', [
+            'shareaholicSiteId' => '{{TestVariable}}',
+            'shareaholicInPageApp' => 'share_buttons',
+            'shareaholicAppId' => '{{TestVariable}}',
+            'shareaholicParentSelector' => '.share',
+        ], [$idTrigger], [], Tag::FIRE_LIMIT_UNLIMITED, 0, 9999, $this->now, $this->now);
+
+        $result = $this->model->getContainerVariableReferences($this->idSite, $this->containerVersion1, $idVariable);
+        $this->assertSame([
+            ['tag', $idTag],
+            ['trigger', $idTrigger],
+        ], array_map(function ($reference) {
+            return [$reference['referenceType'], $reference['referenceId']];
+        }, $result));
+    }
+
     public function testGetVariableReferencesWhenNoReferences()
     {
         // we test the references apart from this via API in system tests

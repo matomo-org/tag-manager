@@ -296,6 +296,7 @@ export default defineComponent({
         idContainer: this.idContainer,
         idContainerVersion: this.idContainerVersion,
         idVariable: variable.idvariable,
+        filter_limit: '-1',
       }).then((references) => {
         if (!references || !references.length) {
           this.variableReferences = [];
