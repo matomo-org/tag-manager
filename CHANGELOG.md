@@ -6,6 +6,7 @@
 * Fixed the "URI-decode Cookie" option of the Cookie variable having no effect
 * Borders now use `@theme-color-border`, as `@theme-color-border-alternative` is deprecated in Matomo 6
 * The tags, triggers and variables listed when a trigger or variable cannot be deleted now link to their edit forms
+* Fixed the cannot-delete list stopping at 100 references and listing an item more than once, and the trigger or variable list emptying when a deletion is refused
 
 0.2.10 - 22/06/2026
 

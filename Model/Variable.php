@@ -153,6 +153,7 @@ class Variable extends BaseModel
                 if ($this->isUsingParameterTheVariable($parameter, $varName)) {
                     $tagRef = new TagReference($tag['idtag'], $tag['name']);
                     $references[] = $tagRef->toArray();
+                    continue 2;
                 }
             }
         }
@@ -169,6 +170,7 @@ class Variable extends BaseModel
                 if ($condition['actual'] === $varName) {
                     $triggerRef = new TriggerReference($trigger['idtrigger'], $trigger['name']);
                     $references[] = $triggerRef->toArray();
+                    break;
                 }
             }
         }

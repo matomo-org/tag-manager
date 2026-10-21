@@ -188,7 +188,6 @@ class TriggersStore {
     idTrigger: number,
   ): Promise<void> {
     this.privateState.isUpdating = true;
-    this.privateState.triggers = [];
 
     return AjaxHelper.fetch(
       {

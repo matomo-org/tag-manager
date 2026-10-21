@@ -188,7 +188,6 @@ class VariablesStore {
     idVariable: number,
   ): Promise<void> {
     this.privateState.isUpdating = true;
-    this.privateState.variables = [];
 
     return AjaxHelper.fetch(
       {
