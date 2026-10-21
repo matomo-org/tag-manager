@@ -1,0 +1,7 @@
+{
+    "name": "TagManager",
+    "license": "GPL v3+",
+    "require": {
+        "matomo": ">=5.6.0,<6.0.0-b1"
+    }
+}

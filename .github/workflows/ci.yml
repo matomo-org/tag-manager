@@ -1,0 +1,22 @@
+name: Plugins CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches:
+      - '**.x-dev'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+  pull-requests: read
+
+jobs:
+  ci:
+    uses: matomo-org/plugin-ci-workflows/.github/workflows/plugin-ci.yml@main
+    with:
+      plugin-name: TagManager
+      verify-hook: true
+      timezone-regression-exempt: 'Formats stored timestamps in the site timezone for display only; tag start/end windows are stored and evaluated in UTC; nothing is grouped or filtered by site day'

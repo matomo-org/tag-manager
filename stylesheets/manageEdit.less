@@ -1,3 +1,6 @@
+// The theme variable only exists from Matomo 5.11; the fallback is its light value.
+@tagManagerBorderAlternative: ~"var(--theme-color-border-alternative, #E0E0E0)";
+
 .tagManagerManageSelect,
 .tagManagerManageEdit {
 
@@ -68,17 +71,17 @@
   }
 
   .collection.with-header {
-    border-color: @theme-color-border-alternative;
+    border-color: @tagManagerBorderAlternative;
 
     .collection-header {
       background-color: @theme-color-background-tinyContrast;
-      border-bottom-color: @theme-color-border-alternative;
+      border-bottom-color: @tagManagerBorderAlternative;
     }
     .collection-item {
       cursor: pointer;
       min-height: auto;
       background-color: @theme-color-background-contrast;
-      border-bottom-color: @theme-color-border-alternative;
+      border-bottom-color: @tagManagerBorderAlternative;
       &:hover {
         background-color: @theme-color-background-tinyContrast;
       }
@@ -131,7 +134,7 @@
     .avatar .circle[src$="raygun.svg"],
     .avatar .circle[src$="sentry.svg"],
     .avatar .circle[src$="google-consent-mode.svg"] {
-      filter: @theme-filter-on-illustration;
+      filter: ~"var(--theme-filter-on-illustration, none)";
     }
   }
 }
