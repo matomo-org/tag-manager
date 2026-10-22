@@ -15,11 +15,6 @@ parameters:
             identifier: arguments.count
             path: Context/BaseContext.php
             count: 1
-        # the map is filled inside variableToArray(), so here it still reads as the empty array assigned above
-        -
-            identifier: arrayValues.empty
-            path: Context/BaseContext.php
-            count: 1
         # core documents getCurrentUserTokenAuth() as a string while returning its own string|null property
         -
             identifier: nullCoalesce.expr
