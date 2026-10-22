@@ -12,6 +12,7 @@
         "ComparisonGreaterThan": "on rohkem kui",
         "ComparisonStartsWith": "algab kui",
         "Condition": "Tingimus",
+        "CreatedBy": "Looja",
         "CreatedDate": "Loomise kuupäev",
         "EtrackerConfigurationVariableCustomDimensionsTitle": "Kohandatud mõõdud",
         "EtrackerTagTransactionCurrencyTitle": "vääring",
