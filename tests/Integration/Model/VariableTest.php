@@ -15,6 +15,8 @@ use Piwik\Piwik;
 use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\Context\WebContext;
+use Piwik\Plugins\TagManager\Dao\TagsDao;
+use Piwik\Plugins\TagManager\Dao\TriggersDao;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Model\Comparison;
@@ -595,6 +597,21 @@ class VariableTest extends IntegrationTestCase
         foreach ($variables as $variable) {
             $this->assertNotEmpty($variable['typeMetadata']);
         }
+    }
+
+    public function testDeleteContainerVariableWhenOtherEntitiesHaveUnavailableTypes()
+    {
+        // types that are not available, eg because the plugin providing them is no longer active
+        $tagsDao = StaticContainer::get(TagsDao::class);
+        $tagsDao->createTag($this->idSite, $this->containerVersion1, 'NotAvailableTag', 'UnavailableTag', ['foo' => '{{InitialVariable1}}'], [], [], 'unlimited', 0, 999, null, null, $this->now);
+        $triggersDao = StaticContainer::get(TriggersDao::class);
+        $triggersDao->createTrigger($this->idSite, $this->containerVersion1, 'NotAvailableTrigger', 'UnavailableTrigger', [], [], $this->now);
+        $idVariable = $this->dao->createVariable($this->idSite, $this->containerVersion1, 'NotAvailableVariable', 'UnavailableVariable', [], null, [], $this->now);
+
+        $this->model->deleteContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
+        $this->model->deleteContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
+
+        $this->assertSame([], $this->model->getContainerVariables($this->idSite, $this->containerVersion1));
     }
 
     public function testDeleteContainerVariable()

@@ -149,7 +149,7 @@ class Variable extends BaseModel
         $variables = $this->getContainerVariables($idSite, $idContainerVersion);
 
         foreach ($tags as $tag) {
-            foreach ($tag['typeMetadata']['parameters'] as $parameter) {
+            foreach ($tag['typeMetadata']['parameters'] ?? [] as $parameter) {
                 if ($this->isUsingParameterTheVariable($parameter, $varName)) {
                     $tagRef = new TagReference($tag['idtag'], $tag['name']);
                     $references[] = $tagRef->toArray();
@@ -158,7 +158,7 @@ class Variable extends BaseModel
             }
         }
         foreach ($triggers as $trigger) {
-            foreach ($trigger['typeMetadata']['parameters'] as $parameter) {
+            foreach ($trigger['typeMetadata']['parameters'] ?? [] as $parameter) {
                 if ($this->isUsingParameterTheVariable($parameter, $varName)) {
                     $triggerRef = new TriggerReference($trigger['idtrigger'], $trigger['name']);
                     $references[] = $triggerRef->toArray();
@@ -317,7 +317,7 @@ class Variable extends BaseModel
         $found = false;
 
         $parameters = $entity['parameters'];
-        foreach ($entity['typeMetadata']['parameters'] as $parameter) {
+        foreach ($entity['typeMetadata']['parameters'] ?? [] as $parameter) {
             $paramName = $parameter['name'];
             if (
                 $this->canParameterContainVariables($parameter, $entity['type'])
@@ -354,7 +354,7 @@ class Variable extends BaseModel
     {
         $variables = [];
         $parameters = $entity['parameters'];
-        foreach ($entity['typeMetadata']['parameters'] as $parameter) {
+        foreach ($entity['typeMetadata']['parameters'] ?? [] as $parameter) {
             $paramName = $parameter['name'];
             if (
                 $this->canParameterContainVariables($parameter, $entity['type'])
