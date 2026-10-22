@@ -255,6 +255,7 @@ class Container extends BaseModel
         $exported = $export->exportContainerVersion($idSite, $idContainer, $idContainerVersion);
         $import = StaticContainer::get('Piwik\Plugins\TagManager\API\Import');
         // validate before creating the version so a failed import does not leave an empty version behind
+        $import->checkVersionTypesAreAvailable($exported);
         $import->checkImportContainerIsPossible($exported, $idSite, $idContainer);
 
         // create a new version

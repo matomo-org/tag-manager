@@ -98,6 +98,25 @@ describe("ContainerUnavailableTypes", function () {
         });
     });
 
+    it('should show unavailable entities on the dashboard without a link to the editor', async function () {
+        await openList('dashboard');
+
+        const names = await page.evaluate(() => {
+            var entityNames = ['Available tag', 'Unavailable tag', 'Page view', 'Unavailable trigger', 'Unavailable variable'];
+            return Array.from(document.querySelectorAll('a[title], span[title]'))
+                .filter((element) => entityNames.includes(element.textContent.trim()))
+                .map((element) => element.tagName.toLowerCase() + ':' + element.textContent.trim());
+        });
+
+        expect(names).to.have.members([
+            'a:Available tag',
+            'span:Unavailable tag',
+            'a:Page view',
+            'span:Unavailable trigger',
+            'span:Unavailable variable',
+        ]);
+    });
+
     it('should only offer an unavailable trigger in the tag editor where the tag already uses it', async function () {
         await openList('manageTags');
         await page.evaluate(() => {

@@ -9,9 +9,11 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration\Context;
 
+use Piwik\Config;
 use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\API;
+use Piwik\Plugins\TagManager\Configuration;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Dao\TriggersDao;
@@ -217,5 +219,33 @@ class WebContextTest extends IntegrationTestCase
         $this->assertStringNotContainsString('NestedVariable', $js);
         $this->assertStringNotContainsString('TagWithNestedVariable', $js);
         $this->assertStringNotContainsString('TriggerWithUnavailableVariableParam', $js);
+    }
+
+    public function test_generate_ignoresEntitiesUsingADisabledPreConfiguredVariable()
+    {
+        Config::getInstance()->TagManager = [Configuration::KEY_DISABLED_VARIABLES => ['PageUrl']];
+
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+        $idContainerVersion = $this->getContainerDraftVersion($idContainer);
+        $now = '2018-01-01 02:03:04';
+
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
+        $this->api->addContainerTag($this->idSite, $idContainer, $idContainerVersion, 'CustomImage', 'MyImageTag', ['customImageSrc' => 'https://matomo.org/foo.png'], [$idTrigger]);
+        $tagsDao = StaticContainer::get(TagsDao::class);
+        $tagsDao->createTag($this->idSite, $idContainerVersion, 'CustomImage', 'TagWithDisabledVariable', ['customImageSrc' => 'https://matomo.org/foo.png?u={{PageUrl}}'], [$idTrigger], [], 'unlimited', 0, 999, null, null, $now);
+        $triggersDao = StaticContainer::get(TriggersDao::class);
+        $triggersDao->createTrigger($this->idSite, $idContainerVersion, PageViewTrigger::ID, 'TriggerWithDisabledVariable', [], [
+            ['actual' => 'PageUrl', 'comparison' => 'equals', 'expected' => 'foo'],
+        ], $now);
+
+        $this->api->enablePreviewMode($this->idSite, $idContainer, $idContainerVersion);
+
+        $containers = StaticContainer::get(Container::class);
+        $container = $containers->getContainer($this->idSite, $idContainer);
+        $js = implode("\n", StaticContainer::get(WebContext::class)->generate($container));
+
+        $this->assertStringContainsString('MyImageTag', $js);
+        $this->assertStringNotContainsString('TagWithDisabledVariable', $js);
+        $this->assertStringNotContainsString('TriggerWithDisabledVariable', $js);
     }
 }

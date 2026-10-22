@@ -149,6 +149,11 @@ class Variable extends BaseModel
         $variables = $this->getContainerVariables($idSite, $idContainerVersion);
 
         foreach ($tags as $tag) {
+            if (empty($tag['typeMetadata']) && in_array($varName, $this->listVariableNamesInParameters($tag), true)) {
+                $tagRef = new TagReference($tag['idtag'], $tag['name']);
+                $references[] = $tagRef->toArray();
+                continue;
+            }
             foreach ($tag['typeMetadata']['parameters'] ?? [] as $parameter) {
                 if ($this->isUsingParameterTheVariable($parameter, $varName)) {
                     $tagRef = new TagReference($tag['idtag'], $tag['name']);
@@ -158,6 +163,11 @@ class Variable extends BaseModel
             }
         }
         foreach ($triggers as $trigger) {
+            if (empty($trigger['typeMetadata']) && in_array($varName, $this->listVariableNamesInParameters($trigger), true)) {
+                $triggerRef = new TriggerReference($trigger['idtrigger'], $trigger['name']);
+                $references[] = $triggerRef->toArray();
+                continue;
+            }
             foreach ($trigger['typeMetadata']['parameters'] ?? [] as $parameter) {
                 if ($this->isUsingParameterTheVariable($parameter, $varName)) {
                     $triggerRef = new TriggerReference($trigger['idtrigger'], $trigger['name']);
@@ -262,7 +272,9 @@ class Variable extends BaseModel
                     $trigger['conditions'][$index] = $condition;
                 }
             }
-            if ($parameters || $found) {
+            if (($parameters || $found) && empty($trigger['typeMetadata'])) {
+                $this->trigger->updateReferencesOfUnavailableTrigger($idSite, $idContainerVersion, $trigger['idtrigger'], $parameters ?: $trigger['parameters'], $trigger['conditions']);
+            } elseif ($parameters || $found) {
                 $this->trigger->updateContainerTrigger($idSite, $idContainerVersion, $trigger['idtrigger'], $trigger['name'], $parameters, $trigger['conditions']);
             }
         }
@@ -317,21 +329,51 @@ class Variable extends BaseModel
         $found = false;
 
         $parameters = $entity['parameters'];
-        foreach ($entity['typeMetadata']['parameters'] ?? [] as $parameter) {
-            $paramName = $parameter['name'];
-            if (
-                $this->canParameterContainVariables($parameter, $entity['type'])
-                && isset($parameters[$paramName])
-                && is_string($parameters[$paramName])
-                && strpos($parameters[$paramName], $oldVarNameTemplate) !== false
-            ) {
+        foreach ($this->getParameterValuesThatCanContainVariables($entity) as $paramName => $value) {
+            if (strpos($value, $oldVarNameTemplate) !== false) {
                 $found = true;
-                $parameters[$paramName] = str_replace($oldVarNameTemplate, $newVarNameTemplate, $parameters[$paramName]);
+                $parameters[$paramName] = str_replace($oldVarNameTemplate, $newVarNameTemplate, $value);
             }
         }
         if ($found) {
             return $parameters;
         }
+    }
+
+    /**
+     * Returns the string parameter values of the Tag/Trigger/Variable that can contain variables. Without the type
+     * metadata, eg when the plugin providing the type is no longer active, we cannot tell which parameters accept
+     * variables, so all string values are returned to keep the references.
+     *
+     * @param array $entity The array of the Tag/Trigger/Variable built when loading the entry from the database
+     * @return array<string, string> Parameter values by parameter name
+     */
+    private function getParameterValuesThatCanContainVariables(array $entity): array
+    {
+        $parameters = $entity['parameters'] ?? [];
+        $values = [];
+
+        if (empty($entity['typeMetadata'])) {
+            foreach ($parameters as $paramName => $value) {
+                if (is_string($value)) {
+                    $values[$paramName] = $value;
+                }
+            }
+            return $values;
+        }
+
+        foreach ($entity['typeMetadata']['parameters'] as $parameter) {
+            $paramName = $parameter['name'];
+            if (
+                $this->canParameterContainVariables($parameter, $entity['type'])
+                && isset($parameters[$paramName])
+                && is_string($parameters[$paramName])
+            ) {
+                $values[$paramName] = $parameters[$paramName];
+            }
+        }
+
+        return $values;
     }
 
     private function canParameterContainVariables(array $parameterMetadata, string $entityType)
@@ -353,18 +395,11 @@ class Variable extends BaseModel
     public function listVariableNamesInParameters(array $entity): array
     {
         $variables = [];
-        $parameters = $entity['parameters'];
-        foreach ($entity['typeMetadata']['parameters'] ?? [] as $parameter) {
-            $paramName = $parameter['name'];
-            if (
-                $this->canParameterContainVariables($parameter, $entity['type'])
-                && isset($parameters[$paramName])
-                && is_string($parameters[$paramName])
-                && strpos($parameters[$paramName], '{{') !== false
-            ) {
+        foreach ($this->getParameterValuesThatCanContainVariables($entity) as $value) {
+            if (strpos($value, '{{') !== false) {
                 // Use regex to get the list of all the variable names
                 $matches = [];
-                preg_match_all('/{{.[^}]+}}/', $parameters[$paramName], $matches);
+                preg_match_all('/{{.[^}]+}}/', $value, $matches);
                 $matches = array_unique($matches[0]);
                 $matches = array_map(function ($value) {
                     return trim(str_replace(['{{', '}}'], '', $value));

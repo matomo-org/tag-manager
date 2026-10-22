@@ -603,7 +603,7 @@ class VariableTest extends IntegrationTestCase
     {
         // types that are not available, eg because the plugin providing them is no longer active
         $tagsDao = StaticContainer::get(TagsDao::class);
-        $tagsDao->createTag($this->idSite, $this->containerVersion1, 'NotAvailableTag', 'UnavailableTag', ['foo' => '{{InitialVariable1}}'], [], [], 'unlimited', 0, 999, null, null, $this->now);
+        $tagsDao->createTag($this->idSite, $this->containerVersion1, 'NotAvailableTag', 'UnavailableTag', ['foo' => 'bar'], [], [], 'unlimited', 0, 999, null, null, $this->now);
         $triggersDao = StaticContainer::get(TriggersDao::class);
         $triggersDao->createTrigger($this->idSite, $this->containerVersion1, 'NotAvailableTrigger', 'UnavailableTrigger', [], [], $this->now);
         $idVariable = $this->dao->createVariable($this->idSite, $this->containerVersion1, 'NotAvailableVariable', 'UnavailableVariable', [], null, [], $this->now);
@@ -612,6 +612,48 @@ class VariableTest extends IntegrationTestCase
         $this->model->deleteContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
 
         $this->assertSame([], $this->model->getContainerVariables($this->idSite, $this->containerVersion1));
+    }
+
+    public function testDeleteContainerVariableReferencedByEntitiesWithUnavailableTypes()
+    {
+        // without the type we cannot tell which parameters accept variables, so all of them count as references
+        $tagsDao = StaticContainer::get(TagsDao::class);
+        $idTag = $tagsDao->createTag($this->idSite, $this->containerVersion1, 'NotAvailableTag', 'UnavailableTag', ['foo' => '{{InitialVariable1}}'], [], [], 'unlimited', 0, 999, null, null, $this->now);
+        $triggersDao = StaticContainer::get(TriggersDao::class);
+        $idTrigger = $triggersDao->createTrigger($this->idSite, $this->containerVersion1, 'NotAvailableTrigger', 'UnavailableTrigger', ['bar' => 'a {{InitialVariable1}}'], [], $this->now);
+        $idVariable = $this->dao->createVariable($this->idSite, $this->containerVersion1, 'NotAvailableVariable', 'UnavailableVariable', ['baz' => '{{InitialVariable1}}'], null, [], $this->now);
+
+        $references = $this->model->getContainerVariableReferences($this->idSite, $this->containerVersion1, $this->idVariable1);
+        $this->assertEquals([
+            ['referenceId' => $idTag, 'referenceType' => 'tag', 'referenceTypeName' => 'Tag', 'referenceName' => 'UnavailableTag'],
+            ['referenceId' => $idTrigger, 'referenceType' => 'trigger', 'referenceTypeName' => 'Trigger', 'referenceName' => 'UnavailableTrigger'],
+            ['referenceId' => $idVariable, 'referenceType' => 'variable', 'referenceTypeName' => 'Variable', 'referenceName' => 'UnavailableVariable'],
+        ], $references);
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('This variable is in use elsewhere and cannot be deleted.');
+        $this->model->deleteContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1);
+    }
+
+    public function testUpdateContainerVariableNameReferencesInEntitiesWithUnavailableTypes()
+    {
+        $tagsDao = StaticContainer::get(TagsDao::class);
+        $idTag = $tagsDao->createTag($this->idSite, $this->containerVersion1, 'NotAvailableTag', 'UnavailableTag', ['foo' => '{{InitialVariable1}}', 'other' => 'kept'], [], [], 'unlimited', 0, 999, null, null, $this->now);
+        $triggersDao = StaticContainer::get(TriggersDao::class);
+        $idTrigger = $triggersDao->createTrigger($this->idSite, $this->containerVersion1, 'NotAvailableTrigger', 'UnavailableTrigger', ['bar' => 'a {{InitialVariable1}}'], [
+            ['actual' => 'InitialVariable1', 'comparison' => 'equals', 'expected' => 'x'],
+        ], $this->now);
+        $idVariable = $this->dao->createVariable($this->idSite, $this->containerVersion1, 'NotAvailableVariable', 'UnavailableVariable', ['baz' => '{{InitialVariable1}}'], null, [], $this->now);
+
+        $this->updateContainerVariable($this->idSite, $this->containerVersion1, $this->idVariable1, 'RenamedVariable', ['dataLayerName' => 'myVariable']);
+
+        $tag = $tagsDao->getContainerTag($this->idSite, $this->containerVersion1, $idTag);
+        $this->assertSame(['foo' => '{{RenamedVariable}}', 'other' => 'kept'], $tag['parameters']);
+        $trigger = $triggersDao->getContainerTrigger($this->idSite, $this->containerVersion1, $idTrigger);
+        $this->assertSame(['bar' => 'a {{RenamedVariable}}'], $trigger['parameters']);
+        $this->assertSame('RenamedVariable', $trigger['conditions'][0]['actual']);
+        $variable = $this->dao->getContainerVariable($this->idSite, $this->containerVersion1, $idVariable);
+        $this->assertSame(['baz' => '{{RenamedVariable}}'], $variable['parameters']);
     }
 
     public function testDeleteContainerVariable()

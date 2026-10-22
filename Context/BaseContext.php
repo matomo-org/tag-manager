@@ -485,6 +485,11 @@ abstract class BaseContext
                 $this->variables[$var['name']] = $var;
                 return $var;
             }
+
+            if (is_string($variableNameOrVariable) && $this->variablesProvider->isDisabledInConfig($variableNameOrVariable)) {
+                // a pre-configured variable disabled in the configuration is not available either
+                $this->referencesUnavailableVariable = true;
+            }
         }
     }
 

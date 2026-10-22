@@ -83,6 +83,18 @@ class Trigger extends BaseModel
         }
     }
 
+    /**
+     * Updates the parameters and conditions of a trigger whose type is not available, eg when a referenced variable is
+     * renamed. The parameters cannot be validated without the type, so they are stored as they are.
+     */
+    public function updateReferencesOfUnavailableTrigger($idSite, $idContainerVersion, $idTrigger, $parameters, $conditions)
+    {
+        $this->updateTriggerColumns($idSite, $idContainerVersion, $idTrigger, array(
+            'parameters' => $parameters,
+            'conditions' => $conditions,
+        ));
+    }
+
     private function formatParameters($triggerType, $parameters)
     {
         $triggerTemplate = $this->triggersProvider->getTrigger($triggerType);

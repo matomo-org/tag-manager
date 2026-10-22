@@ -46,14 +46,13 @@
                   :key="index"
                 >
                   <a
+                    v-if="isTypeAvailable('tag', tag.type)"
                     :href="linkTo('manageTags', { idTag: tag.idtag })"
-                    :title="translate(
-                      'TagManager_EntityDateTypeMetaInformation',
-                      tag.created_date_pretty || '',
-                      tag.updated_date_pretty || '',
-                      tag.type,
-                    )"
+                    :title="getEntityTitle(tag)"
                   >{{ tag.name }}</a><span
+                    v-else
+                    :title="getEntityTitle(tag)"
+                  >{{ tag.name }}</span><span
                     v-if="index !== sortedContainerVersionTags.length - 1"
                   >, </span>
                 </span>
@@ -85,14 +84,13 @@
                 {{ translate('TagManager_Names') }}:
                 <span v-for="(trigger, index) in sortedTriggers" :key="index">
                   <a
+                    v-if="isTypeAvailable('trigger', trigger.type)"
                     :href="linkTo('manageTriggers', { idTrigger: trigger.idtrigger })"
-                    :title="translate(
-                      'TagManager_EntityDateTypeMetaInformation',
-                      trigger.created_date_pretty || '',
-                      trigger.updated_date_pretty || '',
-                      trigger.type,
-                    )"
-                  >{{ trigger.name }}</a><span v-show="
+                    :title="getEntityTitle(trigger)"
+                  >{{ trigger.name }}</a><span
+                    v-else
+                    :title="getEntityTitle(trigger)"
+                  >{{ trigger.name }}</span><span v-show="
                     index !== sortedTriggers.length - 1"
                   >, </span>
                 </span>
@@ -129,14 +127,13 @@
                 {{ translate('TagManager_Names') }}:
                 <span v-for="(variable, index) in sortedVariables" :key="index">
                   <a
+                    v-if="isTypeAvailable('variable', variable.type)"
                     :href="linkTo('manageVariables', { idVariable: variable.idvariable })"
-                    :title="translate(
-                      'TagManager_EntityDateTypeMetaInformation',
-                      variable.created_date_pretty || '',
-                      variable.updated_date_pretty || '',
-                      variable.type,
-                    )"
+                    :title="getEntityTitle(variable)"
                   >{{ variable.name }}</a><span
+                    v-else
+                    :title="getEntityTitle(variable)"
+                  >{{ variable.name }}</span><span
                     v-if="index !== sortedVariables.length - 1"
                   >, </span>
                 </span>
@@ -211,7 +208,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { DeepReadonly, defineComponent } from 'vue';
 import {
   translate,
   AjaxHelper,
@@ -223,6 +220,9 @@ import {
   externalLink,
 } from 'CoreHome';
 import AvailableContextsStore from '../AvailableContexts.store';
+import TagsStore from '../Tag/Tags.store';
+import TriggersStore from '../Trigger/Triggers.store';
+import VariablesStore from '../Variable/Variables.store';
 import {
   Container,
   ExportedVersion,
@@ -233,7 +233,12 @@ import {
 interface ContainerDashboardState {
   container: Container|null;
   containerVersion: ExportedVersion|null;
+  availableTypeIds: Record<string, string[]>|null;
   isLoading: boolean;
+}
+
+function getTypeIds(categories: DeepReadonly<{ types: { id: string }[] }[]>): string[] {
+  return categories.flatMap((category) => category.types.map((type) => type.id));
 }
 
 function sortByName<T extends { name: string }>(items: T[]) {
@@ -266,6 +271,7 @@ export default defineComponent({
     return {
       container: null,
       containerVersion: null,
+      availableTypeIds: null,
       isLoading: false,
     };
   },
@@ -279,6 +285,19 @@ export default defineComponent({
       idContainer: this.idContainer,
     }).then((container) => {
       this.container = container;
+
+      // the editors cannot be used for an entity whose type is not available
+      return Promise.all([
+        TagsStore.fetchAvailableTags(container.context),
+        TriggersStore.fetchAvailableTriggers(container.context),
+        VariablesStore.fetchAvailableVariables(container.context),
+      ]).then(([tags, triggers, variables]) => {
+        this.availableTypeIds = {
+          tag: getTypeIds(tags),
+          trigger: getTypeIds(triggers),
+          variable: getTypeIds(variables),
+        };
+      });
     });
 
     const versionPromise = AjaxHelper.fetch<ExportedVersion>({
@@ -293,6 +312,17 @@ export default defineComponent({
     });
   },
   methods: {
+    isTypeAvailable(kind: string, type: string) {
+      return !this.availableTypeIds || this.availableTypeIds[kind].includes(type);
+    },
+    getEntityTitle(entity: { created_date_pretty?: string, updated_date_pretty?: string, type: string }) {
+      return translate(
+        'TagManager_EntityDateTypeMetaInformation',
+        entity.created_date_pretty || '',
+        entity.updated_date_pretty || '',
+        entity.type,
+      );
+    },
     linkTo(action: string, hash?: QueryParameters) {
       let url = MatomoUrl.stringify({
         ...MatomoUrl.urlParsed.value,

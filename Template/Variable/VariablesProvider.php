@@ -152,6 +152,17 @@ class VariablesProvider
     }
 
     /**
+     * Whether the variable type is disabled in the configuration, for example a pre-configured variable.
+     * @param string $variableId
+     * @return bool
+     */
+    public function isDisabledInConfig($variableId)
+    {
+        $disabled = array_map('strtolower', $this->configuration->getDisabledVariables());
+        return in_array(strtolower($variableId), $disabled, true);
+    }
+
+    /**
      * @return BaseVariable|null
      */
     public function getPreConfiguredVariable($variableId)

@@ -94,7 +94,7 @@ class Import
             throw new Exception($message);
         }
 
-        $this->checkTypesAreAvailable($exportedContainerVersion);
+        $this->checkTypesAreAvailable($exportedContainerVersion, 'TagManager_ErrorImportTypeNotAvailable');
 
         foreach ($exportedContainerVersion['tags'] as $tag) {
             $this->tagsProvider->checkIsValidTag($tag['type']);
@@ -124,8 +124,14 @@ class Import
     /**
      * A type is not available for example when the plugin that provides it is no longer active, or when it is disabled
      * in the configuration. We list all affected entities in one message so the user knows which ones to delete.
+     * Creating a version uses its own message, as the entities are already in the container, unlike in an import.
      */
-    private function checkTypesAreAvailable($exportedContainerVersion)
+    public function checkVersionTypesAreAvailable($exportedContainerVersion)
+    {
+        $this->checkTypesAreAvailable($exportedContainerVersion, 'TagManager_ErrorTypeNotAvailable');
+    }
+
+    private function checkTypesAreAvailable($exportedContainerVersion, $errorTranslationKey)
     {
         $unavailable = [];
 
@@ -148,7 +154,7 @@ class Import
         }
 
         if (!empty($unavailable)) {
-            throw new Exception(Piwik::translate('TagManager_ErrorTypeNotAvailable', implode(', ', $unavailable)));
+            throw new Exception(Piwik::translate($errorTranslationKey, implode(', ', $unavailable)));
         }
     }
 
