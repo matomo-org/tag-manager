@@ -504,7 +504,7 @@ export default defineComponent({
             }
 
             this.tag = clone(tag) as unknown as Tag;
-            this.parameterValues = Object.fromEntries(tag.typeMetadata.parameters.map(
+            this.parameterValues = Object.fromEntries((tag.typeMetadata?.parameters || []).map(
               (s) => [s.name, s.value],
             ));
 

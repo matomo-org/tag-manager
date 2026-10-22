@@ -136,11 +136,13 @@ abstract class BaseContext
             ];
         }
 
+        $ignoredTriggerIds = [];
         foreach ($this->triggerModel->getContainerTriggers($idSite, $idContainerVersion) as $trigger) {
             // we are ignoring any trigger that is not actually used in any tag for performance reasons
             // (for now, we might change this later so triggers can more easily build on top of each other)
             if (empty($trigger['typeMetadata'])) {
                 // the trigger type is not available, eg because the plugin providing it is no longer active
+                $ignoredTriggerIds[] = $trigger['idtrigger'];
                 continue;
             }
             $conditions = [];
@@ -151,6 +153,7 @@ abstract class BaseContext
                         if (!$actual) {
                             // the condition variable type is not available. Ignoring only the condition would make
                             // the trigger fire more often than configured, so we ignore the whole trigger instead
+                            $ignoredTriggerIds[] = $trigger['idtrigger'];
                             continue 2;
                         }
                         $conditions[] = [
@@ -170,6 +173,13 @@ abstract class BaseContext
             ];
 
             $containerJs['triggers'][] = $trigger;
+        }
+
+        if (!empty($ignoredTriggerIds)) {
+            // a tag must not fire without one of its block triggers, so we ignore such a tag as well
+            $containerJs['tags'] = array_values(array_filter($containerJs['tags'], function ($tag) use ($ignoredTriggerIds) {
+                return empty(array_intersect((array) $tag['blockTriggerIds'], $ignoredTriggerIds));
+            }));
         }
 
         foreach ($this->variableModel->getContainerVariables($idSite, $idContainerVersion) as $variable) {

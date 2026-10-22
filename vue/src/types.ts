@@ -60,7 +60,8 @@ export interface Variable {
   type: string;
   updated_date?: string;
   updated_date_pretty?: string;
-  typeMetadata: VariableType;
+  // null when the type is not available, eg because the plugin providing it is no longer active
+  typeMetadata: VariableType|null;
 }
 
 export interface ContainerVariableType {
@@ -144,7 +145,8 @@ export interface Trigger {
   description: string;
   status?: string;
   type: string;
-  typeMetadata: TriggerType;
+  // null when the type is not available, eg because the plugin providing it is no longer active
+  typeMetadata: TriggerType|null;
   updated_date?: string;
   updated_date_pretty?: string;
 }
@@ -193,7 +195,8 @@ export interface Tag {
   start_date: null|string;
   status: string;
   type: string;
-  typeMetadata: TagType;
+  // null when the type is not available, eg because the plugin providing it is no longer active
+  typeMetadata: TagType|null;
   updated_date?: string;
   updated_date_pretty?: string;
 }

@@ -180,7 +180,9 @@ class WebContextTest extends IntegrationTestCase
         $tagsDao = StaticContainer::get(TagsDao::class);
         $tagsDao->createTag($this->idSite, $idContainerVersion, 'NotAvailableTag', 'UnavailableTag', [], [$idTrigger], [], 'unlimited', 0, 999, null, null, $now);
         $triggersDao = StaticContainer::get(TriggersDao::class);
-        $triggersDao->createTrigger($this->idSite, $idContainerVersion, 'NotAvailableTrigger', 'UnavailableTrigger', [], [], $now);
+        $idUnavailableTrigger = $triggersDao->createTrigger($this->idSite, $idContainerVersion, 'NotAvailableTrigger', 'UnavailableTrigger', [], [], $now);
+        // a tag blocked by an unavailable trigger must not fire without that block
+        $tagsDao->createTag($this->idSite, $idContainerVersion, 'CustomImage', 'TagWithUnavailableBlockTrigger', ['customImageSrc' => 'https://matomo.org/bar.png'], [$idTrigger], [$idUnavailableTrigger], 'unlimited', 0, 999, null, null, $now);
         $variablesDao = StaticContainer::get(VariablesDao::class);
         $variablesDao->createVariable($this->idSite, $idContainerVersion, 'NotAvailableVariable', 'UnavailableVariable', [], null, [], $now);
         $triggersDao->createTrigger($this->idSite, $idContainerVersion, PageViewTrigger::ID, 'TriggerWithUnavailableVariable', [], [
@@ -204,5 +206,6 @@ class WebContextTest extends IntegrationTestCase
         $this->assertStringNotContainsString('UnavailableTrigger', $js);
         $this->assertStringNotContainsString('UnavailableVariable', $js);
         $this->assertStringNotContainsString('TriggerWithUnavailableVariable', $js);
+        $this->assertStringNotContainsString('TagWithUnavailableBlockTrigger', $js);
     }
 }

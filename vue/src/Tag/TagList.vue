@@ -93,7 +93,7 @@
                 <a
                   style="display: inline-block;vertical-align: top !important;"
                   class="chip"
-                  v-if="hasWriteAccess"
+                  v-if="canEditTrigger(fireTriggerId)"
                   href=""
                   @click.prevent="editTrigger(fireTriggerId)"
                   :title="triggers[fireTriggerId]"
@@ -102,7 +102,7 @@
                 </a>
                 <span
                   class="chip"
-                  v-if="!hasWriteAccess"
+                  v-if="!canEditTrigger(fireTriggerId)"
                   :title="triggers[fireTriggerId]"
                 >
                   {{ truncateText(triggers[fireTriggerId], triggerTruncateLength) }}
@@ -117,7 +117,7 @@
                 >
                   <a
                     class="chip"
-                    v-show="hasWriteAccess"
+                    v-show="canEditTrigger(blockTriggerId)"
                     href=""
                     @click.prevent="editTrigger(blockTriggerId)"
                     :title="triggers[blockTriggerId]"
@@ -126,7 +126,7 @@
                   </a>
                   <span
                     class="chip"
-                    v-show="!hasWriteAccess"
+                    v-show="!canEditTrigger(blockTriggerId)"
                     :title="triggers[blockTriggerId]"
                   >
                     {{ truncateText(triggers[blockTriggerId], triggerTruncateLength) }}
@@ -317,6 +317,10 @@ export default defineComponent({
     createTag() {
       this.editTag(0);
     },
+    canEditTrigger(idTrigger: number) {
+      // the trigger editor cannot be used when the trigger type is not available
+      return this.hasWriteAccess && !this.unavailableTriggerIds.includes(idTrigger);
+    },
     editTrigger(idTrigger: number) {
       tagManagerHelper.editTrigger(
         this.idContainer,
@@ -423,6 +427,11 @@ export default defineComponent({
     },
   },
   computed: {
+    unavailableTriggerIds() {
+      return TriggersStore.triggers.value
+        .filter((t) => !t.typeMetadata)
+        .map((t) => t.idtrigger);
+    },
     triggers() {
       const triggers: Record<string, string> = {};
       TriggersStore.triggers.value.forEach((t) => {

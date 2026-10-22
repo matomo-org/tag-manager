@@ -411,13 +411,16 @@ export default defineComponent({
             }
 
             this.variable = clone(variable) as unknown as Variable;
-            this.variable.typeMetadata.parameters = variable.typeMetadata.parameters.filter(
-              (item) => !Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') || !Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
-            );
-            this.variable.typeMetadata.advancedParameters = variable.typeMetadata.parameters.filter(
-              (item) => Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') && Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
-            );
-            this.parameterValues = Object.fromEntries(variable.typeMetadata.parameters.map(
+            const parameters = variable.typeMetadata?.parameters || [];
+            if (this.variable.typeMetadata) {
+              this.variable.typeMetadata.parameters = parameters.filter(
+                (item) => !Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') || !Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
+              );
+              this.variable.typeMetadata.advancedParameters = parameters.filter(
+                (item) => Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') && Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
+              );
+            }
+            this.parameterValues = Object.fromEntries(parameters.map(
               (s) => [s.name, s.value],
             ));
 
@@ -509,7 +512,7 @@ export default defineComponent({
         typeMetadata: variableTemplate,
       };
 
-      this.variable.typeMetadata.advancedParameters = [];
+      variableTemplate.advancedParameters = [];
       const advancedOptions = variableTemplate.parameters.filter(
         (item) => Object.prototype.hasOwnProperty.call(item, 'uiControlAttributes') && Object.prototype.hasOwnProperty.call(item.uiControlAttributes, 'showAdvancedSettings'),
       );
@@ -519,8 +522,8 @@ export default defineComponent({
       this.parameterValues = Object.fromEntries(variableTemplate.parameters.map(
         (s) => [s.name, s.value],
       ));
-      this.variable.typeMetadata.advancedParameters = advancedOptions;
-      this.variable.typeMetadata.parameters = nonAdvancedOptions;
+      variableTemplate.advancedParameters = advancedOptions;
+      variableTemplate.parameters = nonAdvancedOptions;
 
       if (this.variable.typeMetadata?.name) {
         this.editTitle += `: ${this.variable.typeMetadata.name}`;
