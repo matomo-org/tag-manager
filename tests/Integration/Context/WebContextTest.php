@@ -13,10 +13,13 @@ use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\API;
 use Piwik\Plugins\TagManager\Context\WebContext;
+use Piwik\Plugins\TagManager\Dao\TagsDao;
+use Piwik\Plugins\TagManager\Dao\TriggersDao;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\TagManager;
+use Piwik\Plugins\TagManager\Template\Trigger\PageViewTrigger;
 use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
@@ -162,5 +165,44 @@ class WebContextTest extends IntegrationTestCase
         }
 
         $this->fail('An expected exception has not been thrown');
+    }
+
+    public function test_generate_ignoresEntitiesWithUnavailableTypes()
+    {
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+        $idContainerVersion = $this->getContainerDraftVersion($idContainer);
+        $now = '2018-01-01 02:03:04';
+
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
+        $this->api->addContainerTag($this->idSite, $idContainer, $idContainerVersion, 'CustomImage', 'MyImageTag', ['customImageSrc' => 'https://matomo.org/foo.png'], [$idTrigger]);
+
+        // types that are not available, eg because the plugin providing them is no longer active
+        $tagsDao = StaticContainer::get(TagsDao::class);
+        $tagsDao->createTag($this->idSite, $idContainerVersion, 'NotAvailableTag', 'UnavailableTag', [], [$idTrigger], [], 'unlimited', 0, 999, null, null, $now);
+        $triggersDao = StaticContainer::get(TriggersDao::class);
+        $triggersDao->createTrigger($this->idSite, $idContainerVersion, 'NotAvailableTrigger', 'UnavailableTrigger', [], [], $now);
+        $variablesDao = StaticContainer::get(VariablesDao::class);
+        $variablesDao->createVariable($this->idSite, $idContainerVersion, 'NotAvailableVariable', 'UnavailableVariable', [], null, [], $now);
+        $triggersDao->createTrigger($this->idSite, $idContainerVersion, PageViewTrigger::ID, 'TriggerWithUnavailableVariable', [], [
+            ['actual' => 'UnavailableVariable', 'comparison' => 'equals', 'expected' => 'foo'],
+        ], $now);
+
+        // the preview release keeps the entity names in the generated container
+        $this->api->enablePreviewMode($this->idSite, $idContainer, $idContainerVersion);
+
+        $containers = StaticContainer::get(Container::class);
+        $container = $containers->getContainer($this->idSite, $idContainer);
+        $files = StaticContainer::get(WebContext::class)->generate($container);
+        $js = implode("\n", $files);
+
+        $this->assertStringContainsString('MyImageTag', $js);
+        $this->assertStringContainsString('MyPageViewTrigger', $js);
+        $this->assertStringNotContainsString('NotAvailableTag', $js);
+        $this->assertStringNotContainsString('NotAvailableTrigger', $js);
+        $this->assertStringNotContainsString('NotAvailableVariable', $js);
+        $this->assertStringNotContainsString('UnavailableTag', $js);
+        $this->assertStringNotContainsString('UnavailableTrigger', $js);
+        $this->assertStringNotContainsString('UnavailableVariable', $js);
+        $this->assertStringNotContainsString('TriggerWithUnavailableVariable', $js);
     }
 }

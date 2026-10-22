@@ -76,9 +76,13 @@
             </td>
             <td
               class="type"
-              :title="tag.typeMetadata.description"
+              :title="tag.typeMetadata
+                ? tag.typeMetadata.description
+                : translate('TagManager_TypeNotAvailableHelp')"
             >
-              {{ tag.typeMetadata.name }}
+              {{ tag.typeMetadata
+                ? tag.typeMetadata.name
+                : translate('TagManager_TypeNotAvailable', tag.type) }}
             </td>
             <td class="triggers">
               <span
@@ -156,12 +160,13 @@
               />
               <a
                 class="table-action icon-edit"
+                v-show="tag.typeMetadata"
                 @click="editTag(tag.idtag)"
                 :title="translate('TagManager_EditTag')"
               />
               <a
                 class="table-action icon-content-copy"
-                v-show="hasPublishCapability()"
+                v-show="hasPublishCapability() && tag.typeMetadata"
                 @click="openCopyDialog(tag as Tag)"
                 :title="translate(
                   'TagManager_CopyX',
@@ -445,8 +450,8 @@ export default defineComponent({
         if (typeof entity[propName] === 'string') {
           propValue = (entity[propName] as string);
         } else if (propName === 'typeMetadata') {
-          const propTypeMeta = (entity.typeMetadata as TagType);
-          propValue = (propTypeMeta.name as string);
+          const propTypeMeta = (entity.typeMetadata as TagType|null);
+          propValue = (propTypeMeta?.name || '');
         } else if (propName === 'fire_trigger_ids') {
           if (this.triggers && entity.fire_trigger_ids) {
             Object.values((entity.fire_trigger_ids) as number[]).forEach((value) => {

@@ -118,6 +118,10 @@ abstract class BaseContext
             if ($tag['status'] !== TagsDao::STATUS_ACTIVE) {
                 continue;
             }
+            if (empty($tag['typeMetadata'])) {
+                // the tag type is not available, eg because the plugin providing it is no longer active
+                continue;
+            }
             $containerJs['tags'][] = [
                 'id' => $tag['idtag'],
                 'type' => $tag['type'],
@@ -135,18 +139,25 @@ abstract class BaseContext
         foreach ($this->triggerModel->getContainerTriggers($idSite, $idContainerVersion) as $trigger) {
             // we are ignoring any trigger that is not actually used in any tag for performance reasons
             // (for now, we might change this later so triggers can more easily build on top of each other)
+            if (empty($trigger['typeMetadata'])) {
+                // the trigger type is not available, eg because the plugin providing it is no longer active
+                continue;
+            }
             $conditions = [];
             if (!empty($trigger['conditions'])) {
                 foreach ($trigger['conditions'] as $condition) {
                     if (!empty($condition['actual'])) {
                         $actual = $this->variableToArray($container, $condition['actual']);
-                        if ($actual) {
-                            $conditions[] = [
-                                'actual' => $actual,
-                                'comparison' => $condition['comparison'],
-                                'expected' => $condition['expected']
-                            ];
+                        if (!$actual) {
+                            // the condition variable type is not available. Ignoring only the condition would make
+                            // the trigger fire more often than configured, so we ignore the whole trigger instead
+                            continue 2;
                         }
+                        $conditions[] = [
+                            'actual' => $actual,
+                            'comparison' => $condition['comparison'],
+                            'expected' => $condition['expected']
+                        ];
                     }
                 }
             }
@@ -388,6 +399,10 @@ abstract class BaseContext
             return $this->variables[$variableNameOrVariable];
         } else {
             $variable = $this->variableModel->findVariableByName($container['idsite'], $container['idcontainerversion'], $variableNameOrVariable);
+        }
+        if ($variable && empty($variable['typeMetadata'])) {
+            // the variable type is not available, eg because the plugin providing it is no longer active
+            return null;
         }
         if ($variable) {
             $lookUpTable = [];

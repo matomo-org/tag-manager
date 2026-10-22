@@ -78,8 +78,12 @@
             </td>
             <td
               class="type"
-              :title="trigger.typeMetadata.description"
-            >{{ trigger.typeMetadata.name }}</td>
+              :title="trigger.typeMetadata
+                ? trigger.typeMetadata.description
+                : translate('TagManager_TypeNotAvailableHelp')"
+            >{{ trigger.typeMetadata
+              ? trigger.typeMetadata.name
+              : translate('TagManager_TypeNotAvailable', trigger.type) }}</td>
             <td class="conditions">
               <span
                 class="icon-ok"
@@ -98,12 +102,13 @@
             >
               <a
                 class="table-action icon-edit"
+                v-show="trigger.typeMetadata"
                 @click="editTrigger(trigger.idtrigger ?? 0)"
                 :title="translate('TagManager_EditTrigger')"
               />
               <a
                 class="table-action icon-content-copy"
-                v-show="hasPublishCapability()"
+                v-show="hasPublishCapability() && trigger.typeMetadata"
                 @click="openCopyDialog(trigger as Trigger)"
                 :title="translate(
                   'TagManager_CopyX',
@@ -302,8 +307,8 @@ export default defineComponent({
         if (typeof entity[propName] === 'string') {
           propValue = (entity[propName] as string);
         } else if (propName === 'typeMetadata') {
-          const propTypeMeta = (entity.typeMetadata as TriggerType);
-          propValue = (propTypeMeta.name as string);
+          const propTypeMeta = (entity.typeMetadata as TriggerType|null);
+          propValue = (propTypeMeta?.name || '');
         } else if (propName === 'parameters' && entity.type === 'CustomEvent') {
           const propTypeParameters = (entity.parameters as Record<string, unknown>);
           propValue = (propTypeParameters.eventName as string);

@@ -14,6 +14,7 @@ use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\ContainerReleaseDao;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
 use Piwik\Plugins\TagManager\Dao\ContainerVersionsDao;
+use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Input\Description;
 use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Model\Container;
@@ -598,6 +599,23 @@ class ContainerTest extends IntegrationTestCase
         $this->expectExceptionMessage('The requested container version does not exist.');
 
         $this->createContainerVersion($this->idSite, $this->idContainer1, 9999);
+    }
+
+    public function test_createContainerVersion_failsWithoutCreatingVersionWhenTypeNotAvailable()
+    {
+        $tagsDao = StaticContainer::get(TagsDao::class);
+        // a type that is not available, eg because the plugin providing it is no longer active
+        $tagsDao->createTag($this->idSite, $this->idContainer1draft, 'NotAvailable', 'My tag', [], [], [], 'unlimited', 0, 999, null, null, $this->now);
+
+        try {
+            $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft);
+            $this->fail('An exception was expected');
+        } catch (\Exception $e) {
+            $this->assertSame('These items use a type that is not available: Tag "My tag" (NotAvailable). A plugin that is not active may have provided this type. Delete these items or activate the plugin again.', $e->getMessage());
+        }
+
+        $versions = $this->model->getContainerVersions($this->idSite, $this->idContainer1);
+        $this->assertSame([], $versions);
     }
 
     public function test_createContainerVersion()

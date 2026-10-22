@@ -94,6 +94,8 @@ class Import
             throw new Exception($message);
         }
 
+        $this->checkTypesAreAvailable($exportedContainerVersion);
+
         foreach ($exportedContainerVersion['tags'] as $tag) {
             $this->tagsProvider->checkIsValidTag($tag['type']);
 
@@ -116,6 +118,37 @@ class Import
             if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
+        }
+    }
+
+    /**
+     * A type is not available for example when the plugin that provides it is no longer active. We list all affected
+     * entities in one message so the user knows which ones to delete.
+     */
+    private function checkTypesAreAvailable($exportedContainerVersion)
+    {
+        $unavailable = [];
+
+        foreach ($exportedContainerVersion['tags'] as $tag) {
+            if (!$this->tagsProvider->getTag($tag['type'])) {
+                $unavailable[] = sprintf('%s "%s" (%s)', Piwik::translate('TagManager_Tag'), $tag['name'], $tag['type']);
+            }
+        }
+
+        foreach ($exportedContainerVersion['triggers'] as $trigger) {
+            if (!$this->triggersProvider->getTrigger($trigger['type'])) {
+                $unavailable[] = sprintf('%s "%s" (%s)', Piwik::translate('TagManager_Trigger'), $trigger['name'], $trigger['type']);
+            }
+        }
+
+        foreach ($exportedContainerVersion['variables'] as $variable) {
+            if (!$this->variablesProvider->getVariable($variable['type'])) {
+                $unavailable[] = sprintf('%s "%s" (%s)', Piwik::translate('TagManager_Variable'), $variable['name'], $variable['type']);
+            }
+        }
+
+        if (!empty($unavailable)) {
+            throw new Exception(Piwik::translate('TagManager_ErrorTypeNotAvailable', implode(', ', $unavailable)));
         }
     }
 
