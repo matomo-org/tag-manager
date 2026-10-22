@@ -7,6 +7,7 @@
 * Borders now use `@theme-color-border`, as `@theme-color-border-alternative` is deprecated in Matomo 6
 * The tags, triggers and variables listed when a trigger or variable cannot be deleted now link to their edit forms
 * Fixed the cannot-delete list stopping at 100 references and listing an item more than once, and the trigger or variable list emptying when a deletion is refused
+* The Versions list now shows who created and who published each version, the version details show who created it, and the container version API methods return the creator as `created_by` to users with write access. Deleting a user removes their login from the versions they created and the releases they published
 
 0.2.10 - 22/06/2026
 

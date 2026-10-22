@@ -75,7 +75,32 @@
 }
 .tagManagerVersionList {
   th.action, td.action {
-    width: 280px;
+    width: 260px;
+  }
+
+  th.name {
+    min-width: 120px;
+  }
+
+  th.description {
+    min-width: 150px;
+  }
+
+  th.environments {
+    min-width: 130px;
+  }
+
+  th.created {
+    min-width: 120px;
+  }
+
+  th.createdBy {
+    min-width: 100px;
+  }
+
+  // names, descriptions and logins (often email addresses) can be long unbroken strings
+  td.name, td.description, td.environments, td.createdBy {
+    overflow-wrap: anywhere;
   }
 }
 .tagManagerVariableList {

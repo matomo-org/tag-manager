@@ -149,6 +149,7 @@ class ContainerTest extends IntegrationTestCase
                 'name' => '',
                 'description' => '',
                 'created_date' => '2018-01-01 02:03:04',
+                'created_by' => null,
                 'updated_date' => '2018-01-01 02:03:04',
                 'created_date_pretty' => 'Jan 1, 2018 02:03:04',
                 'updated_date_pretty' => 'Jan 1, 2018 02:03:04'
@@ -189,6 +190,7 @@ class ContainerTest extends IntegrationTestCase
                 'name' => '',
                 'description' => '',
                 'created_date' => '2018-01-01 02:03:04',
+                'created_by' => null,
                 'updated_date' => '2018-01-01 02:03:04',
                 'created_date_pretty' => 'Jan 1, 2018 02:03:04',
                 'updated_date_pretty' => 'Jan 1, 2018 02:03:04'
@@ -264,6 +266,7 @@ class ContainerTest extends IntegrationTestCase
                 'name' => '',
                 'description' => '',
                 'created_date' => '2018-01-01 02:03:04',
+                'created_by' => null,
                 'updated_date' => '2018-01-01 02:03:04',
                 'created_date_pretty' => 'Jan 1, 2018 02:03:04',
                 'updated_date_pretty' => 'Jan 1, 2018 02:03:04'
@@ -304,6 +307,7 @@ class ContainerTest extends IntegrationTestCase
                 'name' => '',
                 'description' => '',
                 'created_date' => '2018-01-01 02:03:04',
+                'created_by' => null,
                 'updated_date' => '2018-01-01 02:03:04',
                 'created_date_pretty' => 'Jan 1, 2018 02:03:04',
                 'updated_date_pretty' => 'Jan 1, 2018 02:03:04'
@@ -374,6 +378,7 @@ class ContainerTest extends IntegrationTestCase
                             'name' => 'v2',
                             'description' => '',
                             'created_date' => $this->now,
+                            'created_by' => null,
                             'updated_date' => $this->now,
                             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
                             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
@@ -389,6 +394,7 @@ class ContainerTest extends IntegrationTestCase
                             'name' => 'v1',
                             'description' => 'Desc',
                             'created_date' => $this->now,
+                            'created_by' => null,
                             'updated_date' => $this->now,
                             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
                             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
@@ -421,6 +427,7 @@ class ContainerTest extends IntegrationTestCase
                     'name' => '',
                     'description' => '',
                     'created_date' => $this->now,
+                    'created_by' => null,
                     'updated_date' => $this->now,
                     'created_date_pretty' => 'Jan 1, 2018 02:03:04',
                     'updated_date_pretty' => 'Jan 1, 2018 02:03:04'
@@ -635,6 +642,7 @@ class ContainerTest extends IntegrationTestCase
             'name' => 'My Name',
             'description' => 'My description',
             'created_date' => '2018-01-01 02:03:04',
+            'created_by' => null,
             'updated_date' => '2018-01-01 02:03:04',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Jan 1, 2018 02:03:04',
@@ -718,6 +726,7 @@ class ContainerTest extends IntegrationTestCase
             'name' => 'MyUpdated Name',
             'description' => 'My updated description',
             'created_date' => '2018-01-01 02:03:04',
+            'created_by' => null,
             'updated_date' => '2018-02-01 05:06:07',
             'created_date_pretty' => 'Jan 1, 2018 02:03:04',
             'updated_date_pretty' => 'Feb 1, 2018 05:06:07',

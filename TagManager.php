@@ -63,6 +63,7 @@ class TagManager extends \Piwik\Plugin
             'CustomJsTracker.trackerJsChanged' => 'regenerateReleasedContainers', // in case a Matomo tracker is bundled
             'SitesManager.deleteSite.end' => 'onSiteDeleted',
             'SitesManager.addSite.end' => 'onSiteAdded',
+            'UsersManager.deleteUser' => 'onUserDeleted',
             'System.addSystemSummaryItems' => 'addSystemSummaryItems',
             'Template.afterJsTracker' => 'addTagManagerCode',
             'Template.siteWithoutDataTab.MatomoTagManager.content' => 'setTagManagerCode',
@@ -497,6 +498,9 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_DebugUrlSameUrlErrorMessage';
         $result[] = 'TagManager_NameOfLatestVersion';
         $result[] = 'TagManager_Created';
+        $result[] = 'TagManager_CreatedBy';
+        $result[] = 'TagManager_UnknownUserHelp';
+        $result[] = 'General_Unknown';
         $result[] = 'TagManager_CreateVersionWithoutPublishing';
         $result[] = 'TagManager_PublishVersionToEnvironmentToViewEmbedCode';
         $result[] = 'TagManager_CreateVersionAndPublishRelease';
@@ -658,6 +662,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_VersionsDescriptionDescription';
         $result[] = 'TagManager_VersionsEnvironmentsDescription';
         $result[] = 'TagManager_VersionsCreatedDescription';
+        $result[] = 'TagManager_VersionsCreatedByDescription';
         $result[] = 'TagManager_VersionsActionDescription';
         $result[] = 'TagManager_CreateNewVersionNow';
         $result[] = 'TagManager_SelectAVariable';
@@ -1017,6 +1022,15 @@ class TagManager extends \Piwik\Plugin
             BaseContext::removeAllContainerFiles($container['idcontainer']);
         }
         $dao->deleteContainersForSite($idSite, $deletedDate);
+    }
+
+    public function onUserDeleted($userLogin)
+    {
+        $dao = new ContainerVersionsDao();
+        $dao->anonymizeUserLogin($userLogin);
+
+        $dao = new ContainerReleaseDao();
+        $dao->anonymizeUserLogin($userLogin);
     }
 
     public function getMessagesToWarnOnSiteRemoval(&$messages, $idSite)

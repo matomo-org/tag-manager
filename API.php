@@ -1102,12 +1102,21 @@ class API extends \Piwik\Plugin\API
     /**
      * Get a list of all available containers within a site.
      * @param int $idSite
-     * @return array
+     * @return array  Each container's `draft` and `versions` include `created_by` as described in
+     *                {@see getContainerVersions()}.
      */
     public function getContainers($idSite)
     {
         $this->accessValidator->checkViewPermission($idSite);
-        return $this->containers->getContainers($idSite);
+
+        $containers = $this->containers->getContainers($idSite);
+        if (!$this->accessValidator->hasWriteCapability($idSite)) {
+            foreach (array_keys($containers) as $index) {
+                $this->removeVersionCreators($containers[$index]);
+            }
+        }
+
+        return $containers;
     }
 
     /**
@@ -1185,8 +1194,9 @@ class API extends \Piwik\Plugin\API
         }
 
         $this->enableGeneratePreview = false;
-        $container = $this->accessValidator->runWithoutCustomTemplatesCapabilityCheck(function () use ($idSite, $idContainer, $idContainerVersion, $name, $description) {
-            return $this->containers->createContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description);
+        $createdBy = Piwik::getCurrentUserLogin();
+        $container = $this->accessValidator->runWithoutCustomTemplatesCapabilityCheck(function () use ($idSite, $idContainer, $idContainerVersion, $name, $description, $createdBy) {
+            return $this->containers->createContainerVersion($idSite, $idContainer, $idContainerVersion, $name, $description, $createdBy);
         });
         // not needed to create a preview release as no actual change to container was made. Make it faster as the createContainerVersion
         // uses "import" logic which would create a new preview release or check for recursions on every created tag/trigger/...
@@ -1218,6 +1228,10 @@ class API extends \Piwik\Plugin\API
 
     /**
      * Get a list of all versions that exist for the given container.
+     *
+     * Each version's `created_by` holds the login of the user who created it. It is null for users without write
+     * access, and when not known, eg for a version created before this was recorded.
+     *
      * @param int $idSite The id of the site the given container belongs to
      * @param string $idContainer  The id of a container, for example "6OMh6taM"
      * @return array
@@ -1227,7 +1241,14 @@ class API extends \Piwik\Plugin\API
         $this->accessValidator->checkViewPermission($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
-        return $this->containers->getContainerVersions($idSite, $idContainer);
+        $versions = $this->containers->getContainerVersions($idSite, $idContainer);
+        if (!$this->accessValidator->hasWriteCapability($idSite)) {
+            foreach (array_keys($versions) as $index) {
+                $this->removeCreator($versions[$index]);
+            }
+        }
+
+        return $versions;
     }
 
     /**
@@ -1238,14 +1259,19 @@ class API extends \Piwik\Plugin\API
      * @param int $idContainerVersion The ID of the container version, a container may have multiple versions and
      *                                the list of variable will be different per container. Therefore you need to provide
      *                                the ID of the version you are referring to.
-     * @return array
+     * @return array  Includes `created_by` as described in {@see getContainerVersions()}.
      */
     public function getContainerVersion($idSite, $idContainer, $idContainerVersion)
     {
         $this->accessValidator->checkViewPermission($idSite);
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
 
-        return $this->containers->getContainerVersion($idSite, $idContainer, $idContainerVersion);
+        $version = $this->containers->getContainerVersion($idSite, $idContainer, $idContainerVersion);
+        if (!$this->accessValidator->hasWriteCapability($idSite)) {
+            $this->removeCreator($version);
+        }
+
+        return $version;
     }
 
     /**
@@ -1327,14 +1353,19 @@ class API extends \Piwik\Plugin\API
      *
      * @param int $idSite The id of the site the given container belongs to
      * @param string $idContainer  The id of a container, for example "6OMh6taM"
-     * @return array
+     * @return array  The `draft` and `versions` include `created_by` as described in {@see getContainerVersions()}.
      */
     public function getContainer($idSite, $idContainer)
     {
         $this->accessValidator->checkViewPermission($idSite);
         $this->containers->checkContainerExists($idSite, $idContainer);
 
-        return $this->containers->getContainer($idSite, $idContainer);
+        $container = $this->containers->getContainer($idSite, $idContainer);
+        if (is_array($container) && !$this->accessValidator->hasWriteCapability($idSite)) {
+            $this->removeVersionCreators($container);
+        }
+
+        return $container;
     }
 
     /**
@@ -1626,5 +1657,27 @@ class API extends \Piwik\Plugin\API
             $idSite = \Piwik\Request::fromRequest()->getIntegerParameter('idSite', 0);
         }
         $this->accessValidator->checkUserHasTagManagerAccess($idSite);
+    }
+
+    /**
+     * `created_by` is a login and so identifies a user account. Like the Versions menu entry, it is only for users
+     * who can write to the site; everyone else gets a version with no known creator.
+     */
+    private function removeCreator(&$version): void
+    {
+        if (is_array($version) && array_key_exists('created_by', $version)) {
+            $version['created_by'] = null;
+        }
+    }
+
+    private function removeVersionCreators(array &$container): void
+    {
+        foreach (array_keys($container['versions'] ?? []) as $index) {
+            $this->removeCreator($container['versions'][$index]);
+        }
+
+        if (!empty($container['draft'])) {
+            $this->removeCreator($container['draft']);
+        }
     }
 }
