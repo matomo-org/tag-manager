@@ -131,19 +131,19 @@ class Import
 
         foreach ($exportedContainerVersion['tags'] as $tag) {
             if (!$this->tagsProvider->getTag($tag['type'])) {
-                $unavailable[] = sprintf('%s "%s" (%s)', Piwik::translate('TagManager_Tag'), $tag['name'], $tag['type']);
+                $unavailable[] = sprintf('%s "%s"', Piwik::translate('TagManager_Tag'), $tag['name']);
             }
         }
 
         foreach ($exportedContainerVersion['triggers'] as $trigger) {
             if (!$this->triggersProvider->getTrigger($trigger['type'])) {
-                $unavailable[] = sprintf('%s "%s" (%s)', Piwik::translate('TagManager_Trigger'), $trigger['name'], $trigger['type']);
+                $unavailable[] = sprintf('%s "%s"', Piwik::translate('TagManager_Trigger'), $trigger['name']);
             }
         }
 
         foreach ($exportedContainerVersion['variables'] as $variable) {
             if (!$this->variablesProvider->getVariable($variable['type'])) {
-                $unavailable[] = sprintf('%s "%s" (%s)', Piwik::translate('TagManager_Variable'), $variable['name'], $variable['type']);
+                $unavailable[] = sprintf('%s "%s"', Piwik::translate('TagManager_Variable'), $variable['name']);
             }
         }
 

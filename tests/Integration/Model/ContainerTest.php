@@ -611,7 +611,7 @@ class ContainerTest extends IntegrationTestCase
             $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft);
             $this->fail('An exception was expected');
         } catch (\Exception $e) {
-            $this->assertSame('These items use a type that is not available: Tag "My tag" (NotAvailable). A plugin that is not active may have provided this type. Delete these items or activate the plugin again.', $e->getMessage());
+            $this->assertSame('Some items use a type that is no longer available, possibly because the plugin that provided it was deactivated. Delete these items or activate the plugin again: Tag "My tag".', $e->getMessage());
         }
 
         $versions = $this->model->getContainerVersions($this->idSite, $this->idContainer1);
