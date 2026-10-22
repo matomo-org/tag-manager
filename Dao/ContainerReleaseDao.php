@@ -52,6 +52,15 @@ class ContainerReleaseDao extends BaseDao implements TagManagerDao
     }
 
     /**
+     * Removes the given login from every release it published, deleted releases included. `release_login` is
+     * NOT NULL, so an anonymised release keeps an empty login.
+     */
+    public function anonymizeUserLogin(string $userLogin): void
+    {
+        Db::query(sprintf("UPDATE %s SET `release_login` = '' WHERE `release_login` = ?", $this->tablePrefixed), [$userLogin]);
+    }
+
+    /**
      * @return array
      */
     public function getAllReleases()

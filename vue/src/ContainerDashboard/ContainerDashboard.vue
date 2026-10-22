@@ -313,7 +313,7 @@ export default defineComponent({
     releaseTooltip(release: Release) {
       const firstPart = translate(
         'TagManager_ReleaseInfo',
-        release.release_login,
+        release.release_login || translate('General_Unknown'),
         release.release_date_pretty,
       );
       const secondPart = translate('TagManager_ReleaseVersionInfo', release.version_name);

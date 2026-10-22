@@ -526,6 +526,19 @@ class ContainerReleaseDaoTest extends IntegrationTestCase
         $this->assertEquals(0, $rows);
     }
 
+    public function test_anonymizeUserLogin_onlyRemovesGivenLogin()
+    {
+        $this->createRelease($idSite = 2);
+        $this->createRelease($idSite = 3);
+        $this->dao->releaseVersion($idSite = 3, 'A68AGI3Z', 6, 'live', 'otheruser', $this->now);
+        $this->dao->deleteAllVersionsForSite($idSite = 2, $this->now);
+
+        $this->dao->anonymizeUserLogin('myuser');
+
+        $releaseLogins = array_column($this->dao->getAllReleases(), 'release_login');
+        $this->assertSame(['', '', 'otheruser'], $releaseLogins);
+    }
+
     private function createRelease($idSite = 1, $idContainerVersion = 5, $idContainer = 'A68AGI3Z', $environment = 'live')
     {
         $releaseLogin = 'myuser';

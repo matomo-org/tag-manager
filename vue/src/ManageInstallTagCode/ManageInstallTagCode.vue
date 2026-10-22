@@ -85,7 +85,9 @@
           <td class="environment">{{ ucfirst(release.environment) }}</td>
           <td class="name">{{ releaseVersions[release.idcontainerrelease]?.name }}</td>
           <td class="revision">{{ releaseVersions[release.idcontainerrelease]?.revision }}</td>
-          <td class="released_by">{{ release.release_login }}</td>
+          <td class="released_by">
+            {{ release.release_login || translate('General_Unknown') }}
+          </td>
           <td class="released_on"><span class="date">{{ release.release_date_pretty }}</span></td>
         </tr>
       </tbody>

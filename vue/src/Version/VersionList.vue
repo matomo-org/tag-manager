@@ -37,6 +37,8 @@
               :title="environmentTranslatedText">{{ translate('TagManager_Environments') }}</th>
             <th class="created"
               :title="createdTranslatedText">{{ translate('TagManager_Created') }}</th>
+            <th class="createdBy" v-if="hasWriteAccess"
+              :title="createdByTranslatedText">{{ translate('TagManager_CreatedBy') }}</th>
             <th class="action"
               :title="actionTranslatedText">{{ translate('General_Actions') }}</th>
           </tr>
@@ -84,15 +86,22 @@
                 :key="index"
                 :title="translate(
                   'TagManager_ReleaseInfo',
-                  release.release_login,
+                  loginOrUnknown(release.release_login),
                   release.release_date_pretty
                 )"
               >
-                {{ ucfirst(release.environment) }}<span
+                {{ ucfirst(release.environment) }}
+                ({{ loginOrUnknown(release.release_login) }})<span
                   v-show="index !== version.releases.length - 1">, </span>
               </span>
             </td>
             <td class="created"><span>{{ version.created_date_pretty }}</span></td>
+            <td class="createdBy" v-if="hasWriteAccess">
+              <span v-if="version.created_by">{{ version.created_by }}</span>
+              <span v-else :title="translate('TagManager_UnknownUserHelp')">
+                {{ translate('General_Unknown') }}
+              </span>
+            </td>
             <td class="action">
               <a
                 class="table-action icon-rocket"
@@ -337,6 +346,9 @@ export default defineComponent({
         yes: doDelete,
       });
     },
+    loginOrUnknown(login: string) {
+      return login || this.translate('General_Unknown');
+    },
     ucfirst(s: string) {
       return `${s.substring(0, 1).toUpperCase()}${s.substring(1)}`;
     },
@@ -401,6 +413,9 @@ export default defineComponent({
             if (value.environment) {
               propValue += `${value.environment} `;
             }
+            if (value.release_login) {
+              propValue += `${value.release_login} `;
+            }
           });
         }
         return propValue.toLowerCase().indexOf(searchFilter) !== -1;
@@ -436,6 +451,9 @@ export default defineComponent({
     },
     createdTranslatedText(): string {
       return this.translate('TagManager_VersionsCreatedDescription');
+    },
+    createdByTranslatedText(): string {
+      return this.translate('TagManager_VersionsCreatedByDescription');
     },
     actionTranslatedText(): string {
       return this.translate('TagManager_VersionsActionDescription');

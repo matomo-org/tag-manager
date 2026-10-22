@@ -45,6 +45,16 @@
                 :placeholder="translate('TagManager_VersionDescriptionPlaceholderV2')"
               />
             </div>
+            <div v-if="edit">
+              <Field
+                uicontrol="text"
+                name="created_by"
+                :model-value="version.created_by || translate('General_Unknown')"
+                :disabled="true"
+                :title="translate('TagManager_CreatedBy')"
+                :inline-help="version.created_by ? '' : translate('TagManager_UnknownUserHelp')"
+              />
+            </div>
             <SaveButton
               class="createButton no-publish"
               @confirm="edit ? updateVersion() : createVersion()"

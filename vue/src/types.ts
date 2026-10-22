@@ -208,6 +208,7 @@ export interface Draft {
   name: string;
   created_date: string;
   created_date_pretty: string;
+  created_by: string|null;
   description: string;
   updated_date: string;
   updated_date_pretty: string;
@@ -241,6 +242,7 @@ export interface Release {
 export interface Version {
   created_date?: string;
   created_date_pretty?: string;
+  created_by?: string|null;
   description: string;
   environments: string[];
   idcontainer: string;
