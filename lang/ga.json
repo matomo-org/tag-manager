@@ -193,6 +193,7 @@
         "CreateVersionAndPublishRelease": "Cruthaigh leagan nua agus foilsigh scaoileadh",
         "CreateVersionWithoutPublishing": "Cruthaigh leagan nua (gan fhoilsiú)",
         "Created": "Cruthaithe",
+        "CreatedBy": "Cruthaithe ag",
         "CreatedDate": "Dáta cruthaithe",
         "CreatedOnX": "Cruthaithe ar \"%s\"",
         "CreatedX": "Iontach! D'éirigh le cruthú an %s.",

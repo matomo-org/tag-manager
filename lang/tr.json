@@ -193,6 +193,7 @@
         "CreateVersionAndPublishRelease": "Yeni sürüm ekle ve yayınla",
         "CreateVersionWithoutPublishing": "Yeni sürüm ekle (yayınlamadan)",
         "Created": "Eklendi",
+        "CreatedBy": "Oluşturan",
         "CreatedDate": "Eklenme tarihi",
         "CreatedOnX": "\"%s\" zamanında eklendi",
         "CreatedX": "Harika! %s eklendi.",
