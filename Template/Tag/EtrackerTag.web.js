@@ -7,15 +7,19 @@
 
 (function () {
     var hasBeenLoaded = false;
-    // custom dimensions may only set globals of their own, never ones the browser or page already defines
+    // custom dimensions may only set globals of their own, never ones the browser or page already defines.
+    // A global stays the tag's own only while it still holds the value the tag last wrote to it.
     var customDimensionGlobals = {};
 
     function canSetCustomDimension(index) {
         index = String(index);
-        if (!/^[A-Za-z0-9_$]+$/.test(index)) {
+        if (!/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(index)) {
             return false;
         }
-        return customDimensionGlobals[index] === true || !(index in window);
+        // hasOwnProperty, not `in`: inherited names such as toString would otherwise match window's own
+        return !(index in window)
+            || (Object.prototype.hasOwnProperty.call(customDimensionGlobals, index)
+                && window[index] === customDimensionGlobals[index]);
     }
 
     return function (parameters, TagManager) {
@@ -31,6 +35,7 @@
                 if (TagManager.utils.hasProperty(etrackerConfig, i)) {
                     if(i.startsWith('et_')){
                         window[i] = etrackerConfig[i];
+                        customDimensionGlobals[i] = etrackerConfig[i];
                     }
                 }
             }
@@ -41,10 +46,13 @@
                 var dimIndex;
                 for (dimIndex = 0; dimIndex < etrackerConfig.customDimensions.length; dimIndex++) {
                     var dimension = etrackerConfig.customDimensions[dimIndex];
-                    if (dimension && TagManager.utils.isObject(dimension) && dimension.index && dimension.value
-                        && canSetCustomDimension(dimension.index)) {
-                        window[dimension.index] = dimension.value;
-                        customDimensionGlobals[String(dimension.index)] = true;
+                    if (dimension && TagManager.utils.isObject(dimension) && dimension.index && dimension.value) {
+                        if (canSetCustomDimension(dimension.index)) {
+                            window[dimension.index] = dimension.value;
+                            customDimensionGlobals[String(dimension.index)] = dimension.value;
+                        } else {
+                            TagManager.debug.log('etracker custom dimension "' + dimension.index + '" not set: the page already defines a global with that name, or it is not a valid variable name');
+                        }
                     }
                 }
             }

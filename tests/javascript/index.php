@@ -2673,31 +2673,56 @@
         });
 
         test("Matomo TagManager Template EtrackerTag custom dimensions", function() {
-            expect(4);
+            expect(10);
             var templateToTest = 'EtrackerTag';
             window.etrackerTestExistingGlobal = 'original';
+            var originalWindowName = window.name;
+            var originalDebugLog = window.MatomoTagManager.debug.log;
+            var debugLogCount = 0;
+            window.MatomoTagManager.debug.log = function () { debugLogCount++; };
 
-            function fireWithDimensions(customDimensions) {
+            function fireWithDimensions(customDimensions, config) {
+                config = config || {};
+                config.customDimensions = customDimensions;
                 fireTemplateTag(templateToTest, {
                     trackingType: {get: function () { return 'pageview'; }},
-                    etrackerConfig: {get: function () { return {customDimensions: customDimensions}; }}
+                    etrackerConfig: {get: function () { return config; }}
                 });
             }
 
             fireWithDimensions([
                 {index: 'etrackerTestNewGlobal', value: 'first'},
                 {index: 'etrackerTestExistingGlobal', value: 'changed'},
-                {index: 'etrackerTest.invalid', value: 'changed'}
+                {index: 'etrackerTest.invalid', value: 'changed'},
+                {index: '1', value: 'changed'},
+                {index: 'name', value: 'changed'},
+                {index: 'toString', value: 'changed'}
             ]);
             strictEqual(window.etrackerTestNewGlobal, 'first', 'sets a global that does not exist yet');
             strictEqual(window.etrackerTestExistingGlobal, 'original', 'does not overwrite an existing global');
             strictEqual(window['etrackerTest.invalid'], undefined, 'does not set a global with an invalid name');
+            strictEqual(window.name, originalWindowName, 'does not overwrite a browser global');
+            strictEqual(typeof window.toString, 'function', 'does not overwrite a global inherited from Object.prototype');
+            strictEqual(debugLogCount, 5, 'logs each skipped dimension, including a name starting with a digit');
 
             fireWithDimensions([{index: 'etrackerTestNewGlobal', value: 'second'}]);
             strictEqual(window.etrackerTestNewGlobal, 'second', 'updates a global it set itself when fired again');
 
+            window.etrackerTestNewGlobal = 'fromPage';
+            fireWithDimensions([{index: 'etrackerTestNewGlobal', value: 'third'}]);
+            strictEqual(window.etrackerTestNewGlobal, 'fromPage', 'does not overwrite a global the page has since reassigned');
+
+            delete window.etrackerTestNewGlobal;
+            fireWithDimensions([{index: 'etrackerTestNewGlobal', value: 'fourth'}]);
+            strictEqual(window.etrackerTestNewGlobal, 'fourth', 'sets a global again once the page has deleted it');
+
+            fireWithDimensions([{index: 'et_pagename', value: 'fromDimension'}], {et_pagename: 'fromConfig'});
+            strictEqual(window.et_pagename, 'fromDimension', 'overrides an et_* global set from the tag config');
+
             delete window.etrackerTestExistingGlobal;
             delete window.etrackerTestNewGlobal;
+            delete window.et_pagename;
+            window.MatomoTagManager.debug.log = originalDebugLog;
         });
 
         test("Matomo TagManager Template MatomoTag", function() {
