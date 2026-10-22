@@ -94,7 +94,7 @@ class ImportTest extends IntegrationTestCase
     public function test_checkImportContainerIsPossible_whenTagNotExists()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Some items use a type that is no longer available, possibly because the plugin that provided it was deactivated. Delete these items or activate the plugin again: Tag "My tag".');
+        $this->expectExceptionMessage('Some items use a type that is no longer available, possibly because the plugin that provided it was deactivated or the type was disabled in the configuration. Delete these items, or make the type available again: Tag "My tag".');
 
         $this->exported['tags'][0]['type'] = 'Foo';
         $this->exported['tags'][0]['name'] = 'My tag';
@@ -104,7 +104,7 @@ class ImportTest extends IntegrationTestCase
     public function test_checkImportContainerIsPossible_listsAllEntitiesWithUnavailableTypes()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Some items use a type that is no longer available, possibly because the plugin that provided it was deactivated. Delete these items or activate the plugin again: Tag "My tag", Trigger "My trigger", Variable "My variable".');
+        $this->expectExceptionMessage('Some items use a type that is no longer available, possibly because the plugin that provided it was deactivated or the type was disabled in the configuration. Delete these items, or make the type available again: Tag "My tag", Trigger "My trigger", Variable "My variable".');
 
         $this->exported['tags'][0]['type'] = 'Foo';
         $this->exported['tags'][0]['name'] = 'My tag';

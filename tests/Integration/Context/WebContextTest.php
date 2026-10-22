@@ -189,6 +189,12 @@ class WebContextTest extends IntegrationTestCase
             ['actual' => 'UnavailableVariable', 'comparison' => 'equals', 'expected' => 'foo'],
         ], $now);
 
+        // entities referencing the unavailable variable must not run with an unresolved value
+        $tagsDao->createTag($this->idSite, $idContainerVersion, 'CustomImage', 'TagWithUnavailableVariableParam', ['customImageSrc' => '{{UnavailableVariable}}'], [$idTrigger], [], 'unlimited', 0, 999, null, null, $now);
+        $variablesDao->createVariable($this->idSite, $idContainerVersion, MatomoConfigurationVariable::ID, 'NestedVariable', ['matomoUrl' => '{{UnavailableVariable}}', 'idSite' => $this->idSite], null, [], $now);
+        $tagsDao->createTag($this->idSite, $idContainerVersion, 'CustomImage', 'TagWithNestedVariable', ['customImageSrc' => '{{NestedVariable}}'], [$idTrigger], [], 'unlimited', 0, 999, null, null, $now);
+        $triggersDao->createTrigger($this->idSite, $idContainerVersion, 'CustomEvent', 'TriggerWithUnavailableVariableParam', ['eventName' => '{{UnavailableVariable}}'], [], $now);
+
         // the preview release keeps the entity names in the generated container
         $this->api->enablePreviewMode($this->idSite, $idContainer, $idContainerVersion);
 
@@ -207,5 +213,9 @@ class WebContextTest extends IntegrationTestCase
         $this->assertStringNotContainsString('UnavailableVariable', $js);
         $this->assertStringNotContainsString('TriggerWithUnavailableVariable', $js);
         $this->assertStringNotContainsString('TagWithUnavailableBlockTrigger', $js);
+        $this->assertStringNotContainsString('TagWithUnavailableVariableParam', $js);
+        $this->assertStringNotContainsString('NestedVariable', $js);
+        $this->assertStringNotContainsString('TagWithNestedVariable', $js);
+        $this->assertStringNotContainsString('TriggerWithUnavailableVariableParam', $js);
     }
 }

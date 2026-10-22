@@ -65,6 +65,12 @@ abstract class BaseContext
      */
     private $variables = array();
 
+    /**
+     * Set when a referenced variable, or a variable it references, has a type that is not available
+     * @var bool
+     */
+    private $referencesUnavailableVariable = false;
+
     private $nestedVariableCals = [];
 
     public function __construct(VariablesProvider $variablesProvider, Variable $variableModel, Trigger $triggerModel, Tag $tagModel, Container $containerModel, StorageInterface $storage, Salt $salt)
@@ -122,11 +128,17 @@ abstract class BaseContext
                 // the tag type is not available, eg because the plugin providing it is no longer active
                 continue;
             }
+            $this->referencesUnavailableVariable = false;
+            $parameters = $this->parametersToVariableJs($container, $tag);
+            if ($this->referencesUnavailableVariable) {
+                // the tag would otherwise run with an unresolved variable
+                continue;
+            }
             $containerJs['tags'][] = [
                 'id' => $tag['idtag'],
                 'type' => $tag['type'],
                 'name' => $tag['name'],
-                'parameters' => $this->parametersToVariableJs($container, $tag),
+                'parameters' => $parameters,
                 'blockTriggerIds' => $tag['block_trigger_ids'],
                 'fireTriggerIds' => $tag['fire_trigger_ids'],
                 'fireLimit' => $tag['fire_limit'],
@@ -164,11 +176,18 @@ abstract class BaseContext
                     }
                 }
             }
+            $this->referencesUnavailableVariable = false;
+            $parameters = $this->parametersToVariableJs($container, $trigger);
+            if ($this->referencesUnavailableVariable) {
+                // the trigger would otherwise run with an unresolved variable
+                $ignoredTriggerIds[] = $trigger['idtrigger'];
+                continue;
+            }
             $trigger = [
                 'id' => $trigger['idtrigger'],
                 'type' => $trigger['type'],
                 'name' => $trigger['name'],
-                'parameters' => $this->parametersToVariableJs($container, $trigger),
+                'parameters' => $parameters,
                 'conditions' => $conditions,
             ];
 
@@ -211,6 +230,9 @@ abstract class BaseContext
         return $response;
     }
 
+    /**
+     * @phpstan-impure sets $referencesUnavailableVariable
+     */
     private function parametersToVariableJs($container, $entity)
     {
         if (!empty($entity['name'])) {
@@ -401,6 +423,9 @@ abstract class BaseContext
         return substr($str, $start, $length);
     }
 
+    /**
+     * @phpstan-impure sets $referencesUnavailableVariable
+     */
     protected function variableToArray($container, $variableNameOrVariable)
     {
         if (is_array($variableNameOrVariable)) {
@@ -412,9 +437,19 @@ abstract class BaseContext
         }
         if ($variable && empty($variable['typeMetadata'])) {
             // the variable type is not available, eg because the plugin providing it is no longer active
+            $this->referencesUnavailableVariable = true;
             return null;
         }
         if ($variable) {
+            // a variable that references an unavailable variable is not available either
+            $referencesUnavailableVariable = $this->referencesUnavailableVariable;
+            $this->referencesUnavailableVariable = false;
+            $parameters = $this->parametersToVariableJs($container, $variable);
+            if ($this->referencesUnavailableVariable) {
+                return null;
+            }
+            $this->referencesUnavailableVariable = $referencesUnavailableVariable;
+
             $lookUpTable = [];
             if (!empty($variable['lookup_table']) && is_array($variable['lookup_table'])) {
                 foreach ($variable['lookup_table'] as $lookup) {
@@ -427,7 +462,7 @@ abstract class BaseContext
                 'type' => $variable['type'],
                 'lookUpTable' => $lookUpTable,
                 'defaultValue' => $variable['default_value'],
-                'parameters' => $this->parametersToVariableJs($container, $variable)
+                'parameters' => $parameters
             ];
             // by setting var name key we make sure to not include same var twice
             $this->variables[$var['name']] = $var;

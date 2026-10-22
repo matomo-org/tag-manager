@@ -122,8 +122,8 @@ class Import
     }
 
     /**
-     * A type is not available for example when the plugin that provides it is no longer active. We list all affected
-     * entities in one message so the user knows which ones to delete.
+     * A type is not available for example when the plugin that provides it is no longer active, or when it is disabled
+     * in the configuration. We list all affected entities in one message so the user knows which ones to delete.
      */
     private function checkTypesAreAvailable($exportedContainerVersion)
     {
@@ -131,19 +131,19 @@ class Import
 
         foreach ($exportedContainerVersion['tags'] as $tag) {
             if (!$this->tagsProvider->getTag($tag['type'])) {
-                $unavailable[] = sprintf('%s "%s"', Piwik::translate('TagManager_Tag'), $tag['name']);
+                $unavailable[] = Piwik::translate('TagManager_ErrorTypeNotAvailableTag', $tag['name']);
             }
         }
 
         foreach ($exportedContainerVersion['triggers'] as $trigger) {
             if (!$this->triggersProvider->getTrigger($trigger['type'])) {
-                $unavailable[] = sprintf('%s "%s"', Piwik::translate('TagManager_Trigger'), $trigger['name']);
+                $unavailable[] = Piwik::translate('TagManager_ErrorTypeNotAvailableTrigger', $trigger['name']);
             }
         }
 
         foreach ($exportedContainerVersion['variables'] as $variable) {
             if (!$this->variablesProvider->getVariable($variable['type'])) {
-                $unavailable[] = sprintf('%s "%s"', Piwik::translate('TagManager_Variable'), $variable['name']);
+                $unavailable[] = Piwik::translate('TagManager_ErrorTypeNotAvailableVariable', $variable['name']);
             }
         }
 
