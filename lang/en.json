@@ -785,6 +785,7 @@
         "TriggerConditionsHelpText": "%1$sLearn more%2$s about tracking interactions on nested elements.",
         "TriggerDescriptionHelp": "The trigger description lets you provide a brief explanation of what the trigger is for.",
         "TriggerNameHelp": "The trigger name lets you define a unique name for this trigger to quickly identify it. Please note that this name will be publicly visible in the source code of the trigger when you preview/debug this container.",
+        "TriggerNotAvailableOption": "%1$s (not available)",
         "TriggerUsageBenefits": "Triggers let you define on which event a certain tag should be fired or blocked. For example when a specific element was clicked, or when a visitor reached a certain scroll position. Additionally, you can specify a filter to further restrict when a certain trigger should be triggered or not.",
         "Triggers": "Triggers",
         "TriggersNameDescription": "The unique user-defined trigger label for identifying and differentiating triggers.",
