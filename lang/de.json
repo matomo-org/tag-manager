@@ -188,6 +188,7 @@
         "CreateVersionAndPublishRelease": "Neue Version erstellen und Release veröffentlichen",
         "CreateVersionWithoutPublishing": "Neue Version erstellen (ohne zu veröffentlichen)",
         "Created": "Erstellt",
+        "CreatedBy": "Erstellt von",
         "CreatedDate": "Erstellungsdatum",
         "CreatedOnX": "Erstellt am \"%s\"",
         "CreatedX": "Fantastisch! %s wurde erfolgreich erstellt.",
