@@ -192,6 +192,7 @@
         "CreateVersionAndPublishRelease": "Δημιουργία νέας έκδοσης και δημοσίευση έκδοσης",
         "CreateVersionWithoutPublishing": "Δημιουργία νέας έκδοσης (χωρίς δημοσίευση)",
         "Created": "Δημιουργήθηκε",
+        "CreatedBy": "Δημιουργήθηκε από",
         "CreatedDate": "Ημ/νία δημιουργίας",
         "CreatedOnX": "Δημιουργήθηκε στις \"%s\"",
         "CreatedX": "Υπέροχα! Το %s δημιουργήθηκε με επιτυχία.",
