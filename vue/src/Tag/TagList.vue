@@ -76,9 +76,13 @@
             </td>
             <td
               class="type"
-              :title="tag.typeMetadata.description"
+              :title="tag.typeMetadata
+                ? tag.typeMetadata.description
+                : translate('TagManager_TypeNotAvailableHelp')"
             >
-              {{ tag.typeMetadata.name }}
+              {{ tag.typeMetadata
+                ? tag.typeMetadata.name
+                : translate('TagManager_TypeNotAvailable', tag.type) }}
             </td>
             <td class="triggers">
               <span
@@ -89,7 +93,7 @@
                 <a
                   style="display: inline-block;vertical-align: top !important;"
                   class="chip"
-                  v-if="hasWriteAccess"
+                  v-if="canEditTrigger(fireTriggerId)"
                   href=""
                   @click.prevent="editTrigger(fireTriggerId)"
                   :title="triggers[fireTriggerId]"
@@ -98,7 +102,7 @@
                 </a>
                 <span
                   class="chip"
-                  v-if="!hasWriteAccess"
+                  v-if="!canEditTrigger(fireTriggerId)"
                   :title="triggers[fireTriggerId]"
                 >
                   {{ truncateText(triggers[fireTriggerId], triggerTruncateLength) }}
@@ -113,7 +117,7 @@
                 >
                   <a
                     class="chip"
-                    v-show="hasWriteAccess"
+                    v-show="canEditTrigger(blockTriggerId)"
                     href=""
                     @click.prevent="editTrigger(blockTriggerId)"
                     :title="triggers[blockTriggerId]"
@@ -122,7 +126,7 @@
                   </a>
                   <span
                     class="chip"
-                    v-show="!hasWriteAccess"
+                    v-show="!canEditTrigger(blockTriggerId)"
                     :title="triggers[blockTriggerId]"
                   >
                     {{ truncateText(triggers[blockTriggerId], triggerTruncateLength) }}
@@ -156,12 +160,13 @@
               />
               <a
                 class="table-action icon-edit"
+                v-show="tag.typeMetadata"
                 @click="editTag(tag.idtag)"
                 :title="translate('TagManager_EditTag')"
               />
               <a
                 class="table-action icon-content-copy"
-                v-show="hasPublishCapability()"
+                v-show="hasPublishCapability() && tag.typeMetadata"
                 @click="openCopyDialog(tag as Tag)"
                 :title="translate(
                   'TagManager_CopyX',
@@ -312,6 +317,10 @@ export default defineComponent({
     createTag() {
       this.editTag(0);
     },
+    canEditTrigger(idTrigger: number) {
+      // the trigger editor cannot be used when the trigger type is not available
+      return this.hasWriteAccess && !this.unavailableTriggerIds.includes(idTrigger);
+    },
     editTrigger(idTrigger: number) {
       tagManagerHelper.editTrigger(
         this.idContainer,
@@ -418,6 +427,11 @@ export default defineComponent({
     },
   },
   computed: {
+    unavailableTriggerIds() {
+      return TriggersStore.triggers.value
+        .filter((t) => !t.typeMetadata)
+        .map((t) => t.idtrigger);
+    },
     triggers() {
       const triggers: Record<string, string> = {};
       TriggersStore.triggers.value.forEach((t) => {
@@ -445,8 +459,8 @@ export default defineComponent({
         if (typeof entity[propName] === 'string') {
           propValue = (entity[propName] as string);
         } else if (propName === 'typeMetadata') {
-          const propTypeMeta = (entity.typeMetadata as TagType);
-          propValue = (propTypeMeta.name as string);
+          const propTypeMeta = (entity.typeMetadata as TagType|null);
+          propValue = (propTypeMeta?.name || '');
         } else if (propName === 'fire_trigger_ids') {
           if (this.triggers && entity.fire_trigger_ids) {
             Object.values((entity.fire_trigger_ids) as number[]).forEach((value) => {

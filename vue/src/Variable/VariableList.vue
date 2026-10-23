@@ -79,9 +79,13 @@
             </td>
             <td
               class="type"
-              :title="variable.typeMetadata.description"
+              :title="variable.typeMetadata
+                ? variable.typeMetadata.description
+                : translate('TagManager_TypeNotAvailableHelp')"
             >
-              {{ variable.typeMetadata.name }}
+              {{ variable.typeMetadata
+                ? variable.typeMetadata.name
+                : translate('TagManager_TypeNotAvailable', variable.type) }}
             </td>
             <td class="lookupTable">
               <span
@@ -101,12 +105,13 @@
             >
               <a
                 class="table-action icon-edit"
+                v-show="variable.typeMetadata"
                 @click="editVariable(variable.idvariable ?? 0)"
                 :title="translate('TagManager_EditVariable')"
               />
               <a
                 class="table-action icon-content-copy"
-                v-show="hasPublishCapability()"
+                v-show="hasPublishCapability() && variable.typeMetadata"
                 @click="openCopyDialog(variable)"
                 :title="translate(
                   'TagManager_CopyX',
@@ -361,8 +366,8 @@ export default defineComponent({
         if (typeof entity[propName] === 'string') {
           propValue = (entity[propName] as string);
         } else if (propName === 'typeMetadata') {
-          const propTypeMeta = (entity.typeMetadata as VariableType);
-          propValue = (propTypeMeta.name as string);
+          const propTypeMeta = (entity.typeMetadata as VariableType|null);
+          propValue = (propTypeMeta?.name || '');
         } else if (propName === 'parameters' && entity.type === 'CustomJsFunction') {
           const propTypeParameters = (entity.parameters as Record<string, unknown>);
           propValue = (propTypeParameters.jsFunction as string);

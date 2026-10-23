@@ -94,6 +94,8 @@ class Import
             throw new Exception($message);
         }
 
+        $this->checkTypesAreAvailable($exportedContainerVersion, 'TagManager_ErrorImportTypeNotAvailable');
+
         foreach ($exportedContainerVersion['tags'] as $tag) {
             $this->tagsProvider->checkIsValidTag($tag['type']);
 
@@ -116,6 +118,43 @@ class Import
             if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
+        }
+    }
+
+    /**
+     * A type is not available for example when the plugin that provides it is no longer active, or when it is disabled
+     * in the configuration. We list all affected entities in one message so the user knows which ones to delete.
+     * Creating a version uses its own message, as the entities are already in the container, unlike in an import.
+     */
+    public function checkVersionTypesAreAvailable($exportedContainerVersion)
+    {
+        $this->checkTypesAreAvailable($exportedContainerVersion, 'TagManager_ErrorTypeNotAvailable');
+    }
+
+    private function checkTypesAreAvailable($exportedContainerVersion, $errorTranslationKey)
+    {
+        $unavailable = [];
+
+        foreach ($exportedContainerVersion['tags'] as $tag) {
+            if (!$this->tagsProvider->getTag($tag['type'])) {
+                $unavailable[] = Piwik::translate('TagManager_ErrorTypeNotAvailableTag', $tag['name']);
+            }
+        }
+
+        foreach ($exportedContainerVersion['triggers'] as $trigger) {
+            if (!$this->triggersProvider->getTrigger($trigger['type'])) {
+                $unavailable[] = Piwik::translate('TagManager_ErrorTypeNotAvailableTrigger', $trigger['name']);
+            }
+        }
+
+        foreach ($exportedContainerVersion['variables'] as $variable) {
+            if (!$this->variablesProvider->getVariable($variable['type'])) {
+                $unavailable[] = Piwik::translate('TagManager_ErrorTypeNotAvailableVariable', $variable['name']);
+            }
+        }
+
+        if (!empty($unavailable)) {
+            throw new Exception(Piwik::translate($errorTranslationKey, implode(', ', $unavailable)));
         }
     }
 

@@ -129,7 +129,11 @@ class Tag extends BaseModel
     {
         $tag = $this->dao->getContainerTag($idSite, $idContainerVersion, $idTag);
         if (!empty($tag)) {
-            $parameters = $this->formatParameters($tag['type'], $parameters);
+            if ($this->tagsProvider->getTag($tag['type'])) {
+                $parameters = $this->formatParameters($tag['type'], $parameters);
+            }
+            // else the type is not available, eg when a referenced variable is renamed. The parameters cannot be
+            // validated without the type, so they are stored as they are
             $this->updateTagColumns($idSite, $idContainerVersion, $idTag, array(
                 'parameters' => $parameters,
             ));

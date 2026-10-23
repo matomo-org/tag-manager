@@ -250,13 +250,17 @@ class Container extends BaseModel
         $this->validateContainerVersion($idSite, $name, $description);
         $createdDate = $this->getCurrentDateTime();
 
-        // create a new version
-        $newIdContainerVersion = $this->versionsDao->createVersion($idSite, $idContainer, $name, $description, $createdDate, $createdBy);
-
         // we need to use staticContainer and not in constructor as they would require each other in the constructor and result in a loop
         $export = $this->getExport();
         $exported = $export->exportContainerVersion($idSite, $idContainer, $idContainerVersion);
         $import = StaticContainer::get('Piwik\Plugins\TagManager\API\Import');
+        // validate before creating the version so a failed import does not leave an empty version behind
+        $import->checkVersionTypesAreAvailable($exported);
+        $import->checkImportContainerIsPossible($exported, $idSite, $idContainer);
+
+        // create a new version
+        $newIdContainerVersion = $this->versionsDao->createVersion($idSite, $idContainer, $name, $description, $createdDate, $createdBy);
+
         $import->importContainerVersion($exported, $idSite, $idContainer, $newIdContainerVersion);
 
         return $newIdContainerVersion;

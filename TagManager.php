@@ -524,6 +524,9 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_Containers';
         $result[] = 'TagManager_Type';
         $result[] = 'TagManager_Types';
+        $result[] = 'TagManager_TypeNotAvailable';
+        $result[] = 'TagManager_TypeNotAvailableHelp';
+        $result[] = 'TagManager_TriggerNotAvailableOption';
         $result[] = 'TagManager_Tag';
         $result[] = 'TagManager_Tags';
         $result[] = 'TagManager_Version';

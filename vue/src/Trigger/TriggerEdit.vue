@@ -418,7 +418,7 @@ export default defineComponent({
             }
 
             this.trigger = clone(trigger) as unknown as Trigger;
-            this.parameterValues = Object.fromEntries(trigger.typeMetadata.parameters.map(
+            this.parameterValues = Object.fromEntries((trigger.typeMetadata?.parameters || []).map(
               (s) => [s.name, s.value],
             ));
 

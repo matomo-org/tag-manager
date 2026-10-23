@@ -36,7 +36,7 @@
           </div>
           <span
             class="icon-edit valign"
-            v-show="idTrigger"
+            v-show="idTrigger && !unavailableTriggerIds.includes(idTrigger)"
             @click="$emit('edit', idTrigger)"
             :title="translate('General_Edit')"
           />
@@ -89,6 +89,10 @@ export default defineComponent({
     modelValue: {
       type: Array,
       required: true,
+    },
+    unavailableTriggerIds: {
+      type: Array,
+      default: () => [],
     },
   },
   components: {

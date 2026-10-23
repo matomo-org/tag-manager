@@ -94,9 +94,24 @@ class ImportTest extends IntegrationTestCase
     public function test_checkImportContainerIsPossible_whenTagNotExists()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('The tag "Foo" is not supported');
+        $this->expectExceptionMessage('This import has items with a type that is not available in this Matomo: Tag "My tag". Make the type available, for example by activating the plugin that provides it, or remove these items from the import.');
 
         $this->exported['tags'][0]['type'] = 'Foo';
+        $this->exported['tags'][0]['name'] = 'My tag';
+        $this->import->checkImportContainerIsPossible($this->exported, $this->idSite, $this->idContainer);
+    }
+
+    public function test_checkImportContainerIsPossible_listsAllEntitiesWithUnavailableTypes()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('This import has items with a type that is not available in this Matomo: Tag "My tag", Trigger "My trigger", Variable "My variable". Make the type available, for example by activating the plugin that provides it, or remove these items from the import.');
+
+        $this->exported['tags'][0]['type'] = 'Foo';
+        $this->exported['tags'][0]['name'] = 'My tag';
+        $this->exported['triggers'][0]['type'] = 'Bar';
+        $this->exported['triggers'][0]['name'] = 'My trigger';
+        $this->exported['variables'][0]['type'] = 'Baz';
+        $this->exported['variables'][0]['name'] = 'My variable';
         $this->import->checkImportContainerIsPossible($this->exported, $this->idSite, $this->idContainer);
     }
 
