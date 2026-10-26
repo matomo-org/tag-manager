@@ -70,10 +70,13 @@
         var BANG = /!/g;
         var LPAREN = /\(/g;
         var RPAREN = /\)/g;
+        var AMP = /&/g;
         var encode = encodeURI(String(val));
         // modification by matomo: we use encodeURI instead of encodeURIComponent as we are currently not detecting
         // whether we are escaping a variable as part of a uri or the full uri
+        // modification by matomo: encodeURI keeps "&", so we escape it to prevent character references in the attribute
         return encode
+            .replace(AMP, '&amp;')
             .replace(BANG, '%21')
             .replace(QUOT, '%27')
             .replace(APOS, '%27')
@@ -148,6 +151,23 @@
                 }
             }
             return false;
+        }
+
+        function getAttributeValueSoFar(htmlString)
+        {
+            // same normalisation as TagManager.dom.isAttributeContext, which already confirmed we are within the value
+            htmlString = String(htmlString).replace(/([\s﻿\xA0]*=[\s﻿\xA0]*)/g, '=');
+            var lastPiece = htmlString.substring(htmlString.lastIndexOf('<'));
+            return lastPiece.substring(lastPiece.lastIndexOf('=') + 1).replace(/^["']/, '');
+        }
+
+        function hasScriptUriScheme(attributeValue)
+        {
+            var textarea = parameters.document.createElement('textarea');
+            textarea.innerHTML = attributeValue; // decodes character references without parsing any elements
+            // browsers ignore leading whitespace and control characters, and tabs and newlines anywhere in a URL
+            var uri = textarea.value.replace(/[\t\n\r]/g, '').replace(/^[\x00-\x20]+/, '');
+            return /^(javascript|vbscript):/i.test(uri);
         }
 
         function doChildrenContainJavaScript(element)
@@ -226,7 +246,11 @@
                             }
                         } else if (TagManager.dom.isAttributeContext(value, 'href') || TagManager.dom.isAttributeContext(value, 'src')) {
                             if (hasValueSet) {
-                                value += secureFilters.uri(theVarValue);
+                                var uriValue = secureFilters.uri(theVarValue);
+                                // a variable must not turn the URL into one that executes script
+                                if (!hasScriptUriScheme(getAttributeValueSoFar(value) + uriValue)) {
+                                    value += uriValue;
+                                }
                             }
                         } else if (hasValueSet) {
                             value += secureFilters.html(theVarValue);
