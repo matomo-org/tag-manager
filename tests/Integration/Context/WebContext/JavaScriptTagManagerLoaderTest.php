@@ -47,7 +47,9 @@ class JavaScriptTagManagerLoaderTest extends IntegrationTestCase
     {
         $previewUrl = 'https://localhost/js/1_live_23iaMf3k.js';
         $result = $this->loader->getDetectPreviewModeContent($previewUrl, 1, '23iaMf3k');
-        self::assertStringContainsString('document.cookie.indexOf', $result);
+        self::assertStringContainsString('document.cookie.match(/(?:^|;\s*)mtmPreviewMode=([^;]*)/)', $result);
+        self::assertStringContainsString("indexOf('%3AmtmPreview1_23iaMf3k%3D1%3A')", $result);
+        self::assertStringNotContainsString('document.cookie.indexOf', $result);
         self::assertStringContainsString($previewUrl, $result);
         $this->assertGreaterThanOrEqual(100, strlen($result));
     }
