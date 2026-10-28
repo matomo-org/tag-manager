@@ -6,7 +6,9 @@ array (
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-if ((document.cookie.indexOf(\'mtmPreview2_aaacont1%3D1\') !== -1 && window.location.href.indexOf(\'&mtmPreviewMode=0\') === -1 && window.location.href.indexOf(\'?mtmPreviewMode=0\') === -1) || window.location.href.indexOf(\'&mtmPreviewMode=aaacont1\') !== -1 || window.location.href.indexOf(\'?mtmPreviewMode=aaacont1\') !== -1) {
+var mtmPreviewCookieMatch = document.cookie.match(/(?:^|;\\s*)mtmPreviewMode=([^;]*)/);
+var mtmHasPreviewCookie = !!mtmPreviewCookieMatch && (\'%3A\' + mtmPreviewCookieMatch[1] + \'%3A\').indexOf(\'%3AmtmPreview2_aaacont1%3D1%3A\') !== -1;
+if ((mtmHasPreviewCookie && window.location.href.indexOf(\'&mtmPreviewMode=0\') === -1 && window.location.href.indexOf(\'?mtmPreviewMode=0\') === -1) || window.location.href.indexOf(\'&mtmPreviewMode=aaacont1\') !== -1 || window.location.href.indexOf(\'?mtmPreviewMode=aaacont1\') !== -1) {
 
     var d=document, g=d.createElement(\'script\'), s=d.getElementsByTagName(\'script\')[0];
     g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://localhost/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
@@ -56,7 +58,9 @@ window.MatomoTagManager.addContainer({"id":"aaacont1","isTagFireLimitAllowedInPr
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-if ((document.cookie.indexOf(\'mtmPreview2_aaacont1%3D1\') !== -1 && window.location.href.indexOf(\'&mtmPreviewMode=0\') === -1 && window.location.href.indexOf(\'?mtmPreviewMode=0\') === -1) || window.location.href.indexOf(\'&mtmPreviewMode=aaacont1\') !== -1 || window.location.href.indexOf(\'?mtmPreviewMode=aaacont1\') !== -1) {
+var mtmPreviewCookieMatch = document.cookie.match(/(?:^|;\\s*)mtmPreviewMode=([^;]*)/);
+var mtmHasPreviewCookie = !!mtmPreviewCookieMatch && (\'%3A\' + mtmPreviewCookieMatch[1] + \'%3A\').indexOf(\'%3AmtmPreview2_aaacont1%3D1%3A\') !== -1;
+if ((mtmHasPreviewCookie && window.location.href.indexOf(\'&mtmPreviewMode=0\') === -1 && window.location.href.indexOf(\'?mtmPreviewMode=0\') === -1) || window.location.href.indexOf(\'&mtmPreviewMode=aaacont1\') !== -1 || window.location.href.indexOf(\'?mtmPreviewMode=aaacont1\') !== -1) {
 
     var d=document, g=d.createElement(\'script\'), s=d.getElementsByTagName(\'script\')[0];
     g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://localhost/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
@@ -106,7 +110,9 @@ window.MatomoTagManager.addContainer({"id":"aaacont1","isTagFireLimitAllowedInPr
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-if ((document.cookie.indexOf(\'mtmPreview2_aaacont1%3D1\') !== -1 && window.location.href.indexOf(\'&mtmPreviewMode=0\') === -1 && window.location.href.indexOf(\'?mtmPreviewMode=0\') === -1) || window.location.href.indexOf(\'&mtmPreviewMode=aaacont1\') !== -1 || window.location.href.indexOf(\'?mtmPreviewMode=aaacont1\') !== -1) {
+var mtmPreviewCookieMatch = document.cookie.match(/(?:^|;\\s*)mtmPreviewMode=([^;]*)/);
+var mtmHasPreviewCookie = !!mtmPreviewCookieMatch && (\'%3A\' + mtmPreviewCookieMatch[1] + \'%3A\').indexOf(\'%3AmtmPreview2_aaacont1%3D1%3A\') !== -1;
+if ((mtmHasPreviewCookie && window.location.href.indexOf(\'&mtmPreviewMode=0\') === -1 && window.location.href.indexOf(\'?mtmPreviewMode=0\') === -1) || window.location.href.indexOf(\'&mtmPreviewMode=aaacont1\') !== -1 || window.location.href.indexOf(\'?mtmPreviewMode=aaacont1\') !== -1) {
 
     var d=document, g=d.createElement(\'script\'), s=d.getElementsByTagName(\'script\')[0];
     g.type=\'text/javascript\'; g.async=false; g.defer=false; g.src=\'http://localhost/tests/PHPUnit/proxy/js/container_aaacont1_preview.js\'; s.parentNode.insertBefore(g,s);
