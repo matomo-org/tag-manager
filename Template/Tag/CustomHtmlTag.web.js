@@ -81,7 +81,7 @@
         var encode = encodeURI(String(val));
         // modification by matomo: we use encodeURI instead of encodeURIComponent as we are currently not detecting
         // whether we are escaping a variable as part of a uri or the full uri
-        // modification by matomo: encodeURI keeps "&", so we escape it to prevent character references in the attribute
+        // modification by matomo: encodeURI keeps "&", so we escape it as well
         return encode
             .replace(AMP, '&amp;')
             .replace(BANG, '%21')
@@ -162,10 +162,25 @@
 
         function getAttributeValueSoFar(htmlString)
         {
-            // same normalisation as TagManager.dom.isAttributeContext, which already confirmed we are within the value
-            htmlString = String(htmlString).replace(/([\s﻿\xA0]*=[\s﻿\xA0]*)/g, '=');
-            var lastPiece = htmlString.substring(htmlString.lastIndexOf('<'));
-            return lastPiece.substring(lastPiece.lastIndexOf('=') + 1).replace(/^["']/, '');
+            // returns false when htmlString does not end within an attribute value
+            htmlString = String(htmlString).replace(/([\s\uFEFF\xA0]*=[\s\uFEFF\xA0]*)/g, '=');
+            var tagStart = htmlString.lastIndexOf('<');
+            if (tagStart === -1) {
+                return false;
+            }
+            var lastPiece = htmlString.substring(tagStart);
+            var valueStart = lastPiece.lastIndexOf('=');
+            if (valueStart === -1) {
+                return false;
+            }
+            // starting from the last "=" can only make the check stricter
+            var attributeValue = lastPiece.substring(valueStart + 1);
+            var quote = attributeValue.charAt(0);
+            if (quote === '"' || quote === "'") {
+                attributeValue = attributeValue.substring(1);
+                return attributeValue.indexOf(quote) === -1 ? attributeValue : false;
+            }
+            return /[\s>]/.test(attributeValue) ? false : attributeValue;
         }
 
         function hasScriptUriScheme(attributeValue)
@@ -175,6 +190,12 @@
             // browsers ignore leading whitespace and control characters, and tabs and newlines anywhere in a URL
             var uri = textarea.value.replace(/[\t\n\r]/g, '').replace(/^[\x00-\x20]+/, '');
             return /^(javascript|vbscript):/i.test(uri);
+        }
+
+        function isAllowedInAttributeValue(htmlString, filteredValue)
+        {
+            var attributeValue = getAttributeValueSoFar(htmlString);
+            return attributeValue === false || !hasScriptUriScheme(attributeValue + filteredValue);
         }
 
         function doChildrenContainJavaScript(element)
@@ -226,7 +247,7 @@
             var html = parameters.customHtml;
             if (html && html.type === 'JoinedVariable') {
                 var variables = html.getDefinition();
-                var value = '', varReturn, theVarValue, isVariable, hasValueSet;
+                var value = '', contextValue, filteredValue, varReturn, theVarValue, isVariable, hasValueSet;
                 for (var i = 0; i < variables.length; i++) {
                     varReturn = parameters.buildVariable(variables[i]);
                     isVariable = TagManager.utils.isObject(variables[i]);
@@ -234,6 +255,8 @@
                     hasValueSet = theVarValue !== false && theVarValue !== null && TagManager.utils.isDefined(theVarValue);
 
                     if (isVariable) {
+                        // browsers also separate attributes with tabs and line breaks
+                        contextValue = value.replace(/[\t\n\r\f]/g, ' ');
                         if (TagManager.dom.isElementContext(value, 'script')) {
                             // instead of serializing the object, we make it accessible through a method so users can reference
                             // an object using eg "var mytest = {{myObj}}"
@@ -243,7 +266,7 @@
                             TagManager.customHtmlDataStore.push(theVarValue);
                             value += 'window.MatomoTagManager.customHtmlDataStore[' + (TagManager.customHtmlDataStore.length - 1) +']';
                         } else if (TagManager.dom.isElementContext(value, 'style')
-                                 || TagManager.dom.isAttributeContext(value, 'style')) {
+                                 || TagManager.dom.isAttributeContext(contextValue, 'style')) {
                             if (hasValueSet) {
                                 // we need to make sure to print a value... we use a random value... if someone searches for it
                                 // they can find the FAQ article
@@ -251,16 +274,15 @@
                             } else {
                                 value += 'mTmKpwoqM';
                             }
-                        } else if (TagManager.dom.isAttributeContext(value, 'href') || TagManager.dom.isAttributeContext(value, 'src')) {
-                            if (hasValueSet) {
-                                var uriValue = secureFilters.uri(theVarValue);
-                                // a variable must not turn the URL into one that executes script
-                                if (!hasScriptUriScheme(getAttributeValueSoFar(value) + uriValue)) {
-                                    value += uriValue;
-                                }
-                            }
                         } else if (hasValueSet) {
-                            value += secureFilters.html(theVarValue);
+                            if (TagManager.dom.isAttributeContext(contextValue, 'href') || TagManager.dom.isAttributeContext(contextValue, 'src')) {
+                                filteredValue = secureFilters.uri(theVarValue);
+                            } else {
+                                filteredValue = secureFilters.html(theVarValue);
+                            }
+                            if (isAllowedInAttributeValue(value, filteredValue)) {
+                                value += filteredValue;
+                            }
                         }
                     } else if (hasValueSet) {
                         // raw value entered by user, no escaping
