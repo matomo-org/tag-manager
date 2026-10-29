@@ -80,6 +80,25 @@ class BaseActivityTest extends UnitTestCase
         $this->assertSame($expected, (new $class())->getObject($parameters));
     }
 
+    /**
+     * @dataProvider getObjectTypeLabelsData
+     */
+    public function testGetObjectTypeLabels(string $class, array $expected)
+    {
+        $this->assertSame($expected, (new $class())->getObjectTypeLabels());
+    }
+
+    public function getObjectTypeLabelsData(): array
+    {
+        return [
+            'container' => [ContainerAdded::class, ['tm_container' => 'Containers']],
+            'tag'       => [TagUpdated::class, ['tm_tag' => 'Tags']],
+            'trigger'   => [TriggerAdded::class, ['tm_trigger' => 'Triggers']],
+            'variable'  => [VariableUpdated::class, ['tm_variable' => 'Variables']],
+            'version'   => [VersionPublished::class, ['tm_version' => 'Versions']],
+        ];
+    }
+
     public function getObjectData(): array
     {
         $site      = ['site_id' => 1, 'site_name' => 'Site 1'];

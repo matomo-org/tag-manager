@@ -29,6 +29,14 @@ abstract class BaseActivity extends Activity
      */
     protected const OBJECT_TYPE = '';
 
+    private const OBJECT_TYPE_LABELS = [
+        'tm_container' => 'TagManager_Containers',
+        'tm_tag'       => 'TagManager_Tags',
+        'tm_trigger'   => 'TagManager_Triggers',
+        'tm_variable'  => 'TagManager_Variables',
+        'tm_version'   => 'TagManager_Versions',
+    ];
+
     protected function hasRequestedApiMethod($method)
     {
         $method = 'TagManager.' . $method;
@@ -191,6 +199,22 @@ abstract class BaseActivity extends Activity
             'name'    => $name,
             'context' => $context,
         ];
+    }
+
+    /**
+     * Returns the name of the item type getObject() returns, as its heading in the activity log's "Filter by item" filter
+     *
+     * Only ActivityLog 6.1.0 and later calls this; on earlier versions it is an unused method.
+     *
+     * @return array<string, string>
+     */
+    public function getObjectTypeLabels(): array
+    {
+        if (static::OBJECT_TYPE === '') {
+            return [];
+        }
+
+        return [static::OBJECT_TYPE => Piwik::translate(self::OBJECT_TYPE_LABELS[static::OBJECT_TYPE])];
     }
 
     /**
