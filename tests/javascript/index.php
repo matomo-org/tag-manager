@@ -2632,7 +2632,7 @@
         });
 
         test("Matomo TagManager Template CustomHtmlTag", function() {
-            expect(11);
+            expect(43);
             var templateToTest = 'CustomHtmlTag';
             var params = {document: document, customHtml: buildVariable('<div id="customHtmlTag1">my foo bar baz test</div><div id="customHtmlTag2">my test</div>')};
 
@@ -2692,6 +2692,72 @@
             var addedStyle4 = document.getElementById('customStyleTag4');
             strictEqual('http://www.mytesturl.de/?foo=bar&=%22test%3C%3E%22', addedStyle4.href, 'should detect href attribute');
             document.head.removeChild(addedStyle4);
+
+            // does not let variables start a script url in attributes
+            function urlVariable(value) {
+                return {type: 'mytype2', name: 'myname2', Variable: {get: function () { return value; }}};
+            }
+            function fireCustomUrlTagParts(joined) {
+                params.customHtml = buildVariable({joinedVariable: joined});
+                fireTemplateTag(templateToTest, params);
+                var addedElement = document.getElementById('customUrlTag');
+                if (!addedElement) {
+                    return document.createElement('div'); // makes the assertion fail
+                }
+                document.head.removeChild(addedElement);
+                return addedElement;
+            }
+            function fireCustomUrlTag(htmlStart, values, htmlEnd) {
+                var joined = [htmlStart];
+                for (var i = 0; i < values.length; i++) {
+                    joined.push(urlVariable(values[i]));
+                }
+                joined.push(typeof htmlEnd === 'undefined' ? '">' : htmlEnd);
+                return fireCustomUrlTagParts(joined);
+            }
+            function getUrlAttributeWithVariables(htmlStart, attribute, urls, htmlEnd) {
+                return fireCustomUrlTag(htmlStart, urls, htmlEnd).getAttribute(attribute);
+            }
+            function getInnerAttribute(joined, selector, attribute) {
+                var innerElement = fireCustomUrlTagParts(joined).querySelector(selector);
+                return innerElement ? innerElement.getAttribute(attribute) : null;
+            }
+            function getInnerLinkHref(joined) {
+                return getInnerAttribute(joined, 'a', 'href');
+            }
+
+            strictEqual('', getUrlAttributeWithVariables('<a id="customUrlTag" href="', 'href', ['javascript:alert(1)']), 'should not add a javascript url');
+            strictEqual('', getUrlAttributeWithVariables('<a id="customUrlTag" href="', 'href', ['JaVaScRiPt:alert(1)']), 'should not add a javascript url in mixed case');
+            strictEqual(' ', getUrlAttributeWithVariables('<a id="customUrlTag" href=" ', 'href', ['javascript:alert(1)']), 'should not add a javascript url after whitespace');
+            strictEqual('java', getUrlAttributeWithVariables('<a id="customUrlTag" href="', 'href', ['java', 'script:alert(1)']), 'should not add a javascript url split across variables');
+            strictEqual('&#106;avascript:alert%281%29', getUrlAttributeWithVariables('<a id="customUrlTag" href="', 'href', ['&#106;avascript:alert(1)']), 'should not decode character references in a variable');
+            strictEqual('', getUrlAttributeWithVariables('<iframe id="customUrlTag" src="', 'src', ['vbscript:msgbox(1)']), 'should not add a vbscript url');
+            strictEqual('tel:+123', getUrlAttributeWithVariables('<a id="customUrlTag" href="', 'href', ['tel:+123']), 'should keep other url schemes');
+            strictEqual('https://example.com/?a=1&b=2', getUrlAttributeWithVariables('<a id="customUrlTag" href="', 'href', ['https://example.com/?a=1&b=2']), 'should keep an ampersand in a url');
+            strictEqual('https://example.com/?a=%281%29', getUrlAttributeWithVariables('<a id="customUrlTag"\thref="', 'href', ['https://example.com/?a=(1)']), 'should detect href attribute after a tab');
+            strictEqual('', getUrlAttributeWithVariables('<a id="customUrlTag" class="x"\n\thref="', 'href', ['javascript:alert(1)']), 'should not add a javascript url after a line break');
+            strictEqual('mTmKpwoqM', getUrlAttributeWithVariables('<a href=', 'href', ['javascript:alert(1)'], ' id="customUrlTag">'), 'should not add a javascript url in an unquoted attribute and keep the next attribute');
+            strictEqual('j', getUrlAttributeWithVariables('<a id="customUrlTag" href="&#106;', 'href', ['avascript:alert(1)']), 'should not add a javascript url after a character reference');
+            strictEqual('', getUrlAttributeWithVariables('<a id="customUrlTag" title="a>b" href="', 'href', ['javascript:alert(1)']), 'should not add a javascript url after an attribute with ">"');
+            strictEqual('', getUrlAttributeWithVariables('<form id="customUrlTag" action="', 'action', ['javascript:alert(1)']), 'should not add a javascript url in other attributes');
+            strictEqual('javascript:alert(1)', fireCustomUrlTag('<a id="customUrlTag" href="javascript:void(0)">', ['javascript:alert(1)'], '</' + 'a>').textContent, 'should keep text content');
+            strictEqual('javascript://example.com/?x=', fireCustomUrlTagParts(['<a id="customUrlTag" href="', urlVariable('javascript'), '://example.com/?x=', urlVariable('%0Aalert(1)'), '">']).getAttribute('href'), 'should check the whole attribute value after a "=" in the value');
+            strictEqual('javascript:1<', fireCustomUrlTagParts(['<a id="customUrlTag" href="', urlVariable('javascript'), ':1<', urlVariable('alert(1)'), '">']).getAttribute('href'), 'should check the whole attribute value after a "<" in the value');
+            strictEqual('', getInnerLinkHref(['<div id="customUrlTag"><' + 'script type="text/plain">"<b title=\'"</' + 'script><a href="', urlVariable('javascript:alert(1)'), '"></' + 'a></' + 'div>']), 'should not add a javascript url after a quote in a script');
+            strictEqual('', getInnerLinkHref(['<div id="customUrlTag"><!' + '-- <b title=\' --><a href="', urlVariable('javascript:alert(1)'), '"></' + 'a></' + 'div>']), 'should not add a javascript url after a quote in a comment');
+            strictEqual('', getInnerLinkHref(['<svg id="customUrlTag"><title><a href="', urlVariable('javascript:alert(1)'), '"></' + 'a></title></svg>']), 'should not add a javascript url in svg content');
+            strictEqual('', getInnerLinkHref(['<div id="customUrlTag"><svg><desc><b></b></desc><textarea><p><a href="', urlVariable('javascript:alert(1)'), '"></' + 'a></' + 'div>']), 'should not add a javascript url after svg content');
+            strictEqual('#;', getInnerAttribute(['<svg id="customUrlTag"><a><animate attributeName="href" values="#;', urlVariable('javascript:alert(1)'), '"/></' + 'a></svg>'], 'animate', 'values'), 'should not add a javascript url to an animation values list');
+            strictEqual('', fireCustomUrlTagParts(['<col><a id="customUrlTag" href="', urlVariable('javascript:alert(1)'), '">']).getAttribute('href'), 'should not add a javascript url after a leading col');
+            strictEqual('', getInnerLinkHref(['<div id="customUrlTag"><noscript>"<b title=\'</noscript><a href="', urlVariable('javascript:alert(1)'), '"></' + 'a></' + 'div>']), 'should not add a javascript url after noscript');
+            strictEqual('', getInnerLinkHref(['<div id="customUrlTag"><noframes></noframes><noscript>"<b title=\'</noscript><a href="', urlVariable('javascript:alert(1)'), '"></' + 'a></' + 'div>']), 'should not add a javascript url after noscript and noframes');
+            strictEqual('', getInnerAttribute(['<svg id="customUrlTag"><a xlink:href="', urlVariable('javascript:alert(1)'), '"></' + 'a></svg>'], 'a', 'xlink:href'), 'should not add a javascript url to xlink:href');
+            strictEqual('', getUrlAttributeWithVariables('<!' + '-- noframes noembed xmp --><noscript></noscript><a id="customUrlTag" href="', 'href', ['https://example.com/']), 'should not add a value that cannot be checked');
+            strictEqual('', getUrlAttributeWithVariables('<button id="customUrlTag" formaction="', 'formaction', ['javascript:alert(1)']), 'should not add a javascript url to formaction');
+            strictEqual('', getInnerAttribute(['<svg id="customUrlTag"><set attributeName="href" to="', urlVariable('javascript:alert(1)'), '"/></svg>'], 'set', 'to'), 'should not add a javascript url to an animation');
+            strictEqual('0;url=', getUrlAttributeWithVariables('<meta id="customUrlTag" name="customUrlTag" content="0;url=', 'content', ['javascript:alert(1)']), 'should not add a javascript url to a refresh url');
+            strictEqual('https://example.com/', getUrlAttributeWithVariables('<a href=', 'href', ['https://example.com/'], ' id="customUrlTag">'), 'should keep the next attribute after an unquoted attribute');
+            strictEqual('https://example.com/?a=1&b=2', fireCustomUrlTagParts(['<a id="customUrlTag" title="x=\'1\'" href="', urlVariable('https'), '://example.com/?a=', urlVariable('1&b=2'), '">']).getAttribute('href'), 'should keep a url split across variables');
 
             // no auto escape for regular div when through variable
             params.customHtml = buildVariable({joinedVariable:['<div id="customStyleTag4">var x = "', {type: 'mytype2', name: 'myname2', Variable: {get: function (){ return '{}'; }}}, '"</' + 'div>']});
