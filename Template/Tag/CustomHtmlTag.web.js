@@ -160,27 +160,118 @@
             return false;
         }
 
-        function getAttributeValueSoFar(htmlString)
+        function getAttributeValueSoFar(htmlString, isSvgAndMathTracked)
         {
-            // returns false when htmlString does not end within an attribute value
-            htmlString = String(htmlString).replace(/([\s\uFEFF\xA0]*=[\s\uFEFF\xA0]*)/g, '=');
-            var tagStart = htmlString.lastIndexOf('<');
-            if (tagStart === -1) {
-                return false;
+            // follows the HTML tokenizer from the start of htmlString
+            // returns the attribute value so far, or false when htmlString does not end within an attribute value
+            var html = String(htmlString);
+            var position = 0, openForeignElements = [], match, rest, isEndTag, isSelfClosing, tagName, quote, end;
+            var rawTextElements = ['script', 'style', 'textarea', 'title', 'xmp', 'iframe', 'noembed', 'noframes', 'noscript'];
+            // these start tags, and the p and br end tags, end svg and math content
+            var foreignContentBreakouts = ['b', 'big', 'blockquote', 'body', 'br', 'center', 'code', 'dd', 'div', 'dl', 'dt', 'em', 'embed',
+                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'hr', 'i', 'img', 'li', 'listing', 'menu', 'meta', 'nobr', 'ol', 'p', 'pre',
+                'ruby', 's', 'small', 'span', 'strong', 'strike', 'sub', 'sup', 'table', 'tt', 'u', 'ul', 'var'];
+
+            while ((position = html.indexOf('<', position)) !== -1) {
+                rest = html.substring(position);
+                // written as "-{2}" because an HTML comment opener in this code breaks a script element that inlines it
+                if (/^<!-{2}/.test(rest)) {
+                    match = /^<!-{2}(>|->|[\s\S]*?--!?>)/.exec(rest);
+                    if (!match) {
+                        return false;
+                    }
+                    position += match[0].length;
+                    continue;
+                }
+                if (openForeignElements.length && rest.indexOf('<![CDATA[') === 0) {
+                    end = html.indexOf(']]>', position);
+                    if (end === -1) {
+                        return false;
+                    }
+                    position = end + 3;
+                    continue;
+                }
+                match = /^<(\/?)([a-zA-Z][^\t\n\f\r \/>]*)/.exec(rest);
+                if (!match) {
+                    if (/^<[!?\/]/.test(rest)) {
+                        // bogus comment
+                        end = html.indexOf('>', position + 2);
+                        if (end === -1) {
+                            return false;
+                        }
+                        position = end + 1;
+                    } else {
+                        position++;
+                    }
+                    continue;
+                }
+                isEndTag = match[1] === '/';
+                tagName = match[2].toLowerCase();
+                position += match[0].length;
+
+                while (true) {
+                    match = /^[\t\n\f\r \/]*/.exec(html.substring(position));
+                    position += match[0].length;
+                    if (position >= html.length) {
+                        return false;
+                    }
+                    if (html.charAt(position) === '>') {
+                        isSelfClosing = /\/$/.test(match[0]);
+                        break;
+                    }
+                    // attribute name, which can start with "="
+                    position += /^[\s\S][^\t\n\f\r \/>=]*[\t\n\f\r ]*/.exec(html.substring(position))[0].length;
+                    if (html.charAt(position) !== '=') {
+                        continue;
+                    }
+                    position += /^=[\t\n\f\r ]*/.exec(html.substring(position))[0].length;
+                    quote = html.charAt(position);
+                    if (quote === '"' || quote === "'") {
+                        end = html.indexOf(quote, position + 1);
+                        if (end === -1) {
+                            return html.substring(position + 1);
+                        }
+                        position = end + 1;
+                    } else {
+                        match = /^[^\t\n\f\r >]*/.exec(html.substring(position));
+                        if (position + match[0].length >= html.length) {
+                            return match[0];
+                        }
+                        position += match[0].length;
+                    }
+                }
+                position++;
+
+                if (isSvgAndMathTracked && (tagName === 'svg' || tagName === 'math')) {
+                    // content in svg and math elements is not raw text, and it can contain CDATA sections
+                    if (isEndTag) {
+                        // an end tag without a matching open element is ignored
+                        for (var i = openForeignElements.length - 1; i >= 0; i--) {
+                            if (openForeignElements[i] === tagName) {
+                                openForeignElements.length = i;
+                                break;
+                            }
+                        }
+                    } else if (!isSelfClosing) {
+                        openForeignElements.push(tagName);
+                    }
+                } else if (openForeignElements.length && TagManager.utils.indexOfArray(foreignContentBreakouts, tagName) !== -1
+                    && (!isEndTag || tagName === 'p' || tagName === 'br')) {
+                    openForeignElements = [];
+                } else if (!isEndTag && !openForeignElements.length) {
+                    if (tagName === 'plaintext') {
+                        return false;
+                    }
+                    if (TagManager.utils.indexOfArray(rawTextElements, tagName) !== -1) {
+                        match = new RegExp('</' + tagName + '[\\t\\n\\f\\r />]', 'i').exec(html.substring(position));
+                        if (!match) {
+                            return false;
+                        }
+                        position += match.index;
+                    }
+                }
             }
-            var lastPiece = htmlString.substring(tagStart);
-            var valueStart = lastPiece.lastIndexOf('=');
-            if (valueStart === -1) {
-                return false;
-            }
-            // starting from the last "=" can only make the check stricter
-            var attributeValue = lastPiece.substring(valueStart + 1);
-            var quote = attributeValue.charAt(0);
-            if (quote === '"' || quote === "'") {
-                attributeValue = attributeValue.substring(1);
-                return attributeValue.indexOf(quote) === -1 ? attributeValue : false;
-            }
-            return /[\s>]/.test(attributeValue) ? false : attributeValue;
+            return false;
         }
 
         function hasScriptUriScheme(attributeValue)
@@ -194,8 +285,16 @@
 
         function isAllowedInAttributeValue(htmlString, filteredValue)
         {
-            var attributeValue = getAttributeValueSoFar(htmlString);
-            return attributeValue === false || !hasScriptUriScheme(attributeValue + filteredValue);
+            // svg and math content is tokenized differently, and we do not follow all the rules of where it ends,
+            // so we check both ways
+            var isSvgAndMathTracked = [false, true];
+            for (var i = 0; i < isSvgAndMathTracked.length; i++) {
+                var attributeValue = getAttributeValueSoFar(htmlString, isSvgAndMathTracked[i]);
+                if (attributeValue !== false && hasScriptUriScheme(attributeValue + filteredValue)) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         function doChildrenContainJavaScript(element)
