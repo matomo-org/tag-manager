@@ -13,6 +13,8 @@ class ContainerDeleted extends BaseActivity
 {
     protected $eventName = 'TagManager.deleteContainer.end';
 
+    protected const OBJECT_TYPE = 'tm_container';
+
     public function extractParams($eventData)
     {
         if (empty($eventData[0]) || !is_array($eventData[0])) {

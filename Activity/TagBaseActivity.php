@@ -15,6 +15,8 @@ abstract class TagBaseActivity extends BaseActivity
 {
     protected $entityType = 'containertag';
 
+    protected const OBJECT_TYPE = 'tm_tag';
+
     private function getEntityDao()
     {
         return StaticContainer::get('Piwik\Plugins\TagManager\Dao\TagsDao');

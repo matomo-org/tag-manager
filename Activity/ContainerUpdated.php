@@ -13,6 +13,8 @@ class ContainerUpdated extends TagBaseActivity
 {
     protected $eventName = 'API.TagManager.updateContainer.end';
 
+    protected const OBJECT_TYPE = 'tm_container';
+
     public function extractParams($eventData)
     {
         list($return, $finalAPIParameters) = $eventData;

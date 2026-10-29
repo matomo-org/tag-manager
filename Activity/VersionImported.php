@@ -13,6 +13,8 @@ class VersionImported extends BaseActivity
 {
     protected $eventName = 'API.TagManager.importContainerVersion.end';
 
+    protected const OBJECT_TYPE = 'tm_container';
+
     public function extractParams($eventData)
     {
         list($return, $finalAPIParameters) = $eventData;

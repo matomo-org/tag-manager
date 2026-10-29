@@ -15,6 +15,8 @@ abstract class VariableBaseActivity extends BaseActivity
 {
     protected $entityType = 'containervariable';
 
+    protected const OBJECT_TYPE = 'tm_variable';
+
     private function getEntityDao()
     {
         return StaticContainer::get('Piwik\Plugins\TagManager\Dao\VariablesDao');
