@@ -15,6 +15,8 @@ abstract class VersionBaseActivity extends BaseActivity
 {
     protected $entityType = 'containerversion';
 
+    protected const OBJECT_TYPE = 'tm_version';
+
     private function getEntityDao()
     {
         return StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainerVersionsDao');

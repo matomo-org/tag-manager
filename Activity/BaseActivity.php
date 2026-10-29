@@ -19,6 +19,16 @@ abstract class BaseActivity extends Activity
 {
     protected $entityType = '';
 
+    /**
+     * ActivityLog indexes existing entries again when this is bumped, so bump it whenever getObject() changes
+     */
+    protected const OBJECT_INDEX_VERSION = 1;
+
+    /**
+     * The ActivityLog item type the activity acts on, '' for none
+     */
+    protected const OBJECT_TYPE = '';
+
     protected function hasRequestedApiMethod($method)
     {
         $method = 'TagManager.' . $method;
@@ -133,5 +143,61 @@ abstract class BaseActivity extends Activity
         }
 
         return $login;
+    }
+
+    /**
+     * Returns the item the activity acts on, for the activity log's "Filter by item" filter
+     *
+     * Only ActivityLog 6.1.0 and later calls this; on earlier versions it is an unused method.
+     *
+     * @param array<mixed> $parameters
+     * @return array{type: string, id: string, name: ?string, context: ?string}|null
+     */
+    public function getObject(array $parameters): ?array
+    {
+        if (static::OBJECT_TYPE === '') {
+            return null;
+        }
+
+        $isContainer = static::OBJECT_TYPE === 'tm_container';
+        $subject     = $parameters[$isContainer ? 'container' : $this->entityType] ?? null;
+        $id          = is_array($subject) ? self::toString($subject['id'] ?? null) : null;
+
+        if ($id === null || $id === '') {
+            return null;
+        }
+
+        $name = self::toString($subject['name'] ?? null);
+
+        // "ID: <id>" is logged once an entity is deleted, so its last known name is used instead
+        if ($name === 'ID: ' . $id) {
+            $name = null;
+        }
+
+        if ($isContainer) {
+            $context = self::toString($parameters['site']['site_name'] ?? null);
+        } else {
+            $idContainer = self::toString($parameters['container']['id'] ?? null);
+            $context     = self::toString($parameters['container']['name'] ?? null);
+
+            if ($context === 'ID: ' . $idContainer) {
+                $context = null;
+            }
+        }
+
+        return [
+            'type'    => static::OBJECT_TYPE,
+            'id'      => $id,
+            'name'    => $name,
+            'context' => $context,
+        ];
+    }
+
+    /**
+     * @param mixed $value
+     */
+    private static function toString($value): ?string
+    {
+        return is_scalar($value) ? (string) $value : null;
     }
 }

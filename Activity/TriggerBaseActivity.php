@@ -15,6 +15,8 @@ abstract class TriggerBaseActivity extends BaseActivity
 {
     protected $entityType = 'containertrigger';
 
+    protected const OBJECT_TYPE = 'tm_trigger';
+
     private function getEntityDao()
     {
         return StaticContainer::get('Piwik\Plugins\TagManager\Dao\TriggersDao');

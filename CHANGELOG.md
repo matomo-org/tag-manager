@@ -2,6 +2,7 @@
 
 0.2.11
 
+* Tag Manager activities can be filtered by their container, tag, trigger, variable or version in the Activity Log
 * Fixed a blank entry being added to the Activity Log when an event carried no valid site or entity id
 * Fixed the "URI-decode Cookie" option of the Cookie variable having no effect
 * Borders now use `@theme-color-border`, as `@theme-color-border-alternative` is deprecated in Matomo 6
