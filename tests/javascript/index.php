@@ -1609,6 +1609,43 @@
             strictEqual('foobar', dataLayer.get('mytest3'), '_mtm.push allows to push a value directly');
         });
 
+        test("Matomo TagManager preview mode detection", function() {
+            expect(6);
+
+            var previewUrl = 'mtm-preview-detection-test.js';
+
+            function isPreviewDetected(cookie) {
+                Object.defineProperty(document, 'cookie', {configurable: true, get: function () { return cookie; }});
+                try {
+                    var isLive = (function () {
+                        <?php
+                        $loader = new \Piwik\Plugins\TagManager\Context\WebContext\JavaScriptTagManagerLoader();
+                        echo $loader->getDetectPreviewModeContent('mtm-preview-detection-test.js', 1, '23iaMf3k');
+                        ?>
+                        return true;
+                    })();
+                } finally {
+                    delete document.cookie;
+                }
+
+                var scripts = document.getElementsByTagName('script');
+                for (var i = scripts.length - 1; i >= 0; i--) {
+                    if (scripts[i].getAttribute('src') === previewUrl) {
+                        scripts[i].parentNode.removeChild(scripts[i]);
+                    }
+                }
+
+                return !isLive;
+            }
+
+            strictEqual(false, isPreviewDetected(''), 'no preview without a cookie');
+            strictEqual(true, isPreviewDetected('mtmPreviewMode=mtmPreview1_23iaMf3k%3D1'), 'preview with own cookie');
+            strictEqual(true, isPreviewDetected('mtmPreviewMode=mtmPreview2_abcdefgh%3D1%3AmtmPreview1_23iaMf3k%3D1'), 'preview when own container is one of several in the cookie');
+            strictEqual(true, isPreviewDetected('mtmPreviewMode=mtmPreview2_abcdefgh%3D1; mtmPreviewMode=mtmPreview1_23iaMf3k%3D1'), 'preview when own cookie is not the first one with that name');
+            strictEqual(false, isPreviewDetected('_pk_ref.1.abcd=%5B%22%22%2C%22%22%2C1%2C%22https%3A%2F%2Fexample.org%2F%3FmtmPreview1_23iaMf3k%3D1%22%5D'), 'no preview when only another cookie contains the value');
+            strictEqual(false, isPreviewDetected('mtmPreviewMode=mtmPreview1_23iaMf3kX%3D1'), 'no preview for a different container with the same prefix');
+        });
+
         test("Matomo TagManager Template ConstantVariable", function() {
             expect(2);
             var templateToTest = 'ConstantVariable';
