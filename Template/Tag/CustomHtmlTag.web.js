@@ -160,29 +160,6 @@
             return false;
         }
 
-        function getNoscriptReplacement(htmlString)
-        {
-            // the page runs scripts, so it parses noscript content as text. The parser we use to check the HTML does not
-            // run scripts and would parse it as markup, so we rename noscript to an element whose content is always text.
-            // returns false when the HTML already uses all these elements
-            var names = ['noframes', 'noembed', 'xmp'];
-            for (var i = 0; i < names.length; i++) {
-                if (!new RegExp(names[i], 'i').test(htmlString)) {
-                    return names[i];
-                }
-            }
-            return false;
-        }
-
-        function parseHtml(html, noscriptReplacement)
-        {
-            // a document without a browsing context does not load or run anything. We do not use a template element,
-            // because it parses some HTML differently from the div of the page, for example a leading <col>
-            var div = parameters.document.implementation.createHTMLDocument('').createElement('div');
-            div.innerHTML = noscriptReplacement ? html.replace(/(<\/?)noscript/gi, '$1' + noscriptReplacement) : html;
-            return div;
-        }
-
         function getElements(root, elements)
         {
             var children = root.querySelectorAll('*');
@@ -195,44 +172,51 @@
             return elements;
         }
 
-        function hasScriptUriScheme(attributeName, attributeValue)
+        function parseHtml(html, noscriptReplacement)
         {
-            var uris = [attributeValue];
-            if (attributeName === 'values') {
-                // an svg animation can set an attribute to each item of its "values" list
-                uris = attributeValue.split(';');
-            } else if (attributeName === 'content') {
-                // a meta refresh goes to the URL after the delay
-                uris.push(attributeValue.replace(/^\s*[\d.]*\s*[;,]?\s*(url\s*=\s*)?['"]?/i, ''));
-            }
-            for (var i = 0; i < uris.length; i++) {
-                // browsers ignore leading whitespace and control characters, and tabs and newlines anywhere in a URL
-                var uri = uris[i].replace(/[\t\n\r]/g, '').replace(/^[\x00-\x20]+/, '');
-                if (/^(javascript|vbscript):/i.test(uri)) {
-                    return true;
-                }
-            }
-            return false;
+            // a document without a browsing context does not load or run anything. We do not use a template element,
+            // because it parses some HTML differently from the div of the page, for example a leading <col>
+            var div = parameters.document.implementation.createHTMLDocument('').createElement('div');
+            div.innerHTML = html.replace(/(<\/?)noscript/gi, '$1' + noscriptReplacement);
+            return getElements(div, []);
         }
 
-        function getScriptUriAttribute(htmlString, filteredValue)
+        function hasScriptUriScheme(attributeName, attributeValue)
         {
-            // asks the browser where filteredValue goes when it is added to htmlString
-            // returns {name, isUnquoted, isUnchecked} when filteredValue would make the attribute value a script URL,
-            // or when we cannot check it. Otherwise returns false.
-            // We check the value up to the end of filteredValue: the tag owner writes the text after it.
-            var closing = '"\'>';
-            var hasNoscript = /<\/?noscript/i.test(htmlString);
-            var noscriptReplacement = hasNoscript ? getNoscriptReplacement(htmlString) : false;
+            // an svg animation can set a URL from each item of its "values" list, and a meta refresh goes to the URL after the delay
+            var uris = attributeName === 'values' ? attributeValue.split(';') : [attributeValue];
+            if (attributeName === 'content') {
+                uris.push(attributeValue.replace(/^\s*[\d.]*\s*[;,]?\s*(url\s*=\s*)?['"]?/i, ''));
+            }
+            return uris.some(function (uri) {
+                // browsers ignore leading whitespace and control characters, and tabs and newlines anywhere in a URL
+                return /^[\x00-\x20]*(javascript|vbscript):/i.test(uri.replace(/[\t\n\r]/g, ''));
+            });
+        }
+
+        function getBlockedValuePlaceholder(htmlString, filteredValue)
+        {
+            // asks the browser which attribute filteredValue goes into. Returns false when the value does not make the
+            // attribute a script URL. Otherwise returns the text to add instead, because an empty unquoted value would take
+            // the next attribute as its value. We check the value up to the end of filteredValue: the tag owner writes the rest.
             var implementation = parameters.document.implementation;
-            if (!implementation || !implementation.createHTMLDocument || (hasNoscript && !noscriptReplacement)) {
-                // we cannot parse the HTML like the page does, so we do not add the value
-                return {name: '', isUnquoted: /=[\t\n\f\r ]*[^\t\n\f\r "'>]*$/.test(htmlString), isUnchecked: true};
+            var unquotedPlaceholder = /=[\t\n\f\r ]*[^\t\n\f\r "'>]*$/.test(htmlString) ? 'mTmKpwoqM' : '';
+            if (!implementation || !implementation.createHTMLDocument) {
+                return unquotedPlaceholder;
+            }
+            // the page parses noscript content as text, but a document that does not run scripts parses it as markup.
+            // So we rename noscript to an element that is not in the HTML and whose content is always text
+            var noscriptReplacement = ['noframes', 'noembed', 'xmp'].filter(function (name) {
+                return !new RegExp(name, 'i').test(htmlString);
+            })[0];
+            if (!noscriptReplacement && /<\/?noscript/i.test(htmlString)) {
+                return unquotedPlaceholder;
             }
 
             // filteredValue cannot contain "<", quotes or ">", so it does not change the elements before it
+            var closing = '"\'>';
             var marker = 'mtm' + String(Math.random()).replace(/\D/g, '') + 'x';
-            var elements = getElements(parseHtml(htmlString + marker + closing, noscriptReplacement), []);
+            var elements = parseHtml(htmlString + marker + closing, noscriptReplacement);
             for (var i = 0; i < elements.length; i++) {
                 for (var j = 0; j < elements[i].attributes.length; j++) {
                     var attribute = elements[i].attributes[j];
@@ -240,17 +224,13 @@
                     if (position === -1) {
                         continue;
                     }
-                    var element = getElements(parseHtml(htmlString + filteredValue + closing, noscriptReplacement), [])[i];
+                    var element = parseHtml(htmlString + filteredValue + closing, noscriptReplacement)[i];
                     var attributeValue = element ? element.getAttribute(attribute.name) : null;
-                    if (attributeValue === null || hasScriptUriScheme(attribute.name, attributeValue)) {
-                        return {
-                            name: attribute.name,
-                            // an unquoted value also takes the closing quotes
-                            isUnquoted: attribute.value.substring(position + marker.length) === closing.substring(0, 2),
-                            isUnchecked: false
-                        };
+                    if (attributeValue !== null && !hasScriptUriScheme(attribute.name, attributeValue)) {
+                        return false;
                     }
-                    return false;
+                    // an unquoted value also takes the closing quotes
+                    return attribute.value.substring(position + marker.length) === closing.substring(0, 2) ? 'mTmKpwoqM' : '';
                 }
             }
             return false;
@@ -305,7 +285,7 @@
             var html = parameters.customHtml;
             if (html && html.type === 'JoinedVariable') {
                 var variables = html.getDefinition();
-                var value = '', contextValue, filteredValue, blockedAttribute, varReturn, theVarValue, isVariable, hasValueSet;
+                var value = '', contextValue, filteredValue, placeholder, varReturn, theVarValue, isVariable, hasValueSet;
                 for (var i = 0; i < variables.length; i++) {
                     varReturn = parameters.buildVariable(variables[i]);
                     isVariable = TagManager.utils.isObject(variables[i]);
@@ -339,20 +319,12 @@
                             } else {
                                 filteredValue = secureFilters.html(theVarValue);
                             }
-                            blockedAttribute = getScriptUriAttribute(value, filteredValue);
-                            if (!blockedAttribute) {
+                            placeholder = getBlockedValuePlaceholder(value, filteredValue);
+                            if (placeholder === false) {
                                 value += filteredValue;
                             } else {
-                                if (blockedAttribute.isUnchecked) {
-                                    TagManager.debug.log('Custom HTML tag: a variable value is not added, because this browser cannot check it');
-                                } else {
-                                    TagManager.debug.log('Custom HTML tag: a variable value is not added, because it would make the "'
-                                        + blockedAttribute.name + '" attribute a script URL');
-                                }
-                                if (blockedAttribute.isUnquoted) {
-                                    // an empty unquoted value would take the next attribute as its value
-                                    value += 'mTmKpwoqM';
-                                }
+                                TagManager.debug.log('Custom HTML tag: a variable value is not added, because it could make an attribute a script URL');
+                                value += placeholder;
                             }
                         }
                     } else if (hasValueSet) {
