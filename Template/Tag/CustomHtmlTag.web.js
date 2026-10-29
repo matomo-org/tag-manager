@@ -153,141 +153,100 @@
             return false;
         }
 
-        function getAttributeValueSoFar(htmlString, isSvgAndMathTracked)
+        function getNoscriptReplacement(htmlString)
         {
-            // follows the HTML tokenizer from the start of htmlString
-            // returns the attribute value so far, or false when htmlString does not end within an attribute value
-            var html = String(htmlString);
-            var position = 0, openForeignElements = [], match, rest, isEndTag, isSelfClosing, tagName, quote, end;
-            var rawTextElements = ['script', 'style', 'textarea', 'title', 'xmp', 'iframe', 'noembed', 'noframes', 'noscript'];
-            // these start tags, and the p and br end tags, end svg and math content
-            var foreignContentBreakouts = ['b', 'big', 'blockquote', 'body', 'br', 'center', 'code', 'dd', 'div', 'dl', 'dt', 'em', 'embed',
-                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'hr', 'i', 'img', 'li', 'listing', 'menu', 'meta', 'nobr', 'ol', 'p', 'pre',
-                'ruby', 's', 'small', 'span', 'strong', 'strike', 'sub', 'sup', 'table', 'tt', 'u', 'ul', 'var'];
-
-            while ((position = html.indexOf('<', position)) !== -1) {
-                rest = html.substring(position);
-                // written as "-{2}" because an HTML comment opener in this code breaks a script element that inlines it
-                if (/^<!-{2}/.test(rest)) {
-                    match = /^<!-{2}(>|->|[\s\S]*?--!?>)/.exec(rest);
-                    if (!match) {
-                        return false;
-                    }
-                    position += match[0].length;
-                    continue;
-                }
-                if (openForeignElements.length && rest.indexOf('<![CDATA[') === 0) {
-                    end = html.indexOf(']]>', position);
-                    if (end === -1) {
-                        return false;
-                    }
-                    position = end + 3;
-                    continue;
-                }
-                match = /^<(\/?)([a-zA-Z][^\t\n\f\r \/>]*)/.exec(rest);
-                if (!match) {
-                    if (/^<[!?\/]/.test(rest)) {
-                        // bogus comment
-                        end = html.indexOf('>', position + 2);
-                        if (end === -1) {
-                            return false;
-                        }
-                        position = end + 1;
-                    } else {
-                        position++;
-                    }
-                    continue;
-                }
-                isEndTag = match[1] === '/';
-                tagName = match[2].toLowerCase();
-                position += match[0].length;
-
-                while (true) {
-                    match = /^[\t\n\f\r \/]*/.exec(html.substring(position));
-                    position += match[0].length;
-                    if (position >= html.length) {
-                        return false;
-                    }
-                    if (html.charAt(position) === '>') {
-                        isSelfClosing = /\/$/.test(match[0]);
-                        break;
-                    }
-                    // attribute name, which can start with "="
-                    position += /^[\s\S][^\t\n\f\r \/>=]*[\t\n\f\r ]*/.exec(html.substring(position))[0].length;
-                    if (html.charAt(position) !== '=') {
-                        continue;
-                    }
-                    position += /^=[\t\n\f\r ]*/.exec(html.substring(position))[0].length;
-                    quote = html.charAt(position);
-                    if (quote === '"' || quote === "'") {
-                        end = html.indexOf(quote, position + 1);
-                        if (end === -1) {
-                            return html.substring(position + 1);
-                        }
-                        position = end + 1;
-                    } else {
-                        match = /^[^\t\n\f\r >]*/.exec(html.substring(position));
-                        if (position + match[0].length >= html.length) {
-                            return match[0];
-                        }
-                        position += match[0].length;
-                    }
-                }
-                position++;
-
-                if (isSvgAndMathTracked && (tagName === 'svg' || tagName === 'math')) {
-                    // content in svg and math elements is not raw text, and it can contain CDATA sections
-                    if (isEndTag) {
-                        // an end tag without a matching open element is ignored
-                        for (var i = openForeignElements.length - 1; i >= 0; i--) {
-                            if (openForeignElements[i] === tagName) {
-                                openForeignElements.length = i;
-                                break;
-                            }
-                        }
-                    } else if (!isSelfClosing) {
-                        openForeignElements.push(tagName);
-                    }
-                } else if (openForeignElements.length && TagManager.utils.indexOfArray(foreignContentBreakouts, tagName) !== -1
-                    && (!isEndTag || tagName === 'p' || tagName === 'br')) {
-                    openForeignElements = [];
-                } else if (!isEndTag && !openForeignElements.length) {
-                    if (tagName === 'plaintext') {
-                        return false;
-                    }
-                    if (TagManager.utils.indexOfArray(rawTextElements, tagName) !== -1) {
-                        match = new RegExp('</' + tagName + '[\\t\\n\\f\\r />]', 'i').exec(html.substring(position));
-                        if (!match) {
-                            return false;
-                        }
-                        position += match.index;
-                    }
+            // the page runs scripts, so it parses noscript content as text. The parser we use to check the HTML does not
+            // run scripts and would parse it as markup, so we rename noscript to an element whose content is always text.
+            // returns false when the HTML already uses all these elements
+            var names = ['noframes', 'noembed', 'xmp'];
+            for (var i = 0; i < names.length; i++) {
+                if (!new RegExp(names[i], 'i').test(htmlString)) {
+                    return names[i];
                 }
             }
             return false;
         }
 
-        function hasScriptUriScheme(attributeValue)
+        function parseHtml(html, noscriptReplacement)
         {
-            var textarea = parameters.document.createElement('textarea');
-            textarea.innerHTML = attributeValue; // decodes character references without parsing any elements
-            // browsers ignore leading whitespace and control characters, and tabs and newlines anywhere in a URL
-            var uri = textarea.value.replace(/[\t\n\r]/g, '').replace(/^[\x00-\x20]+/, '');
-            return /^(javascript|vbscript):/i.test(uri);
+            // a document without a browsing context does not load or run anything. We do not use a template element,
+            // because it parses some HTML differently from the div of the page, for example a leading <col>
+            var div = parameters.document.implementation.createHTMLDocument('').createElement('div');
+            div.innerHTML = noscriptReplacement ? html.replace(/(<\/?)noscript/gi, '$1' + noscriptReplacement) : html;
+            return div;
         }
 
-        function isAllowedInAttributeValue(htmlString, filteredValue)
+        function getElements(root, elements)
         {
-            // svg and math content is tokenized differently, and we do not follow all the rules of where it ends,
-            // so we check both ways
-            var isSvgAndMathTracked = [false, true];
-            for (var i = 0; i < isSvgAndMathTracked.length; i++) {
-                var attributeValue = getAttributeValueSoFar(htmlString, isSvgAndMathTracked[i]);
-                if (attributeValue !== false && hasScriptUriScheme(attributeValue + filteredValue)) {
+            var children = root.querySelectorAll('*');
+            for (var i = 0; i < children.length; i++) {
+                elements.push(children[i]);
+                if (children[i].nodeName.toLowerCase() === 'template' && children[i].content) {
+                    getElements(children[i].content, elements);
+                }
+            }
+            return elements;
+        }
+
+        function hasScriptUriScheme(attributeName, attributeValue)
+        {
+            var uris = [attributeValue];
+            if (attributeName === 'values') {
+                // an svg animation can set an attribute to each item of its "values" list
+                uris = attributeValue.split(';');
+            } else if (attributeName === 'content') {
+                // a meta refresh goes to the URL after the delay
+                uris.push(attributeValue.replace(/^\s*[\d.]*\s*[;,]?\s*(url\s*=\s*)?['"]?/i, ''));
+            }
+            for (var i = 0; i < uris.length; i++) {
+                // browsers ignore leading whitespace and control characters, and tabs and newlines anywhere in a URL
+                var uri = uris[i].replace(/[\t\n\r]/g, '').replace(/^[\x00-\x20]+/, '');
+                if (/^(javascript|vbscript):/i.test(uri)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function getScriptUriAttribute(htmlString, filteredValue)
+        {
+            // asks the browser where filteredValue goes when it is added to htmlString
+            // returns {name, isUnquoted, isUnchecked} when filteredValue would make the attribute value a script URL,
+            // or when we cannot check it. Otherwise returns false.
+            // We check the value up to the end of filteredValue: the tag owner writes the text after it.
+            var closing = '"\'>';
+            var hasNoscript = /<\/?noscript/i.test(htmlString);
+            var noscriptReplacement = hasNoscript ? getNoscriptReplacement(htmlString) : false;
+            var implementation = parameters.document.implementation;
+            if (!implementation || !implementation.createHTMLDocument || (hasNoscript && !noscriptReplacement)) {
+                // we cannot parse the HTML like the page does, so we do not add the value
+                return {name: '', isUnquoted: /=[\t\n\f\r ]*[^\t\n\f\r "'>]*$/.test(htmlString), isUnchecked: true};
+            }
+
+            // filteredValue cannot contain "<", quotes or ">", so it does not change the elements before it
+            var marker = 'mtm' + String(Math.random()).replace(/\D/g, '') + 'x';
+            var elements = getElements(parseHtml(htmlString + marker + closing, noscriptReplacement), []);
+            for (var i = 0; i < elements.length; i++) {
+                for (var j = 0; j < elements[i].attributes.length; j++) {
+                    var attribute = elements[i].attributes[j];
+                    var position = attribute.value.indexOf(marker);
+                    if (position === -1) {
+                        continue;
+                    }
+                    var element = getElements(parseHtml(htmlString + filteredValue + closing, noscriptReplacement), [])[i];
+                    var attributeValue = element ? element.getAttribute(attribute.name) : null;
+                    if (attributeValue === null || hasScriptUriScheme(attribute.name, attributeValue)) {
+                        return {
+                            name: attribute.name,
+                            // an unquoted value also takes the closing quotes
+                            isUnquoted: attribute.value.substring(position + marker.length) === closing.substring(0, 2),
+                            isUnchecked: false
+                        };
+                    }
                     return false;
                 }
             }
-            return true;
+            return false;
         }
 
         function doChildrenContainJavaScript(element)
@@ -339,7 +298,7 @@
             var html = parameters.customHtml;
             if (html && html.type === 'JoinedVariable') {
                 var variables = html.getDefinition();
-                var value = '', contextValue, filteredValue, varReturn, theVarValue, isVariable, hasValueSet;
+                var value = '', contextValue, filteredValue, blockedAttribute, varReturn, theVarValue, isVariable, hasValueSet;
                 for (var i = 0; i < variables.length; i++) {
                     varReturn = parameters.buildVariable(variables[i]);
                     isVariable = TagManager.utils.isObject(variables[i]);
@@ -367,13 +326,26 @@
                                 value += 'mTmKpwoqM';
                             }
                         } else if (hasValueSet) {
-                            if (TagManager.dom.isAttributeContext(contextValue, 'href') || TagManager.dom.isAttributeContext(contextValue, 'src')) {
+                            if (TagManager.dom.isAttributeContext(contextValue, 'href')
+                                || TagManager.dom.isAttributeContext(contextValue, 'src')) {
                                 filteredValue = secureFilters.uri(theVarValue);
                             } else {
                                 filteredValue = secureFilters.html(theVarValue);
                             }
-                            if (isAllowedInAttributeValue(value, filteredValue)) {
+                            blockedAttribute = getScriptUriAttribute(value, filteredValue);
+                            if (!blockedAttribute) {
                                 value += filteredValue;
+                            } else {
+                                if (blockedAttribute.isUnchecked) {
+                                    TagManager.debug.log('Custom HTML tag: a variable value is not added, because this browser cannot check it');
+                                } else {
+                                    TagManager.debug.log('Custom HTML tag: a variable value is not added, because it would make the "'
+                                        + blockedAttribute.name + '" attribute a script URL');
+                                }
+                                if (blockedAttribute.isUnquoted) {
+                                    // an empty unquoted value would take the next attribute as its value
+                                    value += 'mTmKpwoqM';
+                                }
                             }
                         }
                     } else if (hasValueSet) {
