@@ -297,6 +297,8 @@ class Controller extends \Piwik\Plugin\Controller
             return;
         }
 
+        StaticContainer::get(LastUsedContainer::class)->setForCurrentUser((int) $this->idSite, $idContainer);
+
         if (empty($variables['container'])) {
             $variables['container'] = Request::processRequest('TagManager.getContainer', ['idSite' => $this->idSite, 'idContainer' => $idContainer]);
         }
