@@ -149,7 +149,7 @@
 						<uiControlAttributes>
 						</uiControlAttributes>
 						<availableValues />
-						<description/>
+						<description />
 						<inlineHelp>Ecommerce plugin required.&lt;br /&gt;&lt;br /&gt;Records the current page view as an item (product) page view or an Ecommerce Category page view.</inlineHelp>
 						<introduction />
 						<condition>trackingType == &quot;pageview&quot;</condition>
@@ -333,7 +333,7 @@
 									<plugin>TagManager</plugin>
 									<name>FieldVariableTemplate</name>
 								</component>
-								<availableValues/>
+								<availableValues />
 							</field1>
 							<field2>
 								<key>value</key>
@@ -343,14 +343,14 @@
 									<plugin>TagManager</plugin>
 									<name>FieldVariableTemplate</name>
 								</component>
-								<availableValues/>
+								<availableValues />
 							</field2>
 						</uiControlAttributes>
-						<availableValues/>
+						<availableValues />
 						<description>Optionally, set a value for one or more custom dimensions.</description>
-						<inlineHelp/>
-						<introduction/>
-						<condition/>
+						<inlineHelp />
+						<introduction />
+						<condition />
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
@@ -362,11 +362,11 @@
 						<uiControl>checkbox</uiControl>
 						<uiControlAttributes>
 						</uiControlAttributes>
-						<availableValues/>
-						<description/>
+						<availableValues />
+						<description />
 						<inlineHelp>When this feature is enabled, the custom dimensions will be used for all subsequent requests while the page is active.&lt;br /&gt;&lt;br /&gt;By default, the defined custom dimensions will only be used for the tracking request specifically triggered by this tag.</inlineHelp>
-						<introduction/>
-						<condition/>
+						<introduction />
+						<condition />
 						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
@@ -1470,6 +1470,325 @@
 					</row>
 				</parameters>
 			</row>
+			<row>
+				<id>BingUETConversion</id>
+				<name>Microsoft Ads: UET Conversion</name>
+				<description>Sends a Universal Event Tracking (UET) conversion event to Microsoft Advertising, formerly Bing Ads. Requires the Bing Ads UET Tag on the same page.</description>
+				<category>Ads</category>
+				<icon>plugins/TagManager/images/icons/bing.svg</icon>
+				<help>This tag sends a Universal Event Tracking conversion event. Add the Bing Ads UET Tag to the same page so the event can be sent.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>eventAction</name>
+						<title>Event action</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The action of the conversion goal configured in Microsoft Advertising. Leave empty for a destination URL goal.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventCategory</name>
+						<title>Event category (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventLabel</name>
+						<title>Event label (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventValue</name>
+						<title>Event value (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The value configured on a custom event conversion goal, as a plain number without thousands separators. To report revenue, use the revenue value instead.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>revenueValue</name>
+						<title>Revenue value (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The revenue associated with the conversion, as a plain number without thousands separators, for example 1299.99.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>currency</name>
+						<title>Currency (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>ISO 4217 currency code, for example EUR or USD.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventParameters</name>
+						<title>Event parameters</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>parameter</key>
+								<title>Parameter</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Additional properties sent with the event.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>OpenAIAdsPixel</id>
+				<name>OpenAI Ads: ChatGPT Measurement Pixel</name>
+				<description>Adds the OpenAI ads measurement pixel so you can track page views and conversions from your ChatGPT ad campaigns.</description>
+				<category>Ads</category>
+				<icon>plugins/TagManager/images/icons/openai.svg</icon>
+				<help>This tag loads the OpenAI pixel and sends the selected event. Use the default 'page_viewed' event with a trigger that fires on every page, then add one tag per conversion event, for example 'order_created' on the order confirmation page. Amounts are converted to the smallest currency unit, as the pixel requires.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>pixelId</name>
+						<title>Pixel ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. VgWCTyRaZm5pmgfBScWigR</placeholder>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your pixel ID, created in the Conversions tab of the ChatGPT Ads Manager.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventName</name>
+						<title>Event</title>
+						<value>page_viewed</value>
+						<defaultValue>page_viewed</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<page_viewed>page_viewed</page_viewed>
+							<contents_viewed>contents_viewed</contents_viewed>
+							<items_added>items_added</items_added>
+							<checkout_started>checkout_started</checkout_started>
+							<order_created>order_created</order_created>
+							<lead_created>lead_created</lead_created>
+							<registration_completed>registration_completed</registration_completed>
+							<appointment_scheduled>appointment_scheduled</appointment_scheduled>
+							<subscription_created>subscription_created</subscription_created>
+							<trial_started>trial_started</trial_started>
+							<custom>Custom event</custom>
+						</availableValues>
+						<description>The event to send. 'page_viewed' tracks page views, the others are standard conversion events.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>customEventName</name>
+						<title>Custom event name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Use only when no standard event fits. 1 to 64 lowercase letters, digits, underscores or dashes, starting and ending with a letter or digit, and different from a standard event name.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>eventName == &quot;custom&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>amount</name>
+						<title>Amount (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The total value of the event, for example the order total. Use a plain number without thousands separators, for example 1299.99.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>currency</name>
+						<title>Currency</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>ISO 4217 currency code, for example EUR or USD. Required when an amount is sent.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventId</name>
+						<title>Event ID (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>A unique event ID, for example the order ID, used to deduplicate this event with the same event sent server-side through the Conversions API.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
 		</types>
 	</row>
 	<row>
@@ -1705,7 +2024,7 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description />
-						<inlineHelp>The consent state must be 'denied' before the user gives consent. Once consent is received, you can trigger this tag with the action mode set to 'update' and all consents state set to 'granted' for all consent types. (All consent types are available in the Google documentation). Consent state must be 'denied' or 'granted', no other values are allowed. &lt;a target="_blank" rel="noreferrer noopener" href="https://matomo.org/faq/tag-manager/google-consent-tag-in-matomo-tag-manager/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=Tag.TagManager.GoogleConsentMode"&gt;Learn more&lt;/a&gt;.</inlineHelp>
+						<inlineHelp>The consent state must be 'denied' before the user gives consent. Once consent is received, you can trigger this tag with the action mode set to 'update' and all consents state set to 'granted' for all consent types. (All consent types are available in the Google documentation). Consent state must be 'denied' or 'granted', no other values are allowed. &lt;a target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot; href=&quot;https://matomo.org/faq/tag-manager/google-consent-tag-in-matomo-tag-manager/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=Tag.TagManager.GoogleConsentMode&quot;&gt;Learn more&lt;/a&gt;.</inlineHelp>
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -1779,7 +2098,7 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>This tag is ideal when you need to add for example custom styles or custom JavaScript or when you are looking for a specific tag which is not yet supported. With this tag you can append any HTML to the bottom of your page, add styles, or execute JavaScript. Note: You can replace content within the HTML with variables by putting a variable name in curly brackets like this {{PageUrl}}.</description>
-						<inlineHelp>&lt;a target="_blank" rel="noreferrer noopener" href=&quot;https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=App.TagManager.getParameters&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
+						<inlineHelp>&lt;a target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot; href=&quot;https://matomo.org/faq/tag-manager/faq_26815/?mtm_campaign=Matomo_App&amp;mtm_source=Matomo_App_OnPremise&amp;mtm_medium=App.TagManager.getParameters&quot;&gt;Learn more&lt;/a&gt;</inlineHelp>
 						<introduction />
 						<condition />
 						<fullWidth>0</fullWidth>
@@ -2166,39 +2485,6 @@
 				</parameters>
 			</row>
 			<row>
-				<id>FacebookPixel</id>
-				<name>Facebook Pixel</name>
-				<description>The Facebook Pixel is a web analytics and advertising service offered by Facebook.</description>
-				<category>Social</category>
-				<icon>plugins/TagManager/images/icons/F_icon.svg</icon>
-				<help>This tag lets you track website pageviews in your Facebook Ads account. To obtain the Pixel ID please log in to your Facebook Ads account.</help>
-				<order>9999</order>
-				<contexts>
-					<row>web</row>
-				</contexts>
-				<hasAdvancedSettings>1</hasAdvancedSettings>
-				<isCustomTemplate>0</isCustomTemplate>
-				<parameters>
-					<row>
-						<name>pixelId</name>
-						<title>Pixel ID</title>
-						<value />
-						<defaultValue />
-						<type>string</type>
-						<uiControl>text</uiControl>
-						<uiControlAttributes>
-							<placeholder>e.g. 123456789012345</placeholder>
-						</uiControlAttributes>
-						<availableValues />
-						<description />
-						<inlineHelp />
-						<introduction />
-						<condition />
-						<fullWidth>0</fullWidth>
-					</row>
-				</parameters>
-			</row>
-			<row>
 				<id>LinkedinInsight</id>
 				<name>LinkedIn Insight Tag</name>
 				<description>Adds the LinkedIn Insight Tag so you can apply conversion tracking to your LinkedIn ad campaigns.</description>
@@ -2232,18 +2518,18 @@
 					<row>
 						<name>conversionId</name>
 						<title>LinkedIn Conversion ID (optional)</title>
-						<value/>
-						<defaultValue/>
+						<value />
+						<defaultValue />
 						<type>string</type>
 						<uiControl>text</uiControl>
 						<uiControlAttributes>
 							<placeholder>e.g. 1234567890</placeholder>
 						</uiControlAttributes>
-						<availableValues/>
+						<availableValues />
 						<description>An optional conversion ID if you would like a specific conversion recorded when this tag executes.</description>
-						<inlineHelp>If you are not sure where to find the conversion ID, see the &lt;a href="https://www.linkedin.com/help/lms/answer/a1437736" target="_blank" rel="noreferrer noopener"&gt;LinkedIn documentation&lt;/a&gt; for more information.</inlineHelp>
-						<introduction/>
-						<condition/>
+						<inlineHelp>If you are not sure where to find the conversion ID, see the &lt;a href=&quot;https://www.linkedin.com/help/lms/answer/a1437736&quot; target=&quot;_blank&quot; rel=&quot;noreferrer noopener&quot;&gt;LinkedIn documentation&lt;/a&gt; for more information.</inlineHelp>
+						<introduction />
+						<condition />
 						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
@@ -2311,6 +2597,301 @@
 						</uiControlAttributes>
 						<availableValues />
 						<description>In most cases you should let it activated.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>FacebookPixel</id>
+				<name>Meta Ads: Pixel (Facebook &amp; Instagram)</name>
+				<description>Adds the Meta Pixel to your website so you can track page views for your Facebook and Instagram ad campaigns.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/F_icon.svg</icon>
+				<help>This tag lets you track website pageviews in your Facebook Ads account. To obtain the Pixel ID please log in to your Facebook Ads account.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>pixelId</name>
+						<title>Pixel ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. 123456789012345</placeholder>
+						</uiControlAttributes>
+						<availableValues />
+						<description />
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>PinterestPixel</id>
+				<name>Pinterest Ads: Conversion Tag</name>
+				<description>Adds the Pinterest Tag to your website so you can track page visits and conversion events for your Pinterest ad campaigns.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/pinterest.svg</icon>
+				<help>This tag loads the Pinterest Tag and sends the selected event. Use the default 'pagevisit' event with a trigger that fires on every page, then add one tag per conversion event.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>tagId</name>
+						<title>Tag ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. 2612345678901</placeholder>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your Pinterest Tag ID, found in Pinterest Ads Manager under Conversions.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventName</name>
+						<title>Event</title>
+						<value>pagevisit</value>
+						<defaultValue>pagevisit</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<pagevisit>pagevisit</pagevisit>
+							<viewcategory>viewcategory</viewcategory>
+							<search>search</search>
+							<addtocart>addtocart</addtocart>
+							<checkout>checkout</checkout>
+							<signup>signup</signup>
+							<lead>lead</lead>
+							<watchvideo>watchvideo</watchvideo>
+							<custom>Custom event</custom>
+						</availableValues>
+						<description>The event to send. 'pagevisit' tracks page visits, the others are conversion events.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>customEventName</name>
+						<title>Custom event name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The name of the event to send. Up to 100 letters, digits, underscores or dashes, and different from Pinterest's standard event names.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>eventName == &quot;custom&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventParameters</name>
+						<title>Event parameters</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>parameter</key>
+								<title>Parameter</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Properties sent with the event, for example value, currency, order_quantity or line_items.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>eventId</name>
+						<title>Event ID (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>A unique event ID used to deduplicate this event with the same event sent server-side through the Conversions API.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Reddit</id>
+				<name>Reddit Ads: Pixel</name>
+				<description>Adds the Reddit Pixel to your website so you can track page visits and conversion events for your Reddit ad campaigns.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/reddit.svg</icon>
+				<help>This tag loads the Reddit Pixel and sends the selected event. Use the default 'PageVisit' event with a trigger that fires on every page, then add one tag per conversion event.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>pixelId</name>
+						<title>Pixel ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. t2_xxxxxxxx</placeholder>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your Reddit Pixel ID, found in Reddit Ads Manager.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventName</name>
+						<title>Event</title>
+						<value>PageVisit</value>
+						<defaultValue>PageVisit</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<PageVisit>PageVisit</PageVisit>
+							<ViewContent>ViewContent</ViewContent>
+							<Search>Search</Search>
+							<AddToCart>AddToCart</AddToCart>
+							<AddToWishlist>AddToWishlist</AddToWishlist>
+							<Purchase>Purchase</Purchase>
+							<Lead>Lead</Lead>
+							<SignUp>SignUp</SignUp>
+							<custom>Custom event</custom>
+						</availableValues>
+						<description>The event to send. 'PageVisit' tracks page visits, the others are conversion events.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>customEventName</name>
+						<title>Custom event name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The name of the event to send, up to 64 characters, including spaces.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>eventName == &quot;custom&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventParameters</name>
+						<title>Event parameters</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>parameter</key>
+								<title>Parameter</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Properties sent with the event, for example value, currency, itemCount or conversionId.</description>
 						<inlineHelp />
 						<introduction />
 						<condition />
@@ -2387,7 +2968,7 @@
 						<description>If you want to add an In-Page App enter the App ID here. It is about eight digits long. The App ID is not required for the Total Share Counter.</description>
 						<inlineHelp />
 						<introduction />
-						<condition>shareaholicInPageApp=="share_buttons" || shareaholicInPageApp=="follow_buttons" || shareaholicInPageApp=="recommendations"</condition>
+						<condition>shareaholicInPageApp==&quot;share_buttons&quot; || shareaholicInPageApp==&quot;follow_buttons&quot; || shareaholicInPageApp==&quot;recommendations&quot;</condition>
 						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>
@@ -2413,6 +2994,135 @@
 							<plugin>TagManager</plugin>
 							<name>FieldVariableTemplate</name>
 						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>Snapchat</id>
+				<name>Snapchat Ads: Snap Pixel</name>
+				<description>Adds the Snap Pixel to your website so you can track page views and conversion events for your Snapchat ad campaigns.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/snapchat.svg</icon>
+				<help>This tag loads the Snap Pixel and sends the selected event. Use the default 'PAGE_VIEW' event with a trigger that fires on every page, then add one tag per conversion event.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>pixelId</name>
+						<title>Pixel ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your Snap Pixel ID, found in Snapchat Ads Manager.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventName</name>
+						<title>Event</title>
+						<value>PAGE_VIEW</value>
+						<defaultValue>PAGE_VIEW</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<PAGE_VIEW>PAGE_VIEW</PAGE_VIEW>
+							<VIEW_CONTENT>VIEW_CONTENT</VIEW_CONTENT>
+							<LIST_VIEW>LIST_VIEW</LIST_VIEW>
+							<SEARCH>SEARCH</SEARCH>
+							<ADD_CART>ADD_CART</ADD_CART>
+							<ADD_TO_WISHLIST>ADD_TO_WISHLIST</ADD_TO_WISHLIST>
+							<START_CHECKOUT>START_CHECKOUT</START_CHECKOUT>
+							<ADD_BILLING>ADD_BILLING</ADD_BILLING>
+							<PURCHASE>PURCHASE</PURCHASE>
+							<SIGN_UP>SIGN_UP</SIGN_UP>
+							<SUBSCRIBE>SUBSCRIBE</SUBSCRIBE>
+							<AD_CLICK>AD_CLICK</AD_CLICK>
+							<COMPLETE_TUTORIAL>COMPLETE_TUTORIAL</COMPLETE_TUTORIAL>
+							<CUSTOM_EVENT_1>CUSTOM_EVENT_1</CUSTOM_EVENT_1>
+							<CUSTOM_EVENT_2>CUSTOM_EVENT_2</CUSTOM_EVENT_2>
+							<CUSTOM_EVENT_3>CUSTOM_EVENT_3</CUSTOM_EVENT_3>
+							<CUSTOM_EVENT_4>CUSTOM_EVENT_4</CUSTOM_EVENT_4>
+							<CUSTOM_EVENT_5>CUSTOM_EVENT_5</CUSTOM_EVENT_5>
+						</availableValues>
+						<description>The event to send. 'PAGE_VIEW' tracks page views, the others are conversion events.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>userEmail</name>
+						<title>Visitor email (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The visitor's email address, sent when the pixel loads to improve matching. Only the first Snapchat tag to fire on a page sends it, so set it on the tag that fires on every page.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventParameters</name>
+						<title>Event parameters</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>parameter</key>
+								<title>Parameter</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Properties sent with the event, for example price, currency, transaction_id, item_ids or number_items.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
 					</row>
 				</parameters>
 			</row>
@@ -2467,6 +3177,252 @@
 				</parameters>
 			</row>
 			<row>
+				<id>TikTok</id>
+				<name>TikTok Ads: Pixel</name>
+				<description>Adds the TikTok Pixel to your website so you can track page views and conversion events for your TikTok ad campaigns.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/tiktok.svg</icon>
+				<help>This tag loads the TikTok Pixel and sends the selected event. Use the default 'PageView' event with a trigger that fires on every page, then add one tag per conversion event.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>pixelId</name>
+						<title>Pixel ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. CABCDE12AB34CD56EF</placeholder>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your TikTok Pixel ID, found in TikTok Events Manager.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventName</name>
+						<title>Event</title>
+						<value>PageView</value>
+						<defaultValue>PageView</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<PageView>PageView</PageView>
+							<ViewContent>ViewContent</ViewContent>
+							<Search>Search</Search>
+							<AddToWishlist>AddToWishlist</AddToWishlist>
+							<AddToCart>AddToCart</AddToCart>
+							<InitiateCheckout>InitiateCheckout</InitiateCheckout>
+							<AddPaymentInfo>AddPaymentInfo</AddPaymentInfo>
+							<Purchase>Purchase</Purchase>
+							<CompleteRegistration>CompleteRegistration</CompleteRegistration>
+							<Contact>Contact</Contact>
+							<Download>Download</Download>
+							<SubmitForm>SubmitForm</SubmitForm>
+							<SubmitApplication>SubmitApplication</SubmitApplication>
+							<Subscribe>Subscribe</Subscribe>
+							<CustomizeProduct>CustomizeProduct</CustomizeProduct>
+							<FindLocation>FindLocation</FindLocation>
+							<Schedule>Schedule</Schedule>
+							<StartTrial>StartTrial</StartTrial>
+							<custom>Custom event</custom>
+						</availableValues>
+						<description>The event to send. 'PageView' tracks page views, the others are standard conversion events.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>customEventName</name>
+						<title>Custom event name</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The name of the event to send. Up to 50 letters, digits, underscores or dashes, starting with a letter, and different from TikTok's standard and reserved event names.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>eventName == &quot;custom&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventParameters</name>
+						<title>Event parameters</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>parameter</key>
+								<title>Parameter</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Properties sent with the event, for example value, currency, content_id, content_type or quantity.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>eventName != &quot;PageView&quot;</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>eventId</name>
+						<title>Event ID (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>A unique event ID used to deduplicate this event with the same event sent server-side through the Events API.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>eventName != &quot;PageView&quot;</condition>
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
+			<row>
+				<id>XPixel</id>
+				<name>X Ads: Pixel (formerly Twitter)</name>
+				<description>Adds the X Pixel to your website so you can track conversion events for your X ad campaigns.</description>
+				<category>Social</category>
+				<icon>plugins/TagManager/images/icons/x.svg</icon>
+				<help>This tag loads the X Pixel. To also track a conversion, enter an event ID created in X Ads Manager.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>pixelId</name>
+						<title>Pixel ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. o1abc</placeholder>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your X Pixel ID, found in X Ads Manager.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventId</name>
+						<title>Event ID (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The ID of a conversion event created in X Ads Manager, for example tw-o1abc-xxxxx. Leave empty to only load the pixel.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventParameters</name>
+						<title>Event parameters</title>
+						<value>
+						</value>
+						<defaultValue>
+						</defaultValue>
+						<type>array</type>
+						<uiControl>multituple</uiControl>
+						<uiControlAttributes>
+							<field1>
+								<key>parameter</key>
+								<title>Parameter</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field1>
+							<field2>
+								<key>value</key>
+								<title>Value</title>
+								<uiControl>text</uiControl>
+								<component>
+									<plugin>TagManager</plugin>
+									<name>FieldVariableTemplate</name>
+								</component>
+								<availableValues />
+							</field2>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Properties sent with the event, for example value, currency, conversion_id or contents.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+				</parameters>
+			</row>
+			<row>
 				<id>ZendeskChat</id>
 				<name>Zendesk Chat (formerly Zopim)</name>
 				<description>Reach your customers, instantly via web, mobile, and messaging.</description>
@@ -2504,6 +3460,102 @@
 	<row>
 		<name>Others</name>
 		<types>
+			<row>
+				<id>HubSpotTracking</id>
+				<name>HubSpot: Tracking Code</name>
+				<description>Adds the HubSpot tracking code to your website and can optionally identify the visitor by email address.</description>
+				<category>Others</category>
+				<icon>plugins/TagManager/images/icons/hubspot.svg</icon>
+				<help>This tag loads the HubSpot tracking code for your account. You can optionally identify the visitor by email address or send a custom event. HubSpot tracks only one account per page, so the tag sends nothing when the page already has another account's tracking code.</help>
+				<order>9999</order>
+				<contexts>
+					<row>web</row>
+				</contexts>
+				<hasAdvancedSettings>1</hasAdvancedSettings>
+				<isCustomTemplate>0</isCustomTemplate>
+				<parameters>
+					<row>
+						<name>portalId</name>
+						<title>Hub ID</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+							<placeholder>e.g. 1234567</placeholder>
+						</uiControlAttributes>
+						<availableValues />
+						<description>Your HubSpot account ID.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>region</name>
+						<title>Account region</title>
+						<value>na1</value>
+						<defaultValue>na1</defaultValue>
+						<type>string</type>
+						<uiControl>select</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues>
+							<na1>North America (na1)</na1>
+							<eu1>Europe (eu1)</eu1>
+						</availableValues>
+						<description>Choose Europe if your HubSpot account is hosted in the EU data centre.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>email</name>
+						<title>Visitor email (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The visitor's email address, used to associate their activity with a HubSpot contact. It is sent with the next page view or event.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+					<row>
+						<name>eventName</name>
+						<title>Custom event name (optional)</title>
+						<value />
+						<defaultValue />
+						<type>string</type>
+						<uiControl>text</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>The internal name of a HubSpot custom event, for example pe1234567_video_played. Custom events require Marketing Hub Enterprise. Leave empty to only track page views.</description>
+						<inlineHelp />
+						<introduction />
+						<condition />
+						<fullWidth>0</fullWidth>
+						<component>
+							<plugin>TagManager</plugin>
+							<name>FieldVariableTemplate</name>
+						</component>
+					</row>
+				</parameters>
+			</row>
 			<row>
 				<id>ThemeColor</id>
 				<name>Theme Color</name>

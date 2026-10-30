@@ -34,6 +34,12 @@ class FacebookPixelTag extends BaseTag
         );
     }
 
+    public function getDescription()
+    {
+        // A separate key, as the default FacebookPixelTagDescription has translations of the old wording
+        return Piwik::translate('TagManager_FacebookPixelTagMetaDescription');
+    }
+
     public function getCategory()
     {
         return self::CATEGORY_SOCIAL;
