@@ -11,12 +11,14 @@ namespace Piwik\Plugins\TagManager\tests\Integration;
 
 use Piwik\Container\StaticContainer;
 use Piwik\Plugins\TagManager\Context\WebContext;
+use Piwik\Plugins\TagManager\Controller;
 use Piwik\Plugins\TagManager\LastUsedContainer;
 use Piwik\Plugins\TagManager\Menu;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\TagManager;
 use Piwik\Plugins\TagManager\tests\Framework\Mock\FakeAccessTagManager;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
+use Piwik\Settings\Storage\UserScopedSettingsAccessManager;
 use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\Mock\FakeAccess;
 
@@ -146,7 +148,24 @@ class LastUsedContainerTest extends IntegrationTestCase
 
         $this->lastUsedContainer->setForCurrentUser($this->idSite, 'abc123');
 
-        $this->assertNull($this->lastUsedContainer->getForCurrentUser($this->idSite));
+        $storedValue = StaticContainer::get(UserScopedSettingsAccessManager::class)
+            ->get('TagManager', 'anonymous', 'lastUsedContainers');
+        $this->assertNull($storedValue);
+    }
+
+    public function testOpeningContainerPageMakesItTheDefault()
+    {
+        $this->addContainer($this->idSite, 'First');
+        $idSecondContainer = $this->addContainer($this->idSite, 'Second');
+
+        $_GET['idContainer'] = $idSecondContainer;
+        try {
+            StaticContainer::getContainer()->make(Controller::class)->manageTags();
+        } finally {
+            unset($_GET['idContainer']);
+        }
+
+        $this->assertSame(['dashboard', ['idContainer' => $idSecondContainer]], Menu::getDefaultAction());
     }
 
     private function addContainer(int $idSite, string $name): string

@@ -24,6 +24,13 @@ class LastUsedContainer
      */
     private $accessManager;
 
+    /**
+     * Stored values already read in this request, by user login, as the menu asks for them several times.
+     *
+     * @var array<string, array<int, string>>
+     */
+    private $lastUsedContainersByLogin = [];
+
     public function __construct(UserScopedSettingsAccessManager $accessManager)
     {
         $this->accessManager = $accessManager;
@@ -53,8 +60,11 @@ class LastUsedContainer
             return;
         }
 
+        // The read and the write are not atomic. If two requests save a container for different sites at the same
+        // time, one site's value can be lost. The user then lands on Manage Containers once, which is acceptable.
         $lastUsedContainers[$idSite] = $idContainer;
         $this->accessManager->set('TagManager', $userLogin, self::STORE_KEY_LAST_USED_CONTAINERS, $lastUsedContainers);
+        $this->lastUsedContainersByLogin[$userLogin] = $lastUsedContainers;
     }
 
     private function getCurrentUserLogin(): ?string
@@ -73,8 +83,11 @@ class LastUsedContainer
      */
     private function getLastUsedContainers(string $userLogin): array
     {
-        $value = $this->accessManager->get('TagManager', $userLogin, self::STORE_KEY_LAST_USED_CONTAINERS, []);
+        if (!array_key_exists($userLogin, $this->lastUsedContainersByLogin)) {
+            $value = $this->accessManager->get('TagManager', $userLogin, self::STORE_KEY_LAST_USED_CONTAINERS, []);
+            $this->lastUsedContainersByLogin[$userLogin] = is_array($value) ? $value : [];
+        }
 
-        return is_array($value) ? $value : [];
+        return $this->lastUsedContainersByLogin[$userLogin];
     }
 }
