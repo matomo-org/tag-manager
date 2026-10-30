@@ -2,6 +2,7 @@
 
 0.2.11
 
+* When a site has more than one container, Tag Manager now opens the container you last worked in instead of the Manage Containers page
 * Fixed a blank entry being added to the Activity Log when an event carried no valid site or entity id
 * Fixed the "URI-decode Cookie" option of the Cookie variable having no effect
 * Borders now use `@theme-color-border`, as `@theme-color-border-alternative` is deprecated in Matomo 6

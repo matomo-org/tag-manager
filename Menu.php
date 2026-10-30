@@ -58,19 +58,44 @@ class Menu extends \Piwik\Plugin\Menu
         // makes initial pageview slower otherwise
         $containers = StaticContainer::get('Piwik\Plugins\TagManager\Dao\ContainersDao')->getContainersForSite($idSite);
 
+        $defaultIdContainer = null;
         if (count($containers) == 1) {
             $firstContainer = array_shift($containers);
+            $defaultIdContainer = $firstContainer['idcontainer'];
+        } elseif (count($containers) > 1) {
+            $defaultIdContainer = self::getLastUsedIdContainer($idSite, $containers);
+        }
 
+        if ($defaultIdContainer !== null) {
             $accessValidator = StaticContainer::get('Piwik\Plugins\TagManager\Input\AccessValidator');
             if ($accessValidator->hasWriteCapability($idSite)) {
                 $defaultAction = 'dashboard';
             } else {
                 $defaultAction = 'manageTags';
             }
-            $defaultParams = array('idContainer' => $firstContainer['idcontainer']);
+            $defaultParams = array('idContainer' => $defaultIdContainer);
         }
 
         return array($defaultAction, $defaultParams);
+    }
+
+    /**
+     * Returns the container the current user last worked in, if it still exists for the site.
+     */
+    private static function getLastUsedIdContainer(int $idSite, array $containers): ?string
+    {
+        $lastUsedIdContainer = StaticContainer::get(LastUsedContainer::class)->getForCurrentUser($idSite);
+        if ($lastUsedIdContainer === null) {
+            return null;
+        }
+
+        foreach ($containers as $container) {
+            if ($container['idcontainer'] === $lastUsedIdContainer) {
+                return $lastUsedIdContainer;
+            }
+        }
+
+        return null;
     }
 
     private function configureContainerSubMenu($menu, $idContainer)
