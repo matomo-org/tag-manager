@@ -67,6 +67,30 @@ class LastUsedContainer
         $this->lastUsedContainersByLogin[$userLogin] = $lastUsedContainers;
     }
 
+    /**
+     * Removes the site from the saved containers of every user, for example when the site is deleted.
+     */
+    public function removeSiteForAllUsers(int $idSite): void
+    {
+        $valuesByUser = $this->accessManager->getValuesForAllUsers('TagManager', [self::STORE_KEY_LAST_USED_CONTAINERS]);
+
+        foreach ($valuesByUser as $userLogin => $values) {
+            $userLogin = (string) $userLogin;
+            $lastUsedContainers = $values[self::STORE_KEY_LAST_USED_CONTAINERS] ?? null;
+            if (!is_array($lastUsedContainers) || !array_key_exists($idSite, $lastUsedContainers)) {
+                continue;
+            }
+
+            unset($lastUsedContainers[$idSite]);
+            if (empty($lastUsedContainers)) {
+                $this->accessManager->delete('TagManager', $userLogin, self::STORE_KEY_LAST_USED_CONTAINERS);
+            } else {
+                $this->accessManager->set('TagManager', $userLogin, self::STORE_KEY_LAST_USED_CONTAINERS, $lastUsedContainers);
+            }
+            unset($this->lastUsedContainersByLogin[$userLogin]);
+        }
+    }
+
     private function getCurrentUserLogin(): ?string
     {
         if (Piwik::isUserIsAnonymous()) {

@@ -10,6 +10,7 @@
 namespace Piwik\Plugins\TagManager\tests\Integration;
 
 use Piwik\Container\StaticContainer;
+use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Controller;
 use Piwik\Plugins\TagManager\LastUsedContainer;
@@ -17,6 +18,7 @@ use Piwik\Plugins\TagManager\Menu;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\TagManager;
 use Piwik\Plugins\TagManager\tests\Framework\Mock\FakeAccessTagManager;
+use Piwik\Plugins\SitesManager\API as SitesManagerAPI;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Settings\Storage\UserScopedSettingsAccessManager;
 use Piwik\Tests\Framework\Fixture;
@@ -137,8 +139,34 @@ class LastUsedContainerTest extends IntegrationTestCase
         $this->lastUsedContainer->setForCurrentUser($this->idSite, 'abc123');
         $this->lastUsedContainer->setForCurrentUser($this->idOtherSite, 'def456');
 
-        $this->assertSame('abc123', $this->lastUsedContainer->getForCurrentUser($this->idSite));
-        $this->assertSame('def456', $this->lastUsedContainer->getForCurrentUser($this->idOtherSite));
+        // a new instance has no in-request cache, so this reads the values back from storage
+        $storedLastUsedContainer = $this->createUncachedLastUsedContainer();
+        $this->assertSame('abc123', $storedLastUsedContainer->getForCurrentUser($this->idSite));
+        $this->assertSame('def456', $storedLastUsedContainer->getForCurrentUser($this->idOtherSite));
+    }
+
+    public function testDeletingSiteRemovesItFromLastUsedContainersOfAllUsers()
+    {
+        $idThirdSite = Fixture::createWebsite('2014-03-04 05:06:07');
+
+        $this->lastUsedContainer->setForCurrentUser($this->idOtherSite, 'abc123');
+
+        $this->setViewUser();
+        $this->lastUsedContainer->setForCurrentUser($this->idOtherSite, 'def456');
+        $this->lastUsedContainer->setForCurrentUser($idThirdSite, 'ghi789');
+
+        FakeAccess::clearAccess(true);
+        SitesManagerAPI::getInstance()->deleteSite($this->idOtherSite);
+
+        // the super user only had the deleted site, so the stored value is removed
+        $storedValue = StaticContainer::get(UserScopedSettingsAccessManager::class)
+            ->get('TagManager', Piwik::getCurrentUserLogin(), 'lastUsedContainers');
+        $this->assertNull($storedValue);
+
+        $this->setViewUser();
+        $storedLastUsedContainer = $this->createUncachedLastUsedContainer();
+        $this->assertNull($storedLastUsedContainer->getForCurrentUser($this->idOtherSite));
+        $this->assertSame('ghi789', $storedLastUsedContainer->getForCurrentUser($idThirdSite));
     }
 
     public function testLastUsedContainerIsNotStoredForAnonymousUser()
@@ -171,6 +199,11 @@ class LastUsedContainerTest extends IntegrationTestCase
     private function addContainer(int $idSite, string $name): string
     {
         return $this->model->addContainer($idSite, WebContext::ID, $name, '', 0, 0, 0);
+    }
+
+    private function createUncachedLastUsedContainer(): LastUsedContainer
+    {
+        return new LastUsedContainer(StaticContainer::get(UserScopedSettingsAccessManager::class));
     }
 
     private function setViewUser(): void
