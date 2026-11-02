@@ -469,7 +469,6 @@
         "Except": "Katılmayacak",
         "ExportDraft": "Taslağı dışa aktar",
         "ExportX": "%s dışa aktar",
-        "FacebookPixelTagDescription": "Facebook Pixel, Facebook tarafından sunulan bir site istatistikleri ve reklam hizmetidir.",
         "FacebookPixelTagHelp": "Bu etiket sitedeki sayfa gösterimlerini Facebook Ads üzerinden izleyebilmenizi sağlar. Pixel ID bilgisini almak için Facebook Ads hesabınızda oturum açın.",
         "FacebookPixelTagName": "Facebook Pixel",
         "FacebookPixelTagPixelIdPlaceholder": "örneğin 123456789012345",
