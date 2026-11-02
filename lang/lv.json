@@ -29,6 +29,7 @@
         "MatomoTagEcommerceViewPrice": "Cena",
         "MatomoTagEcommerceViewProductName": "Produkta nosaukums",
         "MatomoTagEcommerceViewProductSKU": "Produkta kods",
+        "OpenAIAdsPixelTagCurrencyTitle": "Valūta",
         "PageTitleVariableName": "Lapas virsraksts",
         "PageUrlVariableName": "Lapas URL",
         "ReferrerUrlVariableName": "Atsauces URL",
