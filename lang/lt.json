@@ -51,6 +51,7 @@
         "MatomoConfigurationMatomoUserIdTitle": "Naudotojo ID",
         "MatomoConfigurationVariableName": "Matomo konfigūracija",
         "MatomoTagEcommerceViewPrice": "Kaina",
+        "OpenAIAdsPixelTagCurrencyTitle": "Valiuta",
         "PageTitleVariableName": "Puslapio antraštė",
         "PageUrlVariableDescription": "Grąžina pilną puslapio URL",
         "PageUrlVariableName": "Puslapio URL",
