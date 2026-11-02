@@ -462,7 +462,6 @@
         "Except": "例外",
         "ExportDraft": "下書きをエクスポート",
         "ExportX": "%s をエクスポート",
-        "FacebookPixelTagDescription": "Facebook Pixel は、Facebook が提供するウェブ解析と広告サービスです。",
         "FacebookPixelTagHelp": "このタグを使用すると、Facebook Ads アカウントのウェブサイトのページビューをトラッキングできます。 Pixel ID を取得するには、Facebook Ads アカウントにログインしてください。",
         "FacebookPixelTagName": "Facebook Pixel",
         "FacebookPixelTagPixelIdPlaceholder": "例: 123456789012345",
