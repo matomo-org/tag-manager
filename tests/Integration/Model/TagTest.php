@@ -159,6 +159,134 @@ class TagTest extends IntegrationTestCase
         $this->addContainerTag($this->idSite, $this->containerVersion1, $type = null, 'MyName', $parameters = ['customHtml' => ''], [$this->idTrigger1]);
     }
 
+    public function testAddContainerTagCustomEventWithoutName()
+    {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Custom event name: A value needs to be provided.');
+
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'Reddit', 'MyName', ['pixelId' => 'a2_test', 'eventName' => 'custom'], [$this->idTrigger1]);
+    }
+
+    /**
+     * @dataProvider getInvalidOpenAIAdsPixelCustomEventNames
+     */
+    public function testAddContainerTagOpenAIAdsPixelInvalidCustomEventName(string $customEventName)
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The custom event name must be');
+
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'OpenAIAdsPixel', 'MyName', ['pixelId' => 'test', 'eventName' => 'custom', 'customEventName' => $customEventName], [$this->idTrigger1]);
+    }
+
+    public function getInvalidOpenAIAdsPixelCustomEventNames(): array
+    {
+        return [
+            ['order_created'],
+            [' Custom '],
+            ['signup done'],
+        ];
+    }
+
+    /**
+     * @dataProvider getInvalidTikTokCustomEventNames
+     */
+    public function testAddContainerTagTikTokInvalidCustomEventName(string $customEventName)
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The custom event name must be');
+
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'TikTok', 'MyName', ['pixelId' => 'test', 'eventName' => 'custom', 'customEventName' => $customEventName], [$this->idTrigger1]);
+    }
+
+    public function getInvalidTikTokCustomEventNames(): array
+    {
+        return [
+            ['1signup'],
+            ['signup done'],
+            [str_repeat('a', 51)],
+            ['purchase'],
+            ['CompletePayment'],
+        ];
+    }
+
+    /**
+     * @dataProvider getInvalidPinterestPixelCustomEventNames
+     */
+    public function testAddContainerTagPinterestPixelInvalidCustomEventName(string $customEventName)
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The custom event name must be');
+
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'PinterestPixel', 'MyName', ['tagId' => 'test', 'eventName' => 'custom', 'customEventName' => $customEventName], [$this->idTrigger1]);
+    }
+
+    public function getInvalidPinterestPixelCustomEventNames(): array
+    {
+        return [
+            ['took survey'],
+            [str_repeat('a', 101)],
+            ['Checkout'],
+            ['custom'],
+        ];
+    }
+
+    public function testAddContainerTagRedditCustomEventNameTooLong()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The custom event name must be at most 64 characters long.');
+
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'Reddit', 'MyName', ['pixelId' => 'a2_test', 'eventName' => 'custom', 'customEventName' => str_repeat('a', 65)], [$this->idTrigger1]);
+    }
+
+    public function testAddContainerTagRedditAcceptsCustomEventNameOf64Characters()
+    {
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'Reddit', 'MyName', ['pixelId' => 'a2_test', 'eventName' => 'custom', 'customEventName' => str_repeat('a', 62) . ' é'], [$this->idTrigger1]);
+        $this->assertGreaterThan(0, $idTag);
+    }
+
+    public function testAddContainerTagTikTokAndPinterestAcceptCustomEventNames()
+    {
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'TikTok', 'MyName', ['pixelId' => 'test', 'eventName' => 'custom', 'customEventName' => 'Signup_Done'], [$this->idTrigger1]);
+        $this->assertGreaterThan(0, $idTag);
+
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'PinterestPixel', 'MyName2', ['tagId' => 'test', 'eventName' => 'custom', 'customEventName' => '{{EventName}}'], [$this->idTrigger1]);
+        $this->assertGreaterThan(0, $idTag);
+    }
+
+    public function testAddContainerTagHubSpotTrackingInvalidHubId()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The Hub ID must contain only digits.');
+
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'HubSpotTracking', 'MyName', ['portalId' => '123/evil'], [$this->idTrigger1]);
+    }
+
+    public function testAddContainerTagHubSpotTrackingAcceptsHubIdAndVariable()
+    {
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'HubSpotTracking', 'MyName', ['portalId' => ' 1234567 '], [$this->idTrigger1]);
+        $this->assertGreaterThan(0, $idTag);
+
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'HubSpotTracking', 'MyName2', ['portalId' => '{{HubId}}'], [$this->idTrigger1]);
+        $this->assertGreaterThan(0, $idTag);
+    }
+
+    public function testAddContainerTagOpenAIAdsPixelAmountWithoutCurrency()
+    {
+        $this->expectException(\Piwik\Validators\Exception::class);
+        $this->expectExceptionMessage('Currency: A value needs to be provided.');
+
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'OpenAIAdsPixel', 'MyName', ['pixelId' => 'test', 'eventName' => 'order_created', 'amount' => '10'], [$this->idTrigger1]);
+    }
+
+    public function testAddContainerTagOpenAIAdsPixelAcceptsVariableNameAndAmountWithCurrency()
+    {
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'OpenAIAdsPixel', 'MyName', ['pixelId' => 'test', 'eventName' => 'custom', 'customEventName' => '{{EventName}}'], [$this->idTrigger1]);
+        $this->assertGreaterThan(0, $idTag);
+
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'OpenAIAdsPixel', 'MyName2', ['pixelId' => 'test', 'eventName' => 'lead_created', 'amount' => '10', 'currency' => 'EUR'], [$this->idTrigger1]);
+        $this->assertGreaterThan(0, $idTag);
+    }
+
     public function testAddContainerTagMissingFireTrigger()
     {
         $this->expectException(\Piwik\Validators\Exception::class);
