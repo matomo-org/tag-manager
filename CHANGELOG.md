@@ -2,6 +2,8 @@
 
 0.2.11
 
+* Added OpenAI Ads, Microsoft Ads UET Conversion, TikTok, Pinterest, Snapchat, X, Reddit and HubSpot tags
+* Renamed the Facebook Pixel tag to Meta Ads: Pixel (Facebook & Instagram)
 * Fixed a blank entry being added to the Activity Log when an event carried no valid site or entity id
 * Fixed the "URI-decode Cookie" option of the Cookie variable having no effect
 * Borders now use `@theme-color-border`, as `@theme-color-border-alternative` is deprecated in Matomo 6

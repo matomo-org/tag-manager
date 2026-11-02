@@ -2762,6 +2762,268 @@
             window.MatomoTagManager.debug.log = originalDebugLog;
         });
 
+        test("Matomo TagManager Template OpenAIAdsPixelTag", function() {
+            expect(13);
+            var calls = [];
+            var fakeWindow = {Intl: window.Intl, oaiq: function () { calls.push(Array.prototype.slice.call(arguments)); }};
+
+            function fire(params) {
+                calls = [];
+                params.window = fakeWindow;
+                params.pixelId = 'openai-test-pixel';
+                fireTemplateTag('OpenAIAdsPixelTag', params);
+                return calls;
+            }
+
+            deepEqual(fire({eventName: 'order_created', amount: '12,50', currency: 'eur'}), [
+                ['init', {pixelId: 'openai-test-pixel'}],
+                ['measureSingle', 'openai-test-pixel', 'order_created', {type: 'contents', amount: 1250, currency: 'EUR'}]
+            ], 'initialises the pixel and sends the amount in minor units');
+            deepEqual(fire({eventName: 'order_created', amount: 1299, currency: 'JPY'}), [
+                ['measureSingle', 'openai-test-pixel', 'order_created', {type: 'contents', amount: 1299, currency: 'JPY'}]
+            ], 'does not initialise the pixel again, and uses the decimal places of the currency');
+            deepEqual(fire({eventName: 'order_created', amount: 0, currency: 'EUR'})[0][3], {type: 'contents', amount: 0, currency: 'EUR'}, 'sends a zero amount');
+            deepEqual(fire({eventName: 'order_created', amount: '1,299.00', currency: 'EUR'})[0][3], {type: 'contents'}, 'drops an amount with a thousands separator');
+            deepEqual(fire({eventName: 'order_created', amount: '1,299', currency: 'EUR'})[0][3], {type: 'contents'}, 'drops an amount that may hold a thousands separator');
+            deepEqual(fire({eventName: 'order_created', amount: '12.500', currency: 'KWD'})[0][3], {type: 'contents', amount: 12500, currency: 'KWD'}, 'reads three decimals for a currency that has them');
+            deepEqual(fire({eventName: 'order_created', amount: '10', currency: ''})[0][3], {type: 'contents'}, 'drops an amount without a currency');
+            deepEqual(fire({eventName: 'order_created', amount: '10', currency: 'EURO'})[0][3], {type: 'contents'}, 'drops an amount with an invalid currency');
+            deepEqual(fire({eventName: 'lead_created', amount: '10', currency: 'EUR'})[0][3], {type: 'customer_action', amount: 1000, currency: 'EUR'}, 'sends the amount for a lead');
+            deepEqual(fire({eventName: 'custom', customEventName: ' Signup_Done ', eventId: 42}), [
+                ['measureSingle', 'openai-test-pixel', 'custom', {type: 'custom'}, {custom_event_name: 'signup_done', event_id: '42'}]
+            ], 'sends a custom event with its normalised name and the event ID');
+            deepEqual(fire({eventName: 'custom', customEventName: 'bad name'}), [], 'drops a custom event with an invalid name');
+            deepEqual(fire({eventName: 'custom', customEventName: 'order_created'}), [], 'drops a custom event named like a standard event');
+            deepEqual(fire({eventName: 'custom', customEventName: ''}), [], 'drops a custom event without a name');
+        });
+
+        test("Matomo TagManager Template BingUETConversionTag", function() {
+            expect(8);
+            var fakeWindow = {Intl: window.Intl};
+
+            function fire(params) {
+                fakeWindow.uetq = [];
+                params.window = fakeWindow;
+                fireTemplateTag('BingUETConversionTag', params);
+                return fakeWindow.uetq;
+            }
+
+            deepEqual(fire({eventAction: 'purchase', eventCategory: 'shop', eventValue: 0, revenueValue: '12,50', currency: 'EUR'}),
+                ['event', 'purchase', {event_category: 'shop', event_value: 0, revenue_value: 12.5, currency: 'EUR'}],
+                'queues the event with numeric values, including zero');
+            deepEqual(fire({eventAction: 'purchase', eventValue: 'abc', revenueValue: '1,299.00'}), ['event', 'purchase', {}], 'drops values that are not plain numbers');
+            deepEqual(fire({eventAction: 'purchase', revenueValue: '1.299', currency: 'EUR'}), ['event', 'purchase', {}], 'drops a value that may hold a thousands separator, and its currency');
+            deepEqual(fire({eventAction: 'purchase', revenueValue: '12.500', currency: ' kwd '}), ['event', 'purchase', {revenue_value: 12.5, currency: 'KWD'}], 'reads three decimals for a currency that has them, and normalises the currency');
+            deepEqual(fire({eventAction: 'signup', eventParameters: [{parameter: 'plan', value: 'pro'}, {parameter: '', value: 'ignored'}]}),
+                ['event', 'signup', {plan: 'pro'}],
+                'adds the event parameters that have a name');
+            deepEqual(fire({eventAction: 'purchase', revenueValue: '10', currency: 'EUR', eventParameters: [{parameter: 'revenue_value', value: 'abc'}, {parameter: 'currency', value: 'x'}]}),
+                ['event', 'purchase', {revenue_value: 10, currency: 'EUR'}],
+                'does not let an event parameter replace a validated field');
+            deepEqual(fire({eventAction: 'purchase', revenueValue: 'abc', eventParameters: [{parameter: 'currency', value: 'x'}, {parameter: 'plan', value: 'pro'}]}),
+                ['event', 'purchase', {plan: 'pro'}],
+                'does not let an event parameter set a field the tag builds itself');
+            deepEqual(fire({eventAction: 'purchase', revenueValue: '10', currency: 'EURO'}), ['event', 'purchase', {revenue_value: 10}], 'drops a currency that is not a three-letter code');
+        });
+
+        test("Matomo TagManager Template PinterestPixelTag", function() {
+            expect(7);
+            var calls = [];
+            var fakeWindow = {pintrk: function () { calls.push(Array.prototype.slice.call(arguments)); }};
+
+            function fire(params) {
+                calls = [];
+                params.window = fakeWindow;
+                params.tagId = params.tagId || 'pinterest-test-tag';
+                fireTemplateTag('PinterestPixelTag', params);
+                return calls;
+            }
+
+            deepEqual(fire({eventName: 'pagevisit', eventId: 'abc'}), [
+                ['load', 'pinterest-test-tag'],
+                ['page'],
+                ['track', 'pagevisit', {event_id: 'abc'}]
+            ], 'loads the tag with the base page call once, then tracks pagevisit as a conversion');
+            deepEqual(fire({eventName: 'checkout', eventParameters: [{parameter: 'value', value: '10'}]}), [
+                ['track', 'checkout', {value: '10'}]
+            ], 'does not load the tag again, and sends the event parameters');
+            deepEqual(fire({eventName: 'custom', customEventName: ''}), [], 'sends nothing for a custom event without a name');
+            deepEqual(fire({eventName: 'custom', customEventName: ' TookSurvey '}), [['track', 'TookSurvey', {}]], 'sends a custom event with its trimmed name');
+            deepEqual(fire({eventName: 'custom', customEventName: 'bad name'}), [], 'drops a custom event with an invalid name');
+            deepEqual(fire({eventName: 'custom', customEventName: 'Checkout'}), [], 'drops a custom event named like a standard one');
+            deepEqual(fire({tagId: 'pinterest-unloaded-tag', eventName: 'custom', customEventName: 'bad name'}), [], 'does not load a tag for an invalid custom event');
+        });
+
+        test("Matomo TagManager Template TikTokTag", function() {
+            expect(6);
+            var calls = [];
+            function record(name) {
+                return function () { calls.push([name].concat(Array.prototype.slice.call(arguments))); };
+            }
+            var fakeWindow = {ttq: {
+                load: record('load'),
+                instance: function (pixelId) {
+                    return {page: record('page:' + pixelId), track: record('track:' + pixelId)};
+                }
+            }};
+
+            function fire(params) {
+                calls = [];
+                params.window = fakeWindow;
+                params.pixelId = params.pixelId || 'tiktok-test-pixel';
+                fireTemplateTag('TikTokTag', params);
+                return calls;
+            }
+
+            deepEqual(fire({eventName: 'PageView'}), [
+                ['load', 'tiktok-test-pixel'],
+                ['page:tiktok-test-pixel']
+            ], 'loads the pixel once and sends the page view to that pixel only');
+            deepEqual(fire({eventName: 'Purchase', eventId: 'abc', eventParameters: [{parameter: 'value', value: '10'}]}), [
+                ['track:tiktok-test-pixel', 'Purchase', {value: '10'}, {event_id: 'abc'}]
+            ], 'sends the event with its parameters and ID to that pixel only');
+            deepEqual(fire({eventName: 'custom', customEventName: ' Signup_Done '}), [
+                ['track:tiktok-test-pixel', 'Signup_Done', {}]
+            ], 'sends a custom event with its trimmed name');
+            deepEqual(fire({eventName: 'custom', customEventName: 'bad name'}), [], 'drops a custom event with an invalid name');
+            deepEqual(fire({eventName: 'custom', customEventName: 'completepayment'}), [], 'drops a custom event with a reserved name');
+            deepEqual(fire({pixelId: 'tiktok-unloaded-pixel', eventName: 'custom', customEventName: 'bad name'}), [], 'does not load a pixel for an invalid custom event');
+        });
+
+        test("Matomo TagManager Template RedditTag", function() {
+            expect(5);
+            var calls = [];
+            var fakeWindow = {rdt: function () { calls.push(Array.prototype.slice.call(arguments)); }};
+
+            function fire(params) {
+                calls = [];
+                params.window = fakeWindow;
+                params.pixelId = 'a2_reddit_test';
+                fireTemplateTag('RedditTag', params);
+                return calls;
+            }
+
+            deepEqual(fire({eventName: 'AddToCart', eventParameters: [{parameter: 'value', value: '10'}, {parameter: '', value: 'ignored'}]}), [
+                ['init', 'a2_reddit_test'],
+                ['track', 'AddToCart', {value: '10'}]
+            ], 'initialises the pixel once and sends the event parameters that have a name');
+            deepEqual(fire({eventName: 'custom', customEventName: 'Signup'}), [
+                ['track', 'Custom', {customEventName: 'Signup'}]
+            ], 'sends a custom event under Custom with its name');
+            deepEqual(fire({eventName: 'custom', customEventName: ''}), [], 'sends nothing for a custom event without a name');
+            var name64 = new Array(64).join('a') + '😀';
+            deepEqual(fire({eventName: 'custom', customEventName: name64}), [
+                ['track', 'Custom', {customEventName: name64}]
+            ], 'counts a character outside the Basic Multilingual Plane once towards the 64 allowed');
+            deepEqual(fire({eventName: 'custom', customEventName: new Array(66).join('a')}), [], 'sends nothing for a custom event name over 64 characters');
+        });
+
+        test("Matomo TagManager Template SnapchatTag", function() {
+            expect(2);
+            var calls = [];
+            var fakeWindow = {snaptr: function () { calls.push(Array.prototype.slice.call(arguments)); }};
+
+            function fire(params) {
+                calls = [];
+                params.window = fakeWindow;
+                params.pixelId = 'snapchat-test-pixel';
+                fireTemplateTag('SnapchatTag', params);
+                return calls;
+            }
+
+            deepEqual(fire({eventName: 'PAGE_VIEW', userEmail: 'a@example.com'}), [
+                ['init', 'snapchat-test-pixel', {user_email: 'a@example.com'}],
+                ['track', 'PAGE_VIEW', {}]
+            ], 'initialises the pixel with the email and sends the event');
+            deepEqual(fire({eventName: 'VIEW_CONTENT', eventParameters: [{parameter: 'item_ids', value: 'sku-1'}]}), [
+                ['track', 'VIEW_CONTENT', {item_ids: 'sku-1'}]
+            ], 'does not initialise the pixel again, and sends the event parameters');
+        });
+
+        test("Matomo TagManager Template XPixelTag", function() {
+            expect(2);
+            var calls = [];
+            var fakeWindow = {twq: function () { calls.push(Array.prototype.slice.call(arguments)); }};
+
+            function fire(params) {
+                calls = [];
+                params.window = fakeWindow;
+                params.pixelId = 'x-test-pixel';
+                fireTemplateTag('XPixelTag', params);
+                return calls;
+            }
+
+            deepEqual(fire({}), [['config', 'x-test-pixel']], 'configures the pixel and sends no event without an event ID');
+            deepEqual(fire({eventId: 'tw-x-test-abc', eventParameters: [{parameter: 'value', value: '10'}]}), [
+                ['event', 'tw-x-test-abc', {value: '10'}]
+            ], 'does not configure the pixel again, and sends the event with its parameters');
+        });
+
+        test("Matomo TagManager Template HubSpotTrackingTag", function() {
+            expect(16);
+            var scripts = [];
+            var existingLoader = null;
+            var embeddedScript = null;
+            var fakeDocument = {
+                getElementById: function () { return existingLoader; },
+                querySelector: function () { return embeddedScript; },
+                createElement: function () { return {}; },
+                getElementsByTagName: function () {
+                    return [{parentNode: {insertBefore: function (script) { scripts.push(script.src); }}}];
+                }
+            };
+            var fakeWindow = {location: {pathname: '/shop', search: '?a=1'}};
+
+            function fire(params) {
+                fakeWindow._hsq = [];
+                params.window = fakeWindow;
+                params.document = fakeDocument;
+                fireTemplateTag('HubSpotTrackingTag', params);
+                return fakeWindow._hsq;
+            }
+
+            deepEqual(fire({portalId: '123/evil'}), [], 'ignores a Hub ID that is not only digits');
+            deepEqual(fire({portalId: ' 4242 ', region: 'eu1'}), [], 'leaves the first page view to the loaded tracking code');
+            deepEqual(scripts, ['https://js-eu1.hs-scripts.com/4242.js'], 'loads the tracking code for the region once');
+            deepEqual(fire({portalId: '4242'}), [], 'does not count the same path twice');
+            fakeWindow.location = {pathname: '/checkout', search: ''};
+            deepEqual(fire({portalId: '4242', email: 'a@example.com'}), [
+                ['setPath', '/checkout'],
+                ['identify', {email: 'a@example.com'}],
+                ['trackPageView']
+            ], 'counts a page view for a new path');
+            fakeWindow.location = {pathname: '/thanks', search: ''};
+            deepEqual(fire({portalId: '4242', eventName: 'pe4242_signup'}), [
+                ['setPath', '/thanks'],
+                ['trackCustomBehavioralEvent', {name: 'pe4242_signup'}]
+            ], 'sets the new path before an event, without counting a page view');
+            deepEqual(fire({portalId: '4242'}), [['trackPageView']], 'still counts the page view for a path first seen by an event');
+            fakeWindow.location = {pathname: '/checkout', search: ''};
+            fire({portalId: '4242', eventName: 'pe4242_signup'});
+            fakeWindow.location = {pathname: '/thanks', search: ''};
+            deepEqual(fire({portalId: '4242'}), [['setPath', '/thanks'], ['trackPageView']], 'counts a page view on returning to a path counted earlier');
+            existingLoader = {src: 'https://js.hs-scripts.com/4343.js'};
+            deepEqual(fire({portalId: '4343'}), [], 'leaves the first page view to tracking code already on the page');
+            deepEqual(fire({portalId: '4444', email: 'b@example.com', eventName: 'pe4444_signup'}), [], 'sends nothing when another account\'s tracking code is on the page');
+            existingLoader = null;
+            embeddedScript = {src: 'https://js.hs-scripts.com/5555.js'};
+            deepEqual(fire({portalId: '5656', eventName: 'pe5656_signup'}), [], 'recognises another account\'s tracking code embedded under a different id');
+            deepEqual(fire({portalId: '5555'}), [], 'leaves the first page view to tracking code embedded under a different id');
+            deepEqual(scripts, ['https://js-eu1.hs-scripts.com/4242.js'], 'does not load a second tracking code');
+            embeddedScript = null;
+            fakeWindow.performance = {getEntriesByType: function () { return [{name: 'https://example.com/landing?x=1#top'}]; }};
+            existingLoader = {src: 'https://js.hs-scripts.com/6666.js'};
+            deepEqual(fire({portalId: '6666', eventName: 'pe6666_signup'}), [
+                ['setPath', '/thanks'],
+                ['trackCustomBehavioralEvent', {name: 'pe6666_signup'}]
+            ], 'sets the path when the page has navigated since tracking code already on the page loaded');
+            deepEqual(fire({portalId: '6666'}), [['trackPageView']], 'counts the page view for the navigated path');
+            existingLoader = {src: 'https://js.hs-scripts.com/6767.js'};
+            fakeWindow.location = {pathname: '/landing', search: '?x=1'};
+            deepEqual(fire({portalId: '6767'}), [], 'leaves the page view for the path the page was loaded on to tracking code already on the page');
+            delete fakeWindow.performance;
+        });
+
         test("Matomo TagManager Template MatomoTag", function() {
             expect(2);
             var templateToTest = 'MatomoTag';
