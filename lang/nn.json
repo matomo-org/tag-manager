@@ -854,6 +854,7 @@
         "OneTrustTagDomainDescription": "For å finne data-domain-script logger du inn i OneTrust, går til Scripts, vel domenet du vil ha, vel fana Production Scripts og finn data-domain-script i Production CDN Script.",
         "OneTrustTagDomainTitle": "Data-domain-script",
         "OnlyTriggerWhen": "Utløys berre når",
+        "OpenAIAdsPixelTagCurrencyTitle": "Valuta",
         "OptionallyCustomiseContainer": "Valfritt: bruk dei avanserte vala til å tilpasse oppsettet av Tag Manager.",
         "OrCreateAndPublishVersion": "eller opprett ein versjon og publiser han",
         "PageHashVariableDescription": "Returnerer hash-delen av den gjeldande URL-en, utan #-teiknet framfor.",
