@@ -1023,6 +1023,8 @@ class TagManager extends \Piwik\Plugin
             BaseContext::removeAllContainerFiles($container['idcontainer']);
         }
         $dao->deleteContainersForSite($idSite, $deletedDate);
+
+        StaticContainer::get(LastUsedContainer::class)->removeSiteForAllUsers((int) $idSite);
     }
 
     public function onUserDeleted($userLogin)
