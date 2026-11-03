@@ -29,12 +29,18 @@
         "MatomoTagEcommerceViewPrice": "Cena",
         "MatomoTagEcommerceViewProductName": "Naziv proizvoda",
         "MatomoTagEcommerceViewProductSKU": "SKU proizvoda",
+        "OpenAIAdsPixelTagCurrencyTitle": "Valuta",
+        "OpenAIAdsPixelTagEventNameTitle": "Događaj",
         "PageTitleVariableName": "Naslov stranice",
         "PageUrlVariableName": "Adresa stranice",
+        "PinterestPixelTagEventNameTitle": "Događaj",
+        "RedditTagEventNameTitle": "Događaj",
         "ReferrerUrlVariableName": "Referenca",
         "ReferrerVariableName": "Referenca",
+        "SnapchatTagEventNameTitle": "Događaj",
         "StartDate": "Početni datum",
         "Tag": "Oznaka",
+        "TikTokTagEventNameTitle": "Događaj",
         "Type": "Tip",
         "Version": "Verzija"
     }
