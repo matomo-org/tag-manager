@@ -24,6 +24,10 @@ exports.selector = async function (page, screenshotName, selector)
 
 exports.topControls = async function (page, screenshotName)
 {
+    // the hidden update-check text would otherwise size the header message box differently per release
+    await page.webpage.addStyleTag({
+        content: '#header_message { width: 160px; overflow: hidden; }',
+    });
     await exports.selector(page, screenshotName, '.top_controls');
 };
 
