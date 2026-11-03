@@ -14,9 +14,15 @@
         "EtrackerTagTransactionCurrencyTitle": "Pera",
         "InvalidDebugUrlError": "Mali",
         "MatomoTagEcommerceViewPrice": "Presyo",
+        "OpenAIAdsPixelTagCurrencyTitle": "Pera",
+        "OpenAIAdsPixelTagEventNameTitle": "Resulta",
         "PageUrlVariableName": "URL ng Pahina",
+        "PinterestPixelTagEventNameTitle": "Resulta",
+        "RedditTagEventNameTitle": "Resulta",
         "ReferrerUrlVariableName": "Referrer URL",
         "ReferrerVariableName": "Referrer URL",
+        "SnapchatTagEventNameTitle": "Resulta",
+        "TikTokTagEventNameTitle": "Resulta",
         "Type": "Uri",
         "Version": "Bersyon"
     }
