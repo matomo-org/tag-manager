@@ -77,6 +77,7 @@
         "MatomoTagEcommerceViewProductSKUHelp": "Kod proizvoda u skladištu koji se pregledava. Na stranici kategorije bi ovo polje trebalo biti prazno.",
         "MatomoTagManager": "Matomo upravljač oznaka",
         "Names": "Imena",
+        "OpenAIAdsPixelTagCurrencyTitle": "Valuta",
         "PageOriginVariableName": "Izvor stranice",
         "PagePathVariableDescription": "Vraća URL stazu trenutačne stranice",
         "PagePathVariableName": "Staza stranice",
