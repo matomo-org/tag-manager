@@ -165,17 +165,22 @@ class MatomoConfigurationVariable extends BaseVariable
             $this->makeSetting('disableCookies', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableCookiesTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableCookiesDescription');
-                $field->condition = '!requireConsent && !requireCookieConsent';
+                $field->condition = '!requireConsent && !requireCookieConsent && !requireConsentForRestrictedData';
             }),
             $this->makeSetting('requireConsent', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireConsentTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireConsentDescription');
-                $field->condition = '!requireCookieConsent && !disableCookies';
+                $field->condition = '!requireCookieConsent && !disableCookies && !requireConsentForRestrictedData';
             }),
             $this->makeSetting('requireCookieConsent', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentDescription');
-                $field->condition = '!requireConsent && !disableCookies';
+                $field->condition = '!requireConsent && !disableCookies && !requireConsentForRestrictedData';
+            }),
+            $this->makeSetting('requireConsentForRestrictedData', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireConsentForRestrictedDataTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireConsentForRestrictedDataDescription');
+                $field->condition = '!requireConsent && !requireCookieConsent && !disableCookies';
             }),
             $this->makeSetting('customCookieTimeOutEnable', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutsEnableTitle');

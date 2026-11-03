@@ -164,6 +164,10 @@
                       	tracker.requireCookieConsent();
                     }
 
+                    if (matomoConfig.requireConsentForRestrictedData && typeof tracker.requireConsentForRestrictedData === 'function') {
+                        tracker.requireConsentForRestrictedData();
+                    }
+
                     if (matomoConfig.disableBrowserFeatureDetection && typeof tracker.disableBrowserFeatureDetection === 'function') {
                         tracker.disableBrowserFeatureDetection();
                     }
