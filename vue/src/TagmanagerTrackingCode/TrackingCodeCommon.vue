@@ -52,6 +52,8 @@
                         :show-all-sites-item="false"
                         :switch-site-on-select="false"
                         :show-selected-site="true"
+                        full-width
+                        align-label-start
                       />
                     </div>
                   </div>
