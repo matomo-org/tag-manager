@@ -9,6 +9,7 @@
         "MatomoTagEcommerceViewPrice": "ราคา",
         "MatomoTagEcommerceViewProductName": "ชื่อสินค้า",
         "MatomoTagEcommerceViewProductSKU": "รหัส SKU สินค้า",
+        "OpenAIAdsPixelTagCurrencyTitle": "สกุลเงิน",
         "PageTitleVariableName": "ชื่อหน้าเว็บ",
         "PageUrlVariableName": "URL หน้า",
         "ReferrerUrlVariableName": "ที่มา URL",

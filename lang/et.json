@@ -23,11 +23,17 @@
         "MatomoTagEcommerceViewPrice": "Hind",
         "MatomoTagEcommerceViewProductName": "Toote nimi",
         "MatomoTagEcommerceViewProductSKU": "Tootekood",
+        "OpenAIAdsPixelTagCurrencyTitle": "vääring",
+        "OpenAIAdsPixelTagEventNameTitle": "Sündmus",
         "PageTitleVariableName": "Lehe pealkiri",
         "PageUrlVariableName": "Lehe URL",
+        "PinterestPixelTagEventNameTitle": "Sündmus",
+        "RedditTagEventNameTitle": "Sündmus",
         "ReferrerUrlVariableName": "Viitaja URL",
         "ReferrerVariableName": "Viitaja URL",
+        "SnapchatTagEventNameTitle": "Sündmus",
         "Tag": "Silt",
+        "TikTokTagEventNameTitle": "Sündmus",
         "Type": "Tüüp",
         "Version": "Versioon"
     }

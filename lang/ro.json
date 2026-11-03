@@ -23,10 +23,16 @@
         "MatomoTagEcommerceViewPrice": "Pret",
         "MatomoTagEcommerceViewProductName": "Denumirea produsului",
         "MatomoTagEcommerceViewProductSKU": "SKU Produs",
+        "OpenAIAdsPixelTagCurrencyTitle": "Unitate monetară",
+        "OpenAIAdsPixelTagEventNameTitle": "Eveniment",
         "PageTitleVariableName": "Titlul paginii",
         "PageUrlVariableName": "URL-ul Paginii",
+        "PinterestPixelTagEventNameTitle": "Eveniment",
+        "RedditTagEventNameTitle": "Eveniment",
         "ReferrerUrlVariableName": "Referal URL",
         "ReferrerVariableName": "Referal URL",
+        "SnapchatTagEventNameTitle": "Eveniment",
+        "TikTokTagEventNameTitle": "Eveniment",
         "Type": "Tip",
         "Version": "Versiune"
     }

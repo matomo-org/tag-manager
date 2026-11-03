@@ -2,6 +2,7 @@
     "TagManager": {
         "CategoryClicks": "Կտտոցներ",
         "EtrackerTagTransactionCurrencyTitle": "արժույթ",
+        "OpenAIAdsPixelTagCurrencyTitle": "արժույթ",
         "PageUrlVariableName": "Էջի URL"
     }
 }
