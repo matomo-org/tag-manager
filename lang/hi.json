@@ -14,11 +14,17 @@
         "MatomoTagEcommerceViewPrice": "कीमत",
         "MatomoTagEcommerceViewProductName": "उत्पाद का नाम",
         "MatomoTagEcommerceViewProductSKU": "उत्पाद SKU",
+        "OpenAIAdsPixelTagCurrencyTitle": "मुद्रा",
+        "OpenAIAdsPixelTagEventNameTitle": "घटना",
         "PageTitleVariableName": "पृष्ठ शीर्षक",
         "PageUrlVariableName": "पृष्ठ का यू.आर.एल",
+        "PinterestPixelTagEventNameTitle": "घटना",
+        "RedditTagEventNameTitle": "घटना",
         "ReferrerUrlVariableName": "संदर्भ URL",
         "ReferrerVariableName": "संदर्भ URL",
+        "SnapchatTagEventNameTitle": "घटना",
         "Tag": "टैग",
+        "TikTokTagEventNameTitle": "घटना",
         "Type": "प्रकार",
         "Version": "संस्करण"
     }
