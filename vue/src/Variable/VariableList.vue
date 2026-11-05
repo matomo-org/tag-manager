@@ -234,6 +234,7 @@ import {
   Variable, VariableType,
 } from '../types';
 import ReferenceList from '../ReferenceList/ReferenceList.vue';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 export interface VariableListState {
   hasWriteAccess: boolean;
@@ -281,7 +282,7 @@ export default defineComponent({
       idContainer: this.idContainer,
       idContainerVersion: this.idContainerVersion,
       filter_limit: '-1',
-    }).then((variables) => {
+    }).catch(rethrowHttpErrorMessage).then((variables) => {
       this.containerVariables = variables;
     });
   },
@@ -302,7 +303,7 @@ export default defineComponent({
         idContainerVersion: this.idContainerVersion,
         idVariable: variable.idvariable,
         filter_limit: '-1',
-      }).then((references) => {
+      }).catch(rethrowHttpErrorMessage).then((references) => {
         if (!references || !references.length) {
           this.variableReferences = [];
 

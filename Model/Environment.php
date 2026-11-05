@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\TagManager\Model;
 
+use Piwik\Exception\ThingNotFoundException;
 use Piwik\Common;
 use Piwik\Piwik;
 use Exception;
@@ -53,7 +54,7 @@ class Environment
             return;
         }
 
-        throw new Exception(Piwik::translate('TagManager_ErrorEnvironmentDoesNotExist', $environmentId));
+        throw new ThingNotFoundException(Piwik::translate('TagManager_ErrorEnvironmentDoesNotExist', $environmentId));
     }
 
     /**

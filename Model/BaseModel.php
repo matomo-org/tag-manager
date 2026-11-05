@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\TagManager\Model;
 
+use Piwik\Exception\ThingNotFoundException;
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
 use Piwik\Piwik;
@@ -47,14 +48,14 @@ class BaseModel
     {
         $container = StaticContainer::get(Container::class)->getContainer($idSite, $idContainer);
         if (empty($container)) {
-            throw new \Exception(Piwik::translate('TagManager_ErrorContainerDoesNotExist', [$idContainer]));
+            throw new ThingNotFoundException(Piwik::translate('TagManager_ErrorContainerDoesNotExist', [$idContainer]));
         }
 
         // Copy the new trigger to the draft version of the destination container
         $idContainerVersion = $container['draft']['idcontainerversion'] ?? null;
         // Make sure that the version is set and is an integer value
         if (empty($idContainerVersion) || !(is_int($idContainerVersion) || (is_string($idContainerVersion) && ctype_digit($idContainerVersion)))) {
-            throw new \Exception(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
+            throw new ThingNotFoundException(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
         }
         // Make sure that the type is int
         return intval($idContainerVersion);

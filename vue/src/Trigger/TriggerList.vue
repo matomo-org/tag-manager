@@ -188,6 +188,7 @@ import { Field } from 'CorePluginsAdmin';
 import TriggersStore from './Triggers.store';
 import { TriggerReference, Trigger, TriggerType } from '../types';
 import ReferenceList from '../ReferenceList/ReferenceList.vue';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 export interface TriggerListState {
   hasWriteAccess: boolean;
@@ -245,7 +246,7 @@ export default defineComponent({
         idContainerVersion: this.idContainerVersion,
         idTrigger: trigger.idtrigger,
         filter_limit: '-1',
-      }).then((references) => {
+      }).catch(rethrowHttpErrorMessage).then((references) => {
         if (!references || !references.length) {
           this.triggerReferences = [];
 

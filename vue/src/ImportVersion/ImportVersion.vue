@@ -72,6 +72,7 @@ import {
   NotificationType,
 } from 'CoreHome';
 import { Field, SaveButton } from 'CorePluginsAdmin';
+import showHttpErrorMessage from '../showHttpErrorMessage';
 
 const NOTIFICATION_ID = 'importContainerVersion';
 
@@ -159,15 +160,12 @@ export default defineComponent({
                   backupName: this.backupName,
                 },
                 post,
-                {
-                  createErrorNotification: false,
-                },
               ).then(() => {
                 this.showNotification(translate('TagManager_VersionImportSuccess'), 'success');
                 this.isUpdating = false;
                 window.location.reload();
               }).catch((e) => {
-                this.showNotification(e.message, 'error', 'transient');
+                showHttpErrorMessage(e);
                 this.isUpdating = false;
               });
             },

@@ -107,6 +107,7 @@ import {
 } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
 import { Container, Version, InstallInstructions } from '../types';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface Environment {
   id: string;
@@ -171,7 +172,7 @@ export default defineComponent({
         filter_limit: '-1',
         idContainer: this.idContainer,
         environment,
-      }).then((instructions) => {
+      }).catch(rethrowHttpErrorMessage).then((instructions) => {
         this.installInstructions = instructions;
         nextTick(() => {
           const codeblocks = Array.isArray(this.$refs.codeblock)

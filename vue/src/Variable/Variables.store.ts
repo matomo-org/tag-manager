@@ -11,6 +11,7 @@ import {
 } from 'vue';
 import { AjaxHelper } from 'CoreHome';
 import { Variable, VariableCategory } from '../types';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface VariablesStoreState {
   variables: Variable[];
@@ -74,7 +75,7 @@ class VariablesStore {
     }).then((record) => {
       this.privateState.variables = [...this.privateState.variables, record];
       return record;
-    }).finally(() => {
+    }).catch(rethrowHttpErrorMessage).finally(() => {
       this.privateState.isLoadingSingle = false;
     });
   }
@@ -99,7 +100,7 @@ class VariablesStore {
       this.privateState.variables = variables;
       this.privateState.isLoadingVars = false;
       return this.variables.value;
-    }).finally(() => {
+    }).catch(rethrowHttpErrorMessage).finally(() => {
       this.privateState.isLoadingVars = false;
     });
   }
@@ -167,7 +168,7 @@ class VariablesStore {
         lookupTable,
       },
       { withTokenInUrl: true },
-    ).finally(() => { // TODO: test finally() use here in old browser (works in node)
+    ).catch(rethrowHttpErrorMessage).finally(() => { // TODO: test finally() use here in old browser (works in node)
       this.privateState.isUpdating = false;
     });
   }
@@ -197,7 +198,7 @@ class VariablesStore {
         method: 'TagManager.deleteContainerVariable',
       },
       { withTokenInUrl: true },
-    ).finally(() => {
+    ).catch(rethrowHttpErrorMessage).finally(() => {
       this.privateState.isUpdating = false;
     });
   }

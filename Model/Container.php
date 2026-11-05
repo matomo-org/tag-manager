@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\TagManager\Model;
 
+use Piwik\Exception\ThingNotFoundException;
 use Piwik\Container\StaticContainer;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\BaseContext;
@@ -206,7 +207,7 @@ class Container extends BaseModel
         $container = $this->dao->getContainer($idSite, $idContainer);
 
         if (empty($container)) {
-            throw new Exception(Piwik::translate('TagManager_ErrorContainerDoesNotExist', $idContainer));
+            throw new ThingNotFoundException(Piwik::translate('TagManager_ErrorContainerDoesNotExist', $idContainer));
         }
     }
 
@@ -240,7 +241,7 @@ class Container extends BaseModel
         $version = $this->versionsDao->getVersion($idSite, $idContainer, $idContainerVersion);
 
         if (empty($version)) {
-            throw new Exception(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
+            throw new ThingNotFoundException(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
         }
     }
 
@@ -320,7 +321,7 @@ class Container extends BaseModel
         $release = $this->releasesDao->getReleaseForContainerVersion($idSite, $idContainer, $environment);
 
         if (empty($release)) {
-            throw new Exception(Piwik::translate('TagManager_ErrorContainerReleaseDoesNotExist'));
+            throw new ThingNotFoundException(Piwik::translate('TagManager_ErrorContainerReleaseDoesNotExist'));
         }
     }
 

@@ -9,6 +9,8 @@
 
 namespace Piwik\Plugins\TagManager;
 
+use Piwik\Http\BadRequestException;
+use Piwik\Exception\ThingNotFoundException;
 use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
@@ -1389,7 +1391,7 @@ class API extends \Piwik\Plugin\API
             $idContainerVersion = $this->getContainerDraftVersion($idSite, $idContainer);
         }
         if (empty($idContainerVersion)) {
-            throw new Exception(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
+            throw new ThingNotFoundException(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
         }
 
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -1420,7 +1422,7 @@ class API extends \Piwik\Plugin\API
             $idContainerVersion = $this->getContainerDraftVersion($idSite, $idContainer);
         }
         if (empty($idContainerVersion)) {
-            throw new Exception(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
+            throw new ThingNotFoundException(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
         }
 
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -1476,7 +1478,7 @@ class API extends \Piwik\Plugin\API
             $idContainerVersion = $this->getContainerDraftVersion($idSite, $idContainer);
         }
         if (empty($idContainerVersion)) {
-            throw new Exception(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
+            throw new ThingNotFoundException(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
         }
 
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
@@ -1507,7 +1509,7 @@ class API extends \Piwik\Plugin\API
 
         $idContainerVersion = $this->getContainerDraftVersion($idSite, $idContainer);
         if (empty($idContainerVersion)) {
-            throw new Exception(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
+            throw new ThingNotFoundException(Piwik::translate('TagManager_ErrorContainerVersionDoesNotExist'));
         }
 
         $this->assertUserCanEditContainerVersion($idSite, $idContainer, $idContainerVersion);
@@ -1519,7 +1521,7 @@ class API extends \Piwik\Plugin\API
         $exportedContainerVersion = @json_decode($exportedContainerVersion, true);
 
         if (empty($exportedContainerVersion) || !is_array($exportedContainerVersion)) {
-            throw new Exception(Piwik::translate('TagManager_ErrorInvalidContainerImportFormat'));
+            throw new BadRequestException(Piwik::translate('TagManager_ErrorInvalidContainerImportFormat'));
         }
 
         // we validate before actually creating a backup version
@@ -1650,6 +1652,7 @@ class API extends \Piwik\Plugin\API
      * @param $idSite
      * @return void
      * @throws \Piwik\NoAccessException
+     * @throws \Piwik\Exception\NoPrivilegesException
      */
     private function checkUserHasTagManagerAccess($idSite = null)
     {

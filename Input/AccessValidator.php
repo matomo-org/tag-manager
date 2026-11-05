@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\TagManager\Input;
 
+use Piwik\Exception\NoPrivilegesException;
 use Piwik\Container\StaticContainer;
 use Piwik\NoAccessException;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
@@ -101,7 +102,12 @@ class AccessValidator
         }
 
         $minimumRole = StaticContainer::get(SystemSettings::class)->restrictTagManagerAccess->getValue();
-        throw new NoAccessException(Piwik::translate('General_ExceptionPrivilegeAccessWebsite', ["'{$minimumRole}'", $idSite]));
+        $message = Piwik::translate('General_ExceptionPrivilegeAccessWebsite', ["'{$minimumRole}'", $idSite]);
+        if (Piwik::isUserIsAnonymous()) {
+            throw new NoAccessException($message);
+        }
+
+        throw new NoPrivilegesException($message, 403);
     }
 
     public function hasUseCustomTemplatesCapability($idSite)

@@ -62,6 +62,7 @@ import TrackingCodeCommon from './TrackingCodeCommon.vue';
 import {
   InstallInstructions,
 } from '../types';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface TagmanagerTrackingSPAPageState {
   setupStep1: string,
@@ -133,7 +134,7 @@ export default defineComponent({
         environment: refs?.environment,
         idSite: refs?.site?.id,
         jsFramework: this.jsFramework,
-      }).then((instructions) => {
+      }).catch(rethrowHttpErrorMessage).then((instructions) => {
         this.installInstructions = instructions;
         nextTick(() => {
           const codeblocks = Array.isArray(this.$refs.codeblock)
