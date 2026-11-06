@@ -17,6 +17,8 @@ use Piwik\Piwik;
 use Piwik\Plugins\CorePluginsAdmin\SettingsMetadata;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Settings\Storage\Backend\TransientBackend;
+use Piwik\Plugins\TagManager\Validators\MultiTupleValue;
+use Piwik\Settings\FieldConfig;
 use Piwik\Settings\Setting;
 use Piwik\Settings\Storage\Storage;
 
@@ -192,7 +194,13 @@ abstract class BaseTemplate
 
         $setting = new Setting($name, $defaultValue, $type, 'TagManager');
         $setting->setStorage($this->settingsStorage);
-        $setting->setConfigureCallback($fieldConfigCallback);
+        $setting->setConfigureCallback(function (FieldConfig $field) use ($fieldConfigCallback) {
+            call_user_func($fieldConfigCallback, $field);
+
+            if ($field->uiControl === FieldConfig::UI_CONTROL_MULTI_TUPLE) {
+                $field->validators[] = new MultiTupleValue($field->uiControlAttributes);
+            }
+        });
         $setting->setIsWritableByCurrentUser(true); // we validate access on API level.
 
         return $setting;
