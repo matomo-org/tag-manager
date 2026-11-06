@@ -96,9 +96,9 @@ export default defineComponent({
             // when no value configured and only one selection is available, we preselect that value
             this.onChange(this.containerVariables[0].key);
           }
-        }).catch(() => {
-          this.isLoading = false;
         });
+      }).catch(() => {
+        this.isLoading = false;
       });
     },
     onChange(newValue: string|null) {

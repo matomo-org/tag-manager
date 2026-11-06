@@ -292,6 +292,7 @@ export default defineComponent({
             diff.sort((a, b) => (
               new Date(b.lastChanged).valueOf() - new Date(a.lastChanged).valueOf()));
             this.versionChanges = diff;
+          }).finally(() => {
             this.isLoadingVersionChanges = false;
           });
 

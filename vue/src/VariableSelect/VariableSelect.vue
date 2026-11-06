@@ -161,9 +161,9 @@ export default defineComponent({
               this.preconfiguredVariables.push(preConfig);
             }
           });
-        }).catch(() => {
-          this.isLoading = false;
         });
+      }).catch(() => {
+        this.isLoading = false;
       });
     },
     editVariable(variable: ContainerVariableType) {
