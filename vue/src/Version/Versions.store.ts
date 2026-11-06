@@ -13,7 +13,6 @@ import {
 } from 'vue';
 import { AjaxHelper } from 'CoreHome';
 import { Version } from '../types';
-import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface VersionsStoreState {
   versions: Version[];
@@ -69,7 +68,7 @@ class VersionsStore {
       this.privateState.versions = versions;
       this.privateState.isLoadingVersions = false;
       return this.versions.value;
-    }).catch(rethrowHttpErrorMessage).finally(() => {
+    }).finally(() => {
       this.privateState.isLoadingVersions = false;
     });
   }
@@ -94,7 +93,7 @@ class VersionsStore {
     }).then((record) => {
       this.privateState.versions = [...this.privateState.versions, record];
       return readonly(record);
-    }).catch(rethrowHttpErrorMessage).finally(() => {
+    }).finally(() => {
       this.privateState.isLoadingSingle = false;
     });
   }
@@ -113,7 +112,7 @@ class VersionsStore {
         method: 'TagManager.deleteContainerVersion',
       },
       { withTokenInUrl: true },
-    ).catch(rethrowHttpErrorMessage).finally(() => {
+    ).finally(() => {
       this.privateState.isUpdating = false;
     });
   }
@@ -129,7 +128,7 @@ class VersionsStore {
       idContainerVersion,
       environment,
       method: 'TagManager.publishContainerVersion',
-    }).catch(rethrowHttpErrorMessage).finally(() => {
+    }).finally(() => {
       this.privateState.isUpdating = false;
     });
   }
@@ -152,7 +151,7 @@ class VersionsStore {
         description: version.description,
       },
       { withTokenInUrl: true },
-    ).catch(rethrowHttpErrorMessage).finally(() => {
+    ).finally(() => {
       this.privateState.isUpdating = false;
     });
   }

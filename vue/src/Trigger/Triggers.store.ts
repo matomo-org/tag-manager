@@ -13,7 +13,6 @@ import {
 } from 'vue';
 import { AjaxHelper } from 'CoreHome';
 import { Trigger, TriggerCategory } from '../types';
-import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface TriggersStoreState {
   triggers: Trigger[];
@@ -66,7 +65,7 @@ class TriggersStore {
     return Promise.resolve(this.fetchPromise).then((triggers) => {
       this.privateState.triggers = triggers;
       return this.triggers.value;
-    }).catch(rethrowHttpErrorMessage).finally(() => {
+    }).finally(() => {
       this.privateState.isLoadingTriggers = false;
     });
   }
@@ -112,7 +111,7 @@ class TriggersStore {
     }).then((record) => {
       this.privateState.triggers = [...this.privateState.triggers, record];
       return readonly(record);
-    }).catch(rethrowHttpErrorMessage).finally(() => {
+    }).finally(() => {
       this.privateState.isLoadingSingle = false;
     });
   }
@@ -168,7 +167,7 @@ class TriggersStore {
         conditions,
       },
       { withTokenInUrl: true },
-    ).catch(rethrowHttpErrorMessage).finally(() => {
+    ).finally(() => {
       this.privateState.isUpdating = false;
     });
   }
@@ -198,7 +197,7 @@ class TriggersStore {
         method: 'TagManager.deleteContainerTrigger',
       },
       { withTokenInUrl: true },
-    ).catch(rethrowHttpErrorMessage).finally(() => {
+    ).finally(() => {
       this.privateState.isUpdating = false;
     });
   }

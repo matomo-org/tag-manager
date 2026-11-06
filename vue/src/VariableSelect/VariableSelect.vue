@@ -90,7 +90,6 @@ import {
   ContainerVariableCategory,
   ContainerVariableType,
 } from '../types';
-import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface VariableSelectState {
   preconfiguredVariables: ContainerVariableCategory[];
@@ -145,7 +144,7 @@ export default defineComponent({
           filter_limit: '-1',
           idContainer: this.idContainer,
           idContainerVersion: this.actualIdContainerVersion,
-        }).catch(rethrowHttpErrorMessage).then((variables) => {
+        }).then((variables) => {
           this.preconfiguredVariables = [];
           this.containerVariables = [];
           this.isLoading = false;
@@ -162,9 +161,9 @@ export default defineComponent({
               this.preconfiguredVariables.push(preConfig);
             }
           });
-        }).catch(() => {
-          this.isLoading = false;
         });
+      }).catch(() => {
+        this.isLoading = false;
       });
     },
     editVariable(variable: ContainerVariableType) {
@@ -204,7 +203,7 @@ export default defineComponent({
         method: 'TagManager.getContainer',
         filter_limit: '-1',
         idContainer: this.idContainer,
-      }).catch(rethrowHttpErrorMessage);
+      });
     },
   },
 });

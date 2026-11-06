@@ -13,7 +13,6 @@ import {
 } from 'vue';
 import { AjaxHelper } from 'CoreHome';
 import { Container } from '../types';
-import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface ContainersStoreState {
   containers: Container[];
@@ -85,7 +84,7 @@ class ContainersStore {
     }).then((record) => {
       this.privateState.containers = [...this.privateState.containers, record];
       return readonly(record);
-    }).catch(rethrowHttpErrorMessage).finally(() => {
+    }).finally(() => {
       this.privateState.isLoadingSingle = false;
     });
   }
@@ -100,7 +99,7 @@ class ContainersStore {
         method: 'TagManager.deleteContainer',
       },
       { withTokenInUrl: true },
-    ).catch(rethrowHttpErrorMessage).finally(() => {
+    ).finally(() => {
       this.privateState.isUpdating = false;
     });
   }
@@ -125,7 +124,7 @@ class ContainersStore {
         context: container.context,
       },
       { withTokenInUrl: true },
-    ).catch(rethrowHttpErrorMessage).finally(() => {
+    ).finally(() => {
       this.privateState.isUpdating = false;
     });
   }

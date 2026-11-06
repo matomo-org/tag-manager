@@ -41,7 +41,6 @@ import {
 } from 'CoreHome';
 import TrackingCodeCommon from './TrackingCodeCommon.vue';
 import { InstallInstructions } from '../types';
-import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 export default defineComponent({
   props: {
@@ -70,7 +69,7 @@ export default defineComponent({
         idContainer: refs?.idContainer,
         environment: refs?.environment,
         idSite: refs?.site?.id,
-      }).catch(rethrowHttpErrorMessage).then((instructions) => {
+      }).then((instructions) => {
         refs.installInstructions = instructions;
         nextTick(() => {
           const codeblocks = Array.isArray(this.$refs.codeblock)

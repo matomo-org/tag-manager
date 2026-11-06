@@ -154,7 +154,6 @@ import {
   Release,
   Variable,
 } from '../types';
-import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface Environment {
   id: string;
@@ -384,7 +383,7 @@ export default defineComponent({
         idContainer: this.idContainer,
         idContainerVersion: containerDraftVersion,
         idSite: this.site.id,
-      }).catch(rethrowHttpErrorMessage).then((variables) => {
+      }).then((variables) => {
         this.matomoConfigs = variables.filter((v) => v.type === 'MatomoConfiguration');
       }).finally(() => {
         this.isLoading = false;

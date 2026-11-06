@@ -345,7 +345,6 @@ import TriggersStore from '../Trigger/Triggers.store';
 import TagTriggerArray from './TagTriggerArray.vue';
 import TagDateInput from './TagDateInput.vue';
 import TagsStore from './Tags.store';
-import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 export interface Option {
   key: number;
@@ -463,7 +462,7 @@ export default defineComponent({
         idContainer: this.idContainer,
         idContainerVersion: this.idContainerVersion,
         filter_limit: '-1',
-      }).catch(rethrowHttpErrorMessage).then((triggers: Trigger[]) => {
+      }).then((triggers: Trigger[]) => {
         this.allContainerTriggers = triggers;
       });
     },
@@ -500,7 +499,7 @@ export default defineComponent({
         method: 'TagManager.getContainer',
         idContainer: this.idContainer,
         filter_limit: '-1',
-      }).catch(rethrowHttpErrorMessage).then(
+      }).then(
         (container) => TagsStore.fetchAvailableTags(container.context),
       ).then((tags) => {
         this.availableTags = tags;
