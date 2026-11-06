@@ -2,8 +2,6 @@
 
 0.2.11
 
-* Fixed requests for a missing container, version, release or environment not answering 404, and invalid container imports not answering 400
-* Fixed logged-in users below the required Tag Manager role being sent to the login page
 * When a site has more than one container, Tag Manager now opens the container you last worked in instead of the Manage Containers page
 * Added OpenAI Ads, Microsoft Ads UET Conversion, TikTok, Pinterest, Snapchat, X, Reddit and HubSpot tags
 * Renamed the Facebook Pixel tag to Meta Ads: Pixel (Facebook & Instagram)

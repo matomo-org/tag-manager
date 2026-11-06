@@ -9,9 +9,9 @@
 
 namespace Piwik\Plugins\TagManager\Model;
 
-use Piwik\Exception\ThingNotFoundException;
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
+use Piwik\Exception\ThingNotFoundException;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Dao\ContainerVersionsDao;
 use Piwik\Plugins\TagManager\Input\AccessValidator;

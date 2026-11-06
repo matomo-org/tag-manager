@@ -9,12 +9,12 @@
 
 namespace Piwik\Plugins\TagManager;
 
-use Piwik\Http\BadRequestException;
-use Piwik\Exception\ThingNotFoundException;
 use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Date;
+use Piwik\Exception\ThingNotFoundException;
+use Piwik\Http\BadRequestException;
 use Piwik\Log;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;

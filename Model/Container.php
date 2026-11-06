@@ -9,8 +9,8 @@
 
 namespace Piwik\Plugins\TagManager\Model;
 
-use Piwik\Exception\ThingNotFoundException;
 use Piwik\Container\StaticContainer;
+use Piwik\Exception\ThingNotFoundException;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\BaseContext;
 use Piwik\Plugins\TagManager\Dao\ContainerReleaseDao;

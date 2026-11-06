@@ -9,8 +9,8 @@
 
 namespace Piwik\Plugins\TagManager\Model;
 
-use Piwik\Exception\ThingNotFoundException;
 use Piwik\Common;
+use Piwik\Exception\ThingNotFoundException;
 use Piwik\Piwik;
 use Exception;
 use Piwik\Plugins\TagManager\SystemSettings;

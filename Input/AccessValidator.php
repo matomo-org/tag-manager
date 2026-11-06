@@ -9,8 +9,8 @@
 
 namespace Piwik\Plugins\TagManager\Input;
 
-use Piwik\Exception\NoPrivilegesException;
 use Piwik\Container\StaticContainer;
+use Piwik\Exception\NoPrivilegesException;
 use Piwik\NoAccessException;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
