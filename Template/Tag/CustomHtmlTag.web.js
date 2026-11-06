@@ -77,10 +77,13 @@
         var BANG = /!/g;
         var LPAREN = /\(/g;
         var RPAREN = /\)/g;
+        var AMP = /&/g;
         var encode = encodeURI(String(val));
         // modification by matomo: we use encodeURI instead of encodeURIComponent as we are currently not detecting
         // whether we are escaping a variable as part of a uri or the full uri
+        // modification by matomo: encodeURI keeps "&", so we escape it as well
         return encode
+            .replace(AMP, '&amp;')
             .replace(BANG, '%21')
             .replace(QUOT, '%27')
             .replace(APOS, '%27')
@@ -157,6 +160,82 @@
             return false;
         }
 
+        function getElements(root, elements)
+        {
+            var children = root.querySelectorAll('*');
+            for (var i = 0; i < children.length; i++) {
+                elements.push(children[i]);
+                if (children[i].nodeName.toLowerCase() === 'template' && children[i].content) {
+                    getElements(children[i].content, elements);
+                }
+            }
+            return elements;
+        }
+
+        function parseHtml(html, noscriptReplacement)
+        {
+            // a document without a browsing context does not load or run anything. We do not use a template element,
+            // because it parses some HTML differently from the div of the page, for example a leading <col>
+            var div = parameters.document.implementation.createHTMLDocument('').createElement('div');
+            div.innerHTML = html.replace(/(<\/?)noscript/gi, '$1' + noscriptReplacement);
+            return getElements(div, []);
+        }
+
+        function hasScriptUriScheme(attributeName, attributeValue)
+        {
+            // an svg animation can set a URL from each item of its "values" list, and a meta refresh goes to the URL after the delay
+            var uris = attributeName === 'values' ? attributeValue.split(';') : [attributeValue];
+            if (attributeName === 'content') {
+                uris.push(attributeValue.replace(/^\s*[\d.]*\s*[;,]?\s*(url\s*=\s*)?['"]?/i, ''));
+            }
+            return uris.some(function (uri) {
+                // browsers ignore leading whitespace and control characters, and tabs and newlines anywhere in a URL
+                return /^[\x00-\x20]*(javascript|vbscript):/i.test(uri.replace(/[\t\n\r]/g, ''));
+            });
+        }
+
+        function getBlockedValuePlaceholder(htmlString, filteredValue)
+        {
+            // asks the browser which attribute filteredValue goes into. Returns false when the value does not make the
+            // attribute a script URL. Otherwise returns the text to add instead, because an empty unquoted value would take
+            // the next attribute as its value. We check the value up to the end of filteredValue: the tag owner writes the rest.
+            var implementation = parameters.document.implementation;
+            var unquotedPlaceholder = /=[\t\n\f\r ]*[^\t\n\f\r "'>]*$/.test(htmlString) ? 'mTmKpwoqM' : '';
+            if (!implementation || !implementation.createHTMLDocument) {
+                return unquotedPlaceholder;
+            }
+            // the page parses noscript content as text, but a document that does not run scripts parses it as markup.
+            // So we rename noscript to an element that is not in the HTML and whose content is always text
+            var noscriptReplacement = ['noframes', 'noembed', 'xmp'].filter(function (name) {
+                return !new RegExp(name, 'i').test(htmlString);
+            })[0];
+            if (!noscriptReplacement && /<\/?noscript/i.test(htmlString)) {
+                return unquotedPlaceholder;
+            }
+
+            // filteredValue cannot contain "<", quotes or ">", so it does not change the elements before it
+            var closing = '"\'>';
+            var marker = 'mtm' + String(Math.random()).replace(/\D/g, '') + 'x';
+            var elements = parseHtml(htmlString + marker + closing, noscriptReplacement);
+            for (var i = 0; i < elements.length; i++) {
+                for (var j = 0; j < elements[i].attributes.length; j++) {
+                    var attribute = elements[i].attributes[j];
+                    var position = attribute.value.indexOf(marker);
+                    if (position === -1) {
+                        continue;
+                    }
+                    var element = parseHtml(htmlString + filteredValue + closing, noscriptReplacement)[i];
+                    var attributeValue = element ? element.getAttribute(attribute.name) : null;
+                    if (attributeValue !== null && !hasScriptUriScheme(attribute.name, attributeValue)) {
+                        return false;
+                    }
+                    // an unquoted value also takes the closing quotes
+                    return attribute.value.substring(position + marker.length) === closing.substring(0, 2) ? 'mTmKpwoqM' : '';
+                }
+            }
+            return false;
+        }
+
         function doChildrenContainJavaScript(element)
         {
             return element && element.innerHTML && element.innerHTML.toLowerCase().indexOf("<script") !== -1;
@@ -206,7 +285,7 @@
             var html = parameters.customHtml;
             if (html && html.type === 'JoinedVariable') {
                 var variables = html.getDefinition();
-                var value = '', varReturn, theVarValue, isVariable, hasValueSet;
+                var value = '', contextValue, filteredValue, placeholder, varReturn, theVarValue, isVariable, hasValueSet;
                 for (var i = 0; i < variables.length; i++) {
                     varReturn = parameters.buildVariable(variables[i]);
                     isVariable = TagManager.utils.isObject(variables[i]);
@@ -214,6 +293,8 @@
                     hasValueSet = theVarValue !== false && theVarValue !== null && TagManager.utils.isDefined(theVarValue);
 
                     if (isVariable) {
+                        // browsers also separate attributes with tabs and line breaks
+                        contextValue = value.replace(/[\t\n\r\f]/g, ' ');
                         if (TagManager.dom.isElementContext(value, 'script')) {
                             // instead of serializing the object, we make it accessible through a method so users can reference
                             // an object using eg "var mytest = {{myObj}}"
@@ -223,7 +304,7 @@
                             TagManager.customHtmlDataStore.push(theVarValue);
                             value += 'window.MatomoTagManager.customHtmlDataStore[' + (TagManager.customHtmlDataStore.length - 1) +']';
                         } else if (TagManager.dom.isElementContext(value, 'style')
-                                 || TagManager.dom.isAttributeContext(value, 'style')) {
+                                 || TagManager.dom.isAttributeContext(contextValue, 'style')) {
                             if (hasValueSet) {
                                 // we need to make sure to print a value... we use a random value... if someone searches for it
                                 // they can find the FAQ article
@@ -231,12 +312,20 @@
                             } else {
                                 value += 'mTmKpwoqM';
                             }
-                        } else if (TagManager.dom.isAttributeContext(value, 'href') || TagManager.dom.isAttributeContext(value, 'src')) {
-                            if (hasValueSet) {
-                                value += secureFilters.uri(theVarValue);
-                            }
                         } else if (hasValueSet) {
-                            value += secureFilters.html(theVarValue);
+                            if (TagManager.dom.isAttributeContext(contextValue, 'href')
+                                || TagManager.dom.isAttributeContext(contextValue, 'src')) {
+                                filteredValue = secureFilters.uri(theVarValue);
+                            } else {
+                                filteredValue = secureFilters.html(theVarValue);
+                            }
+                            placeholder = getBlockedValuePlaceholder(value, filteredValue);
+                            if (placeholder === false) {
+                                value += filteredValue;
+                            } else {
+                                TagManager.debug.log('Custom HTML tag: a variable value is not added, because it could make an attribute a script URL');
+                                value += placeholder;
+                            }
                         }
                     } else if (hasValueSet) {
                         // raw value entered by user, no escaping
