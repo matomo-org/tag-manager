@@ -2919,25 +2919,29 @@
         });
 
         test("Matomo TagManager Template SnapchatTag", function() {
-            expect(2);
+            expect(3);
             var calls = [];
             var fakeWindow = {snaptr: function () { calls.push(Array.prototype.slice.call(arguments)); }};
 
             function fire(params) {
                 calls = [];
                 params.window = fakeWindow;
-                params.pixelId = 'snapchat-test-pixel';
+                params.pixelId = params.pixelId || 'snapchat-test-pixel';
                 fireTemplateTag('SnapchatTag', params);
                 return calls;
             }
 
             deepEqual(fire({eventName: 'PAGE_VIEW', userEmail: 'a@example.com'}), [
                 ['init', 'snapchat-test-pixel', {user_email: 'a@example.com'}],
-                ['track', 'PAGE_VIEW', {}]
-            ], 'initialises the pixel with the email and sends the event');
+                ['track', 'snapchat-test-pixel', 'PAGE_VIEW', {}]
+            ], 'initialises the pixel with the email and sends the event to it');
             deepEqual(fire({eventName: 'VIEW_CONTENT', eventParameters: [{parameter: 'item_ids', value: 'sku-1'}]}), [
-                ['track', 'VIEW_CONTENT', {item_ids: 'sku-1'}]
+                ['track', 'snapchat-test-pixel', 'VIEW_CONTENT', {item_ids: 'sku-1'}]
             ], 'does not initialise the pixel again, and sends the event parameters');
+            deepEqual(fire({eventName: 'PURCHASE', pixelId: 'snapchat-other-pixel'}), [
+                ['init', 'snapchat-other-pixel'],
+                ['track', 'snapchat-other-pixel', 'PURCHASE', {}]
+            ], 'sends a second pixel\'s event only to that pixel');
         });
 
         test("Matomo TagManager Template XPixelTag", function() {
