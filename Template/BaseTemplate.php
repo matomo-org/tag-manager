@@ -17,7 +17,7 @@ use Piwik\Piwik;
 use Piwik\Plugins\CorePluginsAdmin\SettingsMetadata;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Settings\Storage\Backend\TransientBackend;
-use Piwik\Plugins\TagManager\Validators\MultiTupleValue;
+use Piwik\Plugins\TagManager\Settings\MultiTupleValue;
 use Piwik\Settings\FieldConfig;
 use Piwik\Settings\Setting;
 use Piwik\Settings\Storage\Storage;
@@ -198,7 +198,15 @@ abstract class BaseTemplate
             call_user_func($fieldConfigCallback, $field);
 
             if ($field->uiControl === FieldConfig::UI_CONTROL_MULTI_TUPLE) {
-                $field->validators[] = new MultiTupleValue($field->uiControlAttributes);
+                $multiTupleValue = new MultiTupleValue($field->uiControlAttributes);
+                $prepare = $field->prepare;
+                $field->prepare = function ($value, Setting $setting) use ($multiTupleValue, $prepare) {
+                    if ($prepare instanceof \Closure) {
+                        $value = $prepare($value, $setting);
+                    }
+
+                    return $multiTupleValue->normalize($value);
+                };
             }
         });
         $setting->setIsWritableByCurrentUser(true); // we validate access on API level.

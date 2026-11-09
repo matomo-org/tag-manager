@@ -206,18 +206,43 @@ class WebContextTest extends IntegrationTestCase
         $this->assertStringContainsString('{"name":"joined","value":[]}', $js);
     }
 
-    public function test_addContainerVariable_rejectsMultiTupleValuesThatAreNotScalarRows()
+    public function test_addContainerVariable_dropsUnsupportedMultiTupleEntries()
     {
         $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
         $idContainerVersion = $this->getContainerDraftVersion($idContainer);
 
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('contains an unsupported key or value.');
-
         $this->api->addContainerVariable($this->idSite, $idContainer, $idContainerVersion, MatomoConfigurationVariable::ID, 'MyConfig', [
             'matomoUrl' => 'https://matomo.org',
             'idSite' => $this->idSite,
-            'customData' => ['type' => 'CustomJsFunction', 'parameters' => ['jsFunction' => 'function () {}']],
+            'customData' => [
+                'type' => 'CustomJsFunction',
+                'parameters' => ['jsFunction' => 'function () {}'],
+                ['name' => 'foo', 'value' => 'bar', 'type' => 'CustomJsFunction'],
+            ],
         ]);
+
+        $variables = $this->api->getContainerVariables($this->idSite, $idContainer, $idContainerVersion);
+        $this->assertSame([['name' => 'foo', 'value' => 'bar']], $variables[0]['parameters']['customData']);
+    }
+
+    public function test_createContainerVersion_dropsUnsupportedMultiTupleEntriesAlreadyStoredInTheDraft()
+    {
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+        $idContainerVersion = $this->getContainerDraftVersion($idContainer);
+
+        // stored directly to cover data that was saved before multi tuple values were normalized
+        StaticContainer::get(VariablesDao::class)->createVariable($this->idSite, $idContainerVersion, MatomoConfigurationVariable::ID, 'MyConfig', [
+            'matomoUrl' => 'https://matomo.org',
+            'idSite' => $this->idSite,
+            'customData' => [
+                ['name' => 'foo', 'value' => 'bar'],
+                ['name' => 'nested', 'value' => ['type' => 'CustomJsFunction']],
+            ],
+        ], null, [], '2018-01-01 02:03:04');
+
+        $idNewVersion = $this->api->createContainerVersion($this->idSite, $idContainer, 'v1');
+
+        $variables = $this->api->getContainerVariables($this->idSite, $idContainer, $idNewVersion);
+        $this->assertSame([['name' => 'foo', 'value' => 'bar'], ['name' => 'nested']], $variables[0]['parameters']['customData']);
     }
 }
