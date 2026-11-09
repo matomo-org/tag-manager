@@ -284,6 +284,8 @@ abstract class BaseContext
         $vars = [];
         foreach ($parameters as $name => $value) {
             if (is_array($value)) {
+                // needs to happen before resolving variables so only resolved variables can describe a variable
+                $value = $this->removeVariableDescriptorKeys($value);
                 if (in_array($name, $parameterTemplateTypes, true)) {
                     foreach ($value as $key => $subValue) {
                         if (is_array($subValue)) {
@@ -312,6 +314,27 @@ abstract class BaseContext
         }
 
         return $vars;
+    }
+
+    /**
+     * Stored parameter values are user input and must never describe a variable themselves, otherwise they would be
+     * rendered as a variable (including its template) in the container. Only parameterToVariableJs() may produce such
+     * structures.
+     *
+     * @param array<mixed> $value
+     * @return array<mixed>
+     */
+    private function removeVariableDescriptorKeys(array $value): array
+    {
+        unset($value['type'], $value['joinedVariable'], $value['Variable']);
+
+        foreach ($value as $key => $subValue) {
+            if (is_array($subValue)) {
+                $value[$key] = $this->removeVariableDescriptorKeys($subValue);
+            }
+        }
+
+        return $value;
     }
 
     private function mb_strpos($haystack, $needle, $offset)

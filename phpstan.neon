@@ -20,13 +20,6 @@ parameters:
             identifier: nullCoalesce.expr
             path: Context/WebContext/JavaScriptTagManagerLoader.php
             count: 1
-        # core's Controller::$site is only set once a site is in scope, which is what this guard tests for;
-        # cores before matomo-org/matomo#25691 type it as non-nullable, so this only matches on those
-        -
-            identifier: empty.property
-            path: Controller.php
-            count: 1
-            reportUnmatched: false
         # Site's constructor loads the site through SitesManager's API, which throws NoAccessException
         -
             identifier: catch.neverThrown
