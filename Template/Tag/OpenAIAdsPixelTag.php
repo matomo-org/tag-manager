@@ -33,6 +33,8 @@ class OpenAIAdsPixelTag extends BaseTag
 
     public const CUSTOM_EVENT_NAME_PATTERN = '/^[a-z0-9](?:[a-z0-9_-]{0,62}[a-z0-9])?$/';
 
+    public const CURRENCY_PATTERN = '/^[a-z]{3}$/i';
+
     public function getIcon()
     {
         return 'plugins/TagManager/images/icons/openai.svg';
@@ -99,6 +101,16 @@ class OpenAIAdsPixelTag extends BaseTag
                 if (is_string($amountValue) && trim($amountValue) !== '') {
                     $field->validators[] = new NotEmpty();
                 }
+                $field->validate = function ($value) {
+                    $value = trim((string) $value);
+                    // A variable reference only resolves in the browser
+                    if ($value === '' || strpos($value, '{{') !== false) {
+                        return;
+                    }
+                    if (!preg_match(self::CURRENCY_PATTERN, $value)) {
+                        throw new \Exception(Piwik::translate('TagManager_OpenAIAdsPixelTagCurrencyInvalid'));
+                    }
+                };
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
             }),
             $this->makeSetting('eventId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {

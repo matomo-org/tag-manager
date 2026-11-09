@@ -3302,7 +3302,7 @@
 						<description>Properties sent with the event, for example value, currency, content_id, content_type or quantity.</description>
 						<inlineHelp />
 						<introduction />
-						<condition>eventName != &quot;PageView&quot;</condition>
+						<condition>not (eventName == &quot;PageView&quot;)</condition>
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
@@ -3318,7 +3318,7 @@
 						<description>A unique event ID used to deduplicate this event with the same event sent server-side through the Events API.</description>
 						<inlineHelp />
 						<introduction />
-						<condition>eventName != &quot;PageView&quot;</condition>
+						<condition>not (eventName == &quot;PageView&quot;)</condition>
 						<fullWidth>0</fullWidth>
 						<component>
 							<plugin>TagManager</plugin>

@@ -285,6 +285,33 @@ class TagTest extends IntegrationTestCase
 
         $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'OpenAIAdsPixel', 'MyName2', ['pixelId' => 'test', 'eventName' => 'lead_created', 'amount' => '10', 'currency' => 'EUR'], [$this->idTrigger1]);
         $this->assertGreaterThan(0, $idTag);
+
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'OpenAIAdsPixel', 'MyName3', ['pixelId' => 'test', 'eventName' => 'order_created', 'amount' => '10', 'currency' => '{{Currency}}'], [$this->idTrigger1]);
+        $this->assertGreaterThan(0, $idTag);
+
+        // The browser trims and uppercases the currency before sending it
+        $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'OpenAIAdsPixel', 'MyName4', ['pixelId' => 'test', 'eventName' => 'order_created', 'amount' => '10', 'currency' => ' eur '], [$this->idTrigger1]);
+        $this->assertGreaterThan(0, $idTag);
+    }
+
+    /**
+     * @dataProvider getInvalidOpenAIAdsPixelCurrencies
+     */
+    public function testAddContainerTagOpenAIAdsPixelInvalidCurrency(string $currency)
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The currency must be a three-letter ISO 4217 code');
+
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'OpenAIAdsPixel', 'MyName', ['pixelId' => 'test', 'eventName' => 'order_created', 'amount' => '12.50', 'currency' => $currency], [$this->idTrigger1]);
+    }
+
+    public function getInvalidOpenAIAdsPixelCurrencies(): array
+    {
+        return [
+            ['EURO'],
+            ['€'],
+            ['EU'],
+        ];
     }
 
     public function testAddContainerTagMissingFireTrigger()

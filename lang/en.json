@@ -1222,6 +1222,7 @@
         "OpenAIAdsPixelTagAmountDescription": "The total value of the event, for example the order total. Use a plain number without thousands separators, for example 1299.99.",
         "OpenAIAdsPixelTagCurrencyTitle": "Currency",
         "OpenAIAdsPixelTagCurrencyDescription": "ISO 4217 currency code, for example EUR or USD. Required when an amount is sent.",
+        "OpenAIAdsPixelTagCurrencyInvalid": "The currency must be a three-letter ISO 4217 code, for example EUR or USD.",
         "OpenAIAdsPixelTagEventIdTitle": "Event ID (optional)",
         "OpenAIAdsPixelTagEventIdDescription": "A unique event ID, for example the order ID, used to deduplicate this event with the same event sent server-side through the Conversions API.",
         "BingUETConversionTagName": "Microsoft Ads: UET Conversion",
