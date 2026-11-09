@@ -17,6 +17,7 @@ use Piwik\Plugins\TagManager\Dao\VariablesDao;
 use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\TagManager;
+use Piwik\Plugins\TagManager\Template\Trigger\PageViewTrigger;
 use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
 use Piwik\Plugins\TagManager\tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tests\Framework\Fixture;
@@ -162,5 +163,86 @@ class WebContextTest extends IntegrationTestCase
         }
 
         $this->fail('An expected exception has not been thrown');
+    }
+
+    public function test_generate_doesNotRenderVariablesDescribedByStoredArrayParameters()
+    {
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+        $idContainerVersion = $this->getContainerDraftVersion($idContainer);
+        $now = '2018-01-01 02:03:04';
+
+        $nestedVariable = [
+            'type' => 'CustomJsFunction',
+            'name' => 'NestedFunction',
+            'parameters' => ['jsFunction' => 'function () { return "nestedFunctionBody"; }'],
+        ];
+
+        // stored directly to cover data that was saved before input validation was in place
+        $variablesDao = StaticContainer::get(VariablesDao::class);
+        $variablesDao->createVariable($this->idSite, $idContainerVersion, MatomoConfigurationVariable::ID, 'MyConfig', [
+            'matomoUrl' => 'https://matomo.org',
+            'idSite' => $this->idSite,
+            'customData' => [
+                ['name' => 'pageUrl', 'value' => '{{PageUrl}}'],
+                ['name' => 'nested', 'value' => $nestedVariable],
+                ['name' => 'joined', 'value' => ['joinedVariable' => [$nestedVariable]]],
+            ],
+            'customDimensions' => $nestedVariable,
+        ], null, [], $now);
+
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
+        $this->api->addContainerTag($this->idSite, $idContainer, $idContainerVersion, 'Matomo', 'MyMatomoTag', ['matomoConfig' => '{{MyConfig}}', 'trackingType' => 'pageview'], [$idTrigger]);
+
+        $this->api->enablePreviewMode($this->idSite, $idContainer, $idContainerVersion);
+
+        $containers = StaticContainer::get(Container::class);
+        $container = $containers->getContainer($this->idSite, $idContainer);
+        $js = implode("\n", StaticContainer::get(WebContext::class)->generate($container));
+
+        $this->assertStringContainsString('MyMatomoTag', $js);
+        $this->assertStringContainsString("Templates['PageUrlVariable']", $js);
+        $this->assertStringNotContainsString('"type":"CustomJsFunction"', $js);
+        $this->assertStringNotContainsString("Templates['CustomJsFunctionVariable", $js);
+        $this->assertStringContainsString('{"name":"joined","value":[]}', $js);
+    }
+
+    public function test_addContainerVariable_dropsUnsupportedMultiTupleEntries()
+    {
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+        $idContainerVersion = $this->getContainerDraftVersion($idContainer);
+
+        $this->api->addContainerVariable($this->idSite, $idContainer, $idContainerVersion, MatomoConfigurationVariable::ID, 'MyConfig', [
+            'matomoUrl' => 'https://matomo.org',
+            'idSite' => $this->idSite,
+            'customData' => [
+                'type' => 'CustomJsFunction',
+                'parameters' => ['jsFunction' => 'function () {}'],
+                ['name' => 'foo', 'value' => 'bar', 'type' => 'CustomJsFunction'],
+            ],
+        ]);
+
+        $variables = $this->api->getContainerVariables($this->idSite, $idContainer, $idContainerVersion);
+        $this->assertSame([['name' => 'foo', 'value' => 'bar']], $variables[0]['parameters']['customData']);
+    }
+
+    public function test_createContainerVersion_dropsUnsupportedMultiTupleEntriesAlreadyStoredInTheDraft()
+    {
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+        $idContainerVersion = $this->getContainerDraftVersion($idContainer);
+
+        // stored directly to cover data that was saved before multi tuple values were normalized
+        StaticContainer::get(VariablesDao::class)->createVariable($this->idSite, $idContainerVersion, MatomoConfigurationVariable::ID, 'MyConfig', [
+            'matomoUrl' => 'https://matomo.org',
+            'idSite' => $this->idSite,
+            'customData' => [
+                ['name' => 'foo', 'value' => 'bar'],
+                ['name' => 'nested', 'value' => ['type' => 'CustomJsFunction']],
+            ],
+        ], null, [], '2018-01-01 02:03:04');
+
+        $idNewVersion = $this->api->createContainerVersion($this->idSite, $idContainer, 'v1');
+
+        $variables = $this->api->getContainerVariables($this->idSite, $idContainer, $idNewVersion);
+        $this->assertSame([['name' => 'foo', 'value' => 'bar'], ['name' => 'nested']], $variables[0]['parameters']['customData']);
     }
 }
