@@ -365,6 +365,7 @@
         "EnvironmentVariableDescription": "Returnerer nåværende miljø.",
         "EnvironmentVariableName": "Miljønavn",
         "Environments": "Miljøer",
+        "ErrorArrayInvalidEntry": "Oppføringen på posisjon «%1$s» inneholder en nøkkel eller verdi som ikke støttes.",
         "ErrorArrayMissingKey": "Manglende array-nøkkel «%1$s» i «%2$s» ved posisjon «%3$s».",
         "ErrorArrayMissingValue": "Manglende verdi for array-nøkkel «%1$s» i «%2$s» ved posisjon «%3$s».",
         "ErrorComparisonNotSupported": "«%s»-sammenligningen støttes ikke.",

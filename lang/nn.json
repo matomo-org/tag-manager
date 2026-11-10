@@ -365,6 +365,7 @@
         "EnvironmentVariableDescription": "Returnerer det gjeldande miljøet.",
         "EnvironmentVariableName": "Namn på miljø",
         "Environments": "Miljø",
+        "ErrorArrayInvalidEntry": "Oppføringa på posisjon «%1$s» inneheld ein nøkkel eller verdi som ikkje er støtta.",
         "ErrorArrayMissingKey": "Manglar tabellnøkkelen «%1$s» i «%2$s» på posisjon «%3$s».",
         "ErrorArrayMissingValue": "Manglar verdi for tabellnøkkelen «%1$s» i «%2$s» på posisjon «%3$s».",
         "ErrorComparisonNotSupported": "Samanlikninga «%s» er ikkje støtta.",

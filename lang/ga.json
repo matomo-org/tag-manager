@@ -366,6 +366,7 @@
         "EnvironmentVariableDescription": "Filleann an timpeallacht reatha.",
         "EnvironmentVariableName": "Ainm Timpeallachta",
         "Environments": "Timpeallachtaí",
+        "ErrorArrayInvalidEntry": "Tá eochair nó luach nach dtacaítear leis san iontráil ag suíomh \"%1$s\".",
         "ErrorArrayMissingKey": "Eochair eagar \"%1$s\" ar iarraidh i \"%2$s\" ag suíomh \"%3$s\".",
         "ErrorArrayMissingValue": "Luach ar iarraidh le haghaidh eochair eagar \"%1$s\" i \"%2$s\" ag suíomh \"%3$s\".",
         "ErrorComparisonNotSupported": "Ní thacaítear leis an gcomparáid \"%s\".",
