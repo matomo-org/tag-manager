@@ -42,6 +42,17 @@ describe("TagManager", function () {
         await page.click('.editContainer .entityCancel a');
     }
 
+    // Changing the debug URL or disabling preview opens the debug site in a new tab, which takes the
+    // foreground. Chrome then throttles the test page, and later tests took minutes instead of seconds.
+    async function preventDebugSiteTabs(page)
+    {
+        await page.evaluate(function () {
+            window.open = function () {
+                return null;
+            };
+        });
+    }
+
     var selectorContainerOpen = '.top_controls .tagContainerSelector .dropdown',
         leftMenuContainerItem = '#secondNavBar .navbar .container-menu-item',
         leftMenuContainerDropdown = '#secondNavBar .navbar .tag-manager-left-menu-dropdown .menuDropdown';
@@ -176,6 +187,7 @@ describe("TagManager", function () {
     });
 
     it('should change debug URL', async function () {
+        await preventDebugSiteTabs(page);
         await page.evaluate(function() {
             $('#previewDebugUrl').val('https://example.com');
         });
@@ -202,6 +214,7 @@ describe("TagManager", function () {
     });
 
     it('should be able to disable preview', async function () {
+        await preventDebugSiteTabs(page);
         await page.click('#notificationContainer .disablePreviewDebug');
         await page.waitForNetworkIdle();
         await page.waitForSelector('#content .card-content', { visible: true });
