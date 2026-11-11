@@ -54,9 +54,21 @@ exports.notification = async function (page, screenshotName)
 async function settleOpenModal(page)
 {
     await page.waitForNetworkIdle();
-    await page.waitForTimeout(500); // ensure animation is finished
 
     const modal = await page.waitForSelector('.modal.open');
+
+    // The modal fades in through anime.js, which Materialize binds at load time, so the screenshot override
+    // that zeroes M.anime durations does not reach it and the CSS-only disableAnimations cannot stop it. A
+    // fixed sleep lost the race on slow runners; wait for the final frame (opacity 1, unscaled) instead.
+    try {
+        await page.waitForFunction(function () {
+            return Array.prototype.every.call(document.querySelectorAll('.modal.open'), function (m) {
+                return m.style.opacity === '1' && m.style.transform.indexOf('scaleX(1)') !== -1;
+            });
+        }, { timeout: 5000 });
+    } catch (e) {
+        // fall through: the animation may not advance at all, which the styles forced below handle
+    }
 
     // Materialize's modal open-animation may not advance under the new headless Chrome, leaving stale
     // inline styles that offset the capture; settle the open modal to its final state before capturing.
