@@ -295,7 +295,7 @@ class TagTest extends IntegrationTestCase
     }
 
     /**
-     * @dataProvider getInvalidOpenAIAdsPixelCurrencies
+     * @dataProvider getInvalidCurrencies
      */
     public function testAddContainerTagOpenAIAdsPixelInvalidCurrency(string $currency)
     {
@@ -305,7 +305,26 @@ class TagTest extends IntegrationTestCase
         $this->addContainerTag($this->idSite, $this->containerVersion1, 'OpenAIAdsPixel', 'MyName', ['pixelId' => 'test', 'eventName' => 'order_created', 'amount' => '12.50', 'currency' => $currency], [$this->idTrigger1]);
     }
 
-    public function getInvalidOpenAIAdsPixelCurrencies(): array
+    /**
+     * @dataProvider getInvalidCurrencies
+     */
+    public function testAddContainerTagBingUETConversionInvalidCurrency(string $currency)
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The currency must be a three-letter ISO 4217 code');
+
+        $this->addContainerTag($this->idSite, $this->containerVersion1, 'BingUETConversion', 'MyName', ['eventAction' => 'purchase', 'revenueValue' => '12.50', 'currency' => $currency], [$this->idTrigger1]);
+    }
+
+    public function testAddContainerTagBingUETConversionAcceptsValidCurrency()
+    {
+        foreach (['', 'EUR', ' eur ', '{{Currency}}'] as $i => $currency) {
+            $idTag = $this->addContainerTag($this->idSite, $this->containerVersion1, 'BingUETConversion', 'MyName' . $i, ['eventAction' => 'purchase', 'revenueValue' => '12.50', 'currency' => $currency], [$this->idTrigger1]);
+            $this->assertGreaterThan(0, $idTag);
+        }
+    }
+
+    public function getInvalidCurrencies(): array
     {
         return [
             ['EURO'],

@@ -2827,9 +2827,13 @@
         });
 
         test("Matomo TagManager Template PinterestPixelTag", function() {
-            expect(7);
+            expect(8);
             var calls = [];
-            var fakeWindow = {pintrk: function () { calls.push(Array.prototype.slice.call(arguments)); }};
+            var fakeWindow = {pintrk: function () {
+                calls.push(Array.prototype.slice.call(arguments).map(function (arg) {
+                    return typeof arg === 'function' ? 'callback' : arg;
+                }));
+            }};
 
             function fire(params) {
                 calls = [];
@@ -2842,13 +2846,18 @@
             deepEqual(fire({eventName: 'pagevisit', eventId: 'abc'}), [
                 ['load', 'pinterest-test-tag'],
                 ['page'],
-                ['track', 'pagevisit', {event_id: 'abc'}]
+                ['track', 'pagevisit', {event_id: 'abc'}, 'callback', 'pinterest-test-tag']
             ], 'loads the tag with the base page call once, then tracks pagevisit as a conversion');
             deepEqual(fire({eventName: 'checkout', eventParameters: [{parameter: 'value', value: '10'}]}), [
-                ['track', 'checkout', {value: '10'}]
+                ['track', 'checkout', {value: '10'}, 'callback', 'pinterest-test-tag']
             ], 'does not load the tag again, and sends the event parameters');
+            deepEqual(fire({tagId: 'pinterest-second-tag', eventName: 'lead'}), [
+                ['load', 'pinterest-second-tag'],
+                ['page'],
+                ['track', 'lead', {}, 'callback', 'pinterest-second-tag']
+            ], 'sends the event only to its own tag when a second tag is on the page');
             deepEqual(fire({eventName: 'custom', customEventName: ''}), [], 'sends nothing for a custom event without a name');
-            deepEqual(fire({eventName: 'custom', customEventName: ' TookSurvey '}), [['track', 'TookSurvey', {}]], 'sends a custom event with its trimmed name');
+            deepEqual(fire({eventName: 'custom', customEventName: ' TookSurvey '}), [['track', 'TookSurvey', {}, 'callback', 'pinterest-test-tag']], 'sends a custom event with its trimmed name');
             deepEqual(fire({eventName: 'custom', customEventName: 'bad name'}), [], 'drops a custom event with an invalid name');
             deepEqual(fire({eventName: 'custom', customEventName: 'Checkout'}), [], 'drops a custom event named like a standard one');
             deepEqual(fire({tagId: 'pinterest-unloaded-tag', eventName: 'custom', customEventName: 'bad name'}), [], 'does not load a tag for an invalid custom event');

@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\TagManager\Template\Tag;
 
+use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Template\BaseTemplate;
 
@@ -45,5 +46,23 @@ abstract class BaseTag extends BaseTemplate
         return array(
             WebContext::ID
         );
+    }
+
+    /**
+     * Validates a currency setting as a three-letter ISO 4217 code. An empty value or a variable reference passes,
+     * since a variable only resolves in the browser.
+     *
+     * @param mixed $value
+     * @throws \Exception
+     */
+    protected function validateCurrencyCode($value): void
+    {
+        $value = trim((string) $value);
+        if ($value === '' || strpos($value, '{{') !== false) {
+            return;
+        }
+        if (!preg_match('/^[a-z]{3}$/i', $value)) {
+            throw new \Exception(Piwik::translate('TagManager_CurrencyInvalid'));
+        }
     }
 }

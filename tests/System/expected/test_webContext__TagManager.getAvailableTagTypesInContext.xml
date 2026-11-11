@@ -2784,7 +2784,7 @@
 				<description>Adds the Reddit Pixel to your website so you can track page visits and conversion events for your Reddit ad campaigns.</description>
 				<category>Social</category>
 				<icon>plugins/TagManager/images/icons/reddit.svg</icon>
-				<help>This tag loads the Reddit Pixel and sends the selected event. Use the default 'PageVisit' event with a trigger that fires on every page, then add one tag per conversion event.</help>
+				<help>This tag loads the Reddit Pixel and sends the selected event. Use the default 'PageVisit' event with a trigger that fires on every page, then add one tag per conversion event. Use one Reddit pixel per page: if tags with different pixel IDs fire on the same page, every event goes to the pixel that loaded last.</help>
 				<order>9999</order>
 				<contexts>
 					<row>web</row>
