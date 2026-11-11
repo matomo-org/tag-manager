@@ -34,3 +34,4 @@ export { default as TrackingCodePage } from './TagmanagerTrackingCode/TrackingCo
 export { default as TrackingSPAPage } from './TagmanagerTrackingCode/TrackingSPAPage.vue';
 export { default as Debugging } from './Debugging/Debugging.vue';
 export { default as CopyDialog } from './CopyDialog/CopyDialog.vue';
+export { default as EnablePreviewConfirm } from './PreviewMode/EnablePreviewConfirm.vue';

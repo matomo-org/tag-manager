@@ -592,6 +592,15 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_VariableBeingUsedNeedsRemove';
         $result[] = 'TagManager_Change';
         $result[] = 'TagManager_ChangesSinceLastVersion';
+        $result[] = 'TagManager_ChangesComparedToLiveVersion';
+        $result[] = 'TagManager_ChangesComparedToPreviousVersion';
+        $result[] = 'TagManager_ConfirmEnablePreviewTitle';
+        $result[] = 'TagManager_EnablePreviewRiskWarning';
+        $result[] = 'TagManager_PreviewNoVersionToCompare';
+        $result[] = 'TagManager_PreviewChangesLoadError';
+        $result[] = 'TagManager_PreviewNoEarlierVersionToCompare';
+        $result[] = 'TagManager_PreviewModeEnabledDescription';
+        $result[] = 'General_Confirm';
         $result[] = 'TagManager_LastUpdated';
         $result[] = 'TagManager_CreatedDate';
         $result[] = 'TagManager_LookupTable';
@@ -971,6 +980,7 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/vue/src/Version/VersionEdit.less";
         $stylesheets[] = "plugins/TagManager/vue/src/TagmanagerTrackingCode/TagManagerTrackingCode.less";
         $stylesheets[] = "plugins/TagManager/vue/src/CopyDialog/CopyDialog.less";
+        $stylesheets[] = "plugins/TagManager/vue/src/PreviewMode/EnablePreviewConfirm.less";
     }
 
     public function getJsFiles(&$jsFiles)

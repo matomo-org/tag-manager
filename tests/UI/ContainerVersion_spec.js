@@ -282,6 +282,12 @@ describe("ContainerVersion", function () {
     it('should be possible to debug a specific version', async function () {
         await page.reload();
         await clickFirstRowTableAction('icon-bug', 5);
+        await page.waitForSelector('.modal.open .enablePreviewConfirm');
+        await page.waitForNetworkIdle();
+        await capture.modal(page, 'debug_version_confirm');
+
+        await modal.clickButton(page, 'Confirm');
+        await page.waitForNetworkIdle();
         await capture.page(page, 'debug_version_enable');
     });
 
