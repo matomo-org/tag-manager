@@ -574,6 +574,8 @@
         "MatomoConfigurationMatomoSessionCookieTimeOutDescription": "Timeout of the session cookie in minutes.",
         "MatomoConfigurationMatomoRequireCookieConsentTitle": "Require cookie consent",
         "MatomoConfigurationMatomoRequireCookieConsentDescription": "Use cookies only if the user gave cookie consent, otherwise track the user without cookies. In a consent screen you need to call \"window._paq=window._paq||[];window._paq.push(['rememberCookieConsentGiven']);\" when the user gives consent for cookies.",
+        "MatomoConfigurationMatomoRequireConsentForRestrictedDataTitle": "Require consent for data restricted by a compliance policy",
+        "MatomoConfigurationMatomoRequireConsentForRestrictedDataDescription": "For a site measuring under a compliance exemption such as the CNIL configuration. Every visitor is measured, without cookies, and the data the policy withholds - campaign parameters, referrer detail and the User ID - is collected only for visitors who consent. In a consent screen you need to call \"window._paq=window._paq||[];window._paq.push(['rememberConsentGiven']);\" when the user gives consent. Requires the site to have consent-aware analytics enabled.",
         "MatomoConfigurationMatomoSetSecureCookieTitle": "Enable Secure Cookie",
         "MatomoConfigurationMatomoSetSecureCookieDescription": "Enable the Secure cookie flag on all first party cookies. This should be used when your website is only available under HTTPS so that all tracking cookies are always sent over secure connection.",
         "MatomoConfigurationMatomoCookieDomainTitle": "Cookie Domain",
