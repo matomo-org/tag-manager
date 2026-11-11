@@ -99,6 +99,9 @@ class OpenAIAdsPixelTag extends BaseTag
                 if (is_string($amountValue) && trim($amountValue) !== '') {
                     $field->validators[] = new NotEmpty();
                 }
+                $field->validate = function ($value) {
+                    $this->validateCurrencyCode($value);
+                };
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
             }),
             $this->makeSetting('eventId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {

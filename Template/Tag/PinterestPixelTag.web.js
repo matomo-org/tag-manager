@@ -69,7 +69,9 @@
                 paramsObject.event_id = eventId;
             }
 
-            w.pintrk('track', name, paramsObject);
+            // Without a tag ID, pintrk sends the event to whichever tag was loaded last. The SDK warns when
+            // the callback before it is not a function.
+            w.pintrk('track', name, paramsObject, function () {}, tagId);
         };
     };
 })();

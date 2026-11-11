@@ -51,6 +51,9 @@ class BingUETConversionTag extends BaseTag
             $this->makeSetting('currency', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_BingUETConversionTagCurrencyTitle');
                 $field->description = Piwik::translate('TagManager_BingUETConversionTagCurrencyDescription');
+                $field->validate = function ($value) {
+                    $this->validateCurrencyCode($value);
+                };
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
             }),
             $this->makeSetting('eventParameters', [], FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
