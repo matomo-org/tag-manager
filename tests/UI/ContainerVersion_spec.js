@@ -281,7 +281,8 @@ describe("ContainerVersion", function () {
 
     it('should be possible to debug a specific version', async function () {
         await page.reload();
-        await clickFirstRowTableAction('icon-bug', 5);
+        // container1_v3, so the confirmation shows changes compared to the live version
+        await clickFirstRowTableAction('icon-bug', 7);
         await page.waitForSelector('.modal.open .enablePreviewConfirm');
         await page.waitForNetworkIdle();
         await capture.modal(page, 'debug_version_confirm');
