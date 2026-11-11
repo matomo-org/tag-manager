@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
 use Piwik\NoAccessException;
 use Piwik\Container\StaticContainer;
+use Piwik\Exception\ThingNotFoundException;
 use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
 use Piwik\Plugins\TagManager\Context\WebContext;
@@ -1218,6 +1219,14 @@ class TagTest extends IntegrationTestCase
         unset($newTag['idtag']);
 
         $this->assertEquals($tag1, $newTag);
+    }
+
+    public function testCopyTagToMissingContainerThrowsNotFound()
+    {
+        $this->expectException(ThingNotFoundException::class);
+        $this->expectExceptionCode(404);
+
+        $this->model->copyTag($this->idSite, $this->containerVersion1, $this->idTag1, $this->idSite, 'missing');
     }
 
     public function testCopyTagDifferentContainer()

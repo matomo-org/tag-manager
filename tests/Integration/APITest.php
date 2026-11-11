@@ -366,6 +366,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, 99999, Environment::ENVIRONMENT_LIVE);
     }
@@ -374,6 +375,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The environment "foobar" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->publishContainerVersion($this->idSite, $this->idContainer, $this->idContainerDraftVersion, 'foobar');
     }
@@ -439,6 +441,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->updateContainer($this->idSite, '9999', 'TheName');
     }
@@ -491,6 +494,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->updateContainerVersion($this->idSite, $this->idContainer, 99999, 'TheName');
     }
@@ -610,6 +614,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->deleteContainerVariable($this->idSite, $this->idContainer, 9999, $idVariable = 999);
     }
@@ -618,6 +623,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->deleteContainerVariable($this->idSite, 9999, $this->idContainerDraftVersion, $idVariable = 999);
     }
@@ -675,6 +681,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->deleteContainerTrigger($this->idSite, $this->idContainer, 9999, $idTrigger = 999);
     }
@@ -683,6 +690,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->deleteContainerTrigger($this->idSite, 9999, $this->idContainerDraftVersion, $idTrigger = 999);
     }
@@ -700,6 +708,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->deleteContainerTag($this->idSite, $this->idContainer, 9999, $idTag = 999);
     }
@@ -708,6 +717,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->deleteContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
     }
@@ -749,6 +759,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->pauseContainerTag($this->idSite, $this->idContainer, 9999, $idTag = 999);
     }
@@ -757,6 +768,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->pauseContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
     }
@@ -821,6 +833,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->resumeContainerTag($this->idSite, $this->idContainer, 9999, $idTag = 999);
     }
@@ -829,6 +842,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->resumeContainerTag($this->idSite, 9999, $this->idContainerDraftVersion, $idTag = 999);
     }
@@ -931,6 +945,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "99999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->getContainer($this->idSite, 99999);
     }
@@ -954,6 +969,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "99999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->enablePreviewMode($this->idSite, 99999);
     }
@@ -976,6 +992,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "99999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->disablePreviewMode($this->idSite, 99999);
     }
@@ -1210,6 +1227,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "99999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->api->exportContainerVersion($this->idSite, 99999);
     }
@@ -1259,6 +1277,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "99999" does not exist');
+        $this->expectExceptionCode(404);
 
         $export = $this->getValidImportJson();
         $this->api->importContainerVersion($export, $this->idSite, 99999);
@@ -1268,6 +1287,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Invalid format for exportedContainerVersion. Value needs to be a valid JSON');
+        $this->expectExceptionCode(400);
 
         $this->api->importContainerVersion('{"fo:2"L_"', $this->idSite, $this->idContainer);
     }
@@ -1276,6 +1296,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Invalid format for exportedContainerVersion. Value needs to be a valid JSON');
+        $this->expectExceptionCode(400);
 
         $this->api->importContainerVersion('""', $this->idSite, $this->idContainer);
     }
@@ -1470,6 +1491,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "foo01bar" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getContainerInstallInstructions($this->idSite, 'foo01bar', Environment::ENVIRONMENT_LIVE);
@@ -1479,6 +1501,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "foo01bar" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getContainerInstallInstructions($this->idSite, 'foo01bar', Environment::ENVIRONMENT_LIVE, 'react');
@@ -1509,6 +1532,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "foo01bar" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getContainerEmbedCode($this->idSite, 'foo01bar', Environment::ENVIRONMENT_LIVE);
@@ -1535,6 +1559,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getContainerTags($this->idSite, 9999, $this->idContainerDraftVersion);
@@ -1544,6 +1569,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getContainerTags($this->idSite, $this->idContainer, 99999);
@@ -1570,6 +1596,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getContainerTriggers($this->idSite, 9999, $this->idContainerDraftVersion);
@@ -1579,6 +1606,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getContainerTriggers($this->idSite, $this->idContainer, 99999);
@@ -1623,6 +1651,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getContainerVariables($this->idSite, 9999, $this->idContainerDraftVersion);
@@ -1632,6 +1661,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getContainerVariables($this->idSite, $this->idContainer, 99999);
@@ -1658,6 +1688,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "9999" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getAvailableContainerVariables($this->idSite, 9999, $this->idContainerDraftVersion);
@@ -1667,6 +1698,7 @@ class APITest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist');
+        $this->expectExceptionCode(404);
 
         $this->setUser();
         $this->api->getAvailableContainerVariables($this->idSite, $this->idContainer, 99999);
