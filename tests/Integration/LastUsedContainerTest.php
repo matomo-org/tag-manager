@@ -10,6 +10,7 @@
 namespace Piwik\Plugins\TagManager\tests\Integration;
 
 use Piwik\Container\StaticContainer;
+use Piwik\Menu\MenuTop;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Controller;
@@ -65,10 +66,12 @@ class LastUsedContainerTest extends IntegrationTestCase
         $this->lastUsedContainer = StaticContainer::get(LastUsedContainer::class);
 
         $_GET['idSite'] = $this->idSite;
+        MenuTop::unsetInstance();
     }
 
     public function tearDown(): void
     {
+        MenuTop::unsetInstance();
         unset($_GET['idSite']);
         FakeAccess::clearAccess(true);
         TagManager::$enableAutoContainerCreation = true;
@@ -158,9 +161,8 @@ class LastUsedContainerTest extends IntegrationTestCase
         FakeAccess::clearAccess(true);
         SitesManagerAPI::getInstance()->deleteSite($this->idOtherSite);
 
-        // the super user only had the deleted site, so the stored value is removed
         $storedValue = StaticContainer::get(UserScopedSettingsAccessManager::class)
-            ->get('TagManager', Piwik::getCurrentUserLogin(), 'lastUsedContainers');
+            ->get('TagManager', Piwik::getCurrentUserLogin(), 'lastUsedContainer_' . $this->idOtherSite);
         $this->assertNull($storedValue);
 
         $this->setViewUser();
@@ -177,23 +179,63 @@ class LastUsedContainerTest extends IntegrationTestCase
         $this->lastUsedContainer->setForCurrentUser($this->idSite, 'abc123');
 
         $storedValue = StaticContainer::get(UserScopedSettingsAccessManager::class)
-            ->get('TagManager', 'anonymous', 'lastUsedContainers');
+            ->get('TagManager', 'anonymous', 'lastUsedContainer_' . $this->idSite);
         $this->assertNull($storedValue);
     }
 
-    public function testOpeningContainerPageMakesItTheDefault()
+    public function testOverlappingSavesForDifferentSitesKeepBothValues()
     {
-        $this->addContainer($this->idSite, 'First');
+        $this->lastUsedContainer->setForCurrentUser($this->idSite, 'siteA1');
+        $this->lastUsedContainer->setForCurrentUser($this->idOtherSite, 'siteB1');
+
+        $firstRequest = $this->createUncachedLastUsedContainer();
+        $secondRequest = $this->createUncachedLastUsedContainer();
+        foreach ([$firstRequest, $secondRequest] as $request) {
+            $this->assertSame('siteA1', $request->getForCurrentUser($this->idSite));
+            $this->assertSame('siteB1', $request->getForCurrentUser($this->idOtherSite));
+        }
+
+        $firstRequest->setForCurrentUser($this->idSite, 'siteA2');
+        $secondRequest->setForCurrentUser($this->idOtherSite, 'siteB2');
+
+        $storedLastUsedContainer = $this->createUncachedLastUsedContainer();
+        $this->assertSame('siteA2', $storedLastUsedContainer->getForCurrentUser($this->idSite));
+        $this->assertSame('siteB2', $storedLastUsedContainer->getForCurrentUser($this->idOtherSite));
+    }
+
+    /**
+     * @dataProvider getContainerActions
+     */
+    public function testOpeningContainerPageLinksTopMenuToThatContainer(string $action)
+    {
+        $idFirstContainer = $this->addContainer($this->idSite, 'First');
         $idSecondContainer = $this->addContainer($this->idSite, 'Second');
+
+        $this->lastUsedContainer->setForCurrentUser($this->idSite, $idFirstContainer);
 
         $_GET['idContainer'] = $idSecondContainer;
         try {
-            StaticContainer::getContainer()->make(Controller::class)->manageTags();
+            $html = StaticContainer::getContainer()->make(Controller::class)->$action();
         } finally {
             unset($_GET['idContainer']);
         }
 
+        $this->assertMatchesRegularExpression('/id="topmenu-tagmanager"\s+href="([^"]+)"/', $html);
+        preg_match('/id="topmenu-tagmanager"\s+href="([^"]+)"/', $html, $matches);
+        $this->assertStringContainsString('idContainer=' . $idSecondContainer, html_entity_decode($matches[1]));
         $this->assertSame(['dashboard', ['idContainer' => $idSecondContainer]], Menu::getDefaultAction());
+    }
+
+    public function getContainerActions(): array
+    {
+        return [
+            ['dashboard'],
+            ['manageTags'],
+            ['manageTriggers'],
+            ['manageVariables'],
+            ['manageVersions'],
+            ['releases'],
+        ];
     }
 
     private function addContainer(int $idSite, string $name): string

@@ -98,7 +98,7 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $this->accessValidator->checkWriteCapability($this->idSite);
 
-        $dashboardHelpText = $this->renderTemplate('helpContent', [
+        $dashboardHelpText = $this->renderHelpContent([
             'subHeading' => Piwik::translate('TagManager_DashboardHelp1'),
             'paragraphs' => [
                 Piwik::translate('TagManager_DashboardHelp2'),
@@ -110,7 +110,7 @@ class Controller extends \Piwik\Plugin\Controller
             ]
         ]);
 
-        $tagsHelpText = $this->renderTemplate('helpContent', [
+        $tagsHelpText = $this->renderHelpContent([
             'paragraphs' => [
                 Piwik::translate('TagManager_DashboardTagsHelp1', [
                     Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/tags/'),
@@ -124,7 +124,7 @@ class Controller extends \Piwik\Plugin\Controller
             ]
         ]);
 
-        $triggersHelpText = $this->renderTemplate('helpContent', [
+        $triggersHelpText = $this->renderHelpContent([
             'paragraphs' => [
                 Piwik::translate('TagManager_DashboardTriggersHelp1', [
                     Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/triggers/'),
@@ -138,7 +138,7 @@ class Controller extends \Piwik\Plugin\Controller
             ]
         ]);
 
-        $variablesHelpText = $this->renderTemplate('helpContent', [
+        $variablesHelpText = $this->renderHelpContent([
             'paragraphs' => [
                 Piwik::translate('TagManager_DashboardVariablesHelp1', [
                     Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/variables/'),
@@ -152,7 +152,7 @@ class Controller extends \Piwik\Plugin\Controller
             ]
         ]);
 
-        $versionsHelpText = $this->renderTemplate('helpContent', [
+        $versionsHelpText = $this->renderHelpContent([
             'paragraphs' => [
                 Piwik::translate('TagManager_DashboardVersionsHelp1', [
                     Url::getExternalLinkTag('https://matomo.org/guide/tag-manager/versions-and-publish/'),
@@ -179,7 +179,7 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $this->accessValidator->checkUserHasTagManagerAccess($this->idSite);
 
-        $tagsHelpText = $this->renderTemplate('helpContent', [
+        $tagsHelpText = $this->renderHelpContent([
             'subHeading' => Piwik::translate('TagManager_ManageTagsHelp1'),
             'paragraphs' => [
                 Piwik::translate('TagManager_ManageTagsHelp2'),
@@ -201,7 +201,7 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $this->accessValidator->checkUserHasTagManagerAccess($this->idSite);
 
-        $triggersHelpText = $this->renderTemplate('helpContent', [
+        $triggersHelpText = $this->renderHelpContent([
             'subHeading' => Piwik::translate('TagManager_ManageTriggersHelp1'),
             'paragraphs' => [
                 Piwik::translate('TagManager_ManageTriggersHelp2'),
@@ -225,7 +225,7 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $this->accessValidator->checkUserHasTagManagerAccess($this->idSite);
 
-        $variablesHelpText = $this->renderTemplate('helpContent', [
+        $variablesHelpText = $this->renderHelpContent([
             'subHeading' => Piwik::translate('TagManager_ManageVariablesHelp1'),
             'paragraphs' => [
                 Piwik::translate('TagManager_ManageVariablesHelp2'),
@@ -253,7 +253,7 @@ class Controller extends \Piwik\Plugin\Controller
         $this->accessValidator->checkWriteCapability($idSite);
         $path = TagManager::getAbsolutePathToContainerDirectory();
         Filechecks::dieIfDirectoriesNotWritable(array($path));
-        $versionsHelpText = $this->renderTemplate('helpContent', [
+        $versionsHelpText = $this->renderHelpContent([
             'subHeading' => Piwik::translate('TagManager_ManageVersionsHelp1'),
             'paragraphs' => [
                 Piwik::translate('TagManager_ManageVersionsHelp2'),
@@ -726,6 +726,16 @@ class Controller extends \Piwik\Plugin\Controller
         if (empty($notifications)) {
             $view->notifications = NotificationManager::getAllNotificationsToDisplay();
             NotificationManager::cancelAllNonPersistent();
+        }
+
+        return $view->render();
+    }
+
+    private function renderHelpContent(array $variables): string
+    {
+        $view = new View('@TagManager/helpContent');
+        foreach ($variables as $key => $value) {
+            $view->$key = $value;
         }
 
         return $view->render();
