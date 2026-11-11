@@ -160,11 +160,35 @@ describe("TagManager", function () {
         await capture.modal(page, 'install_code_without_content');
     });
 
-    it('should be able to enable preview', async function () {
-        await modal.close(page);
+    async function openEnablePreviewConfirm() {
         await page.evaluate(function() {
             $('#secondNavBar .item:contains(Preview)').click();
         });
+        await page.waitForSelector('.modal.open .enablePreviewConfirm');
+        await page.waitForNetworkIdle();
+    }
+
+    it('should ask for confirmation before enabling preview', async function () {
+        await modal.close(page);
+        await openEnablePreviewConfirm();
+        await capture.modal(page, 'preview_enable_confirm');
+    });
+
+    it('should not enable preview when the confirmation is cancelled', async function () {
+        await modal.clickButton(page, 'Cancel');
+        await page.waitForSelector('.modal.open', { hidden: true });
+        await page.waitForNetworkIdle();
+
+        // Reloading shows whether preview was enabled on the server, not only on this page
+        await page.reload();
+        await page.waitForNetworkIdle();
+        await page.waitForSelector('#secondNavBar');
+        expect(await page.$('.previewDebugNotification')).to.equal(null);
+    });
+
+    it('should be able to enable preview', async function () {
+        await openEnablePreviewConfirm();
+        await modal.clickButton(page, 'Confirm');
         await page.waitForNetworkIdle();
         await page.waitForTimeout(250);
         await page.waitForNetworkIdle();
