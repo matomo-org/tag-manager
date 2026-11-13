@@ -359,7 +359,6 @@
         "EnvironmentVariableDescription": "Returns the current environment.",
         "EnvironmentVariableName": "Environment Name",
         "Environments": "Environments",
-        "ErrorArrayInvalidEntry": "The entry at position \"%1$s\" contains an unsupported key or value.",
         "ErrorArrayMissingKey": "Missing array key \"%1$s\" in \"%2$s\" at position \"%3$s\".",
         "ErrorArrayMissingValue": "Missing value for array key \"%1$s\" in \"%2$s\" at position \"%3$s\".",
         "ErrorComparisonNotSupported": "The comparison \"%s\" is not supported.",
