@@ -358,7 +358,6 @@
         "EnvironmentVariableDescription": "Returnerer det aktuelle miljø.",
         "EnvironmentVariableName": "Miljønavn",
         "Environments": "Miljøer",
-        "ErrorArrayInvalidEntry": "Posten på position \"%1$s\" indeholder en nøgle eller værdi, der ikke understøttes.",
         "ErrorArrayMissingKey": "Manglende array-nøgle \"%1$s\" i \"%2$s\" på position \"%3$s\".",
         "ErrorArrayMissingValue": "Manglende værdi for array-nøglen \"%1$s\" i \"%2$s\" på position \"%3$s\".",
         "ErrorComparisonNotSupported": "Sammenligningen \"%s\" understøttes ikke.",

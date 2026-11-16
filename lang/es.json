@@ -362,7 +362,6 @@
         "EnvironmentVariableDescription": "Volver el actual entorno.",
         "EnvironmentVariableName": "Nombre del entorno",
         "Environments": "Entornos",
-        "ErrorArrayInvalidEntry": "La entrada de la posición «%1$s» contiene una clave o un valor no admitidos.",
         "ErrorArrayMissingKey": "Falta la clave de la matriz \"%1$s\" en \"%2$s\" en la posición \"%3$s\".",
         "ErrorArrayMissingValue": "Falta el valor para la clave de matriz \"%1$s\" en \"%2$s\" en la posición \"%3$s\".",
         "ErrorComparisonNotSupported": "La comparación \"%s\" no está contemplada.",
