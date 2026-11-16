@@ -20,11 +20,6 @@ parameters:
             identifier: nullCoalesce.expr
             path: Context/WebContext/JavaScriptTagManagerLoader.php
             count: 1
-        # core's Controller::$site is only set once a site is in scope, which is what this guard tests for
-        -
-            identifier: empty.property
-            path: Controller.php
-            count: 1
         # Site's constructor loads the site through SitesManager's API, which throws NoAccessException
         -
             identifier: catch.neverThrown

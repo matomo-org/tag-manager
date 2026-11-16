@@ -1,0 +1,12 @@
+includes:
+    - phpstan.neon
+
+parameters:
+    tmpDir: /tmp/phpstan/TagManager/min
+    ignoreErrors:
+        # core's Controller::$site is only set once a site is in scope, which is what this guard tests for.
+        # Older core types it Site; newer core's Site|null leaves nothing to ignore on the maximum leg.
+        -
+            identifier: empty.property
+            path: Controller.php
+            count: 1

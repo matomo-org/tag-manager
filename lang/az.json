@@ -27,6 +27,7 @@
         "InvalidDebugUrlError": "Mali",
         "LivezillaDynamicTagDomainTitle": "Livezilla Domeni",
         "MatomoTagEcommerceViewPrice": "Qiymət",
+        "OpenAIAdsPixelTagCurrencyTitle": "valyuta",
         "PageUrlVariableName": "Sayfa Adresi"
     }
 }

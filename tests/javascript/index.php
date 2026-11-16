@@ -2827,9 +2827,13 @@
         });
 
         test("Matomo TagManager Template PinterestPixelTag", function() {
-            expect(7);
+            expect(8);
             var calls = [];
-            var fakeWindow = {pintrk: function () { calls.push(Array.prototype.slice.call(arguments)); }};
+            var fakeWindow = {pintrk: function () {
+                calls.push(Array.prototype.slice.call(arguments).map(function (arg) {
+                    return typeof arg === 'function' ? 'callback' : arg;
+                }));
+            }};
 
             function fire(params) {
                 calls = [];
@@ -2842,13 +2846,18 @@
             deepEqual(fire({eventName: 'pagevisit', eventId: 'abc'}), [
                 ['load', 'pinterest-test-tag'],
                 ['page'],
-                ['track', 'pagevisit', {event_id: 'abc'}]
+                ['track', 'pagevisit', {event_id: 'abc'}, 'callback', 'pinterest-test-tag']
             ], 'loads the tag with the base page call once, then tracks pagevisit as a conversion');
             deepEqual(fire({eventName: 'checkout', eventParameters: [{parameter: 'value', value: '10'}]}), [
-                ['track', 'checkout', {value: '10'}]
+                ['track', 'checkout', {value: '10'}, 'callback', 'pinterest-test-tag']
             ], 'does not load the tag again, and sends the event parameters');
+            deepEqual(fire({tagId: 'pinterest-second-tag', eventName: 'lead'}), [
+                ['load', 'pinterest-second-tag'],
+                ['page'],
+                ['track', 'lead', {}, 'callback', 'pinterest-second-tag']
+            ], 'sends the event only to its own tag when a second tag is on the page');
             deepEqual(fire({eventName: 'custom', customEventName: ''}), [], 'sends nothing for a custom event without a name');
-            deepEqual(fire({eventName: 'custom', customEventName: ' TookSurvey '}), [['track', 'TookSurvey', {}]], 'sends a custom event with its trimmed name');
+            deepEqual(fire({eventName: 'custom', customEventName: ' TookSurvey '}), [['track', 'TookSurvey', {}, 'callback', 'pinterest-test-tag']], 'sends a custom event with its trimmed name');
             deepEqual(fire({eventName: 'custom', customEventName: 'bad name'}), [], 'drops a custom event with an invalid name');
             deepEqual(fire({eventName: 'custom', customEventName: 'Checkout'}), [], 'drops a custom event named like a standard one');
             deepEqual(fire({tagId: 'pinterest-unloaded-tag', eventName: 'custom', customEventName: 'bad name'}), [], 'does not load a tag for an invalid custom event');
@@ -2919,25 +2928,29 @@
         });
 
         test("Matomo TagManager Template SnapchatTag", function() {
-            expect(2);
+            expect(3);
             var calls = [];
             var fakeWindow = {snaptr: function () { calls.push(Array.prototype.slice.call(arguments)); }};
 
             function fire(params) {
                 calls = [];
                 params.window = fakeWindow;
-                params.pixelId = 'snapchat-test-pixel';
+                params.pixelId = params.pixelId || 'snapchat-test-pixel';
                 fireTemplateTag('SnapchatTag', params);
                 return calls;
             }
 
             deepEqual(fire({eventName: 'PAGE_VIEW', userEmail: 'a@example.com'}), [
                 ['init', 'snapchat-test-pixel', {user_email: 'a@example.com'}],
-                ['track', 'PAGE_VIEW', {}]
-            ], 'initialises the pixel with the email and sends the event');
+                ['track', 'snapchat-test-pixel', 'PAGE_VIEW', {}]
+            ], 'initialises the pixel with the email and sends the event to it');
             deepEqual(fire({eventName: 'VIEW_CONTENT', eventParameters: [{parameter: 'item_ids', value: 'sku-1'}]}), [
-                ['track', 'VIEW_CONTENT', {item_ids: 'sku-1'}]
+                ['track', 'snapchat-test-pixel', 'VIEW_CONTENT', {item_ids: 'sku-1'}]
             ], 'does not initialise the pixel again, and sends the event parameters');
+            deepEqual(fire({eventName: 'PURCHASE', pixelId: 'snapchat-other-pixel'}), [
+                ['init', 'snapchat-other-pixel'],
+                ['track', 'snapchat-other-pixel', 'PURCHASE', {}]
+            ], 'sends a second pixel\'s event only to that pixel');
         });
 
         test("Matomo TagManager Template XPixelTag", function() {

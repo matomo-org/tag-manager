@@ -112,7 +112,8 @@ class TikTokTag extends BaseTag
             $this->makeSetting('eventParameters', [], FieldConfig::TYPE_ARRAY, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_TikTokTagEventParametersTitle');
                 $field->description = Piwik::translate('TagManager_TikTokTagEventParametersDescription');
-                $field->condition = 'eventName != "PageView"';
+                // Not `!=`: the settings form rewrites every `!` to ` not `, which makes `!=` unparseable
+                $field->condition = 'not (eventName == "PageView")';
                 $field->uiControl = FieldConfig::UI_CONTROL_MULTI_TUPLE;
 
                 $field1 = new FieldConfig\MultiPair(Piwik::translate('Parameter'), 'parameter', FieldConfig::UI_CONTROL_TEXT);
@@ -127,7 +128,7 @@ class TikTokTag extends BaseTag
             $this->makeSetting('eventId', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_TikTokTagEventIdTitle');
                 $field->description = Piwik::translate('TagManager_TikTokTagEventIdDescription');
-                $field->condition = 'eventName != "PageView"';
+                $field->condition = 'not (eventName == "PageView")';
                 $field->customFieldComponent = self::FIELD_VARIABLE_COMPONENT;
             }),
         ];

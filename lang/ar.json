@@ -12,12 +12,18 @@
         "ManageX": "إدارة %s",
         "MatomoConfigurationMatomoUserIdTitle": "معرّف المستخدم",
         "MatomoTagEcommerceViewPrice": "السعر",
+        "OpenAIAdsPixelTagCurrencyTitle": "العملة",
+        "OpenAIAdsPixelTagEventNameTitle": "حَدَث",
         "PageTitleVariableName": "عنوان الصفحة",
         "PageUrlVariableName": "رابط الصفحة",
+        "PinterestPixelTagEventNameTitle": "حَدَث",
+        "RedditTagEventNameTitle": "حَدَث",
         "ReferrerUrlVariableName": "جاء من",
         "ReferrerVariableName": "جاء من",
+        "SnapchatTagEventNameTitle": "حَدَث",
         "Tag": "علامة",
         "TagLowercase": "وسم",
+        "TikTokTagEventNameTitle": "حَدَث",
         "Type": "النوع",
         "Version": "الإصدار"
     }
