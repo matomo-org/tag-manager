@@ -243,6 +243,7 @@ import { Field } from 'CorePluginsAdmin';
 import VersionsStore from './Versions.store';
 import { Release, Version } from '../types';
 import AvailableEnvironmentsStore from '../AvailableEnvironments.store';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 export interface VersionListState {
   versionToBePublished: Version|null;
@@ -322,7 +323,7 @@ export default defineComponent({
         filename += `_${versionName}`;
       }
 
-      AjaxHelper.fetch(params).then((exportedContainer) => {
+      AjaxHelper.fetch(params).catch(rethrowHttpErrorMessage).then((exportedContainer) => {
         Matomo.helper.sendContentAsDownload(`${filename}.json`, JSON.stringify(exportedContainer));
       });
     },

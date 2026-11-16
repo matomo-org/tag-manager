@@ -229,6 +229,7 @@ import {
   Release,
   Version,
 } from '../types';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface ContainerDashboardState {
   container: Container|null;
@@ -283,7 +284,7 @@ export default defineComponent({
     const containerPromise = AjaxHelper.fetch<Container>({
       method: 'TagManager.getContainer',
       idContainer: this.idContainer,
-    }).then((container) => {
+    }).catch(rethrowHttpErrorMessage).then((container) => {
       this.container = container;
 
       // the editors cannot be used for an entity whose type is not available
@@ -303,7 +304,7 @@ export default defineComponent({
     const versionPromise = AjaxHelper.fetch<ExportedVersion>({
       method: 'TagManager.exportContainerVersion',
       idContainer: this.idContainer,
-    }).then((containerVersion) => {
+    }).catch(rethrowHttpErrorMessage).then((containerVersion) => {
       this.containerVersion = containerVersion;
     });
 

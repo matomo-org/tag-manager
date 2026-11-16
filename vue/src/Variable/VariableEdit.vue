@@ -272,6 +272,7 @@ import {
   VariableType,
 } from '../types';
 import AvailableComparisonsStore from '../AvailableComparisons.store';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 export interface VariableEditState {
   isDirty: boolean;
@@ -393,7 +394,7 @@ export default defineComponent({
         method: 'TagManager.getContainer',
         idContainer: this.idContainer,
         filter_limit: '-1',
-      }).then(
+      }).catch(rethrowHttpErrorMessage).then(
         (container) => VariablesStore.fetchAvailableVariables(container.context),
       ).then((variables) => {
         this.availableVariables = variables;
