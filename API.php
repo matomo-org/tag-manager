@@ -1651,8 +1651,6 @@ class API extends \Piwik\Plugin\API
      *
      * @param $idSite
      * @return void
-     * @throws \Piwik\NoAccessException
-     * @throws \Piwik\Exception\NoPrivilegesException
      */
     private function checkUserHasTagManagerAccess($idSite = null)
     {
