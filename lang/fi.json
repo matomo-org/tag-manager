@@ -363,7 +363,6 @@
         "EnvironmentVariableDescription": "Palauttaa nykyisen ympäristön.",
         "EnvironmentVariableName": "Ympäristön nimi",
         "Environments": "Ympäristöt",
-        "ErrorArrayInvalidEntry": "Kohdassa \"%1$s\" oleva merkintä sisältää avaimen tai arvon, jota ei tueta.",
         "ErrorArrayMissingKey": "Taulukkoavain \"%1$s\" puuttuu kohteesta \"%2$s\" kohdasta \"%3$s\".",
         "ErrorArrayMissingValue": "Taulukkoavaimen \"%1$s\" arvo puuttuu kohteesta \"%2$s\" kohdasta \"%3$s\".",
         "ErrorComparisonNotSupported": "Vertailua \"%s\" ei tueta.",
