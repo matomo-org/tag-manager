@@ -11,8 +11,7 @@
       {{ translate('TagManager_ConfirmEnablePreviewTitle') }}
     </h2>
     <div class="alert alert-warning enablePreviewConfirm__warning">
-      <p v-html="$sanitize(previewDescription)"></p>
-      <p>{{ translate('TagManager_EnablePreviewRiskWarning') }}</p>
+      <p v-html="$sanitize(riskWarning)"></p>
     </div>
     <div class="enablePreviewConfirm__changes">
       <div v-if="loadFailed" class="alert alert-danger">
@@ -65,6 +64,7 @@ export default defineComponent({
       default: 0,
     },
   },
+  emits: ['loaded'],
   components: {
     VersionChangesTable,
   },
@@ -118,12 +118,13 @@ export default defineComponent({
       this.loadFailed = true;
     }).finally(() => {
       this.loading = false;
+      this.$emit('loaded');
     });
   },
   computed: {
-    previewDescription() {
+    riskWarning() {
       return translate(
-        'TagManager_PreviewModeEnabledDescription',
+        'TagManager_EnablePreviewRiskWarning',
         externalLink('https://matomo.org/faq/tag-manager/preview-debug-a-tag-manager-container/'),
         '</a>',
       );

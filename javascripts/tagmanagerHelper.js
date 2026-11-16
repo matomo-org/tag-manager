@@ -223,15 +223,7 @@
           + '<input role="yes" type="button" value="' + _pk_translate('General_Confirm') + '"/>'
           + '<input role="no" type="button" value="' + _pk_translate('General_Cancel') + '"/></div>');
 
-        var app = createVueApp({
-          render: function () {
-            return createVNode(EnablePreviewConfirm, {
-              idContainer: idContainer,
-              idContainerVersion: parseInt(idContainerVersion, 10) || 0,
-            });
-          },
-        });
-        app.mount(template.children()[0]);
+        var app;
 
         piwikHelper.modalConfirm(template, {
           yes: function () {
@@ -248,6 +240,22 @@
             template.empty();
           },
         });
+
+        // Confirm is the first footer link modalConfirm generates; keep it hidden until the changes are shown
+        var $confirmButton = template.closest('.modal').find('.modal-footer a').first().hide();
+
+        app = createVueApp({
+          render: function () {
+            return createVNode(EnablePreviewConfirm, {
+              idContainer: idContainer,
+              idContainerVersion: parseInt(idContainerVersion, 10) || 0,
+              onLoaded: function () {
+                $confirmButton.show();
+              },
+            });
+          },
+        });
+        app.mount(template.children()[0]);
     };
     tagManagerHelper.disablePreviewMode = function (idContainer) {
         var params = {method: 'TagManager.disablePreviewMode', idContainer: idContainer};

@@ -599,7 +599,6 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_PreviewNoVersionToCompare';
         $result[] = 'TagManager_PreviewChangesLoadError';
         $result[] = 'TagManager_PreviewNoEarlierVersionToCompare';
-        $result[] = 'TagManager_PreviewModeEnabledDescription';
         $result[] = 'General_Confirm';
         $result[] = 'TagManager_LastUpdated';
         $result[] = 'TagManager_CreatedDate';
