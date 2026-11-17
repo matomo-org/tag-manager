@@ -244,6 +244,7 @@ import {
   TriggerCategory,
   TriggerType,
 } from '../types';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface Option {
   key: string;
@@ -321,7 +322,7 @@ export default defineComponent({
       filter_limit: '-1',
       idContainer: this.idContainer,
       idContainerVersion: this.idContainerVersion,
-    }).then((categories) => {
+    }).catch(rethrowHttpErrorMessage).then((categories) => {
       categories.forEach((category) => {
         category.types.forEach((v) => {
           this.variableIdToName[v.id] = v.name;
@@ -401,7 +402,7 @@ export default defineComponent({
         method: 'TagManager.getContainer',
         idContainer: this.idContainer,
         filter_limit: '-1',
-      }).then(
+      }).catch(rethrowHttpErrorMessage).then(
         (container) => TriggersStore.fetchAvailableTriggers(container.context),
       ).then((triggers) => {
         this.availableTriggers = triggers;

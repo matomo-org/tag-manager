@@ -320,6 +320,7 @@ class ContainerTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "foo" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->model->checkContainerExists($this->idSite, 'foo');
     }
@@ -604,6 +605,7 @@ class ContainerTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist.');
+        $this->expectExceptionCode(404);
 
         $this->createContainerVersion($this->idSite, $this->idContainer1, 9999);
     }
@@ -907,6 +909,7 @@ class ContainerTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container version does not exist.');
+        $this->expectExceptionCode(404);
 
         $idVersion = $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'v1');
         $this->publishVersion($this->idSite, $this->idContainer1, 9999);
@@ -966,6 +969,7 @@ class ContainerTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container release does not exist.');
+        $this->expectExceptionCode(404);
 
         $this->model->checkContainerReleaseExists($this->idSite, $this->idContainer1, Environment::ENVIRONMENT_LIVE);
     }
@@ -974,6 +978,7 @@ class ContainerTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "');
+        $this->expectExceptionCode(404);
 
         $this->publishVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, Environment::ENVIRONMENT_LIVE);
 
@@ -984,6 +989,7 @@ class ContainerTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container "');
+        $this->expectExceptionCode(404);
 
         $this->publishVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, Environment::ENVIRONMENT_LIVE);
 
@@ -994,6 +1000,7 @@ class ContainerTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The requested container release does not exist');
+        $this->expectExceptionCode(404);
 
         $this->publishVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, Environment::ENVIRONMENT_LIVE);
 
@@ -1013,6 +1020,7 @@ class ContainerTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The environment "foobar" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->model->getContainerInstallInstructions($this->idSite, $this->idContainer1, 'foobar');
     }

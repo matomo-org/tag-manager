@@ -32,6 +32,7 @@ import { defineComponent } from 'vue';
 import { AjaxHelper, MatomoUrl } from 'CoreHome';
 import { Field } from 'CorePluginsAdmin';
 import { Container, ContainerVariableCategory } from '../types';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface Option {
   key: string;
@@ -80,7 +81,7 @@ export default defineComponent({
           filter_limit: '-1',
           idContainer: MatomoUrl.parsed.value.idContainer as string,
           idContainerVersion: this.idContainerVersion,
-        }).then((variables) => {
+        }).catch(rethrowHttpErrorMessage).then((variables) => {
           this.containerVariables = [];
           this.isLoading = false;
 
@@ -96,9 +97,9 @@ export default defineComponent({
             // when no value configured and only one selection is available, we preselect that value
             this.onChange(this.containerVariables[0].key);
           }
-        }).catch(() => {
-          this.isLoading = false;
         });
+      }).catch(() => {
+        this.isLoading = false;
       });
     },
     onChange(newValue: string|null) {
@@ -128,7 +129,7 @@ export default defineComponent({
         method: 'TagManager.getContainer',
         filter_limit: '-1',
         idContainer: MatomoUrl.parsed.value.idContainer as string,
-      });
+      }).catch(rethrowHttpErrorMessage);
     },
   },
 });

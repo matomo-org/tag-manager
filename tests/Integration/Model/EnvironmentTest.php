@@ -92,6 +92,7 @@ class EnvironmentTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The environment "foobar" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->environment->checkIsValidEnvironment('foobar');
     }
@@ -100,6 +101,7 @@ class EnvironmentTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The environment "Live" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->environment->checkIsValidEnvironment('Live');
     }
@@ -108,6 +110,7 @@ class EnvironmentTest extends IntegrationTestCase
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('The environment "preview" does not exist');
+        $this->expectExceptionCode(404);
 
         $this->environment->checkIsValidEnvironment(Environment::ENVIRONMENT_PREVIEW);
     }

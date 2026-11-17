@@ -9,6 +9,8 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration\Input;
 
+use Piwik\Exception\NoPrivilegesException;
+use Piwik\NoAccessException;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\TagManagerWrite;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
@@ -284,6 +286,25 @@ class AccessValidatorTest extends IntegrationTestCase
             $this->tagFixture->idContainer1,
             $this->tagFixture->idContainer1Version4
         );
+    }
+
+    public function test_checkUserHasTagManagerAccess_loggedInUserBelowMinimumRoleGets403()
+    {
+        $this->settings->restrictTagManagerAccess->setValue(SystemSettings::USER_PERMISSON_LIST[2]);
+        $this->setUser();
+
+        $this->expectException(NoPrivilegesException::class);
+        $this->expectExceptionCode(403);
+        $this->validator->checkUserHasTagManagerAccess(1);
+    }
+
+    public function test_checkUserHasTagManagerAccess_anonymousUserIsAskedToLogIn()
+    {
+        $this->settings->restrictTagManagerAccess->setValue(SystemSettings::USER_PERMISSON_LIST[2]);
+        $this->setAnonymous();
+
+        $this->expectException(NoAccessException::class);
+        $this->validator->checkUserHasTagManagerAccess(1);
     }
 
     protected function setAnonymous()

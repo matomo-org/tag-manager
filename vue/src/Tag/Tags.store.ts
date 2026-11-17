@@ -16,6 +16,7 @@ import {
   TagTypeCategory,
   Tag,
 } from '../types';
+import { rethrowHttpErrorMessage } from '../showHttpErrorMessage';
 
 interface TagsStoreState {
   tags: Tag[];
@@ -66,7 +67,7 @@ class TagsStore {
       this.privateState.tags = tags;
       this.privateState.isLoadingTags = false;
       return this.tags.value;
-    }).finally(() => {
+    }).catch(rethrowHttpErrorMessage).finally(() => {
       this.privateState.isLoadingTags = false;
     });
   }
@@ -103,7 +104,7 @@ class TagsStore {
     }).then((record) => {
       this.privateState.tags = [...this.privateState.tags, record];
       return readonly(record);
-    }).finally(() => {
+    }).catch(rethrowHttpErrorMessage).finally(() => {
       this.privateState.isLoadingSingle = false;
     });
   }
@@ -162,7 +163,7 @@ class TagsStore {
         blockTriggerIds,
       },
       { withTokenInUrl: true },
-    ).finally(() => {
+    ).catch(rethrowHttpErrorMessage).finally(() => {
       this.privateState.isUpdating = false;
     });
   }
@@ -183,7 +184,7 @@ class TagsStore {
         method: 'TagManager.deleteContainerTag',
       },
       { withTokenInUrl: true },
-    ).finally(() => {
+    ).catch(rethrowHttpErrorMessage).finally(() => {
       this.privateState.isUpdating = false;
     });
   }
@@ -204,7 +205,7 @@ class TagsStore {
         method: 'TagManager.pauseContainerTag',
       },
       { withTokenInUrl: true },
-    ).finally(() => {
+    ).catch(rethrowHttpErrorMessage).finally(() => {
       this.privateState.isUpdating = false;
     });
   }
@@ -225,7 +226,7 @@ class TagsStore {
         method: 'TagManager.resumeContainerTag',
       },
       { withTokenInUrl: true },
-    ).finally(() => {
+    ).catch(rethrowHttpErrorMessage).finally(() => {
       this.privateState.isUpdating = false;
     });
   }
