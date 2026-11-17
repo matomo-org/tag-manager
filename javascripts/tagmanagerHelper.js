@@ -208,11 +208,47 @@
         if (!idContainerVersion) {
             idContainerVersion = 0;
         }
-        var params = {method: 'TagManager.enablePreviewMode', idContainer: idContainer, idContainerVersion: idContainerVersion};
-        piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_EnablingPreviewPleaseWait') + '</h2>', {});
-        CoreHome.AjaxHelper.fetch(params).then(function () {
-            window.location.reload();
+        var createVNode = Vue.createVNode;
+        var createVueApp = CoreHome.createVueApp;
+        var EnablePreviewConfirm = TagManager.EnablePreviewConfirm;
+
+        var template = $('<div class="ui-confirm"><div></div>'
+          + '<input role="yes" type="button" value="' + _pk_translate('General_Confirm') + '"/>'
+          + '<input role="no" type="button" value="' + _pk_translate('General_Cancel') + '"/></div>');
+
+        var app;
+
+        piwikHelper.modalConfirm(template, {
+          yes: function () {
+            var params = {method: 'TagManager.enablePreviewMode', idContainer: idContainer, idContainerVersion: idContainerVersion};
+            piwikHelper.modalConfirm('<h2>' + _pk_translate('TagManager_EnablingPreviewPleaseWait') + '</h2>', {});
+            CoreHome.AjaxHelper.fetch(params).then(function () {
+                window.location.reload();
+            });
+          },
+        }, {
+          extraWide: true,
+          onCloseEnd: function () {
+            app.unmount();
+            template.empty();
+          },
         });
+
+        // Confirm is the first footer link modalConfirm generates; keep it hidden until the changes are shown
+        var $confirmButton = template.closest('.modal').find('.modal-footer a').first().hide();
+
+        app = createVueApp({
+          render: function () {
+            return createVNode(EnablePreviewConfirm, {
+              idContainer: idContainer,
+              idContainerVersion: parseInt(idContainerVersion, 10) || 0,
+              onLoaded: function () {
+                $confirmButton.show();
+              },
+            });
+          },
+        });
+        app.mount(template.children()[0]);
     };
     tagManagerHelper.disablePreviewMode = function (idContainer) {
         var params = {method: 'TagManager.disablePreviewMode', idContainer: idContainer};
