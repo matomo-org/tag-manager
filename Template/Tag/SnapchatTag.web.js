@@ -55,7 +55,9 @@
                 });
             }
 
-            w.snaptr('track', eventName, paramsObject);
+            // Naming the pixel keeps the event off any other pixel on the page. The SDK supports this
+            // form (scevent.min.js) although Snap's docs only show track without a pixel ID.
+            w.snaptr('track', pixelId, eventName, paramsObject);
         };
     };
 })();
