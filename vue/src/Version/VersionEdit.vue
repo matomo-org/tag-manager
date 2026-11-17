@@ -99,35 +99,10 @@
             v-if="lastVersion"
           >
             <h3>{{ translate('TagManager_ChangesSinceLastVersion') }}:</h3>
-            <table v-content-table>
-              <thead>
-                <tr>
-                  <th>{{ translate('SitesManager_Type') }}</th>
-                  <th>{{ translate('General_Name') }}</th>
-                  <th>{{ translate('TagManager_Change') }}</th>
-                  <th>{{ translate('TagManager_LastUpdated') }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-if="isLoadingVersionChanges">
-                  <td colspan="4">
-                    <ActivityIndicator
-                      :loading-message="translate('TagManager_DetectingChanges')"
-                      :loading="true"
-                    />
-                  </td>
-                </tr>
-                <tr v-if="!versionChanges.length && !isLoadingVersionChanges">
-                  <td colspan="4">{{ translate('UserCountryMap_None') }}</td>
-                </tr>
-                <tr v-for="(versionChange, index) in versionChanges" :key="index">
-                  <td>{{ translate(versionChange.entityType) }}</td>
-                  <td>{{ versionChange.name }}</td>
-                  <td>{{ translate(versionChange.type) }}</td>
-                  <td class="lastUpdated"><span>{{ versionChange.lastChanged }}</span></td>
-                </tr>
-              </tbody>
-            </table>
+            <VersionChangesTable
+              :changes="versionChanges"
+              :loading="isLoadingVersionChanges"
+            />
           </div>
           <div
             class="entityCancel"
@@ -147,7 +122,6 @@ import {
   Matomo,
   translate,
   ContentBlock,
-  ContentTable,
   ActivityIndicator,
   NotificationsStore,
   NotificationType,
@@ -163,6 +137,7 @@ import { Version } from '../types';
 import VersionsStore from './Versions.store';
 import VersionNameHelpText from './VersionNameHelpText.vue';
 import SelectTagManagerEnvironmentHelpText from './SelectTagManagerEnvironmentHelpText.vue';
+import VersionChangesTable from './VersionChangesTable.vue';
 
 export interface VersionEditState {
   isDirty: boolean;
@@ -195,9 +170,7 @@ export default defineComponent({
     Field,
     SaveButton,
     ActivityIndicator,
-  },
-  directives: {
-    ContentTable,
+    VersionChangesTable,
   },
   data(): VersionEditState {
     return {

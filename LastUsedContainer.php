@@ -17,7 +17,7 @@ use Piwik\Settings\Storage\UserScopedSettingsAccessManager;
  */
 class LastUsedContainer
 {
-    private const STORE_KEY_LAST_USED_CONTAINERS = 'lastUsedContainers';
+    private const STORE_KEY_PREFIX_LAST_USED_CONTAINER = 'lastUsedContainer_';
 
     /**
      * @var UserScopedSettingsAccessManager
@@ -25,9 +25,9 @@ class LastUsedContainer
     private $accessManager;
 
     /**
-     * Stored values already read in this request, by user login, as the menu asks for them several times.
+     * Stored values already read in this request, by user login and site, as the menu asks for them several times.
      *
-     * @var array<string, array<int, string>>
+     * @var array<string, array<int, string|null>>
      */
     private $lastUsedContainersByLogin = [];
 
@@ -43,9 +43,7 @@ class LastUsedContainer
             return null;
         }
 
-        $lastUsedContainers = $this->getLastUsedContainers($userLogin);
-
-        return $lastUsedContainers[$idSite] ?? null;
+        return $this->getLastUsedContainer($userLogin, $idSite);
     }
 
     public function setForCurrentUser(int $idSite, string $idContainer): void
@@ -55,16 +53,12 @@ class LastUsedContainer
             return;
         }
 
-        $lastUsedContainers = $this->getLastUsedContainers($userLogin);
-        if (($lastUsedContainers[$idSite] ?? null) === $idContainer) {
+        if ($this->getLastUsedContainer($userLogin, $idSite) === $idContainer) {
             return;
         }
 
-        // The read and the write are not atomic. If two requests save a container for different sites at the same
-        // time, one site's value can be lost. The user then lands on Manage Containers once, which is acceptable.
-        $lastUsedContainers[$idSite] = $idContainer;
-        $this->accessManager->set('TagManager', $userLogin, self::STORE_KEY_LAST_USED_CONTAINERS, $lastUsedContainers);
-        $this->lastUsedContainersByLogin[$userLogin] = $lastUsedContainers;
+        $this->accessManager->set('TagManager', $userLogin, $this->getStoreKey($idSite), $idContainer);
+        $this->lastUsedContainersByLogin[$userLogin][$idSite] = $idContainer;
     }
 
     /**
@@ -72,22 +66,13 @@ class LastUsedContainer
      */
     public function removeSiteForAllUsers(int $idSite): void
     {
-        $valuesByUser = $this->accessManager->getValuesForAllUsers('TagManager', [self::STORE_KEY_LAST_USED_CONTAINERS]);
+        $storeKey = $this->getStoreKey($idSite);
+        $valuesByUser = $this->accessManager->getValuesForAllUsers('TagManager', [$storeKey]);
 
-        foreach ($valuesByUser as $userLogin => $values) {
+        foreach (array_keys($valuesByUser) as $userLogin) {
             $userLogin = (string) $userLogin;
-            $lastUsedContainers = $values[self::STORE_KEY_LAST_USED_CONTAINERS] ?? null;
-            if (!is_array($lastUsedContainers) || !array_key_exists($idSite, $lastUsedContainers)) {
-                continue;
-            }
-
-            unset($lastUsedContainers[$idSite]);
-            if (empty($lastUsedContainers)) {
-                $this->accessManager->delete('TagManager', $userLogin, self::STORE_KEY_LAST_USED_CONTAINERS);
-            } else {
-                $this->accessManager->set('TagManager', $userLogin, self::STORE_KEY_LAST_USED_CONTAINERS, $lastUsedContainers);
-            }
-            unset($this->lastUsedContainersByLogin[$userLogin]);
+            $this->accessManager->delete('TagManager', $userLogin, $storeKey);
+            unset($this->lastUsedContainersByLogin[$userLogin][$idSite]);
         }
     }
 
@@ -102,16 +87,21 @@ class LastUsedContainer
         return empty($userLogin) ? null : $userLogin;
     }
 
-    /**
-     * @return array<int, string>
-     */
-    private function getLastUsedContainers(string $userLogin): array
+    private function getLastUsedContainer(string $userLogin, int $idSite): ?string
     {
-        if (!array_key_exists($userLogin, $this->lastUsedContainersByLogin)) {
-            $value = $this->accessManager->get('TagManager', $userLogin, self::STORE_KEY_LAST_USED_CONTAINERS, []);
-            $this->lastUsedContainersByLogin[$userLogin] = is_array($value) ? $value : [];
+        if (
+            !isset($this->lastUsedContainersByLogin[$userLogin])
+            || !array_key_exists($idSite, $this->lastUsedContainersByLogin[$userLogin])
+        ) {
+            $value = $this->accessManager->get('TagManager', $userLogin, $this->getStoreKey($idSite));
+            $this->lastUsedContainersByLogin[$userLogin][$idSite] = is_string($value) && $value !== '' ? $value : null;
         }
 
-        return $this->lastUsedContainersByLogin[$userLogin];
+        return $this->lastUsedContainersByLogin[$userLogin][$idSite];
+    }
+
+    private function getStoreKey(int $idSite): string
+    {
+        return self::STORE_KEY_PREFIX_LAST_USED_CONTAINER . $idSite;
     }
 }

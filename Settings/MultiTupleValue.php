@@ -7,17 +7,16 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-namespace Piwik\Plugins\TagManager\Validators;
-
-use Piwik\Piwik;
-use Piwik\Validators\BaseValidator;
-use Piwik\Validators\Exception;
+namespace Piwik\Plugins\TagManager\Settings;
 
 /**
- * Ensures the value of a multi tuple field is a list of rows that only contain the keys declared by the field
+ * Normalizes the value of a multi tuple field to a list of rows that only contain the keys declared by the field
  * (field1 / field2) with scalar values.
+ *
+ * Anything else is dropped rather than rejected, so entities that already hold such a value can still be copied,
+ * versioned and published.
  */
-class MultiTupleValue extends BaseValidator
+class MultiTupleValue
 {
     /**
      * @var string[]
@@ -36,26 +35,38 @@ class MultiTupleValue extends BaseValidator
         }
     }
 
-    public function validate($value)
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    public function normalize($value)
     {
-        if (empty($value) || !is_array($value)) {
+        if (!is_array($value)) {
             // the type of the value itself is validated by the field
-            return;
+            return $value;
         }
 
-        foreach ($value as $index => $row) {
+        $rows = [];
+        foreach ($value as $row) {
             if (!is_array($row)) {
-                throw new Exception(Piwik::translate('TagManager_ErrorArrayInvalidEntry', [$index]));
+                continue;
             }
 
+            $normalizedRow = [];
             foreach ($row as $key => $rowValue) {
                 if (
-                    !in_array((string) $key, $this->allowedKeys, true)
-                    || (!is_null($rowValue) && !is_scalar($rowValue))
+                    in_array((string) $key, $this->allowedKeys, true)
+                    && (is_null($rowValue) || is_scalar($rowValue))
                 ) {
-                    throw new Exception(Piwik::translate('TagManager_ErrorArrayInvalidEntry', [$index]));
+                    $normalizedRow[$key] = $rowValue;
                 }
             }
+
+            if (!empty($normalizedRow)) {
+                $rows[] = $normalizedRow;
+            }
         }
+
+        return $rows;
     }
 }
