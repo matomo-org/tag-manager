@@ -105,6 +105,7 @@
 				<disableCookies>0</disableCookies>
 				<requireConsent>0</requireConsent>
 				<requireCookieConsent>0</requireCookieConsent>
+				<requireConsentForRestrictedData>0</requireConsentForRestrictedData>
 				<customCookieTimeOutEnable>0</customCookieTimeOutEnable>
 				<customCookieTimeOut>393</customCookieTimeOut>
 				<referralCookieTimeOut>182</referralCookieTimeOut>

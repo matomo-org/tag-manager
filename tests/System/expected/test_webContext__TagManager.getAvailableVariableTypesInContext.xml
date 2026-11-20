@@ -264,7 +264,7 @@
 						<description>Disables all first party cookies.</description>
 						<inlineHelp />
 						<introduction />
-						<condition>!requireConsent &amp;&amp; !requireCookieConsent</condition>
+						<condition>!requireConsent &amp;&amp; !requireCookieConsent &amp;&amp; !requireConsentForRestrictedData</condition>
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
@@ -280,7 +280,7 @@
 						<description>Track only when user gave tracking consent. In a consent screen you need to call &quot;window._paq=window._paq||[];window._paq.push(['rememberConsentGiven']);&quot; when the user gives consent.</description>
 						<inlineHelp />
 						<introduction />
-						<condition>!requireCookieConsent &amp;&amp; !disableCookies</condition>
+						<condition>!requireCookieConsent &amp;&amp; !disableCookies &amp;&amp; !requireConsentForRestrictedData</condition>
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
@@ -296,7 +296,23 @@
 						<description>Use cookies only if the user gave cookie consent, otherwise track the user without cookies. In a consent screen you need to call &quot;window._paq=window._paq||[];window._paq.push(['rememberCookieConsentGiven']);&quot; when the user gives consent for cookies.</description>
 						<inlineHelp />
 						<introduction />
-						<condition>!requireConsent &amp;&amp; !disableCookies</condition>
+						<condition>!requireConsent &amp;&amp; !disableCookies &amp;&amp; !requireConsentForRestrictedData</condition>
+						<fullWidth>0</fullWidth>
+					</row>
+					<row>
+						<name>requireConsentForRestrictedData</name>
+						<title>Require consent for data restricted by a compliance policy</title>
+						<value>0</value>
+						<defaultValue>0</defaultValue>
+						<type>boolean</type>
+						<uiControl>checkbox</uiControl>
+						<uiControlAttributes>
+						</uiControlAttributes>
+						<availableValues />
+						<description>For a site measuring under a compliance exemption such as the CNIL configuration. Every visitor is measured, without cookies, and the data the policy withholds - campaign parameters, referrer detail and the User ID - is collected only for visitors who consent. In a consent screen you need to call &quot;window._paq=window._paq||[];window._paq.push(['rememberConsentGiven']);&quot; when the user gives consent. Requires the site to have consent-aware analytics enabled.</description>
+						<inlineHelp />
+						<introduction />
+						<condition>!requireConsent &amp;&amp; !requireCookieConsent &amp;&amp; !disableCookies</condition>
 						<fullWidth>0</fullWidth>
 					</row>
 					<row>
