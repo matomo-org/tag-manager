@@ -22,7 +22,6 @@ use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
 use Piwik\Plugins\FeatureFlags\FeatureFlagManager;
-use Piwik\Plugins\PrivacyManager\FeatureFlags\HybridTracking;
 use Piwik\Plugins\TagManager\Validators\CustomRequestProcessing;
 
 class MatomoConfigurationVariable extends BaseVariable
@@ -72,10 +71,11 @@ class MatomoConfigurationVariable extends BaseVariable
         });
 
         // Hybrid tracking can only be switched on in Matomo while its feature flag is on, so the
-        // option that asks for it in a container is hidden with it.
+        // option that asks for it in a container is hidden with it. The flag is named as a string
+        // because Matomo versions before it do not have its class.
         try {
             $hybridTracking = StaticContainer::get(FeatureFlagManager::class)
-                ->isFeatureActive(HybridTracking::class);
+                ->isFeatureActive('Piwik\Plugins\PrivacyManager\FeatureFlags\HybridTracking');
         } catch (\Exception $e) {
             // The container is also rebuilt on CoreUpdater.update.end, and a Matomo being
             // updated from before feature flags existed has no container configuration that
