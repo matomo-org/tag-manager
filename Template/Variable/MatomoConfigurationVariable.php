@@ -10,6 +10,7 @@
 namespace Piwik\Plugins\TagManager\Template\Variable;
 
 use Piwik\Common;
+use Piwik\Container\StaticContainer;
 use Piwik\NoAccessException;
 use Piwik\Piwik;
 use Piwik\Settings\FieldConfig;
@@ -20,6 +21,8 @@ use Piwik\Url;
 use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
+use Piwik\Plugins\FeatureFlags\FeatureFlagManager;
+use Piwik\Plugins\PrivacyManager\FeatureFlags\GranularPrivacyCompliance;
 use Piwik\Plugins\TagManager\Validators\CustomRequestProcessing;
 
 class MatomoConfigurationVariable extends BaseVariable
@@ -67,6 +70,19 @@ class MatomoConfigurationVariable extends BaseVariable
                 return trim($value);
             };
         });
+
+        // Hybrid tracking can only be switched on in Matomo while the compliance feature flag is
+        // on, so the option that asks for it in a container is hidden with it.
+        try {
+            $hybridTracking = StaticContainer::get(FeatureFlagManager::class)
+                ->isFeatureActive(GranularPrivacyCompliance::class);
+        } catch (\Exception $e) {
+            // The container is also rebuilt on CoreUpdater.update.end, and a Matomo being
+            // updated from before feature flags existed has no container configuration that
+            // answers for them.
+            $hybridTracking = false;
+        }
+        $unlessHybridTracking = $hybridTracking ? ' && !requireConsentForRestrictedData' : '';
 
         $trackerCodeGenerator = new TrackerCodeGenerator();
         $jsEndpoint = $trackerCodeGenerator->getJsTrackerEndpoint();
@@ -162,20 +178,25 @@ class MatomoConfigurationVariable extends BaseVariable
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackBotsTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoTrackBotsDescription');
             }),
-            $this->makeSetting('disableCookies', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+            $this->makeSetting('disableCookies', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) use ($unlessHybridTracking) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableCookiesTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoDisableCookiesDescription');
-                $field->condition = '!requireConsent && !requireCookieConsent';
+                $field->condition = '!requireConsent && !requireCookieConsent' . $unlessHybridTracking;
             }),
-            $this->makeSetting('requireConsent', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+            $this->makeSetting('requireConsent', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) use ($unlessHybridTracking) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireConsentTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireConsentDescription');
-                $field->condition = '!requireCookieConsent && !disableCookies';
+                $field->condition = '!requireCookieConsent && !disableCookies' . $unlessHybridTracking;
             }),
-            $this->makeSetting('requireCookieConsent', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+            $this->makeSetting('requireCookieConsent', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) use ($unlessHybridTracking) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentTitle');
                 $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireCookieConsentDescription');
-                $field->condition = '!requireConsent && !disableCookies';
+                $field->condition = '!requireConsent && !disableCookies' . $unlessHybridTracking;
+            }),
+            $this->makeSetting('requireConsentForRestrictedData', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
+                $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireConsentForRestrictedDataTitle');
+                $field->description = Piwik::translate('TagManager_MatomoConfigurationMatomoRequireConsentForRestrictedDataDescription');
+                $field->condition = '!requireConsent && !requireCookieConsent && !disableCookies';
             }),
             $this->makeSetting('customCookieTimeOutEnable', false, FieldConfig::TYPE_BOOL, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_MatomoConfigurationMatomoCustomCookieTimeOutsEnableTitle');
@@ -679,6 +700,12 @@ class MatomoConfigurationVariable extends BaseVariable
                 };
             }),
         );
+
+        if (!$hybridTracking) {
+            $parameters = array_values(array_filter($parameters, function ($parameter) {
+                return $parameter->getName() !== 'requireConsentForRestrictedData';
+            }));
+        }
 
         $pluginParameters = [];
         if (\Piwik\Plugin\Manager::getInstance()->isPluginActivated('FormAnalytics')) {
