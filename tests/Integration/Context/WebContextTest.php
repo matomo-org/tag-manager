@@ -253,13 +253,10 @@ class WebContextTest extends IntegrationTestCase
      * The consent-exemption option is only offered while the hybrid tracking feature flag is on. A
      * container released with it on stops applying it once the flag is turned off, the next time
      * the release is generated, without a new version having to be published.
-     *
-     * Both flags are set because the option followed GranularPrivacyCompliance until Hybrid
-     * Tracking got its own flag.
      */
     public function test_generate_leavesOutAParameterTheVariableTypeNoLongerDefines()
     {
-        Config::getInstance()->FeatureFlags = ['GranularPrivacyCompliance_feature' => 'enabled', 'HybridTracking_feature' => 'enabled'];
+        Config::getInstance()->FeatureFlags = ['HybridTracking_feature' => 'enabled'];
 
         $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
         $idContainerVersion = $this->getContainerDraftVersion($idContainer);
@@ -278,7 +275,7 @@ class WebContextTest extends IntegrationTestCase
         $js = implode("\n", StaticContainer::get(WebContext::class)->generate($container));
         $this->assertStringContainsString('"requireConsentForRestrictedData":true', $js, 'the option applies while the flag is on');
 
-        Config::getInstance()->FeatureFlags = ['GranularPrivacyCompliance_feature' => 'disabled', 'HybridTracking_feature' => 'disabled'];
+        Config::getInstance()->FeatureFlags = ['HybridTracking_feature' => 'disabled'];
 
         $js = implode("\n", StaticContainer::get(WebContext::class)->generate($container));
         $this->assertStringContainsString('MyMatomoTag', $js);
