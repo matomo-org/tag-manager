@@ -77,8 +77,9 @@ class MatomoConfigurationVariable extends BaseVariable
             $hybridTracking = StaticContainer::get(FeatureFlagManager::class)
                 ->isFeatureActive(GranularPrivacyCompliance::class);
         } catch (\Exception $e) {
-            // The container is also rebuilt on CoreUpdater.update.end, where the DI configuration
-            // of a Matomo being updated from before feature flags existed cannot answer for them.
+            // The container is also rebuilt on CoreUpdater.update.end, and a Matomo being
+            // updated from before feature flags existed has no container configuration that
+            // answers for them.
             $hybridTracking = false;
         }
         $unlessHybridTracking = $hybridTracking ? ' && !requireConsentForRestrictedData' : '';
