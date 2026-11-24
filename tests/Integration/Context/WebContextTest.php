@@ -249,6 +249,39 @@ class WebContextTest extends IntegrationTestCase
         $this->assertStringNotContainsString('TriggerWithDisabledVariable', $js);
     }
 
+    /**
+     * The consent-exemption option is only offered while the compliance feature flag is on. A
+     * container released with it on stops applying it once the flag is turned off, the next time
+     * the release is generated, without a new version having to be published.
+     */
+    public function test_generate_leavesOutAParameterTheVariableTypeNoLongerDefines()
+    {
+        Config::getInstance()->FeatureFlags = ['GranularPrivacyCompliance_feature' => 'enabled'];
+
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+        $idContainerVersion = $this->getContainerDraftVersion($idContainer);
+
+        $this->api->addContainerVariable($this->idSite, $idContainer, $idContainerVersion, MatomoConfigurationVariable::ID, 'MyConfig', [
+            'matomoUrl' => 'https://matomo.org',
+            'idSite' => $this->idSite,
+            'requireConsentForRestrictedData' => true,
+        ]);
+        $idTrigger = $this->api->addContainerTrigger($this->idSite, $idContainer, $idContainerVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
+        $this->api->addContainerTag($this->idSite, $idContainer, $idContainerVersion, 'Matomo', 'MyMatomoTag', ['matomoConfig' => '{{MyConfig}}', 'trackingType' => 'pageview'], [$idTrigger]);
+
+        $this->api->enablePreviewMode($this->idSite, $idContainer, $idContainerVersion);
+        $container = StaticContainer::get(Container::class)->getContainer($this->idSite, $idContainer);
+
+        $js = implode("\n", StaticContainer::get(WebContext::class)->generate($container));
+        $this->assertStringContainsString('"requireConsentForRestrictedData":true', $js, 'the option applies while the flag is on');
+
+        Config::getInstance()->FeatureFlags = ['GranularPrivacyCompliance_feature' => 'disabled'];
+
+        $js = implode("\n", StaticContainer::get(WebContext::class)->generate($container));
+        $this->assertStringContainsString('MyMatomoTag', $js);
+        $this->assertStringNotContainsString('"requireConsentForRestrictedData":', $js, 'the option still applies with the flag off');
+    }
+
     public function test_generate_doesNotRenderVariablesDescribedByStoredArrayParameters()
     {
         $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
