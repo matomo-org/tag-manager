@@ -164,8 +164,16 @@
                       	tracker.requireCookieConsent();
                     }
 
-                    if (matomoConfig.requireConsentForRestrictedData && typeof tracker.requireConsentForRestrictedData === 'function') {
-                        tracker.requireConsentForRestrictedData();
+                    if (matomoConfig.requireConsentForRestrictedData) {
+                        if (typeof tracker.requireConsentForRestrictedData === 'function') {
+                            tracker.requireConsentForRestrictedData();
+                        } else if (typeof tracker.requireCookieConsent === 'function') {
+                            // An older tracker has no such call, and this option hides the two
+                            // that would otherwise withhold the cookies, so nothing would. Cookies
+                            // are still held back until consent, which is the half of the option
+                            // that tracker can honour; the consent reported is simply not acted on.
+                            tracker.requireCookieConsent();
+                        }
                     }
 
                     if (matomoConfig.disableBrowserFeatureDetection && typeof tracker.disableBrowserFeatureDetection === 'function') {
