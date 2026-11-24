@@ -467,6 +467,15 @@ abstract class BaseContext
             // a variable that references an unavailable variable is not available either
             $referencesUnavailableVariable = $this->referencesUnavailableVariable;
             $this->referencesUnavailableVariable = false;
+
+            // a parameter the variable type no longer defines - an option hidden behind a feature
+            // flag that has been turned off, say - is left out, as it would be when the variable is
+            // next saved, so that a container released earlier stops applying it
+            if (isset($variable['typeMetadata']['parameters']) && is_array($variable['parameters'] ?? null)) {
+                $definedParameters = array_column($variable['typeMetadata']['parameters'], 'name');
+                $variable['parameters'] = array_intersect_key($variable['parameters'], array_flip($definedParameters));
+            }
+
             $parameters = $this->parametersToVariableJs($container, $variable);
             if ($this->referencesUnavailableVariable) {
                 return null;
