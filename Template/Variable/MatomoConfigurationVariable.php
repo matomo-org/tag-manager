@@ -22,6 +22,7 @@ use Piwik\Validators\CharacterLength;
 use Piwik\Validators\NotEmpty;
 use Piwik\Validators\NumberRange;
 use Piwik\Plugins\FeatureFlags\FeatureFlagManager;
+use Piwik\Plugins\PrivacyManager\FeatureFlags\GranularPrivacyCompliance;
 use Piwik\Plugins\TagManager\Validators\CustomRequestProcessing;
 
 class MatomoConfigurationVariable extends BaseVariable
@@ -71,12 +72,15 @@ class MatomoConfigurationVariable extends BaseVariable
         });
 
         // Hybrid tracking can only be switched on in Matomo while the compliance feature flag is
-        // on, so the option that asks for it in a container is hidden with it. The flag belongs to
-        // PrivacyManager and need not exist at all on an older Matomo, where isFeatureActive()
-        // answers false and the option stays hidden.
-        $hybridTracking = StaticContainer::get(FeatureFlagManager::class)->isFeatureActive(
-            'Piwik\\Plugins\\PrivacyManager\\FeatureFlags\\GranularPrivacyCompliance'
-        );
+        // on, so the option that asks for it in a container is hidden with it.
+        try {
+            $hybridTracking = StaticContainer::get(FeatureFlagManager::class)
+                ->isFeatureActive(GranularPrivacyCompliance::class);
+        } catch (\Exception $e) {
+            // The container is also rebuilt on CoreUpdater.update.end, where the DI configuration
+            // of a Matomo being updated from before feature flags existed cannot answer for them.
+            $hybridTracking = false;
+        }
         $unlessHybridTracking = $hybridTracking ? ' && !requireConsentForRestrictedData' : '';
 
         $trackerCodeGenerator = new TrackerCodeGenerator();
