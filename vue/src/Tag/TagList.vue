@@ -348,7 +348,7 @@ export default defineComponent({
         });
       };
 
-      Matomo.helper.modalConfirm('#confirmPauseTag', {
+      Matomo.helper.modalConfirm(this.$refs.confirmPauseTag as HTMLElement, {
         yes: doPause,
       });
     },
@@ -363,7 +363,7 @@ export default defineComponent({
         });
       };
 
-      Matomo.helper.modalConfirm('#confirmResumeTag', {
+      Matomo.helper.modalConfirm(this.$refs.confirmResumeTag as HTMLElement, {
         yes: doResume,
       });
     },
@@ -375,7 +375,7 @@ export default defineComponent({
         });
       };
 
-      Matomo.helper.modalConfirm('#confirmDeleteTag', {
+      Matomo.helper.modalConfirm(this.$refs.confirmDeleteTag as HTMLElement, {
         yes: doDelete,
       });
     },

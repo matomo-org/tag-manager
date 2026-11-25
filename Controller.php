@@ -501,7 +501,7 @@ class Controller extends \Piwik\Plugin\Controller
 
             return json_encode(['isSuccess' => true, 'urlToNewCopy' => $url]);
         } catch (\Exception $e) {
-            return json_encode(['isSuccess' => false, 'message' => $e->getMessage()]);
+            return json_encode(['isSuccess' => false, 'message' => Common::sanitizeInputValue($e->getMessage())]);
         }
     }
 
@@ -565,7 +565,7 @@ class Controller extends \Piwik\Plugin\Controller
 
             return json_encode(['isSuccess' => true, 'urlToNewCopy' => $url]);
         } catch (\Exception $e) {
-            return json_encode(['isSuccess' => false, 'message' => $e->getMessage()]);
+            return json_encode(['isSuccess' => false, 'message' => Common::sanitizeInputValue($e->getMessage())]);
         }
     }
 
@@ -629,7 +629,7 @@ class Controller extends \Piwik\Plugin\Controller
 
             return json_encode(['isSuccess' => true, 'urlToNewCopy' => $url]);
         } catch (\Exception $e) {
-            return json_encode(['isSuccess' => false, 'message' => $e->getMessage()]);
+            return json_encode(['isSuccess' => false, 'message' => Common::sanitizeInputValue($e->getMessage())]);
         }
     }
 
@@ -693,7 +693,7 @@ class Controller extends \Piwik\Plugin\Controller
 
             return json_encode(['isSuccess' => true, 'urlToNewCopy' => $url]);
         } catch (\Exception $e) {
-            return json_encode(['isSuccess' => false, 'message' => $e->getMessage()]);
+            return json_encode(['isSuccess' => false, 'message' => Common::sanitizeInputValue($e->getMessage())]);
         }
     }
 
