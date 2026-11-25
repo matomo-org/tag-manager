@@ -534,7 +534,15 @@ class API extends \Piwik\Plugin\API
         $parameters = $this->unsanitizeAssocArray($parameters);
 
         $idTag = $this->tags->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description, $status);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
+
+        try {
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+        } catch (EntityRecursionException $e) {
+            $this->tags->deleteContainerTag($idSite, $idContainerVersion, $idTag);
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            throw $e;
+        }
+
         return $idTag;
     }
 
@@ -586,7 +594,32 @@ class API extends \Piwik\Plugin\API
         $parameters = $this->unsanitizeAssocArray($parameters);
 
         $return = $this->tags->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
+
+        try {
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+        } catch (EntityRecursionException $e) {
+            if (empty($tag)) {
+                throw $e;
+            }
+            $this->tags->updateContainerTag(
+                $tag['idsite'],
+                $tag['idcontainerversion'],
+                $tag['idtag'],
+                $tag['name'],
+                $tag['parameters'],
+                $tag['fire_trigger_ids'],
+                $tag['block_trigger_ids'],
+                $tag['fire_limit'],
+                $tag['fire_delay'],
+                $tag['priority'],
+                $tag['start_date'],
+                $tag['end_date'],
+                $tag['description']
+            );
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            throw $e;
+        }
+
         return $return;
     }
 
@@ -674,7 +707,15 @@ class API extends \Piwik\Plugin\API
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
             $this->tags->resumeContainerTag($idSite, $idContainerVersion, $idTag);
-            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            try {
+                $this->updateContainerPreviewRelease($idSite, $idContainer);
+            } catch (EntityRecursionException $e) {
+                if ($tag['status'] === BaseDao::STATUS_PAUSED) {
+                    $this->tags->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+                    $this->updateContainerPreviewRelease($idSite, $idContainer);
+                }
+                throw $e;
+            }
             Piwik::postEvent('TagManager.resumeContainerTag.end', array(array(
                 'idSite' => $idSite,
                 'idContainer' => $idContainer,
@@ -772,7 +813,15 @@ class API extends \Piwik\Plugin\API
         $conditions = $this->unsanitizeAssocArray($conditions);
 
         $idTrigger = $this->triggers->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $description);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
+
+        try {
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+        } catch (EntityRecursionException $e) {
+            $this->triggers->deleteContainerTrigger($idSite, $idContainerVersion, $idTrigger, true);
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            throw $e;
+        }
+
         return $idTrigger;
     }
 
@@ -806,7 +855,26 @@ class API extends \Piwik\Plugin\API
         $conditions = $this->unsanitizeAssocArray($conditions);
 
         $return = $this->triggers->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
+
+        try {
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+        } catch (EntityRecursionException $e) {
+            if (empty($trigger)) {
+                throw $e;
+            }
+            $this->triggers->updateContainerTrigger(
+                $trigger['idsite'],
+                $trigger['idcontainerversion'],
+                $trigger['idtrigger'],
+                $trigger['name'],
+                $trigger['parameters'],
+                $trigger['conditions'],
+                $trigger['description']
+            );
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            throw $e;
+        }
+
         return $return;
     }
 
@@ -1506,6 +1574,8 @@ class API extends \Piwik\Plugin\API
         $this->enableGeneratePreview = false;
         try {
             $this->import->importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion);
+            $this->enableGeneratePreview = true;
+            $this->updateContainerPreviewRelease($idSite, $idContainer);
         } catch (Exception $e) {
             if (!$_isDraftRestoreCall && !empty($draft)) {
                 try {
@@ -1527,9 +1597,9 @@ class API extends \Piwik\Plugin\API
                 }
             }
             throw $e;
+        } finally {
+            $this->enableGeneratePreview = true;
         }
-        $this->enableGeneratePreview = true;
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
     }
 
     private function updateContainerPreviewRelease($idSite, $idContainer)

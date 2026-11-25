@@ -11,8 +11,10 @@ namespace Piwik\Plugins\TagManager\Context;
 
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
+use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\Storage\StorageInterface;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
+use Piwik\Plugins\TagManager\Exception\ContainerTooLargeException;
 use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Environment;
@@ -64,6 +66,24 @@ abstract class BaseContext
 
     private $nestedVariableCals = [];
 
+    /**
+     * Roughly the bytes of configuration a container may encode to. A variable is copied in full wherever it is
+     * referenced, so a few variables referencing each other many times would otherwise need gigabytes.
+     */
+    public const MAX_CONTAINER_WEIGHT = 10000000;
+
+    /**
+     * Weight of each resolved variable, by name
+     * @var array<string, int>
+     */
+    private $variableWeights = [];
+
+    /**
+     * The array each variable was resolved to, by name: a tag or trigger can have the same name and keys as a variable
+     * @var array<string, array<string, mixed>>
+     */
+    private $resolvedVariables = [];
+
     public function __construct(VariablesProvider $variablesProvider, Variable $variableModel, Trigger $triggerModel, Tag $tagModel, Container $containerModel, StorageInterface $storage, Salt $salt)
     {
         $this->variablesProvider = $variablesProvider;
@@ -84,6 +104,8 @@ abstract class BaseContext
     protected function generatePublicContainer($container, $release)
     {
         $this->nestedVariableCals = [];
+        $this->variableWeights = [];
+        $this->resolvedVariables = [];
 
         $idSite = $container['idsite'];
         $idContainer = $container['idcontainer'];
@@ -167,7 +189,89 @@ abstract class BaseContext
         $containerJs['variables'] = array_values($this->variables);
         $this->variables = array();
 
+        $weight = $this->weigh($containerJs);
+        if ($weight > self::MAX_CONTAINER_WEIGHT || $weight + $this->weighMacroExpansions($containerJs['variables']) > self::MAX_CONTAINER_WEIGHT) {
+            throw new ContainerTooLargeException(Piwik::translate('TagManager_ErrorContainerTooLarge'));
+        }
+
         return $containerJs;
+    }
+
+    /**
+     * Approximates the size of $value once encoded, counting a resolved variable it contains from its cached weight
+     * so this stays linear however often variables are referenced.
+     *
+     * @param mixed $value
+     */
+    private function weigh($value, bool $isVariableItself = false): int
+    {
+        if (is_scalar($value)) {
+            return strlen((string) $value);
+        }
+        if (!is_array($value)) {
+            return 0;
+        }
+        if (!$isVariableItself && isset($value['name']) && is_string($value['name'])) {
+            // cheap, as the variables it references are the same arrays on both sides
+            if (isset($this->resolvedVariables[$value['name']]) && $this->resolvedVariables[$value['name']] === $value) {
+                return $this->variableWeights[$value['name']];
+            }
+        }
+
+        $weight = 0;
+        foreach ($value as $key => $item) {
+            $weight += strlen((string) $key) + $this->weigh($item);
+        }
+        return $weight;
+    }
+
+    /**
+     * A context can replace each {{variable}} in a custom JS function with that whole variable
+     *
+     * @param array<int, array<string, mixed>> $variables
+     */
+    private function weighMacroExpansions(array $variables): int
+    {
+        $weight = 0;
+        $preConfiguredWeights = null;
+        foreach ($variables as $variable) {
+            $jsFunction = $variable['parameters']['jsFunction'] ?? null;
+            if (!is_string($jsFunction) || strpos($jsFunction, '{{') === false) {
+                continue;
+            }
+            // names hold no braces, so this finds {{name}} inside {{{name}}} as strtr does
+            preg_match_all('/\{\{([^{}]+)\}\}/', $jsFunction, $matches);
+            $preConfiguredWeights = $preConfiguredWeights ?? $this->getPreConfiguredMacroWeights();
+            foreach ($matches[1] as $name) {
+                // a pre-configured macro is replaced first, by its code rather than the variable
+                $weight += $preConfiguredWeights[$name] ?? $this->variableWeights[$name] ?? 0;
+            }
+        }
+        return $weight;
+    }
+
+    /**
+     * The length of the code the web context puts in place of each pre-configured {{macro}} in a custom JS function
+     *
+     * @return array<string, int>
+     */
+    private function getPreConfiguredMacroWeights(): array
+    {
+        $response = $this->getPreConfiguredVariablesJSCodeResponse(WebContext::ID);
+        $weights = [];
+        foreach ($response['keys'] as $index => $key) {
+            $weights[substr($key, 2, -2)] = strlen($response['values'][$index]);
+        }
+        return $weights;
+    }
+
+    /**
+     * @param array<string, mixed> $variable
+     */
+    private function addResolvedVariable(array $variable): void
+    {
+        $this->resolvedVariables[$variable['name']] = $variable;
+        $this->variableWeights[$variable['name']] = $this->weigh($variable, true);
     }
 
     public function getPreConfiguredVariablesJSCodeResponse($context)
@@ -409,6 +513,11 @@ abstract class BaseContext
         } else {
             $variable = $this->variableModel->findVariableByName($container['idsite'], $container['idcontainerversion'], $variableNameOrVariable);
         }
+        if ($variable && isset($this->variables[$variable['name']])) {
+            // resolved already, though the reference may differ in case from the stored name: resolving it again would
+            // repeat the work for every reference and give equal but separate copies, which are slow to compare
+            return $this->variables[$variable['name']];
+        }
         if ($variable) {
             $lookUpTable = [];
             if (!empty($variable['lookup_table']) && is_array($variable['lookup_table'])) {
@@ -426,6 +535,7 @@ abstract class BaseContext
             ];
             // by setting var name key we make sure to not include same var twice
             $this->variables[$var['name']] = $var;
+            $this->addResolvedVariable($var);
             return $var;
         } else {
             // try to find pre-configured variable if no user variable found
@@ -443,6 +553,7 @@ abstract class BaseContext
                     'parameters' => $this->parametersToVariableJs($container, array('parameters' => $defaultParams, 'typeMetadata' => array()))
                 ];
                 $this->variables[$var['name']] = $var;
+                $this->addResolvedVariable($var);
                 return $var;
             }
         }
@@ -451,6 +562,23 @@ abstract class BaseContext
     public function getOrder()
     {
         return 99;
+    }
+
+    /**
+     * The preview release is generated last: it shows the draft, which anyone with write access can change, and must
+     * not keep the other releases from being generated when it fails.
+     *
+     * @param array<int, array<string, mixed>> $releases
+     * @return array<int, array<string, mixed>>
+     */
+    protected function getReleasesInGenerationOrder(array $releases): array
+    {
+        $previewReleases = array_filter($releases, function ($release) {
+            return $release['environment'] === Environment::ENVIRONMENT_PREVIEW;
+        });
+        $otherReleases = array_diff_key($releases, $previewReleases);
+
+        return array_merge(array_values($otherReleases), array_values($previewReleases));
     }
 
     public function toArray()
