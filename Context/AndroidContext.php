@@ -34,7 +34,7 @@ class AndroidContext extends BaseContext
     public function generate($container)
     {
         $filesCreated = array();
-        foreach ($container['releases'] as $release) {
+        foreach ($this->getReleasesInGenerationOrder($container['releases']) as $release) {
             $containerJs = $this->generatePublicContainer($container, $release);
             $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $release['environment'], $container['created_date']);
             $filesCreated[$path] = json_encode($containerJs);

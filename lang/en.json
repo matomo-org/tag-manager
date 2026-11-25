@@ -365,6 +365,7 @@
         "ErrorContainerDoesNotExist": "The requested container \"%s\" does not exist.",
         "ErrorContainerIdDuplicate": "The Container ID is already in use",
         "ErrorContainerReleaseDoesNotExist": "The requested container release does not exist.",
+        "ErrorContainerTooLarge": "The container would be too large to generate. Please check whether variables reference other variables many times, directly or through each other.",
         "ErrorContainerTriggerDoesNotExist": "The requested container trigger does not exist.",
         "ErrorContainerVersionDoesNotExist": "The requested container version does not exist.",
         "ErrorContainerVersionImportIncomplete": "Cannot import container. The specified container version is incomplete. Make sure it includes context, tags, triggers, and variables information.",
