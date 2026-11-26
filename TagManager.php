@@ -374,10 +374,11 @@ class TagManager extends \Piwik\Plugin
                     } catch (UnexpectedWebsiteFoundException $e) {
                         // website was removed, ignore
                     } catch (EntityRecursionException $e) {
-                        StaticContainer::get(LoggerInterface::class)->error('Container {idContainer} of site {idSite} could not be regenerated: {exception}', [
+                        StaticContainer::get(LoggerInterface::class)->error('Container {idContainer} of site {idSite} could not be regenerated: {message}', [
                             'idContainer' => $container['idcontainer'],
                             'idSite' => $container['idsite'],
-                            'exception' => $e,
+                            // the message can contain entity names, which may hold control characters
+                            'message' => preg_replace('/[\x00-\x1F\x7F]+/', ' ', $e->getMessage()),
                         ]);
                     }
                 }

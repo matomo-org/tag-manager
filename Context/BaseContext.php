@@ -11,6 +11,7 @@ namespace Piwik\Plugins\TagManager\Context;
 
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
+use Piwik\Log\LoggerInterface;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\Storage\StorageInterface;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
@@ -77,9 +78,10 @@ abstract class BaseContext
 
     /**
      * Roughly the bytes of configuration a container may encode to. A variable is copied in full wherever it is
-     * referenced, so a few variables referencing each other many times would otherwise need gigabytes.
+     * referenced, so a few variables referencing each other many times would otherwise need gigabytes. Generating
+     * a container peaks at about eight times its size in memory, so this keeps it inside a 128M memory limit.
      */
-    public const MAX_CONTAINER_WEIGHT = 10000000;
+    public const MAX_CONTAINER_WEIGHT = 5000000;
 
     /**
      * Weight of each resolved variable, by name
@@ -240,8 +242,12 @@ abstract class BaseContext
         $this->variables = array();
 
         $weight = $this->weigh($containerJs);
-        if ($weight > self::MAX_CONTAINER_WEIGHT || $weight + $this->weighMacroExpansions($containerJs['variables']) > self::MAX_CONTAINER_WEIGHT) {
-            throw new ContainerTooLargeException(Piwik::translate('TagManager_ErrorContainerTooLarge'));
+        if (($container['context'] ?? null) === WebContext::ID) {
+            // the web context writes each custom JS function out twice, as the variable's parameter and as its template
+            $weight += 2 * $this->weighMacroExpansions($containerJs['variables']);
+        }
+        if ($weight > self::MAX_CONTAINER_WEIGHT) {
+            throw new ContainerTooLargeException(Piwik::translate('TagManager_ErrorContainerTooLarge'), $weight);
         }
 
         return $containerJs;
@@ -276,41 +282,57 @@ abstract class BaseContext
     }
 
     /**
-     * A context can replace each {{variable}} in a custom JS function with that whole variable
+     * The weight of replacing each {{variable}} in a custom JS function with that whole variable
      *
      * @param array<int, array<string, mixed>> $variables
      */
     private function weighMacroExpansions(array $variables): int
     {
         $weight = 0;
-        $preConfiguredWeights = null;
+        $markers = null;
+        $markerWeights = [];
+        // random, so a custom JS function cannot contain a marker itself
+        $token = "\0" . bin2hex(random_bytes(8)) . ':';
         foreach ($variables as $variable) {
             $jsFunction = $variable['parameters']['jsFunction'] ?? null;
             if (!is_string($jsFunction) || strpos($jsFunction, '{{') === false) {
                 continue;
             }
-            // names hold no braces, so this finds {{name}} inside {{{name}}} as strtr does
-            preg_match_all('/\{\{([^{}]+)\}\}/', $jsFunction, $matches);
-            $preConfiguredWeights = $preConfiguredWeights ?? $this->getPreConfiguredMacroWeights();
-            foreach ($matches[1] as $name) {
-                // a pre-configured macro is replaced first, by its code rather than the variable
-                $weight += $preConfiguredWeights[$name] ?? $this->variableWeights[$name] ?? 0;
+            if ($markers === null) {
+                $markers = [];
+                foreach ($this->getMacroWeights($variables) as $key => $keyWeight) {
+                    $markers[$key] = $token . count($markerWeights) . "\0";
+                    $markerWeights[] = $keyWeight;
+                }
+            }
+            // the same strtr as the web context's, so a name containing braces is matched as it would be expanded
+            preg_match_all('/' . preg_quote($token, '/') . '(\d+)\x00/', strtr($jsFunction, $markers), $matches);
+            foreach ($matches[1] as $index) {
+                $weight += $markerWeights[(int) $index];
             }
         }
         return $weight;
     }
 
     /**
-     * The length of the code the web context puts in place of each pre-configured {{macro}} in a custom JS function
+     * The length of what the web context puts in place of each {{macro}} in a custom JS function, by macro
      *
+     * @param array<int, array<string, mixed>> $variables
      * @return array<string, int>
      */
-    private function getPreConfiguredMacroWeights(): array
+    private function getMacroWeights(array $variables): array
     {
-        $response = $this->getPreConfiguredVariablesJSCodeResponse(WebContext::ID);
         $weights = [];
+        $response = $this->getPreConfiguredVariablesJSCodeResponse(WebContext::ID);
         foreach ($response['keys'] as $index => $key) {
-            $weights[substr($key, 2, -2)] = strlen($response['values'][$index]);
+            // as in the web context, the first of two equal macros wins, and pre-configured ones come first
+            $weights[$key] = $weights[$key] ?? strlen($response['values'][$index]);
+        }
+        foreach ($variables as $variable) {
+            if (!empty($variable['parameters']) && is_string($variable['name'] ?? null)) {
+                $key = '{{' . $variable['name'] . '}}';
+                $weights[$key] = $weights[$key] ?? ($this->variableWeights[$variable['name']] ?? 0);
+            }
         }
         return $weights;
     }
@@ -649,7 +671,6 @@ abstract class BaseContext
 
     /**
      * @param mixed $reference the name or array the variable was looked up by
-     * @phpstan-impure sets $referencesUnavailableVariable
      */
     private function markUnavailable($reference, string $name): void
     {
@@ -666,20 +687,52 @@ abstract class BaseContext
     }
 
     /**
-     * The preview release is generated last: it shows the draft, which anyone with write access can change, and must
-     * not keep the other releases from being generated when it fails.
+     * The preview release and any other release of the draft are generated last: they show the draft, which anyone
+     * with write access can change, and must not keep the other releases from being generated when it fails.
      *
-     * @param array<int, array<string, mixed>> $releases
+     * @param array<string, mixed> $container
      * @return array<int, array<string, mixed>>
      */
-    protected function getReleasesInGenerationOrder(array $releases): array
+    protected function getReleasesInGenerationOrder(array $container): array
     {
-        $previewReleases = array_filter($releases, function ($release) {
-            return $release['environment'] === Environment::ENVIRONMENT_PREVIEW;
+        $idDraftVersion = (int) ($container['draft']['idcontainerversion'] ?? 0);
+        $draftReleases = array_filter($container['releases'], function ($release) use ($idDraftVersion) {
+            return $release['environment'] === Environment::ENVIRONMENT_PREVIEW
+                || (int) $release['idcontainerversion'] === $idDraftVersion;
         });
-        $otherReleases = array_diff_key($releases, $previewReleases);
+        $otherReleases = array_diff_key($container['releases'], $draftReleases);
 
-        return array_merge(array_values($otherReleases), array_values($previewReleases));
+        return array_merge(array_values($otherReleases), array_values($draftReleases));
+    }
+
+    /**
+     * A version published before MAX_CONTAINER_WEIGHT existed may be over it. Its release keeps the file generated
+     * back then rather than failing every change to the container, as that version cannot change any more. Only the
+     * draft, and a version that is about to be published, are refused for being too large.
+     *
+     * @param array<string, mixed> $container
+     * @param array<string, mixed> $release
+     * @return array<string, mixed>|null null when the release was skipped
+     */
+    protected function generateReleaseUnlessTooLarge(array $container, array $release): ?array
+    {
+        try {
+            return $this->generatePublicContainer($container, $release);
+        } catch (ContainerTooLargeException $e) {
+            if (
+                empty($release['idcontainerrelease'])
+                || (int) $release['idcontainerversion'] === (int) ($container['draft']['idcontainerversion'] ?? 0)
+            ) {
+                throw $e;
+            }
+            StaticContainer::get(LoggerInterface::class)->warning('Container {idContainer} of site {idSite} was not regenerated for environment {environment}: its version {idContainerVersion} is over the size limit.', [
+                'idContainer' => $container['idcontainer'],
+                'idSite' => $container['idsite'],
+                'environment' => $release['environment'],
+                'idContainerVersion' => $release['idcontainerversion'],
+            ]);
+            return null;
+        }
     }
 
     public function toArray()

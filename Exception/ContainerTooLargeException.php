@@ -10,9 +10,24 @@
 namespace Piwik\Plugins\TagManager\Exception;
 
 /**
- * Extends EntityRecursionException so that callers undoing a change which broke the container's generation undo
- * this one as well.
+ * Extends EntityRecursionException so that code handling a container that cannot be generated, eg the scheduled
+ * regeneration of released containers, handles this one as well.
  */
 class ContainerTooLargeException extends EntityRecursionException
 {
+    /**
+     * @var int
+     */
+    private $weight;
+
+    public function __construct(string $message, int $weight)
+    {
+        parent::__construct($message);
+        $this->weight = $weight;
+    }
+
+    public function getWeight(): int
+    {
+        return $this->weight;
+    }
 }
