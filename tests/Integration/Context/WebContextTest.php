@@ -828,7 +828,9 @@ class WebContextTest extends IntegrationTestCase
 
         $this->api->addContainerTrigger($this->idSite, $idContainer, $idDraftVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
 
-        $this->assertArrayHasKey($livePath, $this->getGeneratedFiles());
+        $this->assertNotEmpty($this->getGeneratedFiles()[$livePath] ?? '');
+        // the fixture's innermost value, which only a regenerated file contains
+        $this->assertStringNotContainsString($this->getNestedVariableParameters(0)['userId'], $this->getGeneratedFiles()[$livePath]);
     }
 
     public function test_addContainerTrigger_regeneratesAReleaseOverTheLimitUpToTheStoredReleaseLimit()
@@ -840,8 +842,11 @@ class WebContextTest extends IntegrationTestCase
         $this->api->publishContainerVersion($this->idSite, $idContainer, $idLiveVersion, Environment::ENVIRONMENT_LIVE);
         // a previewed draft has every release regenerated on each change
         $this->api->enablePreviewMode($this->idSite, $idContainer, $idDraftVersion);
-        $parameters = ['matomoUrl' => 'https://matomo.org', 'idSite' => $this->idSite, 'userId' => str_repeat('x', 7000000)];
-        StaticContainer::get(VariablesDao::class)->createVariable($this->idSite, $idLiveVersion, MatomoConfigurationVariable::ID, 'Legacy', $parameters, false, [], '2020-01-01 00:00:00');
+        // several rows of 1,000,000 rather than one of 7,000,000, which is over MySQL 5.7's default max_allowed_packet
+        $parameters = ['matomoUrl' => 'https://matomo.org', 'idSite' => $this->idSite, 'userId' => str_repeat('x', 1000000)];
+        for ($i = 0; $i < 7; $i++) {
+            StaticContainer::get(VariablesDao::class)->createVariable($this->idSite, $idLiveVersion, MatomoConfigurationVariable::ID, 'Legacy' . $i, $parameters, false, [], '2020-01-01 00:00:00');
+        }
         try {
             $this->api->publishContainerVersion($this->idSite, $idContainer, $idLiveVersion, Environment::ENVIRONMENT_LIVE);
             $this->fail('The version is not over the limit for new releases');
