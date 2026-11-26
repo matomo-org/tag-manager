@@ -264,7 +264,7 @@ class Container extends BaseModel
 
         try {
             $import->importContainerVersion($exported, $idSite, $idContainer, $newIdContainerVersion);
-        } catch (\Throwable $e) {
+        } catch (Exception $e) {
             // do not leave an incomplete version behind that could be published and that holds the name
             $this->versionsDao->deleteVersion($idSite, $newIdContainerVersion, $this->getCurrentDateTime());
             throw $e;
