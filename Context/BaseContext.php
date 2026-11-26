@@ -84,6 +84,17 @@ abstract class BaseContext
     public const MAX_CONTAINER_WEIGHT = 5000000;
 
     /**
+     * The limit for regenerating a release that is already stored, so a container published before
+     * MAX_CONTAINER_WEIGHT existed keeps being updated unless it is far over it
+     */
+    public const MAX_STORED_RELEASE_WEIGHT = 10000000;
+
+    /**
+     * @var int
+     */
+    private $maxWeight = self::MAX_CONTAINER_WEIGHT;
+
+    /**
      * Weight of each resolved variable, by name
      * @var array<string, int>
      */
@@ -246,7 +257,7 @@ abstract class BaseContext
             // the web context writes each custom JS function out twice, as the variable's parameter and as its template
             $weight += 2 * $this->weighMacroExpansions($containerJs['variables']);
         }
-        if ($weight > self::MAX_CONTAINER_WEIGHT) {
+        if ($weight > $this->maxWeight) {
             throw new ContainerTooLargeException(Piwik::translate('TagManager_ErrorContainerTooLarge'), $weight);
         }
 
@@ -706,9 +717,10 @@ abstract class BaseContext
     }
 
     /**
-     * A version published before MAX_CONTAINER_WEIGHT existed may be over it. Its release keeps the file generated
-     * back then rather than failing every change to the container, as that version cannot change any more. Only the
-     * draft, and a version that is about to be published, are refused for being too large.
+     * A version published before MAX_CONTAINER_WEIGHT existed may be over it, so a stored release of a version other
+     * than the draft is held to MAX_STORED_RELEASE_WEIGHT instead. Over that, the release keeps the file generated
+     * back then rather than failing every change to the container. The draft, and a version that is about to be
+     * published, are held to MAX_CONTAINER_WEIGHT.
      *
      * @param array<string, mixed> $container
      * @param array<string, mixed> $release
@@ -716,15 +728,17 @@ abstract class BaseContext
      */
     protected function generateReleaseUnlessTooLarge(array $container, array $release): ?array
     {
+        if (
+            empty($release['idcontainerrelease'])
+            || (int) $release['idcontainerversion'] === (int) ($container['draft']['idcontainerversion'] ?? 0)
+        ) {
+            return $this->generatePublicContainer($container, $release);
+        }
+
+        $this->maxWeight = self::MAX_STORED_RELEASE_WEIGHT;
         try {
             return $this->generatePublicContainer($container, $release);
         } catch (ContainerTooLargeException $e) {
-            if (
-                empty($release['idcontainerrelease'])
-                || (int) $release['idcontainerversion'] === (int) ($container['draft']['idcontainerversion'] ?? 0)
-            ) {
-                throw $e;
-            }
             StaticContainer::get(LoggerInterface::class)->warning('Container {idContainer} of site {idSite} was not regenerated for environment {environment}: its version {idContainerVersion} is over the size limit.', [
                 'idContainer' => $container['idcontainer'],
                 'idSite' => $container['idsite'],
@@ -732,6 +746,8 @@ abstract class BaseContext
                 'idContainerVersion' => $release['idcontainerversion'],
             ]);
             return null;
+        } finally {
+            $this->maxWeight = self::MAX_CONTAINER_WEIGHT;
         }
     }
 

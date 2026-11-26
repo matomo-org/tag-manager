@@ -964,6 +964,29 @@ class WebContextTest extends IntegrationTestCase
         $this->assertArrayHasKey($livePath, $this->getGeneratedFiles());
     }
 
+    public function test_addContainerTrigger_regeneratesAReleaseOverTheLimitUpToTheStoredReleaseLimit()
+    {
+        $context = StaticContainer::get(WebContext::class);
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+        $idDraftVersion = $this->getContainerDraftVersion($idContainer);
+        $idLiveVersion = $this->api->createContainerVersion($this->idSite, $idContainer, 'v1');
+        $this->api->publishContainerVersion($this->idSite, $idContainer, $idLiveVersion, Environment::ENVIRONMENT_LIVE);
+        // a previewed draft has every release regenerated on each change
+        $this->api->enablePreviewMode($this->idSite, $idContainer, $idDraftVersion);
+        $parameters = ['matomoUrl' => 'https://matomo.org', 'idSite' => $this->idSite, 'userId' => str_repeat('x', 7000000)];
+        StaticContainer::get(VariablesDao::class)->createVariable($this->idSite, $idLiveVersion, MatomoConfigurationVariable::ID, 'Legacy', $parameters, false, [], '2020-01-01 00:00:00');
+        try {
+            $this->api->publishContainerVersion($this->idSite, $idContainer, $idLiveVersion, Environment::ENVIRONMENT_LIVE);
+            $this->fail('The version is not over the limit for new releases');
+        } catch (ContainerTooLargeException $e) {
+            // only the release stored before that limit is regenerated
+        }
+
+        $this->api->addContainerTrigger($this->idSite, $idContainer, $idDraftVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
+
+        $this->assertStringContainsString($parameters['userId'], $this->getGeneratedFiles()[$this->getReleasePath($context, $idContainer, Environment::ENVIRONMENT_LIVE)]);
+    }
+
     public function test_addContainerVariable_refusesTakingAPublishedVersionOverTheLimit()
     {
         $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
