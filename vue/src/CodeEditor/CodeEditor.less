@@ -1,0 +1,346 @@
+.codeEditor {
+  @_radius: 8px;
+  @_fontSize: 13px;
+  @_lineHeight: 20px;
+  @_minHeight: 160px;
+
+  .codeEditor__fallback {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: @_minHeight;
+    padding: 8px 12px;
+    font-family: monospace;
+    font-size: @_fontSize;
+    line-height: @_lineHeight;
+    color: @theme-color-text;
+    background: @theme-color-background-contrast;
+    border: 1px solid @theme-color-border;
+    border-radius: @_radius;
+    resize: vertical;
+  }
+
+  .codeEditor__fallback:hover {
+    border-color: @theme-color-link;
+  }
+
+  .codeEditor__fallback:focus {
+    border-color: @theme-color-focus-ring;
+    outline: 1px solid @theme-color-focus-ring;
+  }
+
+  // override: CodeMirror builds the editor DOM at runtime and only exposes its own
+  // .cm-* classes. Border, radius and focus treatment mirror FieldSelect.less so the
+  // editor matches the other form fields in the tag and variable forms.
+  .codeEditor__editor {
+    .cm-editor {
+      max-height: 70vh;
+      overflow: hidden;
+      font-size: @_fontSize;
+      color: @theme-color-text;
+      background: @theme-color-background-contrast;
+      border: 1px solid @theme-color-border;
+      border-radius: @_radius;
+    }
+
+    .cm-editor:hover {
+      border-color: @theme-color-link;
+    }
+
+    .cm-editor.cm-focused {
+      border-color: @theme-color-focus-ring;
+      outline: 1px solid @theme-color-focus-ring;
+    }
+
+    .cm-scroller {
+      overflow: auto;
+      font-family: monospace;
+      line-height: @_lineHeight;
+    }
+
+    .cm-content,
+    .cm-gutter {
+      min-height: @_minHeight;
+    }
+
+    .cm-content {
+      padding: 8px 0;
+      caret-color: @theme-color-text;
+    }
+
+    .cm-line {
+      padding: 0 12px;
+    }
+
+    .cm-cursor {
+      border-left-color: @theme-color-text;
+    }
+
+    .cm-placeholder {
+      color: @theme-color-text-placeholder;
+    }
+
+    .cm-gutters {
+      color: @theme-color-text-lighter;
+      background: @theme-color-background-tinyContrast;
+      border-right: 1px solid @theme-color-border-alternative;
+    }
+
+    .cm-lineNumbers .cm-gutterElement {
+      padding: 0 4px 0 12px;
+    }
+
+    .cm-gutter-lint {
+      width: 20px;
+    }
+
+    .cm-activeLineGutter {
+      color: @theme-color-text;
+      background: @theme-color-background-brand-lowContrast;
+    }
+
+    .cm-selectionBackground {
+      background: @theme-color-background-lowContrast;
+    }
+
+    .cm-editor.cm-focused .cm-selectionLayer .cm-selectionBackground {
+      background: @theme-color-border-brand;
+    }
+
+    .cm-selectionMatch {
+      background: @theme-color-background-brand-lowContrast;
+    }
+
+    .cm-matchingBracket {
+      color: inherit;
+      background: @theme-color-border-brand;
+      outline: 1px solid @theme-color-text-brand;
+    }
+
+    .cm-nonmatchingBracket {
+      color: @theme-color-danger;
+    }
+
+    .cm-lintRange-warning {
+      background-image: none;
+      text-decoration: underline wavy @theme-color-warning;
+      text-underline-offset: 3px;
+    }
+
+    // search panel: the inputs and buttons are CodeMirror's own markup, so Materialize's
+    // global input and checkbox rules need to be reset. Inputs mirror the form fields,
+    // buttons mirror .btn-outline.
+    .cm-panels {
+      color: @theme-color-text;
+      background: @theme-color-background-tinyContrast;
+    }
+
+    .cm-panels-top {
+      border-bottom: 1px solid @theme-color-border-alternative;
+    }
+
+    .cm-search {
+      padding: 8px 32px 8px 12px;
+      font-size: 13px;
+    }
+
+    .cm-search .cm-textfield {
+      box-sizing: border-box;
+      width: auto;
+      height: auto;
+      margin: 4px 8px 4px 0;
+      padding: 4px 8px;
+      font-size: 13px;
+      color: @theme-color-text;
+      background: @theme-color-background-contrast;
+      border: 1px solid @theme-color-border;
+      border-radius: @_radius;
+      box-shadow: none;
+    }
+
+    .cm-search .cm-textfield:hover {
+      border-color: @theme-color-link;
+    }
+
+    .cm-search .cm-textfield:focus {
+      border-color: @theme-color-focus-ring;
+      outline: 1px solid @theme-color-focus-ring;
+    }
+
+    .cm-search .cm-button {
+      height: 28px;
+      margin: 4px 8px 4px 0;
+      padding: 0 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: @theme-color-brand;
+      background: transparent;
+      background-image: none;
+      border: 1px solid @theme-color-brand;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .cm-search .cm-button:hover {
+      color: @theme-color-brand-contrast;
+      background: @theme-color-brand;
+    }
+
+    .cm-search .cm-button:focus-visible {
+      outline: 2px solid @theme-color-focus-ring;
+    }
+
+    .cm-search label {
+      margin-right: 12px;
+      font-size: 13px;
+      color: @theme-color-text-light;
+      white-space: nowrap;
+    }
+
+    .cm-search input[type=checkbox] {
+      position: static;
+      width: auto;
+      height: auto;
+      margin: 0 4px 0 0;
+      opacity: 1;
+      pointer-events: auto;
+      vertical-align: middle;
+    }
+
+    .cm-search button[name=close] {
+      top: 8px;
+      right: 8px;
+      font-size: 18px;
+      color: @theme-color-text-lighter;
+    }
+
+    .cm-search button[name=close]:hover {
+      color: @theme-color-text;
+    }
+
+    // tooltips (lint messages, variable autocomplete) mirror .mtm-dropdownPanel
+    .cm-tooltip {
+      color: @theme-color-text;
+      background: @theme-color-background-contrast;
+      border: 1px solid @theme-color-border;
+      border-radius: @_radius;
+      box-shadow: @theme-shadow-overlay;
+    }
+
+    .cm-tooltip-lint {
+      padding: 4px;
+    }
+
+    .cm-diagnostic {
+      padding: 4px 8px;
+      font-family: inherit;
+      font-size: 13px;
+    }
+
+    .cm-diagnostic-warning {
+      border-left: 3px solid @theme-color-warning;
+    }
+
+    .cm-tooltip.cm-tooltip-autocomplete ul {
+      max-height: 280px;
+      padding: 4px;
+      font-family: inherit;
+    }
+
+    .cm-tooltip.cm-tooltip-autocomplete li {
+      margin: 0;
+      padding: 6px 8px;
+      line-height: @_lineHeight;
+      color: @theme-color-text-lighter;
+      border-radius: @_radius;
+    }
+
+    .cm-tooltip.cm-tooltip-autocomplete li[aria-selected] {
+      color: @theme-color-text;
+      background: @theme-color-background-base;
+    }
+
+    .cm-completionMatchedText {
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .cm-completionDetail {
+      margin-left: 12px;
+      font-style: normal;
+      font-size: 12px;
+      color: @theme-color-text-lighter;
+    }
+
+
+    // the variable description panel is placed by positionInfo in the editor bundle so
+    // its top edge lines up with the top of the list
+    .cm-tooltip.cm-completionInfo {
+      box-sizing: border-box;
+      width: 280px;
+      max-width: none;
+      max-height: 280px;
+      padding: 12px;
+      overflow: auto;
+      font-size: 13px;
+      line-height: @_lineHeight;
+    }
+
+    .cm-tooltip.cm-completionInfo-right {
+      margin-left: 4px;
+    }
+
+    .cm-tooltip.cm-completionInfo-left {
+      margin-right: 4px;
+    }
+  }
+
+  .codeEditor__tokenKeyword {
+    color: @theme-color-link;
+  }
+
+  .codeEditor__tokenString {
+    color: @theme-color-text-brand;
+  }
+
+  .codeEditor__tokenTag {
+    color: @theme-color-link;
+  }
+
+  .codeEditor__tokenAttribute {
+    color: @theme-color-text-contrast;
+    font-style: italic;
+  }
+
+  .codeEditor__tokenComment {
+    color: @theme-color-text-lighter;
+    font-style: italic;
+  }
+
+  .codeEditor__tokenVariable {
+    color: @theme-color-text-contrast;
+  }
+
+  .codeEditor__tokenPunctuation {
+    color: @theme-color-text-light;
+  }
+
+  .codeEditor__tokenInvalid {
+    color: @theme-color-danger;
+  }
+}
+
+// fills its container, used when the field is shown in the expanded overlay
+.codeEditor--fill {
+  height: 100%;
+}
+
+.codeEditor--fill .codeEditor__fallback,
+.codeEditor--fill .codeEditor__editor {
+  height: 100%;
+}
+
+// override: CodeMirror's editor otherwise sizes itself to its content
+.codeEditor--fill .codeEditor__editor .cm-editor {
+  height: 100%;
+  max-height: none;
+}

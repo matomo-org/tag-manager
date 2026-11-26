@@ -39,6 +39,8 @@ class CustomRequestProcessingVariable extends BaseVariable
                 $field->title = Piwik::translate('TagManager_CustomRequestProcessingVariableJsFunctionTitle');
                 $field->description = Piwik::translate('TagManager_CustomRequestProcessingVariableJsFunctionDescription');
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;
+                $field->customFieldComponent = self::FIELD_CODE_EDITOR_COMPONENT;
+                $field->uiControlAttributes = ['language' => 'javascript'];
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);

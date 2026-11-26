@@ -38,7 +38,7 @@ class CustomHtmlTag extends BaseTag
         return array(
             $this->makeSetting('customHtml', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_CustomHtmlTagName');
-                $field->customFieldComponent = self::FIELD_TEXTAREA_VARIABLE_COMPONENT;
+                $field->customFieldComponent = self::FIELD_CODE_EDITOR_COMPONENT;
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;
                 $field->description = Piwik::translate('TagManager_CustomHtmlTagDescriptionText');
                 $field->inlineHelp = Piwik::translate(
@@ -46,7 +46,7 @@ class CustomHtmlTag extends BaseTag
                     [Url::getExternalLinkTag('https://matomo.org/faq/tag-manager/faq_26815/', null, null, 'App.TagManager.getParameters'), '</a>']
                 );
                 $field->validators[] = new NotEmpty();
-                $field->uiControlAttributes = ['spellcheck' => 'false'];
+                $field->uiControlAttributes = ['language' => 'html', 'parseVariables' => true];
             }),
             $this->makeSetting('htmlPosition', 'bodyEnd', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_CustomHtmlHtmlPositionTitle');

@@ -11,6 +11,7 @@ export { default as VariableSelectType } from './VariableSelectType/VariableSele
 export { default as FieldTextareaVariable } from './Field/FieldTextareaVariable.vue';
 export { default as FieldVariableTemplate } from './Field/FieldVariableTemplate.vue';
 export { default as FieldVariableTypeTemplate } from './Field/FieldVariableTypeTemplate.vue';
+export { default as FieldCodeEditor } from './Field/FieldCodeEditor.vue';
 export { default as VariableEdit } from './Variable/VariableEdit.vue';
 export { default as VariableList } from './Variable/VariableList.vue';
 export { default as VariableManage } from './Variable/VariableManage.vue';
