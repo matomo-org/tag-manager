@@ -9,7 +9,9 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration\Model;
 
+use Piwik\Common;
 use Piwik\Container\StaticContainer;
+use Piwik\Db;
 use Piwik\Plugins\TagManager\Context\WebContext;
 use Piwik\Plugins\TagManager\Dao\ContainerReleaseDao;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
@@ -625,6 +627,50 @@ class ContainerTest extends IntegrationTestCase
 
         $versions = $this->model->getContainerVersions($this->idSite, $this->idContainer1);
         $this->assertSame([], $versions);
+    }
+
+    public function test_createContainerVersion_failsWithoutCreatingVersionWhenNamesAreUsedMoreThanOnce()
+    {
+        $this->addTagsAndTriggersToVersion($this->idSite, $this->idContainer1draft);
+        // a draft can contain duplicate names, eg after restoring an older version, even though the API does not allow adding them
+        Db::query('UPDATE ' . Common::prefixTable('tagmanager_tag') . ' SET `name` = ? WHERE idcontainerversion = ?', ['myTag', $this->idContainer1draft]);
+        Db::query('UPDATE ' . Common::prefixTable('tagmanager_trigger') . ' SET `name` = ? WHERE idcontainerversion = ? AND `name` != ?', ['Mytrigger', $this->idContainer1draft, 'Mytrigger3']);
+        $draftBefore = $this->exportVersion($this->idSite, $this->idContainer1, $this->idContainer1draft);
+
+        try {
+            $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft);
+            $this->fail('An exception was expected');
+        } catch (\Exception $e) {
+            $this->assertSame('Some names are used more than once. Each tag, trigger and variable needs its own name. Rename or delete these items so their names are unique: Tag "myTag", Trigger "Mytrigger".', $e->getMessage());
+        }
+
+        $this->assertSame([], $this->model->getContainerVersions($this->idSite, $this->idContainer1));
+        $this->assertSame($draftBefore, $this->exportVersion($this->idSite, $this->idContainer1, $this->idContainer1draft));
+    }
+
+    public function test_createContainerVersion_removesIncompleteVersionWhenCopyingFails()
+    {
+        $this->addTagsAndTriggersToVersion($this->idSite, $this->idContainer1draft);
+        // tags are copied after the triggers, and a tag without a fire trigger fails validation when it is added to the new version
+        $tagsDao = StaticContainer::get(TagsDao::class);
+        $idInvalidTag = $tagsDao->createTag($this->idSite, $this->idContainer1draft, CustomHtmlTag::ID, 'Invalid tag', ['customHtml' => '<p></p>'], [], [], 'unlimited', 0, 999, null, null, $this->now);
+
+        try {
+            $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'My version');
+            $this->fail('An exception was expected');
+        } catch (\Exception $e) {
+            $this->assertStringStartsWith('Fire Trigger: A value needs to be provided.', $e->getMessage());
+        }
+
+        $this->assertSame([], $this->model->getContainerVersions($this->idSite, $this->idContainer1));
+
+        // the name is not held by the removed version, so the user can retry with it
+        $tagsDao->deleteContainerTag($this->idSite, $this->idContainer1draft, $idInvalidTag, $this->now);
+        $idVersion = $this->createContainerVersion($this->idSite, $this->idContainer1, $this->idContainer1draft, 'My version');
+
+        $versions = $this->model->getContainerVersions($this->idSite, $this->idContainer1);
+        $this->assertSame([$idVersion], array_column($versions, 'idcontainerversion'));
+        $this->assertCount(2, $this->exportVersion($this->idSite, $this->idContainer1, $idVersion)['tags']);
     }
 
     public function test_createContainerVersion()

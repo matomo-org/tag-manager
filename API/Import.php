@@ -95,6 +95,7 @@ class Import
         }
 
         $this->checkTypesAreAvailable($exportedContainerVersion, 'TagManager_ErrorImportTypeNotAvailable');
+        $this->checkNamesAreUnique($exportedContainerVersion);
 
         foreach ($exportedContainerVersion['tags'] as $tag) {
             $this->tagsProvider->checkIsValidTag($tag['type']);
@@ -156,6 +157,39 @@ class Import
         if (!empty($unavailable)) {
             throw new Exception(Piwik::translate($errorTranslationKey, implode(', ', $unavailable)));
         }
+    }
+
+    /**
+     * Each tag, trigger and variable is added under its name, and adding one whose name is already used in the
+     * version fails. We check this upfront, so a version does not end up with only part of its entities. A container
+     * version can contain duplicate names, for example after restoring an older version, and we list them all so the
+     * user knows which ones to rename or delete.
+     */
+    private function checkNamesAreUnique($exportedContainerVersion)
+    {
+        $duplicates = array_merge(
+            $this->getDuplicateNames($exportedContainerVersion['tags'], 'TagManager_ErrorTypeNotAvailableTag'),
+            $this->getDuplicateNames($exportedContainerVersion['triggers'], 'TagManager_ErrorTypeNotAvailableTrigger'),
+            $this->getDuplicateNames($exportedContainerVersion['variables'], 'TagManager_ErrorTypeNotAvailableVariable')
+        );
+
+        if (!empty($duplicates)) {
+            throw new Exception(Piwik::translate('TagManager_ErrorNamesUsedMoreThanOnce', implode(', ', $duplicates)));
+        }
+    }
+
+    private function getDuplicateNames(array $entities, string $itemTranslationKey): array
+    {
+        $countByName = array_count_values(array_map('strval', array_column($entities, 'name')));
+
+        $duplicates = [];
+        foreach ($countByName as $name => $count) {
+            if ($count > 1) {
+                $duplicates[] = Piwik::translate($itemTranslationKey, (string) $name);
+            }
+        }
+
+        return $duplicates;
     }
 
     public function checkCanReplaceExistingEntities($idSite, $idContainerVersion)
