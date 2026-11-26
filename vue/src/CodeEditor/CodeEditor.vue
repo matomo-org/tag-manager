@@ -35,7 +35,6 @@ import {
   CodeEditorHandle,
   CodeEditorLanguage,
   CodeEditorVariable,
-  CodeEditorViewState,
   loadCodeEditor,
 } from './loadCodeEditor';
 
@@ -43,7 +42,6 @@ export interface CodeEditorState {
   isEditorReady: boolean;
   isUnmounted: boolean;
   editor: CodeEditorHandle|null;
-  valueBeforeEditingElsewhere: string|null;
 }
 
 export default defineComponent({
@@ -61,13 +59,12 @@ export default defineComponent({
     ignoreTemplateVariables: Boolean,
     getVariables: Function as PropType<() => Promise<CodeEditorVariable[]>>,
   },
-  emits: ['update:modelValue', 'ready'],
+  emits: ['update:modelValue'],
   data(): CodeEditorState {
     return {
       isEditorReady: false,
       isUnmounted: false,
       editor: null,
-      valueBeforeEditingElsewhere: null,
     };
   },
   mounted() {
@@ -91,7 +88,6 @@ export default defineComponent({
 
       this.editor = markRaw(editor);
       this.isEditorReady = true;
-      this.$emit('ready');
     }).catch(() => {
       // the plain textarea stays in place and keeps working
     });
@@ -106,46 +102,13 @@ export default defineComponent({
   watch: {
     modelValue(newValue: string) {
       if (this.editor) {
-        this.editor.setValue(newValue || '', {
-          addToHistory: this.valueBeforeEditingElsewhere === null,
-        });
+        this.editor.setValue(newValue || '');
       }
     },
   },
   methods: {
     onFallbackInput(event: Event) {
       this.$emit('update:modelValue', (event.target as HTMLTextAreaElement).value);
-    },
-    getViewState(): CodeEditorViewState|null {
-      return this.editor ? this.editor.getViewState() : null;
-    },
-    setViewState(viewState: CodeEditorViewState|null) {
-      if (this.editor && viewState) {
-        this.editor.setViewState(viewState);
-      }
-    },
-    startEditingElsewhere() {
-      this.valueBeforeEditingElsewhere = this.editor ? this.editor.getValue() : null;
-    },
-    finishEditingElsewhere() {
-      const valueBefore = this.valueBeforeEditingElsewhere;
-      this.valueBeforeEditingElsewhere = null;
-      if (!this.editor || valueBefore === null) {
-        return;
-      }
-
-      const valueAfter = this.editor.getValue();
-      if (valueAfter !== valueBefore) {
-        this.editor.setValue(valueBefore, { addToHistory: false });
-        this.editor.setValue(valueAfter);
-      }
-    },
-    focus() {
-      if (this.editor) {
-        this.editor.focus();
-        return;
-      }
-      (this.$refs.fallback as HTMLTextAreaElement|undefined)?.focus();
     },
     insertAtCursor(text: string) {
       if (this.editor) {

@@ -5,7 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-import { Annotation, EditorState, Transaction } from '@codemirror/state';
+import { Annotation, EditorState } from '@codemirror/state';
 import {
   EditorView,
   drawSelection,
@@ -230,29 +230,13 @@ function create(parent, options) {
     getValue() {
       return view.state.doc.toString();
     },
-    setValue(value, setOptions) {
+    setValue(value) {
       const newValue = value || '';
       if (newValue === view.state.doc.toString()) {
         return;
       }
-      const addToHistory = !setOptions || setOptions.addToHistory !== false;
       view.dispatch({
         changes: { from: 0, to: view.state.doc.length, insert: newValue },
-        annotations: [externalChange.of(true), Transaction.addToHistory.of(addToHistory)],
-      });
-    },
-    getViewState() {
-      const { anchor, head } = view.state.selection.main;
-      return { anchor, head, scroll: view.scrollSnapshot() };
-    },
-    setViewState(viewState) {
-      const length = view.state.doc.length;
-      view.dispatch({
-        selection: {
-          anchor: Math.min(viewState.anchor, length),
-          head: Math.min(viewState.head, length),
-        },
-        effects: viewState.scroll,
         annotations: externalChange.of(true),
       });
     },

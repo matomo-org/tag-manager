@@ -328,19 +328,3 @@
     color: @theme-color-danger;
   }
 }
-
-// fills its container, used when the field is shown in the expanded overlay
-.codeEditor--fill {
-  height: 100%;
-}
-
-.codeEditor--fill .codeEditor__fallback,
-.codeEditor--fill .codeEditor__editor {
-  height: 100%;
-}
-
-// override: CodeMirror's editor otherwise sizes itself to its content
-.codeEditor--fill .codeEditor__editor .cm-editor {
-  height: 100%;
-  max-height: none;
-}

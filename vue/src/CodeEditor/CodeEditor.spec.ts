@@ -24,8 +24,6 @@ function createHandle(): CodeEditorHandle {
   return {
     getValue: vi.fn(),
     setValue: vi.fn(),
-    getViewState: vi.fn(() => ({ anchor: 1, head: 1, scroll: null })),
-    setViewState: vi.fn(),
     insertAtCursor: vi.fn(),
     focus: vi.fn(),
     destroy: vi.fn(),
@@ -81,56 +79,13 @@ describe('TagManager/CodeEditor/CodeEditor', () => {
     expect(wrapper.emitted('update:modelValue')).toEqual([['ab']]);
 
     await wrapper.setProps({ modelValue: 'abc' });
-    expect(handle.setValue).toHaveBeenCalledWith('abc', { addToHistory: true });
+    expect(handle.setValue).toHaveBeenCalledWith('abc');
 
     (wrapper.vm as any).insertAtCursor('{{PageUrl}}');
     expect(handle.insertAtCursor).toHaveBeenCalledWith('{{PageUrl}}');
 
     wrapper.unmount();
     expect(handle.destroy).toHaveBeenCalledTimes(1);
-  });
-
-  it('records changes made in another editor as one undo step', async () => {
-    const handle = createHandle();
-    let value = 'start';
-    (handle.getValue as ReturnType<typeof vi.fn>).mockImplementation(() => value);
-    (handle.setValue as ReturnType<typeof vi.fn>).mockImplementation((newValue: string) => {
-      value = newValue;
-    });
-    loadCodeEditorMock.mockResolvedValue({ create: vi.fn(() => handle) });
-
-    const wrapper = mount(CodeEditor as any, {
-      props: { modelValue: 'start', language: 'html' },
-    });
-    await flushPromises();
-
-    (wrapper.vm as any).startEditingElsewhere();
-    await wrapper.setProps({ modelValue: 'start a' });
-    await wrapper.setProps({ modelValue: 'start ab' });
-    (wrapper.vm as any).finishEditingElsewhere();
-
-    expect((handle.setValue as ReturnType<typeof vi.fn>).mock.calls).toEqual([
-      ['start a', { addToHistory: false }],
-      ['start ab', { addToHistory: false }],
-      ['start', { addToHistory: false }],
-      ['start ab'],
-    ]);
-  });
-
-  it('emits ready and passes the view state through', async () => {
-    const handle = createHandle();
-    loadCodeEditorMock.mockResolvedValue({ create: vi.fn(() => handle) });
-
-    const wrapper = mount(CodeEditor as any, {
-      props: { modelValue: 'abc', language: 'html' },
-    });
-    await flushPromises();
-
-    expect(wrapper.emitted('ready')).toHaveLength(1);
-    const viewState = (wrapper.vm as any).getViewState();
-    expect(viewState).toEqual({ anchor: 1, head: 1, scroll: null });
-    (wrapper.vm as any).setViewState(viewState);
-    expect(handle.setViewState).toHaveBeenCalledWith(viewState);
   });
 
   it('keeps a working textarea when the editor cannot load', async () => {

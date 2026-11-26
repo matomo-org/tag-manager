@@ -1,82 +1,13 @@
 .fieldCodeEditor {
-  @_overlayMaxWidth: 960px;
-  @_overlayHeight: 70vh;
-  @_overlayMargin: 80px;
-  @_overlayMarginSmall: 16px;
-  @_backdropOpacity: 0.7;
-  // timing mirrors the Materialize modal animation used by Matomo dialogs
-  @_animationDuration: 250ms;
-  @_easeOutCubic: cubic-bezier(0.33, 1, 0.68, 1);
-  @_easeOutQuad: cubic-bezier(0.5, 1, 0.89, 1);
-  @_easeOutQuart: cubic-bezier(0.25, 1, 0.5, 1);
-
   .fieldCodeEditor__label {
     display: block;
     margin-bottom: 8px;
-  }
-
-  // the overlay sits below the Materialize modal layer (999 and up), so the variable
-  // picker dialog still opens above the expanded editor
-  .fieldCodeEditor__backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 997;
-    background: @theme-color-background-highContrast;
-    opacity: @_backdropOpacity;
-    animation: fieldCodeEditor__backdropIn @_animationDuration @_easeOutQuad;
-  }
-
-  .fieldCodeEditor__backdrop--closing {
-    opacity: 0;
-    animation: fieldCodeEditor__backdropOut @_animationDuration @_easeOutQuart;
-  }
-
-  .fieldCodeEditor__dialog {
-    position: fixed;
-    inset: 0;
-    z-index: 998;
-    box-sizing: border-box;
-    width: ~"min(@{_overlayMaxWidth}, calc(100% - @{_overlayMargin}))";
-    height: ~"min(@{_overlayHeight}, calc(100% - @{_overlayMargin}))";
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 16px 20px 20px;
-    background: @theme-color-background-tinyContrast;
-    border-radius: 8px;
-    box-shadow: @theme-shadow-overlay;
-    animation: fieldCodeEditor__overlayIn @_animationDuration @_easeOutCubic;
-  }
-
-  .fieldCodeEditor__dialog--closing {
-    opacity: 0;
-    animation: fieldCodeEditor__overlayOut @_animationDuration @_easeOutCubic;
-  }
-
-  .fieldCodeEditor__header {
-    flex: none;
-    display: flex;
-    align-items: safe center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  .fieldCodeEditor__title {
-    font-size: 18px;
-    color: @theme-color-text;
   }
 
   .fieldCodeEditor__content {
     display: flex;
     align-items: flex-start;
     gap: 8px;
-  }
-
-  .fieldCodeEditor__content--fill {
-    flex: auto;
-    align-items: stretch;
-    min-height: 0;
   }
 
   .fieldCodeEditor__editor {
@@ -118,52 +49,5 @@
 
   .fieldCodeEditor__actionButton:focus-visible {
     outline: 2px solid @theme-color-focus-ring;
-  }
-
-  @keyframes fieldCodeEditor__backdropIn {
-    from { opacity: 0; }
-    to { opacity: @_backdropOpacity; }
-  }
-
-  @keyframes fieldCodeEditor__backdropOut {
-    from { opacity: @_backdropOpacity; }
-    to { opacity: 0; }
-  }
-
-  @keyframes fieldCodeEditor__overlayIn {
-    from {
-      opacity: 0;
-      transform: translateY(-6vh) scale(0.8);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @keyframes fieldCodeEditor__overlayOut {
-    from {
-      opacity: 1;
-      transform: none;
-    }
-    to {
-      opacity: 0;
-      transform: translateY(-6vh) scale(0.8);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .fieldCodeEditor__backdrop,
-    .fieldCodeEditor__dialog {
-      animation: none;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .fieldCodeEditor__dialog {
-      width: ~"calc(100% - @{_overlayMarginSmall})";
-      height: ~"calc(100% - @{_overlayMarginSmall})";
-      padding: 12px;
-    }
   }
 }

@@ -621,8 +621,6 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_ContainerMetaInformation';
         $result[] = 'TagManager_ChooseContainer';
         $result[] = 'TagManager_ChooseVariable';
-        $result[] = 'TagManager_CodeEditorCollapse';
-        $result[] = 'TagManager_CodeEditorExpand';
         $result[] = 'TagManager_CodeEditorPossibleSyntaxError';
         $result[] = 'TagManager_ErrorInvalidContainerImportFormat';
         $result[] = 'TagManager_ErrorContainerVersionImportIncomplete';

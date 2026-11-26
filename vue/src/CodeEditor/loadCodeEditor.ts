@@ -24,17 +24,9 @@ export interface CodeEditorOptions {
   getVariables?: () => Promise<CodeEditorVariable[]>;
 }
 
-export interface CodeEditorViewState {
-  anchor: number;
-  head: number;
-  scroll: unknown;
-}
-
 export interface CodeEditorHandle {
   getValue(): string;
-  setValue(value: string, options?: { addToHistory?: boolean }): void;
-  getViewState(): CodeEditorViewState;
-  setViewState(viewState: CodeEditorViewState): void;
+  setValue(value: string): void;
   insertAtCursor(text: string): void;
   focus(): void;
   destroy(): void;
