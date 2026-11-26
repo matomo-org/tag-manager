@@ -12,7 +12,6 @@ namespace Piwik\Plugins\TagManager\tests\Integration\Context;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\Db;
-use Piwik\DI;
 use Piwik\Nonce;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\API;
@@ -89,7 +88,7 @@ class WebContextTest extends IntegrationTestCase
     public function provideContainerConfig()
     {
         return [
-            VariablesDao::class => DI::factory(function () {
+            VariablesDao::class => \Piwik\DI::factory(function () {
                 return new class extends VariablesDao {
                     public function findVariableByName($idSite, $idContainerVersion, $variableName)
                     {
