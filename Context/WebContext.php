@@ -116,13 +116,22 @@ class WebContext extends BaseContext
             }
         }
 
-        foreach ($this->getReleasesInGenerationOrder($container['releases']) as $release) {
+        foreach ($this->getReleasesInGenerationOrder($container) as $release) {
             $this->templateLocator = StaticContainer::getContainer()->make('Piwik\Plugins\TagManager\Context\BaseContext\TemplateLocator');
             $isPreviewRelease = $release['environment'] === Environment::ENVIRONMENT_PREVIEW;
             if ($isPreviewRelease) {
                 $hasPreviewRelease = true;
             }
-            $containerJs = $this->generatePublicContainer($container, $release);
+            $containerJs = $this->generateReleaseUnlessTooLarge($container, $release);
+            if ($containerJs === null) {
+                $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $release['environment'], $container['created_date']);
+                // the skipped release keeps the file generated before the limit, so only a lost file gets the placeholder
+                if (!in_array(PIWIK_DOCUMENT_ROOT . $path, $this->storage->find(dirname(PIWIK_DOCUMENT_ROOT . $path), basename($path)), true)) {
+                    $filesCreated[$path] = $this->addPreviewCode($baseJs, $hasPreviewRelease, $isPreviewRelease, $container);
+                    $this->storage->save(PIWIK_DOCUMENT_ROOT . $path, $filesCreated[$path]);
+                }
+                continue;
+            }
             $replaceMacros = array();
             $variableTemplates = ['keys' => [], 'values' => []];
 

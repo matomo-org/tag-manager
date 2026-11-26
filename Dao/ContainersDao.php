@@ -41,6 +41,15 @@ class ContainersDao extends BaseDao implements TagManagerDao
         // we cannot set a unique key on (`idsite`, `name`) because we soft delete tags and want to make sure names can be used again after deleting an entry
     }
 
+    /**
+     * Holds the container's row until the current transaction ends, waiting while another one holds it
+     */
+    public function lockContainer(int $idSite, string $idContainer): void
+    {
+        $sql = sprintf('SELECT idcontainer FROM %s WHERE idsite = ? AND idcontainer = ? FOR UPDATE', $this->tablePrefixed);
+        Db::fetchOne($sql, [$idSite, $idContainer]);
+    }
+
     private function isNameInUse($idSite, $name, $exceptIdContainer = null)
     {
         $sql = sprintf("SELECT idcontainer FROM %s WHERE idsite = ? AND `name` = ? AND status = ?", $this->tablePrefixed);
