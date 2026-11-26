@@ -38,8 +38,12 @@ class CustomJsFunctionVariable extends BaseVariable
             $this->makeSetting('jsFunction', 'function () { return ""; }', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('TagManager_CustomJsFunctionVariableJsFunctionTitle');
                 $field->description = Piwik::translate('TagManager_CustomJsFunctionVariableJsFunctionDescription');
-                $field->uiControlAttributes = ['placeholder' => Piwik::translate('TagManager_CustomJsFunctionVariableJsFunctionPlaceholder')];
+                $field->uiControlAttributes = [
+                    'language' => 'javascript',
+                    'placeholder' => Piwik::translate('TagManager_CustomJsFunctionVariableJsFunctionPlaceholder'),
+                ];
                 $field->uiControl = FieldConfig::UI_CONTROL_TEXTAREA;
+                $field->customFieldComponent = self::FIELD_CODE_EDITOR_COMPONENT;
                 $field->validators[] = new NotEmpty();
                 $field->validate = function ($value) {
                     $value = trim($value);

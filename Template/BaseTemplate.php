@@ -34,6 +34,7 @@ abstract class BaseTemplate
     public const FIELD_TEXTAREA_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldTextareaVariable'];
     public const FIELD_VARIABLE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTemplate'];
     public const FIELD_VARIABLE_TYPE_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldVariableTypeTemplate'];
+    public const FIELD_CODE_EDITOR_COMPONENT = ['plugin' => 'TagManager', 'name' => 'FieldCodeEditor'];
 
     public static $RESERVED_SETTING_NAMES = [
         'container', 'tag', 'variable', 'trigger', 'length', 'window', 'document', 'get', 'fire', 'setUp', 'set', 'reset', 'type', 'part',

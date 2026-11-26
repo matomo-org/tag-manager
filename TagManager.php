@@ -621,6 +621,7 @@ class TagManager extends \Piwik\Plugin
         $result[] = 'TagManager_ContainerMetaInformation';
         $result[] = 'TagManager_ChooseContainer';
         $result[] = 'TagManager_ChooseVariable';
+        $result[] = 'TagManager_CodeEditorPossibleSyntaxError';
         $result[] = 'TagManager_ErrorInvalidContainerImportFormat';
         $result[] = 'TagManager_ErrorContainerVersionImportIncomplete';
         $result[] = 'TagManager_VersionImportSuccess';
@@ -974,6 +975,8 @@ class TagManager extends \Piwik\Plugin
         $stylesheets[] = "plugins/TagManager/vue/src/ReferenceList/ReferenceList.less";
         $stylesheets[] = "plugins/TagManager/vue/src/VariableSelectType/VariableSelectType.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Field/FieldVariableTemplate.less";
+        $stylesheets[] = "plugins/TagManager/vue/src/Field/FieldCodeEditor.less";
+        $stylesheets[] = "plugins/TagManager/vue/src/CodeEditor/CodeEditor.less";
         $stylesheets[] = "plugins/TagManager/vue/src/ContainerSelector/ContainerSelector.less";
         $stylesheets[] = "plugins/TagManager/vue/src/ContainerDashboard/ContainerDashboard.less";
         $stylesheets[] = "plugins/TagManager/vue/src/Version/VersionEdit.less";

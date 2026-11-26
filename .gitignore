@@ -7,3 +7,4 @@ tests/System/processed/*text
 /vue/dist/*.development.*
 # only the minified bundle is served; the unminified one is no longer built
 /vue/dist/*.umd.js
+/code-editor/node_modules/

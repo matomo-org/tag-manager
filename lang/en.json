@@ -176,6 +176,7 @@
         "ChooseTriggerToContinue": "Choose a type of trigger to continue",
         "ChooseVariable": "Choose a variable",
         "ChooseVariableToContinue": "Choose a type of variable to continue",
+        "CodeEditorPossibleSyntaxError": "Possible syntax error. Check the code near this position.",
         "ClickClassesVariableDescription": "The value of all CSS class names of an element when a click trigger was triggered.",
         "ClickButtonVariableDescription": "Clicked button(left/middle/right)",
         "ClickButtonVariableName": "Click Button",

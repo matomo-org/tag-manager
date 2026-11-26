@@ -1,0 +1,53 @@
+.fieldCodeEditor {
+  .fieldCodeEditor__label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .fieldCodeEditor__content {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .fieldCodeEditor__editor {
+    flex: auto;
+    min-width: 0;
+  }
+
+  .fieldCodeEditor__actionList {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .fieldCodeEditor__actionButton {
+    flex: none;
+    display: flex;
+    align-items: safe center;
+    justify-content: safe center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    font-size: 16px;
+    color: @theme-color-text-lighter;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .fieldCodeEditor__actionButton:hover {
+    color: @theme-color-link;
+    background: @theme-color-background-base;
+  }
+
+  .fieldCodeEditor__actionButton:focus {
+    outline: none;
+  }
+
+  .fieldCodeEditor__actionButton:focus-visible {
+    outline: 2px solid @theme-color-focus-ring;
+  }
+}

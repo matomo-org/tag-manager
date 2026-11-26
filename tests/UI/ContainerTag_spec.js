@@ -54,6 +54,11 @@ describe("ContainerTag", function () {
         await form.sendFieldValue(page, '.editTag [id=' + tagName + ']', value);
     }
 
+    async function setCodeEditorValue(tagName, value)
+    {
+        await form.sendCodeEditorValue(page, '.editTag [id=' + tagName + ']', value);
+    }
+
     async function selectParameterValue(tagName, value)
     {
         await form.selectValue(page, '.editTag [id=' + tagName + ']', value);
@@ -212,7 +217,7 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(250);
         await selectTagType('CustomHtml');
         await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
-        await setParameterValue('customHtml', '<script></script>');
+        await setCodeEditorValue('customHtml', '<script></script>');
         await capture.page(page, 'create_new_prefilled');
     });
 
@@ -447,7 +452,7 @@ describe("ContainerTag", function () {
     it('should be possible to start create a tag and show advanced settings', async function () {
         await selectTagType('CustomHtml');
         await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'Mytrigger3');
-        await setParameterValue('customHtml', '<script></script>');
+        await setCodeEditorValue('customHtml', '<script></script>');
         await page.click('.showAdvancedSettings');
         await capture.page(page, 'create_advanced_prefilled1');
     });
@@ -532,7 +537,7 @@ describe("ContainerTag", function () {
         await page.waitForTimeout(250);
         await selectTagType('CustomHtml');
         await form.selectValue(page, '.fireTrigger0 [name=fire_triggers]', 'updatedTrigger');
-        await setParameterValue('customHtml', '<script></script>');
+        await setCodeEditorValue('customHtml', '<script></script>');
         await setParameterValue('name', 'Test tag with a really long name. Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcdefghijklmnopqrstuvwxyz1234567890Abcde');
         await createOrUpdateTag();
         await capture.page(page, 'create_new_long_name');

@@ -2,6 +2,7 @@
 
 0.2.11
 
+* The Custom HTML tag and the Custom JavaScript and Custom Request Processing variables now use a code editor with syntax highlighting, line numbers, search, syntax warnings and variable autocomplete
 * When a site has more than one container, Tag Manager now opens the container you last worked in instead of the Manage Containers page
 * Added OpenAI Ads, Microsoft Ads UET Conversion, TikTok, Pinterest, Snapchat, X, Reddit and HubSpot tags
 * Renamed the Facebook Pixel tag to Meta Ads: Pixel (Facebook & Instagram)
