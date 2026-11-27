@@ -11,8 +11,11 @@ namespace Piwik\Plugins\TagManager\Context;
 
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
+use Piwik\Log\LoggerInterface;
+use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\Storage\StorageInterface;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
+use Piwik\Plugins\TagManager\Exception\ContainerTooLargeException;
 use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Environment;
@@ -73,6 +76,45 @@ abstract class BaseContext
 
     private $nestedVariableCals = [];
 
+    /**
+     * Roughly the bytes of configuration a container may encode to. A variable is copied in full wherever it is
+     * referenced, so a few variables referencing each other many times would otherwise need gigabytes. Generating
+     * a container peaks at about eight times its size in memory, so this keeps it inside a 128M memory limit.
+     * Default of the TagManagerMaxContainerWeight dependency injection entry, set by `[TagManager] max_container_size` in config.ini.php.
+     */
+    public const MAX_CONTAINER_WEIGHT = 5000000;
+
+    /**
+     * The limit for regenerating a release that is already stored, so a container published before
+     * MAX_CONTAINER_WEIGHT existed keeps being updated unless it is far over it. Default of the
+     * TagManagerMaxStoredReleaseWeight dependency injection entry, set by `[TagManager] max_stored_release_size` in config.ini.php.
+     */
+    public const MAX_STORED_RELEASE_WEIGHT = 10000000;
+
+    /**
+     * Replaces the container limit while a stored release is regenerated
+     * @var int|null
+     */
+    private $maxWeight = null;
+
+    /**
+     * Weight of each resolved variable, by name
+     * @var array<string, int>
+     */
+    private $variableWeights = [];
+
+    /**
+     * The array each variable was resolved to, by name: a tag or trigger can have the same name and keys as a variable
+     * @var array<string, array<string, mixed>>
+     */
+    private $resolvedVariables = [];
+
+    /**
+     * Names and references found to be unavailable, so each is only resolved once
+     * @var array<string, true>
+     */
+    private $unavailableVariables = [];
+
     public function __construct(VariablesProvider $variablesProvider, Variable $variableModel, Trigger $triggerModel, Tag $tagModel, Container $containerModel, StorageInterface $storage, Salt $salt)
     {
         $this->variablesProvider = $variablesProvider;
@@ -93,32 +135,17 @@ abstract class BaseContext
     protected function generatePublicContainer($container, $release)
     {
         $this->nestedVariableCals = [];
+        $this->variableWeights = [];
+        $this->resolvedVariables = [];
+        $this->unavailableVariables = [];
 
         $idSite = $container['idsite'];
-        $idContainer = $container['idcontainer'];
-        $isTagFireLimitAllowedInPreviewMode = 0;
-        if (isset($container['isTagFireLimitAllowedInPreviewMode'])) {
-            $isTagFireLimitAllowedInPreviewMode = $container['isTagFireLimitAllowedInPreviewMode'] ? 1 : 0;
-        }
         $idContainerVersion = $release['idcontainerversion'];
         $container['idcontainerversion'] = $idContainerVersion;
-        $environment = $release['environment'];
 
         $this->variables = [];
 
-        $version = $this->containerModel->getContainerVersion($idSite, $idContainer, $idContainerVersion);
-
-        $containerJs = [
-            'id' => $idContainer,
-            'isTagFireLimitAllowedInPreviewMode' => $isTagFireLimitAllowedInPreviewMode,
-            'idsite' => $idSite,
-            'versionName' => $version['name'],
-            'revision' => $version['revision'],
-            'environment' => $environment,
-            'tags' => [],
-            'triggers' => [],
-            'variables' => [],
-        ];
+        $containerJs = $this->getEmptyPublicContainer($container, $release);
 
         foreach ($this->tagModel->getContainerTags($idSite, $idContainerVersion) as $tag) {
             if ($tag['status'] !== TagsDao::STATUS_ACTIVE) {
@@ -210,7 +237,109 @@ abstract class BaseContext
         $containerJs['variables'] = array_values($this->variables);
         $this->variables = array();
 
+        $weight = $this->weigh($containerJs);
+        if (($container['context'] ?? null) === WebContext::ID) {
+            // the web context writes each custom JS function out twice, as the variable's parameter and as its template
+            $weight += 2 * $this->weighMacroExpansions($containerJs['variables']);
+        }
+        if ($weight > ($this->maxWeight ?? self::getWeightLimit('TagManagerMaxContainerWeight', 'max_container_size'))) {
+            throw new ContainerTooLargeException(Piwik::translate('TagManager_ErrorContainerTooLarge'), $weight);
+        }
+
         return $containerJs;
+    }
+
+    /**
+     * Approximates the size of $value once encoded, counting a resolved variable it contains from its cached weight
+     * so this stays linear however often variables are referenced.
+     *
+     * @param mixed $value
+     */
+    private function weigh($value, bool $isVariableItself = false): int
+    {
+        if (is_scalar($value)) {
+            return strlen((string) $value);
+        }
+        if (!is_array($value)) {
+            return 0;
+        }
+        if (!$isVariableItself && isset($value['name']) && is_string($value['name'])) {
+            // cheap, as the variables it references are the same arrays on both sides
+            if (isset($this->resolvedVariables[$value['name']]) && $this->resolvedVariables[$value['name']] === $value) {
+                return $this->variableWeights[$value['name']];
+            }
+        }
+
+        $weight = 0;
+        foreach ($value as $key => $item) {
+            $weight += strlen((string) $key) + $this->weigh($item);
+        }
+        return $weight;
+    }
+
+    /**
+     * The weight of replacing each {{variable}} in a custom JS function with that whole variable
+     *
+     * @param array<int, array<string, mixed>> $variables
+     */
+    private function weighMacroExpansions(array $variables): int
+    {
+        $weight = 0;
+        $markers = null;
+        $markerWeights = [];
+        // random, so a custom JS function cannot contain a marker itself
+        $token = "\0" . bin2hex(random_bytes(8)) . ':';
+        foreach ($variables as $variable) {
+            $jsFunction = $variable['parameters']['jsFunction'] ?? null;
+            if (!is_string($jsFunction) || strpos($jsFunction, '{{') === false) {
+                continue;
+            }
+            if ($markers === null) {
+                $markers = [];
+                foreach ($this->getMacroWeights($variables) as $key => $keyWeight) {
+                    $markers[$key] = $token . count($markerWeights) . "\0";
+                    $markerWeights[] = $keyWeight;
+                }
+            }
+            // the same strtr as the web context's, so a name containing braces is matched as it would be expanded
+            preg_match_all('/' . preg_quote($token, '/') . '(\d+)\x00/', strtr($jsFunction, $markers), $matches);
+            foreach ($matches[1] as $index) {
+                $weight += $markerWeights[(int) $index];
+            }
+        }
+        return $weight;
+    }
+
+    /**
+     * The length of what the web context puts in place of each {{macro}} in a custom JS function, by macro
+     *
+     * @param array<int, array<string, mixed>> $variables
+     * @return array<string, int>
+     */
+    private function getMacroWeights(array $variables): array
+    {
+        $weights = [];
+        $response = $this->getPreConfiguredVariablesJSCodeResponse(WebContext::ID);
+        foreach ($response['keys'] as $index => $key) {
+            // as in the web context, the first of two equal macros wins, and pre-configured ones come first
+            $weights[$key] = $weights[$key] ?? strlen($response['values'][$index]);
+        }
+        foreach ($variables as $variable) {
+            if (!empty($variable['parameters']) && is_string($variable['name'] ?? null)) {
+                $key = '{{' . $variable['name'] . '}}';
+                $weights[$key] = $weights[$key] ?? ($this->variableWeights[$variable['name']] ?? 0);
+            }
+        }
+        return $weights;
+    }
+
+    /**
+     * @param array<string, mixed> $variable
+     */
+    private function addResolvedVariable(array $variable): void
+    {
+        $this->resolvedVariables[$variable['name']] = $variable;
+        $this->variableWeights[$variable['name']] = $this->weigh($variable, true);
     }
 
     public function getPreConfiguredVariablesJSCodeResponse($context)
@@ -455,12 +584,20 @@ abstract class BaseContext
             $variable = $variableNameOrVariable;
         } elseif (isset($this->variables[$variableNameOrVariable])) {
             return $this->variables[$variableNameOrVariable];
+        } elseif (isset($this->unavailableVariables[$variableNameOrVariable])) {
+            $this->referencesUnavailableVariable = true;
+            return null;
         } else {
             $variable = $this->variableModel->findVariableByName($container['idsite'], $container['idcontainerversion'], $variableNameOrVariable);
         }
-        if ($variable && empty($variable['typeMetadata'])) {
+        if ($variable && isset($this->variables[$variable['name']])) {
+            // resolved already, though the reference may differ in case from the stored name: resolving it again would
+            // repeat the work for every reference and give equal but separate copies, which are slow to compare
+            return $this->variables[$variable['name']];
+        }
+        if ($variable && (empty($variable['typeMetadata']) || isset($this->unavailableVariables[$variable['name']]))) {
             // the variable type is not available, eg because the plugin providing it is no longer active
-            $this->referencesUnavailableVariable = true;
+            $this->markUnavailable($variableNameOrVariable, $variable['name']);
             return null;
         }
         if ($variable) {
@@ -478,6 +615,7 @@ abstract class BaseContext
 
             $parameters = $this->parametersToVariableJs($container, $variable);
             if ($this->referencesUnavailableVariable) {
+                $this->markUnavailable($variableNameOrVariable, $variable['name']);
                 return null;
             }
             $this->referencesUnavailableVariable = $referencesUnavailableVariable;
@@ -498,6 +636,7 @@ abstract class BaseContext
             ];
             // by setting var name key we make sure to not include same var twice
             $this->variables[$var['name']] = $var;
+            $this->addResolvedVariable($var);
             return $var;
         } else {
             // try to find pre-configured variable if no user variable found
@@ -515,19 +654,148 @@ abstract class BaseContext
                     'parameters' => $this->parametersToVariableJs($container, array('parameters' => $defaultParams, 'typeMetadata' => array()))
                 ];
                 $this->variables[$var['name']] = $var;
+                $this->addResolvedVariable($var);
                 return $var;
             }
 
             if (is_string($variableNameOrVariable) && $this->variablesProvider->isDisabledInConfig($variableNameOrVariable)) {
                 // a pre-configured variable disabled in the configuration is not available either
-                $this->referencesUnavailableVariable = true;
+                $this->markUnavailable($variableNameOrVariable, $variableNameOrVariable);
             }
+        }
+    }
+
+    /**
+     * @param mixed $reference the name or array the variable was looked up by
+     */
+    private function markUnavailable($reference, string $name): void
+    {
+        $this->referencesUnavailableVariable = true;
+        $this->unavailableVariables[$name] = true;
+        if (is_string($reference)) {
+            $this->unavailableVariables[$reference] = true;
         }
     }
 
     public function getOrder()
     {
         return 99;
+    }
+
+    /**
+     * The preview release and any other release of the draft are generated last: they show the draft, which anyone
+     * with write access can change, and must not keep the other releases from being generated when it fails.
+     *
+     * @param array<string, mixed> $container
+     * @return array<int, array<string, mixed>>
+     */
+    protected function getReleasesInGenerationOrder(array $container): array
+    {
+        $idDraftVersion = (int) ($container['draft']['idcontainerversion'] ?? 0);
+        $draftReleases = array_filter($container['releases'], function ($release) use ($idDraftVersion) {
+            return $release['environment'] === Environment::ENVIRONMENT_PREVIEW
+                || (int) $release['idcontainerversion'] === $idDraftVersion;
+        });
+        $otherReleases = array_diff_key($container['releases'], $draftReleases);
+
+        return array_merge(array_values($otherReleases), array_values($draftReleases));
+    }
+
+    /**
+     * A version published before the container limit existed may be over it, so a stored release of a version other
+     * than the draft is held to TagManagerMaxStoredReleaseWeight instead, or to the container limit if that is higher.
+     * Over that, the release keeps the file generated back then rather than failing every change to the container.
+     * The draft, and a version that is about to be published, are held to TagManagerMaxContainerWeight.
+     *
+     * @param array<string, mixed> $container
+     * @param array<string, mixed> $release
+     * @return array<string, mixed>|null null when the release was skipped
+     */
+    protected function generateReleaseUnlessTooLarge(array $container, array $release): ?array
+    {
+        if (
+            empty($release['idcontainerrelease'])
+            || (int) $release['idcontainerversion'] === (int) ($container['draft']['idcontainerversion'] ?? 0)
+        ) {
+            return $this->generatePublicContainer($container, $release);
+        }
+
+        $this->maxWeight = max(
+            self::getWeightLimit('TagManagerMaxStoredReleaseWeight', 'max_stored_release_size'),
+            self::getWeightLimit('TagManagerMaxContainerWeight', 'max_container_size')
+        );
+        try {
+            return $this->generatePublicContainer($container, $release);
+        } catch (ContainerTooLargeException $e) {
+            StaticContainer::get(LoggerInterface::class)->warning('Container {idContainer} of site {idSite} was not regenerated for environment {environment}: its version {idContainerVersion} is over the size limit.', [
+                'idContainer' => $container['idcontainer'],
+                'idSite' => $container['idsite'],
+                'environment' => $release['environment'],
+                'idContainerVersion' => $release['idcontainerversion'],
+            ]);
+            return null;
+        } finally {
+            $this->maxWeight = null;
+        }
+    }
+
+    private static function getWeightLimit(string $entry, string $iniSetting): int
+    {
+        $limit = StaticContainer::get($entry);
+        $limit = is_bool($limit) ? false : filter_var($limit, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        if ($limit === false) {
+            throw new \Exception("The [TagManager] {$iniSetting} config setting ({$entry}) must be a positive integer.");
+        }
+
+        return $limit;
+    }
+
+    /**
+     * @param array<string, mixed> $container
+     * @param array<string, mixed> $release
+     * @return array<string, mixed>
+     */
+    protected function getEmptyPublicContainer(array $container, array $release): array
+    {
+        $version = $this->containerModel->getContainerVersion($container['idsite'], $container['idcontainer'], $release['idcontainerversion']);
+
+        return [
+            'id' => $container['idcontainer'],
+            'isTagFireLimitAllowedInPreviewMode' => !empty($container['isTagFireLimitAllowedInPreviewMode']) ? 1 : 0,
+            'idsite' => $container['idsite'],
+            'versionName' => $version['name'],
+            'revision' => $version['revision'],
+            'environment' => $release['environment'],
+            'tags' => [],
+            'triggers' => [],
+            'variables' => [],
+        ];
+    }
+
+    /**
+     * A release skipped for its size keeps the file generated before the limit, so only a lost file is replaced
+     *
+     * @param array<string, mixed> $container
+     * @param array<string, mixed> $release
+     * @param callable(): string $buildPlaceholder
+     * @return string|null the saved placeholder, or null when the file exists
+     */
+    protected function savePlaceholderIfMissing(array $container, array $release, string $path, callable $buildPlaceholder): ?string
+    {
+        if (in_array(PIWIK_DOCUMENT_ROOT . $path, $this->storage->find(dirname(PIWIK_DOCUMENT_ROOT . $path), basename($path)), true)) {
+            return null;
+        }
+
+        $placeholder = $buildPlaceholder();
+        $this->storage->save(PIWIK_DOCUMENT_ROOT . $path, $placeholder);
+        StaticContainer::get(LoggerInterface::class)->error('Container {idContainer} of site {idSite} now serves an empty container for environment {environment}: '
+            . 'its file was missing and its version {idContainerVersion} is over the size limit.', [
+            'idContainer' => $container['idcontainer'],
+            'idSite' => $container['idsite'],
+            'environment' => $release['environment'],
+            'idContainerVersion' => $release['idcontainerversion'],
+        ]);
+        return $placeholder;
     }
 
     public function toArray()

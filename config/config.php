@@ -22,6 +22,12 @@ return array(
         return 'container_';
     },
     'TagManagerJSMinificationEnabled' => true,
+    'TagManagerMaxContainerWeight' => function () {
+        return \Piwik\Config::getInstance()->TagManager['max_container_size'] ?? \Piwik\Plugins\TagManager\Context\BaseContext::MAX_CONTAINER_WEIGHT;
+    },
+    'TagManagerMaxStoredReleaseWeight' => function () {
+        return \Piwik\Config::getInstance()->TagManager['max_stored_release_size'] ?? \Piwik\Plugins\TagManager\Context\BaseContext::MAX_STORED_RELEASE_WEIGHT;
+    },
     'fileintegrity.ignore' => Piwik\DI::add(array(
         Piwik\DI::get('fileintegrityIgnoreTagManager')
     )),

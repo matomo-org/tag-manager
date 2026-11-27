@@ -10,18 +10,24 @@
 namespace Piwik\Plugins\TagManager\Model;
 
 use Piwik\Container\StaticContainer;
+use Piwik\Db;
+use Piwik\Log\LoggerInterface;
 use Piwik\Exception\ThingNotFoundException;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Context\BaseContext;
+use Piwik\Plugins\TagManager\Dao\BaseDao;
 use Piwik\Plugins\TagManager\Dao\ContainerReleaseDao;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
 use Piwik\Plugins\TagManager\Context\ContextProvider;
 use Piwik\Plugins\TagManager\Dao\ContainerVersionsDao;
+use Piwik\Plugins\TagManager\Exception\ContainerTooLargeException;
+use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Exception;
 use Piwik\Plugins\TagManager\Input\Description;
 use Piwik\Plugins\TagManager\Input\IdSite;
 use Piwik\Plugins\TagManager\Input\Name;
 use Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator;
+use Piwik\Plugins\TagManager\SimulatorContext;
 use Piwik\Plugins\TagManager\Template\Variable\MatomoConfigurationVariable;
 use Piwik\Validators\NumberRange;
 
@@ -86,7 +92,7 @@ class Container extends BaseModel
     public function enablePreviewMode($idSite, $idContainer, $idContainerVersion, $releaseLogin)
     {
         $idContainerRelease = $this->publishVersion($idSite, $idContainer, $idContainerVersion, Environment::ENVIRONMENT_PREVIEW, $releaseLogin);
-        $this->generateContainer($idSite, $idContainer);
+        $this->generateContainerToleratingTheDraft($idSite, $idContainer);
         return $idContainerRelease;
     }
 
@@ -94,7 +100,7 @@ class Container extends BaseModel
     {
         $date = $this->getCurrentDateTime();
         $this->releasesDao->deleteAllVersionsForRelease($idSite, $idContainer, Environment::ENVIRONMENT_PREVIEW, $date);
-        $this->generateContainer($idSite, $idContainer);
+        $this->generateContainerToleratingTheDraft($idSite, $idContainer);
     }
 
     public function generateContainerIfHasPreviewRelease($idSite, $idContainer)
@@ -119,6 +125,220 @@ class Container extends BaseModel
         $release = $this->releasesDao->getReleaseForContainerVersion($idSite, $idContainer, Environment::ENVIRONMENT_PREVIEW);
 
         return !empty($release);
+    }
+
+    /**
+     * Regenerates the container when it has a preview release. Unless that release previews the draft, the draft is
+     * also generated without being stored, through a "fake" preview release, so a draft that cannot be generated, eg
+     * because a variable references itself, throws either way.
+     */
+    public function updateContainerPreviewRelease(int $idSite, string $idContainer): void
+    {
+        $previewRelease = $this->releasesDao->getReleaseForContainerVersion($idSite, $idContainer, Environment::ENVIRONMENT_PREVIEW);
+        if (!empty($previewRelease)) {
+            $this->generateContainer($idSite, $idContainer);
+        }
+
+        $container = $this->getContainer($idSite, $idContainer);
+        if (
+            empty($container['draft']['idcontainerversion'])
+            || (!empty($previewRelease) && $previewRelease['idcontainerversion'] === (int) $container['draft']['idcontainerversion'])
+        ) {
+            return;
+        }
+        $this->simulateRelease($container, (int) $container['draft']['idcontainerversion'], Environment::ENVIRONMENT_PREVIEW);
+    }
+
+    /**
+     * Applies a change to the container's draft and regenerates the container in one transaction, so a change the
+     * container cannot be generated with is undone together with anything it created along the way, eg the triggers
+     * and variables a copy brings along.
+     *
+     * A draft that is already over the TagManagerMaxContainerWeight limit, eg from before it existed, still takes
+     * a change that does not make it larger, so that it can be brought back under the limit.
+     *
+     * @template T
+     * @param callable(): T $change
+     * @param int|null $idContainerVersion the version changed, when it can be one other than the draft, which is then
+     *                                     held to the same limit
+     * @return T
+     */
+    public function applyDraftChange(int $idSite, string $idContainer, callable $change, ?int $idContainerVersion = null)
+    {
+        try {
+            return $this->applyDraftChangeInTransaction($idSite, $idContainer, $change, $idContainerVersion);
+        } catch (\Throwable $e) {
+            // the rollback does not undo the files the change already generated, eg the live release's
+            $this->regenerateAfterRollback($idSite, $idContainer);
+            throw $e;
+        }
+    }
+
+    private function regenerateAfterRollback(int $idSite, string $idContainer): void
+    {
+        try {
+            $this->generateContainerToleratingTheDraft($idSite, $idContainer);
+        } catch (\Throwable $e) {
+            // the caller rethrows what made the change fail, so this failure would otherwise go unreported
+            StaticContainer::get(LoggerInterface::class)->warning('Container {idContainer} of site {idSite} could not be regenerated after a failed change: {message}', [
+                'idContainer' => $idContainer,
+                'idSite' => $idSite,
+                'message' => preg_replace('/[\x00-\x1F\x7F]+/', ' ', $e->getMessage()),
+            ]);
+        }
+    }
+
+    /**
+     * For a change that leaves the draft as it is. Every other release is generated before the draft's, and the
+     * context only lets a release of the draft fail for its size, so the others are written by the time it fails.
+     */
+    private function generateContainerToleratingTheDraft(int $idSite, string $idContainer): void
+    {
+        try {
+            $this->generateContainer($idSite, $idContainer);
+        } catch (ContainerTooLargeException $e) {
+            // a draft that was already over the limit before this change
+        }
+    }
+
+    /**
+     * @template T
+     * @param callable(): T $change
+     * @return T
+     */
+    private function applyDraftChangeInTransaction(int $idSite, string $idContainer, callable $change, ?int $idContainerVersion)
+    {
+        try {
+            return $this->inTransaction($idSite, $idContainer, function () use ($idSite, $idContainer, $change, $idContainerVersion) {
+                $result = $change();
+                $this->updateContainerPreviewRelease($idSite, $idContainer);
+                $this->checkOtherVersionSize($idSite, $idContainer, $idContainerVersion);
+                return $result;
+            });
+        } catch (ContainerTooLargeException $refused) {
+            // handled below, where the weights before the change are measured under the lock
+        }
+
+        return $this->inTransaction($idSite, $idContainer, function () use ($idSite, $idContainer, $change, $idContainerVersion, $refused) {
+            $container = $this->getContainer($idSite, $idContainer);
+            $draftWeightBefore = $this->getWeightOverLimit($container, (int) ($container['draft']['idcontainerversion'] ?? 0));
+            $versionWeightBefore = $this->isOtherThanTheDraft($container, $idContainerVersion) ? $this->getWeightOverLimit($container, (int) $idContainerVersion) : null;
+            if ($draftWeightBefore === null && $versionWeightBefore === null) {
+                throw $refused;
+            }
+            $result = null;
+            // generating is the last thing a change does, eg updateContainer() regenerates the container itself
+            try {
+                $result = $change();
+                $this->updateContainerPreviewRelease($idSite, $idContainer);
+            } catch (ContainerTooLargeException $e) {
+                if ($draftWeightBefore === null || $e->getWeight() > $draftWeightBefore) {
+                    throw $e;
+                }
+            }
+            try {
+                $this->checkOtherVersionSize($idSite, $idContainer, $idContainerVersion);
+            } catch (ContainerTooLargeException $e) {
+                if ($versionWeightBefore === null || $e->getWeight() > $versionWeightBefore) {
+                    throw $e;
+                }
+            }
+            return $result;
+        });
+    }
+
+    /**
+     * Generates a changed version other than the draft without storing it, since a release of it that is too large
+     * would otherwise be skipped without an error.
+     */
+    private function checkOtherVersionSize(int $idSite, string $idContainer, ?int $idContainerVersion): void
+    {
+        $container = $this->getContainer($idSite, $idContainer);
+        if (!$this->isOtherThanTheDraft($container, $idContainerVersion)) {
+            return;
+        }
+
+        try {
+            $this->simulateRelease($container, (int) $idContainerVersion, Environment::ENVIRONMENT_PREVIEW);
+        } catch (EntityRecursionException $e) {
+            // only the draft is checked for recursion, as before the size limit
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $container
+     */
+    private function isOtherThanTheDraft(array $container, ?int $idContainerVersion): bool
+    {
+        return $idContainerVersion !== null && $idContainerVersion !== (int) ($container['draft']['idcontainerversion'] ?? 0);
+    }
+
+    /**
+     * @param array<string, mixed> $container
+     */
+    private function getWeightOverLimit(array $container, int $idContainerVersion): ?int
+    {
+        if (empty($idContainerVersion)) {
+            return null;
+        }
+
+        try {
+            $this->simulateRelease($container, $idContainerVersion, Environment::ENVIRONMENT_PREVIEW);
+        } catch (ContainerTooLargeException $e) {
+            return $e->getWeight();
+        } catch (EntityRecursionException $e) {
+            return null;
+        }
+        return null;
+    }
+
+    /**
+     * Generates the container for a release of the given version without storing anything, so it throws when the
+     * version cannot be generated.
+     *
+     * @param array<string, mixed> $container
+     */
+    private function simulateRelease(array $container, int $idContainerVersion, string $environment): void
+    {
+        $container['releases'] = [[
+            'idcontainerrelease' => '',
+            'idcontainer' => $container['idcontainer'],
+            'idcontainerversion' => $idContainerVersion,
+            'environment' => $environment,
+            'release_login' => Piwik::getCurrentUserLogin(),
+            'status' => BaseDao::STATUS_ACTIVE,
+        ]];
+        StaticContainer::get(SimulatorContext::class)->generate($container);
+    }
+
+    /**
+     * @template T
+     * @param callable(): T $callback
+     * @return T
+     */
+    private function inTransaction(int $idSite, string $idContainer, callable $callback)
+    {
+        $db = Db::get();
+        if (!$db instanceof \Zend_Db_Adapter_Abstract) {
+            throw new Exception('Containers can only be changed through the regular database connection.');
+        }
+
+        $db->beginTransaction();
+        try {
+            // a concurrent change would otherwise generate the container from a snapshot without this one
+            $this->dao->lockContainer($idSite, $idContainer);
+            $result = $callback();
+            $db->commit();
+        } catch (\Throwable $e) {
+            try {
+                $db->rollBack();
+            } catch (\Throwable $rollBackError) {
+                // a dropped connection has already discarded the transaction; report what caused the failure
+            }
+            throw $e;
+        }
+
+        return $result;
     }
 
     public function generateContainer($idSite, $idContainer)
@@ -276,8 +496,11 @@ class Container extends BaseModel
             'description' => $description,
             'updated_date' => $this->getCurrentDateTime()
         );
-        $this->versionsDao->updateContainerColumns($idSite, $idContainer, $idContainerVersion, $columns);
-        $this->generateContainer($idSite, $idContainer);
+        // the version name is part of the generated container
+        $this->applyDraftChange((int) $idSite, (string) $idContainer, function () use ($idSite, $idContainer, $idContainerVersion, $columns) {
+            $this->versionsDao->updateContainerColumns($idSite, $idContainer, $idContainerVersion, $columns);
+            $this->generateContainer($idSite, $idContainer);
+        }, (int) $idContainerVersion);
     }
 
     public function deleteContainerVersion($idSite, $idContainer, $idContainerVersion)
@@ -339,9 +562,21 @@ class Container extends BaseModel
         $this->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
         // there is on purpose no validation for environment name as it may be used with eg preview etc.
 
+        // a release that cannot be generated is refused before the version it replaces is retired
+        $this->simulateRelease($this->getContainer($idSite, $idContainer), (int) $idContainerVersion, $environment);
+
         $publishDate = $this->getCurrentDateTime();
         $idContainerRelease = $this->releasesDao->releaseVersion($idSite, $idContainer, $idContainerVersion, $environment, $releaseLogin, $publishDate);
-        $this->generateContainer($idSite, $idContainer);
+        try {
+            $this->generateContainer($idSite, $idContainer);
+        } catch (ContainerTooLargeException $e) {
+            // the published version fits, so this is a draft that was already over the limit, whose preview is
+            // generated after every other release; it must not keep other versions from being published
+            $draft = $this->getContainer($idSite, $idContainer)['draft'] ?? [];
+            if ((int) $idContainerVersion === (int) ($draft['idcontainerversion'] ?? 0)) {
+                throw $e;
+            }
+        }
         return $idContainerRelease;
     }
 

@@ -18,6 +18,7 @@ use Piwik\Nonce;
 use Piwik\Notification;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\API\PreviewCookie;
+use Piwik\Plugins\TagManager\Dao\ContainerVersionsDao;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Container;
 use Piwik\Plugins\TagManager\Model\Environment;
@@ -505,6 +506,28 @@ class Controller extends \Piwik\Plugin\Controller
         }
     }
 
+    /**
+     * Runs a copy as a change to the destination's draft, or to the source version when there is no destination, so a
+     * copy that cannot be generated is undone together with the referenced triggers and variables it copied along.
+     *
+     * @param callable(): int $copy
+     */
+    private function copyIntoContainer(int $idDestinationSite, string $idDestinationContainer, int $idContainerVersion, callable $copy): int
+    {
+        $idChangedVersion = null;
+        if ($idDestinationContainer === '') {
+            // the model then copies within the source container version
+            $idDestinationContainer = (string) StaticContainer::get(ContainerVersionsDao::class)->getContainerIdByVersion($idDestinationSite, $idContainerVersion);
+            $idChangedVersion = $idContainerVersion;
+        }
+
+        if ($idDestinationContainer === '') {
+            return $copy();
+        }
+
+        return $this->container->applyDraftChange($idDestinationSite, $idDestinationContainer, $copy, $idChangedVersion);
+    }
+
     public function copyTagDialog()
     {
         $this->checkSitePermission();
@@ -553,7 +576,9 @@ class Controller extends \Piwik\Plugin\Controller
                 $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
             }
 
-            $idTagNew = $tagModel->copyTag($this->idSite, $idContainerVersion, $idTag, $idDestinationSite, $idDestinationContainer);
+            $idTagNew = $this->copyIntoContainer($idDestinationSite, $idDestinationContainer, $idContainerVersion, function () use ($tagModel, $idContainerVersion, $idTag, $idDestinationSite, $idDestinationContainer) {
+                return $tagModel->copyTag($this->idSite, $idContainerVersion, $idTag, $idDestinationSite, $idDestinationContainer);
+            });
 
             $url = 'index.php?module=TagManager&action=manageTags&'
                 . Url::getQueryStringFromParameters([
@@ -617,7 +642,9 @@ class Controller extends \Piwik\Plugin\Controller
                 $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
             }
 
-            $idTriggerNew = $triggerModel->copyTrigger($this->idSite, $idContainerVersion, $idTrigger, $idDestinationSite, $idDestinationContainer);
+            $idTriggerNew = $this->copyIntoContainer($idDestinationSite, $idDestinationContainer, $idContainerVersion, function () use ($triggerModel, $idContainerVersion, $idTrigger, $idDestinationSite, $idDestinationContainer) {
+                return $triggerModel->copyTrigger($this->idSite, $idContainerVersion, $idTrigger, $idDestinationSite, $idDestinationContainer);
+            });
 
             $url = 'index.php?module=TagManager&action=manageTriggers&'
                 . Url::getQueryStringFromParameters([
@@ -681,7 +708,9 @@ class Controller extends \Piwik\Plugin\Controller
                 $this->accessValidator->checkUseCustomTemplatesCapability($idDestinationSite);
             }
 
-            $idVariableNew = $variableModel->copyVariable($this->idSite, $idContainerVersion, $idVariable, $idDestinationSite, $idDestinationContainer);
+            $idVariableNew = $this->copyIntoContainer($idDestinationSite, $idDestinationContainer, $idContainerVersion, function () use ($variableModel, $idContainerVersion, $idVariable, $idDestinationSite, $idDestinationContainer) {
+                return $variableModel->copyVariable($this->idSite, $idContainerVersion, $idVariable, $idDestinationSite, $idDestinationContainer);
+            });
 
             $url = 'index.php?module=TagManager&action=manageVariables&'
                 . Url::getQueryStringFromParameters([
