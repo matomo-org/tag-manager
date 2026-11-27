@@ -34,9 +34,18 @@ class AndroidContext extends BaseContext
     public function generate($container)
     {
         $filesCreated = array();
-        foreach ($container['releases'] as $release) {
-            $containerJs = $this->generatePublicContainer($container, $release);
+        foreach ($this->getReleasesInGenerationOrder($container) as $release) {
+            $containerJs = $this->generateReleaseUnlessTooLarge($container, $release);
             $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $release['environment'], $container['created_date']);
+            if ($containerJs === null) {
+                $placeholder = $this->savePlaceholderIfMissing($container, $release, $path, function () use ($container, $release) {
+                    return json_encode($this->getEmptyPublicContainer($container, $release));
+                });
+                if ($placeholder !== null) {
+                    $filesCreated[$path] = $placeholder;
+                }
+                continue;
+            }
             $filesCreated[$path] = json_encode($containerJs);
             $this->storage->save(PIWIK_DOCUMENT_ROOT . $path, $filesCreated[$path]);
         }

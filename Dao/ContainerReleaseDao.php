@@ -111,7 +111,7 @@ class ContainerReleaseDao extends BaseDao implements TagManagerDao
 
     /**
      * @param int $idSite
-     * @param int $idContainer
+     * @param string $idContainer
      * @param string $environment
      * @return array
      */

@@ -11,8 +11,6 @@ namespace Piwik\Plugins\TagManager;
 
 use Piwik\API\Request;
 use Piwik\Common;
-use Piwik\Container\StaticContainer;
-use Piwik\Date;
 use Piwik\Log;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
@@ -21,10 +19,8 @@ use Piwik\Plugins\TagManager\API\Import;
 use Piwik\Plugins\TagManager\API\PreviewCookie;
 use Piwik\Plugins\TagManager\API\TemplateMetadata;
 use Piwik\Plugins\TagManager\Context\WebContext;
-use Piwik\Plugins\TagManager\Dao\BaseDao;
 use Piwik\Plugins\TagManager\Dao\ContainersDao;
-use Piwik\Plugins\TagManager\Dao\VariablesDao;
-use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
+use Piwik\Plugins\TagManager\Exception\ContainerTooLargeException;
 use Piwik\Plugins\TagManager\Input\AccessValidator;
 use Piwik\Plugins\TagManager\Model\Comparison;
 use Piwik\Plugins\TagManager\Model\Container;
@@ -121,11 +117,6 @@ class API extends \Piwik\Plugin\API
      */
     private $import;
 
-    /**
-     * @var VariablesDao
-     */
-    private $variablesDao;
-
     private $enableGeneratePreview = true;
 
     public function __construct(
@@ -141,8 +132,7 @@ class API extends \Piwik\Plugin\API
         Environment $environment,
         Comparison $comparisons,
         Export $export,
-        Import $import,
-        VariablesDao $variablesDao
+        Import $import
     ) {
         //Started updating xdebug.max_nesting_level as infinite loop is detected due to variable is doing a self referencing when xdebug is active and max_nesting_level is set to lower value
         if (extension_loaded('xdebug')) {
@@ -164,7 +154,6 @@ class API extends \Piwik\Plugin\API
         $this->export = $export;
         $this->import = $import;
         $this->comparisons = $comparisons;
-        $this->variablesDao = $variablesDao;
     }
 
     /**
@@ -533,9 +522,24 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
-        $idTag = $this->tags->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description, $status);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
-        return $idTag;
+        return $this->applyDraftChange($idSite, $idContainer, function () use (
+            $idSite,
+            $idContainerVersion,
+            $type,
+            $name,
+            $parameters,
+            $fireTriggerIds,
+            $blockTriggerIds,
+            $fireLimit,
+            $fireDelay,
+            $priority,
+            $startDate,
+            $endDate,
+            $description,
+            $status
+        ) {
+            return $this->tags->addContainerTag($idSite, $idContainerVersion, $type, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description, $status);
+        }, $idContainerVersion);
     }
 
     /**
@@ -585,9 +589,9 @@ class API extends \Piwik\Plugin\API
 
         $parameters = $this->unsanitizeAssocArray($parameters);
 
-        $return = $this->tags->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
-        return $return;
+        return $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description) {
+            return $this->tags->updateContainerTag($idSite, $idContainerVersion, $idTag, $name, $parameters, $fireTriggerIds, $blockTriggerIds, $fireLimit, $fireDelay, $priority, $startDate, $endDate, $description);
+        }, $idContainerVersion);
     }
 
     /**
@@ -609,8 +613,9 @@ class API extends \Piwik\Plugin\API
             if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
-            $this->tags->deleteContainerTag($idSite, $idContainerVersion, $idTag);
-            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainerVersion, $idTag) {
+                $this->tags->deleteContainerTag($idSite, $idContainerVersion, $idTag);
+            }, $idContainerVersion);
             Piwik::postEvent('TagManager.deleteContainerTag.end', array(array(
                 'idSite' => $idSite,
                 'idContainer' => $idContainer,
@@ -639,8 +644,9 @@ class API extends \Piwik\Plugin\API
             if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
-            $this->tags->pauseContainerTag($idSite, $idContainerVersion, $idTag);
-            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainerVersion, $idTag) {
+                $this->tags->pauseContainerTag($idSite, $idContainerVersion, $idTag);
+            }, $idContainerVersion);
             Piwik::postEvent('TagManager.pauseContainerTag.end', array(array(
                 'idSite' => $idSite,
                 'idContainer' => $idContainer,
@@ -673,8 +679,9 @@ class API extends \Piwik\Plugin\API
             if ($this->tagsProvider->isCustomTemplate($tag['type'])) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
-            $this->tags->resumeContainerTag($idSite, $idContainerVersion, $idTag);
-            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainerVersion, $idTag) {
+                $this->tags->resumeContainerTag($idSite, $idContainerVersion, $idTag);
+            }, $idContainerVersion);
             Piwik::postEvent('TagManager.resumeContainerTag.end', array(array(
                 'idSite' => $idSite,
                 'idContainer' => $idContainer,
@@ -771,9 +778,9 @@ class API extends \Piwik\Plugin\API
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
 
-        $idTrigger = $this->triggers->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $description);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
-        return $idTrigger;
+        return $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $description) {
+            return $this->triggers->addContainerTrigger($idSite, $idContainerVersion, $type, $name, $parameters, $conditions, $description);
+        }, $idContainerVersion);
     }
 
     /**
@@ -805,9 +812,9 @@ class API extends \Piwik\Plugin\API
         $parameters = $this->unsanitizeAssocArray($parameters);
         $conditions = $this->unsanitizeAssocArray($conditions);
 
-        $return = $this->triggers->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
-        return $return;
+        return $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description) {
+            return $this->triggers->updateContainerTrigger($idSite, $idContainerVersion, $idTrigger, $name, $parameters, $conditions, $description);
+        }, $idContainerVersion);
     }
 
     /**
@@ -829,8 +836,9 @@ class API extends \Piwik\Plugin\API
             if ($this->triggersProvider->isCustomTemplate($trigger['type'])) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
-            $this->triggers->deleteContainerTrigger($idSite, $idContainerVersion, $idTrigger);
-            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainerVersion, $idTrigger) {
+                $this->triggers->deleteContainerTrigger($idSite, $idContainerVersion, $idTrigger);
+            }, $idContainerVersion);
             Piwik::postEvent('TagManager.deleteContainerTrigger.end', array(array(
                 'idSite' => $idSite,
                 'idContainer' => $idContainer,
@@ -976,27 +984,9 @@ class API extends \Piwik\Plugin\API
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
         $name = urldecode($name);
 
-        $idVariable = $this->variables->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $description);
-
-        try {
-            $this->updateContainerPreviewRelease($idSite, $idContainer);
-        } catch (EntityRecursionException $e) {
-            // we need to delete the previously added variable.... we first have to add the  variable to be able to
-            // detect recursion and simulate container generation... if it fails we delete it again
-            $this->forceDeleteVariable($idSite, $idContainerVersion, $idVariable);
-            $this->updateContainerPreviewRelease($idSite, $idContainer);
-            throw $e;
-        }
-
-        return $idVariable;
-    }
-
-    private function forceDeleteVariable($idSite, $idContainerVersion, $idVariable)
-    {
-        // we cannot use model here because it would trigger an error when a variable references itself
-        // that the variable cannot be deleted because it's still in use by another variable
-        $now = Date::now()->getDatetime();
-        $this->variablesDao->deleteContainerVariable($idSite, $idContainerVersion, $idVariable, $now);
+        return $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $description) {
+            return $this->variables->addContainerVariable($idSite, $idContainerVersion, $type, $name, $parameters, $defaultValue, $lookupTable, $description);
+        }, $idContainerVersion);
     }
 
     /**
@@ -1031,27 +1021,9 @@ class API extends \Piwik\Plugin\API
         $lookupTable = $this->unsanitizeAssocArray($lookupTable);
         $name = urldecode($name);
 
-        $return = $this->variables->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description);
-
-        try {
-            $this->updateContainerPreviewRelease($idSite, $idContainer);
-        } catch (EntityRecursionException $e) {
-            // we need to restore the original value.... we first have to save update the original variable
-            // in order to be able to check for recursion by simulating the container... if it fails we restore original value
-            $this->variables->updateContainerVariable(
-                $variable['idsite'],
-                $variable['idcontainerversion'],
-                $variable['idvariable'],
-                $variable['name'],
-                $variable['parameters'],
-                $variable['default_value'],
-                $variable['lookup_table'],
-                $variable['description']
-            );
-            $this->updateContainerPreviewRelease($idSite, $idContainer);
-            throw $e;
-        }
-        return $return;
+        return $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description) {
+            return $this->variables->updateContainerVariable($idSite, $idContainerVersion, $idVariable, $name, $parameters, $defaultValue, $lookupTable, $description);
+        }, $idContainerVersion);
     }
 
     /**
@@ -1073,8 +1045,9 @@ class API extends \Piwik\Plugin\API
             if ($this->variablesProvider->isCustomTemplate($variable['type'])) {
                 $this->accessValidator->checkUseCustomTemplatesCapability($idSite);
             }
-            $this->variables->deleteContainerVariable($idSite, $idContainerVersion, $idVariable);
-            $this->updateContainerPreviewRelease($idSite, $idContainer);
+            $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainerVersion, $idVariable) {
+                $this->variables->deleteContainerVariable($idSite, $idContainerVersion, $idVariable);
+            }, $idContainerVersion);
             Piwik::postEvent('TagManager.deleteContainerVariable.end', array(array(
                 'idSite' => $idSite,
                 'idContainer' => $idContainer,
@@ -1154,8 +1127,9 @@ class API extends \Piwik\Plugin\API
         }
         $this->containers->checkContainerExists($idSite, $idContainer);
 
-        $this->containers->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
+        $this->applyDraftChange($idSite, $idContainer, function () use ($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer) {
+            $this->containers->updateContainer($idSite, $idContainer, $name, $description, $ignoreGtmDataLayer, $isTagFireLimitAllowedInPreviewMode, $activelySyncGtmDataLayer);
+        });
 
         return $idContainer;
     }
@@ -1506,6 +1480,15 @@ class API extends \Piwik\Plugin\API
         $this->enableGeneratePreview = false;
         try {
             $this->import->importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion);
+            $this->enableGeneratePreview = true;
+            try {
+                $this->updateContainerPreviewRelease($idSite, $idContainer);
+            } catch (ContainerTooLargeException $e) {
+                if (!$_isDraftRestoreCall) {
+                    throw $e;
+                }
+                // the restored draft was already this large before the import
+            }
         } catch (Exception $e) {
             if (!$_isDraftRestoreCall && !empty($draft)) {
                 try {
@@ -1527,9 +1510,24 @@ class API extends \Piwik\Plugin\API
                 }
             }
             throw $e;
+        } finally {
+            $this->enableGeneratePreview = true;
         }
-        $this->enableGeneratePreview = true;
-        $this->updateContainerPreviewRelease($idSite, $idContainer);
+    }
+
+    /**
+     * @template T
+     * @param callable(): T $change
+     * @param int|string|null $idContainerVersion the version changed, when it can be one other than the draft
+     * @return T
+     */
+    private function applyDraftChange($idSite, $idContainer, callable $change, $idContainerVersion = null)
+    {
+        if (!$this->enableGeneratePreview) {
+            return $change();
+        }
+        $this->containers->checkContainerExists($idSite, $idContainer);
+        return $this->containers->applyDraftChange((int) $idSite, (string) $idContainer, $change, $idContainerVersion === null ? null : (int) $idContainerVersion);
     }
 
     private function updateContainerPreviewRelease($idSite, $idContainer)
@@ -1537,23 +1535,8 @@ class API extends \Piwik\Plugin\API
         if (!$this->enableGeneratePreview) {
             return;
         }
-        if ($this->containers->hasPreviewRelease($idSite, $idContainer)) {
-            $this->containers->generateContainer($idSite, $idContainer);
-        } else {
-            // we simulate generate the container to possibly detect if a variable references itself. as there might not be
-            // any release and because we only want to simulate the current version we create a "fake" preview release
-            $simulatorContext = StaticContainer::get(SimulatorContext::class);
-            $container = $this->getContainer($idSite, $idContainer);
-            $container['releases'] = [[
-                'idcontainerrelease' => '',
-                'idcontainer' => $container['idcontainer'],
-                'idcontainerversion' => $this->getContainerDraftVersion($idSite, $idContainer),
-                'environment' => Environment::ENVIRONMENT_PREVIEW,
-                'release_login' => Piwik::getCurrentUserLogin(),
-                'status' => BaseDao::STATUS_ACTIVE,
-            ]];
-            $simulatorContext->generate($container);
-        }
+        $this->containers->checkContainerExists($idSite, $idContainer);
+        $this->containers->updateContainerPreviewRelease($idSite, $idContainer);
     }
 
     /**

@@ -86,7 +86,6 @@ class WebContext extends BaseContext
 
             if ($release['environment'] === Environment::ENVIRONMENT_PREVIEW) {
                 $hasPreviewRelease = true;
-                break;
             }
         }
 
@@ -117,13 +116,23 @@ class WebContext extends BaseContext
             }
         }
 
-        foreach ($container['releases'] as $release) {
+        foreach ($this->getReleasesInGenerationOrder($container) as $release) {
             $this->templateLocator = StaticContainer::getContainer()->make('Piwik\Plugins\TagManager\Context\BaseContext\TemplateLocator');
             $isPreviewRelease = $release['environment'] === Environment::ENVIRONMENT_PREVIEW;
             if ($isPreviewRelease) {
                 $hasPreviewRelease = true;
             }
-            $containerJs = $this->generatePublicContainer($container, $release);
+            $containerJs = $this->generateReleaseUnlessTooLarge($container, $release);
+            if ($containerJs === null) {
+                $path = $this->getJsTargetPath($container['idsite'], $container['idcontainer'], $release['environment'], $container['created_date']);
+                $placeholder = $this->savePlaceholderIfMissing($container, $release, $path, function () use ($baseJs, $hasPreviewRelease, $isPreviewRelease, $container) {
+                    return $this->addPreviewCode($baseJs, $hasPreviewRelease, $isPreviewRelease, $container);
+                });
+                if ($placeholder !== null) {
+                    $filesCreated[$path] = $placeholder;
+                }
+                continue;
+            }
             $replaceMacros = array();
             $variableTemplates = ['keys' => [], 'values' => []];
 
@@ -174,10 +183,19 @@ class WebContext extends BaseContext
             if (!empty($replaceMacros)) {
                 $mergedKeys = array_merge($preconfiguredVariablesResponse['keys'], $variableTemplates['keys']);
                 $mergedValues = array_merge($preconfiguredVariablesResponse['values'], $variableTemplates['values']);
+                // strtr does not expand macros again inside an inserted value, which str_replace would do exponentially
+                // often; reversed so that, as with str_replace, the first of two equal keys wins
+                $macros = array_combine(array_reverse($mergedKeys), array_reverse($mergedValues));
+                $expandedTemplates = [];
                 foreach ($replaceMacros as $replaceValues) {
                     if (!empty($containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction'])) {
-                        $containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction'] = str_replace($mergedKeys, $mergedValues, $containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction']);
-                        $this->templateLocator->updateVariableTemplate($replaceValues['methodName'], str_replace($mergedKeys, $mergedValues, $this->templateLocator->getVariableTemplate($replaceValues['methodName'])));
+                        $containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction'] = strtr($containerJs['variables'][$replaceValues['key']]['parameters']['jsFunction'], $macros);
+                        // variables with the same function share one template: expanding it again would expand the
+                        // macros inside the values the first pass inserted
+                        if (!isset($expandedTemplates[$replaceValues['methodName']])) {
+                            $expandedTemplates[$replaceValues['methodName']] = true;
+                            $this->templateLocator->updateVariableTemplate($replaceValues['methodName'], strtr($this->templateLocator->getVariableTemplate($replaceValues['methodName']), $macros));
+                        }
                     }
                 }
             }
