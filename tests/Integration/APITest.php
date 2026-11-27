@@ -9,6 +9,8 @@
 
 namespace Piwik\Plugins\TagManager\tests\Integration;
 
+use Piwik\Common;
+use Piwik\Db;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\Access\Capability\PublishLiveContainer;
 use Piwik\Plugins\TagManager\Access\Capability\UseCustomTemplates;
@@ -1452,6 +1454,65 @@ class APITest extends IntegrationTestCase
         $this->assertEquals($rollBackedDraftVersion['tags'][1]['name'], $currentDraftVersion['tags'][1]['name']);
         $this->assertEquals($rollBackedDraftVersion['triggers'][1]['name'], $currentDraftVersion['triggers'][1]['name']);
         $this->assertEquals($rollBackedDraftVersion['variables'][1]['name'], $currentDraftVersion['variables'][1]['name']);
+    }
+
+    public function test_importContainerVersion_failsWithoutChangingDraftWhenNamesAreUsedMoreThanOnce()
+    {
+        $draftBefore = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
+        $import = $draftBefore;
+        $import['tags'][] = $import['tags'][0];
+
+        try {
+            $this->api->importContainerVersion(json_encode($import), $this->idSite, $this->idContainer);
+            $this->fail('An expected exception has not been raised');
+        } catch (\Exception $e) {
+            $this->assertStringStartsWith('Some names are used more than once.', $e->getMessage());
+            $this->assertStringEndsWith(': Tag "' . $import['tags'][0]['name'] . '".', $e->getMessage());
+        }
+
+        $this->assertSame($draftBefore, $this->api->exportContainerVersion($this->idSite, $this->idContainer));
+    }
+
+    public function test_importContainerVersion_restoresDraftWithDuplicateNamesWhenImportFails()
+    {
+        $draft = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
+        $this->assertGreaterThanOrEqual(2, count($draft['tags']));
+        // a draft can contain duplicate names, eg after restoring an older version, even though the API does not allow adding them
+        Db::query('UPDATE ' . Common::prefixTable('tagmanager_tag') . ' SET `name` = ? WHERE idtag = ?', [$draft['tags'][0]['name'], $draft['tags'][1]['idtag']]);
+        $draftBefore = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
+
+        // the draft is emptied before the import starts, and the import then fails on the tag without a fire trigger
+        $import = json_encode([
+            'context' => WebContext::ID,
+            'tags' => [[
+                'type' => CustomHtmlTag::ID,
+                'name' => 'Tag without fire trigger',
+                'description' => '',
+                'parameters' => ['customHtml' => '<p></p>'],
+                'fire_trigger_ids' => [],
+                'block_trigger_ids' => [],
+                'fire_limit' => 'unlimited',
+                'fire_delay' => 0,
+                'priority' => 999,
+                'start_date' => null,
+                'end_date' => null,
+            ]],
+            'triggers' => [],
+            'variables' => [],
+        ]);
+
+        try {
+            $this->api->importContainerVersion($import, $this->idSite, $this->idContainer);
+            $this->fail('An expected exception has not been raised');
+        } catch (\Exception $e) {
+            $this->assertStringStartsWith('Fire Trigger: A value needs to be provided.', $e->getMessage());
+        }
+
+        // the draft is restored up to the duplicate, as the name check is skipped when restoring it
+        $draftAfter = $this->api->exportContainerVersion($this->idSite, $this->idContainer);
+        $this->assertSame(array_column($draftBefore['variables'], 'name'), array_column($draftAfter['variables'], 'name'));
+        $this->assertSame(array_column($draftBefore['triggers'], 'name'), array_column($draftAfter['triggers'], 'name'));
+        $this->assertContains($draft['tags'][0]['name'], array_column($draftAfter['tags'], 'name'));
     }
 
     private function getValidImportJson()

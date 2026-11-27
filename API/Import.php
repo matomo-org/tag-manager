@@ -76,7 +76,11 @@ class Import
         $this->variablesProvider = $variablesProvider;
     }
 
-    public function checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer)
+    /**
+     * @param bool $checkNamesAreUnique Only skipped when restoring a draft after a failed import, so as much of the
+     *                                  draft as possible is restored even when it already contained duplicate names.
+     */
+    public function checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer, bool $checkNamesAreUnique = true)
     {
         if (
             !isset($exportedContainerVersion['tags'])
@@ -95,6 +99,9 @@ class Import
         }
 
         $this->checkTypesAreAvailable($exportedContainerVersion, 'TagManager_ErrorImportTypeNotAvailable');
+        if ($checkNamesAreUnique) {
+            $this->checkNamesAreUnique($exportedContainerVersion);
+        }
 
         foreach ($exportedContainerVersion['tags'] as $tag) {
             $this->tagsProvider->checkIsValidTag($tag['type']);
@@ -158,6 +165,39 @@ class Import
         }
     }
 
+    /**
+     * Each tag, trigger and variable is added under its name, and adding one whose name is already used in the
+     * version fails. We check this upfront, so a version does not end up with only part of its entities. A container
+     * version can contain duplicate names, for example after restoring an older version, and we list them all so the
+     * user knows which ones to rename or delete.
+     */
+    private function checkNamesAreUnique($exportedContainerVersion)
+    {
+        $duplicates = array_merge(
+            $this->getDuplicateNames($exportedContainerVersion['tags'], 'TagManager_ErrorNamesUsedMoreThanOnceTag'),
+            $this->getDuplicateNames($exportedContainerVersion['triggers'], 'TagManager_ErrorNamesUsedMoreThanOnceTrigger'),
+            $this->getDuplicateNames($exportedContainerVersion['variables'], 'TagManager_ErrorNamesUsedMoreThanOnceVariable')
+        );
+
+        if (!empty($duplicates)) {
+            throw new Exception(Piwik::translate('TagManager_ErrorNamesUsedMoreThanOnce', implode(', ', $duplicates)));
+        }
+    }
+
+    private function getDuplicateNames(array $entities, string $itemTranslationKey): array
+    {
+        $countByName = array_count_values(array_map('strval', array_column($entities, 'name')));
+
+        $duplicates = [];
+        foreach ($countByName as $name => $count) {
+            if ($count > 1) {
+                $duplicates[] = Piwik::translate($itemTranslationKey, (string) $name);
+            }
+        }
+
+        return $duplicates;
+    }
+
     public function checkCanReplaceExistingEntities($idSite, $idContainerVersion)
     {
         $this->checkReplacingEntitiesIsPossible(
@@ -197,9 +237,12 @@ class Import
         }
     }
 
-    public function importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion)
+    /**
+     * @param bool $checkNamesAreUnique See {@see checkImportContainerIsPossible()}
+     */
+    public function importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion, bool $checkNamesAreUnique = true)
     {
-        $this->checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer);
+        $this->checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer, $checkNamesAreUnique);
 
         $existingTags = $this->tags->getContainerTags($idSite, $idContainerVersion);
         $existingTriggers = $this->triggers->getContainerTriggers($idSite, $idContainerVersion);

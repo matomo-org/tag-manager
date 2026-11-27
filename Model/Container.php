@@ -262,7 +262,13 @@ class Container extends BaseModel
         // create a new version
         $newIdContainerVersion = $this->versionsDao->createVersion($idSite, $idContainer, $name, $description, $createdDate, $createdBy);
 
-        $import->importContainerVersion($exported, $idSite, $idContainer, $newIdContainerVersion);
+        try {
+            $import->importContainerVersion($exported, $idSite, $idContainer, $newIdContainerVersion);
+        } catch (Exception $e) {
+            // do not leave an incomplete version behind that could be published and that holds the name
+            $this->versionsDao->deleteVersion($idSite, $newIdContainerVersion, $this->getCurrentDateTime());
+            throw $e;
+        }
 
         return $newIdContainerVersion;
     }
