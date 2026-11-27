@@ -71,14 +71,14 @@ abstract class BaseContext
      * Roughly the bytes of configuration a container may encode to. A variable is copied in full wherever it is
      * referenced, so a few variables referencing each other many times would otherwise need gigabytes. Generating
      * a container peaks at about eight times its size in memory, so this keeps it inside a 128M memory limit.
-     * Default of the TagManagerMaxContainerWeight DI entry, set by `[TagManager] max_container_size` in config.ini.php.
+     * Default of the TagManagerMaxContainerWeight dependency injection entry, set by `[TagManager] max_container_size` in config.ini.php.
      */
     public const MAX_CONTAINER_WEIGHT = 5000000;
 
     /**
      * The limit for regenerating a release that is already stored, so a container published before
      * MAX_CONTAINER_WEIGHT existed keeps being updated unless it is far over it. Default of the
-     * TagManagerMaxStoredReleaseWeight DI entry, set by `[TagManager] max_stored_release_size` in config.ini.php.
+     * TagManagerMaxStoredReleaseWeight dependency injection entry, set by `[TagManager] max_stored_release_size` in config.ini.php.
      */
     public const MAX_STORED_RELEASE_WEIGHT = 10000000;
 
