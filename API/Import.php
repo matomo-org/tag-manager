@@ -76,7 +76,11 @@ class Import
         $this->variablesProvider = $variablesProvider;
     }
 
-    public function checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer)
+    /**
+     * @param bool $checkNamesAreUnique Only skipped when restoring a draft after a failed import, so as much of the
+     *                                  draft as possible is restored even when it already contained duplicate names.
+     */
+    public function checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer, bool $checkNamesAreUnique = true)
     {
         if (
             !isset($exportedContainerVersion['tags'])
@@ -95,7 +99,9 @@ class Import
         }
 
         $this->checkTypesAreAvailable($exportedContainerVersion, 'TagManager_ErrorImportTypeNotAvailable');
-        $this->checkNamesAreUnique($exportedContainerVersion);
+        if ($checkNamesAreUnique) {
+            $this->checkNamesAreUnique($exportedContainerVersion);
+        }
 
         foreach ($exportedContainerVersion['tags'] as $tag) {
             $this->tagsProvider->checkIsValidTag($tag['type']);
@@ -168,9 +174,9 @@ class Import
     private function checkNamesAreUnique($exportedContainerVersion)
     {
         $duplicates = array_merge(
-            $this->getDuplicateNames($exportedContainerVersion['tags'], 'TagManager_ErrorTypeNotAvailableTag'),
-            $this->getDuplicateNames($exportedContainerVersion['triggers'], 'TagManager_ErrorTypeNotAvailableTrigger'),
-            $this->getDuplicateNames($exportedContainerVersion['variables'], 'TagManager_ErrorTypeNotAvailableVariable')
+            $this->getDuplicateNames($exportedContainerVersion['tags'], 'TagManager_ErrorNamesUsedMoreThanOnceTag'),
+            $this->getDuplicateNames($exportedContainerVersion['triggers'], 'TagManager_ErrorNamesUsedMoreThanOnceTrigger'),
+            $this->getDuplicateNames($exportedContainerVersion['variables'], 'TagManager_ErrorNamesUsedMoreThanOnceVariable')
         );
 
         if (!empty($duplicates)) {
@@ -231,9 +237,12 @@ class Import
         }
     }
 
-    public function importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion)
+    /**
+     * @param bool $checkNamesAreUnique See {@see checkImportContainerIsPossible()}
+     */
+    public function importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion, bool $checkNamesAreUnique = true)
     {
-        $this->checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer);
+        $this->checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer, $checkNamesAreUnique);
 
         $existingTags = $this->tags->getContainerTags($idSite, $idContainerVersion);
         $existingTriggers = $this->triggers->getContainerTriggers($idSite, $idContainerVersion);

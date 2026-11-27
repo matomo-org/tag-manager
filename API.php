@@ -1525,7 +1525,10 @@ class API extends \Piwik\Plugin\API
         }
 
         // we validate before actually creating a backup version
-        $this->import->checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer);
+        // restoring the draft after a failed import should bring back as much as possible, even when it already
+        // contained duplicate names, as it did before the names were checked upfront
+        $checkNamesAreUnique = !$_isDraftRestoreCall;
+        $this->import->checkImportContainerIsPossible($exportedContainerVersion, $idSite, $idContainer, $checkNamesAreUnique);
         $this->import->checkCanReplaceExistingEntities($idSite, $idContainerVersion);
 
         if (!empty($backupName)) {
@@ -1535,7 +1538,7 @@ class API extends \Piwik\Plugin\API
         $this->containers->checkContainerVersionExists($idSite, $idContainer, $idContainerVersion);
         $this->enableGeneratePreview = false;
         try {
-            $this->import->importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion);
+            $this->import->importContainerVersion($exportedContainerVersion, $idSite, $idContainer, $idContainerVersion, $checkNamesAreUnique);
         } catch (Exception $e) {
             if (!$_isDraftRestoreCall && !empty($draft)) {
                 try {
