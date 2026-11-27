@@ -32,6 +32,7 @@ use Piwik\Plugins\TagManager\Dao\ContainersDao;
 use Piwik\Plugins\TagManager\Dao\TagsDao;
 use Piwik\Plugins\TagManager\Dao\TriggersDao;
 use Piwik\Plugins\TagManager\Dao\VariablesDao;
+use Piwik\Plugins\TagManager\Exception\ContainerTooLargeException;
 use Piwik\Plugins\TagManager\Exception\EntityRecursionException;
 use Piwik\Plugins\CoreHome\SystemSummary;
 use Piwik\Plugins\TagManager\Model\Container\ContainerIdGenerator;
@@ -372,7 +373,7 @@ class TagManager extends \Piwik\Plugin
                         });
                     } catch (UnexpectedWebsiteFoundException $e) {
                         // website was removed, ignore
-                    } catch (EntityRecursionException $e) {
+                    } catch (EntityRecursionException | ContainerTooLargeException $e) {
                         StaticContainer::get(LoggerInterface::class)->error('Container {idContainer} of site {idSite} could not be regenerated: {message}', [
                             'idContainer' => $container['idcontainer'],
                             'idSite' => $container['idsite'],

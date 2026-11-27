@@ -9,11 +9,7 @@
 
 namespace Piwik\Plugins\TagManager\Exception;
 
-/**
- * Extends EntityRecursionException so that code handling a container that cannot be generated, eg the scheduled
- * regeneration of released containers, handles this one as well.
- */
-class ContainerTooLargeException extends EntityRecursionException
+class ContainerTooLargeException extends \Exception
 {
     /**
      * @var int

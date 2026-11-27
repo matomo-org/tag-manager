@@ -10,8 +10,10 @@
 namespace Piwik\Plugins\TagManager\tests\Integration\Context;
 
 use Piwik\Common;
+use Piwik\Config;
 use Piwik\Container\StaticContainer;
 use Piwik\Db;
+use Piwik\Log\LoggerInterface;
 use Piwik\Nonce;
 use Piwik\Piwik;
 use Piwik\Plugins\TagManager\API;
@@ -295,6 +297,16 @@ class WebContextTest extends IntegrationTestCase
         $variables = array_column((new VariablesDao())->getAllVariables(), 'status', 'name');
         $this->assertArrayNotHasKey('Nested' . $refusedLevel, $variables);
         $this->assertSame('active', $variables['Nested' . ($refusedLevel - 1)]);
+    }
+
+    public function test_addContainerVariable_refusesAVariableOverAConfiguredLimit()
+    {
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+        $idContainerVersion = $this->getContainerDraftVersion($idContainer);
+        // each level references the one below twenty times, so this admits level 1 but not level 2, which the default limit admits
+        Config::getInstance()->TagManager = ['max_container_size' => '100000'];
+
+        $this->assertSame(2, $this->addNestedVariablesUntilRefused($idContainer, $idContainerVersion));
     }
 
     public function test_addContainerTag_refusesATagThatMakesTheContainerTooLarge()
@@ -824,12 +836,37 @@ class WebContextTest extends IntegrationTestCase
         $livePath = $this->getReleasePath($context, $idContainer, Environment::ENVIRONMENT_LIVE);
         $this->storeTooLargeVariable($idLiveVersion);
         StaticContainer::get(StorageInterface::class)->delete($livePath);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('error')->with($this->stringContains('serves an empty container'));
+        StaticContainer::getContainer()->set(LoggerInterface::class, $logger);
 
         $this->api->addContainerTrigger($this->idSite, $idContainer, $idDraftVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
 
         $this->assertNotEmpty($this->getGeneratedFiles()[$livePath] ?? '');
         // the fixture's innermost value, which only a regenerated file contains
         $this->assertStringNotContainsString($this->getNestedVariableParameters(0)['userId'], $this->getGeneratedFiles()[$livePath]);
+    }
+
+    /**
+     * @dataProvider getMobileContexts
+     */
+    public function test_generateContainer_writesAnEmptyMobileContainerForAVersionOverTheLimitWhoseFileIsMissing(string $contextClass)
+    {
+        $context = StaticContainer::get($contextClass);
+        $idContainer = $this->api->addContainer($this->idSite, $context->getId(), 'test');
+        $idLiveVersion = $this->api->createContainerVersion($this->idSite, $idContainer, 'v1');
+        $this->api->publishContainerVersion($this->idSite, $idContainer, $idLiveVersion, Environment::ENVIRONMENT_LIVE);
+        $livePath = $this->getReleasePath($context, $idContainer, Environment::ENVIRONMENT_LIVE);
+        $this->storeTooLargeVariable($idLiveVersion);
+        StaticContainer::get(StorageInterface::class)->delete($livePath);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('error')->with($this->stringContains('serves an empty container'));
+        StaticContainer::getContainer()->set(LoggerInterface::class, $logger);
+
+        StaticContainer::get(Container::class)->generateContainer($this->idSite, $idContainer);
+
+        $placeholder = json_decode($this->getGeneratedFiles()[$livePath] ?? '', true);
+        $this->assertSame([Environment::ENVIRONMENT_LIVE, [], [], []], [$placeholder['environment'] ?? null, $placeholder['tags'] ?? null, $placeholder['triggers'] ?? null, $placeholder['variables'] ?? null]);
     }
 
     public function test_addContainerTrigger_regeneratesAReleaseOverTheLimitUpToTheStoredReleaseLimit()
@@ -856,6 +893,80 @@ class WebContextTest extends IntegrationTestCase
         $this->api->addContainerTrigger($this->idSite, $idContainer, $idDraftVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
 
         $this->assertStringContainsString($parameters['userId'], $this->getGeneratedFiles()[$this->getReleasePath($context, $idContainer, Environment::ENVIRONMENT_LIVE)]);
+    }
+
+    public function test_addContainerTrigger_keepsAStoredReleaseOverAConfiguredStoredReleaseLimit()
+    {
+        // set before the first container is generated, which resolves and caches the limits
+        Config::getInstance()->TagManager = ['max_container_size' => '20000', 'max_stored_release_size' => '30000'];
+        [$idContainer, $idDraftVersion, $livePath] = $this->publishAndPreviewWithLegacyVariable(str_repeat('y', 50000));
+        $liveFile = $this->getGeneratedFiles()[$livePath];
+
+        $this->api->addContainerTrigger($this->idSite, $idContainer, $idDraftVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
+
+        $this->assertSame($liveFile, $this->getGeneratedFiles()[$livePath]);
+    }
+
+    public function test_addContainerTrigger_holdsAStoredReleaseToNoLessThanTheContainerLimit()
+    {
+        $legacyUserId = str_repeat('y', 50000);
+        [$idContainer, $idDraftVersion, $livePath] = $this->publishAndPreviewWithLegacyVariable($legacyUserId);
+        StaticContainer::getContainer()->set('TagManagerMaxStoredReleaseWeight', 1);
+
+        $this->api->addContainerTrigger($this->idSite, $idContainer, $idDraftVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
+
+        $this->assertStringContainsString($legacyUserId, $this->getGeneratedFiles()[$livePath]);
+    }
+
+    /**
+     * @dataProvider getInvalidWeightLimits
+     */
+    public function test_addContainerTrigger_rejectsAnInvalidLimit(string $entry, $limit)
+    {
+        [$idContainer, $idDraftVersion] = $this->publishAndPreviewWithLegacyVariable('x');
+        StaticContainer::getContainer()->set($entry, $limit);
+
+        $this->expectExceptionMessage("({$entry}) must be a positive integer.");
+        $this->api->addContainerTrigger($this->idSite, $idContainer, $idDraftVersion, PageViewTrigger::ID, 'MyPageViewTrigger');
+    }
+
+    public function test_addContainerTrigger_rejectsAnEmptyIniLimit()
+    {
+        Config::getInstance()->TagManager = ['max_container_size' => ''];
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+
+        $this->expectExceptionMessage('The [TagManager] max_container_size config setting (TagManagerMaxContainerWeight) must be a positive integer.');
+        $this->api->addContainerTrigger($this->idSite, $idContainer, $this->getContainerDraftVersion($idContainer), PageViewTrigger::ID, 'MyPageViewTrigger');
+    }
+
+    public function getInvalidWeightLimits(): array
+    {
+        $limits = [];
+        foreach (['TagManagerMaxContainerWeight', 'TagManagerMaxStoredReleaseWeight'] as $entry) {
+            foreach (['zero' => 0, 'negative' => -1, 'non-numeric' => 'abc', 'fraction' => '1.5', 'boolean' => true, 'null' => null] as $name => $limit) {
+                $limits[$entry . ' ' . $name] = [$entry, $limit];
+            }
+        }
+        return $limits;
+    }
+
+    /**
+     * Publishes a live version, adds a variable to it that its file lacks, and previews the draft so every change
+     * regenerates the live release
+     *
+     * @return array{0: int, 1: int, 2: string} idContainer, draft idContainerVersion and the live release's path
+     */
+    private function publishAndPreviewWithLegacyVariable(string $userId): array
+    {
+        $idContainer = $this->api->addContainer($this->idSite, WebContext::ID, 'test');
+        $idDraftVersion = $this->getContainerDraftVersion($idContainer);
+        $idLiveVersion = $this->api->createContainerVersion($this->idSite, $idContainer, 'v1');
+        $this->api->publishContainerVersion($this->idSite, $idContainer, $idLiveVersion, Environment::ENVIRONMENT_LIVE);
+        $this->api->enablePreviewMode($this->idSite, $idContainer, $idDraftVersion);
+        $parameters = ['matomoUrl' => 'https://matomo.org', 'idSite' => $this->idSite, 'userId' => $userId];
+        StaticContainer::get(VariablesDao::class)->createVariable($this->idSite, $idLiveVersion, MatomoConfigurationVariable::ID, 'Legacy', $parameters, false, [], '2020-01-01 00:00:00');
+
+        return [$idContainer, $idDraftVersion, $this->getReleasePath(StaticContainer::get(WebContext::class), $idContainer, Environment::ENVIRONMENT_LIVE)];
     }
 
     public function test_addContainerVariable_refusesTakingAPublishedVersionOverTheLimit()

@@ -153,7 +153,7 @@ class Container extends BaseModel
      * container cannot be generated with is undone together with anything it created along the way, eg the triggers
      * and variables a copy brings along.
      *
-     * A draft that is already over BaseContext::MAX_CONTAINER_WEIGHT, eg from before that limit existed, still takes
+     * A draft that is already over the TagManagerMaxContainerWeight limit, eg from before it existed, still takes
      * a change that does not make it larger, so that it can be brought back under the limit.
      *
      * @template T
@@ -259,8 +259,6 @@ class Container extends BaseModel
 
         try {
             $this->simulateRelease($container, (int) $idContainerVersion, Environment::ENVIRONMENT_PREVIEW);
-        } catch (ContainerTooLargeException $e) {
-            throw $e;
         } catch (EntityRecursionException $e) {
             // only the draft is checked for recursion, as before the size limit
         }
